@@ -1,0 +1,146 @@
+@import url(./bioinfo.css);
+
+.theme-border{
+    background-color: #cc0000;
+}
+.copyright{
+    border-top: 3px solid #cc0000;
+}
+
+h1 {
+ color :#CC0000; 
+}
+
+h2:first-letter {
+   color:#CC0000; 
+}
+
+h1 a {
+  color : #CC0000;
+}
+
+li.Research , li.Research_titre {
+  background-color:#FFFFFF;
+}
+
+li.Research a:hover, li.Research_titre a:hover {
+ background-color :#CCCCCC;
+}
+
+li.Rna , li.Rna_titre {
+  background-color: #FFCCCC;
+}
+
+li.Rna a:hover, li.Rna_titre a:hover {
+    background-color :#CC0000;
+}
+
+ .menu_central a:hover{
+  background-color : #fcc; 
+}
+
+
+.formulaire{
+    border:  1px solid #cccccc;
+    color : black;
+    padding: 10px;
+    margin-top:auto;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:10pt;
+    /*width : auto;	*/
+ 
+}
+
+
+
+/* couleurs de fond pour l'affichage d'un alignement */
+/*     avec des tiges colorees                       */
+
+.a{
+background-color : #99CCFF
+}
+
+.b{
+background-color : #FFFF99;
+}
+
+.c{
+background-color : #FF9966;
+}
+
+.d{
+background-color : #99CC66; 
+}
+
+.e{
+background-color :#ff9999;
+}
+
+.f{
+background-color : #99FFFF;
+}
+
+.g{
+background-color : #6699CC; 
+}
+
+.h{
+background-color : #009933;
+}
+
+.i{
+background-color : #FFCCFF;
+}
+
+.j{
+background-color : #CC0099;
+}
+
+.k{
+background-color : #cc99FF ;
+}
+
+.l{
+background-color : #FFFFCC;
+}
+
+.m{
+background-color : #cc99cc;
+}
+
+.n{
+background-color : #33FFCC;
+}
+
+.o{
+background-color : #CCFFFF;
+}
+
+.p{
+background-color : #99CCCC;
+}
+
+.q{
+background-color : #99CC33;
+}
+
+.r{
+background-color : #FF99FF 
+}
+
+.s{
+background-color : #CC3399; 
+}
+
+.t{
+background-color : #cc9999;
+}
+
+.x{
+background-color : #ffffff;
+}
+
+.y{
+background-color : #dddddd;
+}
