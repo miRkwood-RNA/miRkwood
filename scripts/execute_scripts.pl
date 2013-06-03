@@ -41,10 +41,10 @@ else
 }
 
 ##Passage du multifasta -> fasta et appel au script Stemloop
-open ENTREE, $dirJob.'Sequences.fas' or die "Impossible d'ouvrir le fichier d'entree  : $!"; 
+open my $ENTREE_FH, '<', File::Spec->catfile($dirJob, 'Sequences.fas') or die "Impossible d'ouvrir le fichier d'entree  : $!";
 my %tab=();
 my $nameSeq;
-while  (my $line=<ENTREE>)
+while  (my $line=<$ENTREE_FH>)
 {	
 	if ( grep( /^>/,$line) )
 	{
@@ -55,13 +55,13 @@ while  (my $line=<ENTREE>)
 		$tab{$nameSeq}= $line;
 	}
 }
-close ENTREE;	
+close $ENTREE_FH;	
 foreach my $name (keys %tab)
 { 	
 	my $temp_file = File::Spec->catfile($dirJob, 'tempFile.txt');
-	open (tempFile,  '>', $temp_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
+	open (my $TEMPFILE_FH, '>', $temp_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
 	system("chmod 777 $temp_file");
-	print tempFile $name.$tab{$name};
+	print $TEMPFILE_FH $name.$tab{$name};
 	my $name = substr $name, 1,-1 ;
 
 	my $sequence_dir = File::Spec->catdir($dirJob, $name);
@@ -76,7 +76,7 @@ foreach my $name (keys %tab)
 	system("chmod 777 $ct_file");
 	my $tigeboucle_script = File::Spec->catfile($dirScript, 'Tigeboucle3bc.pl');
 	system("perl $tigeboucle_script $ct_file $sequence_dir");
-	print tempFile "perl $tigeboucle_script $ct_file $sequence_dir";
+	print $TEMPFILE_FH "perl $tigeboucle_script $ct_file $sequence_dir";
 	unlink $temp_file;
 	
 }
@@ -121,10 +121,10 @@ foreach my $dir(@dirs) # parcours du contenu
 
 					## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
 					my $out_Vienna = File::Spec->catfile($candidate_dir, 'outViennaTraited.txt');
-					open (TRAITED, '>', $out_Vienna) || die "$!";
-					open (INPUT, $candidate_rnafold_out) || die "$!";
+					open (my $TRAITED_FH, '>', $out_Vienna) || die "$!";
+					open (my $INPUT_FH, '<', $candidate_rnafold_out) || die "$!";
 					my ($nameSeq, $dna, $Vienna);
-					while (my $line = <INPUT>) 
+					while (my $line = <$INPUT_FH>)
 					{
 						if (($line=~/^>(.*)/)){  # nom sequence
 							$nameSeq = $1;
@@ -135,11 +135,11 @@ foreach my $dir(@dirs) # parcours du contenu
 						elsif (($line=~/(.*) /))        
 						{ 
 							$Vienna= $1;
-							print TRAITED $nameSeq."\t".$dna."\t".$Vienna."\n";#récupération du format Vienna
+							print $TRAITED_FH $nameSeq."\t".$dna."\t".$Vienna."\n";#récupération du format Vienna
 						}
 					 }
-					close INPUT;
-					close TRAITED;
+					close $INPUT_FH;
+					close $TRAITED_FH;
 					system("chmod 777 $out_Vienna");
 					####calcul MFEI (appel script energie.pl)
 					if ($mfei eq "mfeiChecked") 
@@ -165,22 +165,22 @@ foreach my $dir(@dirs) # parcours du contenu
 					if ($align eq "alignChecked")
 					{
 						my $seqN = File::Spec->catfile($candidate_dir, 'seqWithN.txt');
-						open (seqN, '>>', $seqN) or die "Impossible d'ouvrir le fichier d'entree  : $!";
-						open (SEQUENCE, $seq_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
-						while  (my $line=<SEQUENCE>)
+						open (my $SEQN_FH, '>>', $seqN) or die "Impossible d'ouvrir le fichier d'entree  : $!";
+						open (my $SEQUENCE_FH, '<', $seq_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
+						while  (my $line=<$SEQUENCE_FH>)
 						{
 							if ($line=~/^>/)
 							{
-								print seqN $line;
+								print $SEQN_FH $line;
 							}
 							else 
 							{
 								$line =~ s/U/T/g;
-								print seqN $line;
+								print $SEQN_FH $line;
 							}
 						}
-						close seqN;
-						close SEQUENCE;
+						close $SEQN_FH;
+						close $SEQUENCE_FH;
 						my $exonerate_out = File::Spec->catfile($candidate_dir, 'alignement.txt');
 						system("$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out");
 					}
