@@ -1,19 +1,37 @@
 #!/usr/bin/perl -w
 
 use File::Path 'rmtree';
+use File::Basename;
+use Cwd qw( abs_path );
 
-$dirScript = "/var/www/arn/scripts/"; # chemin script
-$dirImages = "/var/www/arn/images/"; # chemin images
-$dirData = "/var/www/arn/data/"; # chemin séquence
-$dirBlast = "/var/www/arn/scripts/ncbi-blast-2.2.26+/bin/"; # chemin Blast
-$dirRandfold = "/var/www/arn/scripts/randfold-2.0/"; # chemin Randfold
+my $local_dir = dirname(abs_path($0));
+my $rootdir = File::Spec->catdir($local_dir, "..");
+
+$dirScript = File::Spec->catdir( $rootdir, 'scripts' );  # chemin script
+$dirImages =  File::Spec->catdir( $rootdir, 'images');  # chemin images
+$dirData =  File::Spec->catdir( $rootdir, 'data');  # chemin séquence
+$dirBlast =  File::Spec->catdir( $dirScript, 'ncbi-blast-2.2.28+-src', 'c++', 'GCC460-Debug', 'bin'); # chemin Blast
+
+## Programs ##
+my $rnafold_bin = File::Spec->catfile($dirScript, 'ViennaRNA-1.8.5', 'Progs', 'RNAfold');
+my $randfold_bin = File::Spec->catfile($dirScript, 'randfold-2.0', 'randfold');
+my $b2ct_bin = File::Spec->catfile($dirScript, 'ViennaRNA-1.8.5', 'Utils', 'b2ct');
+my $selfcontain_bin = File::Spec->catfile($dirScript, 'selfcontain_unix', 'selfcontain.py');
+my $exonerate_bin = File::Spec->catfile($dirScript, 'exonerate-2.2.0-i386', 'bin', 'exonerate');
+my $varna_bin = File::Spec->catfile($dirScript, 'VARNAv3-9.jar');
+
+## Data ##
+my $mirbase_file = File::Spec->catfile($dirData, 'MirbaseFile.txt');
+my $matrix_file = File::Spec->catfile($dirData, 'matrix');
+
 
 my ($check,$mfei,$randfold, $SC,$align,$dirJob,$plant) = @ARGV;
 
 if ($check eq "checked")
 {
 	#appel script filterCDS.pl qui permet de filter les CDS
-	system('perl '.$dirScript.'filterCDS.pl '.$dirBlast.' '.$dirData.' '.$dirJob.' '.$plant);
+	my $filter_script = File::Spec->catfile($dirScript, 'filterCDS.pl');
+	system("perl $filter_script $dirBlast $dirData $dirJob $plant");
 }
 else
 {
@@ -37,22 +55,26 @@ while  ($line=<ENTREE>)
 close ENTREE;	
 foreach $name (keys %tab)
 { 	
-	
-	open tempFile,  '>'.$dirJob.'tempFile.txt' or die "Impossible d'ouvrir le fichier d'entree  : $!"; 
-	system('chmod 777 '.$dirJob.'tempFile.txt');
-	print tempFile $name.@tab{$name};
+	my $temp_file = File::Spec->catfile($dirJob, 'tempFile.txt');
+	open (tempFile,  '>', $temp_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
+	system("chmod 777 $temp_file");
+	print tempFile $name.$tab{$name};
 	$name = substr $name, 1,-1 ;
-	system('mkdir '.$dirJob.$name);
+
+	$sequence_dir = File::Spec->catdir($dirJob, $name);
+	system("mkdir $sequence_dir");
 		
-	system('chmod 777 '.$dirJob.$name.'/fichierRNAfold.txt');
-	system($dirScript.'ViennaRNA-1.8.5/Progs/RNAfold -noPS < '.$dirJob.'/tempFile.txt > '.$dirJob.$name.'/fichierRNAfold.txt');
-	system('chmod 777 '.$dirJob.$name.'/fichierRNAfold.txt');
+	$rnafold_output = File::Spec->catfile($sequence_dir, 'fichierRNAfold.txt');
+	system("$rnafold_bin -noPS < $temp_file > $rnafold_output");
+	system("chmod 777 $rnafold_output");
 	####conversion en format CT 
-	system($dirScript.'ViennaRNA-1.8.5/Utils/b2ct < '.$dirJob.$name.'/fichierRNAfold.txt > '.$dirJob.$name.'/fichierOutB2ct.ct');
-	system('chmod 777 '.$dirJob.$name.'/fichierOutB2ct.ct');
-	system('perl '.$dirScript.'Tigeboucle3bc.pl  '.$dirJob.$name.'/fichierOutB2ct.ct '.$dirJob.$name);
-	print tempFile $dirScript.'Tigeboucle3bc.pl  '.$dirJob.$name.'/fichierOutB2ct.ct '.$dirJob.$name;
-	unlink $dirJob."tempFile.txt";
+	$ct_file = File::Spec->catfile($dirJob, $name, 'fichierOutB2ct.ct');
+	system("$b2ct_bin < $rnafold_output > $ct_file");
+	system("chmod 777 $ct_file");
+	my $tigeboucle_script = File::Spec->catfile($dirScript, 'Tigeboucle3bc.pl');
+	system("perl $tigeboucle_script $ct_file $sequence_dir");
+	print tempFile "perl $tigeboucle_script $ct_file $sequence_dir";
+	unlink $temp_file;
 	
 }
 
@@ -65,72 +87,79 @@ foreach $dir(@dirs) # parcours du contenu
 {
 	if ($dir ne "." && $dir ne ".." && -d $dirJob.$dir) #si fichier est un répertoire
 	{
-		
-		opendir DIR, $dirJob.$dir; # ouverture du sous répertoire 
+
+		$sequence_dir = File::Spec->catdir($dirJob, $dir);
+		opendir DIR, $sequence_dir; # ouverture du sous répertoire
 		my @files;
 		@files=readdir DIR;
 		closedir DIR;
 		foreach $file(@files)
 		{
-			
-				if ($file ne "." && $file ne ".." && -d $dirJob.$dir."/".$file) # si le fichier est de type repertoire
+	
+				if ($file ne "." && $file ne ".." && -d File::Spec->catdir($sequence_dir, $file)) # si le fichier est de type repertoire
 				{
 					####Traitement fichier de sortie outStemloop
-					chmod 0777, $dirJob.$dir."/".$file;
+					$candidate_dir = File::Spec->catdir($sequence_dir, $file);
+					chmod 0777, $candidate_dir;
 					#system('perl /var/www/arn/scripts/image.pl '.$dirScript.' '.$dirJob.$dir."/".$file.'/');
-					system($dirScript.'ViennaRNA-1.8.5/Progs/RNAfold -noPS < '.$dirJob.$dir."/".$file.'/seq.txt > '.$dirJob.$dir."/".$file.'/outRNAFold.txt');
-					system('chmod 777 '.$dirJob.$dir."/".$file.'/outRNAFold.txt');
-					#system ('/usr/bin/java -cp '.$dirScript.'VARNAv3-8.jar fr.orsay.lri.varna.applications.VARNAcmd -i '.$dirJob.$dir.'/'.$file.'/outB2ct.ct -o '.$dirJob.$dir.'/'.$file.'/image.png'); 
-					
-					
-					#open coucou, '>>'.$dirJob.$dir.'/'.$file.'/coucou.txt';
-					#print coucou 'java -cp '.$dirScript.'VARNAv3-8.jar fr.orsay.lri.varna.applications.VARNAcmd -i '.$dirJob.$dir."/".$file.'/outB2ct.ct -o '.$dirJob.$dir."/".$file.'/image.png';
-					#print coucou '\nperl /var/www/arn/scripts/image.pl '.$dirScript.' '.$dirJob.$dir."/".$file.'/';
-					####conversion en format CT 
-					system($dirScript.'ViennaRNA-1.8.5/Utils/b2ct < '.$dirJob.$dir."/".$file.'/outRNAFold.txt > '.$dirJob.$dir."/".$file.'/outB2ct.ct');
-					system('chmod 777 '.$dirJob.$dir."/".$file.'/outB2ct.ct');
+					my $candidate_rnafold_out = File::Spec->catfile($candidate_dir, 'outRNAFold.txt');
+					$seq_file = File::Spec->catfile($candidate_dir, 'seq.txt');
+					system("$rnafold_bin -noPS < $seq_file > $candidate_rnafold_out");
+					system("chmod 777 $candidate_rnafold_out");
+
+					####conversion en format CT
+					my $candidate_ct_file = File::Spec->catfile($candidate_dir, 'outB2ct.ct');
+					system("$b2ct_bin < $candidate_rnafold_out > $candidate_ct_file");
+					system("chmod 777 $candidate_ct_file");
 					
 					#system('./test.sh '.$dirScript.' '.$dirJob.$dir.'/'.$file.'/ '.' > trash 2> errors');
-					system ('/usr/bin/java -cp '.$dirScript.'VARNAv3-8.jar fr.orsay.lri.varna.applications.VARNAcmd -i '.$dirJob.$dir.'/'.$file.'/outB2ct.ct -o '.$dirJob.$dir.'/'.$file.'/image.png > trash');
-					## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN) 
-					$dirSeq = $1;
-					open (TRAITED, '>'.$dirJob.$dir."/".$file.'/outViennaTraited.txt') || die "$!";
-					open (INPUT, $dirJob.$dir."/".$file.'/outRNAFold.txt') || die "$!";
+					my $varna_image = File::Spec->catfile($candidate_dir, 'image.png');
+					system("/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > trash");
+
+					## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
+					my $out_Vienna = File::Spec->catfile($candidate_dir, 'outViennaTraited.txt');
+					open (TRAITED, '>', $out_Vienna) || die "$!";
+					open (INPUT, $candidate_rnafold_out) || die "$!";
 					while (my $line = <INPUT>) 
 					{
 						if (($line=~/^>(.*)/))  {$nameSeq = $1;}#nom sequence
 						elsif (($line=~/^[a-zA-Z]/))    {$dna= substr $line,0,-1;}#récupération de la sequence adn
 						elsif (($line=~/(.*) /))        
 						{ 
-							$Vienna= $1;print TRAITED $nameSeq."\t".$dna."\t".$Vienna."\n";#récupération du format Vienna
+							$Vienna= $1;
+							print TRAITED $nameSeq."\t".$dna."\t".$Vienna."\n";#récupération du format Vienna
 						}
 					 }
 					close INPUT;
 					close TRAITED;
-					system('chmod 777 '.$dirJob.$dir."/".$file.'/outViennaTraited.txt');
+					system("chmod 777 $out_Vienna");
 					####calcul MFEI (appel script energie.pl)
 					if ($mfei eq "mfeiChecked") 
 					{
-						system('perl '.$dirScript.'energie.pl '.$dirJob.$dir."/".$file.'/outB2ct.ct '.$dirJob.$dir.' '.$file);
-					}     
+						my $energie_script = File::Spec->catfile($dirScript, 'energie.pl');
+						system("perl $energie_script $candidate_ct_file $sequence_dir $file");
+					}
 					####calcul p-value randfold  
 					if ($randfold eq "randfoldChecked") 
 					{
-						system($dirRandfold.'randfold -d '.$dirJob.$dir."/".$file.'/seq.txt 7 > '.$dirJob.$dir."/".$file.'/pvalue.txt');
-						system('chmod 777 '.$dirJob.$dir."/".$file.'/pvalue.txt');
+						my $randfold_out = File::Spec->catfile($candidate_dir, 'pvalue.txt');
+						system("$randfold_bin -d $seq_file 7 > $randfold_out");
+						system("chmod 777 $randfold_out");
 					}  
 					####calcul self-contain   
 					if ($SC eq "SCChecked") 
 					{
-						system('python '.$dirScript.'selfcontain_unix/selfcontain.py -i '.$dirJob.$dir."/".$file.'/seq.txt -n 100  > '.$dirJob.$dir."/".$file.'/selfContain.txt');
-						system('chmod 777 '.$dirJob.$dir."/".$file.'/selfContain.txt');
+						my $selfcontain_out = File::Spec->catfile($candidate_dir, 'selfContain.txt');
+						system("python $selfcontain_bin -i $seq_file -n 100  > $selfcontain_out");
+						system("chmod 777 selfcontain_out");
 					}
 					####### creation sequence boucle terminale masquee avec des N pour chaque sequence (repertoire ) et resultat alignement mirBASE
 					if ($align eq "alignChecked")
 					{
-						open seqN, '>>'.$dirJob.$dir.'/'.$file.'/seqWithN.txt' or die "Impossible d'ouvrir le fichier d'entree  : $!"; 
-						open seq, $dirJob.$dir.'/'.$file.'/seq.txt' or die "Impossible d'ouvrir le fichier d'entree  : $!"; 
-						while  ($line=<seq>)
+						my $seqN = File::Spec->catfile($candidate_dir, 'seqWithN.txt');
+						open (seqN, '>>', $seqN) or die "Impossible d'ouvrir le fichier d'entree  : $!";
+						open (SEQUENCE, $seq_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
+						while  ($line=<SEQUENCE>)
 						{
 							if ($line=~/^>/)
 							{
@@ -143,8 +172,9 @@ foreach $dir(@dirs) # parcours du contenu
 							}
 						}
 						close seqN;
-			
-						system($dirScript.'exonerate-2.2.0-i386/bin/exonerate -E --model affine:bestfit '.$dirData.'MirbaseFile.txt  '.$dirJob.$dir.'/'.$file.'/seqWithN.txt -d '.$dirData.'matrix --bestn 1 --score -3 -e -1 -o -1 > '.$dirJob.$dir.'/'.$file.'/alignement.txt');
+						close SEQUENCE;
+						my $exonerate_out = File::Spec->catfile($candidate_dir, 'alignement.txt');
+						system("$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out");
 					}
 				}
 		}
