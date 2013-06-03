@@ -4,13 +4,15 @@ use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
 
+use strict;
+
 my $local_dir = dirname(abs_path($0));
 my $rootdir = File::Spec->catdir($local_dir, "..");
 
-$dirScript = File::Spec->catdir( $rootdir, 'scripts' );  # chemin script
-$dirImages =  File::Spec->catdir( $rootdir, 'images');  # chemin images
-$dirData =  File::Spec->catdir( $rootdir, 'data');  # chemin séquence
-$dirBlast =  File::Spec->catdir( $dirScript, 'ncbi-blast-2.2.28+-src', 'c++', 'GCC460-Debug', 'bin'); # chemin Blast
+my $dirScript = File::Spec->catdir( $rootdir, 'scripts' );  # chemin script
+my $dirImages =  File::Spec->catdir( $rootdir, 'images');  # chemin images
+my $dirData =  File::Spec->catdir( $rootdir, 'data');  # chemin séquence
+my $dirBlast =  File::Spec->catdir( $dirScript, 'ncbi-blast-2.2.28+-src', 'c++', 'GCC460-Debug', 'bin'); # chemin Blast
 
 ## Programs ##
 my $rnafold_bin = File::Spec->catfile($dirScript, 'ViennaRNA-1.8.5', 'Progs', 'RNAfold');
@@ -40,9 +42,10 @@ else
 
 ##Passage du multifasta -> fasta et appel au script Stemloop
 open ENTREE, $dirJob.'Sequences.fas' or die "Impossible d'ouvrir le fichier d'entree  : $!"; 
-%tab=();
-while  ($line=<ENTREE>)
-{
+my %tab=();
+my $nameSeq;
+while  (my $line=<ENTREE>)
+{	
 	if ( grep( /^>/,$line) )
 	{
 		$nameSeq = substr $line,0;	
@@ -53,22 +56,22 @@ while  ($line=<ENTREE>)
 	}
 }
 close ENTREE;	
-foreach $name (keys %tab)
+foreach my $name (keys %tab)
 { 	
 	my $temp_file = File::Spec->catfile($dirJob, 'tempFile.txt');
 	open (tempFile,  '>', $temp_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
 	system("chmod 777 $temp_file");
 	print tempFile $name.$tab{$name};
-	$name = substr $name, 1,-1 ;
+	my $name = substr $name, 1,-1 ;
 
-	$sequence_dir = File::Spec->catdir($dirJob, $name);
+	my $sequence_dir = File::Spec->catdir($dirJob, $name);
 	system("mkdir $sequence_dir");
 		
-	$rnafold_output = File::Spec->catfile($sequence_dir, 'fichierRNAfold.txt');
+	my $rnafold_output = File::Spec->catfile($sequence_dir, 'fichierRNAfold.txt');
 	system("$rnafold_bin -noPS < $temp_file > $rnafold_output");
 	system("chmod 777 $rnafold_output");
 	####conversion en format CT 
-	$ct_file = File::Spec->catfile($dirJob, $name, 'fichierOutB2ct.ct');
+	my $ct_file = File::Spec->catfile($dirJob, $name, 'fichierOutB2ct.ct');
 	system("$b2ct_bin < $rnafold_output > $ct_file");
 	system("chmod 777 $ct_file");
 	my $tigeboucle_script = File::Spec->catfile($dirScript, 'Tigeboucle3bc.pl');
@@ -83,27 +86,27 @@ opendir DIR, $dirJob; #ouverture répertoire job
 my @dirs;
 @dirs=readdir DIR;
 closedir DIR;
-foreach $dir(@dirs) # parcours du contenu
+foreach my $dir(@dirs) # parcours du contenu
 {
 	if ($dir ne "." && $dir ne ".." && -d $dirJob.$dir) #si fichier est un répertoire
 	{
 
-		$sequence_dir = File::Spec->catdir($dirJob, $dir);
+		my $sequence_dir = File::Spec->catdir($dirJob, $dir);
 		opendir DIR, $sequence_dir; # ouverture du sous répertoire
 		my @files;
 		@files=readdir DIR;
 		closedir DIR;
-		foreach $file(@files)
+		foreach my $file(@files)
 		{
 	
 				if ($file ne "." && $file ne ".." && -d File::Spec->catdir($sequence_dir, $file)) # si le fichier est de type repertoire
 				{
 					####Traitement fichier de sortie outStemloop
-					$candidate_dir = File::Spec->catdir($sequence_dir, $file);
+					my $candidate_dir = File::Spec->catdir($sequence_dir, $file);
 					chmod 0777, $candidate_dir;
 					#system('perl /var/www/arn/scripts/image.pl '.$dirScript.' '.$dirJob.$dir."/".$file.'/');
 					my $candidate_rnafold_out = File::Spec->catfile($candidate_dir, 'outRNAFold.txt');
-					$seq_file = File::Spec->catfile($candidate_dir, 'seq.txt');
+					my $seq_file = File::Spec->catfile($candidate_dir, 'seq.txt');
 					system("$rnafold_bin -noPS < $seq_file > $candidate_rnafold_out");
 					system("chmod 777 $candidate_rnafold_out");
 
@@ -120,10 +123,15 @@ foreach $dir(@dirs) # parcours du contenu
 					my $out_Vienna = File::Spec->catfile($candidate_dir, 'outViennaTraited.txt');
 					open (TRAITED, '>', $out_Vienna) || die "$!";
 					open (INPUT, $candidate_rnafold_out) || die "$!";
+					my ($nameSeq, $dna, $Vienna);
 					while (my $line = <INPUT>) 
 					{
-						if (($line=~/^>(.*)/))  {$nameSeq = $1;}#nom sequence
-						elsif (($line=~/^[a-zA-Z]/))    {$dna= substr $line,0,-1;}#récupération de la sequence adn
+						if (($line=~/^>(.*)/)){  # nom sequence
+							$nameSeq = $1;
+						}
+						elsif (($line=~/^[a-zA-Z]/)){  # récupération de la sequence adn
+							$dna= substr $line,0,-1;
+						}
 						elsif (($line=~/(.*) /))        
 						{ 
 							$Vienna= $1;
@@ -159,7 +167,7 @@ foreach $dir(@dirs) # parcours du contenu
 						my $seqN = File::Spec->catfile($candidate_dir, 'seqWithN.txt');
 						open (seqN, '>>', $seqN) or die "Impossible d'ouvrir le fichier d'entree  : $!";
 						open (SEQUENCE, $seq_file) or die "Impossible d'ouvrir le fichier d'entree  : $!";
-						while  ($line=<SEQUENCE>)
+						while  (my $line=<SEQUENCE>)
 						{
 							if ($line=~/^>/)
 							{
