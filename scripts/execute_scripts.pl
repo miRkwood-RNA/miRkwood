@@ -1,10 +1,11 @@
 #!/usr/bin/perl -w
 
+use warnings;
+use strict;
+
 use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
-
-use strict;
 
 my $local_dir = dirname(abs_path($0));
 my $rootdir = File::Spec->catdir($local_dir, "..");
@@ -41,17 +42,15 @@ else
 }
 
 ##Passage du multifasta -> fasta et appel au script Stemloop
-open my $ENTREE_FH, '<', File::Spec->catfile($dirJob, 'Sequences.fas') or die "Impossible d'ouvrir le fichier d'entree  : $!";
 my %tab=();
 my $nameSeq;
+open my $ENTREE_FH, '<', File::Spec->catfile($dirJob, 'Sequences.fas') or die "Impossible d'ouvrir le fichier d'entree  : $!";
 while  (my $line=<$ENTREE_FH>)
 {	
-	if ( grep( /^>/,$line) )
+	if ( grep {/^>/} $line )
 	{
 		$nameSeq = substr $line,0;	
-	}
-	else
-	{
+	}else{
 		$tab{$nameSeq}= $line;
 	}
 }
