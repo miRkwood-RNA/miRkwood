@@ -17,17 +17,20 @@ my $dirBlast = File::Spec->catdir( $dirScript, 'ncbi-blast-2.2.28+-src', 'c++',
 	'GCC460-Debug', 'bin' );                                  # chemin Blast
 
 ## Programs ##
+
+my $vienna_dir =
+  File::Spec->catfile( $dirScript, 'ViennaRNA-2.1.2');
 my $rnafold_bin =
-  File::Spec->catfile( $dirScript, 'ViennaRNA-1.8.5', 'Progs', 'RNAfold' );
+  File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
+my $rnalfold_bin =
+  File::Spec->catfile( $vienna_dir, 'Progs', 'RNALfold' );
+my $rnaeval_bin =
+  File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
+  my $b2ct_bin =
+  File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
+
 my $randfold_bin =
   File::Spec->catfile( $dirScript, 'randfold-2.0', 'randfold' );
-my $rnalfold_bin =
-  File::Spec->catfile( $dirScript, 'ViennaRNA-1.8.5', 'Progs', 'RNALfold' );
-my $rnaeval_bin = 'RNAeval';
-
-#  File::Spec->catfile( $dirScript, 'ViennaRNA-1.8.5', 'Progs', 'RNAeval' );
-my $b2ct_bin =
-  File::Spec->catfile( $dirScript, 'ViennaRNA-1.8.5', 'Utils', 'b2ct' );
 my $selfcontain_bin =
   File::Spec->catfile( $dirScript, 'selfcontain_unix', 'selfcontain.py' );
 my $exonerate_bin =
@@ -77,11 +80,6 @@ foreach my $name ( keys %tab ) {
 	my $sequence_dir = File::Spec->catdir( $dirJob, $name );
 	system("mkdir $sequence_dir");
 
-	## Appel de RNAfold --> Appel de RNALfold
-	#    my $rnafold_output =
-	#      File::Spec->catfile( $sequence_dir, 'fichierRNAfold.txt' );
-	#    system("$rnafold_bin -noPS < $temp_file > $rnafold_output");
-	#    system("chmod 777 $rnafold_output");
 
 	my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
 	system("$rnalfold_bin < $temp_file > $rnalfold_output");
@@ -91,20 +89,15 @@ foreach my $name ( keys %tab ) {
   #    system("$b2ct_bin < $rnalfold_output > $ct_file");
   #    system("chmod 777 $ct_file");
 
-	## Appel de TigeBoucle.pl --> RNAstemloop
-	#my $tigeboucle_script =
-	#  File::Spec->catfile( $dirScript, 'Tigeboucle3bc.pl' );
-	#system("perl $tigeboucle_script $ct_file $sequence_dir");
-	#print $TEMPFILE_FH "perl $tigeboucle_script $ct_file $sequence_dir";
-	#
+	## Appel de RNAstemloop
 	my $rnastemloop_out =
 	  File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
 
-#    my $rnastemloop_cmd = "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
-#    print "$rnastemloop_cmd\n";
-#    system($rnastemloop_cmd);
-#    unlink $temp_file;
-	system("cp Dummy-RNAstemloop.out $rnastemloop_out");
+    my $rnastemloop_cmd = "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
+    #print "$rnastemloop_cmd\n";
+    #system($rnastemloop_cmd);
+    #unlink $temp_file;
+	system("cp Dummy-RNAstemloop.out $rnastemloop_out");  # TODO: Remove this
 	process_RNAstemloop($rnastemloop_out);
 	process_tests($dirJob);
 }
@@ -117,7 +110,6 @@ sub process_RNAstemloop{
 
 	my $rnaeval_cmd = "$rnaeval_bin < $rnastemloop_out > $rnaeval_out";
 
-	#	print $rnaeval_cmd;
 	system($rnaeval_cmd);
 
 	my ( $nameSeq, $dna, $Vienna );
@@ -137,7 +129,7 @@ sub process_RNAstemloop{
 			$dna = substr $line, 0, -1;
 			$line2 = substr( <$eval>, 0, -1 );    # the sequence as well
 			if ( $dna ne $line2 ) {
-				print "Pb";
+				#This should not happen.
 			}
 		}
 		elsif ( ( $line =~ /(.*)/ ) ) {
@@ -157,7 +149,7 @@ sub process_RNAstemloop{
 			  )
 			{
 				if ( $Vienna ne $structure ) {
-					
+					#This should not happen.
 				}
 				{
 					my $candidate_dir =
@@ -229,7 +221,6 @@ sub process_tests{
 					my $candidate_ct_file =
 					  File::Spec->catfile( $candidate_dir, 'outB2ct.ct' );
 					my $b2ct_cmd = "$b2ct_bin < $candidate_rnafold_out > $candidate_ct_file";
-					print "$b2ct_cmd\n";
 				    system($b2ct_cmd);
 					system("chmod 777 $candidate_ct_file");
 
