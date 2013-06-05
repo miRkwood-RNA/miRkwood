@@ -258,11 +258,7 @@ sub process_tests {
 					system("chmod 777 $out_Vienna");
 					####calcul MFEI (appel script energie.pl)
 					if ( $mfei eq "mfeiChecked" ) {
-						my $energie_script =
-						  File::Spec->catfile( $dirScript, 'energie.pl' );
-						system(
-"perl $energie_script $candidate_ct_file $sequence_dir $file"
-						);
+						test_mfei( $candidate_ct_file, $sequence_dir, $file );
 					}
 					####calcul p-value randfold
 					if ( $randfold eq "randfoldChecked" ) {
@@ -314,3 +310,12 @@ sub process_tests {
 	}
 	return 0;
 }
+
+sub test_mfei {
+	#TODO: We do not need these three parameters
+	#      but must restructure energie.pl first
+	my ( $candidate_ct_file, $sequence_dir, $file ) = @_;
+	my $energie_script = File::Spec->catfile( $dirScript, 'energie.pl' );
+	system("perl $energie_script $candidate_ct_file $sequence_dir $file");
+}
+
