@@ -268,32 +268,10 @@ sub process_tests {
 					if ( $SC eq "SCChecked" ) {
 						test_selfcontain( $candidate_dir, $seq_file );
 					}
-					####### creation sequence boucle terminale masquee avec des N pour chaque sequence (repertoire ) et resultat alignement mirBASE
+					####### creation sequence boucle terminale masquee avec des N pour
+					####### chaque sequence (repertoire ) et resultat alignement mirBASE
 					if ( $align eq "alignChecked" ) {
-						my $seqN =
-						  File::Spec->catfile( $candidate_dir, 'seqWithN.txt' );
-						open( my $SEQN_FH, '>>', $seqN )
-						  or die
-						  "Impossible d'ouvrir le fichier d'entree  : $!";
-						open( my $SEQUENCE_FH, '<', $seq_file )
-						  or die
-						  "Impossible d'ouvrir le fichier d'entree  : $!";
-						while ( my $line = <$SEQUENCE_FH> ) {
-							if ( $line =~ /^>/ ) {
-								print $SEQN_FH $line;
-							}
-							else {
-								$line =~ s/U/T/g;
-								print $SEQN_FH $line;
-							}
-						}
-						close $SEQN_FH;
-						close $SEQUENCE_FH;
-						my $exonerate_out = File::Spec->catfile( $candidate_dir,
-							'alignement.txt' );
-						system(
-"$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out"
-						);
+						test_alignment( $candidate_dir, $seq_file );
 					}
 				}
 			}
@@ -323,4 +301,28 @@ sub test_selfcontain {
 	  File::Spec->catfile( $candidate_dir, 'selfContain.txt' );
 	system("python $selfcontain_bin -i $seq_file -n 100  > $selfcontain_out");
 	system("chmod 777 $selfcontain_out");
+}
+
+sub test_alignment {
+	my ( $candidate_dir, $seq_file ) = @_;
+	my $seqN = File::Spec->catfile( $candidate_dir, 'seqWithN.txt' );
+	open( my $SEQN_FH, '>>', $seqN )
+	  or die "Impossible d'ouvrir le fichier d'entree  : $!";
+	open( my $SEQUENCE_FH, '<', $seq_file )
+	  or die "Impossible d'ouvrir le fichier d'entree  : $!";
+	while ( my $line = <$SEQUENCE_FH> ) {
+		if ( $line =~ /^>/ ) {
+			print $SEQN_FH $line;
+		}
+		else {
+			$line =~ s/U/T/g;
+			print $SEQN_FH $line;
+		}
+	}
+	close $SEQN_FH;
+	close $SEQUENCE_FH;
+	my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
+	system(
+"$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out"
+	);
 }
