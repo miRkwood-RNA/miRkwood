@@ -18,16 +18,11 @@ my $dirBlast = File::Spec->catdir( $dirScript, 'ncbi-blast-2.2.28+-src', 'c++',
 
 ## Programs ##
 
-my $vienna_dir =
-  File::Spec->catfile( $dirScript, 'ViennaRNA-2.1.2');
-my $rnafold_bin =
-  File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
-my $rnalfold_bin =
-  File::Spec->catfile( $vienna_dir, 'Progs', 'RNALfold' );
-my $rnaeval_bin =
-  File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
-  my $b2ct_bin =
-  File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
+my $vienna_dir   = File::Spec->catfile( $dirScript,  'ViennaRNA-2.1.2' );
+my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
+my $rnalfold_bin = File::Spec->catfile( $vienna_dir, 'Progs', 'RNALfold' );
+my $rnaeval_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
+my $b2ct_bin     = File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
 
 my $randfold_bin =
   File::Spec->catfile( $dirScript, 'randfold-2.0', 'randfold' );
@@ -80,7 +75,6 @@ foreach my $name ( keys %tab ) {
 	my $sequence_dir = File::Spec->catdir( $dirJob, $name );
 	system("mkdir $sequence_dir");
 
-
 	my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
 	system("$rnalfold_bin < $temp_file > $rnalfold_output");
 
@@ -93,16 +87,18 @@ foreach my $name ( keys %tab ) {
 	my $rnastemloop_out =
 	  File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
 
-    my $rnastemloop_cmd = "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
-    #print "$rnastemloop_cmd\n";
-    #system($rnastemloop_cmd);
-    #unlink $temp_file;
-	system("cp Dummy-RNAstemloop.out $rnastemloop_out");  # TODO: Remove this
+	my $rnastemloop_cmd =
+	  "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
+
+	#print "$rnastemloop_cmd\n";
+	#system($rnastemloop_cmd);
+	#unlink $temp_file;
+	system("cp Dummy-RNAstemloop.out $rnastemloop_out");    # TODO: Remove this
 	process_RNAstemloop($rnastemloop_out);
 	process_tests($dirJob);
 }
 
-sub process_RNAstemloop{
+sub process_RNAstemloop {
 	my ($rnastemloop_out) = @_;
 	my $sequence_dir = dirname($rnastemloop_out);
 
@@ -129,6 +125,7 @@ sub process_RNAstemloop{
 			$dna = substr $line, 0, -1;
 			$line2 = substr( <$eval>, 0, -1 );    # the sequence as well
 			if ( $dna ne $line2 ) {
+
 				#This should not happen.
 			}
 		}
@@ -149,6 +146,7 @@ sub process_RNAstemloop{
 			  )
 			{
 				if ( $Vienna ne $structure ) {
+
 					#This should not happen.
 				}
 				{
@@ -177,10 +175,10 @@ sub process_RNAstemloop{
 
 	close($stem);
 	close($eval);
-    return 0;
+	return 0;
 }
 
-sub process_tests{
+sub process_tests {
 	my $dirJob = shift;
 	##Traitement fichier de sortie outStemloop
 	opendir DIR, $dirJob;    #ouverture répertoire job
@@ -220,8 +218,9 @@ sub process_tests{
 					####conversion en format CT
 					my $candidate_ct_file =
 					  File::Spec->catfile( $candidate_dir, 'outB2ct.ct' );
-					my $b2ct_cmd = "$b2ct_bin < $candidate_rnafold_out > $candidate_ct_file";
-				    system($b2ct_cmd);
+					my $b2ct_cmd =
+					  "$b2ct_bin < $candidate_rnafold_out > $candidate_ct_file";
+					system($b2ct_cmd);
 					system("chmod 777 $candidate_ct_file");
 
 #system('./test.sh '.$dirScript.' '.$dirJob.$dir.'/'.$file.'/ '.' > trash 2> errors');
