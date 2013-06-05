@@ -266,13 +266,7 @@ sub process_tests {
 					}
 					####calcul self-contain
 					if ( $SC eq "SCChecked" ) {
-						my $selfcontain_out =
-						  File::Spec->catfile( $candidate_dir,
-							'selfContain.txt' );
-						system(
-"python $selfcontain_bin -i $seq_file -n 100  > $selfcontain_out"
-						);
-						system("chmod 777 selfcontain_out");
+						test_selfcontain( $candidate_dir, $seq_file );
 					}
 					####### creation sequence boucle terminale masquee avec des N pour chaque sequence (repertoire ) et resultat alignement mirBASE
 					if ( $align eq "alignChecked" ) {
@@ -321,4 +315,12 @@ sub test_randfold {
 	my $randfold_out = File::Spec->catfile( $candidate_dir, 'pvalue.txt' );
 	system("$randfold_bin -d $seq_file 7 > $randfold_out");
 	system("chmod 777 $randfold_out");
+}
+
+sub test_selfcontain {
+	my ( $candidate_dir, $seq_file ) = @_;
+	my $selfcontain_out =
+	  File::Spec->catfile( $candidate_dir, 'selfContain.txt' );
+	system("python $selfcontain_bin -i $seq_file -n 100  > $selfcontain_out");
+	system("chmod 777 $selfcontain_out");
 }
