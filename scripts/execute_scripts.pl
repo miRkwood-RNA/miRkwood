@@ -262,10 +262,7 @@ sub process_tests {
 					}
 					####calcul p-value randfold
 					if ( $randfold eq "randfoldChecked" ) {
-						my $randfold_out =
-						  File::Spec->catfile( $candidate_dir, 'pvalue.txt' );
-						system("$randfold_bin -d $seq_file 7 > $randfold_out");
-						system("chmod 777 $randfold_out");
+						test_randfold( $candidate_dir, $seq_file );
 					}
 					####calcul self-contain
 					if ( $SC eq "SCChecked" ) {
@@ -319,3 +316,9 @@ sub test_mfei {
 	system("perl $energie_script $candidate_ct_file $sequence_dir $file");
 }
 
+sub test_randfold {
+	my ( $candidate_dir, $seq_file ) = @_;
+	my $randfold_out = File::Spec->catfile( $candidate_dir, 'pvalue.txt' );
+	system("$randfold_bin -d $seq_file 7 > $randfold_out");
+	system("chmod 777 $randfold_out");
+}
