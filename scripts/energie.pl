@@ -21,7 +21,13 @@ my ( $nameSeq, $mfe, $longueur );
 while ( my $line = <$FOut> ) {
 	my @variable = split( '\s+', $line );
 
-	if ( $variable[2] =~ /^ENERGY/ ) {
+	if (
+		$variable[2] =~ m{
+		                  ^              # Begin of line
+		                  ENERGY         # ENERGY
+		                }smx
+	  )
+	{
 		$nameSeq = substr $variable[5],
 		  0;    # Récupération du nom de la séquence
 		$mfe      = substr $variable[4], 0;    # Récupération du MFE
@@ -29,7 +35,11 @@ while ( my $line = <$FOut> ) {
 		$cg       = 0;
 	}
 	else {                                     # Not the ENERGY line
-		if ( $variable[2] =~ /[CGcg]/ )        # on rencontre un 'g' ou un 'c'
+		if (
+			$variable[2] =~ m{
+			                  [CG]     # G or C
+		                    }smxi
+		  )
 		{
 			$cg++;
 		}
