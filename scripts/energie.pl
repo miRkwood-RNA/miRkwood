@@ -14,7 +14,7 @@ use File::Spec;
 my ( $CT, $dirData, $seq ) = @ARGV;
 
 # ouverture du fichier de sortie de Unafold
-open( my $FOut, '<', $CT ) || die "Problème à l\'ouverture : $!";
+open( my $FOut, '<', $CT ) || die "Unable to open: $!";
 
 my $cg = 0;
 my ( $nameSeq, $mfe, $longueur );
@@ -41,14 +41,14 @@ while ( my $line = <$FOut> ) {
 		{
 			my $MFEI_output =
 			  File::Spec->catfile( $dirData, $seq, 'outMFEI.txt' );
-            my $num = ( $mfe / $longueur ) * 100;
-            my $other = $num / ( ( $cg / $longueur ) * 100 );
-			open( my $RES, '>>', $MFEI_output );
+			my $num = ( $mfe / $longueur ) * 100;
+			my $other = $num / ( ( $cg / $longueur ) * 100 );
+			open( my $RES, '>>', $MFEI_output ) || die "Unable to open: $!";
 			print $RES $nameSeq . "\t" . $other . "\t" . $mfe . "\t" . $num;
-			close $RES || die "Problème à la fermeture : $!";
-	        system( 'chmod 777 ' . $MFEI_output );
+			close $RES || die "Unable to close: $!";
+			system( 'chmod 777 ' . $MFEI_output );
 		}
 
 	}    # /Else− not ENERGY line
 }    # /While
-close $FOut || die "Problème à la fermeture : $!";
+close $FOut || die "Unable to close: $!";
