@@ -322,7 +322,7 @@ sub test_alignment {
 			print $SEQN_FH $line;
 		}
 		else {
-			$line =~ s/U/T/g;
+			$line =~ s/U/T/gi;
 			print $SEQN_FH $line;
 		}
 	}
