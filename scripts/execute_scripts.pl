@@ -97,9 +97,8 @@ foreach my $name ( keys %tab ) {
 	  "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
 
 	#print "$rnastemloop_cmd\n";
-	#system($rnastemloop_cmd);
-	#unlink $temp_file;
-	system("cp Dummy-RNAstemloop.out $rnastemloop_out");    # TODO: Remove this
+	system($rnastemloop_cmd);
+	unlink $temp_file;
 	process_RNAstemloop($rnastemloop_out);
 	process_tests($dirJob);
 }
@@ -291,7 +290,9 @@ sub test_mfei {
 	#      but must restructure energie.pl first
 	my ( $candidate_ct_file, $sequence_dir, $file ) = @_;
 	my $energie_script = File::Spec->catfile( $dirScript, 'energie.pl' );
-	system("perl $energie_script $candidate_ct_file $sequence_dir $file");
+	my $energie_cmd = "perl $energie_script $candidate_ct_file $sequence_dir $file";
+	#print "$energie_cmd\n";
+	system($energie_cmd);
 }
 
 sub test_randfold {
@@ -328,7 +329,7 @@ sub test_alignment {
 	close $SEQN_FH;
 	close $SEQUENCE_FH;
 	my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
-	system(
-"$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out"
-	);
+	my $exonerate_cmd = "$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out";
+	#print $exonerate_cmd;
+	system($exonerate_cmd);
 }
