@@ -29,7 +29,7 @@ while ( my $line = <$FOut> ) {
 		$cg       = 0;
 	}
 	else {                                     # Not the ENERGY line
-		if ( $variable[2] =~ /[CG]/ )          # on rencontre un 'g' ou un 'c'
+		if ( $variable[2] =~ /[CGcg]/ )        # on rencontre un 'g' ou un 'c'
 		{
 			$cg++;
 		}
