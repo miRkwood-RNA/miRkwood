@@ -42,7 +42,7 @@ my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 
 
 ## Code ##
-
+my $DEBUG = 0;
 my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @ARGV;
 
 if ( $check eq "checked" ) {
@@ -82,7 +82,9 @@ foreach my $name ( keys %tab ) {
 	system("mkdir $sequence_dir");
 
 	my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
-	system("$rnalfold_bin < $temp_file > $rnalfold_output");
+	my $rnalfold_cmd = "$rnalfold_bin < $temp_file > $rnalfold_output";
+	if ($DEBUG){ print "$rnalfold_cmd\n"};
+	system($rnalfold_cmd);
 
 	####conversion en format CT
   #    my $ct_file = File::Spec->catfile( $dirJob, $name, 'fichierOutB2ct.ct' );
@@ -95,8 +97,7 @@ foreach my $name ( keys %tab ) {
 
 	my $rnastemloop_cmd =
 	  "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
-
-	#print "$rnastemloop_cmd\n";
+    if ($DEBUG){ print "$rnastemloop_cmd\n"};
 	system($rnastemloop_cmd);
 	unlink $temp_file;
 	process_RNAstemloop($rnastemloop_out);
@@ -110,7 +111,7 @@ sub process_RNAstemloop {
 	my $rnaeval_out = File::Spec->catfile( $sequence_dir, 'rnaeval.out' );
 
 	my $rnaeval_cmd = "$rnaeval_bin < $rnastemloop_out > $rnaeval_out";
-
+    if ($DEBUG){ print "$rnaeval_cmd\n"};
 	system($rnaeval_cmd);
 
 	my ( $nameSeq, $dna, $Vienna );
