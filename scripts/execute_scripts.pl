@@ -6,6 +6,7 @@ use strict;
 use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
+use PipelineMiRNA::Utils;
 
 my $local_dir = dirname( abs_path($0) );
 my $rootdir = File::Spec->catdir( $local_dir, ".." );
@@ -55,19 +56,11 @@ else {
 }
 
 ##Passage du multifasta -> fasta et appel au script Stemloop
-my %tab = ();
-my $nameSeq;
 open my $ENTREE_FH, '<', File::Spec->catfile( $dirJob, 'Sequences.fas' )
   or die "Impossible d'ouvrir le fichier d'entree  : $!";
-while ( my $line = <$ENTREE_FH> ) {
-    if ( grep { /^>/ } $line ) {
-        $nameSeq = substr $line, 0;
-    }
-    else {
-        $tab{$nameSeq} = $line;
-    }
-}
+my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
 close $ENTREE_FH;
+
 foreach my $name ( keys %tab ) {
     my $temp_file = File::Spec->catfile( $dirJob, 'tempFile.txt' );
     open( my $TEMPFILE_FH, '>', $temp_file )
@@ -77,7 +70,7 @@ foreach my $name ( keys %tab ) {
     my $name = substr $name, 1, -1;
 
     my $sequence_dir = File::Spec->catdir( $dirJob, $name );
-    system("mkdir $sequence_dir");
+    mkdir $sequence_dir;
 
     my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
     my $rnalfold_cmd = "$rnalfold_bin < $temp_file > $rnalfold_output";
