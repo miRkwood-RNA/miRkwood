@@ -11,6 +11,7 @@ sub parse_multi_fasta {
         if ( grep { /^>/ } $line ) {
             chomp $line;
             $nameSeq = (split(' ', $line))[0];
+            $nameSeq =~ s/\|/-/g;
             $tab{$nameSeq} = '';
         }
         else {
