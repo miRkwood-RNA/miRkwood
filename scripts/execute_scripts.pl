@@ -8,6 +8,13 @@ use File::Basename;
 use Cwd qw( abs_path );
 use PipelineMiRNA::Utils;
 
+use Log::Message::Simple qw[msg error debug
+  carp croak cluck confess];
+use Log::Message::Simple qw[msg error debug
+  carp croak cluck confess];
+
+my $debug = 0;
+
 my $local_dir = dirname( abs_path($0) );
 my $rootdir = File::Spec->catdir( $local_dir, ".." );
 
@@ -33,7 +40,7 @@ my $varna_bin        = File::Spec->catfile( $dirProgs, 'VARNAv3-9.jar' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 
 my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
-    'GCC460-Debug', 'bin' );    # chemin Blast
+	'GCC460-Debug', 'bin' );    # chemin Blast
 
 ## Data ##
 
