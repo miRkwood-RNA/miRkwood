@@ -48,58 +48,68 @@ my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
 my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 
 ## Code ##
-my $DEBUG = 0;
-my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @ARGV;
 
-if ( $check eq "checked" ) {
+my ( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant ) = @ARGV;
 
-    #appel script filterCDS.pl qui permet de filter les CDS
-    my $filter_script = File::Spec->catfile( $dirScript, 'filterCDS.pl' );
-    system("perl $filter_script $dirBlast $dirData $dirJob $plant");
-}
-else {
-    system(
-        'mv ' . $dirJob . 'sequenceUpload.fas ' . $dirJob . 'Sequences.fas' );
-}
+main_entry( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant );
 
-##Passage du multifasta -> fasta et appel au script Stemloop
-open my $ENTREE_FH, '<', File::Spec->catfile( $dirJob, 'Sequences.fas' )
-  or die "Impossible d'ouvrir le fichier d'entree  : $!";
-my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
-close $ENTREE_FH;
+sub main_entry {
+	my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
 
-foreach my $name ( keys %tab ) {
-    my $temp_file = File::Spec->catfile( $dirJob, 'tempFile.txt' );
-    open( my $TEMPFILE_FH, '>', $temp_file )
-      or die "Impossible d'ouvrir le fichier d'entree  : $!";
-    system("chmod 777 $temp_file");
-    print $TEMPFILE_FH $name . $tab{$name};
-    my $name = substr $name, 1, -1;
+	  if ( $check eq "checked" ) {
 
-    my $sequence_dir = File::Spec->catdir( $dirJob, $name );
-    mkdir $sequence_dir;
+		#appel script filterCDS.pl qui permet de filter les CDS
+		my $filter_script = File::Spec->catfile( $dirScript, 'filterCDS.pl' );
+		my $filter_cmd =
+		  "perl $filter_script $dirBlast $dirData $dirJob $plant";
+		system($filter_cmd);
+	}
+	else {
+		system( 'mv '
+			  . $dirJob
+			  . 'sequenceUpload.fas '
+			  . $dirJob
+			  . 'Sequences.fas' );
+	}
 
-    my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
-    my $rnalfold_cmd = "$rnalfold_bin < $temp_file > $rnalfold_output";
-    if ($DEBUG) { print "$rnalfold_cmd\n" }
-    system($rnalfold_cmd);
+    ##Passage du multifasta -> fasta et appel au script Stemloop
+	open my $ENTREE_FH, '<', File::Spec->catfile( $dirJob, 'Sequences.fas' )
+	  or die "Impossible d'ouvrir le fichier d'entree  : $!";
+	my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
+	close $ENTREE_FH;
 
-    ####conversion en format CT
+	foreach my $name ( keys %tab ) {
+
+		my $temp_file = File::Spec->catfile( $dirJob, 'tempFile.txt' );
+		open( my $TEMPFILE_FH, '>', $temp_file )
+		  or die "Impossible d'ouvrir le fichier d'entree  : $!";
+		system("chmod 777 $temp_file");
+		print $TEMPFILE_FH "$name\n$tab{$name}";
+		my $name = substr $name, 1;
+		my $sequence_dir = File::Spec->catdir( $dirJob, $name );
+		mkdir $sequence_dir;
+
+		my $rnalfold_output =
+		  File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
+		my $rnalfold_cmd = "$rnalfold_bin < $temp_file > $rnalfold_output";
+		system($rnalfold_cmd);
+
+		####conversion en format CT
   #    my $ct_file = File::Spec->catfile( $dirJob, $name, 'fichierOutB2ct.ct' );
   #    system("$b2ct_bin < $rnalfold_output > $ct_file");
   #    system("chmod 777 $ct_file");
 
-    ## Appel de RNAstemloop
-    my $rnastemloop_out =
-      File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
+		## Appel de RNAstemloop
+		my $rnastemloop_out =
+		  File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
 
-    my $rnastemloop_cmd =
-      "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
-    if ($DEBUG) { print "$rnastemloop_cmd\n" }
-    system($rnastemloop_cmd);
-    unlink $temp_file;
-    process_RNAstemloop($rnastemloop_out);
-    process_tests($dirJob);
+		my $rnastemloop_cmd =
+		  "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
+		system($rnastemloop_cmd);
+		unlink $temp_file;
+		process_RNAstemloop( $rnastemloop_out, $sequence_dir );
+	}
+	process_tests($dirJob, $mfei, $randfold, $SC, $align);
 }
 
 sub process_RNAstemloop {
