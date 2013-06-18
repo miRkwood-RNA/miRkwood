@@ -79,4 +79,18 @@ sub run_selfcontain {
     return ( -e $output );
 }
 
+sub run_exonerate {
+    my ( $input, $output ) = @_;
+    my $exonerate_cmd =
+        "$exonerate_bin " . "-E "
+      . "--model affine:bestfit $mirbase_file $input "
+      . "-d $matrix_file "
+      . "--bestn 1 "
+      . "--score -3 "
+      . "-e -1 -o -1 "
+      . "> $output ";
+    system($exonerate_cmd);
+    return ( -e $output );
+}
+
 1;

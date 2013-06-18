@@ -29,8 +29,6 @@ my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
 
-my $exonerate_bin =
-  File::Spec->catfile( $dirProgs, 'exonerate-2.2.0-i386', 'bin', 'exonerate' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 
 my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
@@ -332,9 +330,6 @@ sub test_alignment {
     close $SEQN_FH;
     close $SEQUENCE_FH;
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
-    my $exonerate_cmd =
-"$exonerate_bin -E --model affine:bestfit $mirbase_file $seqN -d $matrix_file --bestn 1 --score -3 -e -1 -o -1 > $exonerate_out";
-
-    #print $exonerate_cmd;
-    system($exonerate_cmd);
+    PipelineMiRNA::Programs::run_exonerate($seqN, $exonerate_out)
+      or die("Problem when running Exonerate");
 }
