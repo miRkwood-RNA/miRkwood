@@ -28,7 +28,6 @@ my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
 
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
-my $rnaeval_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
 
 my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
 my $selfcontain_bin =
@@ -117,8 +116,8 @@ sub process_RNAstemloop {
     my $rnaeval_out =
       File::Spec->catfile( $current_sequence_dir, 'rnaeval.out' );
 
-    my $rnaeval_cmd = "$rnaeval_bin < $rnastemloop_out > $rnaeval_out";
-    system($rnaeval_cmd);
+    PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
+      or die("Problem when running RNAeval");
 
     my ( $nameSeq, $dna, $Vienna );
     open( my $stem, '<', $rnastemloop_out ) or die $!;

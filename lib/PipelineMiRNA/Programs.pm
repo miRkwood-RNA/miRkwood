@@ -57,3 +57,11 @@ sub run_rnalfold {
     return ( -e $output );
 }
 
+sub run_rnaeval{
+    my ( $input, $output ) = @_;
+    my $rnaeval_cmd = "$rnaeval_bin < $input > $output";
+    system($rnaeval_cmd);
+    return ( -e $output );
+}
+
+1;
