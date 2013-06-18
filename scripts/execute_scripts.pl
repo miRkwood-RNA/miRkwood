@@ -29,7 +29,6 @@ my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
 
-my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
 my $selfcontain_bin =
   File::Spec->catfile( $dirProgs, 'selfcontain_unix', 'selfcontain.py' );
 my $exonerate_bin =
@@ -302,8 +301,9 @@ sub test_mfei {
 sub test_randfold {
     my ( $candidate_dir, $seq_file ) = @_;
     my $randfold_out = File::Spec->catfile( $candidate_dir, 'pvalue.txt' );
-    system("$randfold_bin -d $seq_file 7 > $randfold_out");
-    system("chmod 777 $randfold_out");
+    PipelineMiRNA::Programs::run_randfold($seq_file, $randfold_out)
+      or die("Problem when running Randfold");
+    chmod 777, $randfold_out;
 }
 
 sub test_selfcontain {

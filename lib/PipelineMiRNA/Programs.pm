@@ -64,4 +64,11 @@ sub run_rnaeval{
     return ( -e $output );
 }
 
+sub run_randfold {
+    my ( $input, $output ) = @_;
+    my $randfold_cmd = "$randfold_bin -d $input 7 > $output";
+    system($randfold_cmd);
+    return ( -e $output );
+}
+
 1;
