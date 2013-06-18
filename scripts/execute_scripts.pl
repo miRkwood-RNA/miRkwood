@@ -29,8 +29,6 @@ my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
 
-my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
-
 my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
     'GCC460-Debug', 'bin' );    # chemin Blast
 
@@ -94,10 +92,8 @@ sub main_entry {
         ## Appel de RNAstemloop
         my $rnastemloop_out =
           File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
-
-        my $rnastemloop_cmd =
-          "$rnastemploop_bin -i $rnalfold_output -o $rnastemloop_out";
-        system($rnastemloop_cmd);
+        PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output, $rnastemloop_out )
+          or die("Problem when running RNAstemloop");
         unlink $temp_file;
         process_RNAstemloop($rnastemloop_out);
     }

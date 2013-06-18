@@ -93,4 +93,11 @@ sub run_exonerate {
     return ( -e $output );
 }
 
+sub run_rnastemloop {
+    my ( $input, $output ) = @_;
+    my $rnastemloop_cmd = "$rnastemploop_bin -i $input -o $output";
+    system($rnastemloop_cmd);
+    return ( -e $output );
+}
+
 1;
