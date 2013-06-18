@@ -50,3 +50,10 @@ sub convert_to_ct {
     return (-e $ct_file);
 }
 
+sub run_rnalfold {
+    my ( $input, $output ) = @_;
+    my $rnalfold_cmd = "$rnalfold_bin < $input > $output";
+    system($rnalfold_cmd);
+    return ( -e $output );
+}
+

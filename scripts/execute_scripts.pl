@@ -28,7 +28,6 @@ my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
 
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
-my $rnalfold_bin = File::Spec->catfile( $vienna_dir, 'Progs', 'RNALfold' );
 my $rnaeval_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
 
 my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
@@ -90,8 +89,8 @@ sub main_entry {
 
         my $rnalfold_output =
           File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
-        my $rnalfold_cmd = "$rnalfold_bin < $temp_file > $rnalfold_output";
-        system($rnalfold_cmd);
+        PipelineMiRNA::Programs::run_rnalfold( $temp_file, $rnalfold_output )
+          or die("Problem when running RNALfold");
 
         ####conversion en format CT
   #    my $ct_file = File::Spec->catfile( $dirJob, $name, 'fichierOutB2ct.ct' );
