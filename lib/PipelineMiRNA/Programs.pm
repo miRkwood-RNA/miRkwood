@@ -31,3 +31,22 @@ my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
 my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
 my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 
+sub run_varna {
+    # Run VARNA on the given CT file
+    my ($candidate_ct_file, $varna_image) = @_;
+    my $varna_cmd =
+"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
+    system($varna_cmd);
+    return ( -e $varna_image );
+}
+
+sub convert_to_ct {
+
+    # Convert to CT format using b2ct
+    my ( $rnafold_out, $ct_file ) = @_;
+    my $b2ct_cmd = "$b2ct_bin < $rnafold_out > $ct_file";
+    system($b2ct_cmd);
+    chmod 0777, $ct_file;
+    return (-e $ct_file);
+}
+

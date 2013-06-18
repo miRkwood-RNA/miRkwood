@@ -7,6 +7,7 @@ use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
 use PipelineMiRNA::Utils;
+use PipelineMiRNA::Programs;
 
 use Log::Message::Simple qw[msg error debug
   carp croak cluck confess];
@@ -29,14 +30,12 @@ my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
 my $rnalfold_bin = File::Spec->catfile( $vienna_dir, 'Progs', 'RNALfold' );
 my $rnaeval_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
-my $b2ct_bin     = File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
 
 my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
 my $selfcontain_bin =
   File::Spec->catfile( $dirProgs, 'selfcontain_unix', 'selfcontain.py' );
 my $exonerate_bin =
   File::Spec->catfile( $dirProgs, 'exonerate-2.2.0-i386', 'bin', 'exonerate' );
-my $varna_bin        = File::Spec->catfile( $dirProgs, 'VARNAv3-9.jar' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 
 my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
@@ -233,18 +232,13 @@ sub process_tests {
                     ####conversion en format CT
                     my $candidate_ct_file =
                       File::Spec->catfile( $candidate_dir, 'outB2ct.ct' );
-                    my $b2ct_cmd =
-                      "$b2ct_bin < $candidate_rnafold_out > $candidate_ct_file";
+                    PipelineMiRNA::Programs::convert_to_ct($candidate_rnafold_out, $candidate_ct_file)
+                        or die("Problem when converting to CT format");
 
-                    system($b2ct_cmd);
-                    system("chmod 777 $candidate_ct_file");
-
-#system('./test.sh '.$dirScript.' '.$dirJob.$dir.'/'.$file.'/ '.' > trash 2> errors');
                     my $varna_image =
                       File::Spec->catfile( $candidate_dir, 'image.png' );
-                    my $varna_cmd =
-"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
-                    system($varna_cmd);
+                    PipelineMiRNA::Programs::run_varna($candidate_ct_file, $varna_image)
+                        or die("Problem suring image generation using VARNA");
 
                     ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
                     my $out_Vienna = File::Spec->catfile( $candidate_dir,
