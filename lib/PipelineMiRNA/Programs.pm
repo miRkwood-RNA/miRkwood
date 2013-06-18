@@ -3,6 +3,7 @@ package PipelineMiRNA::Programs;
 use strict;
 use warnings;
 
+use File::Spec;
 use PipelineMiRNA::Energie;
 
 my $rootdir = '/home/jeanfred/Tuile/pipelineMiRNA-web/';
@@ -24,7 +25,7 @@ my $varna_bin        = File::Spec->catfile( $dirProgs, 'VARNAv3-9.jar' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 
 my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
-                                   'GCC460-Debug', 'bin' );    # chemin Blast
+    'GCC460-Debug', 'bin' );    # chemin Blast
 
 ## Data ##
 my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
@@ -32,8 +33,9 @@ my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
 my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 
 sub run_varna {
+
     # Run VARNA on the given CT file
-    my ($candidate_ct_file, $varna_image) = @_;
+    my ( $candidate_ct_file, $varna_image ) = @_;
     my $varna_cmd =
 "/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
     system($varna_cmd);
@@ -47,7 +49,7 @@ sub convert_to_ct {
     my $b2ct_cmd = "$b2ct_bin < $rnafold_out > $ct_file";
     system($b2ct_cmd);
     chmod 0777, $ct_file;
-    return (-e $ct_file);
+    return ( -e $ct_file );
 }
 
 sub run_rnalfold {
@@ -57,7 +59,7 @@ sub run_rnalfold {
     return ( -e $output );
 }
 
-sub run_rnaeval{
+sub run_rnaeval {
     my ( $input, $output ) = @_;
     my $rnaeval_cmd = "$rnaeval_bin < $input > $output";
     system($rnaeval_cmd);
@@ -74,7 +76,8 @@ sub run_randfold {
 sub run_selfcontain {
     my ( $input, $output ) = @_;
     my $num_contexts = 100;
-    my $selfcontain_cmd = "python $selfcontain_bin -i $input -n $num_contexts  > $output";
+    my $selfcontain_cmd =
+      "python $selfcontain_bin -i $input -n $num_contexts  > $output";
     system($selfcontain_cmd);
     return ( -e $output );
 }
