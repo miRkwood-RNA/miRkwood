@@ -29,8 +29,6 @@ my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
 
-my $selfcontain_bin =
-  File::Spec->catfile( $dirProgs, 'selfcontain_unix', 'selfcontain.py' );
 my $exonerate_bin =
   File::Spec->catfile( $dirProgs, 'exonerate-2.2.0-i386', 'bin', 'exonerate' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
@@ -310,8 +308,9 @@ sub test_selfcontain {
     my ( $candidate_dir, $seq_file ) = @_;
     my $selfcontain_out =
       File::Spec->catfile( $candidate_dir, 'selfContain.txt' );
-    system("python $selfcontain_bin -i $seq_file -n 100  > $selfcontain_out");
-    system("chmod 777 $selfcontain_out");
+    PipelineMiRNA::Programs::run_selfcontain($seq_file, $selfcontain_out)
+      or die("Problem when running Selfcontain");
+    chmod 777, $selfcontain_out;
 }
 
 sub test_alignment {

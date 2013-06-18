@@ -71,4 +71,12 @@ sub run_randfold {
     return ( -e $output );
 }
 
+sub run_selfcontain {
+    my ( $input, $output ) = @_;
+    my $num_contexts = 100;
+    my $selfcontain_cmd = "python $selfcontain_bin -i $input -n $num_contexts  > $output";
+    system($selfcontain_cmd);
+    return ( -e $output );
+}
+
 1;
