@@ -243,8 +243,7 @@ sub process_tests {
                     my $varna_image =
                       File::Spec->catfile( $candidate_dir, 'image.png' );
                     my $varna_cmd =
-"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > trash";
-
+"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
                     system($varna_cmd);
 
                     ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
