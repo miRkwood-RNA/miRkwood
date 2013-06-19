@@ -11,8 +11,8 @@ use warnings;
 use File::Spec;
 use PipelineMiRNA::Programs;
 
-my ( $dirBlast, $dirData, $dirJob, $plant ) = @ARGV;
-main( $dirBlast, $dirData, $dirJob, $plant );
+my ( $idirBlast, $idirData, $idirJob, $iplant ) = @ARGV;
+main( $idirBlast, $idirData, $idirJob, $iplant );
 
 sub main {
     my ( $dirBlast, $dirData, $dirJob, $plant ) = @_;
@@ -38,25 +38,25 @@ sub main {
     my $i        = 0;
 
 # Ouverture du fichier outBlast.TXT et construction du tableau contenant la liste des séquences issues du blast
-    open( FOut, $blast_output )
+    open( my $FOut, '<', $blast_output )
       || die "Problème à l\'ouverture : $!";
-    while ( my $line = <FOut> ) {
+    while ( my $line = <$FOut> ) {
         my @name = split( '\t', $line );
         push( @SeqNamesOUT, $name[0] );
     }
-    close FOut || die "Problème à la fermeture : $!";
+    close $FOut || die "Problème à la fermeture : $!";
 
 # Ouverture du fichier sequenceUpload.fas et construction du tableau contenant la liste des séquences issues du blast
-    open( FSeq, $uploaded_sequences )
+    open( my $FSeq, '<', $uploaded_sequences )
       || die "Problème à l\'ouverture : $!";
-    while ( my $line = <FSeq> ) {
-        if ( grep( /^>/, $line ) ) {
+    while ( my $line = <$FSeq> ) {
+        if ( grep { /^>/msx } $line ) {
             my $lineSeq = substr $line, 1, -1;
             push( @SeqNames, $lineSeq );
         }
 
     }
-    close FSeq || die "Problème à la fermeture : $!";
+    close $FSeq || die "Problème à la fermeture : $!";
 
     #Remplissage du tableau @SeqDiff avec les séquences non codantes
     foreach my $SeqName (@SeqNames) {
@@ -77,11 +77,12 @@ sub main {
     # Création du fichier FASTA filtrée des régions codantes
     my $record = 0;
     $i      = 0;
-    open( RES,  '>>', $input_sequences );
-    open( FSeq, $uploaded_sequences )
-      || die "Problème à l\'ouverture : $!";
-    while ( my $line = <FSeq> ) {
-        if ( grep( /^>/, $line ) ) {
+    open( my $RES,  '>>', $input_sequences )
+      or die "Problème à l\'ouverture : $!";
+    open( my $FSeq, '<',  $uploaded_sequences )
+      or die "Problème à l\'ouverture : $!";
+    while ( my $line = <$FSeq> ) {
+        if ( grep { /^>/msx } $line ) {
             my $lineSeq = substr $line, 1, -1;
             if ( $SeqDiff[$i] eq $lineSeq ) {
                 $record = 1;
@@ -92,10 +93,11 @@ sub main {
             }
         }
         if ( $record ) {
-            printf RES $line;
+            printf $RES $line;
         }
     }
-    close FSeq || die "Problème à la fermeture : $!";
-    close(RES);
-    system( 'chmod 777 ' . $input_sequences );
+    close $FSeq || die "Problème à la fermeture : $!";
+    close $RES  || die "Problème à la fermeture : $!";
+    chmod 777, $input_sequences;
+    return;
 }
