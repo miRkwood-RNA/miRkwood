@@ -6,11 +6,16 @@
 #                                                                    #
 ######################################################################
 
+use File::Spec;
+
 my ( $dirBlast, $dirData, $dirJob, $plant ) = @ARGV;
 main( $dirBlast, $dirData, $dirJob, $plant );
 
 sub main {
     my ( $dirBlast, $dirData, $dirJob, $plant ) = @_;
+
+    my $uploaded_sequences = File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+    my $input_sequences    = File::Spec->catfile( $dirJob, 'Sequences.fas' );
 
     system( $dirBlast
           . 'blastx -query '
@@ -22,6 +27,7 @@ sub main {
           . $dirJob
           . 'outBlast.txt' );
     system( 'chmod 777 ' . $dirJob . 'outBlast.txt' );
+
     ##Filtrage du ficher : Elimination des régions codantes###
     @SeqNamesOUT =
       ();    # tableau contenant la liste des séquences issues du Blast
@@ -39,7 +45,7 @@ sub main {
     close FOut || die "Problème à la fermeture : $!";
 
 # Ouverture du fichier sequenceUpload.fas et construction du tableau contenant la liste des séquences issues du blast
-    open( FSeq, $dirJob . 'sequenceUpload.fas' )
+    open( FSeq, $uploaded_sequences )
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <FSeq> ) {
         if ( grep( /^>/, $line ) ) {
@@ -69,8 +75,8 @@ sub main {
     # Création du fichier FASTA filtrée des régions codantes
     $record = false;
     $i      = 0;
-    open( RES,  '>>' . $dirJob . 'Sequences.fas' );
-    open( FSeq, $dirJob . 'sequenceUpload.fas' )
+    open( RES,  '>>', $input_sequences );
+    open( FSeq, $uploaded_sequences )
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <FSeq> ) {
         if ( grep( /^>/, $line ) ) {
@@ -89,5 +95,5 @@ sub main {
     }
     close FSeq || die "Problème à la fermeture : $!";
     close(RES);
-    system( 'chmod 777 ' . $dirJob . 'Sequences.fas' );
+    system( 'chmod 777 ' . $input_sequences );
 }
