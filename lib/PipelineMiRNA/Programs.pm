@@ -26,6 +26,8 @@ my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 
 my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
     'GCC460-Debug', 'bin' );    # chemin Blast
+my $blastx_bin = File::Spec->catfile( $dirBlast, 'blastx' );
+
 
 ## Data ##
 my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
@@ -100,6 +102,18 @@ sub run_rnastemloop {
     my ( $input, $output ) = @_;
     my $rnastemloop_cmd = "$rnastemploop_bin -i $input -o $output";
     system($rnastemloop_cmd);
+    return ( -e $output );
+}
+
+sub run_blast {
+    my ( $query, $database, $blastx_options, $output ) = @_;
+    my $blastx_cmd =
+        "$blastx_bin "
+      . "-query $query "
+      . "-db $database "
+      . "$blastx_options "
+      . "-out $output";
+    system($blastx_cmd);
     return ( -e $output );
 }
 

@@ -7,6 +7,7 @@
 ######################################################################
 
 use File::Spec;
+use PipelineMiRNA::Programs;
 
 my ( $dirBlast, $dirData, $dirJob, $plant ) = @ARGV;
 main( $dirBlast, $dirData, $dirJob, $plant );
@@ -17,16 +18,15 @@ sub main {
     my $uploaded_sequences = File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
     my $input_sequences    = File::Spec->catfile( $dirJob, 'Sequences.fas' );
 
-    system( $dirBlast
-          . 'blastx -query '
-          . $dirJob
-          . 'sequenceUpload.fas -db '
-          . $dirData
-          . $plant
-          . '.fas -outfmt 6 -max_target_seqs 1 -evalue 1E-5 -out '
-          . $dirJob
-          . 'outBlast.txt' );
-    system( 'chmod 777 ' . $dirJob . 'outBlast.txt' );
+    my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
+    my $blast_output = File::Spec->catfile( $dirJob, 'outBlast.txt' );
+    my $blastx_options = "-outfmt 6 -max_target_seqs 1 -evalue 1E-5";
+    PipelineMiRNA::Programs::run_blast($uploaded_sequences,
+                                       $blast_database,
+                                       $blastx_options,
+                                       $blast_output)
+      or die("Problem when running Blastx");
+    chmod 777, $blast_output;
 
     ##Filtrage du ficher : Elimination des régions codantes###
     @SeqNamesOUT =
@@ -36,7 +36,7 @@ sub main {
     $i        = 0;
 
 # Ouverture du fichier outBlast.TXT et construction du tableau contenant la liste des séquences issues du blast
-    open( FOut, $dirJob . 'outBlast.txt' )
+    open( FOut, $blast_output )
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <FOut> ) {
         my @name = split( '\t', $line );
