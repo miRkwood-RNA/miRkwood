@@ -1,2 +1,2 @@
 severity = brutal
-exclude = Miscellanea::RequireRcsKeywords Modules::RequireVersionVar ValuesAndExpressions::ProhibitMagicNumbers CodeLayout::ProhibitParensWithBuiltins NamingConventions::Capitalization
+exclude = Miscellanea::RequireRcsKeywords Modules::RequireVersionVar ValuesAndExpressions::ProhibitMagicNumbers CodeLayout::ProhibitParensWithBuiltins NamingConventions::Capitalization ErrorHandling::RequireCarping Variables::ProhibitPunctuationVars
