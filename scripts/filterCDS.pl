@@ -22,12 +22,12 @@ sub main {
 
     my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
     my $blast_output = File::Spec->catfile( $dirJob, 'outBlast.txt' );
-    my $blastx_options = "-outfmt 6 -max_target_seqs 1 -evalue 1E-5";
+    my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
     PipelineMiRNA::Programs::run_blast($uploaded_sequences,
                                        $blast_database,
                                        $blastx_options,
                                        $blast_output)
-      or die("Problem when running Blastx");
+      or die('Problem when running Blastx');
     chmod 777, $blast_output;
 
     ##Filtrage du ficher : Elimination des régions codantes###
@@ -37,67 +37,33 @@ sub main {
     my @SeqDiff  = ();    # tableau contenant la liste des séquences non codantes
     my $i        = 0;
 
-# Ouverture du fichier outBlast.TXT et construction du tableau contenant la liste des séquences issues du blast
+    my %blast_seqs;
+
+    # Looping in blast_output, indexing sequences found
     open( my $FOut, '<', $blast_output )
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <$FOut> ) {
         my @name = split( '\t', $line );
-        push( @SeqNamesOUT, $name[0] );
+        $blast_seqs{$name[0]} = 1;
     }
     close $FOut || die "Problème à la fermeture : $!";
 
-# Ouverture du fichier sequenceUpload.fas et construction du tableau contenant la liste des séquences issues du blast
-    open( my $FSeq, '<', $uploaded_sequences )
-      || die "Problème à l\'ouverture : $!";
-    while ( my $line = <$FSeq> ) {
-        if ( grep { /^>/msx } $line ) {
-            my $lineSeq = substr $line, 1, -1;
-            push( @SeqNames, $lineSeq );
-        }
-
-    }
-    close $FSeq || die "Problème à la fermeture : $!";
-
-    #Remplissage du tableau @SeqDiff avec les séquences non codantes
-    foreach my $SeqName (@SeqNames) {
-        my $exists = 1;
-        foreach my $SeqNameOUT (@SeqNamesOUT) {
-            if ( $SeqName eq $SeqNameOUT ) {
-                $exists = 0;
-            }
-        }
-        if ( $exists ) {
-            push( @SeqDiff, $SeqName );
-
-            #print "\nUne seq ".$SeqName."\n";
-        }
-        $i = $i++;
-    }
-
-    # Création du fichier FASTA filtrée des régions codantes
-    my $record = 0;
-    $i      = 0;
+    # Looping in uploaded_sequences, copying only the files not found in Blast
     open( my $RES,  '>>', $input_sequences )
       or die "Problème à l\'ouverture : $!";
-    open( my $FSeq2, '<', $uploaded_sequences )
-      or die "Problème à l\'ouverture : $!";
-    while ( my $line = <$FSeq2> ) {
+    open( my $FSeq, '<', $uploaded_sequences )
+      || die "Problème à l\'ouverture : $!";
+    my $lineSeq;
+    while ( my $line = <$FSeq> ) {
         if ( grep { /^>/msx } $line ) {
-            my $lineSeq = substr $line, 1, -1;
-            if ( $SeqDiff[$i] eq $lineSeq ) {
-                $record = 1;
-                $i++;
-            }
-            else {
-                $record = 0;
-            }
+            $lineSeq = substr $line, 1, -1;
         }
-        if ( $record ) {
+        if(!exists($blast_seqs{$lineSeq})) {
             printf $RES $line;
         }
     }
-    close $FSeq2 || die "Problème à la fermeture : $!";
-    close $RES   || die "Problème à la fermeture : $!";
+    close $FSeq || die "Problème à la fermeture : $!";
+    close $RES  || die "Problème à la fermeture : $!";
     chmod 777, $input_sequences;
-    return;
+    return $input_sequences;
 }
