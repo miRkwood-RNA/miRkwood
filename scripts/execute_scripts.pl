@@ -6,6 +6,7 @@ use strict;
 use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
+use File::Copy;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Programs;
 
@@ -46,6 +47,8 @@ main_entry( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant );
 sub main_entry {
     my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
 
+    my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
+
     if ( $check eq "checked" ) {
 
         #appel script filterCDS.pl qui permet de filter les CDS
@@ -55,16 +58,14 @@ sub main_entry {
         system($filter_cmd);
     }
     else {
-        system( 'mv ' 
-              . $dirJob
-              . 'sequenceUpload.fas '
-              . $dirJob
-              . 'Sequences.fas' );
+        my $sequence_uploaded =
+          File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+        File::Copy::move( $sequence_uploaded, $sequences_input );
     }
 
     ##Passage du multifasta -> fasta et appel au script Stemloop
-    open my $ENTREE_FH, '<', File::Spec->catfile( $dirJob, 'Sequences.fas' )
-      or die "Impossible d'ouvrir le fichier d'entree  : $!";
+    open my $ENTREE_FH, '<', $sequences_input
+      or die "Impossible d'ouvrir le fichier d'entree : $!";
     my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
     close $ENTREE_FH;
 
@@ -73,7 +74,7 @@ sub main_entry {
         my $temp_file = File::Spec->catfile( $dirJob, 'tempFile.txt' );
         open( my $TEMPFILE_FH, '>', $temp_file )
           or die "Impossible d'ouvrir le fichier d'entree  : $!";
-        system("chmod 777 $temp_file");
+        chmod 0777, $temp_file;
         print $TEMPFILE_FH "$name\n$tab{$name}";
         my $name = substr $name, 1;
         my $sequence_dir = File::Spec->catdir( $dirJob, $name );
