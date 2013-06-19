@@ -5,6 +5,8 @@
 #                                                                    #
 #                                                                    #
 ######################################################################
+use strict;
+use warnings;
 
 use File::Spec;
 use PipelineMiRNA::Programs;
@@ -29,18 +31,18 @@ sub main {
     chmod 777, $blast_output;
 
     ##Filtrage du ficher : Elimination des régions codantes###
-    @SeqNamesOUT =
+    my @SeqNamesOUT =
       ();    # tableau contenant la liste des séquences issues du Blast
-    @SeqNames = ();    # tableau contenant la liste des séquences à traiter
-    @SeqDiff  = ();    # tableau contenant la liste des séquences non codantes
-    $i        = 0;
+    my @SeqNames = ();    # tableau contenant la liste des séquences à traiter
+    my @SeqDiff  = ();    # tableau contenant la liste des séquences non codantes
+    my $i        = 0;
 
 # Ouverture du fichier outBlast.TXT et construction du tableau contenant la liste des séquences issues du blast
     open( FOut, $blast_output )
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <FOut> ) {
         my @name = split( '\t', $line );
-        push( @SeqNamesOUT, @name[0] );
+        push( @SeqNamesOUT, $name[0] );
     }
     close FOut || die "Problème à la fermeture : $!";
 
@@ -49,7 +51,7 @@ sub main {
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <FSeq> ) {
         if ( grep( /^>/, $line ) ) {
-            $lineSeq = substr $line, 1, -1;
+            my $lineSeq = substr $line, 1, -1;
             push( @SeqNames, $lineSeq );
         }
 
@@ -58,13 +60,13 @@ sub main {
 
     #Remplissage du tableau @SeqDiff avec les séquences non codantes
     foreach my $SeqName (@SeqNames) {
-        $exists = true;
+        my $exists = 1;
         foreach my $SeqNameOUT (@SeqNamesOUT) {
             if ( $SeqName eq $SeqNameOUT ) {
-                $exists = false;
+                $exists = 0;
             }
         }
-        if ( $exists eq true ) {
+        if ( $exists ) {
             push( @SeqDiff, $SeqName );
 
             #print "\nUne seq ".$SeqName."\n";
@@ -73,23 +75,23 @@ sub main {
     }
 
     # Création du fichier FASTA filtrée des régions codantes
-    $record = false;
+    my $record = 0;
     $i      = 0;
     open( RES,  '>>', $input_sequences );
     open( FSeq, $uploaded_sequences )
       || die "Problème à l\'ouverture : $!";
     while ( my $line = <FSeq> ) {
         if ( grep( /^>/, $line ) ) {
-            $lineSeq = substr $line, 1, -1;
-            if ( @SeqDiff[$i] eq $lineSeq ) {
-                $record = true;
+            my $lineSeq = substr $line, 1, -1;
+            if ( $SeqDiff[$i] eq $lineSeq ) {
+                $record = 1;
                 $i++;
             }
             else {
-                $record = false;
+                $record = 0;
             }
         }
-        if ( $record eq true ) {
+        if ( $record ) {
             printf RES $line;
         }
     }
