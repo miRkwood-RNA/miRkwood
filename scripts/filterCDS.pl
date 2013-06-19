@@ -11,11 +11,11 @@ use warnings;
 use File::Spec;
 use PipelineMiRNA::Programs;
 
-my ( $idirBlast, $idirData, $idirJob, $iplant ) = @ARGV;
-main( $idirBlast, $idirData, $idirJob, $iplant );
+my ( $idirData, $idirJob, $iplant ) = @ARGV;
+main( $idirData, $idirJob, $iplant );
 
 sub main {
-    my ( $dirBlast, $dirData, $dirJob, $plant ) = @_;
+    my ( $dirData, $dirJob, $plant ) = @_;
 
     my $uploaded_sequences = File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
     my $input_sequences    = File::Spec->catfile( $dirJob, 'Sequences.fas' );

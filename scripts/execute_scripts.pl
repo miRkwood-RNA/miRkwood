@@ -48,13 +48,11 @@ sub main_entry {
     my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
 
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
-
     if ( $check eq "checked" ) {
-
         #appel script filterCDS.pl qui permet de filter les CDS
         my $filter_script = File::Spec->catfile( $dirScript, 'filterCDS.pl' );
         my $filter_cmd =
-          "perl $filter_script $dirBlast $dirData $dirJob $plant";
+          "perl $filter_script $dirData $dirJob $plant";
         system($filter_cmd);
     }
     else {
