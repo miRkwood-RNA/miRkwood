@@ -79,9 +79,9 @@ sub main {
     $i      = 0;
     open( my $RES,  '>>', $input_sequences )
       or die "Problème à l\'ouverture : $!";
-    open( my $FSeq, '<',  $uploaded_sequences )
+    open( my $FSeq2, '<', $uploaded_sequences )
       or die "Problème à l\'ouverture : $!";
-    while ( my $line = <$FSeq> ) {
+    while ( my $line = <$FSeq2> ) {
         if ( grep { /^>/msx } $line ) {
             my $lineSeq = substr $line, 1, -1;
             if ( $SeqDiff[$i] eq $lineSeq ) {
@@ -96,8 +96,8 @@ sub main {
             printf $RES $line;
         }
     }
-    close $FSeq || die "Problème à la fermeture : $!";
-    close $RES  || die "Problème à la fermeture : $!";
+    close $FSeq2 || die "Problème à la fermeture : $!";
+    close $RES   || die "Problème à la fermeture : $!";
     chmod 777, $input_sequences;
     return;
 }
