@@ -57,6 +57,9 @@ cd $ROOT_PATH
 echo "Installing NCBI Blast 2.2.28"
 wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.28+-src.tar.gz
 tar xf ncbi-blast-2.2.28+-src.tar.gz
+cd ncbi-blast-2.2.28+-src/c++/
+./configure
+make
 cd $ROOT_PATH
 
 rm *.gz *.zip
