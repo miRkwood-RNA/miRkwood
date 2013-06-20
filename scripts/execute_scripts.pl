@@ -13,36 +13,15 @@ use PipelineMiRNA::Components;
 
 use Log::Message::Simple qw[msg error debug
   carp croak cluck confess];
-use Log::Message::Simple qw[msg error debug
-  carp croak cluck confess];
-
-my $debug = 0;
 
 my $local_dir = dirname( abs_path($0) );
 my $rootdir = File::Spec->catdir( $local_dir, ".." );
 
-my $dirScript = File::Spec->catdir( $rootdir, 'scripts' );   # chemin script
-my $dirProgs  = File::Spec->catdir( $rootdir, 'programs' );  # chemin programmes
-my $dirImages = File::Spec->catdir( $rootdir, 'images' );    # chemin images
-my $dirData   = File::Spec->catdir( $rootdir, 'data' );      # chemin séquence
-
-## Programs ##
-
-my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
-my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
-
-my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
-    'GCC460-Debug', 'bin' );    # chemin Blast
-
 ## Data ##
-
-my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
-my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
+my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
 
 ## Code ##
-
 my ( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant ) = @ARGV;
-
 main_entry( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant );
 
 sub main_entry {
@@ -50,8 +29,9 @@ sub main_entry {
 
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
     if ( $check eq "checked" ) {
+
         #Filtering CDS
-        PipelineMiRNA::Components::filter_CDS($dirData, $dirJob, $plant);
+        PipelineMiRNA::Components::filter_CDS( $dirData, $dirJob, $plant );
     }
     else {
         my $sequence_uploaded =
@@ -81,15 +61,11 @@ sub main_entry {
         PipelineMiRNA::Programs::run_rnalfold( $temp_file, $rnalfold_output )
           or die("Problem when running RNALfold");
 
-        ####conversion en format CT
-  #    my $ct_file = File::Spec->catfile( $dirJob, $name, 'fichierOutB2ct.ct' );
-  #    system("$b2ct_bin < $rnalfold_output > $ct_file");
-  #    system("chmod 777 $ct_file");
-
         ## Appel de RNAstemloop
         my $rnastemloop_out =
           File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
-        PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output, $rnastemloop_out )
+        PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
+            $rnastemloop_out )
           or die("Problem when running RNAstemloop");
         unlink $temp_file;
         process_RNAstemloop($rnastemloop_out);
@@ -218,13 +194,15 @@ sub process_tests {
                     ####conversion en format CT
                     my $candidate_ct_file =
                       File::Spec->catfile( $candidate_dir, 'outB2ct.ct' );
-                    PipelineMiRNA::Programs::convert_to_ct($candidate_rnafold_out, $candidate_ct_file)
-                        or die("Problem when converting to CT format");
+                    PipelineMiRNA::Programs::convert_to_ct(
+                        $candidate_rnafold_out, $candidate_ct_file )
+                      or die("Problem when converting to CT format");
 
                     my $varna_image =
                       File::Spec->catfile( $candidate_dir, 'image.png' );
-                    PipelineMiRNA::Programs::run_varna($candidate_ct_file, $varna_image)
-                        or die("Problem suring image generation using VARNA");
+                    PipelineMiRNA::Programs::run_varna( $candidate_ct_file,
+                        $varna_image )
+                      or die("Problem suring image generation using VARNA");
 
                     ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
                     my $out_Vienna = File::Spec->catfile( $candidate_dir,
@@ -264,8 +242,6 @@ sub process_tests {
                     if ( $SC eq "SCChecked" ) {
                         test_selfcontain( $candidate_dir, $seq_file );
                     }
-                    ####### creation sequence boucle terminale masquee avec des N pour
-                    ####### chaque sequence (repertoire ) et resultat alignement mirBASE
                     if ( $align eq "alignChecked" ) {
                         test_alignment( $candidate_dir, $seq_file );
                     }
@@ -277,15 +253,16 @@ sub process_tests {
 }
 
 sub test_mfei {
-    my ( $candidate_dir, $candidate_ct_file, $seq) = @_;
+    my ( $candidate_dir, $candidate_ct_file, $seq ) = @_;
     my $MFEI_output = File::Spec->catfile( $candidate_dir, 'outMFEI.txt' );
-    PipelineMiRNA::Components::compute_energy( $candidate_ct_file, $MFEI_output, $seq );
+    PipelineMiRNA::Components::compute_energy( $candidate_ct_file, $MFEI_output,
+        $seq );
 }
 
 sub test_randfold {
     my ( $candidate_dir, $seq_file ) = @_;
     my $randfold_out = File::Spec->catfile( $candidate_dir, 'pvalue.txt' );
-    PipelineMiRNA::Programs::run_randfold($seq_file, $randfold_out)
+    PipelineMiRNA::Programs::run_randfold( $seq_file, $randfold_out )
       or die("Problem when running Randfold");
     chmod 777, $randfold_out;
 }
@@ -294,12 +271,15 @@ sub test_selfcontain {
     my ( $candidate_dir, $seq_file ) = @_;
     my $selfcontain_out =
       File::Spec->catfile( $candidate_dir, 'selfContain.txt' );
-    PipelineMiRNA::Programs::run_selfcontain($seq_file, $selfcontain_out)
+    PipelineMiRNA::Programs::run_selfcontain( $seq_file, $selfcontain_out )
       or die("Problem when running Selfcontain");
     chmod 777, $selfcontain_out;
 }
 
 sub test_alignment {
+
+    # creation sequence boucle terminale masquee avec des N pour
+    # chaque sequence (repertoire ) et resultat alignement mirBASE
     my ( $candidate_dir, $seq_file ) = @_;
     my $seqN = File::Spec->catfile( $candidate_dir, 'seqWithN.txt' );
     open( my $SEQN_FH, '>>', $seqN )
@@ -318,6 +298,6 @@ sub test_alignment {
     close $SEQN_FH;
     close $SEQUENCE_FH;
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
-    PipelineMiRNA::Programs::run_exonerate($seqN, $exonerate_out)
+    PipelineMiRNA::Programs::run_exonerate( $seqN, $exonerate_out )
       or die("Problem when running Exonerate");
 }
