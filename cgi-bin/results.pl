@@ -2,6 +2,7 @@
 use Class::Struct;
 use CGI; 
 use Time::gmtime;
+use File::Spec;
 
 my $cgi = new CGI; 
 $now = gmctime();
@@ -9,9 +10,14 @@ $now = gmctime();
 $now =~ s/[: ]//g;
 $now = substr($now, 3);
 
-$dirScript = "/var/www/arn/scripts/"; # chemin script
-$dirData = "/var/www/arn/data/"; # chemin séquence de base
-$dirImages = "/var/www/arn/images/"; # chemin images
+my $rootdir = '"/var/www/arn/';
+
+my $dirProgs = File::Spec->catdir( $rootdir, 'programs' );
+
+
+$dirScript = File::Spec->catdir( $rootdir, 'scripts'); # chemin script
+$dirData = File::Spec->catdir( $rootdir, 'data'); # chemin séquence de base
+$dirLib = "/var/www/arn/lib/";
 $dirJob = $dirData."job".$now."/"; # chemin séquence de base
 #mkdir($dirJob,0777);
 system('mkdir '.$dirJob);
@@ -106,7 +112,8 @@ if ($SC eq "") { $SC = "notChecked" };
 if ($align eq "") { $align = "notChecked" };
 if ($check eq "") { $check = "notChecked" };
 #execution de tous les scripts de traitements
-system('perl '.$dirScript.'execute_scripts.pl '.$check.' '.$mfei.' '.$randfold.' '.$SC.' '. $align.' '.$dirJob.' '.$plant);
+my $cmd = "perl -I$dirLib $dirScript/execute_scripts.pl $check $mfei $randfold $SC $align $dirJob $plant";
+system($cmd);
 
 open (finish,'>', $dirJob.'finished') || die "$!"; 
 
