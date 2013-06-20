@@ -1,10 +1,10 @@
-#!/usr/local/bin/perl
 ######################################################################
-#  Lancement du script : perl filtrage.pl sequenceTest DBArapidopsis #
 #  @author : Mohcen BENMOUNAH                                        #
 #                                                                    #
 #                                                                    #
 ######################################################################
+package PipelineMiRNA::Components;
+
 use strict;
 use warnings;
 
@@ -12,22 +12,19 @@ use File::Spec;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Utils;
 
-my ( $idirData, $idirJob, $iplant ) = @ARGV;
-main( $idirData, $idirJob, $iplant );
-
 sub filter_CDS {
     my ( $dirData, $dirJob, $plant ) = @_;
 
-    my $uploaded_sequences = File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
-    my $input_sequences    = File::Spec->catfile( $dirJob, 'Sequences.fas' );
+    my $uploaded_sequences =
+      File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+    my $input_sequences = File::Spec->catfile( $dirJob, 'Sequences.fas' );
 
     my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
-    my $blast_output = File::Spec->catfile( $dirJob, 'outBlast.txt' );
+    my $blast_output   = File::Spec->catfile( $dirJob,  'outBlast.txt' );
     my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
-    PipelineMiRNA::Programs::run_blast($uploaded_sequences,
-                                       $blast_database,
-                                       $blastx_options,
-                                       $blast_output
+    PipelineMiRNA::Programs::run_blast(
+                                        $uploaded_sequences, $blast_database,
+                                        $blastx_options,     $blast_output
     ) or die('Problem when running Blastx');
     chmod 777, $blast_output;
 
