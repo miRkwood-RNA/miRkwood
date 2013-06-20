@@ -9,6 +9,7 @@ use Cwd qw( abs_path );
 use File::Copy;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Programs;
+use PipelineMiRNA::Components;
 
 use Log::Message::Simple qw[msg error debug
   carp croak cluck confess];
@@ -49,11 +50,8 @@ sub main_entry {
 
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
     if ( $check eq "checked" ) {
-        #appel script filterCDS.pl qui permet de filter les CDS
-        my $filter_script = File::Spec->catfile( $dirScript, 'filterCDS.pl' );
-        my $filter_cmd =
-          "perl $filter_script $dirData $dirJob $plant";
-        system($filter_cmd);
+        #Filtering CDS
+        PipelineMiRNA::Components::filter_CDS($dirData, $dirJob, $plant);
     }
     else {
         my $sequence_uploaded =
