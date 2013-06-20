@@ -10,6 +10,7 @@ use warnings;
 
 use File::Spec;
 use PipelineMiRNA::Programs;
+use PipelineMiRNA::Utils;
 
 my ( $idirData, $idirJob, $iplant ) = @ARGV;
 main( $idirData, $idirJob, $iplant );
@@ -49,21 +50,14 @@ sub main {
     close $FOut || die "Problème à la fermeture : $!";
 
     # Looping in uploaded_sequences, copying only the files not found in Blast
-    open( my $RES,  '>>', $input_sequences )
-      or die "Problème à l\'ouverture : $!";
     open( my $FSeq, '<', $uploaded_sequences )
-      || die "Problème à l\'ouverture : $!";
-    my $lineSeq;
-    while ( my $line = <$FSeq> ) {
-        if ( grep { /^>/msx } $line ) {
-            $lineSeq = substr $line, 1, -1;
-        }
-        if(!exists($blast_seqs{$lineSeq})) {
-            printf $RES $line;
-        }
-    }
-    close $FSeq || die "Problème à la fermeture : $!";
-    close $RES  || die "Problème à la fermeture : $!";
+      or die "Problème à l\'ouverture : $!";
+    open( my $RES_FH,  '>>', $input_sequences )
+      or die "Problème à l\'ouverture : $!";
+    PipelineMiRNA::Utils::filter_fasta($FSeq, $RES_FH, \%blast_seqs);
+    close $FSeq or die "Problème à la fermeture : $!";
+    close $RES_FH  or die "Problème à la fermeture : $!";
     chmod 777, $input_sequences;
+
     return $input_sequences;
 }
