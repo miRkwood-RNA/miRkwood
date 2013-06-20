@@ -254,7 +254,7 @@ sub process_tests {
                     system("chmod 777 $out_Vienna");
                     ####calcul MFEI (appel script energie.pl)
                     if ( $mfei eq "mfeiChecked" ) {
-                        test_mfei( $candidate_ct_file, $sequence_dir, $file );
+                        test_mfei( $candidate_dir, $candidate_ct_file, $file );
                     }
                     ####calcul p-value randfold
                     if ( $randfold eq "randfoldChecked" ) {
@@ -277,14 +277,9 @@ sub process_tests {
 }
 
 sub test_mfei {
-
-    #TODO: We do not need these three parameters
-    #      but must restructure energie.pl first
-    my ( $candidate_ct_file, $sequence_dir, $file ) = @_;
-    my $energie_script = File::Spec->catfile( $dirScript, 'energie.pl' );
-    my $energie_cmd =
-      "perl $energie_script $candidate_ct_file $sequence_dir $file";
-    system($energie_cmd);
+    my ( $candidate_dir, $candidate_ct_file, $seq) = @_;
+    my $MFEI_output = File::Spec->catfile( $candidate_dir, 'outMFEI.txt' );
+    PipelineMiRNA::Components::compute_energy( $candidate_ct_file, $MFEI_output, $seq );
 }
 
 sub test_randfold {
