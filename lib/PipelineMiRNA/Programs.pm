@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use File::Spec;
-use PipelineMiRNA::Energie;
 
 my $rootdir = '/home/jeanfred/Tuile/pipelineMiRNA-web/';
 
