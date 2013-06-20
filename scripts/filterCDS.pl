@@ -31,13 +31,6 @@ sub main {
       or die('Problem when running Blastx');
     chmod 777, $blast_output;
 
-    ##Filtrage du ficher : Elimination des régions codantes###
-    my @SeqNamesOUT =
-      ();    # tableau contenant la liste des séquences issues du Blast
-    my @SeqNames = ();    # tableau contenant la liste des séquences à traiter
-    my @SeqDiff  = ();    # tableau contenant la liste des séquences non codantes
-    my $i        = 0;
-
     my %blast_seqs;
 
     # Looping in blast_output, indexing sequences found
