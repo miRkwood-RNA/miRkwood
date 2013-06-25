@@ -10,8 +10,9 @@ my $local_dir = dirname( abs_path($0) );
 my $rootdir = File::Spec->catdir( $local_dir, ".." );
 
 $id_job = $cgi->param('run_id'); # récupération id job
+my $dirJob_name = 'job'.$id_job;
 
-$dirJob = abs_path(File::Spec->catdir( $rootdir, 'data', 'job'.$id_job)).'/';
+$dirJob = abs_path(File::Spec->catdir( $rootdir, 'data', $dirJob_name)).'/';
 #TODO Remove the trailing slash...
 
 $names =[]; 
@@ -46,32 +47,31 @@ my @dirs;
 closedir DIR;
 foreach $dir(@dirs) # parcours du contenu
 {
-	if ($dir ne "." && $dir ne ".." && -d $dirJob.$dir) #si fichier est un répertoire
+    $full_dir = File::Spec->catdir( $dirJob, $dir );
+	if ($dir ne "." && $dir ne ".." && -d $full_dir) #si fichier est un répertoire
 	{
-		#print $dir."\n";
-		opendir DIR, $dirJob.$dir; # ouverture du sous répertoire 
+		opendir DIR, $full_dir; # ouverture du sous répertoire
 		my @files;
 		@files=readdir DIR;
 		closedir DIR;
 		foreach $subDir(@files)
 		{
-			if (($subDir ne ".") && ($subDir ne "..") && -d $dirJob.$dir."/".$subDir) # si le fichier est de type repertoire
+		    $subDir_full = File::Spec->catdir($dirJob, $dir, $subDir );
+			if (($subDir ne ".") && ($subDir ne "..") && -d $subDir_full) # si le fichier est de type repertoire
 			{
-				
-				#print $dirJob.$dir."/".$subDir."/".$subSubDir."\n";
 				push(@$names,$dir); #récupération nom séquence
 				@position = split(/__/,$subDir);
-			
 				push(@$positions,$position[1]); # récupération position
 				push(@$namesPositions,$subDir); # récupération noms + positions
 				$MfeiExist = false;
 				$RandfoldExist = false;
 				$alignExist = false;
 				$SCExist = false;
-				if( -e $dirJob.$dir."/".$subDir.'/pvalue.txt' ) # si fichier existe
-				{
-					$RandfoldExist = true;
-					open (PVALUE, $dirJob.$dir."/".$subDir.'/pvalue.txt') || die "$!";
+                my $pvalue = File::Spec->catfile( $subDir, 'pvalue.txt' );
+                if( -e $pvalue ) # si fichier existe
+                {
+                    $RandfoldExist = true;
+                    open (PVALUE, $pvalue) || die "$!";
 					while (my $line = <PVALUE>) 
 					{
 						if ( $line =~/(.*)\t(.*)\t(.*)/ )
@@ -83,10 +83,11 @@ foreach $dir(@dirs) # parcours du contenu
 					
 				}	
 				#Récupération valeur MFEI
-				if( -e $dirJob.$dir."/".$subDir.'/outMFEI.txt' ) # si fichier existe
+				my $mfei_out = File::Spec->catfile( $subDir, 'outMFEI.txt' );
+				if( -e $mfei_out ) # si fichier existe
 				{
 					$MfeiExist = true;
-					open (MFEI, $dirJob.$dir."/".$subDir.'/outMFEI.txt') || die "$!";
+					open (MFEI, $mfei_out) || die "$!";
 					while (my $line = <MFEI>) 
 					{
 						if ( $line =~/(.*)\t(.*)\t(.*)\t(.*)/ )
@@ -99,10 +100,11 @@ foreach $dir(@dirs) # parcours du contenu
 					close MFEI;
 				}
 				#Récupération valeur self contain
-				if( -e $dirJob.$dir."/".$subDir.'/selfContain.txt' ) # si fichier existe
+				my $selfcontain_out = File::Spec->catfile( $subDir, 'selfContain.txt' );
+				if( -e $selfcontain_out ) # si fichier existe
 				{
 					$SCExist = true;
-					open (SC, $dirJob.$dir."/".$subDir.'/selfContain.txt') || die "$!";
+					open (SC, $selfcontain_out) || die "$!";
 					while (my $line = <SC>) 
 					{
 						if ( $line =~/(.*) (.*)/ )
@@ -114,27 +116,33 @@ foreach $dir(@dirs) # parcours du contenu
 				}
 					
 				#Récupération séquence et format Vienna
-				open (Vienna, $dirJob.$dir."/".$subDir.'/outViennaTraited.txt') || die "$!";
-				while (my $line = <Vienna>) 
-				{
-					if ( $line =~/(.*)\t(.*)\t(.*)/ )
-					{    
-						push(@$DNASequence,$2); # récupération sequence
-						push(@$Vienna,$3); # récupération Vienna
-					
-					}
-				}
+				my $vienna_out = File::Spec->catfile( $subDir, 'outViennaTraited.txt' );
+				if( -e $vienna_out ) # si fichier existe
+                {
+    				open (my $VIENNA, '<', $vienna_out) || die "$!";
+    				while (my $line = <$VIENNA>) 
+    				{
+    					if ( $line =~/(.*)\t(.*)\t(.*)/ )
+    					{    
+    						push(@$DNASequence,$2); # récupération sequence
+    						push(@$Vienna,$3); # récupération Vienna
+    					
+    					}
+    				}
+    				close $VIENNA;
+                }
 				#Récupération alignement avec mirBase 
-				if( -e $dirJob.$dir."/".$subDir.'/alignement.txt' ) # si fichier existe
+				my $alignement = File::Spec->catfile( $subDir, 'alignement.txt' );
+				if( -e $alignement ) # si fichier existe
 				{
 					$alignExist = true;
-					open (align, $dirJob.$dir."/".$subDir.'/alignement.txt') || die "$!";
+					open (align, $alignement) || die "$!";
 					$align = "none";
 					while (my $line = <align>) 
 					{
 						if ( $line =~/^C4/ )
 						{    
-							$align = "/arn/data/job".$id_job.'/'.$dir."/".$subDir.'/alignement.txt';
+							$align = $alignement;
 							last;
 						}
 					
