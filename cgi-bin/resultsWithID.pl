@@ -2,9 +2,18 @@
 use Class::Struct;
 use CGI; 
 my $cgi = new CGI; 
+use Cwd qw( abs_path );
+use File::Basename qw(dirname);
+use File::Spec;
+
+my $local_dir = dirname( abs_path($0) );
+my $rootdir = File::Spec->catdir( $local_dir, ".." );
 
 $id_job = $cgi->param('run_id'); # récupération id job
-$dirJob = "/var/www/arn/data/job".$id_job.'/';
+
+$dirJob = abs_path(File::Spec->catdir( $rootdir, 'data', 'job'.$id_job)).'/';
+#TODO Remove the trailing slash...
+
 $names =[]; 
 $pvalues =[]; 
 $positions =[]; 
@@ -30,7 +39,7 @@ struct results => {        # déclaration de la structure de données
 	selfContain=> '@',
 };
 $name_job = $cgi->param('nameJob'); # récupération id job	
-	
+
 opendir DIR, $dirJob; #ouverture répertoire job
 my @dirs;
 @dirs=readdir DIR;
