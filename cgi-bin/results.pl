@@ -3,42 +3,49 @@ use Class::Struct;
 use CGI; 
 use Time::gmtime;
 use File::Spec;
+use FindBin qw($Bin);
+use Cwd qw( abs_path );
+use File::Basename qw(dirname);
 
 my $cgi = new CGI; 
 $now = gmctime();
 
 $now =~ s/[: ]//g;
 $now = substr($now, 3);
+my $dirJob_name = 'job'.$now;
 
-my $rootdir = '"/var/www/arn/';
+my $local_dir = dirname( abs_path($0) );
+my $rootdir = File::Spec->catdir( $local_dir, ".." );
 
-my $dirProgs = File::Spec->catdir( $rootdir, 'programs' );
+$dirScript = File::Spec->catdir( $rootdir, 'scripts');
+$dirData = File::Spec->catdir( $rootdir, 'data');
+$dirLib = File::Spec->catdir( $rootdir, 'lib');
 
+my $formatFasta_bin = File::Spec->catfile($dirScript, 'formatFasta.sh');
 
-$dirScript = File::Spec->catdir( $rootdir, 'scripts'); # chemin script
-$dirData = File::Spec->catdir( $rootdir, 'data'); # chemin séquence de base
-$dirLib = "/var/www/arn/lib/";
-$dirJob = $dirData."job".$now."/"; # chemin séquence de base
-#mkdir($dirJob,0777);
-system('mkdir '.$dirJob);
+$dirJob = File::Spec->catdir( $dirData, $dirJob_name); # chemin séquence de base
+mkdir $dirJob;
 
-
+my $sequence = File::Spec->catfile($dirJob, 'sequence.fas');
+my $sequence_load = File::Spec->catfile($dirJob, 'sequenceLoad.fas');
+my $sequence_upload = File::Spec->catfile($dirJob, 'sequenceUpload.fas');
 
 my $seqArea = $cgi->param('seqArea');
 if ($seqArea eq "")  # cas upload fichier
 {	
 	$seq = "";
 	my $upload = $cgi->upload('seqFile') || die "$!";
-	open (INPUT, '>> '.$dirJob.'sequence.fas') || die "$!";
+	open (INPUT, '>>', $sequence) || die "$!";
 	while (my $ligne = <$upload>) 
 	{
 		$seq.= $ligne;
 	}
 	print INPUT lc($seq)."\n"; ##mise en minuscules
 	close INPUT;
-	system('chmod 777 '.$dirJob.'sequence.fas');
+	chmod 777, $sequences;
 	$seq = lc($seq)."\n";
-	system('sh '.$dirScript.'formatFasta.sh '.$dirJob.'sequence.fas '.$dirJob.'sequenceLoad.fas' ) ; # script qui elimine les retour a la ligne 
+	my $formatFasta_cmd = "sh $formatFasta_bin $sequence $sequence_load";
+	system($formatFasta_cmd) ; # script qui elimine les retour a la ligne 
 	if ($seq !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/)  
 	{# erreur de syntaxe
 		print $cgi->redirect('http://'.$ENV{SERVER_NAME}.'/cgi-bin/error.pl');       exit; 
@@ -46,10 +53,10 @@ if ($seqArea eq "")  # cas upload fichier
 }
 else #cas textArea
 {
-	open (INPUT, '>> '.$dirJob.'sequence.fas') || die "$!";
+	open (INPUT, '>>', $sequences) || die "$!";
 	print INPUT lc($seqArea);
-	system ("sed -i 'N;s/\r//g' ".$dirJob."sequence.fas"); #commande sed permettant d'eliminer les caracteres du (copier-coller)
-	system('sh '.$dirScript.'formatFasta.sh '.$dirJob.'sequence.fas '.$dirJob.'sequenceLoad.fas' ) ; # script qui elimine les retour a la ligne 
+	system ("sed -i 'N;s/\r//g' ".$sequences); #commande sed permettant d'eliminer les caracteres du (copier-coller)
+	system("sh $formatFasta_bin $sequence $sequence_load" ) ; # script qui elimine les retour a la ligne 
 	while (my $ligne = <INPUT>) 
 	{
 		$seqArea.= $ligne;
@@ -63,9 +70,8 @@ else #cas textArea
 	close INPUT;
 }
 
-	
-	open (LOAD, $dirJob.'sequenceLoad.fas') || die "$!";
-	open (OUTPUT, '>> '.$dirJob.'sequenceUpload.fas') || die "$!";
+	open (LOAD, $sequence_load) || die "$!";
+	open (OUTPUT, '>>', $sequence_upload) || die "$!";
 	while (my $line = <LOAD>) 
 	{
 		if ($line=~/^>/)
@@ -86,7 +92,7 @@ else #cas textArea
 		}
 	
 	}
-	unlink ($dirJob.'sequenceLoad.fas');
+	unlink ($sequence_load);
 
 # redirection vers la page wait en attendant le calcul
 my $mail = $cgi->param('mail');
@@ -112,8 +118,11 @@ if ($SC eq "") { $SC = "notChecked" };
 if ($align eq "") { $align = "notChecked" };
 if ($check eq "") { $check = "notChecked" };
 #execution de tous les scripts de traitements
-my $cmd = "perl -I$dirLib $dirScript/execute_scripts.pl $check $mfei $randfold $SC $align $dirJob $plant";
+my $perl_script = File::Spec->catfile($dirScript, 'execute_scripts.pl');
+my $cmd = "perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob $plant";
 system($cmd);
 
-open (finish,'>', $dirJob.'finished') || die "$!"; 
+my $finish_file = File::Spec->catfile($dirJob, 'finished');
+open (my $finish, '>', $finish_file) || die "$!";
+close $finish_file;
 
