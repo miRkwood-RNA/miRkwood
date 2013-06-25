@@ -4,8 +4,12 @@ use strict;
 use warnings;
 
 use File::Spec;
+use FindBin qw($Bin);
+use Cwd qw(abs_path);
+use File::Basename qw(dirname);
 
-my $rootdir = '/home/jeanfred/Tuile/pipelineMiRNA-web/';
+my $module_path = abs_path(dirname(__FILE__));
+my $rootdir = File::Spec->catdir($module_path, '..', '..');
 
 my $dirProgs = File::Spec->catdir( $rootdir, 'programs' );
 
