@@ -4,6 +4,7 @@ use CGI;
 use Time::gmtime;
 use File::stat;
 use Socket;
+use File::Spec;
 
 use POSIX ":sys_wait_h";
 use IO::Handle;
@@ -17,10 +18,15 @@ $nameJob=$html->param(nameJob);
 $name = $nameJob ; 
 if ($nameJob eq "") { $check = "noTitle" };
 
+my $results_link = 'resultsWithID.pl?run_id='.$now.'&nameJob='.$name;
+my $results_full_link = 'http://'.$ENV{SERVER_NAME}.'/cgi-bin/'.$results_link;
+
+my $is_finished = File::Spec->catfile($dirData, 'job'.$now, 'finished');
+
 #le calcul est fini
-if (-e  $dirData."job".$now."/finished"){
+if (-e  $is_finished){
 	system('perl '.$dirScript.'email.pl '.$nameJob.' '.$now);
-	print $html->redirect(-uri=>'http://'.$ENV{SERVER_NAME}.'/cgi-bin/resultsWithID.pl?run_id='.$now.'&nameJob='.$name); 
+	print $html->redirect(-uri=>$results_full_link);
 	exit; 
 }
 
@@ -190,7 +196,7 @@ piwikTracker.enableLinkTracking();
 <div class="frametitle">
  <h1>miREST :: identification of miRNA/miRNA hairpins in plants</h1>
    <div class="menu_central">
-     <a href="./interface2.pl">home</a>
+     <a href="./interface.pl">home</a>
      <a href="./id.pl">retrieve result with an ID</a>
      </div>
 </div>
@@ -202,7 +208,7 @@ piwikTracker.enableLinkTracking();
   <br/>
   <br/>
 
-  Your request has been successfully submitted.  
+  Your request has been successfully submitted.
   <br> 
 DATA
 if ($email ne "")
@@ -224,6 +230,8 @@ print <<DATA;
   <br /><br />
 
   This page is updated every five seconds.
+
+  You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.
 
   <br /><br /><br /><br />
 
