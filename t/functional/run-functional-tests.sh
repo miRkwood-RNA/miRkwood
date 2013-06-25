@@ -32,4 +32,4 @@ ok 'Full pipeline with FilteringCDS' [ `diff --exclude=pvalue.txt -qr $BASEDIR/o
 
 rm -rf $BASEDIR/output/filtercds/ && mkdir -p $BASEDIR/output/filtercds/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/filtercds/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/filterCDS.pl $ROOTDIR/data/ $BASEDIR/output/filtercds/ ATpepTAIR10
-ok 'FilterCDS' [ `diff -qr $BASEDIR/expected/filtercds/ $BASEDIR/output/filtercds/ | wc -l` -eq 0 ]
+ok 'FilterCDS' [ `diff --exclude=outBlast.txt -qr $BASEDIR/expected/filtercds/ $BASEDIR/output/filtercds/ | wc -l` -eq 0 ]
