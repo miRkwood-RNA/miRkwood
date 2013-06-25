@@ -28,7 +28,7 @@ ok 'Full pipeline' [ `diff --exclude=.svn --exclude=pvalue.txt -qr $BASEDIR/outp
 
 rm -rf $BASEDIR/output/fullpipeline2/ && mkdir -p $BASEDIR/output/fullpipeline2/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/fullpipeline2/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl checked  mfeiChecked randfoldChecked UNSCChecked UNalignChecked $BASEDIR/output/fullpipeline2/ ATpepTAIR10
-ok 'Full pipeline with FilteringCDS' [ `diff --exclude=.svn --exclude=pvalue.txt -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l` -eq 0 ]
+ok 'Full pipeline with FilteringCDS' [ `diff --exclude=.svn --exclude=outBlast.txt --exclude=pvalue.txt -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/filtercds/ && mkdir -p $BASEDIR/output/filtercds/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/filtercds/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/filterCDS.pl $ROOTDIR/data/ $BASEDIR/output/filtercds/ ATpepTAIR10
