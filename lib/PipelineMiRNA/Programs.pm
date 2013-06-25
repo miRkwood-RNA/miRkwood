@@ -26,10 +26,7 @@ my $exonerate_bin =
   File::Spec->catfile( $dirProgs, 'exonerate-2.2.0-i386', 'bin', 'exonerate' );
 my $varna_bin        = File::Spec->catfile( $dirProgs, 'VARNAv3-9.jar' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
-
-my $dirBlast = File::Spec->catdir( $dirProgs, 'ncbi-blast-2.2.28+-src', 'c++',
-    'GCC460-Debug', 'bin' );    # chemin Blast
-my $blastx_bin = File::Spec->catfile( $dirBlast, 'blastx' );
+my $blastx_bin = File::Spec->catfile( $dirProgs, 'blastx' );
 
 
 ## Data ##
