@@ -9,28 +9,27 @@ use File::Spec;
 use POSIX ":sys_wait_h";
 use IO::Handle;
 
-$dirData = "/var/www/arn/data/"; # chemin séquence de base
-$dirScript = "/var/www/arn/scripts/"; # chemin scripts
-$html = new CGI;
-$now=$html->param(jobId); 
-$email=$html->param(mail);
-$nameJob=$html->param(nameJob);
-$name = $nameJob ; 
-if ($nameJob eq "") { $check = "noTitle" };
+$dirData   = "/var/www/arn/data/";       # chemin séquence de base
+$dirScript = "/var/www/arn/scripts/";    # chemin scripts
+$html      = new CGI;
+$now       = $html->param(jobId);
+$email     = $html->param(mail);
+$nameJob   = $html->param(nameJob);
+$name      = $nameJob;
+if ( $nameJob eq "" ) { $check = "noTitle" }
 
-my $results_link = 'resultsWithID.pl?run_id='.$now.'&nameJob='.$name;
-my $results_full_link = 'http://'.$ENV{SERVER_NAME}.'/cgi-bin/'.$results_link;
+my $results_link = 'resultsWithID.pl?run_id=' . $now . '&nameJob=' . $name;
+my $results_full_link =
+  'http://' . $ENV{SERVER_NAME} . '/cgi-bin/' . $results_link;
 
-my $is_finished = File::Spec->catfile($dirData, 'job'.$now, 'finished');
+my $is_finished = File::Spec->catfile( $dirData, 'job' . $now, 'finished' );
 
 #le calcul est fini
-if (-e  $is_finished){
-	system('perl '.$dirScript.'email.pl '.$nameJob.' '.$now);
-	print $html->redirect(-uri=>$results_full_link);
-	exit; 
+if ( -e $is_finished ) {
+    system( 'perl ' . $dirScript . 'email.pl ' . $nameJob . ' ' . $now );
+    print $html->redirect( -uri => $results_full_link );
+    exit;
 }
-
-
 
 print <<DATA;
 Content-type: text/html
@@ -42,7 +41,14 @@ Content-type: text/html
 
 DATA
 
-print "<meta http-equiv=\"Refresh\" content=\"6;URL=http://".$ENV{SERVER_NAME}."/cgi-bin/wait.pl?jobId=".$now.'&nameJob='.$name."&mail=".$email."\">";
+print "<meta http-equiv=\"Refresh\" content=\"6;URL=http://"
+  . $ENV{SERVER_NAME}
+  . "/cgi-bin/wait.pl?jobId="
+  . $now
+  . '&nameJob='
+  . $name
+  . "&mail="
+  . $email . "\">";
 print <<DATA;
 
 <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
@@ -134,7 +140,7 @@ print <<DATA;
       </li>
       <li class="case Rna">
 	<a href="/CGseq/index.php">CG-seq</a>
-      </li> use MIME::Lite;
+      </li>
 
     </ul>
     
@@ -211,9 +217,9 @@ piwikTracker.enableLinkTracking();
   Your request has been successfully submitted.
   <br> 
 DATA
-if ($email ne "")
-{
-	print "An E-mail notification will be sent to <strong>".$email."</strong> as soon as the job is completed.";
+if ( $email ne "" ) {
+    print "An E-mail notification will be sent to <strong>" . $email
+      . "</strong> as soon as the job is completed.";
 }
 print <<DATA;
   <br /> <br> 
@@ -222,7 +228,6 @@ print <<DATA;
 DATA
 
 print $now;
-
 
 print <<DATA;
 
