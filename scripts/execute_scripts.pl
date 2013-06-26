@@ -25,32 +25,39 @@ my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
 my ( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant ) = @ARGV;
 main_entry( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant );
 
+
+
 sub main_entry {
     my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
-
+    my $debug = 0;
+    debug('BEGIN execute_scripts', $debug);
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
     if ( $check eq "checked" ) {
-
+        debug("FilteringCDS", $debug);
         #Filtering CDS
         PipelineMiRNA::Components::filter_CDS( $dirData, $dirJob, $plant );
     }
     else {
         my $sequence_uploaded =
           File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+        debug("Moving file $sequence_uploaded to $sequences_input", $debug);
         File::Copy::move( $sequence_uploaded, $sequences_input );
     }
 
     ##Passage du multifasta -> fasta et appel au script Stemloop
+    debug("Opening multifasta $sequences_input", $debug);
     open my $ENTREE_FH, '<', $sequences_input
-      or die "Impossible d'ouvrir le fichier d'entree : $!";
+      or die "Error when opening sequences -$sequences_input-: $!";
     my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
     close $ENTREE_FH;
-
+    
+    debug("Iterating over names", $debug);
+    debug("Hop: %tab", $debug);
     foreach my $name ( keys %tab ) {
-
+        debug("Considering $name", $debug);
         my $temp_file = File::Spec->catfile( $dirJob, 'tempFile.txt' );
         open( my $TEMPFILE_FH, '>', $temp_file )
-          or die "Impossible d'ouvrir le fichier d'entree  : $!";
+          or die "Error when opening tempfile -$temp_file-: $!";
         chmod 0777, $temp_file;
         print $TEMPFILE_FH "$name\n$tab{$name}";
         my $name = substr $name, 1;
@@ -59,8 +66,9 @@ sub main_entry {
 
         my $rnalfold_output =
           File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
+        debug("Running RNAfold", $debug);
         PipelineMiRNA::Programs::run_rnalfold( $temp_file, $rnalfold_output )
-          or die("Problem when running RNALfold");
+          or die("Problem when running RNALfold: $!");
 
         ## Appel de RNAstemloop
         my $rnastemloop_out =
