@@ -183,13 +183,11 @@ sub process_tests {
     foreach my $dir (@dirs)    # parcours du contenu
     {
         debug("Considering $dir", 1);
+        my $sequence_dir = File::Spec->catdir( $dirJob, $dir );
         if (   $dir ne "."
             && $dir ne ".."
-            && -d $dirJob . $dir )    #si fichier est un répertoire
+            && -d $sequence_dir )    #si fichier est un répertoire
         {
-
-            my $sequence_dir = File::Spec->catdir( $dirJob, $dir );
-
             debug("Entering $sequence_dir", 1);
             opendir DIR, $sequence_dir;    # ouverture du sous répertoire
             my @files;
@@ -197,15 +195,15 @@ sub process_tests {
             closedir DIR;
             foreach my $file (@files) {
                 debug("Considering $file", 1);
+                my $candidate_dir =
+                      File::Spec->catdir( $sequence_dir, $file );
                 if (   $file ne "."
                     && $file ne ".."
-                    && -d File::Spec->catdir( $sequence_dir, $file )
+                    && -d $candidate_dir
                   )    # si le fichier est de type repertoire
                 {
                     debug("Entering $file", 1);
                     ####Traitement fichier de sortie outStemloop
-                    my $candidate_dir =
-                      File::Spec->catdir( $sequence_dir, $file );
                     chmod 0777, $candidate_dir;
 
                     my $seq_file =
