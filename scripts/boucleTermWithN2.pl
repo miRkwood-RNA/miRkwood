@@ -40,10 +40,10 @@ sub mask_CT_file {
     };
 
     #ouverture du fichier de sortie de Unafold
-    open( FOut, $CT )
+    open( my $FOut, '<', $CT )
       or die "Error when opening $CT: $!";
     my ( $nbSeq, $numSeq, $base, $longueur, $nomSeq );
-    while ( my $line = <FOut> ) {
+    while ( my $line = <$FOut> ) {
 
         my @variable = split( '\s+', $line );
         $nbSeq  = $variable[1];
@@ -76,7 +76,7 @@ sub mask_CT_file {
             }
         }
     }
-    close FOut or die "Problème à la fermeture : $!";
+    close $FOut or die "Problème à la fermeture : $!";
 
 ###parcours et traitement et remplissage du struct (nb nucléotides, position deb, position fin)####
     my ( $element5Copy, $nbnucleotides, $element5, $element1 );
@@ -112,9 +112,9 @@ sub mask_CT_file {
         }
     }
 ## lecture du tableau associatif et generation fichier boucleTermWithN.txt ##
-    open( RES, '>>', $boucleTermWithN_out );
+    open( my $RES, '>>', $boucleTermWithN_out );
     foreach my $sequenceNom ( keys %tab ) {
-        print RES ">" . $sequenceNom . "\n";
+        print $RES '>' . $sequenceNom . "\n";
         for ( my $i = 0 ;
             $i < $tab{$sequenceNom}->length ;
             $i++ )    # parcours des deux colonnes 1 et 5
@@ -122,15 +122,15 @@ sub mask_CT_file {
             if (   ( $i >= $tab{$sequenceNom}->debBoucle - 1 )
                 && ( $i <= $tab{$sequenceNom}->finBoucle - 1 ) )
             {
-                print RES 'N';
+                print $RES 'N';
             }
             else {
-                print RES $tab{$sequenceNom}->base($i);
+                print $RES $tab{$sequenceNom}->base($i);
 
             }
         }
-        print RES "\n";
+        print $RES "\n";
     }
-    close RES;
-
+    close $RES or die "Problème à la fermeture : $!";
+    return $boucleTermWithN_out;
 }
