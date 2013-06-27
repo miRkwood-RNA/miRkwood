@@ -12,7 +12,7 @@ my $rootdir = File::Spec->catdir( $local_dir, ".." );
 $id_job = $cgi->param('run_id'); # récupération id job
 my $dirJob_name = 'job'.$id_job;
 
-$dirJob = abs_path(File::Spec->catdir( $rootdir, 'data', $dirJob_name)).'/';
+$dirJob = abs_path(File::Spec->catdir( $rootdir, 'results', $dirJob_name)).'/';
 #TODO Remove the trailing slash...
 
 $names =[]; 
