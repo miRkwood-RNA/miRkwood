@@ -23,13 +23,18 @@ my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
 
 ## Code ##
 my ( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant ) = @ARGV;
+
+my $log_file = File::Spec->catfile( $idirJob, 'log.log' );
+open( my $LOG, '>>', $log_file ) || die "$!";
+local $Log::Message::Simple::DEBUG_FH   = $LOG;
+
 main_entry( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant );
 
 
 
 sub main_entry {
     my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
-    my $debug = 0;
+    my $debug = 1;
     debug('BEGIN execute_scripts', $debug);
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
     if ( $check eq "checked" ) {
@@ -75,6 +80,7 @@ sub main_entry {
           File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
         my $rnastemloop_out_stemloop =
           File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
+        debug("Running RNAstemloop on $rnalfold_output", $debug);
         PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
             $rnastemloop_out_optimal, $rnastemloop_out_stemloop)
           or die("Problem when running RNAstemloop");
@@ -88,10 +94,11 @@ sub main_entry {
 sub process_RNAstemloop {
     my ($rnastemloop_out, $suffix) = @_;
     my $current_sequence_dir = dirname($rnastemloop_out);
-
+    debug("Processing RNAstemloop output $rnastemloop_out", 1);
     my $rnaeval_out =
       File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
+    debug("Running RNAeval", 1);
     PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
       or die("Problem when running RNAeval");
 
@@ -166,6 +173,7 @@ sub process_RNAstemloop {
 
 sub process_tests {
     my ( $dirJob, $mfei, $randfold, $SC, $align ) = @_;
+    debug("A posteriori tests in $dirJob", 1);
     ##Traitement fichier de sortie outStemloop
     opendir DIR, $dirJob;    #ouverture répertoire job
     my @dirs;
@@ -174,6 +182,7 @@ sub process_tests {
 
     foreach my $dir (@dirs)    # parcours du contenu
     {
+        debug("Considering $dir", 1);
         if (   $dir ne "."
             && $dir ne ".."
             && -d $dirJob . $dir )    #si fichier est un répertoire
@@ -181,17 +190,19 @@ sub process_tests {
 
             my $sequence_dir = File::Spec->catdir( $dirJob, $dir );
 
+            debug("Entering $sequence_dir", 1);
             opendir DIR, $sequence_dir;    # ouverture du sous répertoire
             my @files;
             @files = readdir DIR;
             closedir DIR;
             foreach my $file (@files) {
+                debug("Considering $file", 1);
                 if (   $file ne "."
                     && $file ne ".."
                     && -d File::Spec->catdir( $sequence_dir, $file )
                   )    # si le fichier est de type repertoire
                 {
-
+                    debug("Entering $file", 1);
                     ####Traitement fichier de sortie outStemloop
                     my $candidate_dir =
                       File::Spec->catdir( $sequence_dir, $file );
@@ -207,6 +218,7 @@ sub process_tests {
                     ####conversion en format CT
                     my $candidate_ct_optimal_file =
                       File::Spec->catfile( $candidate_dir, 'outB2ct_optimal.ct' );
+                    debug("Converting to CT", 1);
                     PipelineMiRNA::Programs::convert_to_ct(
                         $candidate_rnafold_optimal_out, $candidate_ct_optimal_file )
                       or die("Problem when converting to CT format");
@@ -219,6 +231,7 @@ sub process_tests {
 
                     my $varna_image =
                       File::Spec->catfile( $candidate_dir, 'image.png' );
+                    debug("Generating image using VARNA ", 1);
                     PipelineMiRNA::Programs::run_varna( $candidate_ct_stemloop_file,
                         $varna_image )
                       or die("Problem during image generation using VARNA");
