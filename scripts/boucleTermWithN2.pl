@@ -6,7 +6,10 @@
 #  @author : Mohcen BENMOUNAH                                        #                                                                	 #										         #
 #                                                                    #
 ######################################################################
+use strict;
+use warnings;
 use Class::Struct;
+
 my ( $CTi, $boucleTermWithN_outi ) = @ARGV;
 mask_CT_file( $CTi, $boucleTermWithN_outi );
 
@@ -14,16 +17,16 @@ sub mask_CT_file {
     my ( $CT, $boucleTermWithN_out ) = @_;
 
  # tableau associatif contenant le nom la séquence (clé) et un struct (valeur)
-    %tab = ();
+    my %tab = ();
 
     # tableau temporaire contenant les élements de la colonne 1 du fichier ct
-    $tab1 = [];
+    my $tab1 = [];
 
     # tableau temporaire contenant les élements de la colonne 5 du fichier ct
-    $tab2 = [];
+    my $tab2 = [];
 
     # tableau temporaire contenant les bases de la séquence
-    $tab3 = [];
+    my $tab3 = [];
 
     struct Sequence => {   # déclaration de la structure de données (Sequence)
         colonne1        => '@',
@@ -39,6 +42,7 @@ sub mask_CT_file {
     #ouverture du fichier de sortie de Unafold
     open( FOut, $CT )
       or die "Error when opening $CT: $!";
+    my ( $nbSeq, $numSeq, $base, $longueur, $nomSeq );
     while ( my $line = <FOut> ) {
 
         my @variable = split( '\s+', $line );
@@ -60,7 +64,7 @@ sub mask_CT_file {
             if ( $longueur == $variable[1]
               ) # tester si la longueur actuelle est égale à la longueur de la séquence
             {
-                $mySequence = Sequence->new();    # initialisation du struct
+                my $mySequence = Sequence->new();    # initialisation du struct
                 $mySequence->colonne1($tab1);
                 $mySequence->colonne5($tab2);
                 $mySequence->boucleterminale(0);
@@ -75,10 +79,11 @@ sub mask_CT_file {
     close FOut or die "Problème à la fermeture : $!";
 
 ###parcours et traitement et remplissage du struct (nb nucléotides, position deb, position fin)####
-    foreach $sequence ( values %tab ) {
+    my ( $element5Copy, $nbnucleotides, $element5, $element1 );
+    foreach my $sequence ( values %tab ) {
         $element5Copy  = -1;
         $nbnucleotides = 0;
-        for ( $i = 0 ;
+        for ( my $i = 0 ;
             $i < $sequence->length ; $i++ )  # parcours des deux colonnes 1 et 5
         {
             $element1 = $sequence->colonne1($i);
@@ -108,9 +113,9 @@ sub mask_CT_file {
     }
 ## lecture du tableau associatif et generation fichier boucleTermWithN.txt ##
     open( RES, '>>', $boucleTermWithN_out );
-    foreach $sequenceNom ( keys %tab ) {
+    foreach my $sequenceNom ( keys %tab ) {
         print RES ">" . $sequenceNom . "\n";
-        for ( $i = 0 ;
+        for ( my $i = 0 ;
             $i < $tab{$sequenceNom}->length ;
             $i++ )    # parcours des deux colonnes 1 et 5
         {
