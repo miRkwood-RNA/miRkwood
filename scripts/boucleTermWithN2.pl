@@ -31,19 +31,19 @@ struct Sequence => {    # déclaration de la structure de données (Sequence)
     length          => '$',
     base            => '@',
 };
-my ($CT) = @ARGV;
+
+#ouverture du fichier de sortie de Unafold
 open( FOut, $CT )
-  || die
-  "Problème à l\'ouverture : $!";   #ouverture du fichier de sortie de Unafold
+  or die "Error when opening $CT: $!";
 while ( my $line = <FOut> ) {
 
     my @variable = split( '\s+', $line );
-    $nbSeq  = @variable[1];
-    $numSeq = @variable[5];
-    $base   = @variable[2];
-    if ( @variable[2] =~ /^ENERGY/ ) {
-        $longueur = @variable[1];
-        $nomSeq   = substr @variable[5],
+    $nbSeq  = $variable[1];
+    $numSeq = $variable[5];
+    $base   = $variable[2];
+    if ( $variable[2] =~ /^ENERGY/ ) {
+        $longueur = $variable[1];
+        $nomSeq   = substr $variable[5],
           0;                          # Récupération du nom de la séquence
         $tab1 = [];
         $tab2 = [];
@@ -53,7 +53,7 @@ while ( my $line = <FOut> ) {
         push( @$tab1, $nbSeq );       # remplissage du tableau temporaire tab1
         push( @$tab2, $numSeq );      # remplissage du tableau temporaire	tab2
         push( @$tab3, $base );
-        if ( $longueur == @variable[1]
+        if ( $longueur == $variable[1]
           ) # tester si la longueur actuelle est égale à la longueur de la séquence
         {
             $mySequence = Sequence->new();    # initialisation du struct
@@ -68,7 +68,7 @@ while ( my $line = <FOut> ) {
         }
     }
 }
-close FOut || die "Problème à la fermeture : $!";
+close FOut or die "Problème à la fermeture : $!";
 
 ###parcours et traitement et remplissage du struct (nb nucléotides, position deb, position fin)####
 foreach $sequence ( values %tab ) {
