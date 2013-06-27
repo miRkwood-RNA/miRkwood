@@ -93,16 +93,16 @@ sub run_exonerate {
       . "--bestn 1 "
       . "--score -3 "
       . "-e -1 -o -1 "
-      . "> $output ";
+      . "> $output  2> /dev/null";
     system($exonerate_cmd);
     return ( -e $output );
 }
 
 sub run_rnastemloop {
-    my ( $input, $output ) = @_;
-    my $rnastemloop_cmd = "$rnastemploop_bin -i $input -o $output";
+    my ( $input, $output_stemloop, $output_optimal ) = @_;
+    my $rnastemloop_cmd = "$rnastemploop_bin -i $input --output-stemloop $output_stemloop --output-optimal $output_optimal";
     system($rnastemloop_cmd);
-    return ( -e $output );
+    return ( -e $output_stemloop && -e $output_optimal);
 }
 
 sub run_blast {
