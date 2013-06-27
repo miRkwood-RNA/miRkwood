@@ -71,23 +71,26 @@ sub main_entry {
           or die("Problem when running RNALfold: $!");
 
         ## Appel de RNAstemloop
-        my $rnastemloop_out =
-          File::Spec->catfile( $sequence_dir, 'rnastemloop.out' );
+        my $rnastemloop_out_optimal =
+          File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
+        my $rnastemloop_out_stemloop =
+          File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
         PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
-            $rnastemloop_out )
+            $rnastemloop_out_optimal, $rnastemloop_out_stemloop)
           or die("Problem when running RNAstemloop");
         unlink $temp_file;
-        process_RNAstemloop($rnastemloop_out);
+        process_RNAstemloop($rnastemloop_out_optimal, 'optimal');
+        process_RNAstemloop($rnastemloop_out_stemloop, 'stemloop');
     }
     process_tests( $dirJob, $mfei, $randfold, $SC, $align );
 }
 
 sub process_RNAstemloop {
-    my ($rnastemloop_out) = @_;
+    my ($rnastemloop_out, $suffix) = @_;
     my $current_sequence_dir = dirname($rnastemloop_out);
 
     my $rnaeval_out =
-      File::Spec->catfile( $current_sequence_dir, 'rnaeval.out' );
+      File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
     PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
       or die("Problem when running RNAeval");
@@ -95,7 +98,6 @@ sub process_RNAstemloop {
     my ( $nameSeq, $dna, $Vienna );
     open( my $stem, '<', $rnastemloop_out ) or die $!;
     open( my $eval, '<', $rnaeval_out )     or die $!;
-    open( my $out,  '>', 'output.txt' )     or die $!;
 
     #my $line = <$stem>;
     my $line2;
@@ -140,14 +142,14 @@ sub process_RNAstemloop {
 
                     #Writing seq.txt
                     my $candidate_sequence =
-                      File::Spec->catfile( $candidate_dir, 'seq.txt' );
+                      File::Spec->catfile( $candidate_dir, "seq.txt" );
                     open( my $OUT, '>', $candidate_sequence ) || die "$!";
                     print $OUT ">$nameSeq\n$dna\n";
                     close $OUT;
 
                     #Writing (pseudo) rnafold output
                     my $candidate_rnafold_output =
-                      File::Spec->catfile( $candidate_dir, 'outRNAFold.txt' );
+                      File::Spec->catfile( $candidate_dir, "outRNAFold_$suffix.txt" );
                     open( my $OUT2, '>', $candidate_rnafold_output )
                       || die "$!";
                     print $OUT2 ">$nameSeq\n$dna\n$structure ($energy)\n";
@@ -197,27 +199,35 @@ sub process_tests {
 
                     my $seq_file =
                       File::Spec->catfile( $candidate_dir, 'seq.txt' );
-                    my $candidate_rnafold_out =
-                      File::Spec->catfile( $candidate_dir, 'outRNAFold.txt' );
+                    my $candidate_rnafold_optimal_out =
+                      File::Spec->catfile( $candidate_dir, 'outRNAFold_optimal.txt' );
+                    my $candidate_rnafold_stemploop_out =
+                      File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
 
                     ####conversion en format CT
-                    my $candidate_ct_file =
-                      File::Spec->catfile( $candidate_dir, 'outB2ct.ct' );
+                    my $candidate_ct_optimal_file =
+                      File::Spec->catfile( $candidate_dir, 'outB2ct_optimal.ct' );
                     PipelineMiRNA::Programs::convert_to_ct(
-                        $candidate_rnafold_out, $candidate_ct_file )
+                        $candidate_rnafold_optimal_out, $candidate_ct_optimal_file )
+                      or die("Problem when converting to CT format");
+
+                    my $candidate_ct_stemloop_file =
+                      File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
+                    PipelineMiRNA::Programs::convert_to_ct(
+                        $candidate_rnafold_stemploop_out, $candidate_ct_stemloop_file )
                       or die("Problem when converting to CT format");
 
                     my $varna_image =
                       File::Spec->catfile( $candidate_dir, 'image.png' );
-                    PipelineMiRNA::Programs::run_varna( $candidate_ct_file,
+                    PipelineMiRNA::Programs::run_varna( $candidate_ct_stemloop_file,
                         $varna_image )
-                      or die("Problem suring image generation using VARNA");
+                      or die("Problem during image generation using VARNA");
 
                     ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
                     my $out_Vienna = File::Spec->catfile( $candidate_dir,
                         'outViennaTraited.txt' );
                     open( my $TRAITED_FH, '>', $out_Vienna ) || die "$!";
-                    open( my $INPUT_FH, '<', $candidate_rnafold_out )
+                    open( my $INPUT_FH, '<', $candidate_rnafold_optimal_out ) #TODO: Check if correct
                       || die "$!";
                     my ( $nameSeq, $dna, $Vienna );
                     while ( my $line = <$INPUT_FH> ) {
@@ -242,7 +252,7 @@ sub process_tests {
                     ####calcul MFEI (appel script energie.pl)
                     if ( $mfei eq "mfeiChecked" ) {
                         PipelineMiRNA::PosterioriTests::test_mfei(
-                            $candidate_dir, $candidate_ct_file, $file );
+                            $candidate_dir, $candidate_ct_optimal_file, $file );
                     }
                     ####calcul p-value randfold
                     if ( $randfold eq "randfoldChecked" ) {
@@ -256,7 +266,7 @@ sub process_tests {
                     }
                     if ( $align eq "alignChecked" ) {
                         PipelineMiRNA::PosterioriTests::test_alignment(
-                            $candidate_dir, $seq_file );
+                            $candidate_dir, $candidate_ct_stemloop_file );
                     }
                 }
             }
