@@ -35,23 +35,11 @@ sub test_alignment {
 
     # creation sequence boucle terminale masquee avec des N pour
     # chaque sequence (repertoire ) et resultat alignement mirBASE
-    my ( $candidate_dir, $seq_file ) = @_;
+    my ( $candidate_dir, $CT_file ) = @_;
     my $seqN = File::Spec->catfile( $candidate_dir, 'seqWithN.txt' );
-    open( my $SEQN_FH, '>>', $seqN )
-      or die "Impossible d'ouvrir le fichier d'entree  : $!";
-    open( my $SEQUENCE_FH, '<', $seq_file )
-      or die "Impossible d'ouvrir le fichier d'entree  : $!";
-    while ( my $line = <$SEQUENCE_FH> ) {
-        if ( $line =~ /^>/ ) {
-            print $SEQN_FH $line;
-        }
-        else {
-            $line =~ s/U/T/gi;
-            print $SEQN_FH $line;
-        }
-    }
-    close $SEQN_FH;
-    close $SEQUENCE_FH;
+#    open( my $SEQN_FH, '>>', $seqN )
+#      or die "Impossible d'ouvrir le fichier d'entree  : $!";
+    PipelineMiRNA::Components::mask_CT_file($CT_file, $seqN);
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
     PipelineMiRNA::Programs::run_exonerate( $seqN, $exonerate_out )
       or die("Problem when running Exonerate");
