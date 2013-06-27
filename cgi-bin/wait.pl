@@ -1,32 +1,44 @@
 #!/usr/bin/perl -w
+use strict;
 
 use CGI;
 use Time::gmtime;
 use File::stat;
 use Socket;
 use File::Spec;
+use Cwd qw( abs_path );
+use File::Basename qw(dirname);
+use CGI::Carp qw(fatalsToBrowser);
 
 use POSIX ":sys_wait_h";
 use IO::Handle;
 
-$dirData   = "/var/www/arn/data/";       # chemin séquence de base
-$dirScript = "/var/www/arn/scripts/";    # chemin scripts
-$html      = new CGI;
-$now       = $html->param(jobId);
-$email     = $html->param(mail);
-$nameJob   = $html->param(nameJob);
-$name      = $nameJob;
+my $local_dir = dirname( abs_path($0) );
+my $rootdir = abs_path(File::Spec->catdir( $local_dir, ".." ));
+
+my $dirScript  = File::Spec->catdir( $rootdir, 'scripts' );    # chemin script
+my $dirData    = File::Spec->catdir( $rootdir, 'data' );
+my $dirResults = File::Spec->catdir( $rootdir, 'results' );
+my $dirLib     = File::Spec->catdir( $rootdir, 'lib' );
+my $html      = new CGI;
+my $jobId     = $html->param('jobId');
+my $email     = $html->param('mail');
+my $nameJob   = $html->param('nameJob');
+my $name      = $nameJob;
+
+my $check;
 if ( $nameJob eq "" ) { $check = "noTitle" }
 
-my $results_link = 'resultsWithID.pl?run_id=' . $now . '&nameJob=' . $name;
+my $results_link = 'resultsWithID.pl?run_id=' . $jobId . '&nameJob=' . $name;
 my $results_full_link =
   'http://' . $ENV{SERVER_NAME} . '/cgi-bin/' . $results_link;
-
-my $is_finished = File::Spec->catfile( $dirData, 'job' . $now, 'finished' );
+my $dirJob_name = 'job' . $jobId;
+my $dirJob = File::Spec->catdir( $rootdir, 'results', $dirJob_name );
+my $is_finished = File::Spec->catfile( $dirJob, 'finished' );
 
 #le calcul est fini
 if ( -e $is_finished ) {
-    system( 'perl ' . $dirScript . 'email.pl ' . $nameJob . ' ' . $now );
+    system( 'perl ' . $dirScript . 'email.pl ' . $nameJob . ' ' . $jobId );
     print $html->redirect( -uri => $results_full_link );
     exit;
 }
@@ -44,7 +56,7 @@ DATA
 print "<meta http-equiv=\"Refresh\" content=\"6;URL=http://"
   . $ENV{SERVER_NAME}
   . "/cgi-bin/wait.pl?jobId="
-  . $now
+  . $jobId
   . '&nameJob='
   . $name
   . "&mail="
@@ -227,7 +239,7 @@ print <<DATA;
   Your ID is <B>
 DATA
 
-print $now;
+print $jobId;
 
 print <<DATA;
 
