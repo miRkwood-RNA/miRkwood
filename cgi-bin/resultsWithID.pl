@@ -12,8 +12,7 @@ my $rootdir = File::Spec->catdir( $local_dir, ".." );
 $id_job = $cgi->param('run_id'); # récupération id job
 my $dirJob_name = 'job'.$id_job;
 
-$dirJob = abs_path(File::Spec->catdir( $rootdir, 'results', $dirJob_name)).'/';
-#TODO Remove the trailing slash...
+$dirJob = abs_path(File::Spec->catdir( $rootdir, 'results', $dirJob_name));
 
 $names =[]; 
 $pvalues =[]; 
@@ -67,7 +66,7 @@ foreach $dir(@dirs) # parcours du contenu
 				$RandfoldExist = false;
 				$alignExist = false;
 				$SCExist = false;
-                my $pvalue = File::Spec->catfile( $subDir, 'pvalue.txt' );
+                my $pvalue = File::Spec->catfile( $subDir_full, 'pvalue.txt' );
                 if( -e $pvalue ) # si fichier existe
                 {
                     $RandfoldExist = true;
@@ -75,15 +74,14 @@ foreach $dir(@dirs) # parcours du contenu
 					while (my $line = <PVALUE>) 
 					{
 						if ( $line =~/(.*)\t(.*)\t(.*)/ )
-						{    
+						{
 							push(@$pvalues,$3); # récupération pvalues
 						}
 					}
 					close PVALUE;
-					
-				}	
+				}
 				#Récupération valeur MFEI
-				my $mfei_out = File::Spec->catfile( $subDir, 'outMFEI.txt' );
+				my $mfei_out = File::Spec->catfile( $subDir_full, 'outMFEI.txt' );
 				if( -e $mfei_out ) # si fichier existe
 				{
 					$MfeiExist = true;
@@ -100,7 +98,7 @@ foreach $dir(@dirs) # parcours du contenu
 					close MFEI;
 				}
 				#Récupération valeur self contain
-				my $selfcontain_out = File::Spec->catfile( $subDir, 'selfContain.txt' );
+				my $selfcontain_out = File::Spec->catfile( $subDir_full, 'selfContain.txt' );
 				if( -e $selfcontain_out ) # si fichier existe
 				{
 					$SCExist = true;
@@ -116,7 +114,7 @@ foreach $dir(@dirs) # parcours du contenu
 				}
 					
 				#Récupération séquence et format Vienna
-				my $vienna_out = File::Spec->catfile( $subDir, 'outViennaTraited.txt' );
+				my $vienna_out = File::Spec->catfile( $subDir_full, 'outViennaTraited.txt' );
 				if( -e $vienna_out ) # si fichier existe
                 {
     				open (my $VIENNA, '<', $vienna_out) || die "$!";
@@ -132,7 +130,7 @@ foreach $dir(@dirs) # parcours du contenu
     				close $VIENNA;
                 }
 				#Récupération alignement avec mirBase 
-				my $alignement = File::Spec->catfile( $subDir, 'alignement.txt' );
+				my $alignement = File::Spec->catfile( $subDir_full, 'alignement.txt' );
 				if( -e $alignement ) # si fichier existe
 				{
 					$alignExist = true;
