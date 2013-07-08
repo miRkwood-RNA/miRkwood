@@ -38,7 +38,7 @@ close $INPUT_FH2;
 my %expected2 =
   ( '>fasta1' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
 is_deeply( \%tab2, \%expected2,
-    'Parsing FASTA with long header with parse_multi_fasta ok' );
+           'Parsing FASTA with long header with parse_multi_fasta ok' );
 
 my $fastaFile3 = input_file('fasta_with_pipes.fa');
 file_exists_ok($fastaFile3);
@@ -47,7 +47,26 @@ ok( my %tab3 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH3),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH3;
 my %expected3 = ( '>gi-425626932-gb-JX648278.1-' =>
-      'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
+                  'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
 
 is_deeply( \%tab3, \%expected3,
-    'Parsing FASTA with pipes using parse_multi_fasta ok' );
+           'Parsing FASTA with pipes using parse_multi_fasta ok' );
+
+##################################################################
+diag('Testing find_matching_count()');
+is( PipelineMiRNA::Utils::find_matching_count('()..'), 1 );
+is( PipelineMiRNA::Utils::find_matching_count('..()'), 1 );
+is( PipelineMiRNA::Utils::find_matching_count('.().'), 1 );
+is( PipelineMiRNA::Utils::find_matching_count('()..'), 1 );
+is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1 );
+
+##################################################################
+diag('Testing make_loop()');
+is_deeply( PipelineMiRNA::Utils::make_loop('AA'), [ ['A'], [' '], ['A'] ] );
+is_deeply( PipelineMiRNA::Utils::make_loop('AAA'),
+           [ ['A'], [ ' ', 'A' ], ['A'] ] );
+is_deeply( PipelineMiRNA::Utils::make_loop('AAAA'),
+           [ [ 'A', 'A' ], [ ' ', ' ' ], [ 'A', 'A' ] ] );
+is_deeply(
+    PipelineMiRNA::Utils::make_loop('AAAAA'),
+    [ [ 'A', 'A' ], [ ' ', ' ', 'A' ], [ 'A', 'A' ] ] );

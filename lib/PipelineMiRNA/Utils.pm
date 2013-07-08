@@ -41,4 +41,43 @@ sub filter_fasta {
     return;
 }
 
+sub find_matching_count {
+    my $structure = shift;
+    my $stop = 1;
+    my $parenthesisCounter = 0;
+    my $iteration = -1;
+    my $element;
+    while($stop){
+        $iteration += 1;
+        $element = substr($structure, $iteration, 1);
+        if($element eq '.'){
+        }
+        elsif($element eq '('){
+            $parenthesisCounter += 1;
+        }elsif($element eq ')'){
+            $stop = 0;
+        }
+    }
+    return $parenthesisCounter
+}
+
+sub make_loop {
+    my $sequence = shift;
+    my (@upper, @middle, @lower);
+    my $quotient = int(length($sequence) / 2);
+    my $modulo = int(length($sequence) % 2);
+    push(@middle, (" ") x $quotient);
+    if ($modulo != 0){
+        push(@middle, substr($sequence, $quotient, 1));
+    }
+    push(@upper, split('', substr($sequence, 0, $quotient)));
+    push(@lower, split('', substr($sequence, $quotient, $quotient)));
+    my @AOA;
+    $AOA[0] = [ @upper ];
+    $AOA[1] = [ @middle ];
+    $AOA[2] = [ @lower ];
+    return [ @AOA ];
+}
+
 1;
+
