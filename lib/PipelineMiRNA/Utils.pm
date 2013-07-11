@@ -78,9 +78,9 @@ sub make_loop {
     my $sequence = shift;
     my $SPACE    = q{ };
     my ( @top, @upper, @middle, @lower, @bottom );
-    my $quotient = int( ( length($sequence) - 2 ) / 2 );
-    print $sequence, $SPACE, length($sequence), $SPACE, $quotient;
-    my $modulo = int( length($sequence) % 2 );
+    my $len = length($sequence);
+    my $quotient = int( ( $len - 2 ) / 2 );
+    my $modulo = int( $len % 2 );
     push( @middle, ($SPACE) x $quotient );
     push( @upper,  ($SPACE) x $quotient );
     push( @lower,  ($SPACE) x $quotient );
@@ -89,8 +89,8 @@ sub make_loop {
     }
     push( @top,    split( '', substr( $sequence, 0,             $quotient ) ) );
     push( @upper,  split( '', substr( $sequence, $quotient,     1 ) ) );
-    push( @lower,  split( '', substr( $sequence, $quotient + 2, 1 ) ) );
-    push( @bottom, split( '', substr( $sequence, $quotient + 2, $quotient ) ) );
+    push( @lower,  split( '', substr( $sequence, $len - $quotient - 1, 1 ) ) );
+    push( @bottom, split( '', substr( $sequence, $len - $quotient, $quotient ) ) );
     my @AOA;
     $AOA[0] = [@top];
     $AOA[1] = [@upper];

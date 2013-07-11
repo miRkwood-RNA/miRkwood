@@ -62,11 +62,11 @@ is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1 );
 
 ##################################################################
 diag('Testing make_loop()');
-is_deeply( PipelineMiRNA::Utils::make_loop('AA'), [ ['A'], [' '], ['A'] ] );
-is_deeply( PipelineMiRNA::Utils::make_loop('AAA'),
-           [ ['A'], [ ' ', 'A' ], ['A'] ] );
-is_deeply( PipelineMiRNA::Utils::make_loop('AAAA'),
-           [ [ 'A', 'A' ], [ ' ', ' ' ], [ 'A', 'A' ] ] );
-is_deeply(
-    PipelineMiRNA::Utils::make_loop('AAAAA'),
-    [ [ 'A', 'A' ], [ ' ', ' ', 'A' ], [ 'A', 'A' ] ] );
+my @res1 = PipelineMiRNA::Utils::make_loop('123');
+is_deeply( \@res1, [ [], ['1'], ['2'], ['3'], [] ] );
+
+my @res2 = PipelineMiRNA::Utils::make_loop('1234');
+is_deeply( \@res2, [ ['1'], [' ', '2'], [' '], [' ', '3'], ['4'] ] );
+
+my @res3 = PipelineMiRNA::Utils::make_loop('12345');
+is_deeply(\@res3, [ ['1'], [' ', '2'], [' ', '3'], [' ', '4'], ['5'] ] );
