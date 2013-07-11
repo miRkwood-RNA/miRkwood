@@ -1,10 +1,16 @@
 #!/usr/bin/perl -w
 use Class::Struct;
-use CGI; 
-my $cgi = new CGI; 
+use CGI;
+my $cgi = CGI->new;
+use CGI::Carp qw(fatalsToBrowser);
 use Cwd qw( abs_path );
 use File::Basename qw(dirname);
 use File::Spec;
+
+use FindBin;                     # locate this script
+use lib "$FindBin::Bin/../lib";  # use the parent directory
+use PipelineMiRNA::WebFunctions;
+
 
 my $local_dir = dirname( abs_path($0) );
 my $rootdir = File::Spec->catdir( $local_dir, ".." );
@@ -38,7 +44,7 @@ struct results => {        # déclaration de la structure de données
 	alignement=> '@',
 	selfContain=> '@',
 };
-$name_job = $cgi->param('nameJob'); # récupération id job	
+#$name_job = $cgi->param('nameJob'); # récupération id job	
 
 opendir DIR, $dirJob; #ouverture répertoire job
 my @dirs;
@@ -165,6 +171,12 @@ $myResults->DNASequence($DNASequence);
 $myResults->Vienna($Vienna);
 $myResults->alignement($alignement);
 $myResults->selfContain($selfContain);
+
+my $csv = PipelineMiRNA::WebFunctions->resultstruct2csv(scalar(@$names), $myResults);
+my $csv_file = File::Spec->catfile($dirJob, 'result.csv');
+open (my $CSV, '>', $csv_file) or die "Error when opening $csv_file: $!";
+print $CSV $csv;
+close $CSV or die "Cannot close $csv_file: $!";
 print <<DATA;
 Content-type: application/xhtml+xml
 
@@ -217,12 +229,13 @@ for ($i=0;$i<scalar(@$names); $i++)
 		
 	$baliseSeq=$baliseSeq."' image='"."/arn/data/job".$id_job.'/'.$myResults->names($i)."/".$myResults->names($i)."__".$myResults->positions($i)."/image.png' Vienna='".$myResults->Vienna($i)."' DNASequence='".$myResults->DNASequence($i)."'></Sequence>\n";
 	print $baliseSeq;
+
 	#print "<Sequence name='".$myResults->names($i)."' position='".$myResults->positions($i)."' mfei='".$myResults->mfeis($i)."'  p_value='".$myResults->pvalues($i)."' image='".$myResults->names($i)."_ss.ps' Vienna='".$myResults->Vienna($i)."' DNASequence='".$myResults->DNASequence($i)."'></Sequence>\n";	 
 	#print "<Sequence name='".$myResults->names($i)."' position='".$myResults->positions($i)."' mfei='".$myResults->mfeis($i)."'  p_value='".$myResults->pvalues($i)."' image='".$dirImages.$myResults->names($i)."_ss.ps' ' DNA='".$myResults->DNASequence($i)."' Vienna='".$myResults->Vienna($i)."></Sequence>\n";	
 }
-print <<DATA;		
+print <<"DATA";		
 		</results>
-		
+	<a href="./resultsAsCSV.pl?run_id=$id_job">Download as CSV</a>
 	</body>
 
 </html>
