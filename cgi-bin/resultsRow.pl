@@ -75,7 +75,7 @@ print <<DATA;
 
 
 <li><b>Structure :</b></li>
-<a href="../scripts/test.jnlp">Launch</a>
+<a href="../arn/programs/varna.jnlp">Launch</a>
 		<div class="figure" >
 DATA
 
