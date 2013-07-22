@@ -57,7 +57,8 @@ sub convert_to_ct {
 
 sub run_rnalfold {
     my ( $input, $output ) = @_;
-    my $rnalfold_cmd = "$rnalfold_bin < $input > $output";
+    my $options = '-L 400';
+    my $rnalfold_cmd = "$rnalfold_bin $options < $input > $output";
     system($rnalfold_cmd);
     return ( -e $output );
 }
