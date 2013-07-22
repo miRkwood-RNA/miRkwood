@@ -7,6 +7,7 @@ use File::Spec;
 use FindBin qw($Bin);
 use Cwd qw(abs_path);
 use File::Basename qw(dirname);
+use File::Copy;
 
 my $module_path = abs_path(dirname(__FILE__));
 my $rootdir = File::Spec->catdir($module_path, '..', '..');
@@ -14,9 +15,10 @@ my $rootdir = File::Spec->catdir($module_path, '..', '..');
 my $dirProgs = File::Spec->catdir( $rootdir, 'programs' );
 
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
-my $rnafold_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAfold' );
-my $rnalfold_bin = File::Spec->catfile( $vienna_dir, 'Progs', 'RNALfold' );
-my $rnaeval_bin  = File::Spec->catfile( $vienna_dir, 'Progs', 'RNAeval' );
+my $vienna_progs_dir = File::Spec->catdir( $vienna_dir, 'Progs');
+my $rnafold_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAfold' );
+my $rnalfold_bin = File::Spec->catfile( $vienna_progs_dir, 'RNALfold' );
+my $rnaeval_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAeval' );
 my $b2ct_bin     = File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
 
 my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
@@ -29,11 +31,14 @@ my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 my $blastx_bin = 'blastx';
 #File::Spec->catfile( $dirProgs, 'blastx' );
 
+my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.1'   , 'miRdup.jar' );
 
 ## Data ##
 my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
 my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
 my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
+my $miRdup_model_path =File::Spec->catdir( $dirData, 'mirdup');
+my $miRdup_model_name = 'MirbaseFile.model';
 
 sub run_varna {
 
@@ -117,6 +122,62 @@ sub run_blast {
       . "-out $output";
     system($blastx_cmd);
     return ( -e $output );
+}
+
+=method train_mirdup
+
+Train a MiRdup model using the given data
+
+ Usage : PipelineMiRNA::Programs::train_mirdup($matures_miRNA, $hairpins_precursors);
+ Input : Matures miRNAs file, in FASTA format
+         Hairpins precursors file, in FASTA format
+ Return: -
+
+=cut
+
+sub train_mirdup {
+    my @args                = @_;
+    my $matures_miRNA       = shift @args;
+    my $hairpins_precursors = shift @args;
+    my $run_mirdup_cmd =
+"java -Xms500m -Xmx1500m -jar $miRdup_jar -r $vienna_progs_dir -m $matures_miRNA -h $hairpins_precursors";
+    system($run_mirdup_cmd);
+    return;
+}
+
+=method run_mirdup_prediction_on_sequence
+
+Predict a miRNA given a pre-miRNA using MiRdup model.
+
+ Usage : PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence($sequence, $result_dir, $name);
+ Input : 
+ Return: -
+
+=cut
+
+sub run_mirdup_prediction_on_sequence {
+    my @args        = @_;
+    my $sequence    = shift @args;
+    my $output_dir  = shift @args;
+    my $output_name = shift @args;
+    my $output =
+        $output_name
+      . '.generatedmirnas.'
+      . $miRdup_model_name
+      . '.miRdupOutput.txt';
+    my $run_mirdup_cmd =
+"java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -u $sequence -f $output_name ";
+    chdir($miRdup_model_path) or die "$!";
+    system($run_mirdup_cmd);
+
+    my @old_files = glob "$miRdup_model_path/$output_name*";
+
+    foreach my $old_file (@old_files) {
+        move( $old_file, $output_dir )
+          or die "Could not move $old_file to $output_dir: $!\n";
+    }
+    my $output_file = File::Spec->catfile( $output_dir, $output );
+    return ( -e $output_file );
 }
 
 1;
