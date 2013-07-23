@@ -39,6 +39,71 @@ sub parse_multi_fasta {
     return %tab;
 }
 
+=method rewrite_fasta_with_TU
+
+Rewrite a multi FASTA by changing T with U (or the reverse).
+
+Input:
+ - the way to substitute: 'T' for changing U with T, 'U' for changing T with U
+ - a file handle for the input multi-fasta
+ - a file handle for the output multi-fasta
+Output: -
+
+=cut
+
+sub rewrite_fasta_with_TU {
+    my (@args)      = @_;
+    my $nucleotide  = shift @args;
+    my ($INPUT_FH)  = shift @args;
+    my ($OUTPUT_FH) = shift @args;
+    while ( my $line = <$INPUT_FH> ) {
+        if ( grep { /^>/ } $line ) {
+
+            #            chomp $line;
+            print $OUTPUT_FH $line;
+        }
+        else {
+
+            #            chomp $line;
+            if ( $nucleotide eq 'U' ) {
+                $line =~ s/T/U/g;
+                $line =~ s/t/u/g;
+            }
+            elsif ( $nucleotide eq 'T' ) {
+                $line =~ s/U/T/g;
+                $line =~ s/u/t/g;
+            }
+            print $OUTPUT_FH $line;
+        }
+    }
+    return;
+}
+
+=method rewrite_fasta_with_TU_in_file
+
+Wrapper method for rewrite_fasta_with_TU
+
+Input:
+ - the way to substitute: 'T' for changing U with T, 'U' for changing T with U
+ - a file path to the input multi-fasta
+ - a file path to the output multi-fasta
+Output: -
+
+=cut
+
+sub rewrite_fasta_with_TU_in_file {
+    my (@args)                   = @_;
+    my $nucleotide               = shift @args;
+    my $sequences_to_filter_file = shift @args;
+    my $output_file              = shift @args;
+    open my $ENTREE_FH, '<', $sequences_to_filter_file;
+    open my $OUTPUT_FH, '>', $output_file;
+    rewrite_fasta_with_TU( $nucleotide, $ENTREE_FH, $OUTPUT_FH );
+    close $ENTREE_FH;
+    close $OUTPUT_FH;
+    return;
+}
+
 sub filter_fasta {
     my $FASTA_FH           = shift;
     my $RES_FH             = shift;
