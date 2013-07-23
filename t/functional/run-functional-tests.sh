@@ -30,12 +30,10 @@ ok 'FilterCDS' [ `diff $EXCLUDES -qr $BASEDIR/expected/filtercds/ $BASEDIR/outpu
 
 rm -rf $BASEDIR/output/fullpipeline1/ && mkdir -p $BASEDIR/output/fullpipeline1/ && cp $BASEDIR/data/sequenceSomething.fas $BASEDIR/output/fullpipeline1/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl unChecked  mfeiChecked randfoldChecked UNSCChecked UNalignChecked $BASEDIR/output/fullpipeline1/ ATpepTAIR10
-diff $EXCLUDES -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/
 ok 'Full pipeline' [ `diff $EXCLUDES -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline2/ && mkdir -p $BASEDIR/output/fullpipeline2/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/fullpipeline2/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl checked  mfeiChecked randfoldChecked UNSCChecked UNalignChecked $BASEDIR/output/fullpipeline2/ ATpepTAIR10
-diff $EXCLUDES -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/
 ok 'Full pipeline with FilteringCDS' [ `diff $EXCLUDES -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline3/ && mkdir -p $BASEDIR/output/fullpipeline3/ && cp $BASEDIR/data/sequenceSomething.fas $BASEDIR/output/fullpipeline3/sequenceUpload.fas
