@@ -104,6 +104,18 @@ sub rewrite_fasta_with_TU_in_file {
     return;
 }
 
+=method filter_fasta
+
+Filter a multi FASTA with a given list of sequence names
+
+Input:
+ - a file handle for the FASTA to filter
+ - a file handle for the output
+ - the sequences to remove, as an hash name => whatever
+Output: -
+
+=cut
+
 sub filter_fasta {
     my $FASTA_FH           = shift;
     my $RES_FH             = shift;
