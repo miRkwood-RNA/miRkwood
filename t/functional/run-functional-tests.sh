@@ -22,18 +22,22 @@ ROOTDIR=$BASEDIR/../..
 plan 4
 
 ### Testing script of the PipelineMiRNA
+EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*.log"
+
 rm -rf $BASEDIR/output/filtercds/ && mkdir -p $BASEDIR/output/filtercds/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/filtercds/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/filterCDS.pl $ROOTDIR/data/ $BASEDIR/output/filtercds/ ATpepTAIR10
-ok 'FilterCDS' [ `diff --exclude=.svn --exclude=outBlast.txt -qr $BASEDIR/expected/filtercds/ $BASEDIR/output/filtercds/ | wc -l` -eq 0 ]
+ok 'FilterCDS' [ `diff $EXCLUDES -qr $BASEDIR/expected/filtercds/ $BASEDIR/output/filtercds/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline1/ && mkdir -p $BASEDIR/output/fullpipeline1/ && cp $BASEDIR/data/sequenceSomething.fas $BASEDIR/output/fullpipeline1/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl unChecked  mfeiChecked randfoldChecked UNSCChecked UNalignChecked $BASEDIR/output/fullpipeline1/ ATpepTAIR10
-ok 'Full pipeline' [ `diff --exclude=.svn --exclude=pvalue.txt -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l` -eq 0 ]
+diff $EXCLUDES -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/
+ok 'Full pipeline' [ `diff $EXCLUDES -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline2/ && mkdir -p $BASEDIR/output/fullpipeline2/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/fullpipeline2/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl checked  mfeiChecked randfoldChecked UNSCChecked UNalignChecked $BASEDIR/output/fullpipeline2/ ATpepTAIR10
-ok 'Full pipeline with FilteringCDS' [ `diff --exclude=.svn --exclude=outBlast.txt --exclude=pvalue.txt -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l` -eq 0 ]
+diff $EXCLUDES -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/
+ok 'Full pipeline with FilteringCDS' [ `diff $EXCLUDES -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline3/ && mkdir -p $BASEDIR/output/fullpipeline3/ && cp $BASEDIR/data/sequenceSomething.fas $BASEDIR/output/fullpipeline3/sequenceUpload.fas
 perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl UNchecked  mfeiChecked randfoldChecked UNSCChecked alignChecked $BASEDIR/output/fullpipeline3/ ATpepTAIR10
-ok 'Full pipeline with alignment' [ `diff --exclude=.svn --exclude=outBlast.txt --exclude=pvalue.txt -qr $BASEDIR/output/fullpipeline3/ $BASEDIR/expected/fullpipeline3/ | wc -l` -eq 0 ]
+ok 'Full pipeline with alignment' [ `diff $EXCLUDES -qr $BASEDIR/output/fullpipeline3/ $BASEDIR/expected/fullpipeline3/ | wc -l` -eq 0 ]
