@@ -93,13 +93,16 @@ sub run_selfcontain {
 
 sub run_exonerate {
     my ( $input, $output ) = @_;
+    my $output_fmt = 'name : %ti\n  begin: %tab\n  end  : %tae\n  score: %s\n  seq  : %tas\n';
     my $exonerate_cmd =
         "$exonerate_bin " . "-E "
       . "--model affine:bestfit $mirbase_file $input "
       . "-d $matrix_file "
-      . "--bestn 1 "
-      . "--score -3 "
-      . "-e -1 -o -1 "
+      . '--bestn 1 '
+      . '--score -3 '
+      . '-e -1 -o -1 '
+      . '--showvulgar no --showalignment no --verbose 0 '
+      . "--ryo '$output_fmt'"
       . "> $output  2> /dev/null";
     system($exonerate_cmd);
     return ( -e $output );
