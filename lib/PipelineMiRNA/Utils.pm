@@ -289,4 +289,45 @@ END
     return $result;
 }
 
+=method filter_mirbase_hairpins
+
+Filter a multi-FASTA file to match the contents of another
+multi-FASTA file, in the MiRbase hairpin/precursor way.
+
+Usage: filter_mirbase_hairpins('data/MirbaseFile.txt',
+                               'data/hairpin.fa',
+                               'hairpin-filtered.fa');
+=cut
+
+sub filter_mirbase_hairpins {
+    my (@args)                        = @_;
+    my $sequences_to_filter_file      = shift @args;
+    my $sequences_to_be_filtered_file = shift @args;
+    my $output                        = shift @args;
+    my $counter;
+    open my $ENTREE_FH, '<', $sequences_to_filter_file
+      or die "Error when opening sequences -$sequences_to_filter_file-: $!";
+    my %sequences_to_filter =
+      PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH, 1);
+    close $ENTREE_FH;
+
+    open( my $FSeq, '<', $sequences_to_be_filtered_file )
+      or die "Error when opening file $sequences_to_be_filtered_file: $!";
+    open( my $RES_FH, '>>', $output )
+      or die "Error when opening file $output: $!";
+    my $lineSeq;
+    my $nameSeq;
+    my $RESULT = "";
+    while ( my $line = <$FSeq> ) {
+        if ( grep { /^>/msx } $line ) {
+            $nameSeq = ( split( ' ', $line ) )[0];
+            $nameSeq = uc $nameSeq;
+        }
+        if ( exists( $sequences_to_filter{ uc $nameSeq } ) ) {
+            printf $RES_FH $line;
+        }
+    }
+    return;
+}
+
 1;
