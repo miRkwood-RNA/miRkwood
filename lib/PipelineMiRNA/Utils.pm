@@ -3,14 +3,31 @@ package PipelineMiRNA::Utils;
 use strict;
 use warnings;
 
+=method parse_multi_fasta
+
+Parse a multi FASTA
+
+Input:
+  - a file handle to the multi-fasta
+  - a boolean on whether to upper case the sequence shortname
+Output: An hash shortname=>sequence
+
+=cut
+
 sub parse_multi_fasta {
-    my ($INPUT_FH) = @_;
+    my @args = @_;
+    my ($INPUT_FH) = shift @args;
+    my $to_uppercase = 0;
+    $to_uppercase  = shift @args if @args;
     my %tab = ();
     my $nameSeq;
     while ( my $line = <$INPUT_FH> ) {
         if ( grep { /^>/ } $line ) {
             chomp $line;
             $nameSeq = ( split( ' ', $line ) )[0];
+            if ($to_uppercase) {
+                $nameSeq = uc $nameSeq;
+            }
             $nameSeq =~ s/\|/-/g;
             $tab{$nameSeq} = '';
         }
