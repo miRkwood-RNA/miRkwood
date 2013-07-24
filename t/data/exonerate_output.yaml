@@ -1,0 +1,94 @@
+- name : aly-miR169a
+  begin: 19
+  end  : 40
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : aly-miR169a*
+  begin: 17
+  end  : 38
+  score: -3
+  seq  : TGTAGCCAAGGACAACTTGCC
+
+  alignment: |
+    - -
+    T T
+    G g
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    A g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    - -
+- name : aly-miR169d
+  begin: 17
+  end  : 38
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+
