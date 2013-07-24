@@ -93,7 +93,13 @@ sub run_selfcontain {
 
 sub run_exonerate {
     my ( $input, $output ) = @_;
-    my $output_fmt = 'name : %ti\n  begin: %tab\n  end  : %tae\n  score: %s\n  seq  : %tas\n';
+    my $output_fmt = '- name : %qi\n'
+                    .'  begin: %tab\n'
+                    .'  end  : %tae\n'
+                    .'  score: %s\n'
+                    .'  seq  : %qas\n'
+                    .'  alignment: |{\n'
+                    .'    %Pqs %Pts}\n';
     my $exonerate_cmd =
         "$exonerate_bin " . "-E "
       . "--model affine:bestfit $mirbase_file $input "
