@@ -8,6 +8,7 @@ package PipelineMiRNA::Components;
 use strict;
 use warnings;
 
+use YAML;
 use File::Spec;
 use Class::Struct;
 use PipelineMiRNA::Programs;
@@ -123,7 +124,6 @@ sub compute_energy {
     return;
 }
 
-
 sub mask_CT_file {
     my ( $CT, $boucleTermWithN_out ) = @_;
 
@@ -234,6 +234,71 @@ sub mask_CT_file {
     }
     close $RES or die "Problème à la fermeture : $!";
     return $boucleTermWithN_out;
+}
+
+=method parse_custom_exonerate_output
+
+Parse our custom Exonerate output
+(as defined in Programs::run_exonerate)
+
+Usage: parse_exonerate_alignment($alignment);
+
+=cut
+
+sub parse_custom_exonerate_output{
+    my @args = @_;
+    my $yaml_file = shift @args;
+    my @contents = @{YAML::LoadFile($yaml_file)};
+    my %results;
+    foreach my $element (@contents){
+         my $key = "$element->{'begin'}-$element->{'end'}";
+         my $value = {
+             'name' => $element->{'name'},
+             'seq' => $element->{'seq'},
+             'score' => $element->{'score'},
+             'alignment' => parse_exonerate_alignment($element->{'alignment'}),
+         };
+         if (! exists $results{$key}) {
+             $results{$key} = ();
+         }
+         push @{$results{$key}}, $value;
+    }
+    return %results;
+}
+
+=method parse_exonerate_alignment
+
+Parse the alignment given in the output of Exonerate
+
+Usage: parse_exonerate_alignment($alignment);
+
+=cut
+
+sub parse_exonerate_alignment {
+    my @args = @_;
+    my $alignment = shift @args;
+
+    my $SPACE = q{ };
+    my @top;
+    my @middle;
+    my @bottom;
+
+    for (split /\n/mxs, $alignment ) {
+        my ($first, $second) = split($SPACE, uc $_);
+        push( @top,    $first );
+        push( @bottom, $second );
+        if ( $first eq $second && $first ne '-') {
+            push( @middle, '|' );
+        }else{
+            push( @middle, $SPACE );
+        }
+    }
+    my $result = <<"END";
+@top
+@middle
+@bottom
+END
+    return $result;
 }
 
 1;
