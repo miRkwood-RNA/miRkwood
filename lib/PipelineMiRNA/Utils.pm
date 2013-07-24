@@ -15,21 +15,25 @@ Output: An hash shortname=>sequence
 =cut
 
 sub parse_multi_fasta {
-    my @args = @_;
-    my ($INPUT_FH) = shift @args;
+    my @args         = @_;
+    my ($INPUT_FH)   = shift @args;
     my $to_uppercase = 0;
-    $to_uppercase  = shift @args if @args;
-    my %tab = ();
+    if (@args) {
+        $to_uppercase = shift @args;
+    }
+    my %tab   = ();
+    my $SPACE = q{ };
+    my $EMPTY = q{};
     my $nameSeq;
     while ( my $line = <$INPUT_FH> ) {
-        if ( grep { /^>/ } $line ) {
+        if ( grep { /^>/smx } $line ) {
             chomp $line;
-            $nameSeq = ( split( ' ', $line ) )[0];
+            $nameSeq = ( split( $SPACE, $line ) )[0];
             if ($to_uppercase) {
                 $nameSeq = uc $nameSeq;
             }
             $nameSeq =~ s/\|/-/g;
-            $tab{$nameSeq} = '';
+            $tab{$nameSeq} = $EMPTY;
         }
         else {
             chomp $line;
@@ -57,14 +61,10 @@ sub rewrite_fasta_with_TU {
     my ($INPUT_FH)  = shift @args;
     my ($OUTPUT_FH) = shift @args;
     while ( my $line = <$INPUT_FH> ) {
-        if ( grep { /^>/ } $line ) {
-
-            #            chomp $line;
-            print $OUTPUT_FH $line;
+        if ( grep { /^>/msx } $line ) {
+            print {$OUTPUT_FH} $line;
         }
         else {
-
-            #            chomp $line;
             if ( $nucleotide eq 'U' ) {
                 $line =~ s/T/U/g;
                 $line =~ s/t/u/g;
@@ -73,7 +73,7 @@ sub rewrite_fasta_with_TU {
                 $line =~ s/U/T/g;
                 $line =~ s/u/t/g;
             }
-            print $OUTPUT_FH $line;
+            print {$OUTPUT_FH} $line;
         }
     }
     return;
@@ -96,11 +96,13 @@ sub rewrite_fasta_with_TU_in_file {
     my $nucleotide               = shift @args;
     my $sequences_to_filter_file = shift @args;
     my $output_file              = shift @args;
-    open my $ENTREE_FH, '<', $sequences_to_filter_file;
-    open my $OUTPUT_FH, '>', $output_file;
+    open my $ENTREE_FH, '<', $sequences_to_filter_file
+      or die "Error when opening file $sequences_to_filter_file: $!";
+    open my $OUTPUT_FH, '>', $output_file
+      or die "Error when opening file $output_file: $!";
     rewrite_fasta_with_TU( $nucleotide, $ENTREE_FH, $OUTPUT_FH );
-    close $ENTREE_FH;
-    close $OUTPUT_FH;
+    close $ENTREE_FH or die "Unable to close: $!";
+    close $OUTPUT_FH or die "Unable to close: $!";
     return;
 }
 
@@ -123,13 +125,12 @@ sub filter_fasta {
     my %sequence_to_filter = %{$sequence_to_filter};
 
     my $lineSeq;
-    my $RESULT = "";
     while ( my $line = <$FASTA_FH> ) {
         if ( grep { /^>/msx } $line ) {
             $lineSeq = substr $line, 1, -1;
         }
         if ( !exists( $sequence_to_filter{$lineSeq} ) ) {
-            printf $RES_FH $line;
+            printf {$RES_FH} $line;
         }
     }
     return;
@@ -171,6 +172,7 @@ Return an ASCII representation of the final loop.
 sub make_loop {
     my $sequence = shift;
     my $SPACE    = q{ };
+    my $EMPTY    = q{ };
     my ( @top, @upper, @middle, @lower, @bottom );
     my $len      = length($sequence);
     my $quotient = int( ( $len - 2 ) / 2 );
@@ -178,14 +180,16 @@ sub make_loop {
     push( @middle, ($SPACE) x $quotient );
     push( @upper,  ($SPACE) x $quotient );
     push( @lower,  ($SPACE) x $quotient );
+
     if ( $modulo != 0 ) {
         push( @middle, substr( $sequence, $quotient + 1, 1 ) );
     }
-    push( @top,   split( '', substr( $sequence, 0,         $quotient ) ) );
-    push( @upper, split( '', substr( $sequence, $quotient, 1 ) ) );
-    push( @lower, split( '', substr( $sequence, $len - $quotient - 1, 1 ) ) );
+    push( @top,   split( $EMPTY, substr( $sequence, 0,         $quotient ) ) );
+    push( @upper, split( $EMPTY, substr( $sequence, $quotient, 1 ) ) );
+    push( @lower,
+        split( $EMPTY, substr( $sequence, $len - $quotient - 1, 1 ) ) );
     push( @bottom,
-          split( '', substr( $sequence, $len - $quotient, $quotient ) ) );
+        split( $EMPTY, substr( $sequence, $len - $quotient, $quotient ) ) );
     my @AOA;
     $AOA[0] = [@top];
     $AOA[1] = [@upper];
@@ -263,7 +267,7 @@ sub make_ASCII_viz {
         }
 
         if ( $left ge $parenthesis_number
-             and length($sequence) - $right - 1 ge $parenthesis_number )
+            and ( length($sequence) - $right - 1 ) ge $parenthesis_number )
         {
             $stop = 1;
         }
@@ -305,12 +309,11 @@ sub filter_mirbase_hairpins {
     my $sequences_to_filter_file      = shift @args;
     my $sequences_to_be_filtered_file = shift @args;
     my $output                        = shift @args;
-    my $counter;
     open my $ENTREE_FH, '<', $sequences_to_filter_file
       or die "Error when opening sequences -$sequences_to_filter_file-: $!";
     my %sequences_to_filter =
-      PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH, 1);
-    close $ENTREE_FH;
+      PipelineMiRNA::Utils::parse_multi_fasta( $ENTREE_FH, 1 );
+    close $ENTREE_FH or die "Unable to close: $!";
 
     open( my $FSeq, '<', $sequences_to_be_filtered_file )
       or die "Error when opening file $sequences_to_be_filtered_file: $!";
@@ -318,16 +321,17 @@ sub filter_mirbase_hairpins {
       or die "Error when opening file $output: $!";
     my $lineSeq;
     my $nameSeq;
-    my $RESULT = "";
     while ( my $line = <$FSeq> ) {
         if ( grep { /^>/msx } $line ) {
-            $nameSeq = ( split( ' ', $line ) )[0];
+            $nameSeq = ( split( q{ }, $line ) )[0];
             $nameSeq = uc $nameSeq;
         }
         if ( exists( $sequences_to_filter{ uc $nameSeq } ) ) {
-            printf $RES_FH $line;
+            printf {$RES_FH} $line;
         }
     }
+    close $FSeq   or die "Unable to close: $!";
+    close $RES_FH or die "Unable to close: $!";
     return;
 }
 
