@@ -251,9 +251,15 @@ sub parse_custom_exonerate_output{
     my @contents = @{YAML::LoadFile($yaml_file)};
     my %results;
     foreach my $element (@contents){
-         my $key = "$element->{'begin'}-$element->{'end'}";
+         my $key = "$element->{'begin_target'}-$element->{'end_target'}";
          my $value = {
              'name' => $element->{'name'},
+             'seq' => $element->{'seq'},
+             'score' => $element->{'score'},
+             'begin_target' => $element->{'begin_target'},
+             'end_target' => $element->{'end_target'},
+             'begin_query' => $element->{'begin_query'},
+             'end_query' => $element->{'end_query'},
              'seq' => $element->{'seq'},
              'score' => $element->{'score'},
              'alignment' => parse_exonerate_alignment($element->{'alignment'}),

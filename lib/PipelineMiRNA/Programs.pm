@@ -94,8 +94,10 @@ sub run_selfcontain {
 sub run_exonerate {
     my ( $input, $output ) = @_;
     my $output_fmt = '- name : %qi\n'
-                    .'  begin: %tab\n'
-                    .'  end  : %tae\n'
+                    .'  begin_target: %tab\n'
+                    .'  end_target  : %tae\n'
+                    .'  begin_query : %qab\n'
+                    .'  end_query   : %qae\n'
                     .'  score: %s\n'
                     .'  seq  : %qas\n'
                     .'  alignment: |{\n'
