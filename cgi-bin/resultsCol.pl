@@ -1,12 +1,22 @@
 #!/usr/bin/perl -w
+use strict;
+use warnings;
+
 use CGI;
 
-my $cgi = new CGI; 
-$factor = $cgi->param('factor');
-@values = $cgi->param();
+my $cgi        = CGI->new();
+my $factor     = $cgi->param('factor');
+my @CGI_values = $cgi->param();
 
+my @names  = split( /,/xms, $cgi->param( $CGI_values[3] ) );
+my @values = split( /,/xms, $cgi->param( $CGI_values[1] ) );
 
-print <<DATA;
+my $HTML_list;
+for ( my $i = 0 .. scalar(@values) ) {
+    $HTML_list .= '<li><b>' . $names[$i] . '</b> : ' . $values[$i] . '</li>';
+}
+
+print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
 <html>
@@ -19,29 +29,10 @@ Content-type: text/html
 	</head>
 	<body>
 		<div class="titreDiv"> MicroRNA identification results:</div>
-	
 		<div id = 'showInfo'>
-	
-		 <h2 class='titre'><u>List of 
-DATA
-
-print $factor;
-print <<DATA;
-s</u></h2>
-
-DATA
-
-	@names = split(/,/,$cgi->param(@values[3]));
-	@values = split(/,/,$cgi->param(@values[1]));
-	for ($i=0;$i<scalar(@values);$i++)
-	{
-		print "<li><b>".@names[$i].'</b> : '.@values[$i].'</li>';
-	}
-	
-print <<DATA;
-
-
-</div>
+		  <h2 class='titre'>List of ${factor}s</h2>
+            $HTML_list
+        </div>
 	</body>
 </html>
 
