@@ -29,7 +29,7 @@ Content-type: application/xhtml+xml
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
     <head>
-        <link rel="stylesheet" type="text/css" href="/arn/css/script.css" />
+        <link rel="stylesheet" type="text/css" href="/arn/style/script.css" />
         <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
         <script type="text/javascript" src="/arn/js/graphics.js"></script>
         <script type="text/javascript" src="/arn/js/miARN.js"></script>
@@ -51,17 +51,6 @@ if($valid){
     print <<"HTML";
 $HTML_header    <body onload="main();">
 
-<div class="theme-border"></div>
-<div class="logo"></div>
-
-$bioinfo_menu
-
-<div class="bloc_droit">
-
-$header_menu
-
-<div class="main">
-
         <div class="titreDiv"> Identification of miRNA/miRNA hairpins results:</div>
 $HTML_additional
         <div id="table" ></div>
@@ -69,9 +58,7 @@ $HTML_additional
 $HTML_results
     <a href="./resultsAsCSV.pl?run_id=$id_job">Download as CSV</a>
 
-                </div><!-- main -->
             $footer
-        </div><!-- bloc droit-->
     </body>
 </html>
 HTML

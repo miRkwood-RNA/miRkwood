@@ -20,7 +20,7 @@ Content-type: text/html
 
 <html>
     <head>
-        <LINK rel="stylesheet" type="text/css" href="/arn/css/script.css" />
+        <LINK rel="stylesheet" type="text/css" href="/arn/style/script.css" />
         <link href="/arn/css/basic.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
         <title>MicroRNA identification</title>
