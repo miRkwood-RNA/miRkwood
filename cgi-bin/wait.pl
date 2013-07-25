@@ -64,7 +64,7 @@ my $url =
 my $email_HTML;
 if ( $email ne q{} ) {
     $email_HTML =
-"An E-mail notification will be sent to <strong>$email</strong> as soon as the job is completed.";
+"<p>An E-mail notification will be sent to <strong>$email</strong> as soon as the job is completed.</p>";
 }
 
 print <<"DATA" or die("Error when displaying HTML: $!");
@@ -86,18 +86,14 @@ Content-type: text/html
             <div class="main">
                 <div class="dialog">
                     <br/><br/>
-                    Your request has been successfully submitted.
-                    <br>
-                    $email_HTML
-                    <br /> <br>
-                    Your ID is <B>$jobId</B>.
-                    <br /><br /><br />
-                    This page is updated every five seconds.
-                    You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.
-                    <br /><br /><br /><br />
-                    <b><font size="+1">Please wait</font></b>&nbsp;
-                    <img src="/arn/images/waiting.gif" id="waiting" />
-                    <br /><br /><br />
+                    <div class="waitMessage">
+                        <p>Your request has been successfully submitted.<p>
+                        <p>Your ID is <B>$jobId</B>.</p>
+                        $email_HTML
+
+                        <p>This page is updated every five seconds.</p>
+                        <p>You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.</p>
+                    </div>
                 </div><!-- dialog -->
             </div><!-- main -->
             $footer
