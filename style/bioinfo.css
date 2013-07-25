@@ -63,7 +63,7 @@ ul.menu_partie li a{
 
 ul.menu_partie li a:hover{
     text-decoration: none;
-    border: 0px;     
+    border: 0px;	
     color: black;
 }
 
@@ -172,7 +172,7 @@ ul.menu_partie li.case a{
 .frametitle h1 a, .menu_haut h1 {
    text-decoration: none;
    color: #000;
-}  
+}	
 
 .menu_central{
     position: relative;
@@ -324,7 +324,7 @@ a{
 
 .exemple{
     border: 0px dashed black; 
-    background-color: #f0f3fc;
+    background-color: #e8f0fc;
     color:#000000;
     text-align: left; 
     font-family: monospace;
@@ -429,13 +429,13 @@ table.result th{
   color : black;
   background-color:#adbfe2;
   text-align: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
   padding: 3px;
 }
 
 table.result tr.pair td{
- font-family: sans-serif;
+ font-family: monospace;
  border: 0px;
  color: black;
  background-color:#f0f3fc;
@@ -445,7 +445,7 @@ table.result tr.pair td{
 }
 
 table.result tr.impair td{
-  font-family: sans-serif;
+  font-family: monospace;
   border: 0px;
   padding-left: 5px;
   padding-right: 5px;
@@ -453,7 +453,7 @@ table.result tr.impair td{
 }
 
 table.result tr.pair{
- font-family: sans-serif;
+ font-family: monospace;
  border: 0px;
  color: black;
  background-color:#EFF2FB;
@@ -463,7 +463,7 @@ table.result tr.pair{
 }
 
 table.result tr.impair{
-  font-family: sans-serif;
+  font-family: monospace;
   border: 0px;
   color: black;
   background-color:white;
@@ -474,7 +474,7 @@ table.result tr.impair{
 
 table.result tr.pair td.important{
   border: 0px;
-  font-family: sans-serif;
+  font-family: monospace;
   color: black;
   background-color:#D8D8D8; 
   padding-left: 5px;
@@ -482,7 +482,7 @@ table.result tr.pair td.important{
 }
 
 table.result tr.impair td.important{
-  font-family: sans-serif;
+  font-family: monospace;
   border: 0px;
   color: black;
   background-color:#F0F0F0; 
@@ -561,22 +561,36 @@ li.Rna a:hover, li.Rna_titre a:hover{
     background-color: #FFCCCC;
 }
 
-li.Protea, li.Protea_titre{
+li.proteins, li.proteins_titre{
     border-left: 15px solid #FFA815;
 }
 
-li.Protea a:hover, li.Protea_titre a:hover{
+li.proteins a:hover, li.proteins_titre a:hover{
     background-color: #FFCC99;
 }
 
-li.Reblosum, li.Reblosum_titre{
-    border-left: 15px solid #FFA815;
-}
+/* li.Protea, li.Protea_titre{ */
+/*     border-left: 15px solid #FFA815; */
+/* } */
 
-li.Reblosum a:hover, li.Reblosum_titre a:hover{
-    background-color: #FFCC99;
-}
+/* li.Protea a:hover, li.Protea_titre a:hover{ */
+/*     background-color: #FFCC99; */
+/* } */
 
+/* li.Reblosum, li.Reblosum_titre{ */
+/*     border-left: 15px solid #FFA815; */
+/* } */
+
+/* li.Reblosum a:hover, li.Reblosum_titre a:hover{ */
+/*     background-color: #FFCC99; */
+/* } */
+/* li.Path_titre, li.Path{ */
+/*     border-left: 15px solid #FFA815; */
+/* } */
+
+/* li.Path a:hover, li.Path_titre a:hover{ */
+/*     background-color: #FFCC99; */
+/* } */
 li.Magnolia, li.Magnolia_titre{
     border-left: 15px solid #66CC00;
 }
@@ -608,3 +622,4 @@ li.Mreps, li.Mreps_titre{
 li.Mreps a:hover, li.Mreps_titre a:hover{
     background-color: #9999FF;
 }
+
