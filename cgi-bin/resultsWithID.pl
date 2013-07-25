@@ -13,7 +13,11 @@ use Data::Dumper;
 use FindBin;                     # locate this script
 use lib "$FindBin::Bin/../lib";  # use the parent directory
 use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::WebTemplate;
 
+my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
+my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
+my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
 my $id_job = $cgi->param('run_id'); # récupération id job
 my $name_job = $cgi->param('nameJob'); # récupération id job
@@ -46,12 +50,28 @@ if($valid){
 
     print <<"HTML";
 $HTML_header    <body onload="main();">
+
+<div class="theme-border"></div>
+<div class="logo"></div>
+
+$bioinfo_menu
+
+<div class="bloc_droit">
+
+$header_menu
+
+<div class="main">
+
         <div class="titreDiv"> Identification of miRNA/miRNA hairpins results:</div>
 $HTML_additional
         <div id="table" ></div>
         <div id="singleCell"> </div>
 $HTML_results
     <a href="./resultsAsCSV.pl?run_id=$id_job">Download as CSV</a>
+
+                </div><!-- main -->
+            $footer
+        </div><!-- bloc droit-->
     </body>
 </html>
 HTML

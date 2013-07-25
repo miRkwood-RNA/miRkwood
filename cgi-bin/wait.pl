@@ -75,7 +75,7 @@ Content-type: text/html
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta http-equiv='Refresh' content='6;URL=$url'>
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-        <link title="test" type="text/css" rel="stylesheet" href="/arn/css/script.css" />
+        <link title="test" type="text/css" rel="stylesheet" href="/arn/style/script.css" />
 		<script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
 		<title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
     </head>
