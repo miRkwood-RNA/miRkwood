@@ -1,26 +1,26 @@
 #!/usr/bin/perl -w
+use strict;
+use warnings;
+
 use CGI;
-my $cgi = new CGI; 
-$name = $cgi->param('nameSeq');
-$pvalue = $cgi->param('pvalue');
-$position = $cgi->param('position');
-$mfei = $cgi->param('mfei');
-$mfe = $cgi->param('mfe');
-$amfe = $cgi->param('amfe');
-$self_contain = $cgi->param('self_contain');
-$Vienna = $cgi->param('Vienna');
-$DNASequence = $cgi->param('DNASequence');
-$image = $cgi->param('image');
-print <<DATA;
+my $cgi          = CGI->new();
+my $name         = $cgi->param('nameSeq');
+my $pvalue       = $cgi->param('pvalue');
+my $position     = $cgi->param('position');
+my $mfei         = $cgi->param('mfei');
+my $mfe          = $cgi->param('mfe');
+my $amfe         = $cgi->param('amfe');
+my $self_contain = $cgi->param('self_contain');
+my $Vienna       = $cgi->param('Vienna');
+my $DNASequence  = $cgi->param('DNASequence');
+my $image        = $cgi->param('image');
+print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
 <html>
 	<head>
 		<LINK rel="stylesheet" type="text/css" href="/arn/css/script.css" />
-		
 		<script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-		
-	
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
@@ -28,62 +28,49 @@ Content-type: text/html
 	
 		<div id = 'showInfo'>
 		<h2><u>Sequence Informations </u></h2><br/>
-		<li><b>Name sequence :</b>
-DATA
-print $name;
-print <<DATA;
-</li>
-<li><b>MFEI :</b>
-DATA
-print $mfei;
-print <<DATA;
-</li>
-<li><b>MFE :</b>
-DATA
-print $mfe;
-print <<DATA;
-</li>
-<li><b>AMFE :</b>
-DATA
-print $amfe;
-print <<DATA;
-</li>
-<li><b>P_Value :</b>
-DATA
-print $pvalue;
-print <<DATA;
-</li>
-<li><b>Position :</b>
-DATA
-print $position;
-print <<DATA;
-</li>
-<li><b>Self-contain :</b>
-DATA
-print $self_contain;
-print <<DATA;
-</li>
-<li><b>Vienna :</b></li>
-DATA
-print "<pre>>".$name.'__'.$position."\n".$Vienna."</pre>";
-print <<DATA;
-
-<li><b>Sequence :</b></li>
-DATA
-print "<pre>>".$name.'__'.$position."\n".$DNASequence."</pre>";
-print <<DATA;
-
-
-<li><b>Structure :</b></li>
-<a href="../arn/programs/varna.jnlp">Launch</a>
+		<li>
+		  <b>Name sequence :</b> $name
+        </li>
+        <li>
+          <b>MFEI :</b>$mfei
+        </li>
+        <li>
+          <b>MFE :</b>$mfe
+        </li>
+        <li>
+          <b>AMFE :</b>$amfe
+        </li>
+        <li>
+          <b>P_Value :</b>$pvalue
+        </li>
+        <li>
+          <b>Position :</b>$position;
+        </li>
+        <li>
+          <b>Self-contain :</b>$self_contain;
+        </li>
+        <li>
+          <b>Vienna :</b>
+        </li>
+        <pre>
+>${name}__$position
+$Vienna
+</pre>
+        <li>
+          <b>Sequence :</b>
+        </li>
+        <pre>
+>${name}__$position
+$DNASequence
+</pre>
+        <li>
+          <b>Structure :</b>
+        </li>
+        <a href="../arn/programs/varna.jnlp">Launch</a>
 		<div class="figure" >
-DATA
-
-		print "<p><img src='".$image."' border=0 alt='image'>";
-		print "<p>Fig : ".$name."__".$position." sequence";
-
-print <<DATA;
-	</div>	
+		  <img src='$image' border=0 alt='image'>";
+		  <p>Fig : ${name}__$position sequence</p>
+    	</div>	
 	</div>	
 	</body>
 </html>
