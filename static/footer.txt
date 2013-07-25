@@ -1,0 +1,3 @@
+ <div class="copyright">
+          2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>
+ </div>
