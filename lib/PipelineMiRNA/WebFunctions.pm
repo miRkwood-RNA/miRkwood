@@ -5,6 +5,7 @@ use warnings;
 use Data::Dumper;
 use File::Spec;
 use PipelineMiRNA::Paths;
+use PipelineMiRNA::Parsers;
 
 my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment', 'image', 'Vienna', 'DNASequence');
 
@@ -78,16 +79,9 @@ sub get_structure_for_jobID {
                       ;    # récupération noms + positions
                     my $pvalue =
                       File::Spec->catfile( $subDir_full, 'pvalue.txt' );
-
                     if ( -e $pvalue )    # si fichier existe
                     {
-                        open( PVALUE, $pvalue ) || die "$!";
-                        while ( my $line = <PVALUE> ) {
-                            if ( $line =~ /(.*)\t(.*)\t(.*)/ ) {
-                                $myResults{$subDir}{'p_value'} = $3;  # récupération pvalues
-                            }
-                        }
-                        close PVALUE;
+                        $myResults{$subDir}{'p_value'} = PipelineMiRNA::Parsers::parse_pvalue($pvalue);
                     }
 
                     #Récupération valeur MFEI
@@ -95,29 +89,18 @@ sub get_structure_for_jobID {
                       File::Spec->catfile( $subDir_full, 'outMFEI.txt' );
                     if ( -e $mfei_out )                 # si fichier existe
                     {
-                        open( MFEI, $mfei_out ) || die "$!";
-                        while ( my $line = <MFEI> ) {
-                            if ( $line =~ /(.*)\t(.*)\t(.*)\t(.*)/ ) {
-                                $myResults{$subDir}{'mfei'} = $2;    # récupération mfei
-                                $myResults{$subDir}{'mfe'} = $3;    # récupération mfei
-                                $myResults{$subDir}{'amfe'} = $4;    # récupération mfei
-                            }
-                        }
-                        close MFEI;
+                        my @mfeis = PipelineMiRNA::Parsers::parse_mfei($mfei_out);
+                        $myResults{$subDir}{'mfei'} = $mfeis[0];
+                        $myResults{$subDir}{'mfe'} = $mfeis[1];
+                        $myResults{$subDir}{'amfe'} = $mfeis[2];
                     }
 
                     #Récupération valeur self contain
                     my $selfcontain_out =
                       File::Spec->catfile( $subDir_full, 'selfContain.txt' );
-                    if ( -e $selfcontain_out )          # si fichier existe
+                    if ( -e $selfcontain_out )
                     {
-                        open( SC, $selfcontain_out ) || die "$!";
-                        while ( my $line = <SC> ) {
-                            if ( $line =~ /(.*) (.*)/ ) {
-                                $myResults{$subDir}{'self_contain'} = $2; # récupération mfei
-                            }
-                        }
-                        close SC;
+                        $myResults{$subDir}{'self_contain'} = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_out);
                     }
 
                     #Récupération séquence et format Vienna
@@ -125,16 +108,9 @@ sub get_structure_for_jobID {
                                                        'outViennaTraited.txt' );
                     if ( -e $vienna_out )                  # si fichier existe
                     {
-                        open( my $VIENNA, '<', $vienna_out ) || die "$!";
-                        while ( my $line = <$VIENNA> ) {
-                            if ( $line =~ /(.*)\t(.*)\t(.*)/ ) {
-                                $myResults{$subDir}{'DNASequence'} = $2;
-                                  ;    # récupération sequence
-                                $myResults{$subDir}{'Vienna'} = $3;    # récupération Vienna
-
-                            }
-                        }
-                        close $VIENNA;
+                        my @vienna_res = PipelineMiRNA::Parsers::parse_vienna($vienna_out);
+                        $myResults{$subDir}{'DNASequence'} = $vienna_res[0];
+                        $myResults{$subDir}{'Vienna'} = $vienna_res[1];
                     }
 
                     #Récupération alignement avec mirBase
@@ -142,16 +118,7 @@ sub get_structure_for_jobID {
                       File::Spec->catfile( $subDir_full, 'alignement.txt' );
                     if ( -e $file_alignement )                # si fichier existe
                     {
-                        open( my $ALIGN, $file_alignement ) || die "$!";
-                        my $align = "none";
-                        while ( my $line = <$ALIGN> ) {
-                            if ( $line =~ /^C4/ ) {
-                                $align = $file_alignement;
-                                last;
-                            }
-                        }
-                        $myResults{$subDir}{'alignment'} = $align;
-                        close $ALIGN or die ("Error closing $file_alignement: $!");
+                        $myResults{$subDir}{'alignment'} = PipelineMiRNA::Parsers::parse_alignment($file_alignement);
                     }
                     my $image_path = PipelineMiRNA::Paths->get_server_path($job,  $dir, $subDir, 'image.png');
                     $myResults{$subDir}{'image'} = $image_path;
