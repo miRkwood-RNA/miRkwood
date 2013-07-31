@@ -9,6 +9,11 @@ use File::Basename qw(dirname);
 use CGI::Carp qw(fatalsToBrowser);
 use Log::Message::Simple qw[msg error debug];
 
+use FindBin;                       # locate this script
+use lib "$FindBin::Bin/../lib";    # use the parent directory
+
+use PipelineMiRNA::Paths;
+
 my $cgi = new CGI;
 $now = gmctime();
 
@@ -16,27 +21,21 @@ $now =~ s/[: ]//g;
 $now = substr( $now, 3 );
 
 my $local_dir = dirname( abs_path($0) );
-my $rootdir = File::Spec->catdir( $local_dir, ".." );
+my $rootdir = PipelineMiRNA::Paths->get_server_root_dir();
 
-$dirScript = File::Spec->catdir( $rootdir, 'scripts' );    # chemin script
-
-#$dirScript = "/var/www/arn/scripts/"; # chemin script
-
-$dirData   = File::Spec->catdir( $rootdir, 'data' );
-$dirLib    = File::Spec->catdir( $rootdir, 'lib' );
-$dirImages = File::Spec->catdir( $rootdir, 'images' );
+$dirScript = PipelineMiRNA::Paths->get_absolute_path('scripts' );    # chemin script
+$dirLib    = PipelineMiRNA::Paths->get_absolute_path( 'lib' );
 
 my $formatFasta_bin = File::Spec->catfile( $dirScript, 'formatFasta.sh' );
 
 $dirJob_name = 'job' . $now;
-$dirJob = File::Spec->catdir( $rootdir, 'results', $dirJob_name )
-  ;    # chemin séquence de base
+$dirJob = PipelineMiRNA::Paths->get_absolute_path('results', $dirJob_name );
 
 #$dirJob = $dirData."job".$now."/"; # chemin séquence de base
 mkdir $dirJob;
 
 my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
-open( my $LOG, '>>', $log_file ) || die "$!";
+open( my $LOG, '>>', $log_file ) or die "Error when opening $log_file: $!";
 
 my $sequence_origin = File::Spec->catfile( $dirJob, 'sequence.fas' );
 my $sequence_load   = File::Spec->catfile( $dirJob, 'sequenceLoad.fas' );
