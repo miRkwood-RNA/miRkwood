@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Data::Dumper;
+use Test::More qw/no_plan/;
+use Test::File;
+
+use FindBin;
+require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
+
+BEGIN {
+    use_ok('PipelineMiRNA::Parsers');
+}
+require_ok('PipelineMiRNA::Parsers');
+
+my $input1    = '(((((.(((.(((((.))....))).)))...))))) (-16.93)';
+my @expected1 = [ '(((((.(((.(((((.))....))).)))...)))))', '-16.93' ];
+my @result1   = PipelineMiRNA::Parsers::parse_Vienna_line($input1);
+is_deeply( \@result1, @expected1, 'Standard line correctly parsed' );
+
+my $input2    = '(((((.(((.(((((.))....))).)))...))))) ( -8.58)';
+my @expected2 = [ '(((((.(((.(((((.))....))).)))...)))))', '-8.58' ];
+my @result2   = PipelineMiRNA::Parsers::parse_Vienna_line($input2);
+is_deeply( \@result2, @expected2,
+    'Line with whitespace in energy correctly parsed' );
+
