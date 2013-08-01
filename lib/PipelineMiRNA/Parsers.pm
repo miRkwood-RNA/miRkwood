@@ -87,4 +87,21 @@ sub parse_alignment {
     close $FH or die("Error when closing: $!");
     return $align;
 }
+
+sub parse_Vienna_line {
+    my @args = @_;
+    my $line = shift @args;
+    my ( $structure, $energy ) =
+                $line =~ m{
+                       ^                #Begin of line
+                       ([\.()]+?)       #A sequence of ( ) .
+                       \s+?             #Some whitespace
+                       \(               #Opening parenthesis
+                           ([-.\d]*?)   #
+                       \)               #Closing parenthesis
+                       \s*$             #Whitespace until the end
+                   }smx;
+    return ( $structure, $energy );
+}
+
 1;
