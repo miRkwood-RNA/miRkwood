@@ -35,15 +35,18 @@ $dirJob = PipelineMiRNA::Paths->get_absolute_path('results', $dirJob_name );
 mkdir $dirJob;
 
 my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
-open( my $LOG, '>>', $log_file ) or die "Error when opening $log_file: $!";
+open( my $LOG, '>>', $log_file ) or die "Error when opening log file: $!";
+local $Log::Message::Simple::DEBUG_FH   = $LOG;
 
 my $sequence_origin = File::Spec->catfile( $dirJob, 'sequence.fas' );
 my $sequence_load   = File::Spec->catfile( $dirJob, 'sequenceLoad.fas' );
 my $sequence_upload = File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
 
 my $seqArea = $cgi->param('seqArea');
+
 if ( $seqArea eq "" )    # cas upload fichier
 {
+    debug("Sequences are a FASTA file uploaded", 1);
     $seq = "";
     my $upload = $cgi->upload('seqFile')
       || die "Error when getting seqFile: $!";
@@ -56,9 +59,9 @@ if ( $seqArea eq "" )    # cas upload fichier
     close INPUT;
     chmod 777, $sequence_origin;
     $seq = lc($seq) . "\n";
-    print $LOG "Captured $seq";
+
     my $fasta_cmd = "sh $formatFasta_bin $sequence_origin $sequence_load";
-    print $LOG "Run $fasta_cmd";
+    debug("Run shell script $fasta_cmd", 1);
     system($fasta_cmd);             # script qui elimine les retour a la ligne
 
     if ( $seq !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
@@ -70,8 +73,9 @@ if ( $seqArea eq "" )    # cas upload fichier
 }
 else                                #cas textArea
 {
+    debug('Sequences are provided through the text area', 1);
     open( INPUT, '>>', $sequence_origin )
-      || die "Error when opening -$sequence_origin-: $!";
+      or die "Error when opening -$sequence_origin-: $!";
     print INPUT lc($seqArea);
     system( "sed -i 'N;s/\r//g' " . $sequence_origin )
       ;    #commande sed permettant d'eliminer les caracteres du (copier-coller)
@@ -159,12 +163,12 @@ if ( $check    eq "" ) { $check    = "notChecked" }
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
 "perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob $plant";
-
-print $LOG "The command is: $cmd";
-
+debug("Running perl script $cmd", 1);
 system($cmd);
 
 my $finish_file = File::Spec->catfile( $dirJob, 'finished' );
 open( my $finish, '>', $finish_file ) || die "$!";
 close $finish_file;
+debug("Writing finish file $finish_file", 1);
+
 close $log_file;
