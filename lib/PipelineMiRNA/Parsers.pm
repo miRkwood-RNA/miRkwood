@@ -6,7 +6,7 @@ use warnings;
 
 =method parse_pvalue
 
-Get the results structure of a given job identifier
+Parse the contents of the pvalue file the results structure of a given job identifier
 
 =cut
 
@@ -14,7 +14,7 @@ sub parse_pvalue {
     my @args   = @_;
     my $pvalue = shift @args;
     my $result;
-    open( my $FH, '<', $pvalue ) or die "Error when opening file: $!";
+    open( my $FH, '<', $pvalue ) or die "Error when opening file $pvalue: $!";
     while ( my $line = <$FH> ) {
         if ( $line =~ /(.*)\t(.*)\t(.*)/xms ) {
             $result = $3;
