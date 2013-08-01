@@ -96,9 +96,9 @@ sub parse_Vienna_line {
                        ^                #Begin of line
                        ([\.()]+?)       #A sequence of ( ) .
                        \s+?             #Some whitespace
-                       \(               #Opening parenthesis
+                       \(\s*?           #Opening parenthesis and maybe whistespace
                            ([-.\d]*?)   #
-                       \)               #Closing parenthesis
+                       \s*?\)           #Closing parenthesis and maybe whistespace
                        \s*$             #Whitespace until the end
                    }smx;
     return ( $structure, $energy );
