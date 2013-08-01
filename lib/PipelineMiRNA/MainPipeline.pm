@@ -49,7 +49,7 @@ sub main_entry {
     open my $ENTREE_FH, '<', $sequences_input
       or die "Error when opening sequences -$sequences_input-: $!";
     debug("Calling parse_multi_fasta() on $sequences_input", $debug);
-    my %tab = PipelineMiRNA::Utils::parse_multi_fasta($dirJob, $ENTREE_FH);
+    my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
     close $ENTREE_FH;
 
     debug('Iterating over names', $debug);
