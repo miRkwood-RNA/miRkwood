@@ -52,6 +52,21 @@ my %expected3 = ( '>gi-425626932-gb-JX648278.1-' =>
 is_deeply( \%tab3, \%expected3,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );
 
+my $fastaFile4 = input_file('fasta2.fa');
+file_exists_ok($fastaFile4);
+open( my $INPUT_FH4, '<', $fastaFile4 ) or die "Fail to open: $!";
+ok( my %tab4 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH4),
+    'Can call parse_multi_fasta()' );
+close $INPUT_FH4;
+my %expected4 = ( '>contig15750' =>
+                  'aatgagtaagataaattgctaattaaatgcgacgagaggttcatacatgaagagaagagtgctcttattatgtagccaaggatgaattgcctaatgacagctcaagtcgtttaaaaaacgactctttgttggtttattaggcgttcatttcttgactgacttaatcggctttttttcatcatgttagatcttctcaacttgttacgagcatatcgttcaatattttcatagtcttcttgtaatatgactttgtcaagtcatttcatatagctacttatgtgtagctattattgtcataattattatatagattatatacttaaagagagacttgtaagggatttaagatgtttagataatcatgtaacattcttgtcaagttatgatcaagcattat',
+                  '>contig15916' =>
+                  'aaaaaacctcacatacagcccccgtatctctctctctctataattgataggctattttcttctctctctagaaatgagcttacatggcatgcagatccattgcttatttataggtatagatacagcagatatatattatttattcatatatgtgtatcgaggtatcggaagaagaaattttcattgttacggcggttttctgattcgcttggtgcaggtcgggaacggcttggccgacggtttcatatttgtctccactgtgtgaaacctcgtagcttgagtactgtcctgccttgcatcaactgaatctgaaccgatgtaaatgatctgtgaccggtgtaggagaattggatgaatattgttggagat'
+                  );
+print keys %expected4;
+is_deeply( \%tab4, \%expected4,
+           'Parsing FASTA with pipes using parse_multi_fasta ok' );
+
 ##################################################################
 diag('Testing find_matching_count()');
 is( PipelineMiRNA::Utils::find_matching_count('()..'), 1 );
