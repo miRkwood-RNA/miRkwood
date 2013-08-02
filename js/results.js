@@ -65,7 +65,7 @@ results.prototype.getValuesByFactorName = function(factor) //avoir toutes les va
 
 results.prototype.getFactorsNamesList = function() //liste des critères
 {
-	var allNames = new Array("position","mfei","mfe","amfe","p_value","self_contain", "alignment","image" );
+	var allNames = new Array("position","mfe","mfei","amfe","p_value","self_contain", "alignment","image" );
 	var names = new Array();
 	for(var i = 0;i < allNames.length;i++)
 	{

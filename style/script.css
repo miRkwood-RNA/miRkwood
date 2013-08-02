@@ -227,20 +227,20 @@ table a
 
 table a:link 
 {	
-	border-bottom: 1px dashed #ddd;
+	border-bottom: 1px dotted #ddd;
 	color: #000;
 }
 
 table a:visited 
 {
-	border-bottom: 1px dashed #ccc;
+	border-bottom: 1px dotted #ccc;
 	text-decoration: line-through;
 	color: #808080;
 }
 
 table a:hover 
 {
-	border-bottom: 1px dashed #bbb;
+	border-bottom: 1px dotted #bbb;
 	color: #666;
 }
 
@@ -271,11 +271,43 @@ tbody th, tbody td
 	text-align: left;
 }
 
-tbody th 
-{	
-	white-space: nowrap;
-}
 
+
+a.name 
+{
+	color: rgb(50, 50, 75);
+	
+}
+tbody th.factors
+{	border-width: 1px;	font-size: 1.3em;
+	padding: 12px;
+    font-family: "Times New Roman", Serif;
+	border-style: solid;	
+	text-align: center;
+	border-color: #999999;
+	white-space: nowrap;
+	
+	background:#b5cfd2 url('css/cell-blue.jpg');
+}
+tbody th.names
+{	border-width: 1px;	font-size: 1.1em;
+	padding: 8px;
+	border-style: solid;	text-align: center;
+	border-color: #999999;
+	white-space: nowrap;
+	
+	background:#f0f5f6 url('css/cell-grey.jpg');
+}
+tbody td 
+{
+	
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+
+      
+        text-align:center;
+}
 .odd h
 {
 	background: #fcfcfc;
@@ -333,7 +365,7 @@ input#upload:hover { background: #eee; color: #111; border-color:#777; }
 .forms h2, h2::first-letter
 {
 	background-color:#EEF5F5;
-	
+	blue
 }
 
 
@@ -363,7 +395,7 @@ input#upload
 	vertical-align: text-bottom;
 	text-align: center;
 	font-size: 10pt;
-	font-weight: bold;
+	font-weight: bold;	background:#b5cfd2 url('css/cell-blue.jpg');
 	cursor: pointer;
 	position: relative;
 	display: block;
@@ -381,3 +413,5 @@ input#upload
   font-weight: bold;
   margin: 1em 0 3em;
 }
+
+
