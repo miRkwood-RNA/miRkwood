@@ -58,9 +58,9 @@ $HTML_additional
         <div id="table" ></div>
         <div id="singleCell"> </div>
 $HTML_results
-    <a href="./resultsAsCSV.pl?run_id=$id_job">Download as CSV</a>
+  
 
-            $footer
+            
     </body>
 </html>
 HTML
