@@ -287,7 +287,7 @@ tbody th.factors
 	border-color: #999999;
 	white-space: nowrap;
 	
-	background:#b5cfd2 url('css/cell-blue.jpg');
+	background:#b5cfd2 url('../images/cell-blue.jpg');
 }
 tbody th.names
 {	border-width: 1px;	font-size: 1.1em;
@@ -296,7 +296,7 @@ tbody th.names
 	border-color: #999999;
 	white-space: nowrap;
 	
-	background:#f0f5f6 url('css/cell-grey.jpg');
+	background:#f0f5f6 url('../images/cell-grey.jpg');
 }
 tbody td 
 {
@@ -400,7 +400,7 @@ input#upload
 	vertical-align: text-bottom;
 	text-align: center;
 	font-size: 10pt;
-	font-weight: bold;	background:#b5cfd2 url('css/cell-blue.jpg');
+	font-weight: bold;	background:#b5cfd2 url('../images/cell-blue.jpg');
 	cursor: pointer;
 	position: relative;
 	display: block;

@@ -80,7 +80,7 @@ function createGrid(id,rowsNumber,columnsNumber) // création du tableau avec le
 	var div  = document.createElement('div');
 	div.id = "select";
 	div.innerHTML = "<a onclick='selectAll("+rowsNumber+")' href='#' class='myButton'>Select all</a>           <a  onclick='deSelectAll("+rowsNumber+")'  href='#' class='myButton'>Deselect all</a>";
-	//div.innerHTML = "<input type='checkbox' id='cocheTout'/><span id='cocheText'>Cocher tout</span>";
+
 	var tar=document.getElementById(id); // div "table"
 	tar.appendChild(div);
 	var table=document.createElement('table');
