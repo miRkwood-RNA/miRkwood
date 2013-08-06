@@ -33,6 +33,7 @@ Content-type: application/xhtml+xml
         <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
         <script type="text/javascript" src="/arn/js/graphics.js"></script>
         <script type="text/javascript" src="/arn/js/miARN.js"></script>
+    	 <script src="http://code.jquery.com/jquery-latest.js"></script>
     </head>
 END_TXT
 
@@ -53,6 +54,7 @@ $HTML_header    <body onload="main();">
 
         <div class="titreDiv"> Identification of miRNA/miRNA hairpins results:</div>
 $HTML_additional
+		<div id="csv" ><a onclick='exportCSV("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="80" heigth="50"    alt=""/></a></div>
         <div id="table" ></div>
         <div id="singleCell"> </div>
 $HTML_results

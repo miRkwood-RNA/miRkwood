@@ -55,12 +55,6 @@ Content-type: text/html
         <pre>
 >${name}__$position
 $Vienna
-</pre>
-        <li>
-          <b>Sequence :</b>
-        </li>
-        <pre>
->${name}__$position
 $DNASequence
 </pre>
         <li>

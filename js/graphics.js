@@ -76,17 +76,45 @@ function colorOut(a,b) // gérer couleur en dehors de la sélection
 }
 function createGrid(id,rowsNumber,columnsNumber) // création du tableau avec les résultats
 {
+	
+	var div  = document.createElement('div');
+	div.id = "select";
+	div.innerHTML = "<a onclick='selectAll("+rowsNumber+")' href='#' class='myButton'>Select all</a>           <a  onclick='deSelectAll("+rowsNumber+")'  href='#' class='myButton'>Deselect all</a>";
+	//div.innerHTML = "<input type='checkbox' id='cocheTout'/><span id='cocheText'>Cocher tout</span>";
 	var tar=document.getElementById(id); // div "table"
+	tar.appendChild(div);
 	var table=document.createElement('table');
-
+	
 	
 	table.border='1';
 	var tbdy=document.createElement('tbody');
+	tbdy.id = 'cases';
 	table.appendChild(tbdy); //ajouter au tableau table
 	for (var i=0;i<rowsNumber;i++) // parcours nombre de ligne
 	{
 		var tr=document.createElement('tr'); 
 		tbdy.appendChild(tr); //ajouter ligne
+		if (i!=0) 	
+		{
+			var checkbox = document.createElement('input');
+			checkbox.type = "checkbox";
+			checkbox.name = "name";
+			checkbox.value = "value";
+			checkbox.id = "checkbox"+i;
+			
+			var td=document.createElement('td');
+			tr.appendChild(td);
+			td.appendChild(checkbox);
+		}else {
+
+	
+			var td=document.createElement('td');
+
+
+			tr.appendChild(td);
+		
+		
+		}
 		for (var j=0;j<columnsNumber;j++) // parcours nombre de colonnes
 		{
 			if (i==0) 
@@ -158,4 +186,38 @@ function createGrid(id,rowsNumber,columnsNumber) // création du tableau avec le
 		}
 	}
 	tar.appendChild(table);
+}
+
+
+function selectAll(rowsNumber)
+{
+	for (var i=1;i<rowsNumber;i++)
+	{
+		document.getElementById('checkbox'+i).checked = true;	
+	}
+}
+
+function deSelectAll(rowsNumber)
+{
+	for (var i=1;i<rowsNumber;i++)
+	{
+		document.getElementById('checkbox'+i).checked = false;	
+	}
+}
+
+
+function exportCSV(id)
+{	
+	var tab=new Array();
+	for (var i=1;i<rowsNumber;i++)
+	{
+		if (document.getElementById('checkbox'+i).checked == true )
+		{
+			var nameTemp = myResults.getSequenceNameByIndex(i-1);
+			var positions = myResults.getValuesByFactorName("position");
+			var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
+			tab.push(nameTemp+"__"+factorsTemp.position);
+		}
+	}
+	window.location = "/cgi-bin/resultsAsCSV.pl?" + "data=" + tab.join(',') + "&run_id=" + id;
 }

@@ -126,7 +126,7 @@ sub retrieve_candidate_information {
     my $selfcontain_out =
       File::Spec->catfile( $subDir_full, 'selfContain.txt' );
     if ( -e $selfcontain_out )
-    {
+    {Dumper
         $result{'self_contain'} = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_out);
     }
 
@@ -162,16 +162,20 @@ Convert the results structure to CSV
 sub resultstruct2csv {
     my ( $self, @args ) = @_;
     my $results = shift @args;
-    my %results = %{$results};
+	my @tab = shift @args;
+	my %results = %{$results};
     my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
-
-    my $result = join( ',', @headers ) . "\n";
+	my $result = join( ',', @headers ) . "\n";
     while ( my ($key, $value) = each %results )
     {
-        for my $header (@headers){
-            $result .= "${$value}{$header},";
-        }
-        $result .= "\n";
+    	if (  $key ~~ \@tab ) 
+    	{
+ 	        for my $header (@headers)
+ 	        {
+	            $result .= "${$value}{$header},";
+	        }
+	        $result .= "\n";
+    	}
     }
     return $result;
 }
@@ -185,6 +189,7 @@ Convert the results structure to HTML table
 sub resultstruct2table {
     my ( $self, @args ) = @_;
     my $results = shift @args;
+   
     my %results = %{$results};
 
     my $HTML_results = <<'END_TXT';
