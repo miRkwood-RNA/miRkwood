@@ -137,9 +137,9 @@ textarea {
 pre 
 {
 	margin-left:20px;
-	height:50px;
+	width: 500px;
 	line-height: 1.3em;
-	overflow-x: auto;border: 1px dashed #2F6FAB;
+	border: 1px dashed #2F6FAB;
 }
 
 .db

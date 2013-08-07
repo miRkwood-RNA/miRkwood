@@ -14,6 +14,28 @@ my $self_contain = $cgi->param('self_contain');
 my $Vienna       = $cgi->param('Vienna');
 my $DNASequence  = $cgi->param('DNASequence');
 my $image        = $cgi->param('image');
+my $viennaString="";
+my $sequenceString="";
+my $string ="";
+
+for (my $i=1 ; $i <= length($Vienna) ; $i++)
+{
+
+		$viennaString.= substr $Vienna , $i-1 , 1 ;
+		$sequenceString.= substr $DNASequence , $i-1 , 1 ;
+		if ($i % 50 == 0 )
+		{
+			
+			$string.= $viennaString."\n".	$sequenceString."\n\n";
+			$viennaString="";$sequenceString="";
+		}
+		if (($viennaString ne "") && ($i==length($Vienna))) 
+		{
+			$string.= $viennaString."\n".	$sequenceString."\n\n";
+		}
+}
+
+
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
@@ -54,8 +76,7 @@ Content-type: text/html
         </li>
         <pre>
 >${name}__$position
-$Vienna
-$DNASequence
+$string
 </pre>
         <li>
           <b>Structure :</b>
