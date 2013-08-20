@@ -7,12 +7,24 @@ use File::Spec;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Components;
 
+=method test_mfei
+
+Run the MFEI a posteriori test
+
+=cut
+
 sub test_mfei {
     my ( $candidate_dir, $candidate_ct_file, $seq ) = @_;
     my $MFEI_output = File::Spec->catfile( $candidate_dir, 'outMFEI.txt' );
     PipelineMiRNA::Components::compute_energy( $candidate_ct_file, $MFEI_output,
         $seq );
 }
+
+=method test_randfold
+
+Run the Randfold a posteriori test
+
+=cut
 
 sub test_randfold {
     my ( $candidate_dir, $seq_file ) = @_;
@@ -22,6 +34,12 @@ sub test_randfold {
     chmod 777, $randfold_out;
 }
 
+=method test_selfcontain
+
+Run the SelfContain a posteriori test
+
+=cut
+
 sub test_selfcontain {
     my ( $candidate_dir, $seq_file ) = @_;
     my $selfcontain_out =
@@ -30,6 +48,12 @@ sub test_selfcontain {
       or die("Problem when running Selfcontain");
     chmod 777, $selfcontain_out;
 }
+
+=method test_alignment
+
+Run the Alignment (exonerate) a posteriori test
+
+=cut
 
 sub test_alignment {
 
