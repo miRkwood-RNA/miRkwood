@@ -307,4 +307,44 @@ END
     return $result;
 }
 
+=method process_OutVienna
+
+Process the OutVienna file to retrieve data (Vienna format, DNA sequence)
+
+Usage: process_OutVienna($out_Vienna, $candidate_rnafold_optimal_out);
+
+=cut
+
+sub process_OutVienna {
+    my @args = @_;
+    my $out_Vienna = shift @args;
+    my $candidate_rnafold_optimal_out = shift @args;
+
+    open( my $TRAITED_FH, '>', $out_Vienna )
+      or die "Error when opening $out_Vienna: $!";
+    open( my $INPUT_FH, '<', $candidate_rnafold_optimal_out ) #TODO: Check if correct
+      or die "Error when opening $candidate_rnafold_optimal_out: $!";
+    my ( $nameSeq, $dna, $Vienna );
+    while ( my $line = <$INPUT_FH> ) {
+        if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
+            $nameSeq = $1;
+        }
+        elsif ( ( $line =~ /^[a-zA-Z]/ ) )
+        {    # récupération de la sequence adn
+            $dna = substr $line, 0, -1;
+        }
+        elsif ( ( $line =~ /(.*) / ) ) {
+            $Vienna = $1;
+            print $TRAITED_FH $nameSeq . "\t"
+              . $dna . "\t"
+              . $Vienna
+              . "\n";    #récupération du format Vienna
+        }
+    }
+    close $INPUT_FH;
+    close $TRAITED_FH;
+    chmod 777, $out_Vienna;
+    return (-e $out_Vienna);
+}
+
 1;
