@@ -248,7 +248,10 @@ Usage: parse_exonerate_alignment($alignment);
 sub parse_custom_exonerate_output{
     my @args = @_;
     my $yaml_file = shift @args;
-    my @contents = @{YAML::LoadFile($yaml_file)};
+    (-e $yaml_file) or die("Error when opening YAML file $yaml_file");
+    my $yaml = YAML::LoadFile($yaml_file) or die("Error when parsing YAML file $yaml_file");
+    my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
+
     my %results;
     foreach my $element (@contents){
          my $key = "$element->{'begin_target'}-$element->{'end_target'}";
