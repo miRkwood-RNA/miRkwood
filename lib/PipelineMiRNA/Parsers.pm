@@ -6,7 +6,7 @@ use warnings;
 
 =method parse_pvalue
 
-Parse the contents of the pvalue file the results structure of a given job identifier
+Parse the contents of the given pvalue file
 
 =cut
 
@@ -23,6 +23,12 @@ sub parse_pvalue {
     close $FH or die("Error when closing: $!");
     return $result;
 }
+
+=method parse_mfei
+
+Parse the contents of the given MFEI file
+
+=cut
 
 sub parse_mfei {
     my @args     = @_;
@@ -41,6 +47,12 @@ sub parse_mfei {
     return @res;
 }
 
+=method parse_selfcontain
+
+Parse the contents of the given SelfContain file
+
+=cut
+
 sub parse_selfcontain {
     my @args            = @_;
     my $selfcontain_out = shift @args;
@@ -55,6 +67,12 @@ sub parse_selfcontain {
     close $FH or die("Error when closing: $!");
     return $result;
 }
+
+=method parse_vienna
+
+Parse the contents of the given Vienna file
+
+=cut
 
 sub parse_vienna {
     my @args       = @_;
@@ -72,6 +90,12 @@ sub parse_vienna {
     return @res;
 }
 
+=method parse_alignment
+
+Parse the contents of the given Alignment file
+
+=cut
+
 sub parse_alignment {
     my @args            = @_;
     my $alignement_file = shift @args;
@@ -87,6 +111,12 @@ sub parse_alignment {
     close $FH or die("Error when closing: $!");
     return $align;
 }
+
+=method parse_Vienna_line
+
+Parse the given Vienna format line, return a couple (structure, energy)
+
+=cut
 
 sub parse_Vienna_line {
     my @args = @_;
