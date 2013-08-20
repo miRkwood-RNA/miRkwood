@@ -169,6 +169,12 @@ sub process_RNAstemloop {
     } #while $line=<IN>
 }
 
+=method process_tests
+
+Perform the a posteriori tests for a given job
+
+=cut
+
 sub process_tests {
     my ( $dirJob, $mfei, $randfold, $SC, $align ) = @_;
     debug("A posteriori tests in $dirJob", 1);
@@ -201,88 +207,7 @@ sub process_tests {
                   )    # si le fichier est de type repertoire
                 {
                     debug("Entering candidate $file", 1);
-                    ####Traitement fichier de sortie outStemloop
-                    chmod 0777, $candidate_dir;
-
-                    my $seq_file =
-                      File::Spec->catfile( $candidate_dir, 'seq.txt' );
-                    my $candidate_rnafold_optimal_out =
-                      File::Spec->catfile( $candidate_dir, 'outRNAFold_optimal.txt' );
-                    my $candidate_rnafold_stemploop_out =
-                      File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
-
-                    ####conversion en format CT
-                    my $candidate_ct_optimal_file =
-                      File::Spec->catfile( $candidate_dir, 'outB2ct_optimal.ct' );
-                    debug("Converting optimal to CT in $candidate_ct_optimal_file", 1);
-                    PipelineMiRNA::Programs::convert_to_ct(
-                        $candidate_rnafold_optimal_out, $candidate_ct_optimal_file )
-                      or die('Problem when converting to CT format');
-
-                    my $candidate_ct_stemloop_file =
-                      File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
-                    debug("Converting stemloop to CT in $candidate_ct_stemloop_file", 1);
-                    PipelineMiRNA::Programs::convert_to_ct(
-                        $candidate_rnafold_stemploop_out, $candidate_ct_stemloop_file )
-                      or die('Problem when converting to CT format');
-
-                    my $varna_image =
-                      File::Spec->catfile( $candidate_dir, 'image.png' );
-                    debug("Generating image using VARNA in $varna_image", 1);
-                    PipelineMiRNA::Programs::run_varna( $candidate_ct_stemloop_file,
-                        $varna_image )
-                      or die('Problem during image generation using VARNA');
-
-                    ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
-                    my $out_Vienna = File::Spec->catfile( $candidate_dir,
-                        'outViennaTraited.txt' );
-                    open( my $TRAITED_FH, '>', $out_Vienna )
-                      or die "Error when opening $out_Vienna: $!";
-                    open( my $INPUT_FH, '<', $candidate_rnafold_optimal_out ) #TODO: Check if correct
-                      or die "Error when opening $candidate_rnafold_optimal_out: $!";
-                    my ( $nameSeq, $dna, $Vienna );
-                    while ( my $line = <$INPUT_FH> ) {
-                        if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
-                            $nameSeq = $1;
-                        }
-                        elsif ( ( $line =~ /^[a-zA-Z]/ ) )
-                        {    # récupération de la sequence adn
-                            $dna = substr $line, 0, -1;
-                        }
-                        elsif ( ( $line =~ /(.*) / ) ) {
-                            $Vienna = $1;
-                            print $TRAITED_FH $nameSeq . "\t" 
-                              . $dna . "\t"
-                              . $Vienna
-                              . "\n";    #récupération du format Vienna
-                        }
-                    }
-                    close $INPUT_FH;
-                    close $TRAITED_FH;
-                    chmod 777, $out_Vienna;
-                    ####calcul MFEI (appel script energie.pl)
-                    if ( $mfei eq 'mfeiChecked' ) {
-                        debug("Running test_mfei on $file", 1);
-                        PipelineMiRNA::PosterioriTests::test_mfei(
-                            $candidate_dir, $candidate_ct_optimal_file, $file );
-                    }
-                    ####calcul p-value randfold
-                    if ( $randfold eq 'randfoldChecked' ) {
-                        debug("Running test_randfold on $seq_file", 1);
-                        PipelineMiRNA::PosterioriTests::test_randfold(
-                            $candidate_dir, $seq_file );
-                    }
-                    ####calcul self-contain
-                    if ( $SC eq 'SCChecked' ) {
-                        debug("Running test_selfcontain on $seq_file", 1);
-                        PipelineMiRNA::PosterioriTests::test_selfcontain(
-                            $candidate_dir, $seq_file );
-                    }
-                    if ( $align eq 'alignChecked' ) {
-                        debug("Running test_alignment on $candidate_ct_stemloop_file", 1);
-                        PipelineMiRNA::PosterioriTests::test_alignment(
-                            $candidate_dir, $candidate_ct_stemloop_file );
-                    } # if file
+                    process_tests_for_candidate($candidate_dir, $file, $mfei, $randfold, $SC, $align);
                     debug("Done with candidate $file", 1);
                 } # foreach my $file (@files)
             } # if directory
@@ -290,6 +215,102 @@ sub process_tests {
         } # foreach my $dir (@dirs)
     } #process_tests
     return 0;
+}
+
+=method process_tests_for_candidate
+
+Perform the a posteriori tests for a given candidate
+
+=cut
+
+sub process_tests_for_candidate {
+
+    my @args = @_;
+    my ($candidate_dir, $file, $mfei, $randfold, $SC, $align ) = @args;
+
+    ####Traitement fichier de sortie outStemloop
+    chmod 0777, $candidate_dir;
+
+    my $seq_file =
+      File::Spec->catfile( $candidate_dir, 'seq.txt' );
+    my $candidate_rnafold_optimal_out =
+      File::Spec->catfile( $candidate_dir, 'outRNAFold_optimal.txt' );
+    my $candidate_rnafold_stemploop_out =
+      File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
+
+    ####conversion en format CT
+    my $candidate_ct_optimal_file =
+      File::Spec->catfile( $candidate_dir, 'outB2ct_optimal.ct' );
+    debug("Converting optimal to CT in $candidate_ct_optimal_file", 1);
+    PipelineMiRNA::Programs::convert_to_ct(
+        $candidate_rnafold_optimal_out, $candidate_ct_optimal_file )
+      or die('Problem when converting to CT format');
+
+    my $candidate_ct_stemloop_file =
+      File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
+    debug("Converting stemloop to CT in $candidate_ct_stemloop_file", 1);
+    PipelineMiRNA::Programs::convert_to_ct(
+        $candidate_rnafold_stemploop_out, $candidate_ct_stemloop_file )
+      or die('Problem when converting to CT format');
+
+    my $varna_image =
+      File::Spec->catfile( $candidate_dir, 'image.png' );
+    debug("Generating image using VARNA in $varna_image", 1);
+    PipelineMiRNA::Programs::run_varna( $candidate_ct_stemloop_file,
+        $varna_image )
+      or die('Problem during image generation using VARNA');
+
+    ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
+    my $out_Vienna = File::Spec->catfile( $candidate_dir,
+        'outViennaTraited.txt' );
+    open( my $TRAITED_FH, '>', $out_Vienna )
+      or die "Error when opening $out_Vienna: $!";
+    open( my $INPUT_FH, '<', $candidate_rnafold_optimal_out ) #TODO: Check if correct
+      or die "Error when opening $candidate_rnafold_optimal_out: $!";
+    my ( $nameSeq, $dna, $Vienna );
+    while ( my $line = <$INPUT_FH> ) {
+        if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
+            $nameSeq = $1;
+        }
+        elsif ( ( $line =~ /^[a-zA-Z]/ ) )
+        {    # récupération de la sequence adn
+            $dna = substr $line, 0, -1;
+        }
+        elsif ( ( $line =~ /(.*) / ) ) {
+            $Vienna = $1;
+            print $TRAITED_FH $nameSeq . "\t"
+              . $dna . "\t"
+              . $Vienna
+              . "\n";    #récupération du format Vienna
+        }
+    }
+    close $INPUT_FH;
+    close $TRAITED_FH;
+    chmod 777, $out_Vienna;
+    ####calcul MFEI (appel script energie.pl)
+    if ( $mfei eq 'mfeiChecked' ) {
+        debug("Running test_mfei on $file", 1);
+        PipelineMiRNA::PosterioriTests::test_mfei(
+            $candidate_dir, $candidate_ct_optimal_file, $file );
+    }
+    ####calcul p-value randfold
+    if ( $randfold eq 'randfoldChecked' ) {
+        debug("Running test_randfold on $seq_file", 1);
+        PipelineMiRNA::PosterioriTests::test_randfold(
+            $candidate_dir, $seq_file );
+    }
+    ####calcul self-contain
+    if ( $SC eq 'SCChecked' ) {
+        debug("Running test_selfcontain on $seq_file", 1);
+        PipelineMiRNA::PosterioriTests::test_selfcontain(
+            $candidate_dir, $seq_file );
+    }
+    if ( $align eq 'alignChecked' ) {
+        debug("Running test_alignment on $candidate_ct_stemloop_file", 1);
+        PipelineMiRNA::PosterioriTests::test_alignment(
+            $candidate_dir, $candidate_ct_stemloop_file );
+    } # if file
+    return;
 }
 
 1;
