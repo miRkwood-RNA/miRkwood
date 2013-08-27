@@ -50,11 +50,13 @@ $header_menu
 				  </tr>
 				</div>
 				<div class="forms">
-					<label class="textDiv" for="seqArea"><legend><h2>Paste your sequence(s)[<a href="./help.pl">?</a>]:</h2></legend> </label><br />
-					<textarea name="seqArea"  rows="10" cols="150" ></textarea>            
+					<label class="textDiv" for="seqArea">
+					   <legend><h2>Paste your sequence(s)[<a href="./help.pl">?</a>]:</h2></legend>
+				    </label><br />
+					<textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
 					<label class="textDiv" style="color:#333" for="seq">Or, upload file :</label><br />
 					<input type="file" name="seqFile" id="file" />
-				
+					<a href="#" onclick="generateExample('hop'); return false">Example&raquo;</a>
 				</div>
 				  <div class="forms">
 					 <label class="checkbox" for="db"><h2>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i> :
