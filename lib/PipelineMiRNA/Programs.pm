@@ -8,6 +8,7 @@ use FindBin qw($Bin);
 use Cwd qw(abs_path);
 use File::Basename qw(dirname);
 use File::Copy;
+use Log::Message::Simple qw[msg error debug];
 
 my $module_path = abs_path(dirname(__FILE__));
 my $rootdir = File::Spec->catdir($module_path, '..', '..');
@@ -87,6 +88,7 @@ sub run_selfcontain {
     my $num_contexts = 100;
     my $selfcontain_cmd =
       "python $selfcontain_bin -i $input -n $num_contexts  > $output";
+    debug($selfcontain_cmd, 1);
     system($selfcontain_cmd);
     return ( -e $output );
 }
@@ -112,6 +114,8 @@ sub run_exonerate {
       . '--showvulgar no --showalignment no --verbose 0 '
       . "--ryo '$output_fmt'"
       . "> $output  2> /dev/null";
+
+    debug($exonerate_cmd, 1);
     system($exonerate_cmd);
     return ( -e $output );
 }

@@ -12,6 +12,7 @@ use Log::Message::Simple qw[msg error debug];
 use FindBin;                       # locate this script
 use lib "$FindBin::Bin/../lib";    # use the parent directory
 
+use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 
 my $cgi = new CGI;
@@ -35,8 +36,7 @@ $dirJob = PipelineMiRNA::Paths->get_absolute_path('results', $dirJob_name );
 mkdir $dirJob;
 
 my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
-open( my $LOG, '>>', $log_file ) or die "Error when opening log file: $!";
-local $Log::Message::Simple::DEBUG_FH   = $LOG;
+local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
 my $sequence_origin = File::Spec->catfile( $dirJob, 'sequence.fas' );
 my $sequence_load   = File::Spec->catfile( $dirJob, 'sequenceLoad.fas' );

@@ -8,6 +8,7 @@ use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
 use File::Copy;
+use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Parsers;
@@ -26,9 +27,9 @@ my $dirData = PipelineMiRNA::Paths->get_absolute_path( 'data' );
 sub main_entry {
     my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
     my $debug = 1;
+
     my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
-    open( my $LOG, '>>', $log_file ) || die "Error when opening log file: $!";
-    local $Log::Message::Simple::DEBUG_FH   = $LOG;
+    local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
     debug('BEGIN execute_scripts', $debug);
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
