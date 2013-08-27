@@ -14,18 +14,15 @@ function showHideBlock()
 }
 
 function wainting()
-{
-	
-	document.getElementById('upload').disabled="true";
+{	
+    document.getElementById('upload').disabled="true";
 }
 
 function verifySequence()
-{
-	
-	var a = document.form.seqArea.value && document.form.seqFile.value;
-	var s = !(document.form.seqArea.value || document.form.seqFile.value);
-	if (a) alert ("Choose between sequence data and sequence file");
-	if (s) alert ("You must provide sequences");
-	return !(a||s);
-	
+{	
+    var a = document.form.seqArea.value && document.form.seqFile.value;
+    var s = !(document.form.seqArea.value || document.form.seqFile.value);
+    if (a) alert ("Choose between sequence data and sequence file");
+    if (s) alert ("You must provide sequences");
+    return !(a||s);
 }
