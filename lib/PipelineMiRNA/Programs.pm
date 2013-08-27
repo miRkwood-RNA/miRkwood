@@ -25,8 +25,9 @@ my $b2ct_bin     = File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
 my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
 my $selfcontain_bin =
   File::Spec->catfile( $dirProgs, 'selfcontain_unix', 'selfcontain.py' );
-my $exonerate_bin =
-  File::Spec->catfile( $dirProgs, 'exonerate-2.2.0-i386', 'bin', 'exonerate' );
+my $exonerate_dir =
+  File::Spec->catdir( $dirProgs, 'exonerate-2.2.0-i386', 'bin' );
+my $exonerate_bin = 'exonerate';
 my $varna_bin        = File::Spec->catfile( $dirProgs, 'VARNAv3-9.jar' );
 my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 my $blastx_bin = 'blastx';
@@ -105,7 +106,8 @@ sub run_exonerate {
                     .'  alignment: |{\n'
                     .'    %Pqs %Pts}\n';
     my $exonerate_cmd =
-        "$exonerate_bin " . "-E "
+        "cd $exonerate_dir && "
+      . "$exonerate_bin " . "-E "
       . "--model affine:bestfit $mirbase_file $input "
       . "-d $matrix_file "
       . '--bestn 1 '
