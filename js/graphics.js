@@ -221,3 +221,8 @@ function exportCSV(id)
 	}
 	window.location = "/cgi-bin/resultsAsCSV.pl?" + "data=" + tab.join(',') + "&run_id=" + id;
 }
+
+function exportODT(id)
+{
+	window.location = "/cgi-bin/resultsAsODT.pl?" + "&run_id=" + id;
+}

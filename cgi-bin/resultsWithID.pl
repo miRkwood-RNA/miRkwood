@@ -54,7 +54,10 @@ $HTML_header    <body onload="main();">
 
         <div class="titreDiv"> Identification of miRNA/miRNA hairpins results:</div>
 $HTML_additional
-		<div id="csv" ><a onclick='exportCSV("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="80" heigth="100"    alt=""/></a></div>
+		<div id="dl" >
+		  <a onclick='exportCSV("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="80" heigth="100"    alt=""/></a>
+		  <a onclick='exportODT("$id_job")' id="" href="#"><img src="/arn/images/odf.png" width ="48" heigth="28"    alt="Download as ODF"/></a>
+		</div>
         <div id="table" ></div>
         <div id="singleCell"> </div>
 $HTML_results
