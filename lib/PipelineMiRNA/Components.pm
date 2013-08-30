@@ -302,10 +302,14 @@ sub parse_exonerate_alignment {
             push( @middle, $SPACE );
         }
     }
+    my $top = join('', @top);
+    my $middle = join('', @middle);
+    my $bottom= join('', @bottom);
+
     my $result = <<"END";
-@top
-@middle
-@bottom
+$top
+$middle
+$bottom
 END
     return $result;
 }
