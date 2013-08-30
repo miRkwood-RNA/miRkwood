@@ -226,3 +226,8 @@ function exportODT(id)
 {
 	window.location = "/cgi-bin/resultsAsODT.pl?" + "&run_id=" + id;
 }
+
+function exportGFF(id)
+{
+	window.location = "/cgi-bin/resultsAsGFF.pl?" + "&run_id=" + id;
+}

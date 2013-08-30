@@ -57,6 +57,7 @@ $HTML_additional
 		<div id="dl" >
 		  <a onclick='exportCSV("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="80" heigth="100"    alt=""/></a>
 		  <a onclick='exportODT("$id_job")' id="" href="#"><img src="/arn/images/odf.png" width ="48" heigth="28"    alt="Download as ODF"/></a>
+          <a onclick='exportGFF("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="48" heigth="28"    alt="Download as GFF"/></a>
 		</div>
         <div id="table" ></div>
         <div id="singleCell"> </div>
