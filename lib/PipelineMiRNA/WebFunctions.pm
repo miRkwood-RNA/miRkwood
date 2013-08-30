@@ -41,6 +41,9 @@ sub is_valid_jobID {
 
 Get the results structure of a given job identifier
 
+Usage:
+my %results = PipelineMiRNA::WebFunctions->get_structure_for_jobID($jobId);
+
 =cut
 
 sub get_structure_for_jobID {

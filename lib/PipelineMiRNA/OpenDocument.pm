@@ -86,7 +86,7 @@ sub prepare_document {
     return $doc;
 }
 
-=method prepare_document
+=method generate_report
 
 Generate an ODF document for the given jobID
 
