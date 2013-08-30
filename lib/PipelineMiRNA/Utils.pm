@@ -284,12 +284,17 @@ sub make_ASCII_viz {
     my @lower_end  = @{ ${ final_loop [3] } };
     my @bottom_end = @{ ${ final_loop [4] } };
 
+    my $top = join('', @top) . join('', @top_end);
+    my $upper = join('', @upper) . join('', @upper_end);
+    my $middle = join('', @middle) . join('', @middle_end);
+    my $lower = join('', @lower) . join('', @lower_end);
+    my $bottom= join('', @bottom) . join('', @bottom_end);
     my $result = <<"END";
-@top @top_end
-@upper @upper_end
-@middle @middle_end
-@lower @lower_end
-@bottom @bottom_end
+$top
+$upper
+$middle
+$lower
+$bottom
 END
     return $result;
 }
