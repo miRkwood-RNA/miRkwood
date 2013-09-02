@@ -14,24 +14,9 @@ my $self_contain   = $cgi->param('self_contain');
 my $Vienna         = $cgi->param('Vienna');
 my $DNASequence    = $cgi->param('DNASequence');
 my $image          = $cgi->param('image');
-my $viennaString   = q{};
-my $sequenceString = q{};
-my $string         = q{};
 
-for ( 1 .. length($Vienna) ) {
 
-    $viennaString   .= substr $Vienna,      $_ - 1, 1;
-    $sequenceString .= substr $DNASequence, $_ - 1, 1;
-    if ( $_ % 50 == 0 ) {
-
-        $string .= $viennaString . "\n" . $sequenceString . "\n\n";
-        $viennaString   = q{};
-        $sequenceString = q{};
-    }
-    if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
-        $string .= $viennaString . "\n" . $sequenceString . "\n\n";
-    }
-}
+my $string = PipelineMiRNA::WebFunctions->make_Vienna_viz($Vienna, $DNASequence);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

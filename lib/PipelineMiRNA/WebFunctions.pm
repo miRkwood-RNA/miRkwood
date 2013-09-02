@@ -249,4 +249,39 @@ sub resultstruct2pseudoXML {
     return $result;
 }
 
+
+=method make_Vienna_viz
+
+Make a nicer Vienna display by cutting too long lines.
+
+Usage:
+my $string = make_Vienna_viz($Vienna, $DNASequence)
+
+=cut
+
+sub make_Vienna_viz {
+    my ($self, @args) = @_;
+    my $Vienna = shift @args;
+    my $DNASequence = shift @args;
+
+    my $viennaString   = q{};
+    my $sequenceString = q{};
+    my $string         = q{};
+    for ( 1 .. length($Vienna) ) {
+
+        $viennaString   .= substr $Vienna,      $_ - 1, 1;
+        $sequenceString .= substr $DNASequence, $_ - 1, 1;
+        if ( $_ % 50 == 0 ) {
+
+            $string .= $viennaString . "\n" . $sequenceString . "\n\n";
+            $viennaString   = q{};
+            $sequenceString = q{};
+        }
+        if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
+            $string .= $viennaString . "\n" . $sequenceString . "\n\n";
+        }
+    }
+    return $string
+}
+
 1;
