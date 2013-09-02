@@ -3,6 +3,15 @@ use strict;
 use warnings;
 
 use CGI;
+use FindBin;                     # locate this script
+use lib "$FindBin::Bin/../lib";  # use the parent directory
+use PipelineMiRNA::WebTemplate;
+use PipelineMiRNA::WebFunctions;
+
+my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
+my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
+my $footer       = PipelineMiRNA::WebTemplate::get_footer();
+
 my $cgi            = CGI->new();
 my $name           = $cgi->param('nameSeq');
 my $pvalue         = $cgi->param('pvalue');
@@ -28,8 +37,13 @@ Content-type: text/html
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
-		<div class="titreDiv"> MicroRNA identification results:</div>
-	
+        <div class="theme-border"></div>
+        <div class="logo"></div>
+        $bioinfo_menu
+        <div class="bloc_droit">
+        $header_menu
+        <div class="main">
+
 		<div id = 'showInfo'>
 		<h2><u>Sequence Informations </u></h2><br/>
 		<li>
@@ -68,7 +82,12 @@ $string
 		  <img src='$image' border=0 alt='image'>";
 		  <p>Fig : ${name}__$position sequence</p>
     	</div>	
-	</div>	
+	</div>
+	</div><!-- main -->
+
+$footer
+
+</div><!-- bloc droit-->
 	</body>
 </html>
 
