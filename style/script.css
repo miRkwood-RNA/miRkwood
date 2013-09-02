@@ -27,20 +27,7 @@ li
 {
 	margin-top:10px;
 }
-table
-{	
-	float:left;
-	width:700px;
-	min-height:50px;
-	max-height:200px;
-	overflow:scroll;
-	border-color:Silver;
-	border-style:Double;
-	background-color:silver; 
-	margin-left:40%;
-	margin-top:5%;
-	
-}
+
 div.figure {
 	width: 500px;
 	border: thin silver solid;
@@ -182,14 +169,26 @@ pre
 {
 	margin-left:500px;
 }
-table 
-{
+
+table
+{	
+	width:700px;
+	min-height:50px;
+	max-height:200px;
+	overflow:scroll;
+	border-color:Silver;
+	border-style:Double;
+	background-color:silver;
+	margin-top:5%;
+	margin-bottom:5%;
 	border-collapse: collapse;
 	border: 2px solid #000;
 	font: normal 80%/140% arial, helvetica, sans-serif;
 	color: #555;
 	background: #fff;
+	
 }
+
 th 
 {
 	text-align:center;
@@ -477,4 +476,11 @@ input#upload
 	margin-top: 100px;
 	
 	
+}
+
+
+.main{
+	position:relative;
+	overflow:default;
+
 }
