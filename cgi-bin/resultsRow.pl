@@ -3,38 +3,35 @@ use strict;
 use warnings;
 
 use CGI;
-my $cgi          = CGI->new();
-my $name         = $cgi->param('nameSeq');
-my $pvalue       = $cgi->param('pvalue');
-my $position     = $cgi->param('position');
-my $mfei         = $cgi->param('mfei');
-my $mfe          = $cgi->param('mfe');
-my $amfe         = $cgi->param('amfe');
-my $self_contain = $cgi->param('self_contain');
-my $Vienna       = $cgi->param('Vienna');
-my $DNASequence  = $cgi->param('DNASequence');
-my $image        = $cgi->param('image');
-my $viennaString="";
-my $sequenceString="";
-my $string ="";
+my $cgi            = CGI->new();
+my $name           = $cgi->param('nameSeq');
+my $pvalue         = $cgi->param('pvalue');
+my $position       = $cgi->param('position');
+my $mfei           = $cgi->param('mfei');
+my $mfe            = $cgi->param('mfe');
+my $amfe           = $cgi->param('amfe');
+my $self_contain   = $cgi->param('self_contain');
+my $Vienna         = $cgi->param('Vienna');
+my $DNASequence    = $cgi->param('DNASequence');
+my $image          = $cgi->param('image');
+my $viennaString   = "";
+my $sequenceString = "";
+my $string         = "";
 
-for (my $i=1 ; $i <= length($Vienna) ; $i++)
-{
+for ( my $i = 1 ; $i <= length($Vienna) ; $i++ ) {
 
-		$viennaString.= substr $Vienna , $i-1 , 1 ;
-		$sequenceString.= substr $DNASequence , $i-1 , 1 ;
-		if ($i % 50 == 0 )
-		{
-			
-			$string.= $viennaString."\n".	$sequenceString."\n\n";
-			$viennaString="";$sequenceString="";
-		}
-		if (($viennaString ne "") && ($i==length($Vienna))) 
-		{
-			$string.= $viennaString."\n".	$sequenceString."\n\n";
-		}
+    $viennaString   .= substr $Vienna,      $i - 1, 1;
+    $sequenceString .= substr $DNASequence, $i - 1, 1;
+    if ( $i % 50 == 0 ) {
+
+        $string .= $viennaString . "\n" . $sequenceString . "\n\n";
+        $viennaString   = "";
+        $sequenceString = "";
+    }
+    if ( ( $viennaString ne "" ) && ( $i == length($Vienna) ) ) {
+        $string .= $viennaString . "\n" . $sequenceString . "\n\n";
+    }
 }
-
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
