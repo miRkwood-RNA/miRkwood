@@ -20,6 +20,10 @@ my $position = $cgi->param('position');
 my $typePage = $cgi->param('typePage');
 my $url      = $cgi->param('url');
 
+my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
+my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
+my $footer       = PipelineMiRNA::WebTemplate::get_footer();
+
 =method make_HTML
 
 Returns the HTML page with the given <body>
@@ -39,9 +43,27 @@ Content-type: text/html
         <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
         <title>MicroRNA identification</title>
     </head>
-$body
-</html>
+<body>
+<div class="theme-border"></div>
+<div class="logo"></div>
 
+$bioinfo_menu
+
+<div class="bloc_droit">
+
+$header_menu
+
+<div class="main">
+$body
+
+</div><!-- main -->
+
+$footer
+
+</div><!-- bloc droit-->
+
+</body>
+</html>
 DATA
     return $html;
 }
@@ -51,7 +73,6 @@ DATA
 my $body;
 if ( $typePage eq 'simpleCell' ) {
     $body = <<"DATA";
-    <body>
         <div class="titreDiv"> MicroRNA identification results:</div>
         <div id = 'showInfo'>
             <h2 ><u>Sequence Informations </u></h2><br/>
@@ -60,7 +81,6 @@ if ( $typePage eq 'simpleCell' ) {
             <li><b>$factor:</b> $value
             </li>
         </div>
-    </body>
 DATA
     my $html = make_HTML($body);
 }
@@ -114,14 +134,12 @@ elsif ( $typePage eq 'image' ) {
     my @url = split( /\//xms, $url );
     my $image_name = @url[5];
     $body = <<"DATA";
-	<body>
 		<div class="titreDiv"> MicroRNA identification results:</div>
 		<h2> Structure :</h2>
 		<div class="figure" >
 		  <img src='$url' border=0 alt='image'>
 		  <p>Fig : $image_name sequence
     	</div>	
-	</body>
 DATA
 }
 
