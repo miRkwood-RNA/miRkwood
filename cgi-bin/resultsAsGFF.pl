@@ -18,7 +18,7 @@ my $id_job = $cgi->param('run_id');    # récupération id job
 my $valid = PipelineMiRNA::WebFunctions->is_valid_jobID($id_job);
 
 if ($valid) {
-    my $gff = PipelineMiRNA::GFF->generate_GFF($id_job);
+    my $gff = PipelineMiRNA::GFF->generate_GFF_from_ID($id_job);
 
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/gff
