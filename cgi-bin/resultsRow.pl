@@ -14,21 +14,21 @@ my $self_contain   = $cgi->param('self_contain');
 my $Vienna         = $cgi->param('Vienna');
 my $DNASequence    = $cgi->param('DNASequence');
 my $image          = $cgi->param('image');
-my $viennaString   = "";
-my $sequenceString = "";
-my $string         = "";
+my $viennaString   = q{};
+my $sequenceString = q{};
+my $string         = q{};
 
-for ( my $i = 1 ; $i <= length($Vienna) ; $i++ ) {
+for ( 1 .. length($Vienna) ) {
 
-    $viennaString   .= substr $Vienna,      $i - 1, 1;
-    $sequenceString .= substr $DNASequence, $i - 1, 1;
-    if ( $i % 50 == 0 ) {
+    $viennaString   .= substr $Vienna,      $_ - 1, 1;
+    $sequenceString .= substr $DNASequence, $_ - 1, 1;
+    if ( $_ % 50 == 0 ) {
 
         $string .= $viennaString . "\n" . $sequenceString . "\n\n";
-        $viennaString   = "";
-        $sequenceString = "";
+        $viennaString   = q{};
+        $sequenceString = q{};
     }
-    if ( ( $viennaString ne "" ) && ( $i == length($Vienna) ) ) {
+    if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
         $string .= $viennaString . "\n" . $sequenceString . "\n\n";
     }
 }
