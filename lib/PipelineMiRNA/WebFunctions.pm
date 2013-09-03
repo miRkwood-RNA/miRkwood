@@ -150,7 +150,7 @@ sub retrieve_candidate_information {
         #my $align_res = PipelineMiRNA::Parsers::parse_alignment($file_alignement);
         $result{'alignment'} = $file_alignement;
     }
-    my $image_path = PipelineMiRNA::Paths->get_server_path($job,  $dir, $subDir, 'image.png');
+    my $image_path = File::Spec->catfile($job,  $dir, $subDir, 'image.png');
     $result{'image'} = $image_path;
 
     return %result;
@@ -237,10 +237,19 @@ sub resultstruct2pseudoXML {
     my $results = shift @args;
     my %results = %{$results};
     my $result = "<results id='all'>\n";
+
+    my @headers1 = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment');
+    my @headers2 = ('Vienna', 'DNASequence');
+
     while ( my ($key, $value) = each %results )
     {
         $result .= "<Sequence";
-        for my $header (@headers){
+        for my $header (@headers1){
+            $result .= " $header='${$value}{$header}'";
+        }
+        my $img = PipelineMiRNA::Paths->get_server_path(${$value}{'image'});
+        $result .= " image='$img'";
+        for my $header (@headers2){
             $result .= " $header='${$value}{$header}'";
         }
         $result .= "></Sequence>\n";
