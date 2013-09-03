@@ -107,6 +107,8 @@ sub generate_report {
       File::Spec->catfile( PipelineMiRNA::Paths->get_server_path($jobPath),
         $ODP_filename );
 
+    my %results = PipelineMiRNA::WebFunctions->get_structure_for_jobID($jobId);
+
     my $doc = $self->prepare_document();
 
     # Main context access
@@ -129,6 +131,22 @@ sub generate_report {
             style => 'Top title'
         )
     );
+    my @headers = ('position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
+    while ( my ( $key, $value ) = each %results ) {
+        my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
+        $context->append_element(
+            odf_create_heading(
+                level => 2,
+                text  => $key,
+            )
+        );
+        my $result;
+        for my $header (@headers)
+        {
+            $result .= "$header: ${$value}{$header}\n";
+        }
+        my $elt = $context->append_element(odf_create_paragraph(text => $result));
+    }
 
     # save the generated document and quit
     $doc->save( target => $ODP_abspath, pretty => TRUE );
