@@ -26,7 +26,6 @@ sub prepare_document {
     $elt = $doc->insert_style(
         odf_create_style(
             'paragraph',
-            align         => 'justify',
             margin_top    => '2mm',
             margin_bottom => '2mm',
             orphans       => 2,
