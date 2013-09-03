@@ -131,7 +131,7 @@ sub generate_report {
             style => 'Top title'
         )
     );
-    my @headers = ('position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
+    my @headers = qw( position mfei mfe amfe p_value self_contain );
     while ( my ( $key, $value ) = each %results ) {
         my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
         $context->append_element(
@@ -141,12 +141,33 @@ sub generate_report {
             )
         );
         my $result;
-        for my $header (@headers)
-        {
+        for my $header (@headers) {
             $result .= "$header: ${$value}{$header}\n";
         }
-        my $elt = $context->append_element(odf_create_paragraph(text => $result));
-    }
+        my $vienna_seq =
+          PipelineMiRNA::WebFunctions->make_Vienna_viz( ${$value}{'Vienna'},
+            ${$value}{'DNASequence'} );
+
+        $result .= "Vienna:\n$vienna_seq";
+        my $para =
+          $context->append_element( odf_create_paragraph( text => $result ) );
+
+        my $img_path      = ${$value}{'image'};
+        my $img_full_path = PipelineMiRNA::Paths->get_absolute_path($img_path);
+
+        my ( $lien_image, $taille_image ) =
+          $doc->add_image_file($img_full_path);
+        $para->append_element(
+            odf_frame->create(
+                image => $lien_image,
+                name  => "Structure_${$value}{'name'}_${$value}{'position'}",
+                title => 'Structure',
+                description => 'Structure',
+                name        => 'Fleur',
+                size        => $taille_image,
+            )
+        );
+    }    #  while each %results
 
     # save the generated document and quit
     $doc->save( target => $ODP_abspath, pretty => TRUE );
