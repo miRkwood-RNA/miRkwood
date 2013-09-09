@@ -18,6 +18,7 @@ sub test_mfei {
     my $MFEI_output = File::Spec->catfile( $candidate_dir, 'outMFEI.txt' );
     PipelineMiRNA::Components::compute_energy( $candidate_ct_file, $MFEI_output,
         $seq );
+    return -e $MFEI_output;
 }
 
 =method test_randfold
@@ -32,6 +33,7 @@ sub test_randfold {
     PipelineMiRNA::Programs::run_randfold( $seq_file, $randfold_out )
       or die("Problem when running Randfold");
     chmod 777, $randfold_out;
+    return -e $randfold_out;
 }
 
 =method test_selfcontain
@@ -47,6 +49,7 @@ sub test_selfcontain {
     PipelineMiRNA::Programs::run_selfcontain( $seq_file, $selfcontain_out )
       or die("Problem when running Selfcontain");
     chmod 777, $selfcontain_out;
+    return -e $selfcontain_out;
 }
 
 =method test_alignment
@@ -67,6 +70,7 @@ sub test_alignment {
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
     PipelineMiRNA::Programs::run_exonerate( $seqN, $exonerate_out )
       or die("Problem when running Exonerate");
+    return -e $exonerate_out;
 }
 
 1;
