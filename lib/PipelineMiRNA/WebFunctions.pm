@@ -167,13 +167,13 @@ sub resultstruct2csv {
     my $results = shift @args;
 	my @tab = shift @args;
 	my %results = %{$results};
-    my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
-	my $result = join( ',', @headers ) . "\n";
+    my @csv_headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
+	my $result = join( ',', @csv_headers ) . "\n";
     while ( my ($key, $value) = each %results )
     {
     	if (  $key ~~ \@tab ) 
     	{
- 	        for my $header (@headers)
+	        for my $header (@csv_headers)
  	        {
 	            $result .= "${$value}{$header},";
 	        }

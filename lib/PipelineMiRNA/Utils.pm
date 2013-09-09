@@ -32,7 +32,7 @@ sub parse_multi_fasta {
             if ($to_uppercase) {
                 $nameSeq = uc $nameSeq;
             }
-            $nameSeq =~ s/\|/-/g;
+            $nameSeq =~ s/\|/-/xmsg;
             $tab{$nameSeq} = $EMPTY;
         }
         else {

@@ -60,7 +60,7 @@ sub parse_selfcontain {
     open( my $FH, '<', $selfcontain_out )
       or die "Error when opening file: $!";
     while ( my $line = <$FH> ) {
-        if ( $line =~ /(.*) (.*)/ ) {
+        if ( $line =~ /(.*) (.*)/xms ) {
             $result = $2;
         }
     }

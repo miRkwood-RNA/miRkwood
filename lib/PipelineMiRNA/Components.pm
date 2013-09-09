@@ -149,7 +149,7 @@ sub mask_CT_file {
         $nbSeq  = $variable[1];
         $numSeq = $variable[5];
         $base   = $variable[2];
-        if ( $variable[2] =~ /^ENERGY/ ) {
+        if ( $variable[2] =~ /^ENERGY/xms ) {
             $longueur = $variable[1];
             $nomSeq   = substr $variable[5],
               0;    # Récupération du nom de la séquence
@@ -212,7 +212,8 @@ sub mask_CT_file {
         }
     }
 ## lecture du tableau associatif et generation fichier boucleTermWithN.txt ##
-    open( my $RES, '>>', $boucleTermWithN_out );
+    open( my $RES, '>>', $boucleTermWithN_out )
+      or die "Error when opening $boucleTermWithN_out: $!";
     foreach my $sequenceNom ( keys %tab ) {
         print $RES '>' . $sequenceNom . "\n";
         for ( my $i = 0 ;
@@ -333,14 +334,14 @@ sub process_OutVienna {
       or die "Error when opening $candidate_rnafold_optimal_out: $!";
     my ( $nameSeq, $dna, $Vienna );
     while ( my $line = <$INPUT_FH> ) {
-        if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
+        if ( ( $line =~ /^>(.*)/xms ) ) {    # nom sequence
             $nameSeq = $1;
         }
-        elsif ( ( $line =~ /^[a-zA-Z]/ ) )
+        elsif ( ( $line =~ /^[a-zA-Z]/xms ) )
         {    # récupération de la sequence adn
             $dna = substr $line, 0, -1;
         }
-        elsif ( ( $line =~ /(.*) / ) ) {
+        elsif ( ( $line =~ /(.*) /xms ) ) {
             $Vienna = $1;
             print $TRAITED_FH $nameSeq . "\t"
               . $dna . "\t"
