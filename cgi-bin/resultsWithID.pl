@@ -81,8 +81,18 @@ HTML
 }else{
     print <<"HTML";
 $HTML_header
-    <body>
-        <p>No results available for the given job identifier $id_job: $valid </p>
+<body>
+    <div class="theme-border"></div>
+    <div class="logo"></div>
+    $bioinfo_menu
+    <div class="bloc_droit">
+        $header_menu
+        <div class="main">
+        $HTML_additional
+            <p>No results available for the given job identifier $id_job: $valid </p>
+        </div><!-- main -->
+    $footer
+    </div><!-- bloc droit-->
     </body>
 </html>
 HTML
