@@ -229,11 +229,11 @@ function deSelectAll(rowsNumber)
 }
 
 /**
- * Export the selected sequences as CSV
- * @param {String} id Identifier of the job
+ * Retrieve the names of the sequences selected
+ * @return {Array} An array of the selected name
  */
-function exportCSV(id)
-{	
+function getChecked()
+{
 	var tab=new Array();
 	for (var i=1;i<rowsNumber;i++)
 	{
@@ -245,6 +245,18 @@ function exportCSV(id)
 			tab.push(nameTemp+"__"+factorsTemp.position);
 		}
 	}
+	return tab;
+}
+
+
+/**
+ * Export the selected sequences as CSV
+ * @param {String} id Identifier of the job
+ */
+function exportCSV(id)
+{	
+	var tab=new Array();
+	tab = getChecked();
 	window.location = "/cgi-bin/resultsAsCSV.pl?" + "data=" + tab.join(',') + "&run_id=" + id;
 }
 
