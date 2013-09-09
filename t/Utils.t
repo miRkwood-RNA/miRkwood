@@ -63,25 +63,23 @@ my %expected4 = ( '>contig15750' =>
                   '>contig15916' =>
                   'aaaaaacctcacatacagcccccgtatctctctctctctataattgataggctattttcttctctctctagaaatgagcttacatggcatgcagatccattgcttatttataggtatagatacagcagatatatattatttattcatatatgtgtatcgaggtatcggaagaagaaattttcattgttacggcggttttctgattcgcttggtgcaggtcgggaacggcttggccgacggtttcatatttgtctccactgtgtgaaacctcgtagcttgagtactgtcctgccttgcatcaactgaatctgaaccgatgtaaatgatctgtgaccggtgtaggagaattggatgaatattgttggagat'
                   );
-print keys %expected4;
 is_deeply( \%tab4, \%expected4,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );
 
 ##################################################################
 diag('Testing find_matching_count()');
-is( PipelineMiRNA::Utils::find_matching_count('()..'), 1 );
-is( PipelineMiRNA::Utils::find_matching_count('..()'), 1 );
-is( PipelineMiRNA::Utils::find_matching_count('.().'), 1 );
-is( PipelineMiRNA::Utils::find_matching_count('()..'), 1 );
-is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1 );
+is( PipelineMiRNA::Utils::find_matching_count('()..'), 1, 'matching left' );
+is( PipelineMiRNA::Utils::find_matching_count('..()'), 1, 'matching right' );
+is( PipelineMiRNA::Utils::find_matching_count('.().'), 1, 'matching middle' );
+is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1, 'matching across' );
 
 ##################################################################
 diag('Testing make_loop()');
 my @res1 = PipelineMiRNA::Utils::make_loop('123');
-is_deeply( \@res1, [ [], ['1'], ['2'], ['3'], [] ] );
+is_deeply( \@res1, [ [], ['1'], ['2'], ['3'], [] ], 'make_loop() with 3 elements ok' );
 
 my @res2 = PipelineMiRNA::Utils::make_loop('1234');
-is_deeply( \@res2, [ ['1'], [' ', '2'], [' '], [' ', '3'], ['4'] ] );
+is_deeply( \@res2, [ ['1'], [' ', '2'], [' '], [' ', '3'], ['4'] ], 'make_loop() with 4 elements ok' );
 
 my @res3 = PipelineMiRNA::Utils::make_loop('12345');
-is_deeply(\@res3, [ ['1'], [' ', '2'], [' ', '3'], [' ', '4'], ['5'] ] );
+is_deeply(\@res3, [ ['1'], [' ', '2'], [' ', '3'], [' ', '4'], ['5'] ], 'make_loop() with 5 elements ok' );
