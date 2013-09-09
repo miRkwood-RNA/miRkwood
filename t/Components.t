@@ -40,9 +40,9 @@ C c
 C c
 - -';
 
-my $expected1 = '- T G T A G C C A A G G A C - A G A C T T G C C -
-  | | | | | | | | | | | |       | |   | | | | |  
-- T G T A G C C A A G G A - - T G A A T T G C C -
+my $expected1 = '-TGTAGCCAAGGAC-AGACTTGCC-
+ ||||||||||||   || ||||| 
+-TGTAGCCAAGGA--TGAATTGCC-
 ';
 my $output1 = PipelineMiRNA::Components::parse_exonerate_alignment($input1);
 is( $output1, $expected1, 'Parsing Exonerate alignment ok' );
@@ -54,18 +54,18 @@ file_exists_ok($exonerate_output_file);
 my %exonerate_expected = (
     '17-38' => [
         {
-            'alignment' => '- T G T A G C C A A G G A C A A C T T G C C -
-  | | | | | | | | | | | |     |   | | | | |  
-- T G T A G C C A A G G A T G A A T T G C C -
+            'alignment' => '-TGTAGCCAAGGACAACTTGCC-
+ ||||||||||||  | ||||| 
+-TGTAGCCAAGGATGAATTGCC-
 ',
             'name'  => 'aly-miR169a*',
             'score' => '-3',
             'seq'   => 'TGTAGCCAAGGACAACTTGCC'
         },
         {
-            'alignment' => '- T G - - A G C C A A G G A T G A C T T G C C G - -
-  | |     | | | | | | | | | | | |   | | | | |      
-- T G T - A G C C A A G G A T G A A T T G C C - - -
+            'alignment' => '-TG--AGCCAAGGATGACTTGCCG--
+ ||  |||||||||||| |||||   
+-TGT-AGCCAAGGATGAATTGCC---
 ',
             'name'  => 'aly-miR169d',
             'score' => '-3',
@@ -74,9 +74,9 @@ my %exonerate_expected = (
     ],
     '19-40' => [
         {
-            'alignment' => '- C A G C C A A G G A T G A C T T G C C G A -
-    | | | | | | | | | | | |   | | | | |   |  
-- T A G C C A A G G A T G A A T T G C C T A -
+            'alignment' => '-CAGCCAAGGATGACTTGCCGA-
+  |||||||||||| ||||| | 
+-TAGCCAAGGATGAATTGCCTA-
 ',
             'name'  => 'aly-miR169a',
             'score' => '-3',
