@@ -52,13 +52,17 @@ file_exists_ok($exonerate_output_file);
 
 #my %exonerate_expected = ('A' => 'B');
 my %exonerate_expected = (
-    '17-38' => [
+    '37-58' => [
         {
             'alignment' => '-TGTAGCCAAGGACAACTTGCC-
  ||||||||||||  | ||||| 
 -TGTAGCCAAGGATGAATTGCC-
 ',
             'name'  => 'aly-miR169a*',
+            'begin_target' => '37',
+            'end_target' => '58',
+            'begin_query' => '21',
+            'end_query' => '0',
             'score' => '-3',
             'seq'   => 'TGTAGCCAAGGACAACTTGCC'
         },
@@ -68,17 +72,25 @@ my %exonerate_expected = (
 -TGT-AGCCAAGGATGAATTGCC---
 ',
             'name'  => 'aly-miR169d',
+            'begin_target' => '37',
+            'end_target' => '58',
+            'begin_query' => '0',
+            'end_query' => '21',
             'score' => '-3',
             'seq'   => 'TGAGCCAAGGATGACTTGCCG'
         }
     ],
-    '19-40' => [
+    '39-60' => [
         {
             'alignment' => '-CAGCCAAGGATGACTTGCCGA-
   |||||||||||| ||||| | 
 -TAGCCAAGGATGAATTGCCTA-
 ',
             'name'  => 'aly-miR169a',
+            'begin_target' => '39',
+            'end_target' => '60',
+            'begin_query' => '0',
+            'end_query' => '21',
             'score' => '-3',
             'seq'   => 'CAGCCAAGGATGACTTGCCGA'
         }

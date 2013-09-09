@@ -1,6 +1,8 @@
 - name : aly-miR169a
-  begin: 19
-  end  : 40
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
   score: -3
   seq  : CAGCCAAGGATGACTTGCCGA
 
@@ -29,8 +31,10 @@
     A a
     - -
 - name : aly-miR169a*
-  begin: 17
-  end  : 38
+  begin_target: 37
+  end_target  : 58
+  begin_query : 21
+  end_query   : 0
   score: -3
   seq  : TGTAGCCAAGGACAACTTGCC
 
@@ -59,8 +63,10 @@
     C c
     - -
 - name : aly-miR169d
-  begin: 17
-  end  : 38
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
   score: -3
   seq  : TGAGCCAAGGATGACTTGCCG
 
