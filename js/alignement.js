@@ -1,4 +1,7 @@
-function readFile(url)  // fonction ajax qui permet de lire un fichier txt 
+/**
+ * Fonction AJAX qui permet de lire un fichier txt
+ */
+function readFile(url)
 {
      if(window.XMLHttpRequest) // FIREFOX
           xhr_object = new XMLHttpRequest(); 
@@ -12,6 +15,9 @@ function readFile(url)  // fonction ajax qui permet de lire un fichier txt
      else{ return(false);}
 }
 
+/**
+ * 
+ */
 function displayFile(url)
 {console.log("one")
 		var file = readFile(url);

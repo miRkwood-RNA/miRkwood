@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 function showHideBlock() 
 { 
     if(document.getElementById('CDS').checked)
@@ -13,11 +15,17 @@ function showHideBlock()
     }
 }
 
+/**
+ * 
+ */
 function wainting()
 {	
     document.getElementById('upload').disabled="true";
 }
 
+/**
+ * 
+ */
 function verifySequence()
 {	
     var a = document.form.seqArea.value && document.form.seqFile.value;
@@ -27,6 +35,9 @@ function verifySequence()
     return !(a||s);
 }
 
+/**
+ * 
+ */
 function generateExample() {
     var exampleSeqs =
     ['>contig15750',

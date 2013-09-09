@@ -1,11 +1,17 @@
-function results() // classe js results
+/**
+ * Classe js results
+ */
+function results()
 {	
 	//attributs
 	this.dataXml=document.getElementById("all"); // chargement de tout l'XML
 	this.SequencesXML = this.dataXml.querySelectorAll("Sequence"); // selection de tous les tags sequences
 }
-  
-results.prototype.getSequencesNamesList = function() // méthode : retourner la liste de tous les nom
+
+/**
+ * Retourner la liste de tous les nom
+ */
+results.prototype.getSequencesNamesList = function()
 {
 	var names = new Array();
 	var seqs = this.SequencesXML;
@@ -16,14 +22,20 @@ results.prototype.getSequencesNamesList = function() // méthode : retourner la 
 	return names; // retour tableau name
 }
 
-results.prototype.getSequenceXMLByNameAndPosition = function(name,pos) // récupération de tous les attributs d'une séquence avec son nom
+/**
+ * Récupération de tous les attributs d'une séquence avec son nom
+ */
+results.prototype.getSequenceXMLByNameAndPosition = function(name,pos)
 {
 	
 	var seq = this.dataXml.querySelector("Sequence[name='"+name+"'][position='"+pos+"']");
 	return seq;
 }
 
-results.prototype.getSequenceByNameFactors = function(name,pos) // retourne un objet contenant les critères de chaque séquence avec son nom
+/**
+ * Retourne un objet contenant les critères de chaque séquence avec son nom
+ */
+results.prototype.getSequenceByNameFactors = function(name,pos)
 {
 	var factors = new Object();
 	var seq = this.getSequenceXMLByNameAndPosition(name,pos);
@@ -39,20 +51,29 @@ results.prototype.getSequenceByNameFactors = function(name,pos) // retourne un o
 	return factors;
 }
 
-results.prototype.getSequenceByNameByFactor = function(name,factor) //////// retourne la valeur d'une célulle (nom séquence, critère)
+/**
+ * Retourne la valeur d'une cellule (nom séquence, critère)
+ */
+results.prototype.getSequenceByNameByFactor = function(name,factor)
 {
 	var seq = this.getSequenceXMLByNameAndPosition(name);
 	var factor = seq.getAttribute(factor);
 	return factor;
 }
 
-results.prototype.getValueByIndices = function(i,j)// retourne valeur de la cellule avec les indices des tableaux
+/**
+ * Retourne valeur de la cellule avec les indices des tableaux
+ */
+results.prototype.getValueByIndices = function(i,j)
 {
 	var value = this.SequencesXML[i].attributes[j+1].value;
 	return value;
 }
 
-results.prototype.getValuesByFactorName = function(factor) //avoir toutes les valeurs d'une colonne
+/**
+ * Avoir toutes les valeurs d'une colonne
+ */
+results.prototype.getValuesByFactorName = function(factor)
 {
 	var values = new Array();
 	var seqs = this.SequencesXML;
@@ -63,7 +84,10 @@ results.prototype.getValuesByFactorName = function(factor) //avoir toutes les va
 	return values;
 }
 
-results.prototype.getFactorsNamesList = function() //liste des critères
+/**
+ * liste des critères
+ */
+results.prototype.getFactorsNamesList = function()
 {
 	var allNames = new Array("position","mfe","mfei","amfe","p_value","self_contain", "alignment","image" );
 	var names = new Array();
@@ -75,11 +99,18 @@ results.prototype.getFactorsNamesList = function() //liste des critères
 	return names;
 }
 
-results.prototype.getSequenceNameByIndex = function(ind) // retourner nom séquence à partir d'un indice
+/**
+ * Retourner nom séquence à partir d'un indice
+ */
+results.prototype.getSequenceNameByIndex = function(ind)
 {
 	return this.SequencesXML[ind].getAttribute("name");
 }
-results.prototype.getFactorNameByIndex = function(ind)	// retourner critère à partir d'un indice
+
+/**
+ * Retourner critère à partir d'un indice
+ */
+results.prototype.getFactorNameByIndex = function(ind)
 {
 	return this.getFactorsNamesList()[ind];
 }

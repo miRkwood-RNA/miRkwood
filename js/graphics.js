@@ -1,12 +1,18 @@
-
-function main() // instantiation  de classe results.js
+/**
+ * Instantiation  de classe results.js
+ */
+function main()
 {
 	myResults = new results();
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
 	createGrid('table',rowsNumber+1,columnsNumber+1);// fonction permettant de créer le tableau par rapport au résultats
-}	
-function showCellInfo(i,j)// focntion permettant d'afficher la valeur d'une cellule
+}
+
+/**
+ * Fonction permettant d'afficher la valeur d'une cellule
+ */
+function showCellInfo(i,j)
 {
 	if ((i!=0)&&(j!=0))
 	{
@@ -52,7 +58,11 @@ function showCellInfo(i,j)// focntion permettant d'afficher la valeur d'une cell
 		}
 	} 
 }
-function colorOver(a,b) // gérer couleur 
+
+/**
+ * Gérer couleur
+ */
+function colorOver(a,b)
 {
 	for (var i=0;i<rowsNumber+1;i++)
 	{
@@ -63,7 +73,11 @@ function colorOver(a,b) // gérer couleur
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','#EDEDED');
 	}
 }
-function colorOut(a,b) // gérer couleur en dehors de la sélection
+
+/**
+ * Gérer couleur en dehors de la sélection
+ */
+function colorOut(a,b)
 {
 	for (var i=0;i<rowsNumber+1;i++)
 	{
@@ -74,7 +88,11 @@ function colorOut(a,b) // gérer couleur en dehors de la sélection
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','white');
 	}
 }
-function createGrid(id,rowsNumber,columnsNumber) // création du tableau avec les résultats
+
+/**
+ * création du tableau avec les résultats
+ */
+function createGrid(id,rowsNumber,columnsNumber)
 {
 	
 	var div  = document.createElement('div');
@@ -188,7 +206,9 @@ function createGrid(id,rowsNumber,columnsNumber) // création du tableau avec le
 	tar.appendChild(table);
 }
 
-
+/**
+ * 
+ */
 function selectAll(rowsNumber)
 {
 	for (var i=1;i<rowsNumber;i++)
@@ -197,6 +217,9 @@ function selectAll(rowsNumber)
 	}
 }
 
+/**
+ * 
+ */
 function deSelectAll(rowsNumber)
 {
 	for (var i=1;i<rowsNumber;i++)
@@ -205,7 +228,10 @@ function deSelectAll(rowsNumber)
 	}
 }
 
-
+/**
+ * Export the selected sequences as CSV
+ * @param {String} id Identifier of the job
+ */
 function exportCSV(id)
 {	
 	var tab=new Array();
@@ -222,11 +248,19 @@ function exportCSV(id)
 	window.location = "/cgi-bin/resultsAsCSV.pl?" + "data=" + tab.join(',') + "&run_id=" + id;
 }
 
+/**
+ * Export the selected sequences as ODT
+ * @param {String} id Identifier of the job
+ */
 function exportODT(id)
 {
 	window.location = "/cgi-bin/resultsAsODT.pl?" + "&run_id=" + id;
 }
 
+/**
+ * Export the selected sequences as GFF
+ * @param {String} id Identifier of the job
+ */
 function exportGFF(id)
 {
 	window.location = "/cgi-bin/resultsAsGFF.pl?" + "&run_id=" + id;
