@@ -43,3 +43,17 @@ my @expected4 = [ '-1.00166666666667', '-60.1', '-37.0987654320988' ];
 my @result4 = PipelineMiRNA::Parsers::parse_mfei($mfei_file);
 is_deeply( \@result4, @expected4, 'MFEI file is correctly parsed' );
 
+# Vienna
+
+my $vienna_file1 = input_file('outViennaTraited.txt');
+my $vienna_file2 = input_file('outViennaTraited2.txt');
+file_exists_ok($vienna_file1);
+file_exists_ok($vienna_file2);
+my @expected5 = ['gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc',
+                 '((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))' ];
+my @result5   = PipelineMiRNA::Parsers::parse_vienna($vienna_file1);
+is_deeply( \@result5, @expected5, 'Vienna file "all in line" is correctly parsed' );
+
+my @result6   = PipelineMiRNA::Parsers::parse_vienna($vienna_file2);
+is_deeply( \@result6, @expected5, 'Vienna file "with breakspace" is correctly parsed' );
+
