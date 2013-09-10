@@ -57,3 +57,10 @@ is_deeply( \@result5, @expected5, 'Vienna file "all in line" is correctly parsed
 my @result6   = PipelineMiRNA::Parsers::parse_vienna($vienna_file2);
 is_deeply( \@result6, @expected5, 'Vienna file "with breakspace" is correctly parsed' );
 
+# Selfcontain
+
+my $selfcontain_file = input_file('selfContain.txt');
+file_exists_ok($selfcontain_file);
+my $expected7 = '0';
+my $result7   = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_file);
+is( $result7, $expected7, 'Selfcontain file is correctly parsed' );

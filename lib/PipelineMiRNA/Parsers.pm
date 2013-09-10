@@ -70,9 +70,15 @@ sub parse_selfcontain {
     open( my $FH, '<', $selfcontain_out )
       or die "Error when opening file: $!";
     while ( my $line = <$FH> ) {
-        if ( $line =~ /(.*) (.*)/xms ) {
-            $result = $2;
-        }
+        if ( $line =~ m{
+           ^                # Begin of line
+           (.*?)            # A non-greedy sequence of characters, captured
+           \s+?             # Some whitespace
+           (.*?)            # A non-greedy sequence of characters, captured
+           $                # End of line
+           }xms ) {
+           $result = $2;
+       }
     }
     close $FH or die("Error when closing: $!");
     return $result;
