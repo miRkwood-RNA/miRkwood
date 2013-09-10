@@ -90,11 +90,19 @@ sub parse_vienna {
     my @res;
     open( my $FH, '<', $vienna_out )
       or die "Error when opening file: $!";
-    while ( my $line = <$FH> ) {
-        if ( $line =~ /(.*)\t(.*)\t(.*)/xms ) {
-            $res[0] = $2;    # récupération sequence
-            $res[1] = $3;    # récupération Vienna
-        }
+    while ( my $line = <$FH> ){
+        if ( $line =~ m{
+           ^\s+?            # Begin of line and some whitespace
+           ([aAcCgGtTuU]*)  # A sequence of nucleotides, captured
+           \s+?             # Some whitespace
+           ([\(\.\)]+)      # A sequence of either '.', '(' or ')'
+           \s+?             # Some whitespace
+           (.*?)$           # Whatever, non-greedy, captured
+           \s*$             # Some whitespace until the end
+           }smx ) {
+            $res[0] = $1;    # récupération sequence
+            $res[1] = $2;    # récupération Vienna
+       }
     }
     close $FH or die("Error when closing: $!");
     return @res;
