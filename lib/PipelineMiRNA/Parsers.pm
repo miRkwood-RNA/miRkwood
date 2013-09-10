@@ -16,9 +16,19 @@ sub parse_pvalue {
     my $result;
     open( my $FH, '<', $pvalue ) or die "Error when opening file $pvalue: $!";
     while ( my $line = <$FH> ) {
-        if ( $line =~ /(.*)\t(.*)\t(.*)/xms ) {
-            $result = $3;
-        }
+
+        if ( $line =~ m{
+           ^                #Begin of line
+           (.*?)            #A non-greedy sequence of characters, captured
+           \t               #One tabulation
+           (.*?)            #A non-greedy sequence of characters, captured
+           \t               #One tabulation
+           (.*?)            #A non-greedy sequence of characters, captured
+           $                #End of line
+           }smx ) {
+           $result = $3;
+       }
+
     }
     close $FH or die("Error when closing: $!");
     return $result;
