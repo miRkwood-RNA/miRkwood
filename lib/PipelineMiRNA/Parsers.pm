@@ -120,6 +120,8 @@ sub parse_vienna {
 
 Parse the contents of the given Alignment file
 
+Should be deprecated since the new YAML output format.
+
 =cut
 
 sub parse_alignment {
