@@ -85,12 +85,13 @@ sub get_structure_for_jobID {
 
 =method retrieve_candidate_information
 
-Get the result for a given candidate
+Check correctness and get the result for a given candidate
 
 Arguments:
 - $job - the job identifier
 - $dir - the sequence name
 - $subDir - the candidate name
+
 =cut
 
 sub retrieve_candidate_information {
@@ -99,16 +100,42 @@ sub retrieve_candidate_information {
     my $dir = shift @args;
     my $subDir = shift @args;
 
-    my $job_dir = PipelineMiRNA::Paths->get_absolute_path($job);
-    my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
+    my $candidate_dir = File::Spec->catdir($job,  $dir, $subDir);
+
+    my $full_candidate_dir = PipelineMiRNA::Paths->get_absolute_path($candidate_dir);
+
+
+    if ( ! -e $full_candidate_dir ){
+        die('Unvalid candidate information');
+
+    }else{
+        my %result = actual_retrieve_candidate_information($candidate_dir);
+        $result{'name'} = $dir;    #récupération nom séquence
+        my @position = split( /__/, $subDir );
+        $result{'position'} = $position[1]; # récupération position
+        return %result;
+    }
+}
+
+=method actual_retrieve_candidate_information
+
+Get the results for a given candidate
+
+Arguments:
+- $candidate_dir - the unprefixed path to the candidate results
+
+=cut
+
+sub actual_retrieve_candidate_information {
+    my @args = @_;
+    my $candidate_dir = shift @args;
+
     my %result = ();
 
-    $result{'name'} = $dir;    #récupération nom séquence
-    my @position = split( /__/, $subDir );
-    $result{'position'} = $position[1]; # récupération position
-      ;    # récupération noms + positions
+    my $full_candidate_dir = PipelineMiRNA::Paths->get_absolute_path($candidate_dir);
+
     my $pvalue =
-      File::Spec->catfile( $subDir_full, 'pvalue.txt' );
+      File::Spec->catfile( $full_candidate_dir, 'pvalue.txt' );
     if ( -e $pvalue )    # si fichier existe
     {
         $result{'p_value'} = PipelineMiRNA::Parsers::parse_pvalue($pvalue);
@@ -116,7 +143,7 @@ sub retrieve_candidate_information {
 
     #Récupération valeur MFEI
     my $mfei_out =
-      File::Spec->catfile( $subDir_full, 'outMFEI.txt' );
+      File::Spec->catfile( $full_candidate_dir, 'outMFEI.txt' );
     if ( -e $mfei_out )                 # si fichier existe
     {
         my @mfeis = PipelineMiRNA::Parsers::parse_mfei($mfei_out);
@@ -127,14 +154,14 @@ sub retrieve_candidate_information {
 
     #Récupération valeur self contain
     my $selfcontain_out =
-      File::Spec->catfile( $subDir_full, 'selfContain.txt' );
+      File::Spec->catfile( $full_candidate_dir, 'selfContain.txt' );
     if ( -e $selfcontain_out )
     {Dumper
         $result{'self_contain'} = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_out);
     }
 
     #Récupération séquence et format Vienna
-    my $vienna_out = File::Spec->catfile( $subDir_full,
+    my $vienna_out = File::Spec->catfile( $full_candidate_dir,
                                        'outViennaTraited.txt' );
     if ( -e $vienna_out )                  # si fichier existe
     {
@@ -144,13 +171,13 @@ sub retrieve_candidate_information {
     }
 
     #Récupération alignement avec mirBase
-    my $file_alignement = PipelineMiRNA::Paths->get_absolute_path($job,  $dir, $subDir, 'alignement.txt');
+    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     if ( -e $file_alignement )                # si fichier existe
     {
         #my $align_res = PipelineMiRNA::Parsers::parse_alignment($file_alignement);
         $result{'alignment'} = $file_alignement;
     }
-    my $image_path = File::Spec->catfile($job,  $dir, $subDir, 'image.png');
+    my $image_path = File::Spec->catfile($candidate_dir, 'image.png');
     $result{'image'} = $image_path;
 
     return %result;
