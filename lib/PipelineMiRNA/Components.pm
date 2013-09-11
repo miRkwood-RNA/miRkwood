@@ -334,18 +334,32 @@ sub process_OutVienna {
       or die "Error when opening $candidate_rnafold_optimal_out: $!";
     my ( $nameSeq, $dna, $Vienna );
     while ( my $line = <$INPUT_FH> ) {
-        if ( ( $line =~ /^>(.*)/xms ) ) {    # nom sequence
+        if ( $line =~ m{
+           ^>               # Begin of line and a caret symbol
+           (.*?)            # Whatever, non-greedy, captured
+           \s*?$            # Possibly some whitespace, until the end
+        }xms ){
             $nameSeq = $1;
         }
-        elsif ( ( $line =~ /^[a-zA-Z]/xms ) )
-        {    # récupération de la sequence adn
-            $dna = substr $line, 0, -1;
+        elsif ( $line =~ m{
+           ^\s*?            # Begin of line and possibly some whitespace
+           ([aAcCgGtTuU]*)  # A sequence of nucleotides, captured
+           \s*?$            # Possibly some whitespace, until the end
+        }xms ){
+            # récupération de la sequence adn
+            $dna = $1;
         }
-        elsif ( ( $line =~ /(.*) /xms ) ) {
+        elsif ( $line =~ m{
+           ^\s*?            # Begin of line and possibly some whitespace
+           ([\(\.\)]+)      # A sequence of either '.', '(' or ')'
+           \s+?             # Some whitespace
+           (.*?)            # Whatever, non-greedy, captured
+           \s*$             # Some whitespace until the end
+           }xms ) {
             $Vienna = $1;
-            print $TRAITED_FH $nameSeq . "\t"
-              . $dna . "\t"
-              . $Vienna
+            print $TRAITED_FH "$nameSeq" . "\t"
+              . "$dna" . "\t"
+              . "$Vienna"
               . "\n";    #récupération du format Vienna
         }
     }
