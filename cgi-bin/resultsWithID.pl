@@ -70,6 +70,7 @@ $HTML_results
           <a onclick='exportODT("$id_job")' id="" href="#"><img src="/arn/images/odf.png" width ="48" heigth="28"    alt="Download as ODF"/></a>
           <a onclick='exportGFF("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="48" heigth="28"    alt="Download as GFF"/></a>
         </div>
+        <div id="id_job" >$id_job</div>
     </div><!-- main -->
 
     $footer

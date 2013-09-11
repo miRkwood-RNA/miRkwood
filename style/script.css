@@ -481,5 +481,9 @@ input#upload
 .main{
 	position:relative;
 	overflow:default;
+}
 
+div#id_job {
+	font-weight:bold;
+	display:none;
 }
