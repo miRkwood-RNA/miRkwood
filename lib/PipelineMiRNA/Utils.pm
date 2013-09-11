@@ -266,8 +266,8 @@ sub make_ASCII_viz {
             $stop = 1;
         }
 
-        if ( $left ge $parenthesis_number
-            and ( length($sequence) - $right - 1 ) ge $parenthesis_number )
+        if ( $left > $parenthesis_number
+            and ( length($sequence) - $right - 1 ) > $parenthesis_number )
         {
             $stop = 1;
         }
