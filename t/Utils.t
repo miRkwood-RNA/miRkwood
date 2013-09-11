@@ -75,11 +75,30 @@ is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1, 'matching across' );
 
 ##################################################################
 diag('Testing make_loop()');
-my @res1 = PipelineMiRNA::Utils::make_loop('123');
-is_deeply( \@res1, [ [], ['1'], ['2'], ['3'], [] ], 'make_loop() with 3 elements ok' );
+use Data::Dumper;
+ok( my @res5 = PipelineMiRNA::Utils::make_loop('123'),
+    'Can call make_loop() with 3 elements');
+#print Dumper(@res5);
+is_deeply( \@res5, [ [], ['1'], ['2'], ['3'], [] ], 'make_loop() with 3 elements ok' );
 
-my @res2 = PipelineMiRNA::Utils::make_loop('1234');
-is_deeply( \@res2, [ ['1'], [' ', '2'], [' '], [' ', '3'], ['4'] ], 'make_loop() with 4 elements ok' );
+ok( my @res6 = PipelineMiRNA::Utils::make_loop('1234'),
+    'Can call make_loop() with 4 elements');
+#print Dumper(@res6);
+is_deeply( \@res6, [ ['1'], [' ', '2'], [' '], [' ', '3'], ['4'] ], 'make_loop() with 4 elements ok' );
 
-my @res3 = PipelineMiRNA::Utils::make_loop('12345');
-is_deeply(\@res3, [ ['1'], [' ', '2'], [' ', '3'], [' ', '4'], ['5'] ], 'make_loop() with 5 elements ok' );
+ok( my @res7 = PipelineMiRNA::Utils::make_loop('12345'),
+    'Can call make_loop() with 5 elements');
+is_deeply( \@res7, [ ['1'], [' ', '2'], [' ', '3'], [' ', '4'], ['5'] ], 'make_loop() with 5 elements ok' );
+
+my $sequence1 = "cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg";
+my $vienna1   = "((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))";
+
+ok( my $result8 = PipelineMiRNA::Utils::make_ASCII_viz($sequence1, $vienna1),
+    'Can call make_ASCII_viz()');
+my $expected8 = "  u    u  -  c      -     u         --    uca-  ucguu
+cu auua gu ag caagga ugaau gccuaauga  cagc    ag     u
+|| |||| || || |||||| ||||| |||||||||  ||||    ||     a
+gg uaau ca uc guucuu acuug cggauuauu  guug    uc     a
+  c    u  g  a      u     -         ug    uuuc  aaaac
+";
+is( $result8, $expected8, 'make_ASCII_viz returns a correct hairpin');
