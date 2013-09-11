@@ -14,6 +14,7 @@ function main()
  */
 function showCellInfo(i,j)
 {
+	var id_job = document.getElementById('id_job').innerHTML;
 	if ((i!=0)&&(j!=0))
 	{
 		var factor = myResults.getFactorsNamesList()[j-1];
@@ -37,7 +38,7 @@ function showCellInfo(i,j)
 		var positions = myResults.getValuesByFactorName("position");
 		
 		var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
-		window.open("./resultsRow.pl?nameSeq="+nameTemp+"&mfei="+ factorsTemp.mfei+"&pvalue="+factorsTemp.p_value+"&position="+factorsTemp.position+"&Vienna="+factorsTemp.Vienna+"&DNASequence="+factorsTemp.DNASequence+"&image="+factorsTemp.image+"&mfe="+factorsTemp.mfe+"&amfe="+factorsTemp.amfe+"&self_contain="+factorsTemp.self_contain);
+		window.open("./resultsRow.pl?jobID="+id_job+"&nameSeq="+nameTemp+"&position="+factorsTemp.position);
 		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>Sequence Informations </u></h2><br/> <li><b>Name sequence :</b> " + nameTemp + "</li><br/><li> <b>MFEI : </b>" + factorsTemp.mfei + "</li> <br/> <li><b>P_value :</b> " + factorsTemp.p_value + "</li><br/> <li><b>Initial position : </b>" + factorsTemp.position +"</li> <br/> </div>"
 	} 
 	if ((i==0)&&(j!=0))  
