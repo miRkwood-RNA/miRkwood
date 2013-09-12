@@ -1,5 +1,7 @@
 package PipelineMiRNA::Paths;
 
+# ABSTRACT: Managing paths and path construction
+
 use strict;
 use warnings;
 use Cwd;

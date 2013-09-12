@@ -1,5 +1,7 @@
 package PipelineMiRNA::Parsers;
 
+# ABSTRACT: Parsing methods
+
 use strict;
 use warnings;
 

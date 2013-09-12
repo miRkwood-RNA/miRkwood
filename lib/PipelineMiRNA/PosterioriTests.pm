@@ -1,5 +1,7 @@
 package PipelineMiRNA::PosterioriTests;
 
+# ABSTRACT: Everything needed to run the a posteriori tests
+
 use strict;
 use warnings;
 

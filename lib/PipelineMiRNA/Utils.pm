@@ -1,5 +1,7 @@
 package PipelineMiRNA::Utils;
 
+# ABSTRACT: Useful, reusable methods.
+
 use strict;
 use warnings;
 

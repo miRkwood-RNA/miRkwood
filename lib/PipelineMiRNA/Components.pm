@@ -1,9 +1,6 @@
-######################################################################
-#  @author : Mohcen BENMOUNAH                                        #
-#                                                                    #
-#                                                                    #
-######################################################################
 package PipelineMiRNA::Components;
+
+# ABSTRACT: Components directly needed for the execution of the pipeline
 
 use strict;
 use warnings;

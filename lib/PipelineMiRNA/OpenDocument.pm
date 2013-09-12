@@ -1,5 +1,7 @@
 package PipelineMiRNA::OpenDocument;
 
+# ABSTRACT: Exporting pipeline results as OpenDocument
+
 use strict;
 use warnings;
 

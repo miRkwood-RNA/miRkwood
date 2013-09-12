@@ -1,5 +1,7 @@
 package PipelineMiRNA::WebFunctions;
 
+# ABSTRACT: Code directly tied to the web interface
+
 use strict;
 use warnings;
 use Data::Dumper;

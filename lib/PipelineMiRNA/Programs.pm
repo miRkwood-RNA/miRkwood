@@ -1,5 +1,7 @@
 package PipelineMiRNA::Programs;
 
+# ABSTRACT: Executing external programs
+
 use strict;
 use warnings;
 

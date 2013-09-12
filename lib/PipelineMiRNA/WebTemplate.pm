@@ -1,5 +1,7 @@
 package PipelineMiRNA::WebTemplate;
 
+# ABSTRACT: The HTML templates (or bits of) used by the web interface
+
 use strict;
 use warnings;
 

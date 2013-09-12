@@ -1,5 +1,7 @@
 package PipelineMiRNA::MainPipeline;
 
+# ABSTRACT: The actual pipeline
+
 use strict;
 use warnings;
 

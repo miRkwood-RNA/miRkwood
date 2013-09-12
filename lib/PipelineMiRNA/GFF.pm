@@ -1,5 +1,7 @@
 package PipelineMiRNA::GFF;
 
+# ABSTRACT: Exporting pipeline results as GFF
+
 use strict;
 use warnings;
 
