@@ -33,7 +33,7 @@ sub generate_GFF {
         $output .= "\n" .    # BEGIN
           ${$value}{'name'} . "\t" .    # seqid
           '.' . "\t" .                  # source
-          'mRNA' . "\t" .               # type
+          'miRNA' . "\t" .              # type
           $start . "\t" .               # start
           $end . "\t" .                 # end
           '.' . "\t" .                  # score
