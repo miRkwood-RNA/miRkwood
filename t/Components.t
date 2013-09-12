@@ -100,3 +100,18 @@ my %exonerate_expected = (
 my %output = PipelineMiRNA::Components::parse_custom_exonerate_output(
     $exonerate_output_file);
 is_deeply( \%output, \%exonerate_expected, 'Parsing Exonerate output ok' );
+
+my $input_vienna = "
+>contig15916__234-365
+ccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguugg
+(((((((((((((.....(((((((((.((.(....((((.((..((......))..)).(((((((...............)))))))))))....).))))))...))))).....))))).)))))))) (-30.70)
+";
+my $expected = 'contig15916__234-365'. "\t".
+               'ccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguugg' . "\t".
+               '(((((((((((((.....(((((((((.((.(....((((.((..((......))..)).(((((((...............)))))))))))....).))))))...))))).....))))).))))))))' . "\n";
+
+open my ($input_vienna_fh), '<', \$input_vienna;
+ok( my $result = PipelineMiRNA::Components::parse_RNAfold_output($input_vienna_fh),
+    'Can call parse_RNAfold_output()' );
+close $input_vienna_fh;
+is ($result , $expected, 'Converting RNAfold output in ViennaTraited ok');
