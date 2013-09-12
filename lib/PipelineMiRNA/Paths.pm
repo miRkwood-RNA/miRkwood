@@ -9,7 +9,7 @@ use File::Spec;
 use File::Basename;
 use YAML;
 
-=method get_root_dir
+=method get_config
 
 Get the YAML configuration file contents.
 
@@ -21,7 +21,7 @@ sub get_config {
     return %{YAML::LoadFile($config_file )};
 }
 
-=method get_root_dir
+=method get_server_root_dir
 
 Return the project root directory, as considered by the server
 
@@ -47,6 +47,8 @@ sub get_root_dir {
 
 =method get_server_path
 
+Append the given path to the server root
+
 =cut
 
 sub get_server_path {
@@ -55,6 +57,8 @@ sub get_server_path {
 }
 
 =method get_absolute_path
+
+Append the given path to the absolute root
 
 =cut
 

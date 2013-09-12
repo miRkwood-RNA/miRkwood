@@ -91,6 +91,12 @@ sub main_entry {
     return;
 }
 
+=method process_RNAstemloop_wrapper
+
+Wrap process_RNAstemloop()
+
+=cut
+
 sub process_RNAstemloop_wrapper {
     my ($rnastemloop_out, $suffix) = @_;
     my $current_sequence_dir = dirname($rnastemloop_out);
@@ -109,6 +115,14 @@ sub process_RNAstemloop_wrapper {
     close($eval);
     return 0;
 }
+
+=method process_RNAstemloop
+
+Process the outputs of RNAstemloop + RNAeval
+Writes the sequence on disk (seq.txt) and outRNAFold.txt
+(for a given suffix)
+
+=cut
 
 sub process_RNAstemloop {
     my @args   = @_;

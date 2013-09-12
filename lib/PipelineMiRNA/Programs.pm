@@ -44,9 +44,14 @@ my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 my $miRdup_model_path =File::Spec->catdir( $dirData, 'mirdup');
 my $miRdup_model_name = 'MirbaseFile.model';
 
-sub run_varna {
+=method run_varna
 
-    # Run VARNA on the given CT file
+Run VARNA on the given CT file
+Return whether the output file exists.
+
+=cut
+
+sub run_varna {
     my ( $candidate_ct_file, $varna_image ) = @_;
     my $varna_cmd =
 "/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
@@ -54,15 +59,27 @@ sub run_varna {
     return ( -e $varna_image );
 }
 
-sub convert_to_ct {
+=method convert_to_ct
 
-    # Convert to CT format using b2ct
+Convert to CT format using b2ct
+Return whether the output file exists.
+
+=cut
+
+sub convert_to_ct {
     my ( $rnafold_out, $ct_file ) = @_;
     my $b2ct_cmd = "$b2ct_bin < $rnafold_out > $ct_file";
     system($b2ct_cmd);
     chmod 0777, $ct_file;
     return ( -e $ct_file );
 }
+
+=method run_rnalfold
+
+Run RNAfold on the given FASTA file
+Return whether the output file exists.
+
+=cut
 
 sub run_rnalfold {
     my ( $input, $output ) = @_;
@@ -72,6 +89,13 @@ sub run_rnalfold {
     return ( -e $output );
 }
 
+=method run_rnaeval
+
+Run RNAeval on the file
+Return whether the output file exists.
+
+=cut
+
 sub run_rnaeval {
     my ( $input, $output ) = @_;
     my $rnaeval_cmd = "$rnaeval_bin < $input > $output";
@@ -79,12 +103,26 @@ sub run_rnaeval {
     return ( -e $output );
 }
 
+=method run_randfold
+
+Run Randfold on the given file
+Return whether the output file exists.
+
+=cut
+
 sub run_randfold {
     my ( $input, $output ) = @_;
     my $randfold_cmd = "$randfold_bin -d $input 7 > $output";
     system($randfold_cmd);
     return ( -e $output );
 }
+
+=method run_selfcontain
+
+Run SelfContain on the given sequence file
+Return whether the output file exists.
+
+=cut
 
 sub run_selfcontain {
     my ( $input, $output ) = @_;
@@ -95,6 +133,13 @@ sub run_selfcontain {
     system($selfcontain_cmd);
     return ( -e $output );
 }
+
+=method run_exonerate
+
+Run Exonerate on the given file
+Return whether the output file exists.
+
+=cut
 
 sub run_exonerate {
     my ( $input, $output ) = @_;
@@ -124,12 +169,31 @@ sub run_exonerate {
     return ( -e $output );
 }
 
+=method run_rnastemloop
+
+Run RNAstemloop on the given file
+Return whether the output files exist.
+
+=cut
+
 sub run_rnastemloop {
     my ( $input, $output_stemloop, $output_optimal ) = @_;
     my $rnastemloop_cmd = "$rnastemploop_bin -i $input --output-stemloop $output_stemloop --output-optimal $output_optimal";
     system($rnastemloop_cmd);
     return ( -e $output_stemloop && -e $output_optimal);
 }
+
+=method run_blast
+
+Run BLAST.
+
+Usage:
+PipelineMiRNA::Programs::run_blast($query_file, $blast_database_file,
+                                   $blastx_options, $blast_output_file)
+
+Return whether the output file exists.
+
+=cut
 
 sub run_blast {
     my ( $query, $database, $blastx_options, $output ) = @_;

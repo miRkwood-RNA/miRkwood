@@ -8,6 +8,12 @@ use warnings;
 use File::Spec;
 use PipelineMiRNA::Paths;
 
+=method get_static_file
+
+Return the contents of a given file in the stati directory
+
+=cut
+
 sub get_static_file {
     my @args = @_;
     my $file_name = shift @args;
@@ -18,15 +24,33 @@ sub get_static_file {
     return $contents;
 }
 
+=method get_bioinfo_menu
+
+Return the HTML BioInfo left menu
+
+=cut
+
 sub get_bioinfo_menu {
     my @args = @_;
     return get_static_file('bioinfo_menu.txt');
 }
 
+=method get_header_menu
+
+Return the HTML BioInfo header menu
+
+=cut
+
 sub get_header_menu {
     my @args = @_;
     return get_static_file('header_menu.txt');
 }
+
+=method get_footer
+
+Return the HTML BioInfo footer
+
+=cut
 
 sub get_footer {
     my @args = @_;
