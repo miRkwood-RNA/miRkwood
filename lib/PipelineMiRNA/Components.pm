@@ -317,7 +317,7 @@ END
 
 =method process_OutVienna
 
-Process the OutVienna file to retrieve data (Vienna format, DNA sequence)
+Process the RNAfold output file and write the outVienna file
 
 Usage: process_OutVienna($out_Vienna, $candidate_rnafold_optimal_out);
 
@@ -328,12 +328,25 @@ sub process_OutVienna {
     my $out_Vienna = shift @args;
     my $candidate_rnafold_optimal_out = shift @args;
 
-    open( my $TRAITED_FH, '>', $out_Vienna )
-      or die "Error when opening $out_Vienna: $!";
     open( my $INPUT_FH, '<', $candidate_rnafold_optimal_out ) #TODO: Check if correct
       or die "Error when opening $candidate_rnafold_optimal_out: $!";
+    my $result = parse_RNAfold_output($INPUT_FH);
+    close $INPUT_FH;
+
+    open( my $TRAITED_FH, '>', $out_Vienna )
+      or die "Error when opening $out_Vienna: $!";
+    print $TRAITED_FH $result;
+    close $TRAITED_FH;
+    chmod 777, $out_Vienna;
+    return (-e $out_Vienna);
+}
+
+sub parse_RNAfold_output {
+    my (@args)      = @_;
+    my ($INPUT_FH)  = shift @args;
     my ( $nameSeq, $dna, $Vienna );
-    while ( my $line = <$INPUT_FH> ) {
+    my $result = "";
+        while ( my $line = <$INPUT_FH> ) {
         if ( $line =~ m{
            ^>               # Begin of line and a caret symbol
            (.*?)            # Whatever, non-greedy, captured
@@ -357,16 +370,13 @@ sub process_OutVienna {
            \s*$             # Some whitespace until the end
            }xms ) {
             $Vienna = $1;
-            print $TRAITED_FH "$nameSeq" . "\t"
+            $result .= "$nameSeq" . "\t"
               . "$dna" . "\t"
               . "$Vienna"
               . "\n";    #récupération du format Vienna
         }
     }
-    close $INPUT_FH;
-    close $TRAITED_FH;
-    chmod 777, $out_Vienna;
-    return (-e $out_Vienna);
+    return $result
 }
 
 1;
