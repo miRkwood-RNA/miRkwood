@@ -8,6 +8,7 @@ use lib "$FindBin::Bin/../lib";  # use the parent directory
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::WebFunctions;
 use PipelineMiRNA::Paths;
+use PipelineMiRNA::Utils;
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
@@ -30,6 +31,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions::retrieve_candidate_informa
 }else{
 
     my $image_url = PipelineMiRNA::Paths->get_server_path($candidate{"image"});
+    my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
     $html_contents ="
             <div id = 'showInfo'>
         <h2><u>Sequence Informations </u></h2><br/>
@@ -54,6 +56,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions::retrieve_candidate_informa
         <li>
           <b>Self-contain :</b> $candidate{'self_contain'}
         </li>
+        <pre class='hairpin'>$hairpin</pre>
         <div class='figure' >
           <img src='$image_url' border=0 alt='image'>
           <p>Fig : ${name}__$position sequence</p>
