@@ -57,4 +57,28 @@ sub get_footer {
     return get_static_file('footer.txt');
 }
 
+=method get_error_page
+
+Return a generic error page
+
+=cut
+
+sub get_error_page {
+    my @args = @_;
+    my $error_message = shift @args;
+    my $html = <<"HTML";
+Content-type: text/html
+
+<html>
+    <head>
+        <LINK rel="stylesheet" type="text/css" href="/arn/style/script.css" />
+        <script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+        <title>MicroRNA identification</title>
+    </head>
+    <body>
+        $error_message
+    </body>
+HTML
+}
+
 1;
