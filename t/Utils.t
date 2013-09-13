@@ -96,10 +96,10 @@ my $vienna1   = "((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))...
 
 ok( my $result8 = PipelineMiRNA::Utils::make_ASCII_viz($sequence1, $vienna1),
     'Can call make_ASCII_viz()');
-my $expected8 = "  u    u  -  c      -     u         --    uca-  ucguu
-cu auua gu ag caagga ugaau gccuaauga  cagc    ag     u
-|| |||| || || |||||| ||||| |||||||||  ||||    ||     a
-gg uaau ca uc guucuu acuug cggauuauu  guug    uc     a
-  c    u  g  a      u     -         ug    uuuc  aaaac
+my $expected8 = "  u    u  -  c      -     u         --    uca-        
+cu auua gu ag caagga ugaau gccuaauga  cagc    agucguuua
+|| |||| || || |||||| ||||| |||||||||  ||||    ||||||||a
+gg uaau ca uc guucuu acuug cggauuauu  guug    ucagcaaaa
+  c    u  g  a      u     -         ug    uuuc        
 ";
 is( $result8, $expected8, 'make_ASCII_viz returns a correct hairpin');

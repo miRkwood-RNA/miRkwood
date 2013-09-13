@@ -229,7 +229,10 @@ sub make_ASCII_viz {
         my $element_right = substr( $structure, $right, 1 );
         my $letter_right  = substr( $sequence,  $right, 1 );
 
-        if ( $element_left eq '.' and $element_right eq ')' ) {
+        if ($parenthesis_counter == $parenthesis_number){
+            $stop = 1;
+        }
+        elsif ( $element_left eq '.' and $element_right eq ')' ) {
             push( @top,    $letter_left );
             push( @upper,  $SPACE );
             push( @middle, $SPACE );
@@ -267,16 +270,10 @@ sub make_ASCII_viz {
         else {
             $stop = 1;
         }
-
-        if ( $left > $parenthesis_number
-            and ( length($sequence) - $right - 1 ) > $parenthesis_number )
-        {
-            $stop = 1;
-        }
-
     }
 
-    my $subsequence = substr( $sequence, $left, $right - $left - 1 );
+    my $subsequence = substr( $sequence, $left, $right - $left + 1 );
+
     my @final_loop = make_loop($subsequence);
 
     #    @{$hit}[1]
