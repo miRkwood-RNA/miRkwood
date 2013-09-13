@@ -91,15 +91,33 @@ ok( my @res7 = PipelineMiRNA::Utils::make_loop('12345'),
     'Can call make_loop() with 5 elements');
 is_deeply( \@res7, [ ['1'], [' ', '2'], [' ', '3'], [' ', '4'], ['5'] ], 'make_loop() with 5 elements ok' );
 
+ok( my @res8 = PipelineMiRNA::Utils::make_loop('123456'),
+    'Can call make_loop() with 5 elements');
+my @expected8 = [ ['12'], [' ', ' ', '3'], [' ', ' '], [' ', ' ', '4'], ['65'] ];
+is_deeply( \@res8, @expected8, 'make_loop() with 6 elements ok' );
+    
 my $sequence1 = "cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg";
 my $vienna1   = "((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))";
 
-ok( my $result8 = PipelineMiRNA::Utils::make_ASCII_viz($sequence1, $vienna1),
+ok( my $result9 = PipelineMiRNA::Utils::make_ASCII_viz($sequence1, $vienna1),
     'Can call make_ASCII_viz()');
-my $expected8 = "  u    u  -  c      -     u         --    uca-        
+my $expected9 = "  u    u  -  c      -     u         --    uca-        
 cu auua gu ag caagga ugaau gccuaauga  cagc    agucguuua
 || |||| || || |||||| ||||| |||||||||  ||||    ||||||||a
 gg uaau ca uc guucuu acuug cggauuauu  guug    ucagcaaaa
   c    u  g  a      u     -         ug    uuuc        
 ";
-is( $result8, $expected8, 'make_ASCII_viz returns a correct hairpin');
+is( $result9, $expected9, 'make_ASCII_viz returns a correct hairpin');
+
+
+my $sequence2 = "gucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguuggagau";
+my $vienna2   = "((((((((.((((..(.((...(..((((..((((((((....(((((((...............))))))).......).)).)))))))))..)...)).)..)))).).)))))))";
+ok( my $result10 = PipelineMiRNA::Utils::make_ASCII_viz($sequence2, $vienna2),
+    'Can call make_ASCII_viz()');
+my $expected10 = "       - u    ga a  ucg ag    ag     -  - ugcc---       aacuga
+gucucca c gugu  a cc   u  cuug  uacug uc c       uugcauc      a
+||||||| | ||||  | ||   |  ||||  ||||| || |       |||||||      u
+uagaggu g uaua  u gg   a  ggau  guggc ag g       aauguag      c
+       u u    ag a  uua ga    --     c  u ucuagua       ccaagu
+";
+is( $result10, $expected10, 'make_ASCII_viz returns a correct hairpin');

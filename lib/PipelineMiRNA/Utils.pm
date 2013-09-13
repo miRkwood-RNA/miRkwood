@@ -191,7 +191,7 @@ sub make_loop {
     push( @lower,
         split( $EMPTY, substr( $sequence, $len - $quotient - 1, 1 ) ) );
     push( @bottom,
-        split( $EMPTY, substr( $sequence, $len - $quotient, $quotient ) ) );
+        split( $EMPTY, reverse substr( $sequence, $len - $quotient, $quotient ) ) );
     my @AOA;
     $AOA[0] = [@top];
     $AOA[1] = [@upper];
