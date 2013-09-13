@@ -56,6 +56,9 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions::retrieve_candidate_informa
         <li>
           <b>Self-contain :</b> $candidate{'self_contain'}
         </li>
+        <li>
+          <a href='./exportVienna.pl?jobId=$jobId&name=$name&position=$position'>Vienna</a>
+        </li>
         <pre class='hairpin'>$hairpin</pre>
         <div class='figure' >
           <img src='$image_url' border=0 alt='image'>
