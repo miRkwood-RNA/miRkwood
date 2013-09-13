@@ -68,10 +68,11 @@ is_deeply( \%tab4, \%expected4,
 
 ##################################################################
 diag('Testing find_matching_count()');
-is( PipelineMiRNA::Utils::find_matching_count('()..'), 1, 'matching left' );
-is( PipelineMiRNA::Utils::find_matching_count('..()'), 1, 'matching right' );
-is( PipelineMiRNA::Utils::find_matching_count('.().'), 1, 'matching middle' );
-is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1, 'matching across' );
+is( PipelineMiRNA::Utils::find_matching_count('()..'), 1, 'one - matching left' );
+is( PipelineMiRNA::Utils::find_matching_count('..()'), 1, 'one - matching right' );
+is( PipelineMiRNA::Utils::find_matching_count('.().'), 1, 'one - matching middle' );
+is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1, 'one - matching across' );
+is( PipelineMiRNA::Utils::find_matching_count('(.().)'), 2, 'two - matching across' );
 
 ##################################################################
 diag('Testing make_loop()');
