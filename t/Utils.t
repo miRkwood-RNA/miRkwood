@@ -120,4 +120,21 @@ gucucca c gugu  a cc   u  cuug  uacug uc c       uugcauc      a
 uagaggu g uaua  u gg   a  ggau  guggc ag g       aauguag      c
        u u    ag a  uua ga    --     c  u ucuagua       ccaagu
 ";
-is( $result10, $expected10, 'make_ASCII_viz returns a correct hairpin');
+is( $result10, $expected10, 'make_ASCII_viz returns a correct hairpin with big loop');
+
+my $sequence3 = "aaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucug";
+my $vienna3   = "....((((.((..((......))..)).(((((((...............)))))))))))....";
+ok( my $result11  = PipelineMiRNA::Utils::make_ASCII_viz($sequence3, $vienna3),
+    'Can call make_ASCII_viz()');
+
+TODO: {
+    local $TODO = 'ASCII viz has a bug with a crossroads hairpin';
+#    my $expected11 = "aacc    a  uu  guacuguccugccuugca
+#    ucgu gc  ga                  u
+#    |||| ||  ||                  
+#    agua aa  ug                  c
+#gucu    -  --  uagccaagucuaagucaa
+#";
+    my $expected11 = "Something";
+    is( $result11, $expected11, 'make_ASCII_viz returns a correct hairpin with big loop');
+}
