@@ -44,6 +44,33 @@ my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 my $miRdup_model_path =File::Spec->catdir( $dirData, 'mirdup');
 my $miRdup_model_name = 'MirbaseFile.model';
 
+=method list_programs
+
+List all the binaries needed in the pipeline.
+
+=cut
+
+sub list_programs {
+    my @args = @_;
+    return (
+        $rnafold_bin,  $rnalfold_bin, $rnaeval_bin,
+        $randfold_bin, $varna_bin,    $rnastemploop_bin
+    );
+}
+
+=method list_unavailable_programs
+
+List the missing binaries among those needed in the pipeline.
+
+=cut
+
+sub list_unavailable_programs {
+    my @args       = @_;
+    my @programs   = list_programs();
+    my @unexisting = grep { !-e $_ } @programs;
+    return @unexisting;
+}
+
 =method run_varna
 
 Run VARNA on the given CT file
