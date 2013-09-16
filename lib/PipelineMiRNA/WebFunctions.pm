@@ -4,12 +4,30 @@ package PipelineMiRNA::WebFunctions;
 
 use strict;
 use warnings;
+
 use Data::Dumper;
 use File::Spec;
+use Time::gmtime;
+
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Parsers;
 
 my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment', 'image', 'Vienna', 'DNASequence');
+
+
+=method make_job_id
+
+Return a jobId (based on the current time)
+
+=cut
+
+sub make_job_id {
+    my ( $self, @args ) = @_;
+    my $now = gmctime();
+    $now =~ s/[: ]//g;
+    $now = substr( $now, 3 );
+    return $now;
+}
 
 =method jobId_to_jobPath
 

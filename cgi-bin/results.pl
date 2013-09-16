@@ -1,7 +1,6 @@
 #!/usr/bin/perl -w
 use Class::Struct;
 use CGI;
-use Time::gmtime;
 use File::Spec;
 use FindBin qw($Bin);
 use Cwd qw( abs_path );
@@ -14,12 +13,12 @@ use lib "$FindBin::Bin/../lib";    # use the parent directory
 
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
+use PipelineMiRNA::Programs;
+use PipelineMiRNA::WebFunctions;
 
 my $cgi = new CGI;
-$now = gmctime();
-
-$now =~ s/[: ]//g;
-$now = substr( $now, 3 );
+my $mail = $cgi->param('mail');
+my $nameJob = $cgi->param('job');
 
 my $local_dir = dirname( abs_path($0) );
 my $rootdir = PipelineMiRNA::Paths->get_server_root_dir();
@@ -29,18 +28,18 @@ $dirLib    = PipelineMiRNA::Paths->get_absolute_path( 'lib' );
 
 my $formatFasta_bin = File::Spec->catfile( $dirScript, 'formatFasta.sh' );
 
-$dirJob_name = 'job' . $now;
-$dirJob = PipelineMiRNA::Paths->get_absolute_path('results', $dirJob_name );
+my $jobId = PipelineMiRNA::WebFunctions->make_job_id();
+my $dirJob_name = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+my $dirJob_path = PipelineMiRNA::Paths->get_absolute_path($dirJob_name);
 
-#$dirJob = $dirData."job".$now."/"; # chemin séquence de base
-mkdir $dirJob;
+mkdir $dirJob_path;
 
-my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
+my $log_file = File::Spec->catfile( $dirJob_path, 'log.log' );
 local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
-my $sequence_origin = File::Spec->catfile( $dirJob, 'sequence.fas' );
-my $sequence_load   = File::Spec->catfile( $dirJob, 'sequenceLoad.fas' );
-my $sequence_upload = File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+my $sequence_origin = File::Spec->catfile( $dirJob_path, 'sequence.fas' );
+my $sequence_load   = File::Spec->catfile( $dirJob_path, 'sequenceLoad.fas' );
+my $sequence_upload = File::Spec->catfile( $dirJob_path, 'sequenceUpload.fas' );
 
 my $seqArea = $cgi->param('seqArea');
 
@@ -118,31 +117,9 @@ while ( my $line = <LOAD> ) {
 unlink($sequence_load);
 
 # redirection vers la page wait en attendant le calcul
-my $mail = $cgi->param('mail');
-
-my $nameJob = $cgi->param('job');
-
-print $cgi->redirect( -uri => 'http://'
-      . $ENV{SERVER_NAME}
-      . '/cgi-bin/wait.pl?jobId='
-      . $now
-      . '&mail='
-      . $mail
-      . '&nameJob='
-      . $nameJob );
-
-print $cgi->redirect( -uri => 'http://'
-      . $ENV{SERVER_NAME}
-      . '/cgi-bin/wait.pl?jobId='
-      . $now
-      . '&mail='
-      . $mail );
-print "Location: http://"
-  . $ENV{SERVER_NAME}
-  . "wait.pl?jobId="
-  . $now
-  . "&mail="
-  . $mail . "\n\n";
+my $waiting_url ='http://' . $ENV{SERVER_NAME} . "/cgi-bin/wait.pl?jobId=$jobId&nameJob=$nameJob&mail=$mail";
+print $cgi->redirect( -uri => $waiting_url  );
+print "Location: $waiting_url \n\n";
 
 my $check    = $cgi->param('check');
 my $mfei     = $cgi->param('mfei');
@@ -162,11 +139,10 @@ if ( $check    eq "" ) { $check    = "notChecked" }
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob $plant";
+"perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob_path $plant";
 debug("Running perl script $cmd", 1);
 system($cmd);
-
-my $finish_file = File::Spec->catfile( $dirJob, 'finished' );
+my $finish_file = File::Spec->catfile( $dirJob_path, 'finished' );
 open( my $finish, '>', $finish_file ) || die "$!";
 close $finish_file;
 debug("Writing finish file $finish_file", 1);
