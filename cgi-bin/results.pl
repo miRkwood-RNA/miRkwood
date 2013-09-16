@@ -15,6 +15,7 @@ use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::WebTemplate;
 
 my $cgi = new CGI;
 my $mail = $cgi->param('mail');
@@ -116,35 +117,42 @@ while ( my $line = <LOAD> ) {
 }
 unlink($sequence_load);
 
-# redirection vers la page wait en attendant le calcul
-my $waiting_url ='http://' . $ENV{SERVER_NAME} . "/cgi-bin/wait.pl?jobId=$jobId&nameJob=$nameJob&mail=$mail";
-print $cgi->redirect( -uri => $waiting_url  );
-print "Location: $waiting_url \n\n";
 
-my $check    = $cgi->param('check');
-my $mfei     = $cgi->param('mfei');
-my $randfold = $cgi->param('randfold');
-my $SC       = $cgi->param('selfContain');
-my $align    = $cgi->param('align');
-my $plant    = $cgi->param('db');
-if ( !$plant ) {
-    $plant = "NonePlant";
+my @unavailable = PipelineMiRNA::Programs::list_unavailable_programs();
+if (@unavailable){
+    my $error = "Cannot find required third-party software: @unavailable";
+    print PipelineMiRNA::WebTemplate::get_error_page($error);
+} else {
+    # redirection vers la page wait en attendant le calcul
+    my $waiting_url ='http://' . $ENV{SERVER_NAME} . "/cgi-bin/wait.pl?jobId=$jobId&nameJob=$nameJob&mail=$mail";
+    print $cgi->redirect( -uri => $waiting_url  );
+    print "Location: $waiting_url \n\n";
+
+    my $check    = $cgi->param('check');
+    my $mfei     = $cgi->param('mfei');
+    my $randfold = $cgi->param('randfold');
+    my $SC       = $cgi->param('selfContain');
+    my $align    = $cgi->param('align');
+    my $plant    = $cgi->param('db');
+    if ( !$plant ) {
+        $plant = "NonePlant";
+    }
+    if ( $mfei     eq "" ) { $mfei     = "notChecked" }
+    if ( $randfold eq "" ) { $randfold = "notChecked" }
+    if ( $SC       eq "" ) { $SC       = "notChecked" }
+    if ( $align    eq "" ) { $align    = "notChecked" }
+    if ( $check    eq "" ) { $check    = "notChecked" }
+
+    #execution de tous les scripts de traitements
+    my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
+    my $cmd =
+    "perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob_path $plant";
+    debug("Running perl script $cmd", 1);
+    system($cmd);
+    my $finish_file = File::Spec->catfile( $dirJob_path, 'finished' );
+    open( my $finish, '>', $finish_file ) || die "$!";
+    close $finish_file;
+    debug("Writing finish file $finish_file", 1);
+
+    close $log_file;
 }
-if ( $mfei     eq "" ) { $mfei     = "notChecked" }
-if ( $randfold eq "" ) { $randfold = "notChecked" }
-if ( $SC       eq "" ) { $SC       = "notChecked" }
-if ( $align    eq "" ) { $align    = "notChecked" }
-if ( $check    eq "" ) { $check    = "notChecked" }
-
-#execution de tous les scripts de traitements
-my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
-my $cmd =
-"perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob_path $plant";
-debug("Running perl script $cmd", 1);
-system($cmd);
-my $finish_file = File::Spec->catfile( $dirJob_path, 'finished' );
-open( my $finish, '>', $finish_file ) || die "$!";
-close $finish_file;
-debug("Writing finish file $finish_file", 1);
-
-close $log_file;
