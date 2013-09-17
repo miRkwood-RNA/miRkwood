@@ -28,7 +28,10 @@ sub generate_GFF {
 
     my $output = '##gff-version 3';
 
-    while ( my ( $key, $value ) = each %results ) {
+    my @keys = sort keys %results;
+
+    foreach my $key (@keys) {
+        my $value = $results{$key};
         my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
         $output .= "\n" .    # BEGIN
           ${$value}{'name'} . "\t" .    # seqid

@@ -134,7 +134,10 @@ sub generate_report {
         )
     );
     my @headers = qw( position mfei mfe amfe p_value self_contain );
-    while ( my ( $key, $value ) = each %results ) {
+    my @keys    = sort keys %results;
+
+    foreach my $key (@keys) {
+        my $value = $results{$key};
         my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
         $context->append_element(
             odf_create_heading(

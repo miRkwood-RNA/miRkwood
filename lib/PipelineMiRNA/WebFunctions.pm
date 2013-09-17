@@ -217,10 +217,13 @@ sub resultstruct2csv {
 	my %results = %{$results};
     my @csv_headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
 	my $result = join( ',', @csv_headers ) . "\n";
-    while ( my ($key, $value) = each %results )
+
+    my @keys = sort keys %results;
+    foreach my $key(@keys)
     {
     	if (  $key ~~ \@tab ) 
     	{
+    	    my $value = $results{$key};
 	        for my $header (@csv_headers)
  	        {
 	            $result .= "${$value}{$header},";
@@ -289,8 +292,9 @@ sub resultstruct2pseudoXML {
     my @headers1 = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment');
     my @headers2 = ('Vienna', 'DNASequence');
 
-    while ( my ($key, $value) = each %results )
-    {
+    my @keys = sort keys %results;
+    foreach my $key (@keys) {
+        my $value = $results{$key};
         $result .= "<Sequence";
         for my $header (@headers1){
             $result .= " $header='${$value}{$header}'";
