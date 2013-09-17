@@ -45,6 +45,18 @@ sub get_root_dir {
     return $config{'absolute_root'};
 }
 
+=method get_results_dir_name
+
+Return the project results (relatively to the root)
+
+=cut
+
+sub get_results_dir_name {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'results'};
+}
+
 =method get_server_path
 
 Append the given path to the server root

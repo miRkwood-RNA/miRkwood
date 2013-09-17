@@ -39,7 +39,8 @@ sub jobId_to_jobPath {
     my ( $self, @args ) = @_;
     my $id_job      = shift @args;
     my $dirJob_name = 'job' . $id_job;
-    my $jobPath = File::Spec->catdir( 'results', $dirJob_name);
+    my $results_dir = PipelineMiRNA::Paths->get_results_dir_name();
+    my $jobPath = File::Spec->catdir( $results_dir, $dirJob_name);
     return $jobPath;
 }
 
