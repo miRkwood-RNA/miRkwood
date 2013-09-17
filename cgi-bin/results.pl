@@ -34,6 +34,12 @@ my $dirJob_name = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
 my $dirJob_path = PipelineMiRNA::Paths->get_absolute_path($dirJob_name);
 my $root = PipelineMiRNA::Paths->get_absolute_path(PipelineMiRNA::Paths->get_results_dir_name());
 
+if (! -e $root) {
+    my $error = "Designated directory ($root) for results does not exist. Please contact the system administrator";
+    print PipelineMiRNA::WebTemplate::get_error_page($error);
+    die($error);
+}
+
 if (! -W $root) {
     my $error = "Cannot write results in designated directory $root. Please contact the system administrator";
     print PipelineMiRNA::WebTemplate::get_error_page($error);
