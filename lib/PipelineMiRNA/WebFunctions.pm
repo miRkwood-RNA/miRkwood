@@ -200,7 +200,31 @@ sub actual_retrieve_candidate_information {
     my $image_path = File::Spec->catfile($candidate_dir, 'image.png');
     $result{'image'} = $image_path;
 
+    # Computing general quality
+    $result{'quality'} = $self->compute_quality(\%result);
+
     return %result;
+}
+
+=method compute_quality
+
+Compute a general quality score
+
+=cut
+
+sub compute_quality(){
+    my ( $self, @args ) = @_;
+    my %result = %{shift @args};
+    my $quality = 0;
+    if ( $result{'mfei'} < -0.5 ){
+        $quality += 1;
+    }
+    my $length = length ($result{'DNASequence'});
+
+    if ( $length > 80 && $length < 200 ){
+        $quality += 1;
+    }
+    return $quality;
 }
 
 =method resultstruct2csv
@@ -288,7 +312,7 @@ sub resultstruct2pseudoXML {
     my %results = %{$results};
     my $result = "<results id='all'>\n";
 
-    my @headers1 = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment');
+    my @headers1 = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment', 'quality');
     my @headers2 = ('Vienna', 'DNASequence');
 
     my @keys = sort keys %results;
