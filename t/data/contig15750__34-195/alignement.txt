@@ -1,0 +1,4816 @@
+- name : aly-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : aly-miR169a*
+  begin_target: 37
+  end_target  : 58
+  begin_query : 21
+  end_query   : 0
+  score: -3
+  seq  : TGTAGCCAAGGACAACTTGCC
+
+  alignment: |
+    - -
+    T T
+    G g
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    A g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    - -
+- name : aly-miR169d
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : aly-miR169e
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : aly-miR169f
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : aly-miR169g
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : aly-miR169h
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aly-miR169i
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aly-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aly-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aly-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aly-miR169m
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aly-miR169n
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAAGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    A g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : aqc-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : aqc-miR169b
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ata-miR169
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGAATTGCCAG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    A a
+    T T
+    T T
+    G g
+    C c
+    C c
+    A -
+    G -
+    - -
+    - -
+- name : ath-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : ath-miR169d
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : ath-miR169e
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : ath-miR169f
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : ath-miR169g
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : ath-miR169h
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ath-miR169i
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ath-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ath-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ath-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ath-miR169m
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ath-miR169n
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : bdi-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : bdi-miR169b
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : bdi-miR169d
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGAATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : bdi-miR169e
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : bdi-miR169g
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : bdi-miR169h
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : bdi-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGATTTGCCTGT
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    T a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T -
+    G -
+    - -
+    T T
+    - -
+- name : bna-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : bna-miR169b
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : bna-miR169c
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : bna-miR169d
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : bna-miR169e
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : bna-miR169f
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : bna-miR169g
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : bna-miR169h
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : bna-miR169i
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : bna-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : bna-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : bna-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : far-miR169
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : ghb-miR169a
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : gma-miR169b
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : gma-miR169c
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : AAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    A T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : gma-miR169e
+  begin_target: 40
+  end_target  : 58
+  begin_query : 0
+  end_query   : 20
+  score: -3
+  seq  : AGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : hvu-miR169
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : AAGCCAAGGATGAGTTGCCTG
+
+  alignment: |
+    - -
+    A T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    G a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : mtr-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : mtr-miR169b
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : mtr-miR169e
+  begin_target: 38
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : GGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    G g
+    G T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : mtr-miR169f
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : AAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    A T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : osa-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : osa-miR169d
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGAATTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    A a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : osa-miR169e
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : osa-miR169f.1
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : osa-miR169g
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : osa-miR169h
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : osa-miR169i.1
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : osa-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : osa-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : osa-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : osa-miR169m
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : osa-miR169n
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGAATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : osa-miR169o
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGAATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : ptc-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : ptc-miR169ab
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGACGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169ac
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGACGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169ad
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGACGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169ae
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGACGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169af
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGACGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169b
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : ptc-miR169c
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : ptc-miR169i
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169m
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169n
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : ptc-miR169o
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : AAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    A T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169p
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : AAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    A T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169q
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGACGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : ptc-miR169r
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : ptc-miR169s
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TCAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    C -
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : ptc-miR169u
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGACGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : ptc-miR169v
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169w
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCCA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    C T
+    A a
+    - -
+- name : ptc-miR169x
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCTCG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    T -
+    - -
+    C c
+    G -
+    - -
+    - -
+- name : ptc-miR169y
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCATGGATGAATTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    T a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    A a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : rco-miR169c
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : sbi-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : sbi-miR169c
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169d
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169e
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : sbi-miR169f
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : sbi-miR169g
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : sbi-miR169h
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169i
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGAATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169j
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : sbi-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : sbi-miR169m
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169n
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169o
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGATTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    T a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : sbi-miR169p
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGAATGGCTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    G a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sbi-miR169q
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGAATGGCTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    G a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : sly-miR169b
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : sly-miR169c
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : sly-miR169d
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : ssl-miR169
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : ssp-miR169
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : tcc-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : tcc-miR169c
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : tcc-miR169d
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : tcc-miR169e
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : tcc-miR169g
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAGGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    G a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : tcc-miR169h
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : tcc-miR169i
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGAGTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    G a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : tcc-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : tcc-miR169m
+  begin_target: 37
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TGAGCCAAGGATGACTTGCCG
+
+  alignment: |
+    - -
+    T T
+    G g
+    - T
+    - -
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    - -
+- name : vvi-miR169e
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 22
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCTGC
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    C -
+    - -
+    - -
+- name : vvi-miR169f
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : vvi-miR169g
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : vvi-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : GAGCCAAGGATGACTTGCCGT
+
+  alignment: |
+    - -
+    G T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    - -
+    T T
+    - -
+- name : vvi-miR169v
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : AAGCCAAGGATGAATTGCCGG
+
+  alignment: |
+    - -
+    A T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    A a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : vvi-miR169x
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : vvi-miR169y
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCGAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    G c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169a
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : zma-miR169b
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : CAGCCAAGGATGACTTGCCGA
+
+  alignment: |
+    - -
+    C T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G T
+    A a
+    - -
+- name : zma-miR169c*
+  begin_target: 37
+  end_target  : 58
+  begin_query : 22
+  end_query   : 0
+  score: -3
+  seq  : TGTAGCCAAGGACAGACTTGCC
+
+  alignment: |
+    - -
+    T T
+    G g
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C -
+    - -
+    A T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    - -
+- name : zma-miR169f
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169g
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169h
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -1
+  seq  : TAGCCAAGGATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169i
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : zma-miR169j
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : zma-miR169k
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGGATGACTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : zma-miR169l
+  begin_target: 39
+  end_target  : 59
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAGGGATGATTTGCCTG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    G a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    T a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    G -
+    - -
+    - -
+- name : zma-miR169m
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGAATGGCTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    G a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169n
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGAATGGCTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    G a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169o
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -2
+  seq  : TAGCCAAGAATGACTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169p
+  begin_target: 39
+  end_target  : 58
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGGATGACTTGCCGG
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    T T
+    G g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    G -
+    G -
+    - -
+    - -
+- name : zma-miR169q
+  begin_target: 39
+  end_target  : 60
+  begin_query : 0
+  end_query   : 21
+  score: -3
+  seq  : TAGCCAAGAATGGCTTGCCTA
+
+  alignment: |
+    - -
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    A g
+    A a
+    T T
+    G g
+    G a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    T T
+    A a
+    - -
+- name : zma-miR169r*
+  begin_target: 37
+  end_target  : 58
+  begin_query : 21
+  end_query   : 0
+  score: -3
+  seq  : TGTAGCCAAGGACAACTTGCC
+
+  alignment: |
+    - -
+    T T
+    G g
+    T T
+    A a
+    G g
+    C c
+    C c
+    A a
+    A a
+    G g
+    G g
+    A a
+    C T
+    A g
+    A a
+    C a
+    T T
+    T T
+    G g
+    C c
+    C c
+    - -
