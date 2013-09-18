@@ -138,3 +138,18 @@ TODO: {
     my $expected11 = "Something";
     is( $result11, $expected11, 'make_ASCII_viz returns a correct hairpin with big loop');
 }
+
+my $seq_with_T = "ATGCATGC";
+my $seq_with_U = 'AUGCAUGC';
+my $result12 = "";
+open my ($input_seq_fh), '<', \$seq_with_T;
+open my ($result12_fh),  '>', \$result12;
+PipelineMiRNA::Utils::rewrite_fasta_with_TU('U', $input_seq_fh, $result12_fh);
+close $input_seq_fh;
+close $result12_fh;
+is ( $result12, $seq_with_U, 'rewrite_fasta_with_TU correctly replace T with U');
+
+open $input_seq_fh, '<', \$seq_with_U;
+open $result12_fh,  '>', \$result12;
+PipelineMiRNA::Utils::rewrite_fasta_with_TU('T', $input_seq_fh, $result12_fh);
+is ( $result12, $seq_with_T, 'rewrite_fasta_with_TU correctly replace U with T');
