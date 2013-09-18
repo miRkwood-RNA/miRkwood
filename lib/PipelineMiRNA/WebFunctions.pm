@@ -95,7 +95,7 @@ sub get_structure_for_jobID {
                      && ( $subDir ne ".." )
                      && -d $subDir_full ) # si le fichier est de type repertoire
                 {
-                    my %candidate = retrieve_candidate_information($job, $dir, $subDir);
+                    my %candidate = $self->retrieve_candidate_information($job, $dir, $subDir);
                     $myResults{$subDir} = \%candidate;
                 }
             }
@@ -116,7 +116,7 @@ Arguments:
 =cut
 
 sub retrieve_candidate_information {
-    my @args = @_;
+    my ( $self, @args ) = @_;
     my $job = shift @args;
     my $dir = shift @args;
     my $subDir = shift @args;
@@ -130,7 +130,8 @@ sub retrieve_candidate_information {
         die('Unvalid candidate information');
 
     }else{
-        my %result = actual_retrieve_candidate_information($candidate_dir);
+        my $full_candidate_dir = PipelineMiRNA::Paths->get_absolute_path($candidate_dir);
+        my %result = $self->actual_retrieve_candidate_information($candidate_dir, $full_candidate_dir);
         $result{'name'} = $dir;    #récupération nom séquence
         my @position = split( /__/, $subDir );
         $result{'position'} = $position[1]; # récupération position
@@ -144,17 +145,15 @@ Get the results for a given candidate
 
 Arguments:
 - $candidate_dir - the unprefixed path to the candidate results
+- $full_candidate_dir - the prefixed path to the candidate results
 
 =cut
 
 sub actual_retrieve_candidate_information {
-    my @args = @_;
+    my ( $self, @args ) = @_;
     my $candidate_dir = shift @args;
-
+    my $full_candidate_dir = shift @args;
     my %result = ();
-
-    my $full_candidate_dir = PipelineMiRNA::Paths->get_absolute_path($candidate_dir);
-
     my $pvalue =
       File::Spec->catfile( $full_candidate_dir, 'pvalue.txt' );
     if ( -e $pvalue )    # si fichier existe
