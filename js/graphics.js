@@ -256,8 +256,14 @@ function getChecked()
  */
 function exportCSV(id)
 {	
+	
 	var tab=new Array();
 	tab = getChecked();
+	if(tab.length ==0)
+	{
+	   alert("You must select at least one element to export!! ");
+	   return;
+	}
 	window.location = "/cgi-bin/resultsAsCSV.pl?" + "data=" + tab.join(',') + "&run_id=" + id;
 }
 
