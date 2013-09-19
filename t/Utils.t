@@ -122,22 +122,17 @@ uagaggu g uaua  u gg   a  ggau  guggc ag g       aauguag      c
 ";
 is( $result10, $expected10, 'make_ASCII_viz returns a correct hairpin with big loop');
 
-my $sequence3 = "aaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucug";
-my $vienna3   = "....((((.((..((......))..)).(((((((...............)))))))))))....";
+my $sequence3 = "ccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguugg";
+my $vienna3   = "(((((((((((((.....(((((((((.((.(....((((.................................................))))....).))))))...))))).....))))).))))))))";
 ok( my $result11  = PipelineMiRNA::Utils::make_ASCII_viz($sequence3, $vienna3),
     'Can call make_ASCII_viz()');
-
-TODO: {
-    local $TODO = 'ASCII viz has a bug with a crossroads hairpin';
-#    my $expected11 = "aacc    a  uu  guacuguccugccuugca
-#    ucgu gc  ga                  u
-#    |||| ||  ||                  
-#    agua aa  ug                  c
-#gucu    -  --  uagccaagucuaagucaa
-#";
-    my $expected11 = "Something";
-    is( $result11, $expected11, 'make_ASCII_viz returns a correct hairpin with big loop');
-}
+    my $expected11 = "        -     auuug     ---    u  g aacc    agcuugaguacuguccugccuug
+ccgacggu uucau     ucucc   acug gu a    ucgu                       c
+|||||||| |||||     |||||   |||| || |    ||||                       a
+gguuguua aagua     agagg   uggc ca u    agua                       u
+        u     gguua     aug    -  g gucu    aauguagccaagucuaagucaac
+";
+is( $result11, $expected11, 'make_ASCII_viz returns a correct hairpin with giant loop');
 
 my $seq_with_T = "ATGCATGC";
 my $seq_with_U = 'AUGCAUGC';
