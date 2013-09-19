@@ -181,13 +181,15 @@ sub actual_retrieve_candidate_information {
     }
 
     #Récupération séquence et format Vienna
-    my $vienna_out = File::Spec->catfile( $full_candidate_dir,
-                                       'outViennaTraited.txt' );
-    if ( -e $vienna_out )                  # si fichier existe
+    my $rnafold_stemloop_out = File::Spec->catfile( $full_candidate_dir,
+                                       'outRNAFold_stemloop.txt' );
+    if ( -e $rnafold_stemloop_out )                  # si fichier existe
     {
-        my @vienna_res = PipelineMiRNA::Parsers::parse_vienna($vienna_out);
-        $result{'DNASequence'} = $vienna_res[0];
-        $result{'Vienna'} = $vienna_res[1];
+        my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_stemloop_out);
+
+
+        $result{'DNASequence'} = $vienna_res[1];
+        $result{'Vienna'} = $vienna_res[2];
     }
 
     #Récupération alignement avec mirBase

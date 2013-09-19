@@ -277,12 +277,6 @@ sub process_tests_for_candidate {
         $varna_image )
       or die('Problem during image generation using VARNA');
 
-    ## traitement du fichier OutVienna pour la récupération des données(Format Vienna, séquence ADN)
-    my $out_Vienna = File::Spec->catfile( $candidate_dir,
-        'outViennaTraited.txt' );
-    PipelineMiRNA::Components::process_OutVienna($out_Vienna, $candidate_rnafold_optimal_out)
-      or die('Problem during OutVienna processing');
-
     ####calcul MFEI (appel script energie.pl)
     if ( $mfei eq 'mfeiChecked' ) {
         debug("Running test_mfei on $file", 1);

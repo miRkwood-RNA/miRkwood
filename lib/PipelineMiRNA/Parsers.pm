@@ -173,10 +173,11 @@ Return a string "<sequence name> <sequence> <vienna>"
 
 sub parse_RNAfold_output {
     my (@args)      = @_;
-    my ($INPUT_FH)  = shift @args;
-    my ( $nameSeq, $dna, $Vienna );
+    my ($file)  = shift @args;
+    my ( $nameSeq, $dna, $structure, $energy );
     my $result = "";
-        while ( my $line = <$INPUT_FH> ) {
+    open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
+    while ( my $line = <$INPUT_FH> ) {
         if ( $line =~ m{
            ^>               # Begin of line and a caret symbol
            (.*?)            # Whatever, non-greedy, captured
@@ -192,20 +193,12 @@ sub parse_RNAfold_output {
             # récupération de la sequence adn
             $dna = $1;
         }
-        elsif ( $line =~ m{
-           ^\s*?            # Begin of line and possibly some whitespace
-           ([\(\.\)]+)      # A sequence of either '.', '(' or ')'
-           \s+?             # Some whitespace
-           (.*?)            # Whatever, non-greedy, captured
-           \s*$             # Some whitespace until the end
-           }xms ) {
-            $Vienna = $1;
-            $result .= "$nameSeq" . "\t"
-              . "$dna" . "\t"
-              . "$Vienna"
-              . "\n";    #récupération du format Vienna
+        else{
+            ( $structure, $energy ) = parse_Vienna_line($line);
         }
-    }
-    return $result
+    } # while
+    close $INPUT_FH or die "Error when closing file $file: $!";
+    return ( $nameSeq, $dna, $structure, $energy );
 }
+
 1;
