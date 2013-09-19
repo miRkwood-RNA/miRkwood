@@ -164,4 +164,48 @@ sub parse_Vienna_line {
     return ( $structure, $energy );
 }
 
+=method parse_RNAfold_output
+
+Parse the output of RNAfold,
+Return a string "<sequence name> <sequence> <vienna>"
+
+=cut
+
+sub parse_RNAfold_output {
+    my (@args)      = @_;
+    my ($INPUT_FH)  = shift @args;
+    my ( $nameSeq, $dna, $Vienna );
+    my $result = "";
+        while ( my $line = <$INPUT_FH> ) {
+        if ( $line =~ m{
+           ^>               # Begin of line and a caret symbol
+           (.*?)            # Whatever, non-greedy, captured
+           \s*?$            # Possibly some whitespace, until the end
+        }xms ){
+            $nameSeq = $1;
+        }
+        elsif ( $line =~ m{
+           ^\s*?            # Begin of line and possibly some whitespace
+           ([aAcCgGtTuU]*)  # A sequence of nucleotides, captured
+           \s*?$            # Possibly some whitespace, until the end
+        }xms ){
+            # récupération de la sequence adn
+            $dna = $1;
+        }
+        elsif ( $line =~ m{
+           ^\s*?            # Begin of line and possibly some whitespace
+           ([\(\.\)]+)      # A sequence of either '.', '(' or ')'
+           \s+?             # Some whitespace
+           (.*?)            # Whatever, non-greedy, captured
+           \s*$             # Some whitespace until the end
+           }xms ) {
+            $Vienna = $1;
+            $result .= "$nameSeq" . "\t"
+              . "$dna" . "\t"
+              . "$Vienna"
+              . "\n";    #récupération du format Vienna
+        }
+    }
+    return $result
+}
 1;

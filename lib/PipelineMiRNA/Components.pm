@@ -10,6 +10,7 @@ use File::Spec;
 use Class::Struct;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Utils;
+use PipelineMiRNA::Parsers;
 
 struct Sequence => {   # déclaration de la structure de données (Sequence)
     colonne1        => '@',
@@ -327,7 +328,7 @@ sub process_OutVienna {
 
     open( my $INPUT_FH, '<', $candidate_rnafold_optimal_out ) #TODO: Check if correct
       or die "Error when opening $candidate_rnafold_optimal_out: $!";
-    my $result = parse_RNAfold_output($INPUT_FH);
+    my $result = PipelineMiRNA::Parsers::parse_RNAfold_output($INPUT_FH);
     close $INPUT_FH;
 
     open( my $TRAITED_FH, '>', $out_Vienna )
@@ -336,44 +337,6 @@ sub process_OutVienna {
     close $TRAITED_FH;
     chmod 777, $out_Vienna;
     return (-e $out_Vienna);
-}
-
-sub parse_RNAfold_output {
-    my (@args)      = @_;
-    my ($INPUT_FH)  = shift @args;
-    my ( $nameSeq, $dna, $Vienna );
-    my $result = "";
-        while ( my $line = <$INPUT_FH> ) {
-        if ( $line =~ m{
-           ^>               # Begin of line and a caret symbol
-           (.*?)            # Whatever, non-greedy, captured
-           \s*?$            # Possibly some whitespace, until the end
-        }xms ){
-            $nameSeq = $1;
-        }
-        elsif ( $line =~ m{
-           ^\s*?            # Begin of line and possibly some whitespace
-           ([aAcCgGtTuU]*)  # A sequence of nucleotides, captured
-           \s*?$            # Possibly some whitespace, until the end
-        }xms ){
-            # récupération de la sequence adn
-            $dna = $1;
-        }
-        elsif ( $line =~ m{
-           ^\s*?            # Begin of line and possibly some whitespace
-           ([\(\.\)]+)      # A sequence of either '.', '(' or ')'
-           \s+?             # Some whitespace
-           (.*?)            # Whatever, non-greedy, captured
-           \s*$             # Some whitespace until the end
-           }xms ) {
-            $Vienna = $1;
-            $result .= "$nameSeq" . "\t"
-              . "$dna" . "\t"
-              . "$Vienna"
-              . "\n";    #récupération du format Vienna
-        }
-    }
-    return $result
 }
 
 1;
