@@ -64,3 +64,16 @@ file_exists_ok($selfcontain_file);
 my $expected7 = '0';
 my $result7   = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_file);
 is( $result7, $expected7, 'Selfcontain file is correctly parsed' );
+
+# RNAFold
+
+my @expected8 = ('contig15750__34-195',
+               'gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc',
+               '((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))',
+               '-60.10',
+               );
+
+my $rnafold_file = input_file('contig15750__34-195', 'outRNAFold_stemloop.txt');
+ok( my @result8 = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_file),
+    'Can call parse_RNAfold_output()' );
+is_deeply (\@result8 , \@expected8, 'Converting RNAfold output in ViennaTraited ok');
