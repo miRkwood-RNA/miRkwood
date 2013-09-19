@@ -96,7 +96,7 @@ elsif ( $typePage eq 'alignement' ) {
     my $subDir = $url[$length - 2];
     
     my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId2);
-    my %candidate = PipelineMiRNA::WebFunctions::retrieve_candidate_information($job, $dir, $subDir);
+    my %candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_information($job, $dir, $subDir);
     my $sequence = $candidate{'DNASequence'};
     my $structure = $candidate{'Vienna'};
     my $hairpin = PipelineMiRNA::Utils::make_ASCII_viz($sequence, $structure);

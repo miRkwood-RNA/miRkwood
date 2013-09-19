@@ -25,7 +25,7 @@ my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
 my %candidate;
 my $html_contents;
 
-if (! eval {%candidate = PipelineMiRNA::WebFunctions::retrieve_candidate_information($job, $name, $candidate_name);}) {
+if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_information($job, $name, $candidate_name);}) {
     # Catching exception
     $html_contents = "No results for the given identifiers";
 }else{
