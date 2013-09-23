@@ -85,8 +85,15 @@ DATA
     my $html = make_HTML($body);
 }
 elsif ( $typePage eq 'alignement' ) {
+
+    if ( ! -e $url ){
+        my $error = "No alignment available";
+        print PipelineMiRNA::WebTemplate::get_error_page($error);
+        die($error);
+    }
+
     my %results = PipelineMiRNA::Components::parse_custom_exonerate_output($url);
-    
+
     my @url = split( /\//xms, $url );
     my $length = scalar(@url);
     my $jobId  = $url[$length - 4];
@@ -94,7 +101,7 @@ elsif ( $typePage eq 'alignement' ) {
     my $jobId2 = substr($jobId, 3, $len - 3);
     my $dir    = $url[$length - 3];
     my $subDir = $url[$length - 2];
-    
+
     my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId2);
     my %candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_information($job, $dir, $subDir);
     my $sequence = $candidate{'DNASequence'};
