@@ -67,7 +67,7 @@ List the missing binaries among those needed in the pipeline.
 sub list_unavailable_programs {
     my @args       = @_;
     my @programs   = list_programs();
-    my @unexisting = grep { !-e $_ } @programs;
+    my @unexisting = grep { !-f $_ } @programs;
     return @unexisting;
 }
 
