@@ -192,6 +192,16 @@ sub actual_retrieve_candidate_information {
         $result{'Vienna'} = $vienna_res[2];
     }
 
+    #Récupération séquence et format Vienna
+    my $rnafold_optimal_out = File::Spec->catfile( $full_candidate_dir,
+                                                   'outRNAFold_optimal.txt' );
+    if ( -e $rnafold_optimal_out )                  # si fichier existe
+    {
+        my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_optimal_out);
+
+        $result{'Vienna_optimal'} = $vienna_res[2];
+    }
+
     #Récupération alignement avec mirBase
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     if ( -e $file_alignement )                # si fichier existe
