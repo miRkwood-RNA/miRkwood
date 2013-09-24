@@ -14,6 +14,7 @@ my $cgi            = CGI->new();
 my $jobId          = $cgi->param('jobId');
 my $name           = $cgi->param('name');
 my $position       = $cgi->param('position');
+my $optimal        = $cgi->param('optimal');
 
 my $candidate_name = $name.'__'.$position;
 my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
@@ -27,7 +28,13 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
     print PipelineMiRNA::WebTemplate::get_error_page("No results for the given identifiers");
 }else{
     my $sequence = $candidate{'DNASequence'};
-    my $structure = $candidate{'Vienna'};
+    my $structure;
+    if ($optimal){
+        $structure = $candidate{'Vienna_optimal'};
+        $candidate_name .= "_optimal"
+    }else{
+        $structure = $candidate{'Vienna'};
+    }
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=$candidate_name.txt
