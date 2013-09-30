@@ -40,6 +40,7 @@ results.prototype.getSequenceByNameFactors = function(name,pos)
 	var factors = new Object();
 	var seq = this.getSequenceXMLByNameAndPosition(name,pos);
 	factors.position = seq.getAttribute("position");
+	factors.quality = seq.getAttribute("quality");	
 	factors.mfei = seq.getAttribute("mfei");
 	factors.amfe = seq.getAttribute("amfe");
 	factors.mfe = seq.getAttribute("mfe");
@@ -89,7 +90,7 @@ results.prototype.getValuesByFactorName = function(factor)
  */
 results.prototype.getFactorsNamesList = function()
 {
-	var allNames = new Array("position","mfe","mfei","amfe","p_value","self_contain", "alignment","image" );
+	var allNames = new Array(  "position","quality" , "mfe","mfei","amfe","p_value","self_contain", "alignment", "image"  );
 	var names = new Array();
 	for(var i = 0;i < allNames.length;i++)
 	{

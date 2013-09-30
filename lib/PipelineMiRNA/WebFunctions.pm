@@ -324,11 +324,12 @@ sub resultstruct2pseudoXML {
     my %results = %{$results};
     my $result = "<results id='all'>\n";
 
-    my @headers1 = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment', 'quality');
+    my @headers1 = ('name', 'position','quality', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment' );
     my @headers2 = ('Vienna', 'DNASequence');
 
     my @keys = sort keys %results;
     foreach my $key (@keys) {
+   
         my $value = $results{$key};
         $result .= "<Sequence";
         for my $header (@headers1){

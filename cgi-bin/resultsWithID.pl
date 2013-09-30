@@ -33,7 +33,10 @@ Content-type: application/xhtml+xml
         <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
         <script type="text/javascript" src="/arn/js/graphics.js"></script>
         <script type="text/javascript" src="/arn/js/miARN.js"></script>
-    	 <script src="http://code.jquery.com/jquery-latest.js"></script>
+    	
+    	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript"></script>
+  		 <script src="/arn/js/imgpreview.full.jquery.js" type="text/javascript"></script>
+   	 	
     </head>
 END_TXT
 
@@ -51,8 +54,6 @@ if($valid){
 
     print <<"HTML";
 $HTML_header    <body onload="main();">
-<div class="theme-border"></div>
-<div class="logo"></div>
 
 $bioinfo_menu
 
@@ -62,7 +63,7 @@ $header_menu
 
 <div class="main">
 $HTML_additional
-        <div id="table" ></div>
+        <div id="table" ></div><script src="/arn/js/test.js" type="text/javascript"></script>
         <div id="singleCell"> </div>
 $HTML_results
         <div id="dl" >
@@ -75,6 +76,7 @@ $HTML_results
 
     $footer
     </div><!-- bloc droit-->
+    	
     </body>
 </html>
 HTML

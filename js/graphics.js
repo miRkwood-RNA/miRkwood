@@ -7,6 +7,37 @@ function main()
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
 	createGrid('table',rowsNumber+1,columnsNumber+1);// fonction permettant de créer le tableau par rapport au résultats
+	//#######plugin imgPreview
+	jQuery.noConflict();
+	(function($){  
+		
+	$('tbody#cases a').imgPreview({
+		containerID: 'imgPreviewWithStyles',
+		imgCSS: {
+		// Limit preview size:
+		height: 200
+		},
+		// When container is shown:
+		onShow: function(link){
+		// Animate link:
+		$(link).stop().animate({opacity:0.4});
+		// Reset image:
+		$('img', this).stop().css({opacity:0});
+		},
+		// When image has loaded:
+		onLoad: function(){
+		// Animate image
+		$(this).animate({opacity:1}, 300);
+		},
+		// When container hides: 
+		onHide: function(link){
+		// Animate link:
+		$(link).stop().animate({opacity:1});
+		}
+		});
+
+	})(jQuery);
+
 }
 
 /**
@@ -167,11 +198,20 @@ function createGrid(id,rowsNumber,columnsNumber)
 			if ((i!=0)&&(j!=0))  // cas cellule
 			{
 				var factor = myResults.getFactorsNamesList()[j-1];
-				if ( factor =='image') //cas lien image
+				
+
+				if ( factor =='quality') //cas lien image
+				{	
+					var value = myResults.getValueByIndices(i-1,j-1); // appel fonction qui définit la valeur à partir des indices 				
+					var string = repeat("<img src='/arn/images/star.gif' alt='arobas' style='width:20px; height:20px;' />", parseInt(value))
+				
+					td.innerHTML = string;
+					}
+				else if ( factor =='image') //cas lien image
 				{	
 					var value = myResults.getValueByIndices(i-1,j-1);
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
-					td.innerHTML = "<a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'>View structure</a>  "; // ajouter la valeur à la cellule
+					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'>View structure</a></a>  "; // ajouter la valeur à la cellule
 					
 					//var a=document.createElement('a'); 
 					//var value = a.setAttribute("href","../images/".myResults.getValueByIndices(i-1,j-1));
@@ -228,6 +268,14 @@ function deSelectAll(rowsNumber)
 		document.getElementById('checkbox'+i).checked = false;	
 	}
 }
+
+/**
+ * Function to repeat String
+ */
+function repeat(str, times) {
+    return new Array(times + 1).join(str);
+}
+
 
 /**
  * Retrieve the names of the sequences selected

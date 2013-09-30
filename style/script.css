@@ -487,3 +487,15 @@ div#id_job {
 	font-weight:bold;
 	display:none;
 }
+
+
+/* CSS: (StyleSheet) plugin : imgPreviewWith*/
+
+#imgPreviewWithStyles {
+    background: #222;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    padding: 2px;
+    z-index: 999;
+    border: none;
+}
