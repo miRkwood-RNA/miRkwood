@@ -178,7 +178,7 @@ sub run_exonerate {
                     .'  score: %s\n'
                     .'  seq  : %qas\n'
                     .'  alignment: |{\n'
-                    .'    %Pqs %Pts}\n';
+                    .'    %Pqs %Pts %Pl}\n';
     my $exonerate_cmd =
         "cd $exonerate_dir && "
       . "$exonerate_bin " . "-E "

@@ -292,13 +292,16 @@ sub parse_exonerate_alignment {
     my @bottom;
 
     for (split /\n/mxs, $alignment ) {
-        my ($first, $second) = split($SPACE, uc $_);
-        push( @top,    $first );
-        push( @bottom, $second );
-        if ( $first eq $second && $first ne '-') {
-            push( @middle, '|' );
-        }else{
-            push( @middle, $SPACE );
+        my ($first, $second, $label) = split($SPACE, $_);
+
+        if ($label ne 'none') {
+            push( @top,    $first );
+            push( @bottom, $second );
+            if ( uc $first eq uc $second ) {
+                push( @middle, '|' );
+            }else{
+                push( @middle, $SPACE );
+            }
         }
     }
     my $top = join('', @top);
