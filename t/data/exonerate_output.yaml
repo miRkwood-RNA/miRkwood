@@ -7,29 +7,29 @@
   seq  : CAGCCAAGGATGACTTGCCGA
 
   alignment: |
-    - -
-    C T
-    A a
-    G g
-    C c
-    C c
-    A a
-    A a
-    G g
-    G g
-    A a
-    T T
-    G g
-    A a
-    C a
-    T T
-    T T
-    G g
-    C c
-    C c
-    G T
-    A a
-    - -
+    - - none
+    C T match
+    A a match
+    G g match
+    C c match
+    C c match
+    A a match
+    A a match
+    G g match
+    G g match
+    A a match
+    T T match
+    G g match
+    A a match
+    C a match
+    T T match
+    T T match
+    G g match
+    C c match
+    C c match
+    G T match
+    A a match
+    - - none
 - name : aly-miR169a*
   begin_target: 37
   end_target  : 58
@@ -39,29 +39,29 @@
   seq  : TGTAGCCAAGGACAACTTGCC
 
   alignment: |
-    - -
-    T T
-    G g
-    T T
-    A a
-    G g
-    C c
-    C c
-    A a
-    A a
-    G g
-    G g
-    A a
-    C T
-    A g
-    A a
-    C a
-    T T
-    T T
-    G g
-    C c
-    C c
-    - -
+    - - none
+    T T match
+    G g match
+    T T match
+    A a match
+    G g match
+    C c match
+    C c match
+    A a match
+    A a match
+    G g match
+    G g match
+    A a match
+    C T match
+    A g match
+    A a match
+    C a match
+    T T match
+    T T match
+    G g match
+    C c match
+    C c match
+    - - none
 - name : aly-miR169d
   begin_target: 37
   end_target  : 58
@@ -71,30 +71,29 @@
   seq  : TGAGCCAAGGATGACTTGCCG
 
   alignment: |
-    - -
-    T T
-    G g
-    - T
-    - -
-    A a
-    G g
-    C c
-    C c
-    A a
-    A a
-    G g
-    G g
-    A a
-    T T
-    G g
-    A a
-    C a
-    T T
-    T T
-    G g
-    C c
-    C c
-    G -
-    - -
-    - -
-
+    - - none
+    T T match
+    G g match
+    - T gap
+    - - none
+    A a match
+    G g match
+    C c match
+    C c match
+    A a match
+    A a match
+    G g match
+    G g match
+    A a match
+    T T match
+    G g match
+    A a match
+    C a match
+    T T match
+    T T match
+    G g match
+    C c match
+    C c match
+    G - gap
+    - - none
+    - - none
