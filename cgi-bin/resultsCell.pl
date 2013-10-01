@@ -55,13 +55,11 @@ Content-type: text/html
 <div class="theme-border"></div>
 <div class="logo"></div>
 
-$bioinfo_menu
-
 <div class="bloc_droit">
 
 $header_menu
 
-<div class="main">
+<div class="main main-full">
 $body
 
 </div><!-- main -->

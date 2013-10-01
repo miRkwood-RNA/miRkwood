@@ -483,6 +483,11 @@ input#upload
 	overflow:default;
 }
 
+.main-full{
+	left:-185px;
+	width:920px;
+}
+
 div#id_job {
 	font-weight:bold;
 	display:none;

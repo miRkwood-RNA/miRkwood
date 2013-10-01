@@ -55,13 +55,11 @@ if($valid){
     print <<"HTML";
 $HTML_header    <body onload="main();">
 
-$bioinfo_menu
-
 <div class="bloc_droit">
 
 $header_menu
 
-<div class="main">
+<div class="main main-full">
 $HTML_additional
         <div id="table" ></div><script src="/arn/js/test.js" type="text/javascript"></script>
         <div id="singleCell"> </div>
