@@ -24,6 +24,14 @@ my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
+
+sub get_first_element_of_split {
+    my @args = @_;
+    my $value = shift @args;
+    my @split = split(/-/, $value);
+    return $split[0];
+}
+
 =method make_HTML
 
 Returns the HTML page with the given <body>
@@ -110,13 +118,12 @@ elsif ( $typePage eq 'alignement' ) {
 
     my $contents = "";
 
-
-    keys %results;
-    while(my($position, $values) = each %results) {
+    my @keys = sort { get_first_element_of_split($a)  <=> get_first_element_of_split($b) } keys %results;
+    foreach my $position (@keys) {
+        my @hits = @{$results{$position}};
         $contents .= "<h3>$position</h3><pre style='height: 100px;'>$hairpin</pre>";
-        my @values2 = @{$values};
-        for my $hit (@values2){
-#            my $t = $hit->{'name'};
+        foreach my $hit (@hits){
+            my $t = $hit->{'name'};
             $contents .= <<"INNER";
 <h4>$hit->{'name'}</h4>
 <pre>$hit->{'alignment'}</pre>
