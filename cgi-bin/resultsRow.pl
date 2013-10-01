@@ -34,6 +34,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
     my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
     my $size = length $candidate{'DNASequence'};
 
+    my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&name=$name&position=$position";
     my $linkVienna = "./exportVienna.pl?jobId=$jobId&name=$name&position=$position";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
     my $Vienna_HTML = "<a href='$linkVienna'>Stem-loop structure (dot-bracket format)</a>";
@@ -65,7 +66,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
           <b>Strand:</b>
         </li>
         <li>
-          <b>Sequence (FASTA format):</b>
+          <a href='$linkFasta'>Sequence (FASTA format)</a>
         </li>
         <h2>Secondary structure</h2>
         <div class='figure' >
