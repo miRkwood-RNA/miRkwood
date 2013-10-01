@@ -120,12 +120,12 @@ elsif ( $typePage eq 'alignement' ) {
 
     my @keys = sort { get_first_element_of_split($a)  <=> get_first_element_of_split($b) } keys %results;
     foreach my $position (@keys) {
-        my @hits = @{$results{$position}};
+        # Sorting the hit list by descending value of the 'score' element
+        my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$results{$position}};
         $contents .= "<h3>$position</h3><pre style='height: 100px;'>$hairpin</pre>";
         foreach my $hit (@hits){
-            my $t = $hit->{'name'};
             $contents .= <<"INNER";
-<h4>$hit->{'name'}</h4>
+<h4>$hit->{'name'} ($hit->{'score'})</h4>
 <pre>$hit->{'alignment'}</pre>
 INNER
         }
