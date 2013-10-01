@@ -19,76 +19,76 @@ my @alignment_values = (
 G g match
 A - gap
 - - none
-T T match
+U U match
 C c match
 C c match
-C T match
+C U match
 G g match
 C c match
 C c match
-T T match
-T T match
+U U match
+U U match
 G g match
 C c match
 A a match
-T T match
+U U match
 C c match
 A a match
 A a match
 C c match
-T T match
+U U match
 G g match
 A a match
 A a match
-T T match
+U U match
 - - none',
-'GATCCCGCCTTGCATCAACTGAAT
+'GAUCCCGCCUUGCAUCAACUGAAU
 | ||| ||||||||||||||||||
-g-TccTgccTTgcaTcaacTgaaT
+g-UccUgccUUgcaUcaacUgaaU
 '],
 ['- - none
 C c match
 C c match
-C T match
+C U match
 G g match
 C c match
 C c match
-T T match
-T T match
+U U match
+U U match
 G g match
 C c match
 A a match
-T T match
+U U match
 C c match
 A a match
 A a match
 C c match
-T T match
+U U match
 G g match
 A a match
 A a match
-T T match
+U U match
 - - none',
-'CCCGCCTTGCATCAACTGAAT
+'CCCGCCUUGCAUCAACUGAAU
 || ||||||||||||||||||
-ccTgccTTgcaTcaacTgaaT
+ccUgccUUgcaUcaacUgaaU
 '],
 ['- - none
-A T match
+A U match
 G c match
 G g match
 C c match
-T T match
-T T match
+U U match
+U U match
 G g match
 G g match
-T T match
+U U match
 G g match
 C c match
 A a match
 G g match
 C g match
-T T match
+U U match
 C c match
 G g match
 G g match
@@ -96,14 +96,14 @@ G g match
 A a match
 A a match
 - - none
-','AGGCTTGGTGCAGCTCGGGAA
+','AGGCUUGGUGCAGCUCGGGAA
   ||||||||||| |||||||
-TcgcTTggTgcaggTcgggaa
+UcgcUUggUgcaggUcgggaa
 '],
 ['- - none
-T T match
+U U match
 G g match
-T T match
+U U match
 A a match
 G g match
 C c match
@@ -113,24 +113,24 @@ A a match
 G g match
 G g match
 A a match
-C T match
+C U match
 A g match
 A a match
 C a match
-T T match
-T T match
+U U match
+U U match
 G g match
 C c match
 C c match
 - - none
-','TGTAGCCAAGGACAACTTGCC
+','UGUAGCCAAGGACAACUUGCC
 ||||||||||||  | |||||
-TgTagccaaggaTgaaTTgcc
+UgUagccaaggaUgaaUUgcc
 '],
 ['- - none
-T T match
+U U match
 G g match
-- T gap
+- U gap
 - - none
 A a match
 G g match
@@ -141,21 +141,21 @@ A a match
 G g match
 G g match
 A a match
-T T match
+U U match
 G g match
 A a match
 C a match
-T T match
-T T match
+U U match
+U U match
 G g match
 C c match
 C c match
 G - gap
 - - none
 - - none
-','TG-AGCCAAGGATGACTTGCCG
+','UG-AGCCAAGGAUGACUUGCCG
 || |||||||||||| ||||| 
-TgTagccaaggaTgaaTTgcc-
+UgUagccaaggaUgaaUUgcc-
 ']
 );
 
@@ -173,9 +173,9 @@ file_exists_ok($exonerate_output_file);
 my %exonerate_expected = (
     '37-58' => [
         {
-            'alignment' => 'TGTAGCCAAGGACAACTTGCC
+            'alignment' => 'UGUAGCCAAGGACAACUUGCC
 ||||||||||||  | |||||
-TgTagccaaggaTgaaTTgcc
+UgUagccaaggaUgaaUUgcc
 ',
             'name'  => 'aly-miR169a*',
             'begin_target' => '37',
@@ -186,9 +186,9 @@ TgTagccaaggaTgaaTTgcc
             'seq'   => 'TGTAGCCAAGGACAACTTGCC'
         },
         {
-            'alignment' => 'TG-AGCCAAGGATGACTTGCCG
+            'alignment' => 'UG-AGCCAAGGAUGACUUGCCG
 || |||||||||||| ||||| 
-TgTagccaaggaTgaaTTgcc-
+UgUagccaaggaUgaaUUgcc-
 ',
             'name'  => 'aly-miR169d',
             'begin_target' => '37',
@@ -201,9 +201,9 @@ TgTagccaaggaTgaaTTgcc-
     ],
     '39-60' => [
         {
-            'alignment' => 'CAGCCAAGGATGACTTGCCGA
+            'alignment' => 'CAGCCAAGGAUGACUUGCCGA
  |||||||||||| ||||| |
-TagccaaggaTgaaTTgccTa
+UagccaaggaUgaaUUgccUa
 ',
             'name'  => 'aly-miR169a',
             'begin_target' => '39',
@@ -216,6 +216,6 @@ TagccaaggaTgaaTTgccTa
     ]
 );
 
-my %output = PipelineMiRNA::Components::parse_custom_exonerate_output(
-    $exonerate_output_file);
+    my %output = PipelineMiRNA::Components::parse_custom_exonerate_output(
+        $exonerate_output_file);
 is_deeply( \%output, \%exonerate_expected, 'Parsing Exonerate output ok' );

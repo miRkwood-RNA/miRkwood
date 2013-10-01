@@ -292,8 +292,9 @@ sub parse_exonerate_alignment {
     my @bottom;
 
     for (split /\n/mxs, $alignment ) {
+        $_ =~ s/T/U/g;
+        $_ =~ s/t/u/g;
         my ($first, $second, $label) = split($SPACE, $_);
-
         if ($label ne 'none') {
             push( @top,    $first );
             push( @bottom, $second );
