@@ -32,52 +32,61 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 
     my $image_url = PipelineMiRNA::Paths->get_server_path($candidate{"image"});
     my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
-    my $Vienna_HTML;
+    my $size = length $candidate{'DNASequence'};
+
+    my $linkVienna = "./exportVienna.pl?jobId=$jobId&name=$name&position=$position";
+    my $linkViennaOptimal = $linkVienna . '&optimal=1';
+    my $Vienna_HTML = "<a href='$linkVienna'>Stem-loop structure (dot-bracket format)</a>";
+
+
     if($candidate{'Vienna'} ne $candidate{'Vienna_optimal'}){
-        $Vienna_HTML = "
-        <li>
-          <a href='./exportVienna.pl?jobId=$jobId&name=$name&position=$position'>Vienna (hairpin)</a>
-        </li>
-        <li>
-          <a href='./exportVienna.pl?jobId=$jobId&name=$name&position=$position&optimal=1'>Vienna (optimal)</a>
-        </li>"
+        $Vienna_HTML .= "<br/><a href='$linkViennaOptimal'>Optimal MFE secondary structure (dot-bracket format)</a>"
     } else {
-        $Vienna_HTML = "
-        <li>
-          <a href='./exportVienna.pl?jobId=$jobId&name=$name&position=$position'>Vienna</a>
-        </li>"
+        $Vienna_HTML .= " <br/><i>(This stem-loop structure is the MFE structure)</i>"
+    }
+
+    my $alignmentHTML;
+    if($candidate{'alignment'}){
+         $alignmentHTML = " <pre class='hairpin'>$hairpin</pre>
+         Insert here fancy alignments";
+    } else {
+        $alignmentHTML = "No alignment has been found.";
     }
 
     $html_contents ="
             <div id = 'showInfo'>
-        <h2><u>Sequence Informations </u></h2><br/>
         <li>
-          <b>Name sequence : </b>$candidate{'name'}
+          <b>Name: </b>$candidate{'name'}
         </li>
         <li>
-          <b>MFEI :</b> $candidate{'mfei'}
+          <b>Position:</b> $position ($size nt)
         </li>
         <li>
-          <b>MFE :</b> $candidate{'mfe'}
+          <b>Strand:</b>
         </li>
         <li>
-          <b>AMFE :</b> $candidate{'amfe'}
+          <b>Sequence (FASTA format):</b>
         </li>
-        <li>
-          <b>P_Value :</b> $candidate{'p_value'}
-        </li>
-        <li>
-          <b>Position :</b> $position
-        </li>
-        <li>
-          <b>Self-contain :</b> $candidate{'self_contain'}
-        </li>
-        $Vienna_HTML
-        <pre class='hairpin'>$hairpin</pre>
+        <h2>Secondary structure</h2>
         <div class='figure' >
           <img src='$image_url' border=0 alt='image'>
-          <p>Fig : ${name}__$position sequence</p>
+          <p>Fig: ${name}__$position sequence</p>
         </div>
+        $Vienna_HTML
+        <h2>Thermodynamics stability</h2>
+        <li>
+          <b>MFE:</b> $candidate{'mfe'} kcal/mol
+        </li>
+        <li>
+          <b>AMFE:</b> $candidate{'amfe'}
+        </li>
+        <li>
+          <b>MFEI:</b> $candidate{'mfei'}
+        </li>
+
+        <h2>Mirbase alignments</h2>
+        $alignmentHTML
+
     </div><!-- showInfo -->
 "
 }
