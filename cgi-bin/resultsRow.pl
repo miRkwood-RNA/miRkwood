@@ -21,6 +21,7 @@ my $position       = $cgi->param('position');
 
 my $candidate_name = $name.'__'.$position;
 my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+my $returnlink = PipelineMiRNA::WebTemplate::get_link_back_to_results($jobId);
 
 my %candidate;
 my $html_contents;
@@ -102,6 +103,7 @@ Content-type: text/html
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
+	    <a class="returnlink" href='$returnlink'>Return to results</a>
         $html_contents
 	</body>
 </html>

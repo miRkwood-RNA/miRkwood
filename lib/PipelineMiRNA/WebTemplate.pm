@@ -57,6 +57,18 @@ sub get_footer {
     return get_static_file('footer.txt');
 }
 
+=method get_link_back_to_results
+
+Return the link back to the main results page
+
+=cut
+
+sub get_link_back_to_results {
+    my @args = @_;
+    my $jobId = shift @args;
+    return ("./resultsWithID.pl?run_id=$jobId");
+}
+
 =method get_error_page
 
 Return a generic error page
