@@ -102,18 +102,7 @@ Content-type: text/html
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
-        <div class="theme-border"></div>
-        <div class="logo"></div>
-        <div class="bloc_droit">
-        $header_menu
-        <div class="main main-full">
         $html_contents
-
-	   </div><!-- main -->
-
-$footer
-
-</div><!-- bloc droit-->
 	</body>
 </html>
 
