@@ -112,29 +112,40 @@ elsif ( $typePage eq 'alignement' ) {
 
     my $contents = "";
 
+    my $predictionCounter = 0;
     my @keys = sort { get_first_element_of_split($a)  <=> get_first_element_of_split($b) } keys %results;
     foreach my $position (@keys) {
+        $predictionCounter += 1;
         # Sorting the hit list by descending value of the 'score' element
         my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$results{$position}};
-        $contents .= "<h3>$position</h3><pre style='height: 100px;'>$hairpin</pre>";
+        $contents .= "<h3>Predition #$predictionCounter: $position</h3>
+        <pre style='height: 100px;'>$hairpin</pre>
+        <ul>
+            <li>Evaluation score of MIRdup: TODO</li>
+        </ul>
+        <h4>Alignments</h4>
+        ";
         foreach my $hit (@hits){
+            my $alignment = $hit->{'alignment'};
+            my $name = $hit->{'name'};
+            my ($top, $middle, $bottom) = split(/\n/, $alignment);
+            $top    = sprintf "%-15s %3s %s %s", 'query', $hit->{'begin_query'},  $top,    $hit->{'end_query'};
+            $middle = sprintf "%-15s %3s %s %s", '',      '',                     $middle, '';
+            $bottom = sprintf "%-15s %3s %s %s", $name,   $hit->{'begin_target'}, $bottom, $hit->{'end_target'};
             $contents .= <<"INNER";
-<h4>$hit->{'name'} ($hit->{'score'})</h4>
-<pre>$hit->{'alignment'}</pre>
+<pre>
+$top
+$middle
+$bottom
+</pre>
 INNER
         }
 
     }
 
     $body = <<"DATA";
-	<body onload="displayFile('$url')">
-		<div class="titreDiv"> MicroRNA identification results:</div>
-		<h2> Alignments :</h2>
-		$contents
-            <div id = 'alignement'>
-    		<pre id = 'preAlign'>
-	</div>	</pre>
-	</body>
+<h2> Alignments :</h2>
+$contents
 DATA
 
 }
