@@ -70,8 +70,8 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
         </li>
         <h2>Secondary structure</h2>
         <div class='figure' >
-          <img src='$image_url' border=0 alt='image'>
-          <p>Fig: ${name}__$position sequence</p>
+          <img src='$image_url' border=0 height='400px' alt='image'>
+          <p>Fig: $candidate_name sequence</p>
         </div>
         $Vienna_HTML
         <h2>Thermodynamics stability</h2>
