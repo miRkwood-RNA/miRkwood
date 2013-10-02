@@ -38,13 +38,12 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
     my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&name=$name&position=$position";
     my $linkVienna = "./exportVienna.pl?jobId=$jobId&name=$name&position=$position";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
-    my $Vienna_HTML = "<a href='$linkVienna'>Stem-loop structure (dot-bracket format)</a>";
 
-
+    my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if($candidate{'Vienna'} ne $candidate{'Vienna_optimal'}){
-        $Vienna_HTML .= "<br/><a href='$linkViennaOptimal'>Optimal MFE secondary structure (dot-bracket format)</a>"
+        $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li>"
     } else {
-        $Vienna_HTML .= " <br/><i>(This stem-loop structure is the MFE structure)</i>"
+        $Vienna_HTML .= "<br/><i>(This stem-loop structure is the MFE structure)</i></li>"
     }
 
     my $alignmentHTML;
@@ -67,7 +66,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
           <b>Strand:</b>
         </li>
         <li>
-          <a href='$linkFasta'>Sequence (FASTA format)</a>
+          <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
         </li>
         <h2>Secondary structure</h2>
         <div class='figure' >
