@@ -39,6 +39,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 Content-type: text/txt
 Content-disposition: attachment;filename=$candidate_name.txt
 
+>$candidate_name
 $sequence
 $structure
 DATA
