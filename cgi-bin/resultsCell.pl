@@ -44,6 +44,7 @@ sub make_HTML {
     my $html = <<"DATA";
 Content-type: text/html
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
         <LINK rel="stylesheet" type="text/css" href="/arn/style/script.css" />
@@ -51,24 +52,19 @@ Content-type: text/html
         <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
         <title>MicroRNA identification</title>
     </head>
-<body>
-<div class="theme-border"></div>
-<div class="logo"></div>
+    <body>
+        <div class="theme-border"></div>
+        <div class="logo"></div>
 
-<div class="bloc_droit">
+        <div class="bloc_droit">
 
-$header_menu
-
-<div class="main main-full">
-$body
-
-</div><!-- main -->
-
-$footer
-
-</div><!-- bloc droit-->
-
-</body>
+            $header_menu
+            <div class="main main-full">
+                $body
+            </div><!-- main -->
+            $footer
+        </div><!-- bloc droit-->
+    </body>
 </html>
 DATA
     return $html;
