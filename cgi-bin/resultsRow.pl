@@ -69,10 +69,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
         </li>
         <h2>Secondary structure</h2>
-        <div class='figure' >
-          <img src='$image_url' border=0 height='400px' alt='image'>
-          <p>Fig: $candidate_name sequence</p>
-        </div>
+        <img id='structure' src='$image_url' height='400px' alt='$candidate_name secondary structure'>
         $Vienna_HTML
         <h2>Thermodynamics stability</h2>
         <li>
