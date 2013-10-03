@@ -19,9 +19,9 @@ my $optimal        = $cgi->param('optimal');
 my $candidate_name = $name.'__'.$position;
 my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
 
-
 my %candidate;
-my $html_contents;
+my $filename = $candidate_name;
+my $header = ">$candidate_name";
 
 if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_information($job, $name, $candidate_name);}) {
     # Catching exception
@@ -30,16 +30,18 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
     my $sequence = $candidate{'DNASequence'};
     my $structure;
     if ($optimal){
+        $header .= ", MFE structure";
         $structure = $candidate{'Vienna_optimal'};
-        $candidate_name .= "_optimal"
+        $filename .= "_optimal"
     }else{
         $structure = $candidate{'Vienna'};
+        $header .= ", stemloop structure";
     }
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
-Content-disposition: attachment;filename=$candidate_name.txt
+Content-disposition: attachment;filename=$filename.txt
 
->$candidate_name
+$header
 $sequence
 $structure
 DATA
