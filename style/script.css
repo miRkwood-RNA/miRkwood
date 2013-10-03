@@ -494,6 +494,10 @@ div#id_job {
 	display:none;
 }
 
+span.mature {
+	text-transform:uppercase;
+	color:blue;
+}
 
 /* CSS: (StyleSheet) plugin : imgPreviewWith*/
 

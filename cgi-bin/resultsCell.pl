@@ -115,11 +115,32 @@ elsif ( $typePage eq 'alignement' ) {
     my $predictionCounter = 0;
     my @keys = sort { get_first_element_of_split($a)  <=> get_first_element_of_split($b) } keys %results;
     foreach my $position (@keys) {
+        my ($left, $right) = split(/-/, $position);
+        my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
+
+        my $hairpin_with_mature;
+
+        if ($left > length $top)
+        {
+            #on the other side
+            $hairpin_with_mature = $hairpin;
+        } else {
+            my $size = PipelineMiRNA::Utils::compute_mature_boundaries($left, $right, $top);
+            substr($top, $left, $size)   = '<span class="mature">' . substr($top, $left, $size) . '</span>';
+            substr($upper, $left, $size) = '<span class="mature">' . substr($upper, $left, $size) . '</span>';
+            $hairpin_with_mature = <<"END";
+$top
+$upper
+$middle
+$lower
+$bottom
+END
+        }
         $predictionCounter += 1;
         # Sorting the hit list by descending value of the 'score' element
         my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$results{$position}};
         $contents .= "<h3>Predition #$predictionCounter: $position</h3>
-        <pre style='height: 100px;'>$hairpin</pre>
+        <pre style='height: 80px;'>$hairpin_with_mature</pre>
         <ul>
             <li>Evaluation score of MIRdup: TODO</li>
         </ul>
