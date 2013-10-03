@@ -80,7 +80,7 @@ use Data::Dumper;
 ok( my @res5 = PipelineMiRNA::Utils::make_loop('123'),
     'Can call make_loop() with 3 elements');
 #print Dumper(@res5);
-is_deeply( \@res5, [ [], ['1'], ['2'], ['3'], [] ], 'make_loop() with 3 elements ok' );
+is_deeply( \@res5, [ [], ['1'], [' ', '2'], ['3'], [] ], 'make_loop() with 3 elements ok' );
 
 ok( my @res6 = PipelineMiRNA::Utils::make_loop('1234'),
     'Can call make_loop() with 4 elements');
@@ -103,7 +103,7 @@ ok( my $result9 = PipelineMiRNA::Utils::make_ASCII_viz($sequence1, $vienna1),
     'Can call make_ASCII_viz()');
 my $expected9 = "  u    u  -  c      -     u         --    uca-        
 cu auua gu ag caagga ugaau gccuaauga  cagc    agucguuua
-|| |||| || || |||||| ||||| |||||||||  ||||    ||||||||a
+|| |||| || || |||||| ||||| |||||||||  ||||    |||||||| a
 gg uaau ca uc guucuu acuug cggauuauu  guug    ucagcaaaa
   c    u  g  a      u     -         ug    uuuc        
 ";

@@ -183,6 +183,10 @@ sub make_loop {
     push( @upper,  ($SPACE) x $quotient );
     push( @lower,  ($SPACE) x $quotient );
 
+    if ($len < 4){
+        push( @middle, $SPACE );
+    }
+
     if ( $modulo != 0 ) {
         push( @middle, substr( $sequence, $quotient + 1, 1 ) );
     }
