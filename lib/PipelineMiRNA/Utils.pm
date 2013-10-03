@@ -302,6 +302,25 @@ END
     return $result;
 }
 
+=method compute_mature_boundaries
+
+Given a harpin and the mature position,
+computes the actual span of the mature
+(because of gaps).
+
+=cut
+
+sub compute_mature_boundaries {
+    my @args = @_;
+    my ($left, $right, $top) = @args;
+    my $size1 = $right - $left;
+    my $sub_string = substr($top, $left, $size1);
+    my $gap_count = 0;
+    $gap_count++ while ($sub_string =~ m/-/g);
+    my $size = $size1 + $gap_count;
+    return $size;
+}
+
 =method filter_mirbase_hairpins
 
 Filter a multi-FASTA file to match the contents of another
