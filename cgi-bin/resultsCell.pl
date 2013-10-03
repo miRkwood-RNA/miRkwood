@@ -88,13 +88,13 @@ DATA
 }
 elsif ( $typePage eq 'alignement' ) {
 
-    if ( ! -e $url ){
+    my %results;
+    if (! eval {%results = PipelineMiRNA::Components::parse_custom_exonerate_output($url);}) {
+        # Catching exception
         my $error = "No alignment available";
         print PipelineMiRNA::WebTemplate::get_error_page($error);
         die($error);
     }
-
-    my %results = PipelineMiRNA::Components::parse_custom_exonerate_output($url);
 
     my @url = split( /\//xms, $url );
     my $length = scalar(@url);
