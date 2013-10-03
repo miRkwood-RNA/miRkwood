@@ -97,7 +97,7 @@ Content-type: text/html
 
 <html>
 	<head>
-		<LINK rel="stylesheet" type="text/css" href="/arn/style/script.css" />
+		<LINK rel="stylesheet" type="text/css" href="/arn/style/results.css" />
 		<script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
 		<title>MicroRNA identification</title>
 	</head>
