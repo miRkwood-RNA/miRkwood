@@ -129,9 +129,9 @@ elsif ( $typePage eq 'alignement' ) {
             my $alignment = $hit->{'alignment'};
             my $name = $hit->{'name'};
             my ($top, $middle, $bottom) = split(/\n/, $alignment);
-            $top    = sprintf "%-15s %3s %s %s", 'query', $hit->{'begin_query'},  $top,    $hit->{'end_query'};
+            $top    = sprintf "%-15s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
             $middle = sprintf "%-15s %3s %s %s", '',      '',                     $middle, '';
-            $bottom = sprintf "%-15s %3s %s %s", $name,   $hit->{'begin_target'}, $bottom, $hit->{'end_target'};
+            $bottom = sprintf "%-15s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
             $contents .= <<"INNER";
 <pre>
 $top
