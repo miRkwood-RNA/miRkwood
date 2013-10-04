@@ -298,8 +298,8 @@ sub parse_exonerate_alignment {
         $_ =~ s/t/u/g;
         my ($first, $second, $label) = split($SPACE, $_);
         if ($label ne 'none') {
-            push( @top,    $second );
-            push( @bottom, $first );
+            push( @top,    lc $second );
+            push( @bottom, lc $first );
             if ( uc $first eq uc $second ) {
                 push( @middle, '|' );
             }else{
