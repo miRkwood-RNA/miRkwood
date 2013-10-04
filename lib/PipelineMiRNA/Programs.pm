@@ -171,12 +171,14 @@ Return whether the output file exists.
 sub run_exonerate {
     my ( $input, $output ) = @_;
     my $output_fmt = '- name : %qi\n'
-                    .'  begin_target: %tab\n'
-                    .'  end_target  : %tae\n'
-                    .'  begin_query : %qab\n'
-                    .'  end_query   : %qae\n'
+                    .'  begin_target  : %tab\n'
+                    .'  end_target    : %tae\n'
+                    .'  strand_target : %tS\n'
+                    .'  begin_query   : %qab\n'
+                    .'  end_query     : %qae\n'
+                    .'  def_query     : %qd\n'
+                    .'  seq_query     : %qas\n'
                     .'  score: %s\n'
-                    .'  seq  : %qas\n'
                     .'  alignment: |{\n'
                     .'    %Pqs %Pts %Pl}\n';
     my $exonerate_cmd =

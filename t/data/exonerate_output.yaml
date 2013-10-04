@@ -1,11 +1,13 @@
 - name : aly-miR169a
-  begin_target: 39
-  end_target  : 60
-  begin_query : 0
-  end_query   : 21
-  score: -3
-  seq  : CAGCCAAGGATGACTTGCCGA
+  begin_target  : 39
+  end_target    : 60
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0017485 Arabidopsis lyrata miR169a
+  seq_query     : CAGCCAAGGATGACTTGCCGA
 
+  score: -3
   alignment: |
     - - none
     C T match
@@ -31,13 +33,15 @@
     A a match
     - - none
 - name : aly-miR169a*
-  begin_target: 37
-  end_target  : 58
-  begin_query : 21
-  end_query   : 0
-  score: -3
-  seq  : TGTAGCCAAGGACAACTTGCC
+  begin_target  : 37
+  end_target    : 58
+  strand_target : +
+  begin_query   : 21
+  end_query     : 0
+  def_query     : MIMAT0017486 Arabidopsis lyrata miR169a*:[revcomp]
+  seq_query     : TGTAGCCAAGGACAACTTGCC
 
+  score: -3
   alignment: |
     - - none
     T T match
@@ -63,13 +67,15 @@
     C c match
     - - none
 - name : aly-miR169d
-  begin_target: 37
-  end_target  : 58
-  begin_query : 0
-  end_query   : 21
-  score: -3
-  seq  : TGAGCCAAGGATGACTTGCCG
+  begin_target  : 37
+  end_target    : 58
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0017491 Arabidopsis lyrata miR169d
+  seq_query     : TGAGCCAAGGATGACTTGCCG
 
+  score: -3
   alignment: |
     - - none
     T T match

@@ -262,9 +262,11 @@ sub parse_custom_exonerate_output{
              'score' => $element->{'score'},
              'begin_target' => $element->{'begin_target'},
              'end_target' => $element->{'end_target'},
+             'strand_target' => $element->{'strand_target'},
              'begin_query' => $element->{'begin_query'},
              'end_query' => $element->{'end_query'},
-             'seq' => $element->{'seq'},
+             'def_query' => $element->{'def_query'},
+             'seq' => $element->{'seq_query'},
              'score' => $element->{'score'},
              'alignment' => parse_exonerate_alignment($element->{'alignment'}),
          };

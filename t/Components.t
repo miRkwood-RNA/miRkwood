@@ -180,10 +180,12 @@ uguagccaaggacaacuugcc
             'name'  => 'aly-miR169a*',
             'begin_target' => '37',
             'end_target' => '58',
+            'strand_target' => '+',
             'begin_query' => '21',
             'end_query' => '0',
+            'def_query' => 'MIMAT0017486 Arabidopsis lyrata miR169a*:[revcomp]',
             'score' => '-3',
-            'seq'   => 'TGTAGCCAAGGACAACTTGCC'
+            'seq' => 'TGTAGCCAAGGACAACTTGCC'
         },
         {
             'alignment' => 'uguagccaaggaugaauugcc-
@@ -193,8 +195,10 @@ ug-agccaaggaugacuugccg
             'name'  => 'aly-miR169d',
             'begin_target' => '37',
             'end_target' => '58',
+            'strand_target' => '+',
             'begin_query' => '0',
             'end_query' => '21',
+            'def_query' => 'MIMAT0017491 Arabidopsis lyrata miR169d',
             'score' => '-3',
             'seq'   => 'TGAGCCAAGGATGACTTGCCG'
         }
@@ -208,8 +212,10 @@ cagccaaggaugacuugccga
             'name'  => 'aly-miR169a',
             'begin_target' => '39',
             'end_target' => '60',
+            'strand_target' => '+',
             'begin_query' => '0',
             'end_query' => '21',
+            'def_query' => 'MIMAT0017485 Arabidopsis lyrata miR169a',
             'score' => '-3',
             'seq'   => 'CAGCCAAGGATGACTTGCCGA'
         }
@@ -218,4 +224,5 @@ cagccaaggaugacuugccga
 
     my %output = PipelineMiRNA::Components::parse_custom_exonerate_output(
         $exonerate_output_file);
+
 is_deeply( \%output, \%exonerate_expected, 'Parsing Exonerate output ok' );
