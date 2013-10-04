@@ -149,10 +149,19 @@ END
         foreach my $hit (@hits){
             my $alignment = $hit->{'alignment'};
             my $name = $hit->{'name'};
+            my @splitted = split(/ /, $hit->{'def_query'});
+            my $mirbase_id = $splitted[0];
+            my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+            my $html_name = "<a href='$mirbase_link'>$name</a>";
+            my $spacing = 15;
             my ($top, $middle, $bottom) = split(/\n/, $alignment);
-            $top    = sprintf "%-15s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
-            $middle = sprintf "%-15s %3s %s %s", '',      '',                     $middle, '';
-            $bottom = sprintf "%-15s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
+            $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
+            $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
+            $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
+            my $additional_space = "";
+            my $sub_string = substr($bottom, 0, $spacing);
+            $additional_space .= ' ' while ($sub_string =~ m/ /g);
+            substr($bottom, 0, $spacing) = $html_name . $additional_space;
             $contents .= <<"INNER";
 <pre>
 $top
