@@ -1,13 +1,13 @@
 /**
  * Instantiation  de classe results.js
  */
-function main()
+function main(id)
 {
-	myResults = new results();
+	myResults = new results(id);
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
 	createGrid('table',rowsNumber+1,columnsNumber+1);// fonction permettant de créer le tableau par rapport au résultats
-	//#######plugin imgPreview
+	//#######plugin imgPreview########
 	jQuery.noConflict();
 	(function($){  
 		
@@ -75,7 +75,7 @@ function showCellInfo(i,j)
 	if ((i==0)&&(j!=0))  
 	{	
 		var factor = myResults.getFactorsNamesList()[j-1];
-		if ((factor != "image") &&(factor != "alignment")&&(factor != "amfe")&&(factor != "mfe")&&(factor != "position")&&(factor != "alignment")&&(factor != "alignment")) // quand on clique pas sur image et alignement 
+		if ((factor != "image") &&(factor != "quality") &&(factor != "alignment")&&(factor != "amfe")&&(factor != "mfe")&&(factor != "position")&&(factor != "alignment")&&(factor != "alignment")) // quand on clique pas sur image et alignement 
 		{
 			var values= "";
 			var factorsTemp = myResults.getFactorNameByIndex(j-1);
@@ -128,6 +128,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 {
 	
 	var div  = document.createElement('div');
+	
 	div.id = "select";
 	div.innerHTML = "<a onclick='selectAll("+rowsNumber+")' href='#' class='myButton'>Select all</a>           <a  onclick='deSelectAll("+rowsNumber+")'  href='#' class='myButton'>Deselect all</a>";
 
@@ -187,8 +188,18 @@ function createGrid(id,rowsNumber,columnsNumber)
 			td.width='100';
 			if ((i==0)&&(j!=0))
 			{
-				var value = document.createTextNode(myResults.getFactorsNamesList()[j-1]); // ajouter critère
-				td.appendChild(value); // ajouter la valeur à la cellule
+				
+				
+				var value = myResults.getFactorsNamesList()[j-1]; // ajouter critère
+				//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
+				if (value.toString() == 'quality') 
+				{
+					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-decoration:underline;text-transform:capitalize;">'+value.toString()+'</h3>';
+				}else 
+				{
+					td.innerHTML = '<h3 style="text-transform:capitalize;">'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
+				}			
+				
 			}
 			if ((i!=0)&&(j==0)) // ajouter nom séquence 
 			{
@@ -200,7 +211,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				var factor = myResults.getFactorsNamesList()[j-1];
 				
 
-				if ( factor =='quality') //cas lien image
+				if ( factor =='quality') 
 				{	
 					var value = myResults.getValueByIndices(i-1,j-1); // appel fonction qui définit la valeur à partir des indices 				
 					var string = repeat("<img src='/arn/images/star.gif' alt='arobas' style='width:20px; height:20px;' />", parseInt(value))
@@ -237,14 +248,15 @@ function createGrid(id,rowsNumber,columnsNumber)
 			}
 			if ((i==0)&&(j==0))
 			{
-				var value = document.createTextNode('name');
-				td.appendChild(value); // ajouter la valeur à la cellule
+				var value = 'name';
+				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')"   style="text-decoration:underline;text-transform:capitalize;">'+value.toString()+'</h3>';
 			}
 			
 			tr.appendChild(td); // ajoute colonne à la ligne
 		}
 	}
 	tar.appendChild(table);
+
 }
 
 /**
@@ -331,4 +343,12 @@ function exportODT(id)
 function exportGFF(id)
 {
 	window.location = "/cgi-bin/resultsAsGFF.pl?" + "&run_id=" + id;
+}
+
+
+function sortingTable(id)
+{
+	var table = document.getElementById('table');
+	table.innerHTML = "";
+	main(id);
 }

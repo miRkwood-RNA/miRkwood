@@ -53,7 +53,7 @@ if($valid){
     my $HTML_results = PipelineMiRNA::WebFunctions->resultstruct2pseudoXML( \%myResults);
 
     print <<"HTML";
-$HTML_header    <body onload="main();">
+$HTML_header    <body onload="main('all');">
 
 <div class="bloc_droit">
 
@@ -61,7 +61,7 @@ $header_menu
 
 <div class="main main-full">
 $HTML_additional
-        <div id="table" ></div><script src="/arn/js/test.js" type="text/javascript"></script>
+        <div id="table" ></div>
         <div id="singleCell"> </div>
 $HTML_results
         <div id="dl" >

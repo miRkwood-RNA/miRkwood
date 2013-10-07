@@ -1,10 +1,10 @@
 /**
  * Classe js results
  */
-function results()
+function results(id)
 {	
 	//attributs
-	this.dataXml=document.getElementById("all"); // chargement de tout l'XML
+	this.dataXml=document.getElementById(id); // chargement de tout l'XML
 	this.SequencesXML = this.dataXml.querySelectorAll("Sequence"); // selection de tous les tags sequences
 }
 

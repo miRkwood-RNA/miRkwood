@@ -319,19 +319,35 @@ Convert the results structure to to pseudo XML format
 =cut
 
 sub resultstruct2pseudoXML {
+	
     my ( $self, @args ) = @_;
     my $results = shift @args;
     my %results = %{$results};
     my $result = "<results id='all'>\n";
-
-    my @headers1 = ('name', 'position','quality', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment' );
+	my @headers1 = ('name', 'position','quality', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment' );
     my @headers2 = ('Vienna', 'DNASequence');
+	my @keys = sort keys %results;
 
-    my @keys = sort keys %results;
     foreach my $key (@keys) {
-   
-        my $value = $results{$key};
-        $result .= "<Sequence";
+   		my $value = $results{$key};
+       	$result .= "<Sequence";
+        for my $header (@headers1){
+            $result .= " $header='${$value}{$header}'";
+        }
+        my $img = PipelineMiRNA::Paths->get_server_path(${$value}{'image'});
+        $result .= " image='$img'";
+        for my $header (@headers2){
+            $result .= " $header='${$value}{$header}'";
+        }
+        $result .= "></Sequence>\n";
+    }
+    $result .= "</results>";
+    $result .= "<results id='all2'>\n";
+   	@keys = sort keys %results;
+    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}} keys %results; 
+  	foreach my $key (@keys) {
+   		my $value = $results{$key};
+       	$result .= "<Sequence";
         for my $header (@headers1){
             $result .= " $header='${$value}{$header}'";
         }
