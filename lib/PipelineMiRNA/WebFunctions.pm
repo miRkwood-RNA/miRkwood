@@ -416,7 +416,7 @@ sub make_alignments_HTML {
     }
 
     my $contents = "";
-
+    my @TOC;
     my $predictionCounter = 0;
 
     sub get_first_element_of_split {
@@ -452,13 +452,17 @@ END
         $predictionCounter += 1;
         # Sorting the hit list by descending value of the 'score' element
         my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$alignments{$position}};
-        $contents .= "<h3>Predition #$predictionCounter: $position</h3>
+        my $title = "Prediction $predictionCounter: $position";
+        $contents .= "<h3 id='$position'>$title</h3>
         <pre style='height: 80px;'>$hairpin_with_mature</pre>
         <ul>
             <li>Evaluation score of MIRdup: TODO</li>
         </ul>
         <h4>Alignments</h4>
         ";
+
+        my $toc_element = "<a href='#$position'>$position</a>";
+        push @TOC, $toc_element;
         foreach my $hit (@hits){
             my $alignment = $hit->{'alignment'};
             my $name = $hit->{'name'};
@@ -485,7 +489,8 @@ INNER
         }
 
     }
-    return $contents;
+    my $toc = "<span class='toc'>" . join(" - ", @TOC) . '</span>';
+    return $toc . "\n" . $contents;
 
 }
 
