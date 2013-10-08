@@ -79,4 +79,18 @@ sub get_absolute_path {
     return File::Spec->catdir( $self->get_root_dir(), @args );
 }
 
+=method get_candidate_paths
+
+Return both the server and absolute paths for a given candidate
+
+=cut
+
+sub get_candidate_paths {
+    my ($self, @args) = @_;
+    my ($job,  $dir, $subDir) = @args;
+    my $candidate_dir = File::Spec->catdir($job,  $dir, $subDir);
+    my $full_candidate_dir = $self->get_absolute_path($candidate_dir);
+    return ($candidate_dir, $full_candidate_dir);
+}
+
 1;

@@ -121,16 +121,12 @@ sub retrieve_candidate_information {
     my $dir = shift @args;
     my $subDir = shift @args;
 
-    my $candidate_dir = File::Spec->catdir($job,  $dir, $subDir);
-
-    my $full_candidate_dir = PipelineMiRNA::Paths->get_absolute_path($candidate_dir);
-
+    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
 
     if ( ! -e $full_candidate_dir ){
         die('Unvalid candidate information');
 
     }else{
-        my $full_candidate_dir = PipelineMiRNA::Paths->get_absolute_path($candidate_dir);
         my %result = $self->actual_retrieve_candidate_information($candidate_dir, $full_candidate_dir);
         $result{'name'} = $dir;    #récupération nom séquence
         my @position = split( /__/, $subDir );
