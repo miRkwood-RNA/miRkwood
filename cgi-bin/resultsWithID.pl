@@ -62,7 +62,7 @@ $header_menu
 <div class="main main-full">
 $HTML_additional
 <div id="select" > 
-		<p style='font-size:17px;font-family: "Times New Roman", Serif' >Export selected entries \( <a onclick='selectAll()' class='myButton'>Select all<\/a> /  <a  onclick='deSelectAll()'  class='myButton'>Deselect all</a> \) :</p> 
+		<p style='font-size:17px;font-family: "Times New Roman", Serif' >Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) :</p> 
 		<form id= 'exportForm'>
 		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
 		<input type="radio" name="export" value="fas"/>fasta format (plain sequence)<br/>
@@ -73,7 +73,7 @@ $HTML_additional
 		</form>
 	
 		<p style='font-size:16px;font-family: "Times New Roman", Serif' >Click on a line to see the full html report. Click on the checkbox to select an entry.<br/>	<br/>
-		Sort by \( <a onclick ="sortingTable(\'all\')"  class='myButton'>Position<\/a> /  <a  onclick ="sortingTable(\'all2\')"   class='myButton'>Quality</a> \)
+		Sort by \( <a onclick ="sortingTable(\'all\')"  >Position<\/a> /  <a  onclick ="sortingTable(\'all2\')"  >Quality</a> \)
 		</p>
 </div>
     
