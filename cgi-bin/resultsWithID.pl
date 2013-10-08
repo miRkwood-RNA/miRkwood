@@ -69,7 +69,7 @@ $HTML_additional
 		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
 		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
 		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
-		<input type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
+		<input class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
 		</form>
 	
 		<p style='font-size:16px;font-family: "Times New Roman", Serif' >Click on a line to see the full html report. Click on the checkbox to select an entry.<br/>	<br/>
