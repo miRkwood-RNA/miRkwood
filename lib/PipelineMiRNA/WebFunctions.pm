@@ -200,11 +200,8 @@ sub actual_retrieve_candidate_information {
 
     #Récupération alignement avec mirBase
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
-    if ( -e $file_alignement )                # si fichier existe
-    {
-        #my $align_res = PipelineMiRNA::Parsers::parse_alignment($file_alignement);
-        $result{'alignment'} = $file_alignement;
-    }
+    $result{'alignment'} = ( -e $file_alignement && ! -z $file_alignement );
+
     my $image_path = File::Spec->catfile($candidate_dir, 'image.png');
     $result{'image'} = $image_path;
 
