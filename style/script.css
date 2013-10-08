@@ -163,7 +163,7 @@ pre
 }
 #table
 {
-	width:500px;
+	width:550px;
 }
 #seq
 {
@@ -219,7 +219,7 @@ caption
 table a 
 {	padding: 1px;
 	text-decoration: none;
-	font-weight: bold;
+	
 	background: transparent;
 }
 
@@ -271,15 +271,11 @@ tbody th, tbody td
 
 
 
-a.name 
-{
-	color: rgb(50, 50, 75);
-	
-}
+
 tbody th.factors
 {	border-width: 1px;	font-size: 1.3em;
 	padding: 12px;
-    font-family: "Times New Roman", Serif;
+   	font-family: "Times New Roman", Serif;
 	border-style: solid;	
 	text-align: center;
 	border-color: #999999;
@@ -445,9 +441,9 @@ input#upload
     display:inline-block;
     color:#666666;
     font-family:arial;
-    font-size:15px;
+    font-size:11px;
     font-weight:bold;
-    padding:0px 24px;
+    padding:0px 10px;
     text-decoration:none;
     
     text-shadow:0px 1px 0px #ffffff;
@@ -478,6 +474,11 @@ input#upload
 	
 }
 
+#exportForm {
+	margin-left: 50px;
+	font-size:15px;
+ 	font-family: "Times New Roman", Serif;
+}
 
 .main{
 	position:relative;
@@ -508,3 +509,6 @@ span.mature {
     z-index: 999;
     border: none;
 }
+
+
+

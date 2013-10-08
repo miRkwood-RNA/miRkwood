@@ -65,9 +65,7 @@ function showCellInfo(i,j)
 	if ((i!=0)&&(j==0)) 
 	{
 		var nameTemp = myResults.getSequenceNameByIndex(i-1);
-		
 		var positions = myResults.getValuesByFactorName("position");
-		
 		var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
 		window.open("./resultsRow.pl?jobID="+id_job+"&nameSeq="+nameTemp+"&position="+factorsTemp.position);
 		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>Sequence Informations </u></h2><br/> <li><b>Name sequence :</b> " + nameTemp + "</li><br/><li> <b>MFEI : </b>" + factorsTemp.mfei + "</li> <br/> <li><b>P_value :</b> " + factorsTemp.p_value + "</li><br/> <li><b>Initial position : </b>" + factorsTemp.position +"</li> <br/> </div>"
@@ -127,13 +125,13 @@ function colorOut(a,b)
 function createGrid(id,rowsNumber,columnsNumber)
 {
 	
-	var div  = document.createElement('div');
+	//var div  = document.getElementById('select');
 	
-	div.id = "select";
-	div.innerHTML = "<a onclick='selectAll("+rowsNumber+")' href='#' class='myButton'>Select all</a>           <a  onclick='deSelectAll("+rowsNumber+")'  href='#' class='myButton'>Deselect all</a>";
-
+	//div.id = "select";
+	//div.innerHTML = "<p style='font-size:15px' >Export selected entries \( <a onclick='selectAll("+rowsNumber+")' href='#' class='myButton'>Select all<\/a> /          <a  onclick='deSelectAll("+rowsNumber+")'  href='#' class='myButton'>Deselect all</a> \)</p ><p>rrrrfdd</p><p>rrrrfdd</p>";
+	
 	var tar=document.getElementById(id); // div "table"
-	tar.appendChild(div);
+	//tar.appendChild(div);
 	var table=document.createElement('table');
 	
 	
@@ -152,7 +150,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			checkbox.name = "name";
 			checkbox.value = "value";
 			checkbox.id = "checkbox"+i;
-			
+			checkbox.setAttribute("class" , "allCheckbox");
 			var td=document.createElement('td');
 			tr.appendChild(td);
 			td.appendChild(checkbox);
@@ -262,9 +260,10 @@ function createGrid(id,rowsNumber,columnsNumber)
 /**
  * 
  */
-function selectAll(rowsNumber)
+function selectAll()
 {
-	for (var i=1;i<rowsNumber;i++)
+	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
+	for (var i=1;i<rowsNumber+1;i++)
 	{
 		document.getElementById('checkbox'+i).checked = true;	
 	}
@@ -273,9 +272,10 @@ function selectAll(rowsNumber)
 /**
  * 
  */
-function deSelectAll(rowsNumber)
-{
-	for (var i=1;i<rowsNumber;i++)
+function deSelectAll()
+{	
+	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
+	for (var i=1;i<rowsNumber+1;i++)
 	{
 		document.getElementById('checkbox'+i).checked = false;	
 	}
@@ -307,6 +307,24 @@ function getChecked()
 		}
 	}
 	return tab;
+}
+
+
+function exportTo(id )
+{
+	var radios = document.getElementsByName('export');
+	for (var i = 0, length = radios.length; i < length; i++) {
+    		if (radios[i].checked) {
+			// do whatever you want with the checked radio
+			var checked = radios[i].value;
+		
+			// only one radio can be logically checked, don't check the rest
+			break;
+		}
+	}
+	if (checked == 'csv') {exportCSV(id);};	
+	if (checked == 'odf') {exportODT(id);};
+	if (checked == 'gff') {exportGFF(id);};	
 }
 
 

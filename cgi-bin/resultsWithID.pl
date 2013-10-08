@@ -61,14 +61,26 @@ $header_menu
 
 <div class="main main-full">
 $HTML_additional
+<div id="select" > 
+		<p style='font-size:17px;font-family: "Times New Roman", Serif' >Export selected entries \( <a onclick='selectAll()' class='myButton'>Select all<\/a> /  <a  onclick='deSelectAll()'  class='myButton'>Deselect all</a> \) :</p> 
+		<form id= 'exportForm'>
+		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
+		<input type="radio" name="export" value="fas"/>fasta format (plain sequence)<br/>
+		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
+		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
+		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
+		<input type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
+		</form>
+	
+		<p style='font-size:16px;font-family: "Times New Roman", Serif' >Click on a line to see the full html report. Click on the checkbox to select an entry.<br/>	<br/>
+		Sort by \( <a onclick ="sortingTable(\'all\')"  class='myButton'>Position<\/a> /  <a  onclick ="sortingTable(\'all2\')"   class='myButton'>Quality</a> \)
+		</p>
+</div>
+    
         <div id="table" ></div>
         <div id="singleCell"> </div>
 $HTML_results
-        <div id="dl" >
-          <a onclick='exportCSV("$id_job")' id="" href="#"><img src="/arn/images/download.png" width ="48" heigth="28"    alt=""/></a>
-          <a onclick='exportODT("$id_job")' id="" href="#"><img src="/arn/images/odf.png" width ="48" heigth="28"    alt="Download as ODF"/></a>
-          <a onclick='exportGFF("$id_job")' id="" href="#"><img src="/arn/images/gff.jpg" width ="48" heigth="28"    alt="Download as GFF"/></a>
-        </div>
+       
         <div id="id_job" >$id_job</div>
     </div><!-- main -->
 
