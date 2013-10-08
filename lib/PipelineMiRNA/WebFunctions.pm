@@ -11,6 +11,8 @@ use Time::gmtime;
 
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Parsers;
+use PipelineMiRNA::WebTemplate;
+use PipelineMiRNA::Components;
 
 my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment', 'image', 'Vienna', 'DNASequence');
 
@@ -388,6 +390,103 @@ sub make_Vienna_viz {
         }
     }
     return $string
+}
+
+=method make_alignments_HTML
+
+
+=cut
+
+sub make_alignments_HTML {
+    my @args = @_;
+    my $job = shift @args;
+    my $dir = shift @args;
+    my $subDir = shift @args;
+    my $hairpin = shift @args;
+    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
+    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
+
+    my %alignments;
+    %alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);
+    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
+        # Catching exception
+        my $error = "Error with alignments $file_alignement.";
+        print PipelineMiRNA::WebTemplate::get_error_page($error);
+        die($error);
+    }
+
+    my $contents = "";
+
+    my $predictionCounter = 0;
+
+    sub get_first_element_of_split {
+        my @args = @_;
+        my $value = shift @args;
+        my @split = split(/-/, $value);
+        return $split[0];
+    }
+
+    my @keys = sort { get_first_element_of_split($a)  <=> get_first_element_of_split($b) } keys %alignments;
+    foreach my $position (@keys) {
+        my ($left, $right) = split(/-/, $position);
+        my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
+
+        my $hairpin_with_mature;
+
+        if ($left > length $top)
+        {
+            #on the other side
+            $hairpin_with_mature = $hairpin;
+        } else {
+            my $size = PipelineMiRNA::Utils::compute_mature_boundaries($left, $right, $top);
+            substr($top, $left, $size)   = '<span class="mature">' . substr($top, $left, $size) . '</span>';
+            substr($upper, $left, $size) = '<span class="mature">' . substr($upper, $left, $size) . '</span>';
+            $hairpin_with_mature = <<"END";
+$top
+$upper
+$middle
+$lower
+$bottom
+END
+        }
+        $predictionCounter += 1;
+        # Sorting the hit list by descending value of the 'score' element
+        my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$alignments{$position}};
+        $contents .= "<h3>Predition #$predictionCounter: $position</h3>
+        <pre style='height: 80px;'>$hairpin_with_mature</pre>
+        <ul>
+            <li>Evaluation score of MIRdup: TODO</li>
+        </ul>
+        <h4>Alignments</h4>
+        ";
+        foreach my $hit (@hits){
+            my $alignment = $hit->{'alignment'};
+            my $name = $hit->{'name'};
+            my @splitted = split(/ /, $hit->{'def_query'});
+            my $mirbase_id = $splitted[0];
+            my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+            my $html_name = "<a href='$mirbase_link'>$name</a>";
+            my $spacing = 15;
+            my ($top, $middle, $bottom) = split(/\n/, $alignment);
+            $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
+            $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
+            $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
+            my $additional_space = "";
+            my $sub_string = substr($bottom, 0, $spacing);
+            $additional_space .= ' ' while ($sub_string =~ m/ /g);
+            substr($bottom, 0, $spacing) = $html_name . $additional_space;
+            $contents .= <<"INNER";
+<pre>
+$top
+$middle
+$bottom
+</pre>
+INNER
+        }
+
+    }
+    return $contents;
+
 }
 
 1;
