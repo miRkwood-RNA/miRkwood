@@ -419,14 +419,15 @@ sub make_alignments_HTML {
     my @TOC;
     my $predictionCounter = 0;
 
-    sub get_first_element_of_split {
+    sub get_element_of_split {
         my @args = @_;
         my $value = shift @args;
+        my $rank  = shift @args;
         my @split = split(/-/, $value);
-        return $split[0];
+        return $split[$rank];
     }
 
-    my @keys = sort { get_first_element_of_split($a)  <=> get_first_element_of_split($b) } keys %alignments;
+    my @keys = sort { get_element_of_split($a, 0)  <=> get_element_of_split($b, 0) || get_element_of_split($a, 1)  <=> get_element_of_split($b, 1)} keys %alignments;
     foreach my $position (@keys) {
         my ($left, $right) = split(/-/, $position);
         my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
