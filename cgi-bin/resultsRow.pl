@@ -48,8 +48,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 
     my $alignmentHTML;
     if($candidate{'alignment'}){
-         $alignmentHTML = " <pre class='hairpin'>$hairpin</pre>
-         Insert here fancy alignments";
+         $alignmentHTML = PipelineMiRNA::WebFunctions::make_alignments_HTML($job, $name, $candidate_name, $hairpin);
     } else {
         $alignmentHTML = "No alignment has been found.";
     }
