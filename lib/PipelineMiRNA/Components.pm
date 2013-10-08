@@ -249,6 +249,7 @@ sub parse_custom_exonerate_output{
     my $yaml_file = shift @args;
     (-e $yaml_file) or die("Error, YAML file $yaml_file does not exist");
     (! -z $yaml_file) or die("Error, YAML file $yaml_file is empty");
+    (-r $yaml_file) or die("Error, YAML file $yaml_file is not readable");
 
     my $yaml = YAML::LoadFile($yaml_file) or die("Error when parsing YAML file $yaml_file");
     my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
