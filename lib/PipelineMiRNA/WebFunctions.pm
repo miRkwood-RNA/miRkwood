@@ -14,7 +14,7 @@ use PipelineMiRNA::Parsers;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Components;
 
-my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment', 'image', 'Vienna', 'DNASequence');
+my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'alignment', 'image', 'Vienna', 'DNASequence');
 
 
 =method make_job_id
@@ -339,7 +339,7 @@ sub resultstruct2pseudoXML {
     $result .= "</results>";
     $result .= "<results id='all2'>\n";
    	@keys = sort keys %results;
-    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}} keys %results; 
+    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}||$results{$a}{'position'} <=> $results{$b}{'position'}  } keys %results; 
   	foreach my $key (@keys) {
    		my $value = $results{$key};
        	$result .= "<Sequence";
