@@ -73,7 +73,7 @@ function showCellInfo(i,j)
 	if ((i==0)&&(j!=0))  
 	{	
 		var factor = myResults.getFactorsNamesList()[j-1];
-		if ((factor != "image") &&(factor != "quality") &&(factor != "alignment")&&(factor != "amfe")&&(factor != "mfe")&&(factor != "position")&&(factor != "alignment")&&(factor != "alignment")) // quand on clique pas sur image et alignement 
+		if ((factor != "image") &&(factor != "quality") &&(factor != "alignment")&&(factor != "amfe")&&(factor != "mfe")&&(factor != "position")) // quand on clique pas sur image et alignement 
 		{
 			var values= "";
 			var factorsTemp = myResults.getFactorNameByIndex(j-1);
@@ -215,10 +215,11 @@ function createGrid(id,rowsNumber,columnsNumber)
 					var string = repeat("<img src='/arn/images/Star.png' alt='arobas' style='width:20px; height:20px;' />", parseInt(value))
 				
 					td.innerHTML = string;
-					}
+				}
 				else if ( factor =='image') //cas lien image
 				{	
 					var value = myResults.getValueByIndices(i-1,j-1);
+			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
 					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'>View structure</a></a>  "; // ajouter la valeur à la cellule
 					

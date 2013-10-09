@@ -245,7 +245,7 @@ sub resultstruct2csv {
     my $results = shift @args;
 	my @tab = shift @args;
 	my %results = %{$results};
-    my @csv_headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'Vienna', 'DNASequence');
+    my @csv_headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'Vienna', 'DNASequence');
 	my $result = join( ',', @csv_headers ) . "\n";
 
     my @keys = sort keys %results;
@@ -319,7 +319,7 @@ sub resultstruct2pseudoXML {
     my $results = shift @args;
     my %results = %{$results};
     my $result = "<results id='all'>\n";
-	my @headers1 = ('name', 'position','quality', 'mfei', 'mfe', 'amfe', 'p_value', 'self_contain', 'alignment' );
+	my @headers1 = ('name', 'position','quality', 'mfei', 'mfe', 'amfe', 'p_value', 'alignment' );
     my @headers2 = ('Vienna', 'DNASequence');
 	my @keys = sort keys %results;
 
