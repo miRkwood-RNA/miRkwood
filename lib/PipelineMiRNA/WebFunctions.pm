@@ -398,7 +398,7 @@ sub make_Vienna_viz {
 =cut
 
 sub make_alignments_HTML {
-    my @args = @_;
+    my ($self, @args) = @_;
     my $job = shift @args;
     my $dir = shift @args;
     my $subDir = shift @args;
