@@ -212,7 +212,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				if ( factor =='quality') 
 				{	
 					var value = myResults.getValueByIndices(i-1,j-1); // appel fonction qui définit la valeur à partir des indices 				
-					var string = repeat("<img src='/arn/images/star.gif' alt='arobas' style='width:20px; height:20px;' />", parseInt(value))
+					var string = repeat("<img src='/arn/images/Star.png' alt='arobas' style='width:20px; height:20px;' />", parseInt(value))
 				
 					td.innerHTML = string;
 					}
