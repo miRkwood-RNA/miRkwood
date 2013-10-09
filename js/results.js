@@ -44,7 +44,6 @@ results.prototype.getSequenceByNameFactors = function(name,pos)
 	factors.mfei = seq.getAttribute("mfei");
 	factors.amfe = seq.getAttribute("amfe");
 	factors.mfe = seq.getAttribute("mfe");
-	factors.self_contain = seq.getAttribute("self_contain");
 	factors.p_value = seq.getAttribute("p_value");
 	factors.Vienna = seq.getAttribute("Vienna");
 	factors.DNASequence = seq.getAttribute("DNASequence");	
@@ -90,7 +89,7 @@ results.prototype.getValuesByFactorName = function(factor)
  */
 results.prototype.getFactorsNamesList = function()
 {
-	var allNames = new Array(  "position","quality" , "mfe","mfei","amfe","p_value","self_contain", "alignment", "image"  );
+	var allNames = new Array(  "position","quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
 	var names = new Array();
 	for(var i = 0;i < allNames.length;i++)
 	{

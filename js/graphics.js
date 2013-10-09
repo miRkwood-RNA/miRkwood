@@ -49,7 +49,7 @@ function showCellInfo(i,j)
 	if ((i!=0)&&(j!=0))
 	{
 		var factor = myResults.getFactorsNamesList()[j-1];
-		if ((factor != "image") &&(factor != "alignment") &&(factor != "mfei")&&(factor != "mfe")&&(factor != "amfe")&&(factor != "position")&&(factor != "p_value")&&(factor != "self_contain"))
+		if ((factor != "image") &&(factor != "alignment") &&(factor != "mfei")&&(factor != "mfe")&&(factor != "amfe")&&(factor != "position")&&(factor != "p_value"))
 		{
 			window.open("./resultsCell.pl?typePage=simpleCell&nameSeq="+myResults.getSequenceNameByIndex(i-1)+"&factor="+ myResults.getFactorNameByIndex(j-1)+"&value="+myResults.getValueByIndices(i-1,j-1)+"&position="+myResults.getValueByIndices(i-1,0));
 			
