@@ -73,8 +73,8 @@ $HTML_additional
 		</form>
 	
 		<p style='font-size:16px;font-family: "Times New Roman", Serif' >Click on a line to see the full html report. Click on the checkbox to select an entry.<br/>	<br/>
-		Sort by \( <a onclick ="sortingTable(\'all\')"  >Position<\/a> /  <a  onclick ="sortingTable(\'all2\')"  >Quality</a> \)
-		</p>
+		Sort by 
+		<input class="myButton" type="button" id="sort" value="Quality" onclick='changeValue();'/></p>
 </div>
     
         <div id="table" ></div>

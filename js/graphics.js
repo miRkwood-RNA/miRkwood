@@ -370,3 +370,20 @@ function sortingTable(id)
 	table.innerHTML = "";
 	main(id);
 }
+
+
+function changeValue()
+{
+	if (document.getElementById('sort').value == 'Position')
+		
+	{
+		document.getElementById('sort').value = 'Quality';
+		sortingTable('all');
+	} else 
+	{
+		document.getElementById('sort').value = 'Position';
+		sortingTable('all2');
+	}
+	 	
+}
+
