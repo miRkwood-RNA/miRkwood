@@ -225,20 +225,20 @@ table a
 
 table a:link 
 {	
-	border-bottom: 1px dotted #ddd;
+	border-bottom: 1px  #ddd;
 	color: #000;
 }
 
 table a:visited 
 {
-	border-bottom: 1px dotted #ccc;
+	border-bottom: 1px  #ccc;
 	text-decoration: line-through;
 	color: #808080;
 }
 
 table a:hover 
 {
-	border-bottom: 1px dotted #bbb;
+	border-bottom: 1px  #bbb;
 	color: #666;
 }
 
