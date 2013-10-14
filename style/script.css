@@ -281,17 +281,9 @@ tbody th.factors
 	border-color: #999999;
 	white-space: nowrap;
 	
-	background:#b5cfd2 url('../images/cell-blue.jpg');
-}
-tbody th.names
-{	border-width: 1px;	font-size: 1.1em;
-	padding: 8px;
-	border-style: solid;	text-align: center;
-	border-color: #999999;
-	white-space: nowrap;
-	
 	background:#f0f5f6 url('../images/cell-grey.jpg');
 }
+
 tbody td 
 {
 	

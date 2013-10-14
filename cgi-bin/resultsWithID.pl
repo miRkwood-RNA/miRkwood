@@ -61,7 +61,8 @@ $header_menu
 
 <div class="main main-full">
 $HTML_additional
-<div id="select" > 
+<div  id="select" > 
+	<div style="width: 500px"  class="forms">
 		<p style='font-size:17px;font-family: "Times New Roman", Serif' >Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) :</p> 
 		<form id= 'exportForm'>
 		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
@@ -69,12 +70,12 @@ $HTML_additional
 		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
 		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
 		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
-		<input class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
+		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
 		</form>
-	
-		<p style='font-size:16px;font-family: "Times New Roman", Serif' >Click on a line to see the full html report. Click on the checkbox to select an entry.<br/>	<br/>
-		Sort by 
-		<input class="myButton" type="button" id="sort" value="Quality" onclick='changeValue();'/></p>
+	</div>
+		<p style='font-size:16px;font-family: "Times New Roman", Serif' ><input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/><br/>	<br/>Click on a name to see the full html report. Click on the checkbox to select an entry.
+		
+		</p>
 </div>
     
         <div id="table" ></div>

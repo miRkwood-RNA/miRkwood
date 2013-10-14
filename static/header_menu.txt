@@ -1,5 +1,5 @@
 <div class="frametitle">
- <h1>miREST :: identification of miRNA/miRNA hairpins in plants</h1>
+ <h1>miREST</h1>
    <div class="menu_central">
      <a href="./interface.pl">home</a>
      <a href="./help.pl">help</a>

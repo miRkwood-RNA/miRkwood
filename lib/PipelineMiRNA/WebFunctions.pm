@@ -339,7 +339,7 @@ sub resultstruct2pseudoXML {
     $result .= "</results>";
     $result .= "<results id='all2'>\n";
    	@keys = sort keys %results;
-    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}||$results{$a}{'position'} <=> $results{$b}{'position'}  } keys %results; 
+    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}||$results{$a}{'position'} <=> $results{$b}{'position'} } keys %results; 
   	foreach my $key (@keys) {
    		my $value = $results{$key};
        	$result .= "<Sequence";

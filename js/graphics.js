@@ -96,10 +96,15 @@ function colorOver(a,b)
 {
 	for (var i=0;i<rowsNumber+1;i++)
 	{
-		document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
+		console.log(b);
+		if (b == 8) //gerer que la couleur de la colonne de l'image  
+		{
+			document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
+		}
 	}
 	for (var j=0;j<columnsNumber+1;j++)
 	{
+	
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','#EDEDED');
 	}
 }
@@ -171,7 +176,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				var td=document.createElement('th');
 				td.setAttribute("class" , "factors");
 			}else if (j==0) {
-				var td=document.createElement('th');
+				var td=document.createElement('td');
 				td.setAttribute("class" , "names");
 			}
 			else
@@ -190,7 +195,10 @@ function createGrid(id,rowsNumber,columnsNumber)
 				
 				var value = myResults.getFactorsNamesList()[j-1]; // ajouter critère
 				//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
-				if (value.toString() == 'quality') 
+				if  (value.toString() == 'image')  {
+					td.innerHTML = '<h3 style="text-transform:capitalize;">2D structure</h3>' ;
+				}
+				else if (value.toString() == 'quality') 
 				{
 					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-decoration:underline;text-transform:capitalize;">'+value.toString()+'</h3>';
 				}else 
@@ -212,7 +220,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				if ( factor =='quality') 
 				{	
 					var value = myResults.getValueByIndices(i-1,j-1); // appel fonction qui définit la valeur à partir des indices 				
-					var string = repeat("<img src='/arn/images/Star.png' alt='arobas' style='width:20px; height:20px;' />", parseInt(value))
+					var string = repeat("<img src='/arn/images/Star.png' alt='arobas' style='width:15px; height:15px;' /> 	 ", parseInt(value))
 				
 					td.innerHTML = string;
 				}
@@ -221,7 +229,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					var value = myResults.getValueByIndices(i-1,j-1);
 			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
-					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'>View structure</a></a>  "; // ajouter la valeur à la cellule
+					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'><img src='/arn/images/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
 					
 					//var a=document.createElement('a'); 
 					//var value = a.setAttribute("href","../images/".myResults.getValueByIndices(i-1,j-1));
@@ -377,14 +385,14 @@ function sortingTable(id)
 
 function changeValue()
 {
-	if (document.getElementById('sort').value == 'Position')
+	if (document.getElementById('sort').value == 'Sort by position')
 		
 	{
-		document.getElementById('sort').value = 'Quality';
+		document.getElementById('sort').value = 'Sort by quality';
 		sortingTable('all');
 	} else 
 	{
-		document.getElementById('sort').value = 'Position';
+		document.getElementById('sort').value = 'Sort by position';
 		sortingTable('all2');
 	}
 	 	

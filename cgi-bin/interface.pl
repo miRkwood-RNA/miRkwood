@@ -23,7 +23,7 @@ Content-type: text/html
 
         <script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
        
-        <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
+        <title>miREST</title>
 
 
 </head>
