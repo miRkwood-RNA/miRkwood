@@ -73,8 +73,7 @@ $HTML_additional
 		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
 		</form>
 	</div>
-		<p style='font-size:16px;font-family: "Times New Roman", Serif' ><input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/><br/>	<br/>Click on a name to see the full html report. Click on the checkbox to select an entry.
-		
+		<p style='font-size:16px;font-family: "Times New Roman", Serif' ><input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/><br/>	<br/>Click on a name to see the full HTML
 		</p>
 </div>
     
