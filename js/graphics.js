@@ -243,8 +243,9 @@ function createGrid(id,rowsNumber,columnsNumber)
 				else if( factor =='alignment') //cas lien alignement 
 				{
 					var value = myResults.getValueByIndices(i-1,j-1);
-					if (value != "none")
+					if (value == 1)
 					{
+						
 						//td.innerHTML = "<a target='_blank' href='./resultsCell.pl?typePage=alignement&amp;url="+value+ "'>View alignment</a>  "; // ajouter la valeur à la cellule
 						td.innerHTML = "<img src='/arn/images/check.png' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
 					}
