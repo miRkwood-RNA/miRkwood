@@ -319,7 +319,7 @@ sub resultstruct2pseudoXML {
     my $results = shift @args;
     my %results = %{$results};
     my $result = "<results id='all'>\n";
-	my @headers1 = ('name', 'position','quality', 'mfei', 'mfe', 'amfe', 'p_value', 'alignment' );
+	my @headers1 = ('name', 'position','quality', 'mfe', 'mfei', 'amfe', 'p_value', 'alignment' );
     my @headers2 = ('Vienna', 'DNASequence');
 	my @keys = sort keys %results;
 
