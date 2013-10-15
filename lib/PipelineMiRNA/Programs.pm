@@ -81,7 +81,7 @@ Return whether the output file exists.
 sub run_varna {
     my ( $candidate_ct_file, $varna_image ) = @_;
     my $varna_cmd =
-"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
+"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
     system($varna_cmd);
     return ( -e $varna_image );
 }
