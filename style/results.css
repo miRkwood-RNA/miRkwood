@@ -1,6 +1,7 @@
-a.returnlink {
-	font-size: smaller;
-	font-style: italic;
+
+body {
+    background: #FFFFFF;
+    color: #000000;
 }
 
 pre {
@@ -8,6 +9,49 @@ pre {
     line-height: 1.3em;
 }
 
+h2 {
+    padding-left: 8pt;
+    width: 100%;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+h3 {
+    padding: 6px 6px 6px 10px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+
+h4 {
+    padding: 6px 6px 6px 15px;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+ul li {
+    list-style-type: square;
+    padding-left: 3pt;
+	padding-bottom : 1pt;
+    padding-top: 1pt;
+}
+
 span.mature {
     color: blue;
+}
+
+a {
+    color: #000099;
+    text-decoration: none;
+}
+
+a[href]:hover{
+    text-decoration: underline;
+}
+
+a.returnlink {
+	font-size: smaller;
+	font-style: italic;
 }
