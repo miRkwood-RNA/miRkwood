@@ -145,7 +145,7 @@ print "Location: $waiting_url \n\n";
 my $check    = $cgi->param('check');
 my $mfei     = $cgi->param('mfei');
 my $randfold = $cgi->param('randfold');
-my $SC       = $cgi->param('selfContain');
+
 my $align    = $cgi->param('align');
 my $plant    = $cgi->param('db');
 if ( !$plant ) {
@@ -160,7 +160,7 @@ if ( $check    eq "" ) { $check    = "notChecked" }
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $check $mfei $randfold $SC $align $dirJob_path $plant";
+"perl -I$dirLib $perl_script $check $mfei $randfold $align $dirJob_path $plant";
 debug("Running perl script $cmd", 1);
 system($cmd);
 my $finish_file = File::Spec->catfile( $dirJob_path, 'finished' );

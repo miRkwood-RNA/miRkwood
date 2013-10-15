@@ -77,8 +77,7 @@ $header_menu
                 <input class="checkbox" type="checkbox" checked="checked" name="mfei" value="mfeiChecked">Compute MFE/MFEI/AMFE (minimal folding energy)[<a href="./help.pl">?</a>]</input>
                   <br />
                 <input class="checkbox" type="checkbox" checked="checked" name="align" value="alignChecked">Align against mature microRNAs miRBase [<a href="./help.pl">?</a>]</input>
-                   <br />
-                <input class="checkbox" type="checkbox" checked="checked" name="selfContain" value="SCChecked">Compute self_containment index [<a href="./help.pl">?</a>]</input>
+                
                 </div>
                </P>
                 

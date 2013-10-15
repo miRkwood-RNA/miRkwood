@@ -38,21 +38,6 @@ sub test_randfold {
     return -e $randfold_out;
 }
 
-=method test_selfcontain
-
-Run the SelfContain a posteriori test
-
-=cut
-
-sub test_selfcontain {
-    my ( $candidate_dir, $seq_file ) = @_;
-    my $selfcontain_out =
-      File::Spec->catfile( $candidate_dir, 'selfContain.txt' );
-    PipelineMiRNA::Programs::run_selfcontain( $seq_file, $selfcontain_out )
-      or die("Problem when running Selfcontain");
-    chmod 777, $selfcontain_out;
-    return -e $selfcontain_out;
-}
 
 =method test_alignment
 

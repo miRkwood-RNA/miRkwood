@@ -27,7 +27,7 @@ my $dirData = PipelineMiRNA::Paths->get_absolute_path( 'data' );
 #
 
 sub main_entry {
-    my ( $check, $mfei, $randfold, $SC, $align, $dirJob, $plant ) = @_;
+    my ( $check, $mfei, $randfold, $align, $dirJob, $plant ) = @_;
     my $debug = 1;
 
     my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
@@ -87,7 +87,7 @@ sub main_entry {
         process_RNAstemloop_wrapper($rnastemloop_out_optimal, 'optimal');
         process_RNAstemloop_wrapper($rnastemloop_out_stemloop, 'stemloop');
     }
-    process_tests( $dirJob, $mfei, $randfold, $SC, $align );
+    process_tests( $dirJob, $mfei, $randfold,  $align );
     return;
 }
 
@@ -193,7 +193,7 @@ Perform the a posteriori tests for a given job
 =cut
 
 sub process_tests {
-    my ( $dirJob, $mfei, $randfold, $SC, $align ) = @_;
+    my ( $dirJob, $mfei, $randfold,  $align ) = @_;
     debug("A posteriori tests in $dirJob", 1);
     ##Traitement fichier de sortie outStemloop
     opendir DIR, $dirJob;    #ouverture répertoire job
@@ -224,7 +224,7 @@ sub process_tests {
                   )    # si le fichier est de type repertoire
                 {
                     debug("Entering candidate $file", 1);
-                    process_tests_for_candidate($candidate_dir, $file, $mfei, $randfold, $SC, $align);
+                    process_tests_for_candidate($candidate_dir, $file, $mfei, $randfold, $align);
                     debug("Done with candidate $file", 1);
                 } # foreach my $file (@files)
             } # if directory
@@ -243,7 +243,7 @@ Perform the a posteriori tests for a given candidate
 sub process_tests_for_candidate {
 
     my @args = @_;
-    my ($candidate_dir, $file, $mfei, $randfold, $SC, $align ) = @args;
+    my ($candidate_dir, $file, $mfei, $randfold,  $align ) = @args;
 
     ####Traitement fichier de sortie outStemloop
     chmod 0777, $candidate_dir;
@@ -289,12 +289,7 @@ sub process_tests_for_candidate {
         PipelineMiRNA::PosterioriTests::test_randfold(
             $candidate_dir, $seq_file );
     }
-    ####calcul self-contain
-    if ( $SC eq 'SCChecked' ) {
-        debug("Running test_selfcontain on $seq_file", 1);
-        PipelineMiRNA::PosterioriTests::test_selfcontain(
-            $candidate_dir, $seq_file );
-    }
+   
     if ( $align eq 'alignChecked' ) {
         debug("Running test_alignment on $candidate_ct_stemloop_file", 1);
         PipelineMiRNA::PosterioriTests::test_alignment(

@@ -11,6 +11,6 @@ use PipelineMiRNA::MainPipeline;
 
 
 ## Code ##
-my ( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant ) = @ARGV;
+my ( $icheck, $imfei, $irandfold,  $ialign, $idirJob, $iplant ) = @ARGV;
 
-PipelineMiRNA::MainPipeline::main_entry( $icheck, $imfei, $irandfold, $iSC, $ialign, $idirJob, $iplant );
+PipelineMiRNA::MainPipeline::main_entry( $icheck, $imfei, $irandfold, $ialign, $idirJob, $iplant );
