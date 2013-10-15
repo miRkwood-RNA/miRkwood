@@ -509,6 +509,7 @@ span.mature {
 	-o-transform: scale(2); /* Opera */
 	padding: 10px;
 	margin-top: 20px;
-	
+	width :10px;
+	height :10px;
 }
 
