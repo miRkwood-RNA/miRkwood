@@ -8,6 +8,7 @@ use warnings;
 use Data::Dumper;
 use File::Spec;
 use Time::gmtime;
+use Switch;
 
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Parsers;
@@ -234,16 +235,55 @@ sub compute_quality(){
     return $quality;
 }
 
+=method candidateAsVienna
 
-
-=method exportToFasta
-
-Convert the results structure to Fasta
+Convert a given candidate to Vienna dot-bracket format
 
 =cut
 
-sub exportToFasta {
+sub candidateAsVienna {
     my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my $optimal = shift @args;
+    my $output = "";
+    my $candidate_name = $candidate{'name'}.'__'.$candidate{'position'};
+    my $header = ">$candidate_name";
+    my $structure;
+    if ($optimal){
+        $header .= ", MFE structure";
+        $structure = $candidate{'Vienna_optimal'};
+    }else{
+        $structure = $candidate{'Vienna'};
+        $header .= ", stemloop structure";
+    }
+    $output .= '>' . $candidate_name . "\n" . $candidate{'DNASequence'} . "\n" . "$structure" . "\n";
+    return $output;
+}
+
+=method candidateAsFasta
+
+Convert a given candidate to FASTA format
+
+=cut
+
+sub candidateAsFasta {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my $output = "";
+    $output .= '>'.$candidate{'name'} . '__' . $candidate{'position'} . "\n" . $candidate{'DNASequence'} . "\n";
+    return $output;
+}
+
+
+=method export
+
+Convert the results
+
+=cut
+
+sub export {
+    my ( $self, @args ) = @_;
+    my $export_type = shift @args;
     my $results = shift @args;
     my @sequences_to_export = shift @args;
     my %results = %{$results};
@@ -255,7 +295,10 @@ sub exportToFasta {
         if (  $key ~~ \@sequences_to_export )
         {
             my $value = $results{$key};
-            $output .= '>'.${$value}{'name'} . '__' . ${$value}{'position'} . "\n" . ${$value}{'DNASequence'} . "\n";
+            switch ($export_type) {
+                case 'fas'        { $output .= $self->candidateAsFasta($value); }
+                case 'dot'        { $output .= $self->candidateAsVienna($value); }
+            }
         }
     }
     return $output;

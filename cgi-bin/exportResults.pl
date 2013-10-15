@@ -72,11 +72,23 @@ DATA
 sub exportAsFasta {
     my $id_job = shift @_;
     my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
-    my $fasta = PipelineMiRNA::WebFunctions->exportToFasta( \%myResults , \@sequences_to_export);
+    my $fasta = PipelineMiRNA::WebFunctions->export('fas', \%myResults , \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=Results-$id_job.txt
 
 $fasta
+DATA
+}
+
+sub exportAsDotBracket {
+    my $id_job = shift @_;
+    my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
+    my $dotbracket = PipelineMiRNA::WebFunctions->export('dot', \%myResults , \@sequences_to_export);
+    print <<"DATA" or die "Error when printing content: $!";
+Content-type: text/txt
+Content-disposition: attachment;filename=Results-$id_job.txt
+
+$dotbracket
 DATA
 }
