@@ -502,5 +502,9 @@ span.mature {
     border: none;
 }
 
-
+#checkboxSelect {
+	margin-top: 10px;
+    width:30px;
+    height:30px;
+}
 

@@ -96,7 +96,7 @@ function colorOver(a,b)
 {
 	for (var i=0;i<rowsNumber+1;i++)
 	{
-		console.log(b);
+	
 		if (b == 8) //gerer que la couleur de la colonne de l'image  
 		{
 			document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
@@ -161,10 +161,15 @@ function createGrid(id,rowsNumber,columnsNumber)
 			td.appendChild(checkbox);
 		}else {
 
-	
+			var checkbox = document.createElement('input');
+			checkbox.type = "checkbox";
+			checkbox.name = "name";
+			checkbox.value = "value";
+			checkbox.id = "checkboxSelect";
+			checkbox.setAttribute('onclick',"checkboxSelect()");
 			var td=document.createElement('td');
-
-
+			td.appendChild(checkbox);
+			
 			tr.appendChild(td);
 		
 		
@@ -266,6 +271,23 @@ function createGrid(id,rowsNumber,columnsNumber)
 	}
 	tar.appendChild(table);
 
+}
+
+
+
+
+/**
+ * 
+ */
+function checkboxSelect()
+{
+	if (document.getElementById('checkboxSelect').checked == true)
+	{
+		selectAll();
+	}else
+	{
+		deSelectAll();
+	}
 }
 
 /**
