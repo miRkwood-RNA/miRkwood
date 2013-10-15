@@ -18,7 +18,7 @@ use PipelineMiRNA::WebFunctions;
 my $id_job = $cgi->param('run_id');    # récupération id job
 my $export_type = $cgi->param('type');
 my $data= $cgi->param('data');  # identifiant des candidats sélectionnés
-my @tab =  split( ',',$data  );
+my @sequences_to_export =  split( ',',$data  );
 
 my $valid = PipelineMiRNA::WebFunctions->is_valid_jobID($id_job);
 
@@ -38,7 +38,7 @@ else {
 
 sub exportAsGFF {
     use PipelineMiRNA::GFF;
-    my $gff = PipelineMiRNA::GFF->generate_GFF_from_ID($id_job);
+    my $gff = PipelineMiRNA::GFF->generate_GFF_from_ID($id_job, \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/gff
 Content-disposition: attachment;filename=Results-$id_job.gff
@@ -48,6 +48,7 @@ DATA
 }
 
 sub exportAsODF {
+    #TODO: Filter selected sequences.
     use PipelineMiRNA::OpenDocument;
     my $odt = PipelineMiRNA::OpenDocument->generate_report($id_job);
     print $cgi->redirect( -uri => $odt );
@@ -55,7 +56,7 @@ sub exportAsODF {
 
 sub exportAsCSV {
     my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
-    my $csv = PipelineMiRNA::WebFunctions->resultstruct2csv( \%myResults , \@tab);
+    my $csv = PipelineMiRNA::WebFunctions->resultstruct2csv( \%myResults , \@sequences_to_export);
 
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/csv
