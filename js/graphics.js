@@ -70,6 +70,7 @@ function showCellInfo(i,j)
 		window.open("./resultsRow.pl?jobID="+id_job+"&nameSeq="+nameTemp+"&position="+factorsTemp.position);
 		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>Sequence Informations </u></h2><br/> <li><b>Name sequence :</b> " + nameTemp + "</li><br/><li> <b>MFEI : </b>" + factorsTemp.mfei + "</li> <br/> <li><b>P_value :</b> " + factorsTemp.p_value + "</li><br/> <li><b>Initial position : </b>" + factorsTemp.position +"</li> <br/> </div>"
 	} 
+	/**
 	if ((i==0)&&(j!=0))  
 	{	
 		var factor = myResults.getFactorsNamesList()[j-1];
@@ -86,7 +87,7 @@ function showCellInfo(i,j)
 			window.open("./resultsCol.pl?factor="+factorsTemp+"&values="+ valuesFactor+"&length="+ valuesFactor.length+"&names="+ names);
 		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>List of " + factorsTemp +"s</u></h2><br/>"+ values + " <br/> </div>"
 		}
-	} 
+	}  */
 }
 
 /**
