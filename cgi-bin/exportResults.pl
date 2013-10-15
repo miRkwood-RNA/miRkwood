@@ -24,11 +24,11 @@ my $valid = PipelineMiRNA::WebFunctions->is_valid_jobID($id_job);
 
 if ($valid) {
     switch ($export_type) {
-        case 'gff'        { exportAsGFF() }
-        case 'odf'        { exportAsODF() }
-        case 'csv'        { exportAsCSV() }
-        case 'fas'        { exportAsFasta() }
-        case 'dotbracket' { }
+        case 'gff'        { exportAsGFF($id_job) }
+        case 'odf'        { exportAsODF($id_job) }
+        case 'csv'        { exportAsCSV($id_job) }
+        case 'fas'        { exportAsFasta($id_job) }
+        case 'dot'        { exportAsDotBracket($id_job) }
         else              { die("Error: the export type '$export_type' is not supported"); }
     }
 }
@@ -37,6 +37,7 @@ else {
 }
 
 sub exportAsGFF {
+    my $id_job = shift @_;
     use PipelineMiRNA::GFF;
     my $gff = PipelineMiRNA::GFF->generate_GFF_from_ID($id_job, \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
@@ -48,6 +49,7 @@ DATA
 }
 
 sub exportAsODF {
+    my $id_job = shift @_;
     #TODO: Filter selected sequences.
     use PipelineMiRNA::OpenDocument;
     my $odt = PipelineMiRNA::OpenDocument->generate_report($id_job);
@@ -55,6 +57,7 @@ sub exportAsODF {
 }
 
 sub exportAsCSV {
+    my $id_job = shift @_;
     my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
     my $csv = PipelineMiRNA::WebFunctions->resultstruct2csv( \%myResults , \@sequences_to_export);
 
@@ -67,6 +70,7 @@ DATA
 }
 
 sub exportAsFasta {
+    my $id_job = shift @_;
     my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
     my $fasta = PipelineMiRNA::WebFunctions->exportToFasta( \%myResults , \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
