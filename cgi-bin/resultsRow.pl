@@ -39,11 +39,11 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
     my $linkVienna = "./exportVienna.pl?jobId=$jobId&name=$name&position=$position";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
-    my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
+    my $Vienna_HTML = "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if($candidate{'Vienna'} ne $candidate{'Vienna_optimal'}){
-        $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li>"
+        $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>"
     } else {
-        $Vienna_HTML .= "<br/><i>(This stem-loop structure is the MFE structure)</i></li>"
+        $Vienna_HTML .= "<br/><i>(This stem-loop structure is the MFE structure)</i></li></ul>"
     }
 
     my $alignmentHTML;
@@ -55,6 +55,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 
     $html_contents ="
             <div id = 'showInfo'>
+        <ul>
         <li>
           <b>Name: </b>$candidate{'name'}
         </li>
@@ -67,10 +68,12 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
         <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
         </li>
+        </ul>
         <h2>Secondary structure</h2>
         <img id='structure' src='$image_url' height='400px' alt='$candidate_name secondary structure'>
         $Vienna_HTML
         <h2>Thermodynamics stability</h2>
+        <ul>
         <li>
           <b>MFE:</b> $candidate{'mfe'} kcal/mol
         </li>
@@ -80,7 +83,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
         <li>
           <b>MFEI:</b> $candidate{'mfei'}
         </li>
-
+        </ul>
         <h2>Mirbase alignments</h2>
         $alignmentHTML
 
