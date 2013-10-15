@@ -344,8 +344,11 @@ function getChecked()
 	return tab;
 }
 
-
-function exportTo(id )
+/**
+ * Export the selected sequences
+ * @param {String} id Identifier of the job
+ */
+function exportTo(id)
 {
 	var radios = document.getElementsByName('export');
 	for (var i = 0, length = radios.length; i < length; i++) {
@@ -357,19 +360,7 @@ function exportTo(id )
 			break;
 		}
 	}
-	if (checked == 'csv') {exportCSV(id);};	
-	if (checked == 'odf') {exportODT(id);};
-	if (checked == 'gff') {exportGFF(id);};	
-}
 
-
-/**
- * Export the selected sequences as CSV
- * @param {String} id Identifier of the job
- */
-function exportCSV(id)
-{	
-	
 	var tab=new Array();
 	tab = getChecked();
 	if(tab.length ==0)
@@ -377,25 +368,7 @@ function exportCSV(id)
 	   alert("You must select at least one element to export!! ");
 	   return;
 	}
-	window.location = "/cgi-bin/resultsAsCSV.pl?" + "data=" + tab.join(',') + "&run_id=" + id;
-}
-
-/**
- * Export the selected sequences as ODT
- * @param {String} id Identifier of the job
- */
-function exportODT(id)
-{
-	window.location = "/cgi-bin/resultsAsODT.pl?" + "&run_id=" + id;
-}
-
-/**
- * Export the selected sequences as GFF
- * @param {String} id Identifier of the job
- */
-function exportGFF(id)
-{
-	window.location = "/cgi-bin/resultsAsGFF.pl?" + "&run_id=" + id;
+	window.location = "/cgi-bin/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
 }
 
 
