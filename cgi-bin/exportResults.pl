@@ -27,9 +27,9 @@ if ($valid) {
         case 'gff'        { exportAsGFF() }
         case 'odf'        { exportAsODF() }
         case 'csv'        { exportAsCSV() }
-        case 'fasta'      { }
+        case 'fas'        { exportAsFasta() }
         case 'dotbracket' { }
-        else              { die('Error: the export type is not supported'); }
+        else              { die("Error: the export type '$export_type' is not supported"); }
     }
 }
 else {
@@ -63,5 +63,16 @@ Content-type: text/csv
 Content-disposition: attachment;filename=Results-$id_job.csv
 
 $csv
+DATA
+}
+
+sub exportAsFasta {
+    my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
+    my $fasta = PipelineMiRNA::WebFunctions->exportToFasta( \%myResults , \@sequences_to_export);
+    print <<"DATA" or die "Error when printing content: $!";
+Content-type: text/txt
+Content-disposition: attachment;filename=Results-$id_job.txt
+
+$fasta
 DATA
 }

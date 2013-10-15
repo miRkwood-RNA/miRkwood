@@ -234,6 +234,33 @@ sub compute_quality(){
     return $quality;
 }
 
+
+
+=method exportToFasta
+
+Convert the results structure to Fasta
+
+=cut
+
+sub exportToFasta {
+    my ( $self, @args ) = @_;
+    my $results = shift @args;
+    my @sequences_to_export = shift @args;
+    my %results = %{$results};
+    my $output = "";
+
+    my @keys = sort keys %results;
+    foreach my $key(@keys)
+    {
+        if (  $key ~~ \@sequences_to_export )
+        {
+            my $value = $results{$key};
+            $output .= '>'.${$value}{'name'} . '__' . ${$value}{'position'} . "\n" . ${$value}{'DNASequence'} . "\n";
+        }
+    }
+    return $output;
+}
+
 =method resultstruct2csv
 
 Convert the results structure to CSV
