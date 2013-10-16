@@ -256,7 +256,7 @@ sub candidateAsVienna {
         $structure = $candidate{'Vienna'};
         $header .= ", stemloop structure";
     }
-    $output .= '>' . $candidate_name . "\n" . $candidate{'DNASequence'} . "\n" . "$structure" . "\n";
+    $output .= $header . "\n" . $candidate{'DNASequence'} . "\n" . "$structure" . "\n";
     return $output;
 }
 
