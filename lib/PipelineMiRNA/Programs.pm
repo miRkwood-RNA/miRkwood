@@ -226,18 +226,14 @@ Return whether the output file exists.
 
 sub run_blast {
     my ( $query, $database, $blastx_options, $output ) = @_;
-    my $log_file = "/var/www/arn/results/programs_log.log";
-    open( my $LOG, '>>', $log_file ) || die "Error when opening log file $log_file: $!";
-    print $LOG, "Running blast";
     my $blastx_cmd =
         "$blastx_bin "
       . "-query $query "
       . "-db $database "
       . "$blastx_options "
       . "-out $output";
-    print $LOG, $blastx_cmd;
     system($blastx_cmd);
-    return ( $blastx_cmd );
+    return ( -e $output );
 }
 
 =method train_mirdup
