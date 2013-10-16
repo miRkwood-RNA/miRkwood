@@ -14,7 +14,6 @@ my $cgi = CGI->new();
 my $jobId    = $cgi->param('jobId');
 my $name     = $cgi->param('name');
 my $position = $cgi->param('position');
-my $optimal  = $cgi->param('optimal');
 
 my $candidate_name = $name . '__' . $position;
 my $job            = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
@@ -35,12 +34,11 @@ if (
         'No results for the given identifiers');
 }
 else {
-    my $sequence = $candidate{'DNASequence'};
+    my $fasta = PipelineMiRNA::WebFunctions->candidateAsFasta(\%candidate);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=$candidate_name.fa
 
->$candidate_name
-$sequence
+$fasta
 DATA
 }
