@@ -27,22 +27,14 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
     # Catching exception
     print PipelineMiRNA::WebTemplate::get_error_page("No results for the given identifiers");
 }else{
-    my $sequence = $candidate{'DNASequence'};
-    my $structure;
+    my $vienna = PipelineMiRNA::WebFunctions->candidateAsVienna(\%candidate, $optimal);
     if ($optimal){
-        $header .= ", MFE structure";
-        $structure = $candidate{'Vienna_optimal'};
         $filename .= "_optimal"
-    }else{
-        $structure = $candidate{'Vienna'};
-        $header .= ", stemloop structure";
     }
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=$filename.txt
 
-$header
-$sequence
-$structure
+$vienna
 DATA
 }
