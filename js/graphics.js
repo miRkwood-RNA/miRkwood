@@ -98,7 +98,7 @@ function colorOver(a,b)
 	for (var i=0;i<rowsNumber+1;i++)
 	{
 	
-		if (b == 8) //gerer que la couleur de la colonne de l'image  
+		if (b == myResults.getIndexByFactorName('alignment')) //gerer que la couleur de la colonne de l'image  
 		{
 			document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
 		}

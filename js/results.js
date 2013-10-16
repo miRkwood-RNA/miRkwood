@@ -115,4 +115,23 @@ results.prototype.getFactorNameByIndex = function(ind)
 	return this.getFactorsNamesList()[ind];
 }
 
-
+/**
+ * Retourner indice colonne à partir d'un critere
+ */
+results.prototype.getIndexByFactorName = function(factor)
+{
+	var allNames = new Array(  "name", "position","quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
+	var names = new Array();
+	var index = 0;
+	for(var i = 0;i < allNames.length;i++)
+	{
+		if ((document.getElementsByTagName('Sequence')[0].getAttribute(allNames[i])!= null) )
+		{
+			index++;
+			if (allNames[i]== factor) {
+				index;break;
+			}
+		}	
+	}
+	return index;
+}
