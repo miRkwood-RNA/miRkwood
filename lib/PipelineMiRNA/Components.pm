@@ -12,6 +12,9 @@ use PipelineMiRNA::Programs;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Parsers;
 
+use Log::Message::Simple qw[msg error debug
+  carp croak cluck confess];
+
 struct Sequence => {   # déclaration de la structure de données (Sequence)
     colonne1        => '@',
     colonne5        => '@',
@@ -26,6 +29,11 @@ struct Sequence => {   # déclaration de la structure de données (Sequence)
 sub filter_CDS {
     my ( $dirData, $dirJob, $plant ) = @_;
 
+    my $log_file = File::Spec->catfile( $dirJob, 'components_log.log' );
+    open( my $LOG, '>>', $log_file ) || die "Error when opening log file $log_file: $!";
+    local $Log::Message::Simple::DEBUG_FH   = $LOG;
+
+
     my $uploaded_sequences =
       File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
     my $input_sequences = File::Spec->catfile( $dirJob, 'Sequences.fas' );
@@ -33,14 +41,26 @@ sub filter_CDS {
     my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
     my $blast_output   = File::Spec->catfile( $dirJob,  'outBlast.txt' );
     my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
-    PipelineMiRNA::Programs::run_blast(
-                                        $uploaded_sequences, $blast_database,
-                                        $blastx_options,     $blast_output
-    ) or die('Problem when running Blastx');
+    debug("Running blast on $uploaded_sequences & $blast_database", 1);
+#    PipelineMiRNA::Programs::run_blast(
+#                                        $uploaded_sequences, $blast_database,
+#                                        $blastx_options,     $blast_output
+#     ) or die("Problem when running Blastx: $!");
+    my $blastx_bin = 'blastx';
+    my $blastx_cmd =
+        "$blastx_bin "
+      . "-query $uploaded_sequences "
+      . "-db $blast_database "
+      . "$blastx_options "
+      . "-out $blast_output";
+    print $LOG, $blastx_cmd;
+    debug("Blast: $blastx_cmd", 1);
+    system($blastx_cmd);
+
     chmod 777, $blast_output;
 
     my %blast_seqs;
-
+    debug("..blast run", 1);
     # Looping in blast_output, indexing sequences found
     open( my $FOut, '<', $blast_output )
       || die "Problème à l\'ouverture : $!";
