@@ -21,6 +21,18 @@ sub get_config {
     return %{YAML::LoadFile($config_file )};
 }
 
+=method get_job_config_path
+
+
+=cut
+
+sub get_job_config_path {
+    my ($self, @args) = @_;
+    my ($dir_job) = shift @args;
+    my $job_config_path = File::Spec->catfile( $dir_job, 'run_options.cfg' );
+    return $job_config_path;
+}
+
 =method get_server_root_dir
 
 Return the project root directory, as considered by the server

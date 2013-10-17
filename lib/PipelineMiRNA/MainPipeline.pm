@@ -17,7 +17,6 @@ use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Components;
 use PipelineMiRNA::PosterioriTests;
-use Data::Dumper;
 
 use Log::Message::Simple qw[msg error debug];
 
@@ -26,12 +25,32 @@ use Log::Message::Simple qw[msg error debug];
 my $dirData = PipelineMiRNA::Paths->get_absolute_path( 'data' );
 #
 
+=method write_config
+
+Write the run options to the job configuration file.
+
+=cut
+
+sub write_config {
+    my ( $mfe, $randfold, $align, $run_options_file ) = @_;
+    my $run_options = PipelineMiRNA->CONFIG();
+    $run_options->param("options.mfe", $mfe);
+    $run_options->param("options.randfold", $randfold);
+    $run_options->param("options.align", $align);
+    PipelineMiRNA->CONFIG($run_options);
+}
+
+
 sub main_entry {
-    my ( $check, $mfei, $randfold, $align, $dirJob, $plant ) = @_;
+    my ( $check, $mfe, $randfold, $align, $dirJob, $plant ) = @_;
     my $debug = 1;
 
     my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
     local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
+
+    my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($dirJob);
+    PipelineMiRNA->CONFIG_FILE($run_options_file);
+    write_config( $mfe, $randfold, $align, $run_options_file );
 
     debug('BEGIN execute_scripts', $debug);
     my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
@@ -87,7 +106,7 @@ sub main_entry {
         process_RNAstemloop_wrapper($rnastemloop_out_optimal, 'optimal');
         process_RNAstemloop_wrapper($rnastemloop_out_stemloop, 'stemloop');
     }
-    process_tests( $dirJob, $mfei, $randfold,  $align );
+    process_tests( $dirJob );
     return;
 }
 
@@ -193,7 +212,7 @@ Perform the a posteriori tests for a given job
 =cut
 
 sub process_tests {
-    my ( $dirJob, $mfei, $randfold,  $align ) = @_;
+    my ( $dirJob ) = @_;
     debug("A posteriori tests in $dirJob", 1);
     ##Traitement fichier de sortie outStemloop
     opendir DIR, $dirJob;    #ouverture répertoire job
@@ -224,7 +243,7 @@ sub process_tests {
                   )    # si le fichier est de type repertoire
                 {
                     debug("Entering candidate $file", 1);
-                    process_tests_for_candidate($candidate_dir, $file, $mfei, $randfold, $align);
+                    process_tests_for_candidate($candidate_dir, $file);
                     debug("Done with candidate $file", 1);
                 } # foreach my $file (@files)
             } # if directory
@@ -243,7 +262,7 @@ Perform the a posteriori tests for a given candidate
 sub process_tests_for_candidate {
 
     my @args = @_;
-    my ($candidate_dir, $file, $mfei, $randfold,  $align ) = @args;
+    my ($candidate_dir, $file ) = @args;
 
     ####Traitement fichier de sortie outStemloop
     chmod 0777, $candidate_dir;
@@ -277,20 +296,21 @@ sub process_tests_for_candidate {
         $varna_image )
       or die('Problem during image generation using VARNA');
 
+    my $cfg = PipelineMiRNA->CONFIG();
+
     ####calcul MFEI (appel script energie.pl)
-    if ( $mfei eq 'mfeiChecked' ) {
+    if ($cfg->param('options.mfe')){
         debug("Running test_mfei on $file", 1);
         PipelineMiRNA::PosterioriTests::test_mfei(
             $candidate_dir, $candidate_ct_optimal_file, $file );
     }
     ####calcul p-value randfold
-    if ( $randfold eq 'randfoldChecked' ) {
+    if ($cfg->param('options.randfold')){
         debug("Running test_randfold on $seq_file", 1);
         PipelineMiRNA::PosterioriTests::test_randfold(
             $candidate_dir, $seq_file );
     }
-   
-    if ( $align eq 'alignChecked' ) {
+    if ($cfg->param('options.align')){
         debug("Running test_alignment on $candidate_ct_stemloop_file", 1);
         PipelineMiRNA::PosterioriTests::test_alignment(
             $candidate_dir, $candidate_ct_stemloop_file );
