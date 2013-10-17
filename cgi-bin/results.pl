@@ -151,11 +151,10 @@ my $plant    = $cgi->param('db');
 if ( !$plant ) {
     $plant = "NonePlant";
 }
-if ( $mfei     eq "" ) { $mfei     = "notChecked" }
-if ( $randfold eq "" ) { $randfold = "notChecked" }
-if ( $SC       eq "" ) { $SC       = "notChecked" }
-if ( $align    eq "" ) { $align    = "notChecked" }
-if ( $check    eq "" ) { $check    = "notChecked" }
+if ( $mfei     eq "" ) { $mfei     = 0 }
+if ( $randfold eq "" ) { $randfold = 0 }
+if ( $align    eq "" ) { $align    = 0 }
+if ( $check    eq "" ) { $check    = 0 }
 
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
