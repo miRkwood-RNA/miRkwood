@@ -358,49 +358,6 @@ sub resultstruct2csv {
     return $result;
 }
 
-=method resultstruct2table
-
-Convert the results structure to HTML table
-
-=cut
-
-sub resultstruct2table {
-    my ( $self, @args ) = @_;
-    my $results = shift @args;
-   
-    my %results = %{$results};
-
-    my $HTML_results = <<'END_TXT';
-            <div class="titreDiv"> Identification of miRNA/miRNA hairpins results:</div>
-            <div id="table" ></div>
-END_TXT
-
-    my $row = 0;
-    my $column = -1;
-    $HTML_results .= "<table>\n<tbody>";
-    $HTML_results .= "<tr>";
-    for my $header (@headers){
-        $column += 1;
-        my $th_content = "id='cell-$row-$column' width='100' onclick='showCellInfo($row, $column)' onmouseover='colorOver($row, $column)' onmouseout='colorOut($row, $column)'";
-        $HTML_results .= "<th $th_content>$header</th>\n";
-    }
-    $HTML_results .= "</tr>\n";
-    while ( my ($key, $value) = each %results )
-    {
-        $row += 1;
-        $column = -1;
-      $HTML_results .= '<tr>';
-      for my $header (@headers){
-          $column += 1;
-          my $td_content = "id='cell-$row-$column' onmouseover='colorOver($row, $column)' onmouseout='colorOut($row, $column)' onclick='showCellInfo($row, $column)'";
-          $HTML_results .= "<th $td_content>${$value}{$header}</th>\n";
-      }
-      $HTML_results .= "\n</tr>\n";
-    }
-    $HTML_results .= "</tbody></table>";
-    return $HTML_results;
-}
-
 =method resultstruct2pseudoXML
 
 Convert the results structure to to pseudo XML format
