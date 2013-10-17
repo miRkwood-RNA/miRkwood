@@ -10,13 +10,35 @@ use File::Spec;
 use Time::gmtime;
 use Switch;
 
+use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Components;
 
-my @headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'alignment', 'image', 'Vienna', 'DNASequence');
 
+=method get_optional_candidate_fields
+
+Return the optional fields based on the current configuration
+
+=cut
+
+sub get_optional_candidate_fields {
+    my ( $self, @args ) = @_;
+    my @fields = ();
+    my $cfg = PipelineMiRNA->CONFIG();
+
+    if ($cfg->param('options.mfe')){
+        push @fields, ('mfei', 'mfe', 'amfe');
+    }
+    if ($cfg->param('options.randfold')){
+        push @fields, ('p_value');
+    }
+    if ($cfg->param('options.align')){
+        push @fields, ('alignment')
+    }
+    return @fields;
+}
 
 =method make_job_id
 
@@ -75,6 +97,7 @@ sub get_structure_for_jobID {
     my $jobId   = shift @args;
     my $job = $self->jobId_to_jobPath($jobId);
     my $job_dir = PipelineMiRNA::Paths->get_absolute_path($job);
+    PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path($job_dir));
     my %myResults = ();
 
     opendir DIR, $job_dir;    #ouverture répertoire job
@@ -315,7 +338,8 @@ sub resultstruct2csv {
     my $results = shift @args;
 	my @tab = shift @args;
 	my %results = %{$results};
-    my @csv_headers = ('name', 'position', 'mfei', 'mfe', 'amfe', 'p_value', 'Vienna', 'DNASequence');
+	my @optional_fields = $self->get_optional_candidate_fields();
+    my @csv_headers = ('name', 'position', @optional_fields, 'Vienna', 'DNASequence');
 	my $result = join( ',', @csv_headers ) . "\n";
 
     my @keys = sort keys %results;
@@ -388,9 +412,12 @@ sub resultstruct2pseudoXML {
     my ( $self, @args ) = @_;
     my $results = shift @args;
     my %results = %{$results};
-    my $result = "<results id='all'>\n";
-	my @headers1 = ('name', 'position','quality', 'mfe', 'mfei', 'amfe', 'p_value', 'alignment' );
+
+    my @optional_fields = $self->get_optional_candidate_fields();
+    my @headers1 = ('name', 'position', 'quality', @optional_fields);
     my @headers2 = ('Vienna', 'DNASequence');
+
+    my $result = "<results id='all'>\n";
 	my @keys = sort keys %results;
 
     foreach my $key (@keys) {
