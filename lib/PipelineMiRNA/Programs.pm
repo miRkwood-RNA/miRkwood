@@ -42,7 +42,7 @@ my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
 my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
 my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 my $miRdup_model_path =File::Spec->catdir( $dirData, 'mirdup');
-my $miRdup_model_name = 'MirbaseFile.model';
+my $miRdup_model_name = 'plant.model';
 
 =method list_programs
 
@@ -290,6 +290,21 @@ sub run_mirdup_prediction_on_sequence {
     }
     my $output_file = File::Spec->catfile( $output_dir, $output );
     return ( -e $output_file );
+}
+
+sub run_mirdup_prediction_on_sequence_file {
+    my @args                   = @_;
+    my $prediction_source_file = shift @args;
+
+    my $run_mirdup_cmd =
+"java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -i $prediction_source_file -f out  > /dev/null 2>&1";
+    chdir($miRdup_model_path) or die "$!";
+    system($run_mirdup_cmd);
+
+    my $output_file =
+        $prediction_source_file
+      . '.miRdup.predictions.txt';
+    return $output_file;
 }
 
 1;
