@@ -133,5 +133,5 @@ results.prototype.getIndexByFactorName = function(factor)
 			}
 		}	
 	}
-	return index;
+	return index-1;
 }

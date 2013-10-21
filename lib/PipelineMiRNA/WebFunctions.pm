@@ -29,7 +29,7 @@ sub get_optional_candidate_fields {
     my $cfg = PipelineMiRNA->CONFIG();
 
     if ($cfg->param('options.mfe')){
-        push @fields, ('mfei', 'mfe', 'amfe');
+        push @fields, ('mfe', 'mfei', 'amfe');
     }
     if ($cfg->param('options.randfold')){
         push @fields, ('p_value');
