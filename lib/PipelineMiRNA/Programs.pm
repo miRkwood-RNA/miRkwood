@@ -35,7 +35,7 @@ my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 my $blastx_bin = 'blastx';
 #File::Spec->catfile( $dirProgs, 'blastx' );
 
-my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.1'   , 'miRdup.jar' );
+my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.2'   , 'miRdup.jar' );
 
 ## Data ##
 my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
@@ -304,6 +304,30 @@ sub run_mirdup_prediction_on_sequence_file {
     my $output_file =
         $prediction_source_file
       . '.miRdup.predictions.txt';
+    return $output_file;
+}
+
+=method run_mirdup_prediction_on_sequence
+
+Validates a file with miRNA mature candidates using MiRdup.
+
+ Usage : PipelineMiRNA::Programs::run_mirdup_validation_on_file($input_file);
+ Input : File correctly formatted
+ Return: the output file to parse
+
+=cut
+
+sub run_mirdup_validation_on_file {
+    my @args                   = @_;
+    my $validation_source_file = shift @args;
+
+    my $run_mirdup_cmd =
+"java -jar $miRdup_jar -r $vienna_progs_dir/ -c $miRdup_model_name -v $validation_source_file > /dev/null 2>&1";
+    chdir($miRdup_model_path) or die "$!";
+    system($run_mirdup_cmd);
+
+    my $output_file =
+        $validation_source_file . '.' . $miRdup_model_name . '.' . 'miRdup.tab.txt';
     return $output_file;
 }
 
