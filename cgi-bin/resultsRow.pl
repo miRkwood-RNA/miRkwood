@@ -32,7 +32,6 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 }else{
 
     my $image_url = PipelineMiRNA::Paths->get_server_path($candidate{"image"});
-    my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
     my $size = length $candidate{'DNASequence'};
 
     my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&name=$name&position=$position";
@@ -48,7 +47,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 
     my $alignmentHTML;
     if($candidate{'alignment'}){
-         $alignmentHTML = PipelineMiRNA::WebFunctions->make_alignments_HTML($job, $name, $candidate_name, $hairpin);
+         $alignmentHTML = PipelineMiRNA::WebFunctions->make_alignments_HTML(\%candidate, $job, $name, $candidate_name);
     } else {
         $alignmentHTML = "No alignment has been found.";
     }

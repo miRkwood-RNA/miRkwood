@@ -12,6 +12,7 @@ use Switch;
 
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
+use PipelineMiRNA::MiRdup;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Components;
@@ -509,13 +510,16 @@ sub merge_alignments {
 
 sub make_alignments_HTML {
     my ($self, @args) = @_;
+    my %candidate = %{shift @args};
     my $job = shift @args;
     my $dir = shift @args;
     my $subDir = shift @args;
-    my $hairpin = shift @args;
-    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
-    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
 
+    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
+    my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
+
+    # Alignments
+    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     my %alignments;
     %alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);
     if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
@@ -531,14 +535,31 @@ sub make_alignments_HTML {
 
     %alignments = $self->merge_alignments(\%alignments);
 
+    # MiRdup
+    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
+    my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $dir,
+                                                                     $candidate{'DNASequence'}, $candidate{'Vienna'},
+                                                                     keys %alignments);
+
+
+    # Sorting by position
     my @keys = sort { get_element_of_split($a, 0)  <=> get_element_of_split($b, 0) || get_element_of_split($a, 1)  <=> get_element_of_split($b, 1)} keys %alignments;
 
     foreach my $position (@keys) {
         my ($left, $right) = split(/-/, $position);
+
+        # MiRdup
+        my $mirdup_key = $dir . '__' . $position;
+        my $mirdup_prediction;
+        if ( $mirdup_results{$mirdup_key} ){
+            $mirdup_prediction = 'This prediction is validated by MiRdup';
+        } else {
+            $mirdup_prediction = 'This prediction is not validated by MiRdup';
+        }
+
+        # Hairpin
         my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
-
         my $hairpin_with_mature;
-
         if ($left > length $top)
         {
             #on the other side
@@ -556,13 +577,14 @@ $bottom
 END
         }
         $predictionCounter += 1;
+
         # Sorting the hit list by descending value of the 'score' element
         my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$alignments{$position}};
         my $title = "Prediction $predictionCounter: $position";
         $contents .= "<h3 id='$position'>$title</h3>
         <pre style='height: 80px;'>$hairpin_with_mature</pre>
         <ul>
-            <li>Evaluation score of MIRdup: TODO</li>
+            <li>$mirdup_prediction</li>
         </ul>
         <h4>Alignments</h4>
         ";
