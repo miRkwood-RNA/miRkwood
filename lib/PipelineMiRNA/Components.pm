@@ -5,7 +5,7 @@ package PipelineMiRNA::Components;
 use strict;
 use warnings;
 
-use YAML;
+use YAML::XS;
 use File::Spec;
 use Class::Struct;
 use PipelineMiRNA::Programs;
@@ -251,7 +251,7 @@ sub parse_custom_exonerate_output{
     (! -z $yaml_file) or die("Error, YAML file $yaml_file is empty");
     (-r $yaml_file) or die("Error, YAML file $yaml_file is not readable");
 
-    my $yaml = YAML::LoadFile($yaml_file) or die("Error when parsing YAML file $yaml_file");
+    my $yaml = YAML::XS::LoadFile($yaml_file) or die("Error when parsing YAML file $yaml_file");
     my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
 
     my %results;

@@ -114,8 +114,12 @@ sub get_structure_for_jobID {
                      && ( $subDir ne ".." )
                      && -d $subDir_full ) # si le fichier est de type repertoire
                 {
-                    my %candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $dir, $subDir);
-                    $myResults{$subDir} = \%candidate;
+                    my %candidate;
+                    if (! eval { %candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $dir, $subDir) } ) {
+                        # Catching, do nothing
+                    }else{
+                        $myResults{$subDir} = \%candidate;
+                    }
                 }
             }
         }
@@ -123,6 +127,52 @@ sub get_structure_for_jobID {
     return %myResults;
 }
 
+
+=method serialize_results
+
+Parse and serialize the results structure of $job_dir
+
+Usage:
+PipelineMiRNA::Results->serialize_results($job_dir);
+
+=cut
+
+sub serialize_results {
+    my ( $self, @args ) = @_;
+    my $relative_job_dir   = shift @args;
+    my $job_dir = PipelineMiRNA::Paths->get_absolute_path($relative_job_dir);
+    opendir DIR, $job_dir;    #ouverture répertoire job
+    my @dirs;
+    @dirs = readdir DIR;
+    closedir DIR;
+    foreach my $dir (@dirs)    # parcours du contenu
+    {
+        my $full_dir = File::Spec->catdir( $job_dir, $dir );
+        if (    $dir ne "."
+             && $dir ne ".."
+             && -d $full_dir )    #si fichier est un répertoire
+        {
+            opendir DIR, $full_dir;    # ouverture du sous répertoire
+            my @files;
+            @files = readdir DIR;
+            closedir DIR;
+            foreach my $subDir (@files) {
+                my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
+                if (    ( $subDir ne "." )
+                     && ( $subDir ne ".." )
+                     && -d $subDir_full ) # si le fichier est de type repertoire
+                {
+                    if (! eval { PipelineMiRNA::Candidate->serialize_candidate_information($relative_job_dir, $dir, $subDir)} ) {
+                        # Catching
+                    }else{
+                        # All is well
+                    }
+                }
+            }
+        }
+    }
+    return;
+}
 
 =method export
 

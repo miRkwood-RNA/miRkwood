@@ -15,6 +15,7 @@ use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Programs;
+use PipelineMiRNA::Results;
 use PipelineMiRNA::Components;
 use PipelineMiRNA::PosterioriTests;
 
@@ -42,9 +43,9 @@ sub write_config {
 
 
 sub main_entry {
-    my ( $check, $mfe, $randfold, $align, $dirJob, $plant ) = @_;
+    my ( $check, $mfe, $randfold, $align, $dirJob_relative, $plant ) = @_;
     my $debug = 1;
-
+    my $dirJob = PipelineMiRNA::Paths->get_absolute_path($dirJob_relative);
     my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
     local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
@@ -107,6 +108,8 @@ sub main_entry {
         process_RNAstemloop_wrapper($rnastemloop_out_stemloop, 'stemloop');
     }
     process_tests( $dirJob );
+    debug("Serializing candidates in $dirJob...", 1);
+    PipelineMiRNA::Results->serialize_results( $dirJob_relative );
     return;
 }
 

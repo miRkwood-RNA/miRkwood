@@ -7,6 +7,7 @@ use warnings;
 
 use Data::Dumper;
 use File::Spec;
+use YAML::XS;
 
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
@@ -14,6 +15,9 @@ use PipelineMiRNA::MiRdup;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Components;
+
+
+my $candidate_base_filename = 'candidate.yml';
 
 
 =method retrieve_candidate_information
@@ -39,15 +43,50 @@ sub retrieve_candidate_information {
         die('Unvalid candidate information');
 
     }else{
-        my %result = $self->actual_retrieve_candidate_information($candidate_dir, $full_candidate_dir);
-        $result{'name'} = $dir;    #récupération nom séquence
-        my @position = split( /__/, $subDir );
-        $result{'position'} = $position[1]; # récupération position
-        return %result;
+        my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
+        return $self->deserialize_candidate($candidate_file);
     }
 }
 
-=method actual_retrieve_candidate_information
+=method serialize_candidate_information
+
+
+=cut
+
+sub serialize_candidate_information {
+    my ( $self, @args ) = @_;
+    my $job_dir = shift @args;
+    my $seq_dir = shift @args;
+    my $can_dir = shift @args;
+
+    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
+
+    my $candidate_file = File::Spec->catfile($candidate_dir, $candidate_base_filename);
+    my %candidate = $self->parse_candidate_information($candidate_dir, $full_candidate_dir);
+    $candidate{'name'} = $seq_dir;    #récupération nom séquence
+    my @position = split( /__/, $can_dir );
+    $candidate{'position'} = $position[1]; # récupération position
+
+    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
+    my %alignments;
+    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
+        # Catching exception
+    } else {
+        %alignments = $self->merge_alignments(\%alignments);
+        my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
+        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $seq_dir,
+                                                                         $candidate{'DNASequence'}, $candidate{'Vienna'},
+                                                                         keys %alignments);
+        $candidate{'alignments'} = \%alignments;
+        $candidate{'mirdup_validation'} = \%mirdup_results;
+        my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
+        $candidate{'hairpin'} = $hairpin;
+    }
+
+    return $self->serialize_candidate( \%candidate, $full_candidate_dir );
+}
+
+=method parse_candidate_information
 
 Get the results for a given candidate
 
@@ -57,7 +96,7 @@ Arguments:
 
 =cut
 
-sub actual_retrieve_candidate_information {
+sub parse_candidate_information {
     my ( $self, @args ) = @_;
     my $candidate_dir = shift @args;
     my $full_candidate_dir = shift @args;
@@ -78,14 +117,6 @@ sub actual_retrieve_candidate_information {
         $result{'mfei'} = $mfeis[0];
         $result{'mfe'} = $mfeis[1];
         $result{'amfe'} = $mfeis[2];
-    }
-
-    #Récupération valeur self contain
-    my $selfcontain_out =
-      File::Spec->catfile( $full_candidate_dir, 'selfContain.txt' );
-    if ( -e $selfcontain_out )
-    {Dumper
-        $result{'self_contain'} = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_out);
     }
 
     #Récupération séquence et format Vienna
@@ -121,6 +152,41 @@ sub actual_retrieve_candidate_information {
     $result{'quality'} = $self->compute_quality(\%result);
 
     return %result;
+}
+
+=method serialize_candidate
+
+Serialize the given candidate on disk
+
+Arguments:
+- $serialization_path - the filepath to serialize to
+- %candidate - the candidate
+
+=cut
+
+sub serialize_candidate{
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my $serialization_path = shift @args;
+    my $serialization_file = File::Spec->catfile($serialization_path, $candidate_base_filename);
+    return YAML::XS::DumpFile($serialization_file, %candidate);
+}
+
+=method deserialize_candidate
+
+Deerialize the given candidate on disk
+
+Arguments:
+- $serialization_file - the filepath to serialize to
+
+=cut
+
+sub deserialize_candidate{
+    my ( $self, @args ) = @_;
+    my $serialization_file = shift @args;
+    (-e $serialization_file)
+        or die("File $serialization_file does not exists");
+    return YAML::XS::LoadFile($serialization_file);
 }
 
 =method compute_quality
@@ -287,31 +353,15 @@ sub make_alignments_HTML {
     my $subDir = shift @args;
 
     my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
-    my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
 
     # Alignments
-    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
-    my %alignments;
-    %alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);
-    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
-        # Catching exception
-        my $error = "Error with alignments $file_alignement.";
-        print PipelineMiRNA::WebTemplate::get_error_page($error);
-        die($error);
-    }
+
+    my %alignments = %{$candidate{'alignments'}};
+    my %mirdup_results = %{$candidate{'mirdup_validation'}};
 
     my $contents = "";
     my @TOC;
     my $predictionCounter = 0;
-
-    %alignments = $self->merge_alignments(\%alignments);
-
-    # MiRdup
-    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
-    my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $dir,
-                                                                     $candidate{'DNASequence'}, $candidate{'Vienna'},
-                                                                     keys %alignments);
-
 
     # Sorting by position
     my @keys = sort { get_element_of_split($a, 0)  <=> get_element_of_split($b, 0) || get_element_of_split($a, 1)  <=> get_element_of_split($b, 1)} keys %alignments;
@@ -329,12 +379,12 @@ sub make_alignments_HTML {
         }
 
         # Hairpin
-        my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
+        my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $candidate{'hairpin'});
         my $hairpin_with_mature;
         if ($left > length $top)
         {
             #on the other side
-            $hairpin_with_mature = $hairpin;
+            $hairpin_with_mature = $candidate{'hairpin'};
         } else {
             my $size = PipelineMiRNA::Utils::compute_mature_boundaries($left, $right, $top);
             substr($top, $left, $size)   = '<span class="mature">' . substr($top, $left, $size) . '</span>';

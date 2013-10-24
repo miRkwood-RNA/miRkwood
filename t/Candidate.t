@@ -16,8 +16,8 @@ require_ok('PipelineMiRNA::Candidate');
 
 my $candidate_dir = input_file('contig15750__34-195');
 
-ok( my %candidate = PipelineMiRNA::Candidate->actual_retrieve_candidate_information('/dummy/', $candidate_dir),
-    'Can call actual_retrieve_candidate_information()' );
+ok( my %candidate = PipelineMiRNA::Candidate->parse_candidate_information('/dummy/', $candidate_dir),
+    'Can call parse_candidate_information()' );
 $candidate{'alignment'} = 'None'; # Hack to get around the full path thing
 
 

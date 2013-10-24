@@ -159,7 +159,7 @@ if ( $check    eq "" ) { $check    = 0 }
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $check $mfei $randfold $align $dirJob_path $plant";
+"perl -I$dirLib $perl_script $check $mfei $randfold $align $dirJob_name $plant";
 debug("Running perl script $cmd", 1);
 system($cmd);
 my $finish_file = File::Spec->catfile( $dirJob_path, 'finished' );
