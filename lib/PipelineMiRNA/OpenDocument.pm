@@ -5,9 +5,10 @@ package PipelineMiRNA::OpenDocument;
 use strict;
 use warnings;
 
-use PipelineMiRNA::Paths;
 use File::Spec;
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Paths;
+use PipelineMiRNA::Results;
+use PipelineMiRNA::Candidate;
 use ODF::lpOD;
 
 =method prepare_document
@@ -99,7 +100,7 @@ sub generate_report {
     my ( $self, @args ) = @_;
     my $jobId = shift @args;
 
-    my $jobPath = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
     my $ODP_filename = "Prediction_report_$jobId.odt";
     my $ODP_abspath =
@@ -109,7 +110,7 @@ sub generate_report {
       File::Spec->catfile( PipelineMiRNA::Paths->get_server_path($jobPath),
         $ODP_filename );
 
-    my %results = PipelineMiRNA::WebFunctions->get_structure_for_jobID($jobId);
+    my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
 
     my $doc = $self->prepare_document();
 
@@ -150,7 +151,7 @@ sub generate_report {
             $result .= "$header: ${$value}{$header}\n";
         }
         my $vienna_seq =
-          PipelineMiRNA::WebFunctions->make_Vienna_viz( ${$value}{'Vienna'},
+          PipelineMiRNA::Candidate->make_Vienna_viz( ${$value}{'Vienna'},
             ${$value}{'DNASequence'} );
 
         $result .= "Vienna:\n$vienna_seq";

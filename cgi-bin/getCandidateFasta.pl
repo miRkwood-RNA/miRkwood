@@ -6,7 +6,8 @@ use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use FindBin;                       # locate this script
 use lib "$FindBin::Bin/../lib";    # use the parent directory
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Candidate;
+use PipelineMiRNA::Results;
 use PipelineMiRNA::WebTemplate;
 
 my $cgi = CGI->new();
@@ -16,14 +17,14 @@ my $name     = $cgi->param('name');
 my $position = $cgi->param('position');
 
 my $candidate_name = $name . '__' . $position;
-my $job            = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+my $job            = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
 my %candidate;
 
 if (
     !eval {
         %candidate =
-          PipelineMiRNA::WebFunctions->retrieve_candidate_information( $job,
+          PipelineMiRNA::Candidate->retrieve_candidate_information( $job,
             $name, $candidate_name );
     }
   )
@@ -34,7 +35,7 @@ if (
         'No results for the given identifiers');
 }
 else {
-    my $fasta = PipelineMiRNA::WebFunctions->candidateAsFasta(\%candidate);
+    my $fasta = PipelineMiRNA::Candidate->candidateAsFasta(\%candidate);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=$candidate_name.fa

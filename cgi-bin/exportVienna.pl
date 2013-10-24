@@ -6,7 +6,8 @@ use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use FindBin;                     # locate this script
 use lib "$FindBin::Bin/../lib";  # use the parent directory
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Results;
+use PipelineMiRNA::Candidate;
 use PipelineMiRNA::WebTemplate;
 
 my $cgi            = CGI->new();
@@ -17,17 +18,17 @@ my $position       = $cgi->param('position');
 my $optimal        = $cgi->param('optimal');
 
 my $candidate_name = $name.'__'.$position;
-my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
 my %candidate;
 my $filename = $candidate_name;
 my $header = ">$candidate_name";
 
-if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_information($job, $name, $candidate_name);}) {
+if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $name, $candidate_name);}) {
     # Catching exception
     print PipelineMiRNA::WebTemplate::get_error_page("No results for the given identifiers");
 }else{
-    my $vienna = PipelineMiRNA::WebFunctions->candidateAsVienna(\%candidate, $optimal);
+    my $vienna = PipelineMiRNA::Candidate->candidateAsVienna(\%candidate, $optimal);
     if ($optimal){
         $filename .= "_optimal"
     }

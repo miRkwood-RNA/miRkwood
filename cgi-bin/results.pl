@@ -14,7 +14,7 @@ use lib "$FindBin::Bin/../lib";    # use the parent directory
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Programs;
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Results;
 use PipelineMiRNA::WebTemplate;
 
 my $cgi = new CGI;
@@ -29,8 +29,8 @@ $dirLib    = PipelineMiRNA::Paths->get_absolute_path( 'lib' );
 
 my $formatFasta_bin = File::Spec->catfile( $dirScript, 'formatFasta.sh' );
 
-my $jobId = PipelineMiRNA::WebFunctions->make_job_id();
-my $dirJob_name = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+my $jobId = PipelineMiRNA::Results->make_job_id();
+my $dirJob_name = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 my $dirJob_path = PipelineMiRNA::Paths->get_absolute_path($dirJob_name);
 my $root = PipelineMiRNA::Paths->get_absolute_path(PipelineMiRNA::Paths->get_results_dir_name());
 

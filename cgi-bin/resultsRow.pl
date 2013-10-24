@@ -3,12 +3,14 @@ use strict;
 use warnings;
 
 use CGI;
+use CGI::Carp qw(fatalsToBrowser);
 use FindBin;                     # locate this script
 use lib "$FindBin::Bin/../lib";  # use the parent directory
-use PipelineMiRNA::WebTemplate;
-use PipelineMiRNA::WebFunctions;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
+use PipelineMiRNA::Results;
+use PipelineMiRNA::Candidate;
+use PipelineMiRNA::WebTemplate;
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
@@ -20,13 +22,13 @@ my $name           = $cgi->param('nameSeq');
 my $position       = $cgi->param('position');
 
 my $candidate_name = $name.'__'.$position;
-my $job = PipelineMiRNA::WebFunctions->jobId_to_jobPath($jobId);
+my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 my $returnlink = PipelineMiRNA::WebTemplate::get_link_back_to_results($jobId);
 
 my %candidate;
 my $html_contents;
 
-if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_information($job, $name, $candidate_name);}) {
+if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $name, $candidate_name);}) {
     # Catching exception
     $html_contents = "No results for the given identifiers";
 }else{
@@ -47,7 +49,7 @@ if (! eval {%candidate = PipelineMiRNA::WebFunctions->retrieve_candidate_informa
 
     my $alignmentHTML;
     if($candidate{'alignment'}){
-         $alignmentHTML = PipelineMiRNA::WebFunctions->make_alignments_HTML(\%candidate, $job, $name, $candidate_name);
+         $alignmentHTML = PipelineMiRNA::Candidate->make_alignments_HTML(\%candidate, $job, $name, $candidate_name);
     } else {
         $alignmentHTML = "No alignment has been found.";
     }

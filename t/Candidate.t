@@ -10,15 +10,15 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::WebFunctions');
+    use_ok('PipelineMiRNA::Candidate');
 }
-require_ok('PipelineMiRNA::WebFunctions');
+require_ok('PipelineMiRNA::Candidate');
 
 my $candidate_dir = input_file('contig15750__34-195');
 
-ok( my %results = PipelineMiRNA::WebFunctions->actual_retrieve_candidate_information('/dummy/', $candidate_dir),
+ok( my %candidate = PipelineMiRNA::Candidate->actual_retrieve_candidate_information('/dummy/', $candidate_dir),
     'Can call actual_retrieve_candidate_information()' );
-$results{'alignment'} = 'None'; # Hack to get around the full path thing
+$candidate{'alignment'} = 'None'; # Hack to get around the full path thing
 
 
 my $seq    = 'gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc';
@@ -34,7 +34,7 @@ my %expected = ('p_value' => '0.125000',
                 'alignment' => 'None',
                 'quality' => '2',
 );
-is_deeply( \%results, \%expected, 'retrieve candidate information ok' );
+is_deeply( \%candidate, \%expected, 'retrieve candidate information ok' );
 
 my %dummy_alignments = ();
 push @{$dummy_alignments{'0-20'}}, ('A', 'B');
@@ -43,7 +43,7 @@ push @{$dummy_alignments{'4-30'}}, ('F', 'G');
 push @{$dummy_alignments{'4-31'}}, ('H');
 push @{$dummy_alignments{'10-40'}}, ('I');
 
-ok( my %merged_alignments = PipelineMiRNA::WebFunctions->merge_alignments(\%dummy_alignments),
+ok( my %merged_alignments = PipelineMiRNA::Candidate->merge_alignments(\%dummy_alignments),
     'Can call merge_alignments') ;
 
 my %expected_merged = ();
@@ -60,7 +60,7 @@ push @{$dummy_alignments2{'39-58'}}, ('F');
 push @{$dummy_alignments2{'39-59'}}, ('G', 'H');
 push @{$dummy_alignments2{'39-60'}}, ('I');
 push @{$dummy_alignments2{'40-58'}}, ('J', 'K');
-ok( my %merged_alignments2 = PipelineMiRNA::WebFunctions->merge_alignments(\%dummy_alignments2),
+ok( my %merged_alignments2 = PipelineMiRNA::Candidate->merge_alignments(\%dummy_alignments2),
     'Can call merge_alignments') ;
 
 my %expected_merged2 = ();

@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 
-use Class::Struct;
 use CGI;
 my $cgi = CGI->new;
 use CGI::Carp qw(fatalsToBrowser);
@@ -10,9 +9,10 @@ use Cwd qw( abs_path );
 use File::Basename qw(dirname);
 use File::Spec;
 use Data::Dumper;
-use FindBin;                     # locate this script
+
+use FindBin;
 use lib "$FindBin::Bin/../lib";  # use the parent directory
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Results;
 use PipelineMiRNA::WebTemplate;
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
@@ -46,11 +46,11 @@ if ($name_job ne "")
     $HTML_additional .= "<div class='titleJob' ><li>Title Job : ".$name_job."</li></div>";
 }
 
-my $valid = PipelineMiRNA::WebFunctions->is_valid_jobID($id_job);
+my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
 
 if($valid){
-    my %myResults = PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
-    my $HTML_results = PipelineMiRNA::WebFunctions->resultstruct2pseudoXML( \%myResults);
+    my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+    my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
 
     print <<"HTML";
 $HTML_header    <body onload="main('all');">

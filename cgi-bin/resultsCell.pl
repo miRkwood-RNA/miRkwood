@@ -10,7 +10,6 @@ use FindBin;                     # locate this script
 use lib "$FindBin::Bin/../lib";  # use the parent directory
 use PipelineMiRNA::Components;
 use PipelineMiRNA::WebTemplate;
-use PipelineMiRNA::WebFunctions;
 use PipelineMiRNA::Utils;
 
 my $name     = $cgi->param('nameSeq');

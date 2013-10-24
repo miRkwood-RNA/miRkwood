@@ -12,7 +12,7 @@ my $cgi = CGI->new;
 use Cwd qw( abs_path );
 use FindBin;                       # locate this script
 use lib "$FindBin::Bin/../lib";    # use the parent directory
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Results;
 
 
 my $id_job = $cgi->param('run_id');    # récupération id job
@@ -20,7 +20,7 @@ my $export_type = $cgi->param('type');
 my $data= $cgi->param('data');  # identifiant des candidats sélectionnés
 my @sequences_to_export =  split( ',',$data  );
 
-my $valid = PipelineMiRNA::WebFunctions->is_valid_jobID($id_job);
+my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
 
 if ($valid) {
     switch ($export_type) {
@@ -58,8 +58,8 @@ sub exportAsODF {
 
 sub exportAsCSV {
     my $id_job = shift @_;
-    my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
-    my $csv = PipelineMiRNA::WebFunctions->resultstruct2csv( \%myResults , \@sequences_to_export);
+    my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+    my $csv = PipelineMiRNA::Results->resultstruct2csv( \%myResults , \@sequences_to_export);
 
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/csv
@@ -71,8 +71,8 @@ DATA
 
 sub exportAsFasta {
     my $id_job = shift @_;
-    my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
-    my $fasta = PipelineMiRNA::WebFunctions->export('fas', \%myResults , \@sequences_to_export);
+    my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+    my $fasta = PipelineMiRNA::Results->export('fas', \%myResults , \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=Results-$id_job.txt
@@ -83,8 +83,8 @@ DATA
 
 sub exportAsDotBracket {
     my $id_job = shift @_;
-    my %myResults =  PipelineMiRNA::WebFunctions->get_structure_for_jobID($id_job);
-    my $dotbracket = PipelineMiRNA::WebFunctions->export('dot', \%myResults , \@sequences_to_export);
+    my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+    my $dotbracket = PipelineMiRNA::Results->export('dot', \%myResults , \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
 Content-disposition: attachment;filename=Results-$id_job.txt

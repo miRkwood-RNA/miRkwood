@@ -9,7 +9,7 @@ use warnings;
 
 use PipelineMiRNA::Paths;
 use File::Spec;
-use PipelineMiRNA::WebFunctions;
+use PipelineMiRNA::Results;
 use Data::Dumper;
 
 =method generate_GFF
@@ -66,7 +66,7 @@ sub generate_GFF_from_ID {
     my ( $self, @args ) = @_;
     my $jobId   = shift @args;
     my @sequences_to_export = shift @args;
-    my %results = PipelineMiRNA::WebFunctions->get_structure_for_jobID($jobId);
+    my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
     return $self->generate_GFF( \%results, \@sequences_to_export);
 }
 

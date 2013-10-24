@@ -1,14 +1,12 @@
-package PipelineMiRNA::WebFunctions;
+package PipelineMiRNA::Candidate;
 
-# ABSTRACT: Code directly tied to the web interface
+# ABSTRACT: Code directly tied to the candidate data structure
 
 use strict;
 use warnings;
 
 use Data::Dumper;
 use File::Spec;
-use Time::gmtime;
-use Switch;
 
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
@@ -17,119 +15,6 @@ use PipelineMiRNA::Parsers;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Components;
 
-
-=method get_optional_candidate_fields
-
-Return the optional fields based on the current configuration
-
-=cut
-
-sub get_optional_candidate_fields {
-    my ( $self, @args ) = @_;
-    my @fields = ();
-    my $cfg = PipelineMiRNA->CONFIG();
-
-    if ($cfg->param('options.mfe')){
-        push @fields, ('mfe', 'mfei', 'amfe');
-    }
-    if ($cfg->param('options.randfold')){
-        push @fields, ('p_value');
-    }
-    if ($cfg->param('options.align')){
-        push @fields, ('alignment')
-    }
-    return @fields;
-}
-
-=method make_job_id
-
-Return a jobId (based on the current time)
-
-=cut
-
-sub make_job_id {
-    my ( $self, @args ) = @_;
-    my $now = gmctime();
-    $now =~ s/[: ]//g;
-    $now = substr( $now, 3 );
-    return $now;
-}
-
-=method jobId_to_jobPath
-
-Get the job path from a job identifier
-
-=cut
-
-sub jobId_to_jobPath {
-    my ( $self, @args ) = @_;
-    my $id_job      = shift @args;
-    my $dirJob_name = 'job' . $id_job;
-    my $results_dir = PipelineMiRNA::Paths->get_results_dir_name();
-    my $jobPath = File::Spec->catdir( $results_dir, $dirJob_name);
-    return $jobPath;
-}
-
-=method is_valid_jobID
-
-Test whether a jobID is valid - ie if there are results for it.
-
-=cut
-
-sub is_valid_jobID {
-    my ( $self, @args ) = @_;
-    my $id_job          = shift @args;
-    my $jobPath = $self->jobId_to_jobPath($id_job);
-    my $full_path = PipelineMiRNA::Paths->get_absolute_path($jobPath);
-    return (-e $full_path);
-}
-
-=method get_structure_for_jobID
-
-Get the results structure of a given job identifier
-
-Usage:
-my %results = PipelineMiRNA::WebFunctions->get_structure_for_jobID($jobId);
-
-=cut
-
-sub get_structure_for_jobID {
-    my ( $self, @args ) = @_;
-    my $jobId   = shift @args;
-    my $job = $self->jobId_to_jobPath($jobId);
-    my $job_dir = PipelineMiRNA::Paths->get_absolute_path($job);
-    PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path($job_dir));
-    my %myResults = ();
-
-    opendir DIR, $job_dir;    #ouverture répertoire job
-    my @dirs;
-    @dirs = readdir DIR;
-    closedir DIR;
-    foreach my $dir (@dirs)    # parcours du contenu
-    {
-        my $full_dir = File::Spec->catdir( $job_dir, $dir );
-        if (    $dir ne "."
-             && $dir ne ".."
-             && -d $full_dir )    #si fichier est un répertoire
-        {
-            opendir DIR, $full_dir;    # ouverture du sous répertoire
-            my @files;
-            @files = readdir DIR;
-            closedir DIR;
-            foreach my $subDir (@files) {
-                my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
-                if (    ( $subDir ne "." )
-                     && ( $subDir ne ".." )
-                     && -d $subDir_full ) # si le fichier est de type repertoire
-                {
-                    my %candidate = $self->retrieve_candidate_information($job, $dir, $subDir);
-                    $myResults{$subDir} = \%candidate;
-                }
-            }
-        }
-    }
-    return %myResults;
-}
 
 =method retrieve_candidate_information
 
@@ -246,12 +131,12 @@ Compute a general quality score
 
 sub compute_quality(){
     my ( $self, @args ) = @_;
-    my %result = %{shift @args};
+    my %candidate = %{shift @args};
     my $quality = 0;
-    if ( $result{'mfei'} < -0.5 ){
+    if ( $candidate{'mfei'} < -0.5 ){
         $quality += 1;
     }
-    my $length = length ($result{'DNASequence'});
+    my $length = length ($candidate{'DNASequence'});
 
     if ( $length > 80 && $length < 200 ){
         $quality += 1;
@@ -296,120 +181,6 @@ sub candidateAsFasta {
     my $output = "";
     $output .= '>'.$candidate{'name'} . '__' . $candidate{'position'} . "\n" . $candidate{'DNASequence'} . "\n";
     return $output;
-}
-
-
-=method export
-
-Convert the results
-
-=cut
-
-sub export {
-    my ( $self, @args ) = @_;
-    my $export_type = shift @args;
-    my $results = shift @args;
-    my @sequences_to_export = shift @args;
-    my %results = %{$results};
-    my $output = "";
-
-    my @keys = sort keys %results;
-    foreach my $key(@keys)
-    {
-        if (  $key ~~ \@sequences_to_export )
-        {
-            my $value = $results{$key};
-            switch ($export_type) {
-                case 'fas'        { $output .= $self->candidateAsFasta($value); }
-                case 'dot'        { $output .= $self->candidateAsVienna($value); }
-            }
-        }
-    }
-    return $output;
-}
-
-=method resultstruct2csv
-
-Convert the results structure to CSV
-
-=cut
-
-sub resultstruct2csv {
-    my ( $self, @args ) = @_;
-    my $results = shift @args;
-	my @tab = shift @args;
-	my %results = %{$results};
-	my @optional_fields = $self->get_optional_candidate_fields();
-    my @csv_headers = ('name', 'position', @optional_fields, 'Vienna', 'DNASequence');
-	my $result = join( ',', @csv_headers ) . "\n";
-
-    my @keys = sort keys %results;
-    foreach my $key(@keys)
-    {
-    	if (  $key ~~ \@tab ) 
-    	{
-    	    my $value = $results{$key};
-	        for my $header (@csv_headers)
- 	        {
-	            $result .= "${$value}{$header},";
-	        }
-	        $result .= "\n";
-    	}
-    }
-    return $result;
-}
-
-=method resultstruct2pseudoXML
-
-Convert the results structure to to pseudo XML format
-
-=cut
-
-sub resultstruct2pseudoXML {
-	
-    my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my %results = %{$results};
-
-    my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers1 = ('name', 'position', 'quality', @optional_fields);
-    my @headers2 = ('Vienna', 'DNASequence');
-
-    my $result = "<results id='all'>\n";
-	my @keys = sort keys %results;
-
-    foreach my $key (@keys) {
-   		my $value = $results{$key};
-       	$result .= "<Sequence";
-        for my $header (@headers1){
-            $result .= " $header='${$value}{$header}'";
-        }
-        my $img = PipelineMiRNA::Paths->get_server_path(${$value}{'image'});
-        $result .= " image='$img'";
-        for my $header (@headers2){
-            $result .= " $header='${$value}{$header}'";
-        }
-        $result .= "></Sequence>\n";
-    }
-    $result .= "</results>";
-    $result .= "<results id='all2'>\n";
-   	@keys = sort keys %results;
-    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}||$results{$a}{'position'} <=> $results{$b}{'position'} } keys %results; 
-  	foreach my $key (@keys) {
-   		my $value = $results{$key};
-       	$result .= "<Sequence";
-        for my $header (@headers1){
-            $result .= " $header='${$value}{$header}'";
-        }
-        my $img = PipelineMiRNA::Paths->get_server_path(${$value}{'image'});
-        $result .= " image='$img'";
-        for my $header (@headers2){
-            $result .= " $header='${$value}{$header}'";
-        }
-        $result .= "></Sequence>\n";
-    }
-    $result .= "</results>";
-    return $result;
 }
 
 
