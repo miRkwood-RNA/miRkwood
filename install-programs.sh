@@ -54,6 +54,13 @@ wget https://www.ebi.ac.uk/%7Eguy/exonerate/exonerate-2.2.0-i386.tar.gz
 tar xf exonerate-2.2.0-i386.tar.gz
 cd $ROOT_PATH
 
+echo "Installing MiRdup 1.2"
+mkdir miRdup_1.2
+cd miRdup_1.2
+wget http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.2.zip
+unzip miRdup_1.2.zip
+cd $ROOT_PATH
+
 echo "Installing NCBI Blast 2.2.28"
 wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.2.28+-src.tar.gz
 tar xf ncbi-blast-2.2.28+-src.tar.gz
