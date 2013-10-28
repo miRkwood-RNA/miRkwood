@@ -79,9 +79,14 @@ sub serialize_candidate_information {
                                                                          keys %alignments);
         $candidate{'alignments'} = \%alignments;
         $candidate{'mirdup_validation'} = \%mirdup_results;
-        my $hairpin   = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
-        $candidate{'hairpin'} = $hairpin;
+
     }
+    my $hairpin = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
+    $candidate{'hairpin'} = $hairpin;
+    my %sequence;
+#    $sequence{$candidate{'name'}} = $candidate{'DNASequence'};
+#    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_prediction.txt");
+#    $candidate{'mirdup_prediction'} = \%{PipelineMiRNA::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
 
     return $self->serialize_candidate( \%candidate, $full_candidate_dir );
 }
