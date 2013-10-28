@@ -53,8 +53,20 @@ sub prepare_document {
         )
     );
 
+    # Monospace
+    $doc->set_font_declaration("Monospace");
+    $elt = $doc->insert_style(
+        odf_create_style(
+            'text',
+            name        => 'Monospace',
+            margin_top  => '0mm',
+            margin_left => '0mm',
+            font    => "Monospace",
+        )
+    );
+
     # Level 2 Heading style creation
-    my $heading_style = $doc->insert_style(
+    $doc->insert_style(
         odf_create_style(
             'paragraph',
             name           => 'Level 2 Heading',
@@ -62,12 +74,27 @@ sub prepare_document {
             margin_top     => '1cm',
             margin_bottom  => '4mm'
         )
-    );
-    $heading_style->set_properties(
+    )->set_properties(
         area   => 'text',
         size   => '16pt',
         weight => 'bold',
         style  => 'italic',
+        color  => 'navy blue'
+    );
+
+    # Level 3 Heading style creation
+    $doc->insert_style(
+        odf_create_style(
+            'paragraph',
+            name           => 'Level 3 Heading',
+            keep_with_next => 'always',
+            margin_top     => '1cm',
+            margin_bottom  => '4mm'
+        )
+    )->set_properties(
+        area   => 'text',
+        size   => '14pt',
+        weight => 'bold',,
         color  => 'navy blue'
     );
 
@@ -86,6 +113,30 @@ sub prepare_document {
         weight => 'bold',
         color  => 'navy blue'
       );
+
+    # Graphic style
+    $doc->insert_style(
+        odf_create_style(
+                'graphic',
+                name            => "Classic",
+                align       => 'center',
+                margin_top  => '5mm'
+                ),
+        automatic       => TRUE
+        );
+
+    $doc->insert_style(
+        odf_create_style(
+            'paragraph',
+            name        => "Centré",
+            align       => 'center',
+            margin_top  => '5mm'
+        )
+    );
+
+
+
+
     return $doc;
 }
 
