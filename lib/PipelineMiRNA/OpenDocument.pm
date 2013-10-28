@@ -102,15 +102,10 @@ sub generate_report {
 
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
-    my $ODP_filename = "Prediction_report_$jobId.odt";
-    my $ODP_abspath =
-      File::Spec->catfile( PipelineMiRNA::Paths->get_absolute_path($jobPath),
-        $ODP_filename );
-    my $ODP_serverpath =
-      File::Spec->catfile( PipelineMiRNA::Paths->get_server_path($jobPath),
-        $ODP_filename );
+    my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
 
     my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
+    use Data::Dumper;
 
     my $doc = $self->prepare_document();
 
@@ -176,9 +171,46 @@ sub generate_report {
     }    #  while each %results
 
     # save the generated document and quit
-    $doc->save( target => $ODP_abspath, pretty => TRUE );
+    $doc->save( target => $ODT_abspath, pretty => TRUE );
+    return $ODT_abspath;
+}
 
-    return $ODP_serverpath;
+=method get_ODF_path
+
+Return the paths to the ODT document
+
+=cut
+
+sub get_ODF_path{
+    my ( $self, @args ) = @_;
+    my $jobId = shift @args;
+    my $ODT_filename = "Prediction_report_$jobId.odt";
+    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
+
+    my $ODT_abspath =
+      File::Spec->catfile( PipelineMiRNA::Paths->get_absolute_path($jobPath),
+        $ODT_filename );
+    my $ODT_serverpath =
+      File::Spec->catfile( PipelineMiRNA::Paths->get_server_path($jobPath),
+        $ODT_filename );
+    return ($ODT_abspath, $ODT_serverpath);
+}
+
+=method get_report
+
+Gererates the report if it does not exist already,
+and return the server path to it.
+
+=cut
+
+sub get_report {
+    my ( $self, @args ) = @_;
+    my $jobId = shift @args;
+    my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
+#    if (! -e $ODT_abspath){
+#    }
+    my $path = $self->generate_report($jobId);
+    return $ODT_serverpath;
 }
 
 1;

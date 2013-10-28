@@ -52,7 +52,7 @@ sub exportAsODF {
     my $id_job = shift @_;
     #TODO: Filter selected sequences.
     use PipelineMiRNA::OpenDocument;
-    my $odt = PipelineMiRNA::OpenDocument->generate_report($id_job);
+    my $odt = PipelineMiRNA::OpenDocument->get_report($id_job);
     print $cgi->redirect( -uri => $odt );
 }
 
