@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use File::Spec;
+use File::Copy;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Results;
 use PipelineMiRNA::Candidate;
@@ -102,6 +103,9 @@ sub generate_report {
 
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
+    my $images_dir = File::Spec->catdir(PipelineMiRNA::Paths->get_absolute_path($jobPath), 'images');
+    mkdir $images_dir;
+
     my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
 
     my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
@@ -155,9 +159,13 @@ sub generate_report {
 
         my $img_path      = ${$value}{'image'};
         my $img_full_path = PipelineMiRNA::Paths->get_absolute_path($img_path);
+        my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
+
+        copy($img_full_path, $new_img_path)
+            or die "Copy of $img_full_path to $images_dir failed: $!";
 
         my ( $lien_image, $taille_image ) =
-          $doc->add_image_file($img_full_path);
+          $doc->add_image_file($new_img_path);
         $para->append_element(
             odf_frame->create(
                 image => $lien_image,
