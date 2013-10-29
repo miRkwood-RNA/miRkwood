@@ -151,6 +151,7 @@ Write it on disk and return the server path to it.
 sub generate_report {
     my ( $self, @args ) = @_;
     my $jobId = shift @args;
+    my @sequences_to_export = shift @args;
 
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
@@ -188,108 +189,110 @@ sub generate_report {
     my @keys    = sort keys %results;
 
     foreach my $key (@keys) {
-        my $value = $results{$key};
-        my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
-        $context->append_element(
-            odf_create_heading(
-                level => 2,
-                text  => $key,
-            )
-        );
+        if ( $key ~~ \@sequences_to_export )
+        {
+            my $value = $results{$key};
+            my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
+            $context->append_element(
+                odf_create_heading(
+                    level => 2,
+                    text  => $key,
+                )
+            );
 
 
-        my $para =
-          $context->append_element( odf_create_paragraph() );
+            my $para =
+              $context->append_element( odf_create_paragraph() );
 
-        my $list = $para->insert_element(
-                odf_create_list, position => NEXT_SIBLING
-                );
+            my $list = $para->insert_element(
+                    odf_create_list, position => NEXT_SIBLING
+                    );
 
-        my $size = length ${$value}{'DNASequence'};
-        my $vienna_seq =
-          PipelineMiRNA::Candidate->make_Vienna_viz( ${$value}{'Vienna'},
-            ${$value}{'DNASequence'} );
+            my $size = length ${$value}{'DNASequence'};
+            my $vienna_seq =
+              PipelineMiRNA::Candidate->make_Vienna_viz( ${$value}{'Vienna'},
+                ${$value}{'DNASequence'} );
 
-        $list->add_item(text => "Name: ${$value}{'name'}", style => "Standard");
-        $list->add_item(text => "Position: ${$value}{'position'} ($size nt)", style => "Standard");
-        $list->add_item(text => "Strand:", style => "Standard");
+            $list->add_item(text => "Name: ${$value}{'name'}", style => "Standard");
+            $list->add_item(text => "Position: ${$value}{'position'} ($size nt)", style => "Standard");
+            $list->add_item(text => "Strand:", style => "Standard");
 
-        my $subtext = "";
-        if(${$value}{'Vienna'} ne ${$value}{'Vienna_optimal'}){
-            $subtext .= ""
-        } else {
-            $subtext.= "(This stem-loop structure is the MFE structure)"
-        }
-        $list->add_item(text => "Sequence and stem-loop structure:\n$vienna_seq \n$subtext", style => "Monospace");
-
-
-        # Section secondary structure
-
-        $context->append_element(
-            odf_create_heading(
-                level => 3,
-                text  => "Secondary structure",
-            )
-        );
-
-        # Copying the image
-        my $img_path      = ${$value}{'image'};
-        my $img_full_path = PipelineMiRNA::Paths->get_absolute_path($img_path);
-        my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
-        copy($img_full_path, $new_img_path)
-            or die "Copy of $img_full_path to $images_dir failed: $!";
-
-        my ( $lien_image, $taille_image ) =
-          $doc->add_image_file($new_img_path);
-
-        my $factor = 0.5;
-        my @width = split( 'pt', shift $taille_image);
-        my $width = ($width[0] * $factor) . 'pt';
-        my @height = split( 'pt', shift $taille_image);
-        my $height = ($height[0] * $factor) . 'pt';
-        my $new_size = [$width, $height];
-
-        $para->append_element(
-            odf_frame->create(
-                image => $lien_image,
-                name  => "Structure_${$value}{'name'}_${$value}{'position'}",
-                title => 'Structure',
-                description => 'Structure',
-                size => $new_size,
-            )
-        );
-
-       # Section secondary structure
-        $context->append_element(
-            odf_create_heading(
-                level => 3,
-                text  => "Thermodynamics stability",
-            )
-        );
-
-        $para =
-          $context->append_element( odf_create_paragraph() );
-
-        $list = $para->insert_element(
-                odf_create_list, position => NEXT_SIBLING
-                );
-
-        # TODO: maybe we do not have those ; infer that from  run_options config file
-        $list->add_item(text => "MFE: ${$value}{'mfe'} kcal/mol", style => "Standard");
-        $list->add_item(text => "AMFE: ${$value}{'amfe'}", style => "Standard");
-        $list->add_item(text => "MFEI: ${$value}{'mfei'}", style => "Standard");
+            my $subtext = "";
+            if(${$value}{'Vienna'} ne ${$value}{'Vienna_optimal'}){
+                $subtext .= ""
+            } else {
+                $subtext.= "(This stem-loop structure is the MFE structure)"
+            }
+            $list->add_item(text => "Sequence and stem-loop structure:\n$vienna_seq \n$subtext", style => "Monospace");
 
 
-        # Section Mirbase alignments
+            # Section secondary structure
 
-        $context->append_element(
-            odf_create_heading(
-                level => 3,
-                text  => "Mirbase alignments",
-            )
-        );
+            $context->append_element(
+                odf_create_heading(
+                    level => 3,
+                    text  => "Secondary structure",
+                )
+            );
+
+            # Copying the image
+            my $img_path      = ${$value}{'image'};
+            my $img_full_path = PipelineMiRNA::Paths->get_absolute_path($img_path);
+            my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
+            copy($img_full_path, $new_img_path)
+                or die "Copy of $img_full_path to $images_dir failed: $!";
+
+            my ( $lien_image, $taille_image ) =
+              $doc->add_image_file($new_img_path);
+
+            my $factor = 0.5;
+            my @width = split( 'pt', shift $taille_image);
+            my $width = ($width[0] * $factor) . 'pt';
+            my @height = split( 'pt', shift $taille_image);
+            my $height = ($height[0] * $factor) . 'pt';
+            my $new_size = [$width, $height];
+
+            $para->append_element(
+                odf_frame->create(
+                    image => $lien_image,
+                    name  => "Structure_${$value}{'name'}_${$value}{'position'}",
+                    title => 'Structure',
+                    description => 'Structure',
+                    size => $new_size,
+                )
+            );
+
+           # Section secondary structure
+            $context->append_element(
+                odf_create_heading(
+                    level => 3,
+                    text  => "Thermodynamics stability",
+                )
+            );
+
+            $para =
+              $context->append_element( odf_create_paragraph() );
+
+            $list = $para->insert_element(
+                    odf_create_list, position => NEXT_SIBLING
+                    );
+
+            # TODO: maybe we do not have those ; infer that from  run_options config file
+            $list->add_item(text => "MFE: ${$value}{'mfe'} kcal/mol", style => "Standard");
+            $list->add_item(text => "AMFE: ${$value}{'amfe'}", style => "Standard");
+            $list->add_item(text => "MFEI: ${$value}{'mfei'}", style => "Standard");
 
 
+            # Section Mirbase alignments
+
+            $context->append_element(
+                odf_create_heading(
+                    level => 3,
+                    text  => "Mirbase alignments",
+                )
+            );
+
+        }   # if key in tab
     }    #  while each %results
 
     # save the generated document and quit
@@ -328,10 +331,11 @@ and return the server path to it.
 sub get_report {
     my ( $self, @args ) = @_;
     my $jobId = shift @args;
+    my @sequences_to_export = shift @args;
     my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
 #    if (! -e $ODT_abspath){
 #    }
-    my $path = $self->generate_report($jobId);
+    my $path = $self->generate_report($jobId, \@sequences_to_export);
     return $ODT_serverpath;
 }
 
