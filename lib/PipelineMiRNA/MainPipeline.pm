@@ -106,6 +106,14 @@ sub main_entry {
         unlink $temp_file;
         process_RNAstemloop_wrapper($rnastemloop_out_optimal, 'optimal');
         process_RNAstemloop_wrapper($rnastemloop_out_stemloop, 'stemloop');
+       	my $current_sequence_dir = dirname($rnastemloop_out_stemloop);
+       	   	 my $rnaeval_out =
+      	File::Spec->catfile( $current_sequence_dir, "rnaeval_stemloop.out" );
+        open( my $stem, '<', $rnastemloop_out_stemloop ) or die $!;
+	    open( my $eval, '<', $rnaeval_out )     or die $!;
+   		process_RNAstemloop($current_sequence_dir,  'stemloop', $stem, $eval);
+		close($stem);
+    	close($eval);
     }
     process_tests( $dirJob );
     debug("Serializing candidates in $dirJob...", 1);
@@ -130,11 +138,8 @@ sub process_RNAstemloop_wrapper {
     PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
       or die("Problem when running RNAeval");
 
-    open( my $stem, '<', $rnastemloop_out ) or die $!;
-    open( my $eval, '<', $rnaeval_out )     or die $!;
-    process_RNAstemloop($current_sequence_dir, $suffix, $stem, $eval);
-    close($stem);
-    close($eval);
+  
+
     return 0;
 }
 
@@ -152,8 +157,7 @@ sub process_RNAstemloop {
     my ($suffix) = shift @args;
     my ($stem)   = shift @args;
     my ($eval)   = shift @args;
-
-    my $line2;
+	my $line2;
     my ( $nameSeq, $dna, $Vienna );
     while ( my $line = <$stem> ) {
 
@@ -189,15 +193,9 @@ sub process_RNAstemloop {
                   or die "Error when opening $candidate_sequence: $!";
                 print $OUT ">$nameSeq\n$dna\n";
                 close $OUT;
-
-                #Writing (pseudo) rnafold output
-                my $candidate_rnafold_output =
-                  File::Spec->catfile( $candidate_dir, "outRNAFold_$suffix.txt" );
-
-                open( my $OUT2, '>', $candidate_rnafold_output )
-                  or die "Error when opening $candidate_rnafold_output: $!";
-                print $OUT2 ">$nameSeq\n$dna\n$structure ($energy)\n";
-                close $OUT2;
+				process_outRNAFold($candidate_dir, 'optimal',$nameSeq,$dna,$structure ,$energy);
+        		process_outRNAFold($candidate_dir, 'stemloop',$nameSeq,$dna,$structure ,$energy);
+                
 
             } else {
                 debug("No structure found in $line2", 1);
@@ -208,6 +206,24 @@ sub process_RNAstemloop {
     } #while $line=<IN>
 }
 
+=method process_outRNAFold
+
+Writing (pseudo) rnafold output
+
+=cut
+
+sub process_outRNAFold {
+     my ($candidate_dir, $suffix,$nameSeq,$dna,$structure ,$energy) = @_;
+ 
+     my $candidate_rnafold_output =
+                  File::Spec->catfile( $candidate_dir, "outRNAFold_$suffix.txt" );
+
+     open( my $OUT2, '>', $candidate_rnafold_output )
+                  or die "Error when opening $candidate_rnafold_output: $!";
+     print $OUT2 ">$nameSeq\n$dna\n$structure ($energy)\n";
+     close $OUT2;
+    
+}
 =method process_tests
 
 Perform the a posteriori tests for a given job
