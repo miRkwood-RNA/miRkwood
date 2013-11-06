@@ -271,18 +271,19 @@ sub run_mirdup_prediction_on_sequence {
     my @args        = @_;
     my $sequence    = shift @args;
     my $output_dir  = shift @args;
-    my $output_name = shift @args;
+
+    my $output_root = 'out';
     my $output =
-        $output_name
+        $output_root
       . '.generatedmirnas.'
       . $miRdup_model_name
       . '.miRdupOutput.txt';
     my $run_mirdup_cmd =
-"java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -u $sequence -f $output_name ";
+"java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -u $sequence -f $output_root > /dev/null 2>&1";
     chdir($miRdup_model_path) or die "$!";
     system($run_mirdup_cmd);
 
-    my @old_files = glob "$miRdup_model_path/$output_name*";
+    my @old_files = glob "$miRdup_model_path/$output_root*";
 
     foreach my $old_file (@old_files) {
         move( $old_file, $output_dir )

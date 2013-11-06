@@ -101,7 +101,26 @@ sub predict_with_mirdup {
     $self->make_prediction_source_file($prediction_file, \%sequences)
         or die "Error when making prediction_source_file: $!";
     my $result_file = PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence_file($prediction_file);
-    return $result_file;
+    return $self->parse_predictions_file($result_file);
+}
+
+
+=method predict_sequence_with_mirdup
+
+Given a sequence, predict its miRNAs
+using miRdup in the given path.
+
+Usage:
+    my $res_file = PipelineMiRNA::MiRdup->predict_sequence_with_mirdup('prediction_results.txt', $sequence);
+
+=cut
+
+sub predict_sequence_with_mirdup {
+    my ($self, @args) = @_;
+    my $prediction_path = shift @args;
+    my $sequence = shift @args;
+    my $result_file = PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence($prediction_path, $sequence);
+    return $self->parse_predictions_file($result_file);
 }
 
 =method validate_with_mirdup
