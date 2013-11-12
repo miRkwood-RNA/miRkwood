@@ -15,6 +15,7 @@ use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Programs;
+use PipelineMiRNA::Candidate;
 use PipelineMiRNA::Results;
 use PipelineMiRNA::Components;
 use PipelineMiRNA::PosterioriTests;
@@ -115,9 +116,7 @@ sub main_entry {
 		close($stem);       
     	close($eval);
     }
-    process_tests( $dirJob );
-    debug("Serializing candidates in $dirJob...", 1);
-    PipelineMiRNA::Results->serialize_results( $dirJob_relative );
+    process_tests( $dirJob_relative, $dirJob );
     return;
 }
 
@@ -340,7 +339,7 @@ Perform the a posteriori tests for a given job
 =cut
 
 sub process_tests {
-    my ( $dirJob ) = @_;
+    my ( $relative_job_dir, $dirJob ) = @_;
     debug("A posteriori tests in $dirJob", 1);
     ##Traitement fichier de sortie outStemloop
     opendir DIR, $dirJob;    #ouverture répertoire job
@@ -361,18 +360,28 @@ sub process_tests {
             my @files;
             @files = readdir DIR;
             closedir DIR;
-            foreach my $file (@files) {
-                debug("Considering $file", 1);
+            foreach my $subDir (@files) {
+                debug("Considering $subDir", 1);
                 my $candidate_dir =
-                      File::Spec->catdir( $sequence_dir, $file );
-                if (   $file ne '.'
-                    && $file ne '..'
+                      File::Spec->catdir( $sequence_dir, $subDir );
+                if (   $subDir ne '.'
+                    && $subDir ne '..'
                     && -d $candidate_dir
                   )    # si le fichier est de type repertoire
                 {
-                    debug("Entering candidate $file", 1);
-                    process_tests_for_candidate($candidate_dir, $file);
-                    debug("Done with candidate $file", 1);
+                    debug("Entering candidate $subDir", 1);
+                    process_tests_for_candidate($candidate_dir, $subDir);
+                    debug("Done with candidate $subDir", 1);
+                    debug("Pseudo Serializing candidate information:\n $relative_job_dir, $dir, $subDir", 1);
+                    debug("Like, really", 1);
+
+                    if (! eval { PipelineMiRNA::Candidate->serialize_candidate_information($relative_job_dir, $dir, $subDir)} ) {
+                        # Catching
+                        debug("Serialization failed", 1);
+                    }else{
+                        debug("Done with serializing $subDir", 1);
+                        # All is well
+                    }
                 } # foreach my $file (@files)
             } # if directory
             debug("Done with initial sequence $dir", 1);
@@ -443,6 +452,7 @@ sub process_tests_for_candidate {
         PipelineMiRNA::PosterioriTests::test_alignment(
             $candidate_dir, $candidate_ct_stemloop_file );
     } # if file
+
     return;
 }
 
