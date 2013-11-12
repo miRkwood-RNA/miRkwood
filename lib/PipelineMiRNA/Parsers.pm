@@ -201,4 +201,28 @@ sub parse_RNAfold_output {
     return ( $nameSeq, $dna, $structure, $energy );
 }
 
+=method parse_alternative_candidates_file
+
+Parse the alternative candidates file
+
+=cut
+
+sub parse_alternative_candidates_file {
+    my (@args)      = @_;
+    my ($file)  = shift @args;
+    my %results;
+    open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
+    while ( my $line = <$INPUT_FH> ) {
+        chomp $line;
+        my ($name, $sequence, $structure, $mfei) = split(/\t/, $line);
+        my %result;
+        $result{'sequence'}  = $sequence;
+        $result{'structure'} = $structure;
+        $result{'mfei'} = $mfei;
+        $results{$name} = \%result;
+    } # while
+    close $INPUT_FH or die "Error when closing file $file: $!";
+    return %results;
+}
+
 1;
