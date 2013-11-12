@@ -38,6 +38,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
     my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&name=$name&position=$position";
     my $linkVienna = "./exportVienna.pl?jobId=$jobId&name=$name&position=$position";
+    my $linkAlternatives = "./exportAlternativesVienna.pl?jobId=$jobId&name=$name&position=$position";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
     my $Vienna_HTML = "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -46,6 +47,15 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     } else {
         $Vienna_HTML .= "<br/><i>(This stem-loop structure is the MFE structure)</i></li></ul>"
     }
+
+    my $alternatives_HTML = '<b>Alternative candidates:</b> ';
+    if($candidate{'alternatives'}){
+        $alternatives_HTML .= "<a href='$linkAlternatives'>download</a></li></ul>"
+    } else {
+        $alternatives_HTML .= "<i>None</i>"
+    }
+    use Data::Dumper;
+    my $toto = PipelineMiRNA::Candidate->alternativeCandidatesAsVienna(\%candidate);
 
     my $alignmentHTML;
     if($candidate{'alignment'}){
@@ -68,6 +78,9 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         </li>
         <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
+        </li>
+        <li>
+          $alternatives_HTML
         </li>
         </ul>
         <h2>Secondary structure</h2>
