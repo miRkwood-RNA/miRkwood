@@ -308,7 +308,7 @@ sub create_directories{
 						                my $alternative_candidates =File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
 						                open( my $OUT2, '>>', $alternative_candidates )
 						                  or die "Error when opening $alternative_candidates: $!";
-								        print $OUT2 ">$name\t$newHash{$key}{$name}{'dna'}\t\t$newHash{$key}{$name}{'structure'}\t$newHash{$key}{$name}{'mfei'}\n";
+								        print $OUT2 ">$name\t$newHash{$key}{$name}{'dna'}\t$newHash{$key}{$name}{'structure'}\t$newHash{$key}{$name}{'mfei'}\n";
 								
 							}	
 						}close $OUT;
