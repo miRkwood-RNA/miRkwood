@@ -153,13 +153,15 @@ sub find_matching_count {
     while ($stop) {
         $iteration += 1;
         $element = substr( $structure, $iteration, 1 );
-        if ( $element eq '.' ) {
-        }
-        elsif ( $element eq '(' ) {
-            $parenthesisCounter += 1;
-        }
-        elsif ( $element eq ')' ) {
-            $stop = 0;
+        if ( $element ) {
+            if ( $element eq '.' ) {
+            }
+            elsif ( $element eq '(' ) {
+                $parenthesisCounter += 1;
+            }
+            elsif ( $element eq ')' ) {
+                $stop = 0;
+            }
         }
     }
     return $parenthesisCounter;
