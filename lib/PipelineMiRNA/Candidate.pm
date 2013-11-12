@@ -81,6 +81,13 @@ sub serialize_candidate_information {
         $candidate{'mirdup_validation'} = \%mirdup_results;
 
     }
+
+    my $alternative_candidates_file = File::Spec->catfile($full_candidate_dir, 'alternativeCandidates.txt');
+    if (-e $alternative_candidates_file){
+        my %alternatives = PipelineMiRNA::Parsers::parse_alternative_candidates_file($alternative_candidates_file);
+        $candidate{'alternatives'} = \%alternatives;
+    }
+
     my $hairpin = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
     $candidate{'hairpin'} = $hairpin;
     my %sequence;
