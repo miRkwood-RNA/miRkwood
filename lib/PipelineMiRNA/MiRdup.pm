@@ -1,5 +1,7 @@
 package PipelineMiRNA::MiRdup;
 
+# ABSTRACT: Using MiRdup prediction program
+
 use strict;
 use warnings;
 
