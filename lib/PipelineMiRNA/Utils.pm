@@ -362,4 +362,20 @@ sub filter_mirbase_hairpins {
     return;
 }
 
+=method get_element_of_split
+
+Get the n-th element of the split on a a given string using the given separator
+
+Usage: get_element_of_split($b, '-', 0);
+=cut
+
+sub get_element_of_split {
+    my @args = @_;
+    my $value = shift @args;
+    my $sep   = shift @args;
+    my $rank  = shift @args;
+    my @split = split(/$sep/, $value);
+    return $split[$rank];
+}
+
 1;

@@ -9,6 +9,7 @@ use Switch;
 use Time::gmtime;
 
 use PipelineMiRNA::Candidate;
+use PipelineMiRNA::Utils;
 
 =method get_optional_candidate_fields
 
@@ -251,7 +252,9 @@ sub resultstruct2pseudoXML {
     my @headers2 = ('Vienna', 'DNASequence');
 
     my $result = "<results id='all'>\n";
-    my @keys = sort keys %results;
+    my @keys = sort { PipelineMiRNA::Utils::get_element_of_split($results{$a}{'position'}, '-', 0) <=>
+                      PipelineMiRNA::Utils::get_element_of_split($results{$b}{'position'}, '-', 0)
+                    } keys %results;
 
     foreach my $key (sort @keys) {
         my $value = $results{$key};
@@ -269,7 +272,12 @@ sub resultstruct2pseudoXML {
     $result .= "</results>";
     $result .= "<results id='all2'>\n";
     @keys = sort keys %results;
-    @keys = sort {$results{$b}{'quality'} <=> $results{$a}{'quality'}||$results{$a}{'position'} <=> $results{$b}{'position'} } keys %results; 
+    @keys = sort { ( $results{$b}{'quality'} cmp
+                     $results{$a}{'quality'} )
+                   ||
+                   ( PipelineMiRNA::Utils::get_element_of_split($results{$a}{'position'}, '-', 0) <=>
+                     PipelineMiRNA::Utils::get_element_of_split($results{$b}{'position'}, '-', 0) )
+                 } keys %results;
     foreach my $key (@keys) {
         my $value = $results{$key};
         $result .= "<Sequence";

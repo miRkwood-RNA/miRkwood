@@ -13,6 +13,7 @@ use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::MiRdup;
 use PipelineMiRNA::Parsers;
+use PipelineMiRNA::Utils;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Components;
 
@@ -65,8 +66,7 @@ sub serialize_candidate_information {
     my %candidate = $self->parse_candidate_information($candidate_dir, $full_candidate_dir);
     $candidate{'name'} = $seq_dir;    #récupération nom séquence
     my @position = split( /__/, $can_dir );
-    $candidate{'position'} = $position[1]; # récupération position
-
+    $candidate{'position'} = $position[1];
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     my %alignments;
     if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
@@ -289,14 +289,6 @@ sub make_Vienna_viz {
     return $string
 }
 
-sub get_element_of_split {
-    my @args = @_;
-    my $value = shift @args;
-    my $rank  = shift @args;
-    my @split = split(/-/, $value);
-    return $split[$rank];
-}
-
 =method merge_alignments
 
 Merge overlapping alignments.
@@ -312,7 +304,12 @@ sub merge_alignments {
     my %merged_alignments;
     my ($stocked_left, $stocked_right) = (-10, -10);
 
-    my @keys = sort { get_element_of_split($a, 0)  <=> get_element_of_split($b, 0) || get_element_of_split($a, 1)  <=> get_element_of_split($b, 1)} keys %alignments;
+    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 0) <=>
+                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 0) )
+                      ||
+                      ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 1)  <=>
+                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 1) )
+                    } keys %alignments;
     my @stocked_hits;
     my $final_key;
     my $final_hit_count = -1;
