@@ -112,7 +112,7 @@ sub main_entry {
         open( my $stem, '<', $rnastemloop_out_stemloop ) or die $!;
 	    open( my $eval, '<', $rnaeval_out )     or die $!;
    		process_RNAstemloop($current_sequence_dir,  'stemloop', $stem, $eval);
-		close($stem);
+		close($stem);       
     	close($eval);
     }
     process_tests( $dirJob );
@@ -157,8 +157,10 @@ sub process_RNAstemloop {
     my ($suffix) = shift @args;
     my ($stem)   = shift @args;
     my ($eval)   = shift @args;
-	my $line2;
+	my $j =0;
+    my $line2; 
     my ( $nameSeq, $dna, $Vienna );
+    my %hash=();
     while ( my $line = <$stem> ) {
 
         if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
@@ -182,36 +184,143 @@ sub process_RNAstemloop {
             { # We have a structure
                 if ( $Vienna ne $structure ) {
                 }
-                my $candidate_dir =
-                  File::Spec->catdir( $current_sequence_dir, $nameSeq );
-                mkdir $candidate_dir;
-
-                #Writing seq.txt
-                my $candidate_sequence =
-                  File::Spec->catfile( $candidate_dir, 'seq.txt' );
-                open( my $OUT, '>', $candidate_sequence )
-                  or die "Error when opening $candidate_sequence: $!";
-                print $OUT ">$nameSeq\n$dna\n";
-                close $OUT;
-				process_outRNAFold($candidate_dir, 'optimal',$nameSeq,$dna,$structure ,$energy);
-        		process_outRNAFold($candidate_dir, 'stemloop',$nameSeq,$dna,$structure ,$energy);
-                
-
-            } else {
+  			
+            	if ($nameSeq=~ /.*__(\d*)-(\d*)$/) 
+				{
+						my $cg = 0;
+						my @dna = split(//, $dna);
+						
+						my $longueur = scalar @dna;
+						for (my $i=0 ; $i< $longueur ; $i++ ) 
+						{
+							if ( $dna[$i] =~ m{
+                              [cg]     # G or C
+                            }smxi)
+							{
+								$cg++;
+							}
+						}
+						my $num = ( $energy / $longueur ) * 100;
+					    my $mfei = $num / ( ( $cg / $longueur ) * 100 );
+						$hash{$j++} = {"name"=>$nameSeq,"start"=>$1 , "end"=>$2,  "mfei"=>$mfei,"dna"=>$dna,"structure"=>$structure,"energy"=>$energy }	;
+						
+				}
+  			 } else {
                 debug("No structure found in $line2", 1);
             } # if $line2
         }else{
             # Should not happen
         } #if $line1
     } #while $line=<IN>
+    	my %newHash = treat_candidates(\%hash);
+    	create_directories(\%newHash,$current_sequence_dir)
+	}
+
+
+=method trait_candidates
+
+
+
+=cut
+
+sub treat_candidates{
+		 
+     			my ( %hash) = %{+shift};  
+     			my   %newHash=();
+				my %tempHash=();
+				my $i= 0;
+                foreach my  $key (sort keys %hash) {
+                	
+                	my $nb  = scalar keys %hash ;
+					my $start = $hash{$key}{"start"};
+					my $end = $hash{$key}{"end"};
+					my $mfei  = $hash{$key}{"mfei"};
+					my $nameSeq= $hash{$key}{"name"};
+					my $structure= $hash{$key}{"structure"};
+					my $dna= $hash{$key}{"dna"};
+					my $energy= $hash{$key}{"energy"};
+               if (($end >=$hash{$key+1}{"end"} || ($hash{$key+1}{"start"} <($start +$end)/2) ) && ($key != $nb-1)  ) 
+					{		
+						$tempHash{$nameSeq} = { "mfei"=> $mfei,"dna"=>$dna,"structure"=>$structure,"energy"=>$energy  };
+					
+					}else 
+					{
+						$tempHash{$nameSeq} = { "mfei"=> $mfei,"dna"=>$dna,"structure"=>$structure,"energy"=>$energy };
+						my $max;
+						my @keys =sort { $tempHash{$b}{"mfei"} <=> $tempHash{$a}{"mfei"} } keys (%tempHash);
+						foreach my  $key (@keys)
+						{
+							if ($i== 0) 
+							{	
+								$max = $key;$newHash{$max}{'max'} ={"mfei"=> $tempHash{$key}{"mfei"},"dna"=>$tempHash{$key}{"dna"},"structure"=>$tempHash{$key}{"structure"},"energy"=> $tempHash{$key}{"energy"}};
+								        	 
+							} 
+							else 
+							{	
+			
+								$newHash{$max}{$key} ={"mfei"=> $tempHash{$key}{"mfei"},"dna"=>$tempHash{$key}{"dna"},"structure"=>$tempHash{$key}{"structure"},"energy"=> $tempHash{$key}{"energy"}};
+								
+							}
+								$i++;
+						}
+						 %tempHash=();$i= 0;
+					}
+                	
+                } 	
+     
+              return %newHash;
 }
 
+=method create_directories
+
+
+
+=cut
+
+sub create_directories{
+		
+		     my ( %newHash) = %{+shift}; 
+		     my $current_sequence_dir = shift;
+			 foreach my $key (sort keys %newHash) 
+				 {
+				 		 my $candidate_dir =
+		                  File::Spec->catdir( $current_sequence_dir, $key );
+		                mkdir $candidate_dir;
+		
+		                #Writing seq.txt
+		                my $candidate_sequence =
+		                  File::Spec->catfile( $candidate_dir, 'seq.txt' );
+		                open( my $OUT, '>', $candidate_sequence )
+		                  or die "Error when opening $candidate_sequence: $!";
+		                print $OUT ">$key\n$newHash{$key}{'max'}{'dna'}\n";
+		                close $OUT;
+		              
+		        
+		                
+						 for my $name ( keys %{ $newHash{$key} } ) 
+						 {
+							if ($name eq 'max') 
+							{
+									process_outRNAFold($candidate_dir, 'optimal',$key,$newHash{$key}{'max'}{'dna'},$newHash{$key}{'max'}{'structure'},$newHash{$key}{'max'}{'energy'});
+		        					process_outRNAFold($candidate_dir, 'stemloop',$key,$newHash{$key}{'max'}{'dna'},$newHash{$key}{'max'}{'structure'},$newHash{$key}{'max'}{'energy'});
+							}else 
+							{
+									   #Writing alternativeCandidates.txt
+						                my $alternative_candidates =File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
+						                open( my $OUT2, '>>', $alternative_candidates )
+						                  or die "Error when opening $alternative_candidates: $!";
+								        print $OUT2 ">$name\t$newHash{$key}{$name}{'dna'}\t\t$newHash{$key}{$name}{'structure'}\t$newHash{$key}{$name}{'mfei'}\n";
+								
+							}	
+						}close $OUT;
+				}
+
+}
 =method process_outRNAFold
 
 Writing (pseudo) rnafold output
 
 =cut
-
 sub process_outRNAFold {
      my ($candidate_dir, $suffix,$nameSeq,$dna,$structure ,$energy) = @_;
  

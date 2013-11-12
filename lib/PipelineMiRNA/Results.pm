@@ -253,7 +253,7 @@ sub resultstruct2pseudoXML {
     my $result = "<results id='all'>\n";
     my @keys = sort keys %results;
 
-    foreach my $key (@keys) {
+    foreach my $key (sort @keys) {
         my $value = $results{$key};
         $result .= "<Sequence";
         for my $header (@headers1){
