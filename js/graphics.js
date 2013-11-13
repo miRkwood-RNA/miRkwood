@@ -331,7 +331,7 @@ function repeat(str, times) {
 function getChecked()
 {
 	var tab=new Array();
-	for (var i=1;i<rowsNumber;i++)
+	for (var i=1;i<=srowsNumber;i++)
 	{
 		if (document.getElementById('checkbox'+i).checked == true )
 		{
