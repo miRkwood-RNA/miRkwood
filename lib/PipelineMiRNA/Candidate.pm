@@ -461,12 +461,15 @@ END
                 foreach my $seq (@splitted){
                     $seq =~ s/^\s+//;
                     $seq =~ s/\s+$//;
-                    my @splitted_one = split(/ /, $seq);
-                    my $name = $splitted_one[0];
-                    my $mirbase_id = $splitted_one[1];
-                    my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
-                    my $html_name = "<a href='$mirbase_link'>$name</a>";
-                    push @sequences, $html_name;
+                    if ($seq =~ 'revcomp'){
+                    } else {
+                        my @splitted_one = split(/ /, $seq);
+                        my $name = $splitted_one[0];
+                        my $mirbase_id = $splitted_one[1];
+                        my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+                        my $html_name = "<a href='$mirbase_link'>$name</a>";
+                        push @sequences, $html_name;
+                    }
                 }
                 $additional_content = "<span class='others'>" . join(' ⋅ ', @sequences) . "</span>";
             } else {
