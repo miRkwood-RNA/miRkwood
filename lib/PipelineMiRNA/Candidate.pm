@@ -442,15 +442,44 @@ END
         push @TOC, $toc_element;
         foreach my $hit (@hits){
             my $alignment = $hit->{'alignment'};
-            my $name = $hit->{'name'};
-            my @splitted = split(/ /, $hit->{'def_query'});
-            my $mirbase_id = $splitted[0];
-            my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
-            my $html_name = "<a href='$mirbase_link'>$name</a>";
+            my $names = $hit->{'name'} . q{ } . $hit->{'def_query'};
+            my $additional_content = "";
+            my $name;
+            my $html_name;
+            my @splitted = split('\|', $names);
+
             my $spacing = 15;
             my ($top, $middle, $bottom) = split(/\n/, $alignment);
             $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
             $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
+
+            if( (scalar @splitted) > 1 ) {
+                # Several sequences
+                $name = "MirBase";
+                $html_name = $name;
+                my @sequences;
+                foreach my $seq (@splitted){
+                    $seq =~ s/^\s+//;
+                    $seq =~ s/\s+$//;
+                    my @splitted_one = split(/ /, $seq);
+                    my $name = $splitted_one[0];
+                    my $mirbase_id = $splitted_one[1];
+                    my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+                    my $html_name = "<a href='$mirbase_link'>$name</a>";
+                    push @sequences, $html_name;
+                }
+                $additional_content = "<span class='others'>" . join(' ⋅ ', @sequences) . "</span>";
+            } else {
+                # Only one sequence
+
+                my @splitted_one = split(/ /, $splitted[0]);
+                $name = $splitted_one[0];
+                my $mirbase_id = $splitted_one[1];
+                my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+                $html_name = "<a href='$mirbase_link'>$name</a>";
+            }
+
+
             $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
             my $additional_space = "";
             my $sub_string = substr($bottom, 0, $spacing);
@@ -462,6 +491,7 @@ $top
 $middle
 $bottom
 </pre>
+$additional_content
 INNER
         }
 
