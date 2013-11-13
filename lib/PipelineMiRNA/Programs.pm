@@ -96,7 +96,7 @@ Return whether the output file exists.
 sub convert_to_ct {
     my ( $rnafold_out, $ct_file ) = @_;
     my $b2ct_cmd = "$b2ct_bin < $rnafold_out > $ct_file";
-    system($b2ct_cmd);    debug("GOGOGOGOOGOG $b2ct_cmd", 1);
+    system($b2ct_cmd);    
     chmod 0777, $ct_file;
     return ( -e $ct_file );
 }
