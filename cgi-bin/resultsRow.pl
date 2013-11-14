@@ -50,7 +50,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
     my $alternatives_HTML = '<b>Alternative candidates:</b> ';
     if($candidate{'alternatives'}){
-        $alternatives_HTML .= "<a href='$linkAlternatives'>download</a></li></ul>"
+        $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>"
     } else {
         $alternatives_HTML .= "<i>None</i>"
     }
@@ -108,7 +108,8 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<LINK rel="stylesheet" type="text/css" href="/arn/style/results.css" />
 		<script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
