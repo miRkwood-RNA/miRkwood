@@ -152,7 +152,7 @@ is ( $result12, $seq_with_T, 'rewrite_fasta_with_TU correctly replace U with T')
 
 my $top1 = "   g  auauu----       a                 c ccuc          -     u  a      c       caccuuucuagcagaucaacaaugaauuuuguggaauagauguugga";
 my $left1 = 53;
-my $right1 = 74;
+my $right1 = 21;
 
 ok( my ($true_left1, $size1) = PipelineMiRNA::Utils::compute_mature_boundaries($left1, $right1, $top1),
     'Can call compute_mature_boundaries');

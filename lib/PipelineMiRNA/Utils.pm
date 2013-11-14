@@ -314,9 +314,7 @@ computes the actual span of the mature
 
 sub compute_mature_boundaries {
     my @args = @_;
-    my ($left, $right, $top) = @args;
-
-    my $size1 = $right - $left;
+    my ($left, $size, $top) = @args;
 
     my $real_left = 0;
     while ($real_left < $left){
@@ -327,11 +325,11 @@ sub compute_mature_boundaries {
         $real_left += 1;
     }
 
-    my $sub_string = substr($top, $real_left, $size1);
+    my $sub_string = substr($top, $real_left, $size);
     my $gap_count = 0;
     $gap_count++ while ($sub_string =~ m/-/g);
-    my $size = $size1 + $gap_count;
-    return ($real_left, $size);
+    my $real_size = $size + $gap_count;
+    return ($real_left, $real_size);
 }
 
 =method filter_mirbase_hairpins
