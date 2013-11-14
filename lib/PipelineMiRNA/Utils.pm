@@ -332,6 +332,42 @@ sub compute_mature_boundaries {
     return ($real_left, $real_size);
 }
 
+=method make_hairpin_with_mature
+
+Given a harpin, the mature position and the length,
+make an hairpin with the mature standing out in HTML.
+
+=cut
+
+sub make_hairpin_with_mature {
+    my (@args) = @_;
+    my ($hairpin, $left, $right, $length) = @args;
+    my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
+    my $hairpin_with_mature;
+    my $pseudo_size = $right - $left;
+    if ($left > length $top)
+    {
+        #on the other side
+        my $converted_left = $length - $right;
+        my ($true_left, $size) = compute_mature_boundaries($converted_left, $pseudo_size, $bottom);
+        substr($bottom, $true_left, $size) = '<span class="mature">' . substr($bottom, $true_left, $size) . '</span>';
+        substr($lower,  $true_left, $size) = '<span class="mature">' . substr($lower,  $true_left, $size) . '</span>';
+    } else {
+        my ($true_left, $size) = compute_mature_boundaries($left, $pseudo_size, $top);
+        substr($top, $true_left, $size)   = '<span class="mature">' . substr($top, $true_left, $size) . '</span>';
+        substr($upper, $true_left, $size) = '<span class="mature">' . substr($upper, $true_left, $size) . '</span>';
+
+    }
+    $hairpin_with_mature = <<"END";
+$top
+$upper
+$middle
+$lower
+$bottom
+END
+    return $hairpin_with_mature;
+}
+
 =method filter_mirbase_hairpins
 
 Filter a multi-FASTA file to match the contents of another
