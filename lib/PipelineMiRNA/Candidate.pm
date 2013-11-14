@@ -414,22 +414,27 @@ sub make_alignments_HTML {
         # Hairpin
         my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $candidate{'hairpin'});
         my $hairpin_with_mature;
+        my $pseudo_size = $right - $left;
         if ($left > length $top)
         {
             #on the other side
-            $hairpin_with_mature = $candidate{'hairpin'};
+            my $converted_left = (length $candidate{'DNASequence'}) - $right;
+            my ($true_left, $size) = PipelineMiRNA::Utils::compute_mature_boundaries($converted_left, $pseudo_size, $bottom);
+            substr($bottom, $true_left, $size) = '<span class="mature">' . substr($bottom, $true_left, $size) . '</span>';
+            substr($lower,  $true_left, $size) = '<span class="mature">' . substr($lower,  $true_left, $size) . '</span>';
         } else {
-            my ($true_left, $size) = PipelineMiRNA::Utils::compute_mature_boundaries($left, $right, $top);
+            my ($true_left, $size) = PipelineMiRNA::Utils::compute_mature_boundaries($left, $pseudo_size, $top);
             substr($top, $true_left, $size)   = '<span class="mature">' . substr($top, $true_left, $size) . '</span>';
             substr($upper, $true_left, $size) = '<span class="mature">' . substr($upper, $true_left, $size) . '</span>';
-            $hairpin_with_mature = <<"END";
+
+        }
+        $hairpin_with_mature = <<"END";
 $top
 $upper
 $middle
 $lower
 $bottom
 END
-        }
         $predictionCounter += 1;
 
         # Sorting the hit list by descending value of the 'score' element
