@@ -270,13 +270,16 @@ Return alternative candidates as Vienna dot-bracket
 sub alternativeCandidatesAsVienna {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
-    my %alternatives = %{$candidate{'alternatives'}};
+    my $alternatives = $candidate{'alternatives'};
     my $output = "";
-    foreach my $name (keys %alternatives) {
-        my %alternative = %{$alternatives{$name}};
-        $output .= '>'.$name . ' (MFEI: ' . $alternative{'mfei'} . ')'. "\n" .
-                   $alternative{'sequence'} . "\n" .
-                   $alternative{'structure'} . "\n";
+    if ($alternatives) {
+        my %alternatives = %{$alternatives};
+        foreach my $name (keys %alternatives) {
+            my %alternative = %{$alternatives{$name}};
+            $output .= '>'.$name . ' (MFEI: ' . $alternative{'mfei'} . ')'. "\n" .
+                       $alternative{'sequence'} . "\n" .
+                       $alternative{'structure'} . "\n";
+        }
     }
     return $output;
 }
