@@ -419,9 +419,9 @@ sub make_alignments_HTML {
             #on the other side
             $hairpin_with_mature = $candidate{'hairpin'};
         } else {
-            my $size = PipelineMiRNA::Utils::compute_mature_boundaries($left, $right, $top);
-            substr($top, $left, $size)   = '<span class="mature">' . substr($top, $left, $size) . '</span>';
-            substr($upper, $left, $size) = '<span class="mature">' . substr($upper, $left, $size) . '</span>';
+            my ($true_left, $size) = PipelineMiRNA::Utils::compute_mature_boundaries($left, $right, $top);
+            substr($top, $true_left, $size)   = '<span class="mature">' . substr($top, $true_left, $size) . '</span>';
+            substr($upper, $true_left, $size) = '<span class="mature">' . substr($upper, $true_left, $size) . '</span>';
             $hairpin_with_mature = <<"END";
 $top
 $upper

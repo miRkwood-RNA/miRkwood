@@ -148,3 +148,12 @@ open $input_seq_fh, '<', \$seq_with_U;
 open $result12_fh,  '>', \$result12;
 PipelineMiRNA::Utils::rewrite_fasta_with_TU('T', $input_seq_fh, $result12_fh);
 is ( $result12, $seq_with_T, 'rewrite_fasta_with_TU correctly replace U with T');
+
+
+my $top1 = "   g  auauu----       a                 c ccuc          -     u  a      c       caccuuucuagcagaucaacaaugaauuuuguggaauagauguugga";
+my $left1 = 53;
+my $right1 = 74;
+
+ok( my ($true_left1, $size1) = PipelineMiRNA::Utils::compute_mature_boundaries($left1, $right1, $top1),
+    'Can call compute_mature_boundaries');
+is_deeply([$true_left1, $size1], [58, 21], 'compute_mature_boundaries ok with gaps before start');
