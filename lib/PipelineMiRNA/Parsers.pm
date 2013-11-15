@@ -219,7 +219,7 @@ sub parse_alternative_candidates_file {
         $result{'sequence'}  = $sequence;
         $result{'structure'} = $structure;
         $result{'mfei'} = $mfei;
-        $results{$name} = \%result;
+        $results{(substr $name, 1)} = \%result;
     } # while
     close $INPUT_FH or die "Error when closing file $file: $!";
     return %results;
