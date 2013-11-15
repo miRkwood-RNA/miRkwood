@@ -447,41 +447,36 @@ sub make_alignments_HTML {
             $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
             $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
 
+            my $title = '';
             if( (scalar @splitted) > 1 ) {
-                # Several sequences
-                $name = "MirBase";
-                $html_name = $name;
-                my @sequences;
-                foreach my $seq (@splitted){
-                    $seq =~ s/^\s+//;
-                    $seq =~ s/\s+$//;
-                    if ($seq =~ 'revcomp'){
-                    } else {
-                        my @splitted_one = split(/ /, $seq);
-                        my $name = $splitted_one[0];
-                        my $mirbase_id = $splitted_one[1];
-                        my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
-                        my $html_name = "<a href='$mirbase_link'>$name</a>";
-                        push @sequences, $html_name;
-                    }
-                }
-                $additional_content = "<span class='others'>" . join(' ⋅ ', @sequences) . "</span>";
-            } else {
-                # Only one sequence
-
-                my @splitted_one = split(/ /, $splitted[0]);
-                $name = $splitted_one[0];
-                my $mirbase_id = $splitted_one[1];
-                my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
-                $html_name = "<a href='$mirbase_link'>$name</a>";
+                $title = 'MirBase sequences: ';
+            }else{
+                $title = 'MirBase sequence: ';
             }
+
+            $name = "MirBase";
+            my @sequences;
+            foreach my $seq (@splitted){
+                $seq =~ s/^\s+//;
+                $seq =~ s/\s+$//;
+                if ($seq =~ 'revcomp'){
+                } else {
+                    my @splitted_one = split(/ /, $seq);
+                    my $name = $splitted_one[0];
+                    my $mirbase_id = $splitted_one[1];
+                    my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+                    my $html_name = "<a href='$mirbase_link'>$name</a>";
+                    push @sequences, $html_name;
+                }
+            }
+            $additional_content = "<span class='others'>$title" . join(' ⋅ ', @sequences) . "</span>";
 
 
             $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
             my $additional_space = "";
             my $sub_string = substr($bottom, 0, $spacing);
             $additional_space .= ' ' while ($sub_string =~ m/ /g);
-            substr($bottom, 0, $spacing) = $html_name . $additional_space;
+            substr($bottom, 0, $spacing) = $name . $additional_space;
             $contents .= <<"INNER";
 <pre>
 $top
