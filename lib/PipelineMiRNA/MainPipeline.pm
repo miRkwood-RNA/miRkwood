@@ -271,7 +271,7 @@ sub treat_candidates {
 			};
 			my $max;
 			my @keys =
-			  sort { $tempHash{$b}{"mfei"} <=> $tempHash{$a}{"mfei"} }
+			  sort { $tempHash{$a}{"mfei"} <=> $tempHash{$b}{"mfei"} }
 			  keys(%tempHash);
 			foreach my $key (@keys) {
 				if ( $i == 0 ) {
