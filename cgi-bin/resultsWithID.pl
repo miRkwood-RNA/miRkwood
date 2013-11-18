@@ -3,17 +3,15 @@ use strict;
 use warnings;
 
 use CGI;
-my $cgi = CGI->new;
 use CGI::Carp qw(fatalsToBrowser);
-use Cwd qw( abs_path );
-use File::Basename qw(dirname);
 use File::Spec;
-use Data::Dumper;
-
 use FindBin;
-use lib "$FindBin::Bin/../lib";  # use the parent directory
+
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::Results;
 use PipelineMiRNA::WebTemplate;
+
+my $cgi = CGI->new;
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();

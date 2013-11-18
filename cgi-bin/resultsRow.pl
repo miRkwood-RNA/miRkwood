@@ -4,8 +4,9 @@ use warnings;
 
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
-use FindBin;                     # locate this script
-use lib "$FindBin::Bin/../lib";  # use the parent directory
+use FindBin;
+
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Results;

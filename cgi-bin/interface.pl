@@ -2,9 +2,9 @@
 use strict;
 use warnings;
 
-use FindBin;                       # locate this script
-use lib "$FindBin::Bin/../lib";    # use the parent directory
+use FindBin;
 
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::WebTemplate;
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();

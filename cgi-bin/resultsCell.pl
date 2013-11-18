@@ -3,14 +3,15 @@ use strict;
 use warnings;
 
 use CGI;
-my $cgi = CGI->new();
 use CGI::Carp qw(fatalsToBrowser);
-use Data::Dumper;
-use FindBin;                     # locate this script
-use lib "$FindBin::Bin/../lib";  # use the parent directory
+use FindBin;
+
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::Components;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Utils;
+
+my $cgi = CGI->new();
 
 my $name     = $cgi->param('nameSeq');
 my $factor   = $cgi->param('factor');

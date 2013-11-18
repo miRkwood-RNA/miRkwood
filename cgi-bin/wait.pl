@@ -3,19 +3,13 @@ use strict;
 use warnings;
 
 use CGI;
-use Time::gmtime;
-use File::stat;
-use Socket;
-use File::Spec;
-use Cwd qw( abs_path );
-use FindBin;                       # locate this script
-use lib "$FindBin::Bin/../lib";    # use the parent directory
-use File::Basename qw(dirname);
 use CGI::Carp qw(fatalsToBrowser);
+use Cwd qw( abs_path );
+use File::Basename qw(dirname);
+use File::Spec;
+use FindBin;
 
-use POSIX ':sys_wait_h';
-use IO::Handle;
-
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::WebTemplate;
 
 my $local_dir = dirname( abs_path($0) );

@@ -1,16 +1,13 @@
 #!/usr/bin/perl -w
-use Class::Struct;
 use CGI;
-use File::Spec;
-use FindBin qw($Bin);
+use CGI::Carp qw(fatalsToBrowser);
 use Cwd qw( abs_path );
 use File::Basename qw(dirname);
-use CGI::Carp qw(fatalsToBrowser);
+use File::Spec;
 use Log::Message::Simple qw[msg error debug];
+use FindBin;
 
-use FindBin;                       # locate this script
-use lib "$FindBin::Bin/../lib";    # use the parent directory
-
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Programs;

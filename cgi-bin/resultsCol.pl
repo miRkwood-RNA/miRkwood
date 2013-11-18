@@ -3,6 +3,9 @@ use strict;
 use warnings;
 
 use CGI;
+use FindBin;
+
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 
 my $cgi        = CGI->new();
 my $factor     = $cgi->param('factor');

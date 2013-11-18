@@ -2,18 +2,16 @@
 use strict;
 use warnings;
 
-use File::Basename qw(dirname);
-use File::Spec;
-use CGI::Carp qw(fatalsToBrowser);
 use CGI;
+use CGI::Carp qw(fatalsToBrowser);
+use File::Spec;
 use Switch;
+use FindBin;
 
-my $cgi = CGI->new;
-use Cwd qw( abs_path );
-use FindBin;                       # locate this script
-use lib "$FindBin::Bin/../lib";    # use the parent directory
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::Results;
 
+my $cgi = CGI->new;
 
 my $id_job = $cgi->param('run_id');    # récupération id job
 my $export_type = $cgi->param('type');
@@ -50,7 +48,6 @@ DATA
 
 sub exportAsODF {
     my $id_job = shift @_;
-    #TODO: Filter selected sequences.
     use PipelineMiRNA::OpenDocument;
     my $odt = PipelineMiRNA::OpenDocument->get_report($id_job, \@sequences_to_export);
     print $cgi->redirect( -uri => $odt );
