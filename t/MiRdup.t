@@ -35,6 +35,7 @@ is( $validation_source . "\n", $validation_source_expected,
 
 
 my $validation_file = input_file('sequencesToValidate.txt.plant.model.miRdup.tab.txt');
+file_exists_ok($validation_file);
 ok( my %result = PipelineMiRNA::MiRdup->parse_validation_output($validation_file),
     'Can call parse_validation_output');
 my %expected = ('chr9_14772_c' => 1,
