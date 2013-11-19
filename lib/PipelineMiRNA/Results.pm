@@ -256,7 +256,7 @@ sub resultstruct2pseudoXML {
                       PipelineMiRNA::Utils::get_element_of_split($results{$b}{'position'}, '-', 0)
                     } keys %results;
 
-    foreach my $key (sort @keys) {
+    foreach my $key (@keys) {
         my $value = $results{$key};
         $result .= "<Sequence";
         for my $header (@headers1){
