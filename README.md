@@ -19,6 +19,13 @@ If you are using cpanminus:
 cat requirements.txt | sudo cpanm
 ```
 
+If you are using Aptitude:
+```
+apt-get -s install $(cat apt-requirements.txt)
+```
+(Note it does not install ODF::lpOD − this one must be installed by hand).
+
+
 ### Installing programs
 
 - The Shell script `install-deps.sh` should install pretty much all dependencies.

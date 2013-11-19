@@ -1,0 +1,7 @@
+libconfig-simple-perl
+libyaml-libyaml-perl
+libxml-twig-perl
+libimage-size-perl
+libfile-type-perl
+libfile-slurp-perl
+libarchive-zip-perl
