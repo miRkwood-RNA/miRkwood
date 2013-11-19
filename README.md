@@ -28,9 +28,9 @@ apt-get -s install $(cat apt-requirements.txt)
 
 ### Installing programs
 
-- The Shell script `install-deps.sh` should install pretty much all dependencies.
+- The Shell script `install-programs.sh` should install pretty much all dependencies.
 ```
-sh install-deps.sh programs/
+sh install-programs.sh programs/
 ```
 - `RNAstemloop` has to be installed manually
 
