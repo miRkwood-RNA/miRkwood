@@ -155,7 +155,7 @@ sub generate_report {
 
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
-    my $images_dir = File::Spec->catdir(PipelineMiRNA::Paths->get_absolute_path($jobPath), 'images');
+    my $images_dir = File::Spec->catdir($jobPath, 'images');
     mkdir $images_dir;
 
     my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
@@ -237,7 +237,7 @@ sub generate_report {
 
             # Copying the image
             my $img_path      = ${$value}{'image'};
-            my $img_full_path = PipelineMiRNA::Paths->get_absolute_path($img_path);
+            my $img_full_path = $img_path;
             my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
             copy($img_full_path, $new_img_path)
                 or die "Copy of $img_full_path to $images_dir failed: $!";
@@ -311,13 +311,8 @@ sub get_ODF_path{
     my $jobId = shift @args;
     my $ODT_filename = "Prediction_report_$jobId.odt";
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
-
-    my $ODT_abspath =
-      File::Spec->catfile( PipelineMiRNA::Paths->get_absolute_path($jobPath),
-        $ODT_filename );
-    my $ODT_serverpath =
-      File::Spec->catfile( PipelineMiRNA::Paths->get_server_path($jobPath),
-        $ODT_filename );
+    my $ODT_abspath = File::Spec->catfile( $jobPath, $ODT_filename );
+    my $ODT_serverpath = PipelineMiRNA::Paths->filesystem_to_relative_path($ODT_abspath);
     return ($ODT_abspath, $ODT_serverpath);
 }
 

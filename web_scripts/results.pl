@@ -1,4 +1,7 @@
 #!/usr/bin/perl -w
+use strict;
+use warnings;
+
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use Cwd qw( abs_path );
@@ -19,17 +22,13 @@ my $mail = $cgi->param('mail');
 my $nameJob = $cgi->param('job');
 
 my $local_dir = dirname( abs_path($0) );
-my $rootdir = PipelineMiRNA::Paths->get_server_root_dir();
 
-$dirScript = PipelineMiRNA::Paths->get_absolute_path('scripts' );    # chemin script
-$dirLib    = PipelineMiRNA::Paths->get_absolute_path( 'lib' );
+my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
+my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
 my $formatFasta_bin = File::Spec->catfile( $dirScript, 'formatFasta.sh' );
 
-my $jobId = PipelineMiRNA::Results->make_job_id();
-my $dirJob_name = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
-my $dirJob_path = PipelineMiRNA::Paths->get_absolute_path($dirJob_name);
-my $root = PipelineMiRNA::Paths->get_absolute_path(PipelineMiRNA::Paths->get_results_dir_name());
+my $root = PipelineMiRNA::Paths->get_results_filesystem_path();
 
 if (! -e $root) {
     my $error = "Designated directory ($root) for results does not exist. Please contact the system administrator";
@@ -50,21 +49,23 @@ if (@unavailable){
     die($error);
 }
 
-mkdir $dirJob_path;
+my $jobId = PipelineMiRNA::Results->make_job_id();
+my $absolute_job_dir = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
+mkdir $absolute_job_dir;
 
-my $log_file = File::Spec->catfile( $dirJob_path, 'log.log' );
+my $log_file = File::Spec->catfile( $absolute_job_dir, 'log.log' );
 local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
-my $sequence_origin = File::Spec->catfile( $dirJob_path, 'sequence.fas' );
-my $sequence_load   = File::Spec->catfile( $dirJob_path, 'sequenceLoad.fas' );
-my $sequence_upload = File::Spec->catfile( $dirJob_path, 'sequenceUpload.fas' );
+my $sequence_origin = File::Spec->catfile( $absolute_job_dir, 'sequence.fas' );
+my $sequence_load   = File::Spec->catfile( $absolute_job_dir, 'sequenceLoad.fas' );
+my $sequence_upload = File::Spec->catfile( $absolute_job_dir, 'sequenceUpload.fas' );
 
 my $seqArea = $cgi->param('seqArea');
 
 if ( $seqArea eq "" )    # cas upload fichier
 {
     debug("Sequences are a FASTA file uploaded", 1);
-    $seq = "";
+    my $seq = "";
     my $upload = $cgi->upload('seqFile')
       || die "Error when getting seqFile: $!";
     while ( my $ligne = <$upload> ) {
@@ -116,6 +117,7 @@ open( LOAD, '<', $sequence_load )
   or die "Error when opening -$sequence_load-: $!";
 open( OUTPUT, '>>', $sequence_upload )
   or die "Error when opening -$sequence_upload-: $!";
+my $name;
 while ( my $line = <LOAD> ) {
     if ( $line =~ /^>/ ) {
         $name = $line;
@@ -156,10 +158,10 @@ if ( $check    eq "" ) { $check    = 0 }
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $check $mfei $randfold $align $dirJob_name $plant";
+"perl -I$dirLib $perl_script $check $mfei $randfold $align $absolute_job_dir $plant";
 debug("Running perl script $cmd", 1);
 system($cmd);
-my $finish_file = File::Spec->catfile( $dirJob_path, 'finished' );
+my $finish_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
 open( my $finish, '>', $finish_file ) || die "$!";
 close $finish_file;
 debug("Writing finish file $finish_file", 1);

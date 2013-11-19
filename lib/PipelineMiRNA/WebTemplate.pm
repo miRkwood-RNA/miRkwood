@@ -17,7 +17,8 @@ Return the contents of a given file in the stati directory
 sub get_static_file {
     my @args = @_;
     my $file_name = shift @args;
-    my $file = PipelineMiRNA::Paths->get_absolute_path('static', $file_name);
+    my $file = File::Spec->catfile(PipelineMiRNA::Paths->get_static_path(),
+                                   $file_name);
     open my $FILE, '<', $file;
     my $contents = do { local $/; <$FILE> };
     close $FILE;

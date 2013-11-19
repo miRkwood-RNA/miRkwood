@@ -23,9 +23,7 @@ use PipelineMiRNA::PosterioriTests;
 use Log::Message::Simple qw[msg error debug];
 
 ### Data ##
-my $dirData = PipelineMiRNA::Paths->get_absolute_path('data');
-
-#
+my $dirData = PipelineMiRNA::Paths->get_data_path();
 
 =method write_config
 
@@ -43,27 +41,26 @@ sub write_config {
 }
 
 sub main_entry {
-	my ( $check, $mfe, $randfold, $align, $dirJob_relative, $plant ) = @_;
+	my ( $check, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
 	my $debug    = 1;
-	my $dirJob   = PipelineMiRNA::Paths->get_absolute_path($dirJob_relative);
-	my $log_file = File::Spec->catfile( $dirJob, 'log.log' );
+	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
 	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
-	my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($dirJob);
+	my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
 	PipelineMiRNA->CONFIG_FILE($run_options_file);
 	write_config( $mfe, $randfold, $align, $run_options_file );
 
 	debug( 'BEGIN execute_scripts', $debug );
-	my $sequences_input = File::Spec->catfile( $dirJob, 'Sequences.fas' );
+	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
 	if ( $check eq 'checked' ) {
 		debug( 'FilteringCDS', $debug );
 
 		#Filtering CDS
-		PipelineMiRNA::Components::filter_CDS( $dirData, $dirJob, $plant );
+		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $plant );
 	}
 	else {
 		my $sequence_uploaded =
-		  File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+		  File::Spec->catfile( $job_dir, 'sequenceUpload.fas' );
 		debug( "Moving file $sequence_uploaded to $sequences_input", $debug );
 		File::Copy::move( $sequence_uploaded, $sequences_input );
 	}
@@ -80,13 +77,13 @@ sub main_entry {
 
 	foreach my $name ( keys %tab ) {
 		debug( "Considering $name", $debug );
-		my $temp_file = File::Spec->catfile( $dirJob, 'tempFile.txt' );
+		my $temp_file = File::Spec->catfile( $job_dir, 'tempFile.txt' );
 		open( my $TEMPFILE_FH, '>', $temp_file )
 		  or die "Error when opening tempfile -$temp_file-: $!";
 		chmod 0777, $temp_file;
 		print $TEMPFILE_FH "$name\n$tab{$name}";
 		my $name = substr $name, 1;
-		my $sequence_dir = File::Spec->catdir( $dirJob, $name );
+		my $sequence_dir = File::Spec->catdir( $job_dir, $name );
 		mkdir $sequence_dir;
 
 		my $rnalfold_output =
@@ -116,7 +113,7 @@ sub main_entry {
 		close($stem);
 		close($eval);
 	}
-	process_tests( $dirJob_relative, $dirJob );
+	process_tests( $job_dir );
 	return;
 }
 
@@ -390,10 +387,10 @@ Perform the a posteriori tests for a given job
 =cut
 
 sub process_tests {
-	my ( $relative_job_dir, $dirJob ) = @_;
-	debug( "A posteriori tests in $dirJob", 1 );
+	my ( $job_dir ) = @_;
+	debug( "A posteriori tests in $job_dir", 1 );
 	##Traitement fichier de sortie outStemloop
-	opendir DIR, $dirJob;    #ouverture répertoire job
+	opendir DIR, $job_dir;    #ouverture répertoire job
 	my @dirs;
 	@dirs = readdir DIR;
 	closedir DIR;
@@ -401,7 +398,7 @@ sub process_tests {
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
 		debug( "Considering $dir", 1 );
-		my $sequence_dir = File::Spec->catdir( $dirJob, $dir );
+		my $sequence_dir = File::Spec->catdir( $job_dir, $dir );
 		if (   $dir ne '.'
 			&& $dir ne '..'
 			&& -d $sequence_dir )    #si fichier est un répertoire
@@ -424,7 +421,7 @@ sub process_tests {
 					process_tests_for_candidate( $candidate_dir, $subDir );
 					debug( "Done with candidate $subDir", 1 );
 					debug(
-"Pseudo Serializing candidate information:\n $relative_job_dir, $dir, $subDir",
+"Pseudo Serializing candidate information:\n $job_dir, $dir, $subDir",
 						1
 					);
 					debug( "Like, really", 1 );
@@ -433,7 +430,7 @@ sub process_tests {
 						!eval {
 							PipelineMiRNA::Candidate
 							  ->serialize_candidate_information(
-								$relative_job_dir, $dir, $subDir );
+								$job_dir, $dir, $subDir );
 						}
 					  )
 					{

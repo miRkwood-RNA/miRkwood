@@ -3,9 +3,13 @@
 use warnings;
 use strict;
 
-use FindBin;                       # locate this script
-use lib "$FindBin::Bin/../lib";    # use the parent directory
-use PipelineMiRNA::MainPipeline;
+use FindBin;
+
+BEGIN {
+    use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
+    use PipelineMiRNA;
+    use PipelineMiRNA::MainPipeline;
+}
 
 
 ## Code ##

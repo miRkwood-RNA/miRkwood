@@ -368,7 +368,7 @@ function exportTo(id)
 	   alert("You must select at least one element to export!! ");
 	   return;
 	}
-	window.location = "/web_scripts/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
+	window.location = "/cgi-bin/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
 }
 
 

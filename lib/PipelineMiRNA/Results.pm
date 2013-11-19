@@ -58,7 +58,7 @@ sub jobId_to_jobPath {
     my ( $self, @args ) = @_;
     my $id_job      = shift @args;
     my $dirJob_name = 'job' . $id_job;
-    my $results_dir = PipelineMiRNA::Paths->get_results_dir_name();
+    my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
     my $jobPath = File::Spec->catdir( $results_dir, $dirJob_name);
     return $jobPath;
 }
@@ -72,8 +72,7 @@ Test whether a jobID is valid - ie if there are results for it.
 sub is_valid_jobID {
     my ( $self, @args ) = @_;
     my $id_job          = shift @args;
-    my $jobPath = $self->jobId_to_jobPath($id_job);
-    my $full_path = PipelineMiRNA::Paths->get_absolute_path($jobPath);
+    my $full_path = $self->jobId_to_jobPath($id_job);
     return (-e $full_path);
 }
 
@@ -89,8 +88,7 @@ my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
 sub get_structure_for_jobID {
     my ( $self, @args ) = @_;
     my $jobId   = shift @args;
-    my $job = $self->jobId_to_jobPath($jobId);
-    my $job_dir = PipelineMiRNA::Paths->get_absolute_path($job);
+    my $job_dir = $self->jobId_to_jobPath($jobId);
     PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path($job_dir));
     my %myResults = ();
 
@@ -116,7 +114,7 @@ sub get_structure_for_jobID {
                      && -d $subDir_full ) # si le fichier est de type repertoire
                 {
                     my %candidate;
-                    if (! eval { %candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $dir, $subDir) } ) {
+                    if (! eval { %candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job_dir, $dir, $subDir) } ) {
                         # Catching, do nothing
                     }else{
                         $myResults{$subDir} = \%candidate;
@@ -262,14 +260,14 @@ sub resultstruct2pseudoXML {
         for my $header (@headers1){
             $result .= " $header='${$value}{$header}'";
         }
-        my $img = PipelineMiRNA::Paths->get_server_path(${$value}{'image'});
+        my $img = PipelineMiRNA::Candidate->get_relative_image($value);
         $result .= " image='$img'";
         for my $header (@headers2){
             $result .= " $header='${$value}{$header}'";
         }
         $result .= "></Sequence>\n";
     }
-    $result .= "</results>";
+    $result .= "</results>\n";
     $result .= "<results id='all2'>\n";
     @keys = sort keys %results;
     @keys = sort { ( $results{$b}{'quality'} cmp
@@ -284,7 +282,7 @@ sub resultstruct2pseudoXML {
         for my $header (@headers1){
             $result .= " $header='${$value}{$header}'";
         }
-        my $img = PipelineMiRNA::Paths->get_server_path(${$value}{'image'});
+        my $img = PipelineMiRNA::Candidate->get_relative_image($value);
         $result .= " image='$img'";
         for my $header (@headers2){
             $result .= " $header='${$value}{$header}'";

@@ -38,13 +38,13 @@ sub retrieve_candidate_information {
     my $dir = shift @args;
     my $subDir = shift @args;
 
-    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
-
-    if ( ! -e $full_candidate_dir ){
+    my $candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
+#    die($candidate_dir);
+    if ( ! -e $candidate_dir ){
         die('Unvalid candidate information');
 
     }else{
-        my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
+        my $candidate_file = File::Spec->catfile($candidate_dir, $candidate_base_filename);
         return $self->deserialize_candidate($candidate_file);
     }
 }
@@ -60,11 +60,13 @@ sub serialize_candidate_information {
     my $seq_dir = shift @args;
     my $can_dir = shift @args;
 
-    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
+    my $full_candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
 
-    my $candidate_file = File::Spec->catfile($candidate_dir, $candidate_base_filename);
-    my %candidate = $self->parse_candidate_information($candidate_dir, $full_candidate_dir);
+    my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
+    my %candidate = $self->parse_candidate_information($full_candidate_dir);
     $candidate{'name'} = $seq_dir;    #récupération nom séquence
+    $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
+
     my @position = split( /__/, $can_dir );
     $candidate{'position'} = $position[1];
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
@@ -110,7 +112,6 @@ Arguments:
 
 sub parse_candidate_information {
     my ( $self, @args ) = @_;
-    my $candidate_dir = shift @args;
     my $full_candidate_dir = shift @args;
     my %result = ();
     my $pvalue =
@@ -156,9 +157,6 @@ sub parse_candidate_information {
     #Récupération alignement avec mirBase
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     $result{'alignment'} = ( -e $file_alignement && ! -z $file_alignement );
-
-    my $image_path = File::Spec->catfile($candidate_dir, 'image.png');
-    $result{'image'} = $image_path;
 
     # Computing general quality
     $result{'quality'} = $self->compute_quality(\%result);
@@ -207,7 +205,7 @@ Compute a general quality score
 
 =cut
 
-sub compute_quality(){
+sub compute_quality {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
     my $quality = 0;
@@ -220,6 +218,32 @@ sub compute_quality(){
         $quality += 1;
     }
     return $quality;
+}
+
+=method get_absolute_image
+
+Return the path to the image
+
+=cut
+
+sub get_absolute_image {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my $image = $candidate{'image'};
+    return $image;
+}
+
+=method get_relative_image
+
+Return the path to the image
+
+=cut
+
+sub get_relative_image {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my $image = $candidate{'image'};
+    return PipelineMiRNA::Paths->filesystem_to_relative_path($image);
 }
 
 =method candidateAsVienna
@@ -383,7 +407,7 @@ sub make_alignments_HTML {
     my $dir = shift @args;
     my $subDir = shift @args;
 
-    my ($candidate_dir, $full_candidate_dir) = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
+    my $candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
 
     # Alignments
 

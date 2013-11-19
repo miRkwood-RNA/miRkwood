@@ -33,62 +33,89 @@ sub get_job_config_path {
     return $job_config_path;
 }
 
-=method get_server_root_dir
+=method get_data_path
 
-Return the project root directory, as considered by the server
+Return the project data directory
 
 =cut
 
-sub get_server_root_dir {
+sub get_data_path {
     my ($self, @args) = @_;
     my %config = $self->get_config();
-    return $config{'server_root'};
+    return $config{'data'};
 }
 
-=method get_root_dir
+=method get_programs_path
 
-Return the project root directory
+Return the project programs directory
 
 =cut
 
-sub get_root_dir {
+sub get_programs_path {
     my ($self, @args) = @_;
     my %config = $self->get_config();
-    return $config{'absolute_root'};
+    return $config{'programs'};
 }
 
-=method get_results_dir_name
+=method get_static_path
 
-Return the project results (relatively to the root)
+Return the project static directory
 
 =cut
 
-sub get_results_dir_name {
+sub get_static_path {
     my ($self, @args) = @_;
     my %config = $self->get_config();
-    return $config{'results'};
+    return $config{'static'};
 }
 
-=method get_server_path
+=method get_scripts_path
 
-Append the given path to the server root
+Return the project static directory
 
 =cut
 
-sub get_server_path {
+sub get_scripts_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir( $self->get_server_root_dir(), @args );
+    my %config = $self->get_config();
+    return $config{'scripts'};
 }
 
-=method get_absolute_path
+=method get_lib_path
 
-Append the given path to the absolute root
+Return the project static directory
 
 =cut
 
-sub get_absolute_path {
+sub get_lib_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir( $self->get_root_dir(), @args );
+    my %config = $self->get_config();
+    return $config{'lib'};
+}
+
+
+=method get_results_web_path
+
+Return the path to the results, as seen from the web
+
+=cut
+
+sub get_results_web_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'web_results'};
+}
+
+=method get_results_filesystem_path
+
+Return the path to the results, as seen from the get_results_filesystem_path
+
+=cut
+
+sub get_results_filesystem_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'filesystem_results'};
 }
 
 =method get_candidate_paths
@@ -99,10 +126,24 @@ Return both the server and absolute paths for a given candidate
 
 sub get_candidate_paths {
     my ($self, @args) = @_;
-    my ($job,  $dir, $subDir) = @args;
-    my $candidate_dir = File::Spec->catdir($job,  $dir, $subDir);
-    my $full_candidate_dir = $self->get_absolute_path($candidate_dir);
-    return ($candidate_dir, $full_candidate_dir);
+    my ($job_dir,  $dir, $subDir) = @args;
+    my $candidate_dir = File::Spec->catdir($job_dir,  $dir, $subDir);
+    return $candidate_dir;
+}
+
+=method absolute_to_relative_path
+
+Convert a filesystem path to a web path
+
+=cut
+
+sub filesystem_to_relative_path {
+    my ($self, @args) = @_;
+    my $path = shift @args;
+    my $filesystem_path = PipelineMiRNA::Paths->get_results_filesystem_path();
+    my $web_path        = PipelineMiRNA::Paths->get_results_web_path();
+    $path =~ s/$filesystem_path/$web_path/g;
+    return $path;
 }
 
 1;

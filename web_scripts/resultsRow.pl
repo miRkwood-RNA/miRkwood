@@ -34,7 +34,8 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     $html_contents = "No results for the given identifiers";
 }else{
 
-    my $image_url = PipelineMiRNA::Paths->get_server_path($candidate{"image"});
+    my $image_url = PipelineMiRNA::Candidate->get_relative_image(\%candidate);
+
     my $size = length $candidate{'DNASequence'};
 
     my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&name=$name&position=$position";
@@ -55,8 +56,6 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     } else {
         $alternatives_HTML .= "<i>None</i>"
     }
-    use Data::Dumper;
-    my $toto = PipelineMiRNA::Candidate->alternativeCandidatesAsVienna(\%candidate);
 
     my $alignmentHTML;
     if($candidate{'alignment'}){
