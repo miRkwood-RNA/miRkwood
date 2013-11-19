@@ -80,16 +80,19 @@ is_deeply (\@result8 , \@expected8, 'Converting RNAfold output in ViennaTraited 
 
 my $alternative_candidates_file = input_file('alternativeCandidates.txt');
 file_exists_ok($alternative_candidates_file);
-ok( my %alternatives = PipelineMiRNA::Parsers::parse_alternative_candidates_file($alternative_candidates_file) );
+ok( my %alternatives = PipelineMiRNA::Parsers::parse_alternative_candidates_file($alternative_candidates_file),
+    'Can callparse_alternative_candidates_file');
+
 my %expected6;
-$expected6{'>contig15750__64-168'} = {
+$expected6{'contig15750__64-168'} = {
   'mfei' => '-0.879487179487179',
   'sequence' => 'cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg',
   'structure' => '((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))'
 };
-$expected6{'>contig15750__34-195'} = {
+$expected6{'contig15750__34-195'} = {
   'mfei' => '-1.00166666666667',
   'sequence' => 'gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc',
   'structure' => '((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))'
 };
+
 is_deeply( \%alternatives, \%expected6, 'Alternative candidate file is correctly parsed' );

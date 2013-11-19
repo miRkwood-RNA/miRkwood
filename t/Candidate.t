@@ -16,9 +16,9 @@ require_ok('PipelineMiRNA::Candidate');
 
 my $candidate_dir = input_file('contig15750__34-195');
 
-ok( my %candidate = PipelineMiRNA::Candidate->parse_candidate_information('/dummy/', $candidate_dir),
+ok( my %candidate = PipelineMiRNA::Candidate->parse_candidate_information($candidate_dir),
     'Can call parse_candidate_information()' );
-$candidate{'alignment'} = 'None'; # Hack to get around the full path thing
+#$candidate{'alignment'} = 'None'; # Hack to get around the full path thing
 
 
 my $seq    = 'gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc';
@@ -30,11 +30,10 @@ my %expected = ('p_value' => '0.125000',
                 'DNASequence' => $seq,
                 'Vienna' => $struct,
                 'Vienna_optimal' => $struct,
-                'image' => '/dummy/image.png',
-                'alignment' => 'None',
+                'alignment' => 1,
                 'quality' => '2',
 );
-is_deeply( \%candidate, \%expected, 'retrieve candidate information ok' );
+is_deeply( \%candidate, \%expected, 'parse candidate information ok' );
 
 my %dummy_alignments = ();
 push @{$dummy_alignments{'0-20'}}, ('A', 'B');
