@@ -261,7 +261,7 @@ sub train_mirdup {
 
 Predict a miRNA given a pre-miRNA using MiRdup model.
 
- Usage : PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence($sequence, $result_dir, $name);
+ Usage : PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence($sequence, $result_dir);
  Input : 
  Return: -
 
@@ -293,6 +293,16 @@ sub run_mirdup_prediction_on_sequence {
     return ( -e $output_file );
 }
 
+=method run_mirdup_prediction_on_sequence_file
+
+Predict a miRNA given a pre-miRNA using MiRdup model.
+
+ Usage : PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence_file($prediction_source_file);
+ Input : A prediction source file
+ Return: Name of the output file
+
+=cut
+
 sub run_mirdup_prediction_on_sequence_file {
     my @args                   = @_;
     my $prediction_source_file = shift @args;
@@ -308,7 +318,7 @@ sub run_mirdup_prediction_on_sequence_file {
     return $output_file;
 }
 
-=method run_mirdup_prediction_on_sequence
+=method run_mirdup_validation_on_file
 
 Validates a file with miRNA mature candidates using MiRdup.
 

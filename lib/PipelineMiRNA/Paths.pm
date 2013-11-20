@@ -23,6 +23,7 @@ sub get_config {
 
 =method get_job_config_path
 
+Given a job directory, return the path to the job configuration file
 
 =cut
 
@@ -155,7 +156,7 @@ sub get_candidate_paths {
     return $candidate_dir;
 }
 
-=method absolute_to_relative_path
+=method filesystem_to_relative_path
 
 Convert a filesystem path to a web path
 

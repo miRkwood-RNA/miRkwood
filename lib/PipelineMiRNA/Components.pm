@@ -23,6 +23,12 @@ struct Sequence => {   # déclaration de la structure de données (Sequence)
     base            => '@',
 };
 
+=method filter_CDS
+
+Filter the sequences based on Blast results
+
+=cut
+
 sub filter_CDS {
     my ( $dirData, $dirJob, $plant ) = @_;
 
@@ -62,6 +68,12 @@ sub filter_CDS {
     chmod 0777, $blast_output;
     return $input_sequences;
 }
+
+=method compute_energy
+
+Parse the CT file and fill the MFEI output file.
+
+=cut
 
 sub compute_energy {
     my ( $CT, $MFEI_output, $sequence_name ) = @_;
@@ -121,6 +133,12 @@ sub compute_energy {
     close $FOut or die "Unable to close: $!";
     return;
 }
+
+=method mask_CT_file
+
+Mask the CT file and outputting to boucleTermWithN_out file
+
+=cut
 
 sub mask_CT_file {
     my ( $CT, $boucleTermWithN_out ) = @_;

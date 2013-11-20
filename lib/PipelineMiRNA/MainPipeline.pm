@@ -40,6 +40,16 @@ sub write_config {
 	PipelineMiRNA->CONFIG($run_options);
 }
 
+=method main_entry
+
+Run the pipeline.
+
+ Usage : PipelineMiRNA::MainPipeline::main_entry( $ifilterCDS, $imfei, $irandfold, $ialign, $idirJob, $iplant );
+ Input : Booleans for pipeline options, job directory, plant identifier
+ Return: -
+
+=cut
+
 sub main_entry {
 	my ( $check, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
 	my $debug    = 1;
