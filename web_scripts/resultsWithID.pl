@@ -17,24 +17,28 @@ my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
+my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $js1 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js');
+my $js2 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'graphics.js');
+my $js3 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js');
+my $js4 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'imgpreview.full.jquery.js');
+
 my $id_job = $cgi->param('run_id'); # récupération id job
 my $name_job = $cgi->param('nameJob'); # récupération id job
 
-my $HTML_header = <<'END_TXT';
+my $HTML_header = <<"END_TXT";
 Content-type: application/xhtml+xml
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
     <head>
-        <link rel="stylesheet" type="text/css" href="/arn/style/script.css" />
-        <script type="text/javascript" language="Javascript" src="/arn/js/results.js"> </script>
-        <script type="text/javascript" src="/arn/js/graphics.js"></script>
-        <script type="text/javascript" src="/arn/js/miARN.js"></script>
-    	
-    	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript"></script>
-  		 <script src="/arn/js/imgpreview.full.jquery.js" type="text/javascript"></script>
-   	 	
+        <link rel="stylesheet" type="text/css" href="$css" />
+        <script type="text/javascript" language="Javascript" src="$js1"> </script>
+        <script type="text/javascript" src="$js2"></script>
+        <script type="text/javascript" src="$js3"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript"></script>
+        <script src="$js4" type="text/javascript"></script>
     </head>
 END_TXT
 

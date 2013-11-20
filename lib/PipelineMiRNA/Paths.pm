@@ -33,6 +33,30 @@ sub get_job_config_path {
     return $job_config_path;
 }
 
+=method get_css_path
+
+Return the project CSS directory
+
+=cut
+
+sub get_css_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'css'};
+}
+
+=method get_js_path
+
+Return the project JavaScript directory
+
+=cut
+
+sub get_js_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'js'};
+}
+
 =method get_data_path
 
 Return the project data directory

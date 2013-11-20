@@ -10,15 +10,14 @@ use File::Spec;
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
+use PipelineMiRNA;
 use PipelineMiRNA::WebTemplate;
 
 my $local_dir = dirname( abs_path($0) );
 my $rootdir = abs_path( File::Spec->catdir( $local_dir, '..' ) );
 
-my $dirScript  = File::Spec->catdir( $rootdir, 'scripts' );    # chemin script
-my $dirData    = File::Spec->catdir( $rootdir, 'data' );
-my $dirResults = File::Spec->catdir( $rootdir, 'results' );
-my $dirLib     = File::Spec->catdir( $rootdir, 'lib' );
+my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
+my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');

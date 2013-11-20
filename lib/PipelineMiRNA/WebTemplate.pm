@@ -70,6 +70,28 @@ sub get_link_back_to_results {
     return ("./resultsWithID.pl?run_id=$jobId");
 }
 
+=method get_css_file
+
+Return the main CSS file
+
+=cut
+
+sub get_css_file {
+    my @args = @_;
+    return File::Spec->catfile(PipelineMiRNA::Paths->get_css_path(), 'script.css');
+}
+
+=method get_js_file
+
+Return the main JavaScript file
+
+=cut
+
+sub get_js_file {
+    my @args = @_;
+    return File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js');
+}
+
 =method get_error_page
 
 Return a generic error page
@@ -79,13 +101,15 @@ Return a generic error page
 sub get_error_page {
     my @args = @_;
     my $error_message = shift @args;
+    my $css = get_css_file();
+    my $js  = get_js_file();
     my $html = <<"HTML";
 Content-type: text/html
 
 <html>
     <head>
-        <LINK rel="stylesheet" type="text/css" href="/arn/style/script.css" />
-        <script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+        <LINK rel="stylesheet" type="text/css" href="$css" />
+        <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <title>MicroRNA identification</title>
     </head>
     <body>
