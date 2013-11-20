@@ -13,9 +13,6 @@ BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA;
 use PipelineMiRNA::WebTemplate;
 
-my $local_dir = dirname( abs_path($0) );
-my $rootdir = abs_path( File::Spec->catdir( $local_dir, '..' ) );
-
 my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
 my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
@@ -37,8 +34,10 @@ my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
 
 my $dirJob_name = 'job' . $jobId;
-my $dirJob      = File::Spec->catdir( $rootdir, 'results', $dirJob_name );
-my $is_finished = File::Spec->catfile( $dirJob, 'finished' );
+
+my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
+my $job_dir     = File::Spec->catdir( $results_dir, 'results', $dirJob_name );
+my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
@@ -60,6 +59,9 @@ if ( $mail ne q{} ) {
 "<p>An E-mail notification will be sent to <strong>$mail</strong> as soon as the job is completed.</p>";
 }
 
+my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $js  = PipelineMiRNA::WebTemplate->get_js_file();
+
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
@@ -69,8 +71,8 @@ Content-type: text/html
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta http-equiv='Refresh' content='6;URL=$waiting_url'>
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-        <link title="test" type="text/css" rel="stylesheet" href="/arn/style/script.css" />
-        <script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+        <link title="test" type="text/css" rel="stylesheet" href="$css" />
+        <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
     </head>
     <body>
