@@ -89,7 +89,7 @@ elsif ( $typePage eq 'alignement' ) {
 }
 elsif ( $typePage eq 'image' ) {
     my @url = split( /\//xms, $url );
-    my $image_name = @url[5];
+    my $image_name = $url[5];
     $body = <<"DATA";
 		<div class="titreDiv"> MicroRNA identification results:</div>
 		<h2> Structure :</h2>

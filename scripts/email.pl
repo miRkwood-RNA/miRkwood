@@ -1,9 +1,13 @@
 #!/usr/bin/perl -w
 
-my ($title, $job) = @ARGV;
-if ($title eq "noTitle")
-{
-	$title= "";	
+my ($job, $title) = @ARGV;
+if ($title){
+    if ($title eq "noTitle")
+    {
+        $title= "";
+    }
+}else{
+    $title= "";
 }
 $to='benmounah.mohcen@gmail.com';
 $from= 'miarn@lifl.fr';
@@ -16,7 +20,13 @@ print MAIL "To: $to\n";
 print MAIL "From: $from\n";
 print MAIL "Subject: $subject $title\n\n";
 ## Mail Body
-print MAIL "Dear MicroARN program user,\n\nYour MicroARN web job is completed.\nResults are available at http://monprojet.com/cgi-bin/resultsWithID.pl?run_id=".$job." \n\nThank you for using program.\n";
+print MAIL <<"DATA";
+Dear MicroARN program user,
+
+Your MicroARN web job is completed.
+Results are available at http://monprojet.com/cgi-bin/resultsWithID.pl?run_id=".$job."
+Thank you for using program.\n";
+DATA
 
 close(MAIL);
 

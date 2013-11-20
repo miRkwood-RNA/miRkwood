@@ -46,7 +46,7 @@ my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 #le calcul est fini
 if ( -e $is_finished ) {
     my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
-    my $email_cmd = "perl $email_script $nameJob $jobId";
+    my $email_cmd = "perl $email_script $jobId $nameJob";
     system($email_cmd);
     print $html->redirect( -uri => $results_url )
       or die("Error when redirecting: $!");
