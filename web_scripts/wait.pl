@@ -36,7 +36,7 @@ my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_argume
 my $dirJob_name = 'job' . $jobId;
 
 my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
-my $job_dir     = File::Spec->catdir( $results_dir, 'results', $dirJob_name );
+my $job_dir     = File::Spec->catdir( $results_dir, $dirJob_name );
 my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
 
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
