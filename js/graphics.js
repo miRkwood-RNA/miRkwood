@@ -248,11 +248,11 @@ function createGrid(id,rowsNumber,columnsNumber)
 					{
 						
 						//td.innerHTML = "<a target='_blank' href='./resultsCell.pl?typePage=alignement&amp;url="+value+ "'>View alignment</a>  "; // ajouter la valeur à la cellule
-						td.innerHTML = "<img src='/arn/images/check.png' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
+						td.innerHTML = "<img src='/arn/style/check.png' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
 					}
 					else
 					{
-						td.innerHTML = "<img src='/arn/images/cross.svg' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
+						td.innerHTML = "<img src='/arn/style/cross.svg' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
 					
 					}
 				}
