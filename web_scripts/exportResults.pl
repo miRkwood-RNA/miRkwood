@@ -5,7 +5,7 @@ use warnings;
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use File::Spec;
-use Switch;
+use feature 'switch';
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
@@ -21,13 +21,14 @@ my @sequences_to_export =  split( ',',$data  );
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
 
 if ($valid) {
-    switch ($export_type) {
-        case 'gff'        { exportAsGFF($id_job) }
-        case 'odf'        { exportAsODF($id_job) }
-        case 'csv'        { exportAsCSV($id_job) }
-        case 'fas'        { exportAsFasta($id_job) }
-        case 'dot'        { exportAsDotBracket($id_job) }
-        else              { die("Error: the export type '$export_type' is not supported"); }
+
+    given ($export_type) {
+        when (/gff/) { exportAsGFF($id_job) }
+        when (/odf/) { exportAsODF($id_job) }
+        when (/csv/) { exportAsCSV($id_job) }
+        when (/fas/) { exportAsFasta($id_job) }
+        when (/dot/) { exportAsDotBracket($id_job) }
+        default { die("Error: the export type '$export_type' is not supported"); }
     }
 }
 else {

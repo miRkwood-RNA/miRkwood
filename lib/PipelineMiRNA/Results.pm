@@ -5,7 +5,7 @@ package PipelineMiRNA::Results;
 use strict;
 use warnings;
 
-use Switch;
+use feature 'switch';
 use Time::gmtime;
 
 use PipelineMiRNA::Candidate;
@@ -193,9 +193,9 @@ sub export {
         if (  $key ~~ \@sequences_to_export )
         {
             my $value = $results{$key};
-            switch ($export_type) {
-                case 'fas'        { $output .= PipelineMiRNA::Candidate->candidateAsFasta($value); }
-                case 'dot'        { $output .= PipelineMiRNA::Candidate->candidateAsVienna($value); }
+            given ($export_type) {
+                when (/fas/) { $output .= PipelineMiRNA::Candidate->candidateAsFasta($value); }
+                when (/dot/) { $output .= PipelineMiRNA::Candidate->candidateAsVienna($value); }
             }
         }
     }
