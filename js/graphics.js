@@ -226,7 +226,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				if ( factor =='quality') 
 				{	
 					var value = myResults.getValueByIndices(i-1,j-1); // appel fonction qui définit la valeur à partir des indices 				
-					var string = repeat("<img src='/arn/images/Star.png' alt='arobas' style='width:15px; height:15px;' /> 	 ", parseInt(value))
+					var string = repeat("<img src='/arn/style/Star.png' alt='arobas' style='width:15px; height:15px;' /> 	 ", parseInt(value))
 				
 					td.innerHTML = string;
 				}
@@ -235,7 +235,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					var value = myResults.getValueByIndices(i-1,j-1);
 			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
-					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'><img src='/arn/images/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
+					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'><img src='/arn/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
 					
 					//var a=document.createElement('a'); 
 					//var value = a.setAttribute("href","../images/".myResults.getValueByIndices(i-1,j-1));
