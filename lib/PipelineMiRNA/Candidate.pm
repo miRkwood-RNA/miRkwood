@@ -209,8 +209,10 @@ sub compute_quality {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
     my $quality = 0;
-    if ( $candidate{'mfei'} < -0.5 ){
-        $quality += 1;
+    if ( $candidate{'mfei'} ) {
+        if ( $candidate{'mfei'} < -0.5 ){
+            $quality += 1;
+        }
     }
     my $length = length ($candidate{'DNASequence'});
 
