@@ -145,16 +145,15 @@ print "Location: $waiting_url \n\n";
 my $check    = $cgi->param('check');
 my $mfei     = $cgi->param('mfei');
 my $randfold = $cgi->param('randfold');
-
 my $align    = $cgi->param('align');
 my $plant    = $cgi->param('db');
 if ( !$plant ) {
     $plant = "NonePlant";
 }
-if ( $mfei     eq "" ) { $mfei     = 0 }
-if ( $randfold eq "" ) { $randfold = 0 }
-if ( $align    eq "" ) { $align    = 0 }
-if ( $check    eq "" ) { $check    = 0 }
+if ( $mfei     ) { $mfei     = 1 } else { $mfei     = 0 }
+if ( $randfold ) { $randfold = 1 } else { $randfold = 0 }
+if ( $align    ) { $align    = 1 } else { $align    = 0 }
+if ( $check    ) { $check    = 1 } else { $check    = 0 }
 
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );

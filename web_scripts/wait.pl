@@ -53,7 +53,7 @@ if ( -e $is_finished ) {
     exit;
 }
 
-my $email_HTML;
+my $email_HTML = '';
 if ( $mail ne q{} ) {
     $email_HTML =
 "<p>An E-mail notification will be sent to <strong>$mail</strong> as soon as the job is completed.</p>";
