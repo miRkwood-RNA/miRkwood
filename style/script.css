@@ -281,7 +281,7 @@ tbody th.factors
 	border-color: #999999;
 	white-space: nowrap;
 	
-	background:#f0f5f6 url('../images/cell-grey.jpg');
+	background:#f0f5f6 url('cell-grey.jpg');
 }
 
 tbody td 
@@ -386,7 +386,7 @@ input#upload
 	vertical-align: text-bottom;
 	text-align: center;
 	font-size: 10pt;
-	font-weight: bold;	background:#b5cfd2 url('../images/cell-blue.jpg');
+	font-weight: bold;	background:#b5cfd2 url('cell-blue.jpg');
 	cursor: pointer;
 	position: relative;
 	display: block;
