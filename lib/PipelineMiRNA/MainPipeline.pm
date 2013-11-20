@@ -231,9 +231,9 @@ sub process_RNAstemloop {
 	create_directories( \%newHash, $current_sequence_dir );
 }
 
-=method trait_candidates
+=method treat_candidates
 
-
+Process the candidates and try merging them.
 
 =cut
 
@@ -313,8 +313,8 @@ sub treat_candidates {
 }
 
 =method create_directories
-s
 
+Create the necessary directories.
 
 =cut
 
