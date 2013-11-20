@@ -34,6 +34,19 @@ sub get_job_config_path {
     return $job_config_path;
 }
 
+=method get_web_root
+
+Return the web root
+(ie in http://myserver.org/web_root/<pipeline.pl>)
+
+=cut
+
+sub get_web_root {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'web_root'};
+}
+
 =method get_css_path
 
 Return the project CSS directory

@@ -131,4 +131,19 @@ sub make_mirbase_link {
     return $url . $id;
 }
 
+=method make_url
+
+Make an URL to the given page based on the server root
+
+=cut
+
+sub make_url {
+    my @args = @_;
+    my $page = shift @args;
+    # dirname( $ENV{HTTP_REFERER} );
+    my $path = File::Spec->catfile($ENV{SERVER_NAME}, PipelineMiRNA::Paths->get_web_root(), $page);
+    my $url  = 'http://'. $path;
+    return $url;
+}
+
 1;

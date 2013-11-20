@@ -27,7 +27,7 @@ my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
 my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
 my $formatFasta_bin = File::Spec->catfile( $dirScript, 'formatFasta.sh' );
-
+my $error_url = PipelineMiRNA::WebTemplate::make_url('error.pl');
 my $root = PipelineMiRNA::Paths->get_results_filesystem_path();
 
 if (! -e $root) {
@@ -84,8 +84,7 @@ if ( $seqArea eq "" )    # cas upload fichier
 
     if ( $seq !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
     {                               # erreur de syntaxe
-        print $cgi->redirect(
-            'http://' . $ENV{SERVER_NAME} . '/cgi-bin/error.pl' );
+        print $cgi->redirect($error_url);
         exit;
     }
 }
@@ -106,8 +105,7 @@ else                                #cas textArea
 
     if ( $seqArea !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
     {                                  # erreur de syntaxe
-        print $cgi->redirect(
-            'http://' . $ENV{SERVER_NAME} . '/cgi-bin/error.pl' );
+        print $cgi->redirect($error_url);
         exit;
     }
     close INPUT;
@@ -137,7 +135,10 @@ while ( my $line = <LOAD> ) {
 unlink($sequence_load);
 
 # redirection vers la page wait en attendant le calcul
-my $waiting_url ='http://' . $ENV{SERVER_NAME} . "/cgi-bin/wait.pl?jobId=$jobId&nameJob=$nameJob&mail=$mail";
+my $arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
+my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $arguments;
+
+
 print $cgi->redirect( -uri => $waiting_url  );
 print "Location: $waiting_url \n\n";
 

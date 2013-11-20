@@ -21,16 +21,21 @@ my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
-my $email   = $html->param('mail');
+my $mail   = $html->param('mail');
 my $nameJob = $html->param('nameJob');
 my $name    = $nameJob;
 
 my $check;
 if ( $nameJob eq q{} ) { $check = 'noTitle' }
 
-my $results_link = 'resultsWithID.pl?run_id=' . $jobId . '&nameJob=' . $name;
-my $results_full_link =
-  'http://' . $ENV{SERVER_NAME} . '/cgi-bin/' . $results_link;
+my $res_arguments = '?run_id=' . $jobId . '&nameJob=' . $name;
+my $results_page  = 'resultsWithID.pl';
+my $results_link  = $results_page . $res_arguments;
+my $results_url   = PipelineMiRNA::WebTemplate::make_url($results_page) . $res_arguments;
+
+my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
+my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
+
 my $dirJob_name = 'job' . $jobId;
 my $dirJob      = File::Spec->catdir( $rootdir, 'results', $dirJob_name );
 my $is_finished = File::Spec->catfile( $dirJob, 'finished' );
@@ -44,20 +49,15 @@ if ( -e $is_finished ) {
     my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
     my $email_cmd = "perl $email_script $nameJob $jobId";
     system($email_cmd);
-    print $html->redirect( -uri => $results_full_link )
+    print $html->redirect( -uri => $results_url )
       or die("Error when redirecting: $!");
     exit;
 }
 
-my $url =
-    'http://'
-  . $ENV{SERVER_NAME}
-  . "/cgi-bin/wait.pl?jobId=$jobId&nameJob=$name&mail=$email";
-
 my $email_HTML;
-if ( $email ne q{} ) {
+if ( $mail ne q{} ) {
     $email_HTML =
-"<p>An E-mail notification will be sent to <strong>$email</strong> as soon as the job is completed.</p>";
+"<p>An E-mail notification will be sent to <strong>$mail</strong> as soon as the job is completed.</p>";
 }
 
 print <<"DATA" or die("Error when displaying HTML: $!");
@@ -67,11 +67,11 @@ Content-type: text/html
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <meta http-equiv='Refresh' content='6;URL=$url'>
+        <meta http-equiv='Refresh' content='6;URL=$waiting_url'>
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
         <link title="test" type="text/css" rel="stylesheet" href="/arn/style/script.css" />
-		<script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-		<title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
+        <script src="/arn/js/miARN.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+        <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
     </head>
     <body>
         $bioinfo_menu
