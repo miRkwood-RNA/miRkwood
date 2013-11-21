@@ -34,6 +34,16 @@ sh install-programs.sh programs/
 ```
 - `RNAstemloop` has to be installed manually
 
+
+### Installing data
+
+The Pipeline relies on a few data files, most of which are under version control.
+
+The remaining data is to be deployed using The Shell script `install-data.sh`
+```
+sh install-data.sh data/
+```
+
 Installation troubleshooting
 ----------------------------
 
