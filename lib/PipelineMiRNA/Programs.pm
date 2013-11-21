@@ -13,9 +13,7 @@ use File::Copy;
 use Log::Message::Simple qw[msg error debug];
 
 use PipelineMiRNA::Paths;
-
-my $module_path = abs_path(dirname(__FILE__));
-my $rootdir = File::Spec->catdir($module_path, '..', '..');
+use PipelineMiRNA::Data;
 
 my $dirProgs = PipelineMiRNA::Paths->get_programs_path();
 
@@ -39,13 +37,6 @@ my $blastx_bin = 'blastx';
 
 my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.2', 'miRdup.jar' );
 
-## Data ##
-
-my $dirData = PipelineMiRNA::Paths->get_data_path();
-my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
-my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
-my $miRdup_model_path =File::Spec->catdir( $dirData, 'mirdup');
-my $miRdup_model_name = 'plant.model';
 
 =method list_programs
 
@@ -174,6 +165,8 @@ Return whether the output file exists.
 
 sub run_exonerate {
     my ( $input, $output ) = @_;
+    my $matrix_file = PipelineMiRNA::Data::get_matrix_file();
+    my $mirbase_file = PipelineMiRNA::Data::get_mirbase_file();
     my $output_fmt = '- name : %qi\n'
                     .'  begin_target  : %tab\n'
                     .'  end_target    : %tae\n'
@@ -276,6 +269,8 @@ sub run_mirdup_prediction_on_sequence {
     my $sequence    = shift @args;
     my $output_dir  = shift @args;
 
+    my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
+    my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
     my $output_root = 'out';
     my $output =
         $output_root
@@ -311,6 +306,9 @@ sub run_mirdup_prediction_on_sequence_file {
     my @args                   = @_;
     my $prediction_source_file = shift @args;
 
+    my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
+    my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
+
     my $run_mirdup_cmd =
 "java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -i $prediction_source_file -f out  > /dev/null 2>&1";
     chdir($miRdup_model_path) or die "$!";
@@ -335,6 +333,9 @@ Validates a file with miRNA mature candidates using MiRdup.
 sub run_mirdup_validation_on_file {
     my @args                   = @_;
     my $validation_source_file = shift @args;
+
+    my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
+    my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
 
     my $run_mirdup_cmd =
 "java -jar $miRdup_jar -r $vienna_progs_dir/ -c $miRdup_model_name -v $validation_source_file > /dev/null 2>&1";
