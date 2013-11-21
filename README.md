@@ -32,7 +32,10 @@ apt-get -s install $(cat apt-requirements.txt)
 ```
 sh install-programs.sh programs/
 ```
-- `RNAstemloop` has to be installed manually
+- `RNAstemloop` has to be installed differently. If you have access to the sequoia forge, run:
+```
+sh install-rnastemloop.sh programs/
+```
 
 
 ### Installing data
