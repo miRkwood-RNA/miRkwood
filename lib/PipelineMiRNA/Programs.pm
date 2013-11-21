@@ -12,10 +12,12 @@ use File::Basename qw(dirname);
 use File::Copy;
 use Log::Message::Simple qw[msg error debug];
 
+use PipelineMiRNA::Paths;
+
 my $module_path = abs_path(dirname(__FILE__));
 my $rootdir = File::Spec->catdir($module_path, '..', '..');
 
-my $dirProgs = File::Spec->catdir( $rootdir, 'programs' );
+my $dirProgs = PipelineMiRNA::Paths->get_programs_path();
 
 my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
 my $vienna_progs_dir = File::Spec->catdir( $vienna_dir, 'Progs');
@@ -35,10 +37,11 @@ my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
 my $blastx_bin = 'blastx';
 #File::Spec->catfile( $dirProgs, 'blastx' );
 
-my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.2'   , 'miRdup.jar' );
+my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.2', 'miRdup.jar' );
 
 ## Data ##
-my $dirData = File::Spec->catdir( $rootdir, 'data' );    # chemin séquence
+
+my $dirData = PipelineMiRNA::Paths->get_data_path();
 my $mirbase_file = File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
 my $matrix_file  = File::Spec->catfile( $dirData, 'matrix' );
 my $miRdup_model_path =File::Spec->catdir( $dirData, 'mirdup');
