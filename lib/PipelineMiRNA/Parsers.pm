@@ -118,30 +118,6 @@ sub parse_vienna {
     return @res;
 }
 
-=method parse_alignment
-
-Parse the contents of the given Alignment file
-
-Should be deprecated since the new YAML output format.
-
-=cut
-
-sub parse_alignment {
-    my @args            = @_;
-    my $alignement_file = shift @args;
-    open( my $FH, '<', $alignement_file )
-      or die "Error when opening file: $!";
-    my $align = 'none';
-    while ( my $line = <$FH> ) {
-        if ( $line =~ /^C4/xms ) {
-            $align = $alignement_file;
-            last;
-        }
-    }
-    close $FH or die("Error when closing: $!");
-    return $align;
-}
-
 =method parse_Vienna_line
 
 Parse the given Vienna format line, return a couple (structure, energy)
