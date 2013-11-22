@@ -1,0 +1,216 @@
+<span class='toc'><a href='#39-59'>39-59</a></span>
+<h3 id='39-59'>Prediction 1: 39-59</h3>
+        <pre style='height: 80px;'>      u  au      a        u   cuu    u <span class="mature"> -  c      -     u    </span>     --    uca-        
+gagagg uc  acauga gagaagag gcu   auua g<span class="mature">u ag caagga ugaau gccu</span>aauga  cagc    agucguuua
+|||||| ||  |||||| |||||||| |||   |||| || || |||||| ||||| |||||||||  ||||    |||||||| a
+cucuuc ag  uguacu cuuuuuuu cgg   uaau ca uc guucuu acuug cggauuauu  guug    ucagcaaaa
+      u  au      a        -   c--    u  g  a      u     -         ug    uuuc        
+</pre>
+        <ul>
+            <li>This prediction is not validated by MiRdup</li>
+        </ul>
+        <h4>Alignments</h4>
+        <pre>
+query            39 uagccaaggaugaauugccua 60
+                    ||||||||||||| ||||||| 
+MirBase           0 uagccaaggaugacuugccua 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001051'>osa-miR169f.1</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001052'>osa-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001453'>sbi-miR169c</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001454'>sbi-miR169d</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001729'>zma-miR169f</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001730'>zma-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001731'>zma-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001974'>ptc-miR169r</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005614'>bna-miR169c</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005615'>bna-miR169d</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005616'>bna-miR169e</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005617'>bna-miR169f</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0006554'>vvi-miR169x</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0007921'>sly-miR169d</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011334'>sbi-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011338'>sbi-miR169m</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011339'>sbi-miR169n</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0012563'>aqc-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018371'>far-miR169</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020394'>tcc-miR169d</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020699'>bdi-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0022511'>ssl-miR169</a></span>
+<pre>
+query            39 uagccaaggaugaauugcc-- 58
+                    |||||||||||||||||||   
+MirBase           0 uagccaaggaugaauugccag 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018217'>ata-miR169</a></span>
+<pre>
+query            39 uagccaaggaugaauugcc-- 58
+                    |||||||||||||||||||   
+MirBase           0 uagccaaggaugaauugccgg 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001049'>osa-miR169d</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    ||||||||||||| ||||||  
+MirBase           0 uagccaaggaugacuugccug 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000913'>ath-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000914'>ath-miR169i</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000915'>ath-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000916'>ath-miR169k</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000917'>ath-miR169l</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000918'>ath-miR169m</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000919'>ath-miR169n</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001053'>osa-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001054'>osa-miR169i.1</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001055'>osa-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001056'>osa-miR169k</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001057'>osa-miR169l</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001058'>osa-miR169m</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001456'>sbi-miR169f</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001457'>sbi-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001732'>zma-miR169i</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001733'>zma-miR169k</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001734'>zma-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001965'>ptc-miR169i</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001966'>ptc-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001967'>ptc-miR169k</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001968'>ptc-miR169l</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001969'>ptc-miR169m</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005814'>ghb-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0007919'>sly-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011337'>sbi-miR169l</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0012564'>aqc-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017499'>aly-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017501'>aly-miR169i</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017503'>aly-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017505'>aly-miR169k</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017507'>aly-miR169l</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017509'>aly-miR169m</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020398'>tcc-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020400'>tcc-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020680'>bdi-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020689'>bdi-miR169e</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    |||||| |||||||||||||  
+MirBase           0 uagccauggaugaauugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001981'>ptc-miR169y</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    ||||||||||||| ||||||  
+MirBase           0 uagccaaggaugauuugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014042'>sbi-miR169o</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    ||||||||||||| ||||||  
+MirBase           0 uagccaaggaugaguugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020399'>tcc-miR169i</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                     |||||||||||| ||||||| 
+MirBase           0 aagccaaggaugacuugccua 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011069'>mtr-miR169f</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    |||||||| |||| ||||||| 
+MirBase           0 uagccaagaaugacuugccua 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001059'>osa-miR169n</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001060'>osa-miR169o</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001459'>sbi-miR169i</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013991'>zma-miR169o</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020654'>bdi-miR169d</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    |||||||||| || ||||||| 
+MirBase           0 uagccaaggacgacuugccua 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001977'>ptc-miR169u</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    ||||||||||||| ||||| | 
+MirBase           0 uagccaaggaugacuugccca 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001978'>ptc-miR169v</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001979'>ptc-miR169w</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    |||||| |||||| ||||||| 
+MirBase           0 uagccagggaugacuugccua 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020397'>tcc-miR169g</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    |||| |||||||| ||||||| 
+MirBase           0 uagcgaaggaugacuugccua 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005677'>vvi-miR169y</a></span>
+<pre>
+query            37 uguagccaaggaugaauugcc- 58
+                    || |||||||||||| |||||  
+MirBase           0 ug-agccaaggaugacuugccg 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000908'>ath-miR169d</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000909'>ath-miR169e</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000910'>ath-miR169f</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000911'>ath-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001970'>ptc-miR169n</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014171'>rco-miR169c</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017491'>aly-miR169d</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017493'>aly-miR169e</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017495'>aly-miR169f</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017497'>aly-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020403'>tcc-miR169m</a></span>
+<pre>
+query            37 uguagccaagga-ugaauugcc 58
+                    ||||||||||||  || ||||| 
+MirBase          22 uguagccaaggacagacuugcc 0
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0015193'>zma-miR169c*</a></span>
+<pre>
+query            37 uguagccaaggaugaauugcc 58
+                    ||||||||||||  | ||||| 
+MirBase          21 uguagccaaggacaacuugcc 0
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0015329'>zma-miR169r*</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017486'>aly-miR169a*</a></span>
+<pre>
+query            38 guagccaaggaugaauugcc- 58
+                    | |||||||||||| |||||  
+MirBase           0 ggagccaaggaugacuugccg 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011065'>mtr-miR169e</a></span>
+<pre>
+query            39 uagccaaggaugaauugcc-- 58
+                    ||||||||||||| |||||   
+MirBase           0 uagccaaggaugacuugccgg 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001050'>osa-miR169e</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011333'>sbi-miR169e</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011335'>sbi-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0012189'>bdi-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013992'>zma-miR169p</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020278'>ssp-miR169</a></span>
+<pre>
+query            39 u-agccaaggaugaauugcc- 58
+                    | |||||||||||| |||||  
+MirBase           0 ucagccaaggaugacuugccg 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001975'>ptc-miR169s</a></span>
+<pre>
+query            39 uagccaaggaugaauugc-c- 58
+                    ||||||||||||| |||| |  
+MirBase           0 uagccaaggaugacuugcucg 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001980'>ptc-miR169x</a></span>
+<pre>
+query            39 uagccaaggaugaauugcc-- 58
+                     ||||||||||||||||||   
+MirBase           0 aagccaaggaugaauugccgg 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0006552'>vvi-miR169v</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    ||||||| ||||| ||||||  
+MirBase           0 uagccaaagaugacuugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017511'>aly-miR169n</a></span>
+<pre>
+query            39 uagccaaggaugaauugcc--u 59
+                    ||||||||||||| |||||  | 
+MirBase           0 uagccaaggaugauuugccugu 22
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020672'>bdi-miR169k</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu-- 59
+                    ||||||||||||| ||||||   
+MirBase           0 uagccaaggaugacuugccugc 22
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005618'>bna-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005619'>bna-miR169h</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005620'>bna-miR169i</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005621'>bna-miR169j</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005622'>bna-miR169k</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005623'>bna-miR169l</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005680'>vvi-miR169e</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                     |||||||||||| ||||||  
+MirBase           0 aagccaaggaugaguugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018218'>hvu-miR169</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                     |||||||||||| ||||||  
+MirBase           0 aagccaaggaugacuugccug 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001971'>ptc-miR169o</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001972'>ptc-miR169p</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    |||||||||| || ||||||  
+MirBase           0 uagccaaggacgacuugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001973'>ptc-miR169q</a></span>
+<pre>
+query            39 uagccaaggaugaauugcc-u 59
+                     |||||||||||| ||||| | 
+MirBase           0 gagccaaggaugacuugccgu 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0006548'>vvi-miR169l</a></span>
+<pre>
+query            39 uagccaaggaugaauugccu- 59
+                    |||||| |||||| ||||||  
+MirBase           0 uagccagggaugauuugccug 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013988'>zma-miR169l</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                     |||||||||||| ||||| | 
+MirBase           0 cagccaaggaugacuugccga 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000200'>ath-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000644'>osa-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001368'>zma-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001369'>zma-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001410'>sbi-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001643'>mtr-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001644'>mtr-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001951'>ptc-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001958'>ptc-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001959'>ptc-miR169c</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005612'>bna-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005613'>bna-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005681'>vvi-miR169f</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005682'>vvi-miR169g</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0007356'>gma-miR169b</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0007920'>sly-miR169c</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017485'>aly-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020391'>tcc-miR169a</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020393'>tcc-miR169c</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020395'>tcc-miR169e</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020695'>bdi-miR169a</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                     |||||||||||| ||||| | 
+MirBase           0 aagccaaggaugacuugccga 21
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0007357'>gma-miR169c</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    |||||||||| || ||||| | 
+MirBase           0 uagccaaggacgacuugccca 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001953'>ptc-miR169ab</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001954'>ptc-miR169ac</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001955'>ptc-miR169ad</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001956'>ptc-miR169ae</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001957'>ptc-miR169af</a></span>
+<pre>
+query            39 uagccaaggaugaauugccua 60
+                    |||||||| |||  ||||||| 
+MirBase           0 uagccaagaauggcuugccua 21
+</pre>
+<span class='others'>MirBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013989'>zma-miR169m</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013990'>zma-miR169n</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0013993'>zma-miR169q</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014043'>sbi-miR169p</a> ⋅ <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014044'>sbi-miR169q</a></span>
+<pre>
+query            40 agccaaggaugaauugcc-- 58
+                    |||||||||||| |||||   
+MirBase           0 agccaaggaugacuugccgg 20
+</pre>
+<span class='others'>MirBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018335'>gma-miR169e</a></span>
