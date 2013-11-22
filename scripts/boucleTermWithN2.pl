@@ -9,9 +9,13 @@
 use strict;
 use warnings;
 
-use PipelineMiRNA::Components;
+use FindBin;
 
+BEGIN {
+    use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
+    use PipelineMiRNA;
+    use PipelineMiRNA::Components;
+}
 
 my ( $CT, $boucleTermWithN_out ) = @ARGV;
 PipelineMiRNA::Components::mask_CT_file( $CT, $boucleTermWithN_out );
-
