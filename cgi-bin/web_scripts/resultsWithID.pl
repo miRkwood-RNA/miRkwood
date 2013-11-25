@@ -17,7 +17,8 @@ my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
-my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
+my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
 my $js1 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js');
 my $js2 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'graphics.js');
 my $js3 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js');
@@ -33,8 +34,8 @@ Content-type: application/xhtml+xml
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
     <head>
-        <link title="test" type="text/css" rel="stylesheet" href="/Style/bioinfo.css" />
-        <link rel="stylesheet" type="text/css" href="$css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
         <script type="text/javascript" language="Javascript" src="$js1"> </script>
         <script type="text/javascript" src="$js2"></script>
         <script type="text/javascript" src="$js3"></script>

@@ -59,7 +59,8 @@ if ( $mail ne q{} ) {
 "<p>An E-mail notification will be sent to <strong>$mail</strong> as soon as the job is completed.</p>";
 }
 
-my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
+my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
 my $js  = PipelineMiRNA::WebTemplate->get_js_file();
 
 print <<"DATA" or die("Error when displaying HTML: $!");
@@ -71,8 +72,8 @@ Content-type: text/html
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta http-equiv='Refresh' content='6;URL=$waiting_url'>
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-        <link title="test" type="text/css" rel="stylesheet" href="/Style/bioinfo.css" />
-        <link title="test" type="text/css" rel="stylesheet" href="$css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
         <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
     </head>

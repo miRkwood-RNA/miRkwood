@@ -11,7 +11,8 @@ my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
-my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
+my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
 my $js  = PipelineMiRNA::WebTemplate->get_js_file();
 
 print <<"DATA" or die("Error when displaying HTML: $!");
@@ -22,9 +23,8 @@ Content-type: text/html
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-<link title="test" type="text/css" rel="stylesheet" href="$css" />
-		
-        <script src="/Style/bioinfo.css" type="text/javascript" LANGUAGE="JavaScript"></script>
+<link title="test" type="text/css" rel="stylesheet" href="$project_css" />
+<link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
        <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <title>miREST</title>
 

@@ -24,7 +24,8 @@ my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
-my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
+my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
 my $js  = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js');
 
 =method make_HTML
@@ -42,7 +43,8 @@ Content-type: text/html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="/Style/bioinfo.css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
         <LINK rel="stylesheet" type="text/css" href="$css" />
         <script type="text/javascript" language="Javascript" src="$js"> </script>
         <title>MicroRNA identification</title>

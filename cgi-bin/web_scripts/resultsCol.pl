@@ -14,7 +14,8 @@ my @CGI_values = $cgi->param();
 my @names  = split( /,/xms, $cgi->param( $CGI_values[3] ) );
 my @values = split( /,/xms, $cgi->param( $CGI_values[1] ) );
 
-my $css = PipelineMiRNA::WebTemplate->get_css_file();
+my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
+my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
 my $js  = PipelineMiRNA::WebTemplate->get_js_file();
 
 my $HTML_list;
@@ -27,10 +28,9 @@ Content-type: text/html
 
 <html>
 	<head>
-		<LINK rel="stylesheet" type="text/css" href="$css" />
-		
+        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
+        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
 		<script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
-		
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
