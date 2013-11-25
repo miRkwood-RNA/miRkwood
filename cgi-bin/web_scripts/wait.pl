@@ -71,11 +71,14 @@ Content-type: text/html
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta http-equiv='Refresh' content='6;URL=$waiting_url'>
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
+        <link title="test" type="text/css" rel="stylesheet" href="/Style/bioinfo.css" />
         <link title="test" type="text/css" rel="stylesheet" href="$css" />
         <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
     </head>
     <body>
+       <div class="logo"></div>
+       <div class="theme-border"></div>
         $bioinfo_menu
         <div class="bloc_droit">
             $header_menu
@@ -92,8 +95,8 @@ Content-type: text/html
                     </div>
                 </div><!-- dialog -->
             </div><!-- main -->
-            $footer
         </div><!-- bloc droit-->
+      $footer
     </body>
 </html>
 DATA

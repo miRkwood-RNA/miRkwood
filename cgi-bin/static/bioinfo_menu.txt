@@ -1,133 +1,155 @@
 <!-- debut du fichier qui represente le menu colore vertical de gauche -->
 
 <div class="bloc_gauche">
-  <div class="nav-top"></div>
   <div class="menu">
-    
-    <!-- SEQUOIA -->
-    <ul class="menu_partie">
-      <li class ="case_titre Research_titre"> 
-    <a href="/index.php">bioinfo.lifl.fr</a>
-      </li>
-      <li class ="case Research"> 
-    <a href="http://www.lifl.fr/bonsai">Bonsai</a>
-      </li>
-    </ul>
-    
-    <!-- Mreps -->
+      
+    <!-- DNA -->
     <ul class="menu_partie"> 
-      <li class ="case_titre Mreps_titre">
-    <a href="/mreps/index.php">mreps</a>
+      <li class ="case_titre DNA_titre">
+	<a href="/DNA/">DNA</a> 
       </li>
-    </ul>
-    
-    <!-- Yass -->
-    <ul class="menu_partie">
-      <li class ="case_titre Yass_titre">
-    <a href="/yass/index.php">YASS</a>
+    <!-- YASS -->  
+      <li class ="case DNA">
+	<a href="/yass/">YASS</a>
       </li>
-    </ul> 
-
     <!-- Magnolia -->
-    <ul class="menu_partie">
-      <li class="case_titre Magnolia_titre">
-    <a href="/magnolia/index.php">Magnolia</a>
+      <li class="case DNA">
+        <a href="/magnolia/">Magnolia</a>
+      </li>
+    <!-- Mreps --> 
+      <li class ="case DNA">
+	<a href="/mreps/">mreps</a>
       </li>
     </ul>
     
-
+    
+    <!-- HTS -->
     <ul class="menu_partie">
-      <li class="case_titre proteins_titre">
-    <a href="/proteins/index.php">Proteins</a>
+      <li class="case_titre HTS_titre">
+	<a href="/HTS/">HTS</a>
       </li>
-    <!-- Path -->
-      <li class ="case proteins">
-        <a href="/path/index.php">Path</a>
+    <!-- SortMeRNA -->
+      <li class="case HTS">
+        <a href="/RNA/sortmerna/">SortMeRNA</a>
       </li>
-    <!-- Protea -->
-      <li class="case proteins">
-    <a href="/protea/index.php">Protea</a>
+    <!-- CRAC -->
+      <li class="case HTS">
+	<a href="/crac/">CRAC</a>
       </li>    
-    <!-- Reblosum -->
-      <li class="case proteins">
-    <a href="/reblosum/index.php">ReBLOSUM</a>
+    <!-- Vidjil -->
+      <li class="case HTS">
+	<a href="/vidjil/">Vidjil</a>
+      </li>
+    <!-- SToRM -->
+      <li class="case HTS">
+	<a href="/yass/iedera_solid/storm/">SToRM</a>
       </li>
     </ul>
-        
+    
     <!-- RNA -->
     <ul class="menu_partie"> 
       <li class="case_titre Rna_titre">
-    <a href="/RNA/index.php">RNA</a>
+	<a href="/RNA/">RNA</a>
       </li>
+    <!-- Carnac -->
       <li class="case Rna">
-    <a href="/RNA/carnac/index.php">Carnac</a>
+	<a href="/RNA/carnac/">Carnac</a>
       </li>
+    <!-- RNAfamily -->
       <li class="case Rna">
-    <a href="/RNA/RNAfamily/rnafamily.php">RNAfamily</a>
+	<a href="/RNA/RNAfamily/rnafamily.php">RNAfamily</a>
       </li>
+    <!-- Gardenia -->
       <li class="case Rna">
-    <a href="/RNA/gardenia/index.php">Gardenia</a>
+	<a href="/RNA/gardenia/">Gardenia</a>
       </li>
+    <!-- Regliss -->
       <li class="case Rna">
-    <a href="/RNA/regliss/index.php">Regliss</a>
+	<a href="/RNA/regliss/">Regliss</a>
       </li>
+    <!-- GC-seq -->  
       <li class="case Rna">
-    <a href="/CGseq/index.php">CG-seq</a>
+	<a href="/CGseq/">CG-seq</a>
       </li>
+    <!-- RNAspace -->
       <li class="case Rna">
-        <a href="/RNA/sortmerna/index.php">SortMeRNA</a>
+        <a href="http://www.rnaspace.org/">RNAspace</a>
+      </li>
+    <!-- MiRNA -->
+      <li class="case Rna">
+      	  <a href="/cgi-bin/MiRNA/web_scripts/interface.pl">MiRNA</a>
       </li>
     </ul>
+    
+    
+    <!-- Proteins -->
+    <ul class="menu_partie">
+      <li class="case_titre proteins_titre">
+	<a href="/proteins/">Proteins</a>
+      </li>
+    <!-- Path -->
+      <li class ="case proteins">
+        <a href="/path/">Path</a>
+      </li>
+    <!-- Protea -->
+      <li class="case proteins">
+	<a href="/protea/">Protea</a>
+      </li>    
+    <!-- Reblosum -->
+      <li class="case proteins">
+	<a href="/reblosum/">ReBLOSUM</a>
+      </li>
+    </ul>        
+    
     
     <!-- TFM -->
     <ul class="menu_partie"> 
       <li class="case_titre Tfm_titre">
-    <a href="/TFM/">TFM</a>
+	<a href="/TFM/">TFM</a>
       </li>
+    <!-- TFM-Explorer -->
       <li class ="case Tfm">
-    <a href="/TFM/TFME/">TFM-Explorer</a>
+	<a href="/TFM/TFME/">TFM-Explorer</a>
       </li>
+    <!-- TFM-Scan -->
       <li class ="case Tfm">
-    <a href="/TFM/TFMscan/">TFM-Scan</a>
+	<a href="/TFM/TFMscan/">TFM-Scan</a>
       </li>
+    <!-- TFM-Pvalue -->
       <li class="case Tfm">
-    <a href="/TFM/TFMpvalue/">TFM-Pvalue</a>
-      </li>      
+	<a href="/TFM/TFMpvalue/">TFM-Pvalue</a>
+      </li>
+    <!-- TFM-CUDA -->
       <li class="case Tfm">
-    <a href="/TFM/TFM-CUDA/">TFM-CUDA</a>
-      </li>      
+	<a href="/TFM/TFM-CUDA/">TFM-CUDA</a>
+      </li>
     </ul>
 
-    <!-- NRPS -->
-    <ul class="menu_partie no-margin">
-      <li class ="case_titre Nrps_titre">
-    <a href="/norine/">NRPS</a>
+    <!-- NRP -->
+    <ul class="menu_partie">
+      <li class ="case_titre Nrp_titre">
+	<a href="/norine/">NRP</a>
       </li>
-      <li class ="case Nrps"> 
-    <a href="/norine/form.jsp">Norine</a>
+    <!-- Norine -->
+      <li class ="case Nrp"> 
+	<a href="/norine/">Norine</a>
+      </li>
+    </ul>
+
+    <!-- Cacolac -->
+    <ul class="menu_partie">
+      <li class ="case_titre cacolac_titre">
+	<a href="/cacolac/">Cacolac</a>
+      </li>
+      <li class ="case cacolac"> 
+	<a href="/cgi-bin/cacolac/cacolac.py">Cacolac</a>
       </li>
 
     </ul>
-    
-  </div> <!-- left menu -->
-  <div class="nav-bottom"></div>  
+
+  </div>
+     
 </div> <!-- bloc gauche-->
 
-
-<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://bioinfo.lifl.fr/piwik/" : "http://bioinfo.lifl.fr/piwik/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script>
-<noscript><p><img src="http://bioinfo.lifl.fr/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
-
-
-<!-- End Piwik Tag -->
-
 <!-- fin du fichier menu.txt -->
+

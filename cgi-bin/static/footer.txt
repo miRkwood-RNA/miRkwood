@@ -1,3 +1,13 @@
- <div class="copyright">
-          2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>
- </div>
+<div class="theme-border-footer"></div>
+<div class="copyright">
+     <table class="footerTable">
+     	    <tr>
+		<td align="left">
+		For questions about <b>MiRNA</b> or for bug reports, please contact MiRNA team
+		</td>
+		<td align="right">
+		2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>
+        	</td>
+	     </tr>
+     </table>
+</div>

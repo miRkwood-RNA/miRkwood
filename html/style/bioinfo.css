@@ -1,111 +1,44 @@
-html, body{
+@import url(../Style/css/box_homepage.css);
+@import url(../Style/css/page_theme.css);
+@import url(../Style/css/divers.css);
+@import url(../Style/css/footer.css);
+@import url(../Style/css/header.css);
+@import url(../Style/css/menu_left.css);
+@import url(../Style/css/table.css);
+
+html{
+ width: 990px;
+ display: block;
+ margin: auto;
+ overflow-y:scroll;
+}
+
+body{
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    background-color: #f8f8f8;
+    background-color: white;
     color: #000;  
-    margin-left: 0px;
-    padding-left: 10px;	
-    width: 980px;
+    margin:0px;
+    padding-left: 0px;	
+    width:990px;
+    border-style:solid;
+    border-color:lightgrey;
+    border-width:1px;
 }
 
 /***************************************************************************** 
 *** SIDEBAR 
 *****************************************************************************/
 .bloc_gauche{
-    position: absolute;
+    float:left;
     width: 190px;
-    left: 35px;
-    top: 157px;
     font-size: 14px;    
-    padding: 0;
-    margin: 0;
-    z-index: 1;
+    margin-top:115px;
+    margin-bottom:10px;
+    position: relative;
+    *position: absolute; /* Pour IE 7 et inferieur */
 }
 
-.menu{
-    background: #fff url(nav_border.png) repeat-y;  
-    width: 100%;
-    padding-left: 5px;
-}
 
-.nav-top{
-    height: 20px;
-    background: #fff url(nav_top.png);
-}
-
-.nav-bottom{
-    height: 20px;
-    background: #fff url(nav_bottom.png);
-}
-
-ul.menu_partie{
-    list-style-type: none;
-    padding-left: 13px;
-    margin-bottom: 5px;
-    margin-top: 0px;
-    width: 140px;
-    margin-left: 0;
-}
-
-ul.no-margin{
-    margin-bottom: 0px;
-}
-
-ul.menu_partie li{
-    list-style-type: none;
-}
-
-ul.menu_partie li a{
-    display: block;
-    height: 20px;
-    border: 0px;
-    color: black;
-}
-
-ul.menu_partie li a:hover{
-    text-decoration: none;
-    border: 0px;	
-    color: black;
-}
-
-ul.menu_partie li a:visited{
-    text-decoration: none;
-    border: 0px;
-    color: black;
-}
-
-ul.menu_partie li.case_titre{
-    padding: 0px;
-    text-align: left;
-    list-style-type: none;
-    font-weight: bold;
-    height: 20px; /* must be here to prevent a IE bug */
-}
-
-ul.menu_partie li.case_titre a{
-   margin: 0px;
-   display: block;
-   padding-top: 0pt;
-   padding-bottom: 0pt;
-   padding-right: 0pt;
-   padding-left: 9px;
-   /* width: 124px; */  /* must be here to prevent a IE bug */
-}
-
-ul.menu_partie li.case{
-    padding: 0;
-    text-decoration: none;
-    text-align: left;
-    height: 20px; 
-}
-
-ul.menu_partie li.case a{
-    display: block;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-right: 0;
-    padding-left: 26px;
-    /* width:  107px; *//*   must be here to prevent a IE bug */
-}
 
 /***************************************************************************** 
 *** BLOC PRINCIPAL 
@@ -115,81 +48,41 @@ ul.menu_partie li.case a{
 .bloc_droit{
     margin: 0px;
     padding-top: 0;
-    padding-left: 195px;
-    background: #f8f8f8 url(border.png) top left repeat-y;
-    z-index: 3;
-    /width: 900px;
+    padding-left: 194px;
+    *margin-bottom: 55px; /* Pour IE 7 et inférieur */
 }
 
-.theme-border{
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    left: 30px;
-    top: 104px;
-    /top: 112px;
-    width: 960px;
-    height: 3px;
-    z-index: 3;
-    background-color: #000;
-    overflow: hidden;
+/** Description *************************************************************/
+
+.bioinfo{
+  margin-bottom:20px;
+  width:700px;  
 }
 
-.logo{
-    position: absolute;
-    width: 100px;
-    height: 70px;
-    left: 50px;
-    top: 26px;
-    background: url(logo.png) top left no-repeat;
-    z-index: 5;
+.bioinfo p{
+  font-size:1.2em;
+  padding-top:8px;
+  margin-left:0px;
 }
-
-/** HEADER ******************************************************************/
-
-.frametitle, .menu_haut{
-    position: relative;
-    padding: 0;
-    margin: 0;
-    left: -195px;
-    height: 130px;
-    width: 980px;
-    margin-bottom: 30px;
-    background: #fff url(header.png);
-    text-align: center;
-}
-
-.frametitle h1, .menu_haut h1{
-    position: relative;
-    margin: 0;
-    left: 70px;
-    padding: 20px;
-    padding-top: 35px;
-    font-size: 26px;;
-    font-weight: bold;
-}
-
-.frametitle h1 a, .menu_haut h1 {
-   text-decoration: none;
-   color: #000;
-}	
 
 .menu_central{
     position: relative;
     top: 11px;
     left: 10px;
-    /left: 0px;
     width: 810px;
     height: 23px;
-    padding-top: 10px;    
+    padding-top: 18px;    
     font-size: 14px;
     color: #444;
     padding-left: 150px;
     background-color: #fff;
+    *padding-top:0px;/* pour IE 7 et inférieur*/
+    *top:80px;/* pour IE 7 et inférieur*/
+    *position:absolute;/* pour IE 7 et inférieur*/
 }
 
 .menu_central a, .menu_central a:hover, .menu_central a:visited{
-    padding: 4px;
+    padding: 11px 4px 4px;
     font-weight: bold;
     margin-left: 20px;
     color: #444;
@@ -198,63 +91,22 @@ ul.menu_partie li.case a{
 
 .menu_central a:hover{ 
     background-color: #ccc;
+    border-radius:0px 0px 5px 5px;
  }
-
-/** FOOTER ******************************************************************/
-
-.footer{
-    margin-top: 20px;
-    width: 550px;
-    position: relative;
-    left: 205px;
-    bottom: -43px;
-    text-align: right;
-    height: 25px;
-    color: #000;
-    margin-left: 10px;
-    padding-right: 10px;
-    font-style: italic;
-    font-size: 12px;
-    z-index: 2;
-}
-
-.copyright{
-    width: 950px;
-    position: relative;
-    left: -185px;
-    text-align: left;
-    height: 27px;
-    padding-top: 17px;
-    padding-left: 10px;
-    font-size: 10px;
-    color: black;
-    border-top: 3px solid #000;
-    background: url(footer.png) -10px 1px;
-    z-index: 1;
-}
-
-.copyright a{
-    font-weight: bold;
-    text-decoration: underline;
-}
 
 /** CONTENT ******************************************************************/
 .main{
     width: 730px;
     min-height: 530px;
     height: auto !important;
-    height: 530px;
-    padding-right: 20px;
-    padding-left: 20px;
     font-size: 12px;
     background-color: #fff;
+    margin-left:8px;
+    padding-top:25px;
+    text-align:left;
 }
 
-.logos {
-    padding-top: 30px;	
-    padding-bottom: 10px; 
-    text-align : center;
-}
+
 
 h2{
     margin-top: 0;
@@ -271,13 +123,14 @@ h2{
 
 h2:first-letter {
   font-weight: bold;
-  font-size: 2em;
+  font-size:1.2em;
   color: #000;
   background-color: #fff;
 }
 
-h2:before{
-    content: ". ";
+h3{
+  color:#000;
+  font-size: 1.5em;
 }
 
 p{
@@ -314,312 +167,7 @@ a{
   text-decoration: none;
 }
 
-/* DIVERS ********************************************************************/
-
-.center{
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.exemple{
-    border: 0px dashed black; 
-    background-color: #e8f0fc;
-    color:#000000;
-    text-align: left; 
-    font-family: monospace;
-    font-size: 1em;	 
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    overflow: auto;
-}
-
-.bande_formulaire{
-    border: 1px solid #e3e9fb;
-    background-color: #EFF2FB;
-    color: black;
-    padding: 10px;
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-}
-
-.error{
-    font-size: 14px;
-    color: white;
-    background-color : red;
-    text-align: center;
-    margin-bottom : 10px;
-}
-
-.dialog
-{
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0px;
-    text-align: left;
-    padding: 5px;
-}
-
-/********* Tableaux **********************************************************/
-
-table.default{
-   border: 0px;
-   width: auto;
-   height: auto;
-   font-size: 10px;
-   border-collapse: collapse;  
-}
-
-table.default tr td{  
-   border: 1px black solid;
-   text-align: left;
-   color:#000000;
-   background-color: white;
-   padding-left: 10px;
-   padding-right: 10px;
-   padding-top: 1px;
-   padding-bottom: 1px;
-}
-
-table.default th{
-  border: 1px solid black;
-  padding: 1px;
-
-}
-
-.center table.default{ 
-   margin: auto;
-}
-
-.center caption{
-   margin: auto;
-}
-
-table.result{
-  white-space: nowrap; 
-  border-collapse: collapse;
-  border: 1px black solid;
-  width: auto;
-  height: auto;
-  font-size: 9px;
-  text-align: center;
-  
-}
-
-.center table.result{
-  margin: auto;
-}
-
-caption.result{
- font-family : Verdana;
-}
-
-table.result th{
-  font-family : Verdana;
-  border : 0px;
-  color : black;
-  background-color:#adbfe2;
-  text-align: center;
-  font-size: 10px;
-  font-weight: bold;
-  padding: 3px;
-}
-
-table.result tr.pair td{
- font-family: monospace;
- border: 0px;
- color: black;
- background-color:#f0f3fc;
- padding-left: 5px;
- padding-right: 5px;
- text-align: center;	 
-}
-
-table.result tr.impair td{
-  font-family: monospace;
-  border: 0px;
-  padding-left: 5px;
-  padding-right: 5px;
-  text-align: center;
-}
-
-table.result tr.pair{
- font-family: monospace;
- border: 0px;
- color: black;
- background-color:#EFF2FB;
- padding-left: 5px;
- padding-right: 5px;
- text-align: center;	 
-}
-
-table.result tr.impair{
-  font-family: monospace;
-  border: 0px;
-  color: black;
-  background-color:white;
-  padding-left: 5px;
-  padding-right: 5px;
-  text-align: center;
-}
-
-table.result tr.pair td.important{
-  border: 0px;
-  font-family: monospace;
-  color: black;
-  background-color:#D8D8D8; 
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-table.result tr.impair td.important{
-  font-family: monospace;
-  border: 0px;
-  color: black;
-  background-color:#F0F0F0; 
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-/*** mise en valeur lors du passage de la souris dans le tableau resultat ***/
-table.result tr.pair:hover td, table.result tr.impair:hover td{
-  color: white;
-  background-color: #003399; 
-  cursor: default; 
-}
-
-table.result tr.pair:hover td a, table.result tr.impair:hover td a{
- color: white;
- background-color: #003399; 
-}
-
-/* tableaux de construction (ne se voit pas)*/
-table.vide{
-   border: 0px;
-   border-collapse: separate;
-   margin: 0px;
-   padding: 0px; 
-}
-
-table.vide table.vide{
-  margin: 0px;
-}
-
-table.vide td{
-   text-align: left;
-   background-color: transparent;
-   color: black;
-   border: 0px;
-   padding-left: 5px;
-   padding-right: 5px;
-   padding-top: 5px;
-}
-
-table.vide td.center{
-  text-align: center;
-}
-
-table.vide tr td.label{
-  border: 0px solid black;
-  padding-left: 0px;
-  padding-right: 3px;
-}
 
 
-/**** themes ******************************************************************/
 
-li.Research_titre, li.Research{
-    border-left: 15px solid #000;
-}
-
-li.Research a:hover, li.Research_titre a:hover{
-    background-color: #CCCCCC;
-}
-
-li.Yass_titre, li.Yass{
-    border-left: 15px solid #587cf1;
-}
-
-li.Yass a:hover, li.Yass_titre a:hover{
-    background-color: #BFEFFF;
-}
-
-li.Rna, li.Rna_titre{
-    border-left: 15px solid #CC0000;
-}
-
-li.Rna a:hover, li.Rna_titre a:hover{
-    background-color: #FFCCCC;
-}
-
-li.proteins, li.proteins_titre{
-    border-left: 15px solid #FFA815;
-}
-
-li.proteins a:hover, li.proteins_titre a:hover{
-    background-color: #FFCC99;
-}
-
-/* li.Protea, li.Protea_titre{ */
-/*     border-left: 15px solid #FFA815; */
-/* } */
-
-/* li.Protea a:hover, li.Protea_titre a:hover{ */
-/*     background-color: #FFCC99; */
-/* } */
-
-/* li.Reblosum, li.Reblosum_titre{ */
-/*     border-left: 15px solid #FFA815; */
-/* } */
-
-/* li.Reblosum a:hover, li.Reblosum_titre a:hover{ */
-/*     background-color: #FFCC99; */
-/* } */
-/* li.Path_titre, li.Path{ */
-/*     border-left: 15px solid #FFA815; */
-/* } */
-
-/* li.Path a:hover, li.Path_titre a:hover{ */
-/*     background-color: #FFCC99; */
-/* } */
-li.Magnolia, li.Magnolia_titre{
-    border-left: 15px solid #66CC00;
-}
-
-li.Magnolia a:hover, li.Magnolia_titre a:hover{
-    background-color: #CCFF99;
-}
-
-li.Tfm, li.Tfm_titre{
-    border-left: 15px solid #800080;
-}
-
-li.Tfm a:hover, li.Tfm_titre a:hover{
-    background-color: #dbafd4;
-}
-
-li.Nrps, li.Nrps_titre{
-    border-left: 15px solid #66CC66;
-}
-
-li.Nrps a:hover, li.Nrps_titre a:hover{
-    background-color: #CCFF99;
-}
-
-li.Mreps, li.Mreps_titre{
-    border-left: 15px solid #0000CC;
-}
-
-li.Mreps a:hover, li.Mreps_titre a:hover{
-    background-color: #9999FF;
-}
 

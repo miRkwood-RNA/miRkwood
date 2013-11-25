@@ -21,6 +21,7 @@ Content-type: text/html
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
+<link title="test" type="text/css" rel="stylesheet" href="/Style/bioinfo.css" />
 <link title="test" type="text/css" rel="stylesheet" href="$css" />
 
 		<script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
@@ -61,7 +62,7 @@ $header_menu
 </div> <!-- form -->
 <br>
 </div>
-
+</div> <!-- bloc droit -->
 $footer
 
 </body>

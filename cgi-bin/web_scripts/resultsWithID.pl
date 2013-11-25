@@ -33,6 +33,7 @@ Content-type: application/xhtml+xml
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
     <head>
+        <link title="test" type="text/css" rel="stylesheet" href="/Style/bioinfo.css" />
         <link rel="stylesheet" type="text/css" href="$css" />
         <script type="text/javascript" language="Javascript" src="$js1"> </script>
         <script type="text/javascript" src="$js2"></script>
@@ -56,7 +57,9 @@ if($valid){
 
     print <<"HTML";
 $HTML_header    <body onload="main('all');">
-
+    <div class="theme-border"></div>
+    <div class="logo"></div>
+    $bioinfo_menu
 <div class="bloc_droit">
 
 $header_menu
@@ -86,10 +89,8 @@ $HTML_results
        
         <div id="id_job" >$id_job</div>
     </div><!-- main -->
-
-    $footer
     </div><!-- bloc droit-->
-    	
+    	$footer
     </body>
 </html>
 HTML
@@ -107,8 +108,8 @@ $HTML_header
         $HTML_additional
             <p>No results available for the given job identifier $id_job: $valid </p>
         </div><!-- main -->
-    $footer
     </div><!-- bloc droit-->
+    $footer
     </body>
 </html>
 HTML

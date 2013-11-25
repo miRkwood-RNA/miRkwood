@@ -22,7 +22,7 @@ Content-type: text/html
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
 <link title="test" type="text/css" rel="stylesheet" href="$css" />
-
+		<script src="/Style/bioinfo.css" type="text/javascript" LANGUAGE="JavaScript"></script>
 		<script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
 	
 		
@@ -128,10 +128,10 @@ It is possible to have more information on each value by clicking on the corresp
  
 </div>
 
-$footer
+
 
 </div><!-- bloc droit-->
-
+$footer
 </body>
 </html>
 
