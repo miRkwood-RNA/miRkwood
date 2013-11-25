@@ -59,6 +59,18 @@ sub get_css_path {
     return $config{'css'};
 }
 
+=method get_server_css_path
+
+Return the Server CSS directory
+
+=cut
+
+sub get_server_css_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_config();
+    return $config{'server_css'};
+}
+
 =method get_js_path
 
 Return the project JavaScript directory

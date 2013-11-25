@@ -72,7 +72,7 @@ sub get_link_back_to_results {
 
 =method get_css_file
 
-Return the main CSS file
+Return the project CSS file
 
 =cut
 
@@ -80,6 +80,18 @@ sub get_css_file {
     my @args = @_;
     return File::Spec->catfile(PipelineMiRNA::Paths->get_css_path(), 'script.css');
 }
+
+=method get_server_css_file
+
+Return the server CSS file
+
+=cut
+
+sub get_server_css_file {
+    my @args = @_;
+    return File::Spec->catfile(PipelineMiRNA::Paths->get_server_css_path, 'bioinfo.css');
+}
+
 
 =method get_js_file
 
