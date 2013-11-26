@@ -45,7 +45,7 @@ Content-type: text/html
     <head>
         <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
         <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
-        <LINK rel="stylesheet" type="text/css" href="$css" />
+    
         <script type="text/javascript" language="Javascript" src="$js"> </script>
         <title>MicroRNA identification</title>
     </head>
