@@ -16,7 +16,7 @@ my $cgi = CGI->new;
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
-
+my $web_root     = PipelineMiRNA::Paths->get_web_root();
 my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
 my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
 my $js1 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js');
@@ -76,7 +76,7 @@ $HTML_additional
 		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
 		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
 		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
-		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job")'/>
+		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job", "$web_root")'/>
 		</form>
 	</div>
 		<p style='font-size:16px;font-family: "Times New Roman", Serif' ><input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/><br/>	<br/>Click on a name to see the full HTML report. Click on the checkbox to select an entry.

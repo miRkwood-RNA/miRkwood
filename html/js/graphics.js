@@ -348,8 +348,9 @@ function getChecked()
  * Export the selected sequences
  * @param {String} id Identifier of the job
  */
-function exportTo(id)
+function exportTo(id, webroot)
 {
+
 	var radios = document.getElementsByName('export');
 	for (var i = 0, length = radios.length; i < length; i++) {
     		if (radios[i].checked) {
@@ -368,7 +369,7 @@ function exportTo(id)
 	   alert("You must select at least one element to export!! ");
 	   return;
 	}
-	window.location = "/cgi-bin/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
+	window.location = "/"+webroot+"/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
 }
 
 
