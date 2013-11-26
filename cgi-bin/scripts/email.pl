@@ -1,22 +1,18 @@
 #!/usr/bin/perl -w
 
-my ($job, $title) = @ARGV;
-if ($title){
-    if ($title eq "noTitle")
-    {
-        $title= "";
-    }
-}else{
-    $title= "";
-}
-$to='benmounah.mohcen@gmail.com';
+my ($results_baseurl, $jobId, $mail, $title) = @ARGV;
+
+my $res_arguments = '?run_id=' . $jobId;
+my $results_url   = $results_baseurl . $res_arguments;
+
+
 $from= 'miarn@lifl.fr';
 $subject='MiARN web job';
 
 open(MAIL, "|/usr/sbin/sendmail -t"); 
 
 ## Mail Header
-print MAIL "To: $to\n"; 
+print MAIL "To: $mail\n"; 
 print MAIL "From: $from\n";
 print MAIL "Subject: $subject $title\n\n";
 ## Mail Body
@@ -24,12 +20,11 @@ print MAIL <<"DATA";
 Dear MicroARN program user,
 
 Your MicroARN web job is completed.
-Results are available at http://monprojet.com/cgi-bin/resultsWithID.pl?run_id=".$job."
+Results are available at $results_url
 Thank you for using program.\n";
 DATA
 
 close(MAIL);
-
 
 
 

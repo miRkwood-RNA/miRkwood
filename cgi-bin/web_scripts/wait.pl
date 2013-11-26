@@ -15,7 +15,7 @@ use PipelineMiRNA::WebTemplate;
 
 my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
 my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
-
+my $web_root   = PipelineMiRNA::Paths->get_web_root();
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
 my $mail   = $html->param('mail');
@@ -28,7 +28,8 @@ if ( $nameJob eq q{} ) { $check = 'noTitle' }
 my $res_arguments = '?run_id=' . $jobId . '&nameJob=' . $name;
 my $results_page  = 'resultsWithID.pl';
 my $results_link  = $results_page . $res_arguments;
-my $results_url   = PipelineMiRNA::WebTemplate::make_url($results_page) . $res_arguments;
+my $results_baseurl = PipelineMiRNA::WebTemplate::make_url($results_page);
+my $results_url   = $results_baseurl . $res_arguments;
 
 my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
@@ -46,7 +47,7 @@ my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 #le calcul est fini
 if ( -e $is_finished ) {
     my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
-    my $email_cmd = "perl $email_script $jobId $nameJob";
+    my $email_cmd = "perl $email_script $results_baseurl $jobId $mail $nameJob ";
     system($email_cmd);
     print $html->redirect( -uri => $results_url )
       or die("Error when redirecting: $!");
@@ -78,7 +79,8 @@ Content-type: text/html
         <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
     </head>
     <body>
-       <div class="logo"></div>
+       <div class="logo"></div> 
+		
        <div class="theme-border"></div>
         $bioinfo_menu
         <div class="bloc_droit">
