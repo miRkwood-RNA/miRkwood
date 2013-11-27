@@ -345,7 +345,8 @@ sub make_hairpin_with_mature {
     my ($top, $upper, $middle, $lower, $bottom) = split(/\n/, $hairpin);
     my $hairpin_with_mature;
     my $pseudo_size = $right - $left;
-    if ($left > length $top)
+    my $l = length($top);
+    if ($left >= $l)
     {
         #on the other side
         my $converted_left = $length - $right;
