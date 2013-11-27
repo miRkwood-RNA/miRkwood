@@ -135,7 +135,7 @@ while ( my $line = <LOAD> ) {
 unlink($sequence_load);
 
 # redirection vers la page wait en attendant le calcul
-my $arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
+my $arguments = '?jobId=' . $jobId . '&nameJob=' . $nameJob . '&mail=' . $mail;
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $arguments;
 
 
