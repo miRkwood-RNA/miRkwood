@@ -157,3 +157,26 @@ my $right1 = 21;
 ok( my ($true_left1, $size1) = PipelineMiRNA::Utils::compute_mature_boundaries($left1, $right1, $top1),
     'Can call compute_mature_boundaries');
 is_deeply([$true_left1, $size1], [58, 21], 'compute_mature_boundaries ok with gaps before start');
+
+
+
+my $hairpin1 = <<"END";
+   a--      ca  cac-      g u       a-  g   aaaaaa     g
+ggu   gagacu  uc    ccggca c cuguaau  gg acu      gugau a
+|||   ||||||  ||    |||||| | |||||||  || |||      ||||| 
+cca   uucugg  ag    ggcugu g gguauug  cc uga      uacua u
+   gca      cg  acua      g u       cg  g   g-----     a
+END
+ok (my $hairpin_with_mature = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin1, 56, 75, 105),
+    'Can call make_hairpin_with_mature on edge case');
+
+my $expected13 = <<"END";
+   a--      ca  cac-      g u       a-  g   aaaaaa     g
+ggu   gagacu  uc    ccggca c cuguaau  gg acu      gugau a
+|||   ||||||  ||    |||||| | |||||||  || |||      ||||| 
+cca   uucugg  ag    ggcugu g g<span class="mature">guauug  cc uga      uac</span>ua u
+   gca      cg  acua      g u <span class="mature">      cg  g   g-----   </span>  a
+END
+
+is ($hairpin_with_mature, $expected13,
+    'make_hairpin_with_mature ok on edge case');
