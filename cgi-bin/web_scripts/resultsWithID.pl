@@ -45,9 +45,9 @@ Content-type: application/xhtml+xml
 END_TXT
 
 my $HTML_additional = "";
-if ($name_job ne "")
+unless (!$name_job)
 {
-    $HTML_additional .= "<div class='titleJob' ><li>Title Job : ".$name_job."</li></div>";
+    $HTML_additional .= "<h2>Title Job : ".$name_job."</h2>";
 }
 
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
