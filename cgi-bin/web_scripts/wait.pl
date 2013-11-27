@@ -20,6 +20,7 @@ my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
 my $mail   = $html->param('mail');
 my $nameJob = $html->param('nameJob');
+$nameJob =~ s/ /_/g;#replace spaces with '_' in name job
 my $name    = $nameJob;
 
 my $check;
@@ -47,7 +48,7 @@ my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 #le calcul est fini
 if ( -e $is_finished ) {
     my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
-    my $email_cmd = "perl $email_script $results_baseurl $jobId $mail $nameJob ";
+    my $email_cmd = "perl $email_script $results_baseurl $jobId $mail $name ";
     system($email_cmd);
     print $html->redirect( -uri => $results_url )
       or die("Error when redirecting: $!");
