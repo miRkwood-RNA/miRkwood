@@ -55,15 +55,33 @@ sub prepare_document {
 
     # Monospace
     $doc->set_font_declaration("Monospace");
-    $elt = $doc->insert_style(
-        odf_create_style(
-            'text',
-            name        => 'Monospace',
-            margin_top  => '0mm',
-            margin_left => '0mm',
-            font    => "Monospace",
-        )
+    my $s = odf_style->create('paragraph', name => "Monospace");
+    $s->set_properties(
+        area=>'paragraph',
+        margin_left=>'4mm',
+        margin_right=>'4mm',
+        margin_top=>'4mm',
     );
+    $s->set_properties(
+            area   => 'text',
+            size   => '11pt',
+            color  => 'black',
+            font   => 'Monospace',
+        );
+    $doc->register_style($s);
+
+    # Hairpin (Monospace style)
+    my $s2 = odf_style->create(
+        'paragraph',
+        name => "Hairpin",
+        parent => "Monospace"
+    );
+    $s2->set_properties(
+        area   => 'text',
+        size   => '9pt',
+        font   => 'Monospace',
+    );
+    $doc->register_style($s2);
 
     # Level 2 Heading style creation
     $doc->insert_style(
@@ -191,8 +209,8 @@ sub generate_report {
     foreach my $key (@keys) {
         if ( $key ~~ \@sequences_to_export )
         {
-            my $value = $results{$key};
-            my ( $start, $end ) = split( m/[-]/xms, ${$value}{'position'} );
+            my $candidate = $results{$key};
+            my ( $start, $end ) = split( m/[-]/xms, ${$candidate}{'position'} );
             $context->append_element(
                 odf_create_heading(
                     level => 2,
@@ -208,17 +226,17 @@ sub generate_report {
                     odf_create_list, position => NEXT_SIBLING
                     );
 
-            my $size = length ${$value}{'DNASequence'};
+            my $size = length ${$candidate}{'DNASequence'};
             my $vienna_seq =
-              PipelineMiRNA::Candidate->make_Vienna_viz( ${$value}{'Vienna'},
-                ${$value}{'DNASequence'} );
+              PipelineMiRNA::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
+                ${$candidate}{'DNASequence'} );
 
-            $list->add_item(text => "Name: ${$value}{'name'}", style => "Standard");
-            $list->add_item(text => "Position: ${$value}{'position'} ($size nt)", style => "Standard");
+            $list->add_item(text => "Name: ${$candidate}{'name'}", style => "Standard");
+            $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => "Standard");
             $list->add_item(text => "Strand:", style => "Standard");
 
             my $subtext = "";
-            if(${$value}{'Vienna'} ne ${$value}{'Vienna_optimal'}){
+            if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
                 $subtext .= ""
             } else {
                 $subtext.= "(This stem-loop structure is the MFE structure)"
@@ -236,7 +254,7 @@ sub generate_report {
             );
 
             # Copying the image
-            my $img_path      = ${$value}{'image'};
+            my $img_path      = ${$candidate}{'image'};
             my $img_full_path = $img_path;
             my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
             copy($img_full_path, $new_img_path)
@@ -255,7 +273,7 @@ sub generate_report {
             $para->append_element(
                 odf_frame->create(
                     image => $lien_image,
-                    name  => "Structure_${$value}{'name'}_${$value}{'position'}",
+                    name  => "Structure_${$candidate}{'name'}_${$candidate}{'position'}",
                     title => 'Structure',
                     description => 'Structure',
                     size => $new_size,
@@ -278,20 +296,13 @@ sub generate_report {
                     );
 
             # TODO: maybe we do not have those ; infer that from  run_options config file
-            $list->add_item(text => "MFE: ${$value}{'mfe'} kcal/mol", style => "Standard");
-            $list->add_item(text => "AMFE: ${$value}{'amfe'}", style => "Standard");
-            $list->add_item(text => "MFEI: ${$value}{'mfei'}", style => "Standard");
+            $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => "Standard");
+            $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => "Standard");
+            $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => "Standard");
 
 
             # Section Mirbase alignments
-
-            $context->append_element(
-                odf_create_heading(
-                    level => 3,
-                    text  => "Mirbase alignments",
-                )
-            );
-
+            $self->add_ODF_alignments($context, $candidate);
         }   # if key in tab
     }    #  while each %results
 
@@ -299,6 +310,69 @@ sub generate_report {
     $doc->save( target => $ODT_abspath, pretty => TRUE );
     return $ODT_abspath;
 }
+
+=method add_ODF_alignments
+
+=cut
+
+sub add_ODF_alignments{
+    my ( $self, @args ) = @_;
+    my $context = shift @args;
+    my %candidate = %{shift @args};
+    my %alignments = %{$candidate{'alignments'}};
+    my %mirdup_results = %{$candidate{'mirdup_validation'}};
+
+    $context->append_element(
+        odf_create_heading(
+            level => 3,
+            text  => "Mirbase alignments",
+        )
+    );
+
+    my @TOC;
+    my $predictionCounter = 0;
+
+    # Sorting by position
+    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, 0)  <=>
+                        PipelineMiRNA::Utils::get_element_of_split($b, 0)
+                      ) ||
+                      ( PipelineMiRNA::Utils::get_element_of_split($a, 1)  <=>
+                        PipelineMiRNA::Utils::get_element_of_split($b, 1))
+                    } keys %alignments;
+    foreach my $position (@keys) {
+        my ($left, $right) = split(/-/, $position);
+
+        # MiRdup
+#        my $mirdup_key = $dir . '__' . $position;
+#        my $mirdup_prediction;
+#        if ( $mirdup_results{$mirdup_key} ){
+#            $mirdup_prediction = 'This prediction is validated by MiRdup';
+#        } else {
+#            $mirdup_prediction = 'This prediction is not validated by MiRdup';
+#        }
+
+        $predictionCounter += 1;
+
+        # Sorting the hit list by descending value of the 'score' element
+        my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$alignments{$position}};
+        my $title = "Prediction $predictionCounter: $position";
+
+        $context->append_element(
+            odf_create_heading(
+                level => 4,
+                text  => $title,
+            )
+        );
+        $context->append_element(
+            odf_create_paragraph(
+                text    => $candidate{'hairpin'},
+                style   =>'Hairpin'
+            )
+        );
+    } # foreach @keys
+    return;
+}
+
 
 =method get_ODF_path
 
