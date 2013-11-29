@@ -68,6 +68,28 @@ my %expected_merged2 = ();
 push @{$expected_merged2{'38-58'}}, ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K');
 is_deeply( \%merged_alignments2, \%expected_merged2, 'merge_alignments ok' );
 
+my %dummy_alignments3 = ();
+push @{$dummy_alignments3{'1-21'}}, ('A', 'B', 'C');
+push @{$dummy_alignments3{'2-21'}}, ('D');
+push @{$dummy_alignments3{'2-23'}}, ('E', 'F');
+push @{$dummy_alignments3{'2-24'}}, ('G');
+push @{$dummy_alignments3{'3-22'}}, ('H', 'I');
+push @{$dummy_alignments3{'3-22'}}, ('J', 'K');
+push @{$dummy_alignments3{'3-23'}}, ('L', 'M', 'N');
+push @{$dummy_alignments3{'3-24'}}, ('O', 'P');
+
+ok( my %merged_alignments3 = PipelineMiRNA::Candidate->merge_alignments(\%dummy_alignments3),
+    'Can call merge_alignments') ;
+
+my %expected_merged3 = ();
+push @{$expected_merged3{'1-21'}}, ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P');
+
+TODO: {
+        local $TODO = 'Known bug under investigation';
+        is_deeply( \%merged_alignments3, \%expected_merged3, 'merge_alignments ok on edge case' );
+    }
+
+
 dies_ok {
     my %candidate =
       PipelineMiRNA::Candidate->retrieve_candidate_information( 'a', 'b', 'c' );
