@@ -1,20 +1,9 @@
 .theme-border{
-    background-color: #cc0000;
-}
-.copyright{
-    border-top: 3px solid #cc0000;
+    background-color: #f4ba31;
 }
 
-h1 {
- color :#CC0000; 
-}
-
-h2:first-letter {
-   color:#CC0000; 
-}
-
-h1 a {
-  color : #CC0000;
+.theme-border-footer{
+   background-color: #f4ba31;
 }
 
 li.Research , li.Research_titre {
@@ -22,19 +11,19 @@ li.Research , li.Research_titre {
 }
 
 li.Research a:hover, li.Research_titre a:hover {
- background-color :#CCCCCC;
+ background-color :#f4ba31
 }
 
 li.Rna , li.Rna_titre {
-  background-color: #FFCCCC;
+  background-color: #fae0a2;
 }
 
 li.Rna a:hover, li.Rna_titre a:hover {
-    background-color :#CC0000;
+    background-color :#f4ba31;
 }
 
  .menu_central a:hover{
-  background-color : #fcc; 
+  background-color : #fae0a2
 }
 
 
