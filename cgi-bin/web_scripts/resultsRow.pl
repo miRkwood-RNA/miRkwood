@@ -121,6 +121,7 @@ Content-type: text/html
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
+	   <h1>Results for $name, $position</h1>
 	    $return_html
         $html_contents
         $return_html
