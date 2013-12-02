@@ -48,14 +48,14 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     my $linkAlternatives = "./exportAlternativesVienna.pl?jobId=$jobId&name=$name&position=$position";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
-    my $Vienna_HTML = "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
+    my $Vienna_HTML = "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if($candidate{'Vienna'} ne $candidate{'Vienna_optimal'}){
         $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>"
     } else {
-        $Vienna_HTML .= "<br/><i>(This stem-loop structure is the MFE structure)</i></li></ul>"
+        $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li></ul>"
     }
 
-    my $alternatives_HTML = '<b>Alternative candidates:</b> ';
+    my $alternatives_HTML = '<b>Alternative candidates (dot-bracket format):</b> ';
     if($candidate{'alternatives'}){
         $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>"
     } else {
@@ -103,7 +103,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           <b>MFEI:</b> $candidate{'mfei'}
         </li>
         </ul>
-        <h2>Mirbase alignments</h2>
+        <h2>miRBase alignments</h2>
         $alignmentHTML
 
     </div><!-- showInfo -->

@@ -4,7 +4,7 @@ body {
     color: #000000;
 }
 
-pre {
+pre.alignment {
     margin-left: 20px;
     line-height: 1.3em;
 }
@@ -27,19 +27,25 @@ h3 {
 
 h4 {
     padding: 6px 6px 6px 15px;
-    font-size: 10pt;
+    font-size: 11pt;
     font-weight: bold;
 }
 
 ul li {
     list-style-type: square;
     padding-left: 3pt;
-	padding-bottom : 1pt;
+    padding-bottom : 1pt;
     padding-top: 1pt;
 }
 
 span.mature {
     color: blue;
+}
+
+span.others {
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 
 a {

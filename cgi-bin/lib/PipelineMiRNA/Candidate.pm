@@ -435,9 +435,9 @@ sub make_alignments_HTML {
         my $mirdup_key = $dir . '__' . $position;
         my $mirdup_prediction;
         if ( $mirdup_results{$mirdup_key} ){
-            $mirdup_prediction = 'This prediction is validated by MiRdup';
+            $mirdup_prediction = 'This prediction is validated by miRdup.';
         } else {
-            $mirdup_prediction = 'This prediction is not validated by MiRdup';
+            $mirdup_prediction = 'This prediction is not validated by miRdup.';
         }
 
         # Hairpin
@@ -452,9 +452,7 @@ sub make_alignments_HTML {
         my $title = "Prediction $predictionCounter: $position";
         $contents .= "<h3 id='$position'>$title</h3>
         <pre style='height: 80px;'>$hairpin_with_mature</pre>
-        <ul>
-            <li>$mirdup_prediction</li>
-        </ul>
+        $mirdup_prediction
         <h4>Alignments</h4>
         ";
 
@@ -475,12 +473,12 @@ sub make_alignments_HTML {
 
             my $title = '';
             if( (scalar @splitted) > 1 ) {
-                $title = 'MirBase sequences: ';
+                $title = 'miRBase sequences: ';
             }else{
-                $title = 'MirBase sequence: ';
+                $title = 'miRBase sequence: ';
             }
 
-            $name = "MirBase";
+            $name = "miRBase";
             my @sequences;
             foreach my $seq (@splitted){
                 $seq =~ s/^\s+//;
@@ -495,7 +493,7 @@ sub make_alignments_HTML {
                     push @sequences, $html_name;
                 }
             }
-            $additional_content = "<span class='others'>$title" . join(' ⋅ ', @sequences) . "</span>";
+            $additional_content = "<span class='others'>$title" . join(', ', @sequences) . "</span>";
 
 
             $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
@@ -504,7 +502,7 @@ sub make_alignments_HTML {
             $additional_space .= ' ' while ($sub_string =~ m/ /g);
             substr($bottom, 0, $spacing) = $name . $additional_space;
             $contents .= <<"INNER";
-<pre>
+<pre class='alignment'>
 $top
 $middle
 $bottom
@@ -514,7 +512,7 @@ INNER
         }
 
     }
-    my $toc = "<span class='toc'>" . join(" - ", @TOC) . '</span>';
+    my $toc = "<span class='toc'>Putative miRNA locus: " . join(", ", @TOC) . '</span>';
     return $toc . "\n" . $contents;
 
 }
