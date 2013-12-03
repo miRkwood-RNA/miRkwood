@@ -66,7 +66,18 @@ results.prototype.getSequenceByNameByFactor = function(name,factor)
  */
 results.prototype.getValueByIndices = function(i,j)
 {
+if (navigator.appName === "Microsoft Internet Explorer") { alert('youpî') ;  };
 	var value = this.SequencesXML[i].attributes[j+1].value;
+	return value;
+}
+
+/**
+ * Retourne valeur de la cellule avec un factor
+ */
+results.prototype.getValueByFactor= function(i,factor)
+{
+
+	var value = this.SequencesXML[i].getAttribute(factor);
 	return value;
 }
 
@@ -75,7 +86,7 @@ results.prototype.getValueByIndices = function(i,j)
  */
 results.prototype.getValuesByFactorName = function(factor)
 {
-	var values = new Array();
+	var values = new Array(); 
 	var seqs = this.SequencesXML;
 	for (var i=0;i<seqs.length;i++)
 	{
@@ -97,6 +108,7 @@ results.prototype.getFactorsNamesList = function()
 		names.push(allNames[i]);
 	}
 	return names;
+	
 }
 
 /**

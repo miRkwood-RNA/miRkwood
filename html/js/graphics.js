@@ -53,14 +53,9 @@ function showCellInfo(i,j)
 		{
 			window.open("./resultsCell.pl?typePage=simpleCell&nameSeq="+myResults.getSequenceNameByIndex(i-1)+"&factor="+ myResults.getFactorNameByIndex(j-1)+"&value="+myResults.getValueByIndices(i-1,j-1)+"&position="+myResults.getValueByIndices(i-1,0));
 			
-			//window.open("./resultsCell.pl?typePage=alignement&url="+myResults.getValueByIndices(i-1,j-1));
+			
 		}
-		// 
-		//{ 
-	//		window.open("./resultsCell.pl?typePage=simpleCell&nameSeq="+myResults.getSequenceNameByIndex(i-1)+"&factor="+ myResults.getFactorNameByIndex(j-1)+"&value="+myResults.getValueByIndices(i-1,j-1)+"&position="+myResults.getValueByIndices(i-1,0));
-			//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>Sequence Informations </u></h2><br/> <li><b>Name sequence :</b> " + myResults.getSequenceNameByIndex(i-1) + "</li><br/> <li> <b>" + myResults.getFactorNameByIndex(j-1) + " </b>: "+ myResults.getValueByIndices(i-1,j-1) + " </li> <br/> </div>"
-		
-		//}
+	
 	} 
 	if ((i!=0)&&(j==0)) 
 	{
@@ -225,14 +220,14 @@ function createGrid(id,rowsNumber,columnsNumber)
 
 				if ( factor =='quality') 
 				{	
-					var value = myResults.getValueByIndices(i-1,j-1); // appel fonction qui définit la valeur à partir des indices 				
+					var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices 				
 					var string = repeat("<img src='/arn/html/style/Star.png' alt='arobas' style='width:15px; height:15px;' /> 	 ", parseInt(value))
 				
 					td.innerHTML = string;
 				}
 				else if ( factor =='image') //cas lien image
 				{	
-					var value = myResults.getValueByIndices(i-1,j-1);
+					var value = myResults.getValueByFactor(i-1,'image');
 			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
 					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'><img src='/arn/html/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
@@ -243,7 +238,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				}
 				else if( factor =='alignment') //cas lien alignement 
 				{
-					var value = myResults.getValueByIndices(i-1,j-1);
+					var value = myResults.getValueByFactor(i-1,'alignment');
 					if (value == 1)
 					{
 						
@@ -258,7 +253,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				}
 				else
 				{
-					var value = document.createTextNode(myResults.getValueByIndices(i-1,j-1)); // appel fonction qui définit la valeur à partir des indices 
+					var value = document.createTextNode(myResults.getValueByFactor(i-1,factor)); // appel fonction qui définit la valeur à partir des indices 
 					td.appendChild(value); // ajouter la valeur à la cellule
 				}
 			}
@@ -395,4 +390,3 @@ function changeValue()
 	}
 	 	
 }
-
