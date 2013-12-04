@@ -59,7 +59,7 @@ $header_menu
 					<textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
 					<label class="textDiv" style="color:#333" for="seq">Or, upload file :</label><br />
 					<input type="file" name="seqFile" id="file" />
-					<input id="seq_button" type="button" value="Ex</b>ample" onclick="generateExample();" />
+					<input id="seq_button" type="button" value="Example" onclick="generateExample();" />
 				</div>
 				  <div class="forms">
 					 <label class="checkbox" for="db"><h2>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i> :
