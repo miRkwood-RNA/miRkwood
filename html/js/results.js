@@ -134,7 +134,7 @@ results.prototype.getFactorNameByIndex = function(ind)
  */
 results.prototype.getIndexByFactorName = function(factor)
 {
-	var allNames = new Array(  "name", "position","quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
+	var allNames = new Array(  "name", "position","length","strand","quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
 	var names = new Array();
 	var index = 0;
 	for(var i = 0;i < allNames.length;i++)
