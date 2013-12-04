@@ -53,6 +53,23 @@ sub prepare_document {
         )
     );
 
+    # Other MiRBase sequences
+    my $s0 = odf_style->create(
+        'paragraph',
+        name => "MirbaseSequences",
+        parent => "Basic");
+    $s0->set_properties(
+        area=>'paragraph',
+        margin_left=>'4mm',
+        margin_top=>'2mm',
+        margin_bottom=>'4mm',
+    );
+    $s0->set_properties(
+            area   => 'text',
+            size   => '9pt',
+        );
+    $doc->register_style($s0);
+
     # Monospace
     $doc->set_font_declaration("Monospace");
     my $s = odf_style->create('paragraph', name => "Monospace");
@@ -78,10 +95,23 @@ sub prepare_document {
     );
     $s2->set_properties(
         area   => 'text',
-        size   => '9pt',
+        size   => '8pt',
         font   => 'Monospace',
     );
     $doc->register_style($s2);
+
+    # Alignment (Monospace style)
+    my $s3 = odf_style->create(
+        'paragraph',
+        name => "Alignment",
+        parent => "Monospace"
+    );
+    $s3->set_properties(
+        area   => 'text',
+        size   => '9pt',
+        font   => 'Monospace',
+    );
+    $doc->register_style($s3);
 
     # Level 2 Heading style creation
     $doc->insert_style(
@@ -369,6 +399,75 @@ sub add_ODF_alignments{
                 style   =>'Hairpin'
             )
         );
+
+        $context->append_element(
+            odf_create_heading(
+                level => 5,
+                text  => 'Alignments',
+            )
+        );
+
+        foreach my $hit (@hits){
+            my $alignment = $hit->{'alignment'};
+            my $names = $hit->{'name'} . q{ } . $hit->{'def_query'};
+
+            my $name;
+            my $html_name;
+            my @splitted = split('\|', $names);
+
+            my $spacing = 15;
+            my ($top, $middle, $bottom) = split(/\n/, $alignment);
+            $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
+            $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
+
+            my $title = '';
+            if( (scalar @splitted) > 1 ) {
+                $title = 'miRBase sequences: ';
+            }else{
+                $title = 'miRBase sequence: ';
+            }
+
+            $name = "miRBase";
+            my @sequences;
+
+            my @mirbase_links;
+            my @mirbase_ids;
+            foreach my $seq (@splitted){
+                $seq =~ s/^\s+//;
+                $seq =~ s/\s+$//;
+                if ($seq =~ 'revcomp'){
+                } else {
+                    my @splitted_one = split(/ /, $seq);
+                    my $name = $splitted_one[0];
+                    my $mirbase_id = $splitted_one[1];
+                    my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+                    push @mirbase_links, $mirbase_link;
+                    push @mirbase_ids, $mirbase_id;
+                }
+            }
+            my $para_seqs = odf_create_paragraph(
+                text    => $title . join(', ', @mirbase_ids),
+                style   => 'MirbaseSequences'
+            );
+            foreach my $i (0..$#mirbase_ids){
+                my $mirbase_id = $mirbase_ids[$i];
+                my $mirbase_link = $mirbase_links[$i];
+                $para_seqs->set_hyperlink(
+                    filter  => $mirbase_id,
+                    url     => $mirbase_link,
+                    name    => "MiRBase entry for $mirbase_id"
+                );
+            }
+            $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
+
+            $context->append_element(
+            odf_create_paragraph(
+                text    => "$top\n$middle\n$bottom",
+                style   =>'Alignment'
+                )
+            );
+            $context->append_element($para_seqs);
+        } # foreach @hits
     } # foreach @keys
     return;
 }
