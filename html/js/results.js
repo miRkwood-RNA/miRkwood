@@ -40,6 +40,8 @@ results.prototype.getSequenceByNameFactors = function(name,pos)
 	var factors = new Object();
 	var seq = this.getSequenceXMLByNameAndPosition(name,pos);
 	factors.position = seq.getAttribute("position");
+	factors.length = seq.getAttribute("length");
+	factors.strand = seq.getAttribute("strand");
 	factors.quality = seq.getAttribute("quality");	
 	factors.mfei = seq.getAttribute("mfei");
 	factors.amfe = seq.getAttribute("amfe");
@@ -66,7 +68,7 @@ results.prototype.getSequenceByNameByFactor = function(name,factor)
  */
 results.prototype.getValueByIndices = function(i,j)
 {
-if (navigator.appName === "Microsoft Internet Explorer") { alert('youpî') ;  };
+
 	var value = this.SequencesXML[i].attributes[j+1].value;
 	return value;
 }
@@ -100,7 +102,7 @@ results.prototype.getValuesByFactorName = function(factor)
  */
 results.prototype.getFactorsNamesList = function()
 {
-	var allNames = new Array(  "position","quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
+	var allNames = new Array(  "position", "length" ,"strand", "quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
 	var names = new Array();
 	for(var i = 0;i < allNames.length;i++)
 	{

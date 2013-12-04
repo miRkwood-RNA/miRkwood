@@ -69,6 +69,7 @@ sub serialize_candidate_information {
 
     my @position = split( /__/, $can_dir );
     $candidate{'position'} = $position[1];
+    $candidate{'length'} = PipelineMiRNA::Utils::get_element_of_split($position[1],'-', 1) - PipelineMiRNA::Utils::get_element_of_split($position[1],'-', 0) +1;
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     my %alignments;
     if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {

@@ -246,7 +246,7 @@ sub resultstruct2pseudoXML {
     my %results = %{$results};
 
     my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers1 = ('name', 'position', 'quality', @optional_fields);
+    my @headers1 = ('name', 'position','length','strand','quality', @optional_fields);
     my @headers2 = ('Vienna', 'DNASequence');
 
     my $result = "<results id='all'>\n";
