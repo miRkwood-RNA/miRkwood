@@ -19,7 +19,6 @@ use PipelineMiRNA::Candidate;
 use PipelineMiRNA::Results;
 use PipelineMiRNA::Components;
 use PipelineMiRNA::PosterioriTests;
-
 use Log::Message::Simple qw[msg error debug];
 
 ### Data ##
@@ -249,6 +248,7 @@ sub treat_candidates {
 		my $start     = $hash[$key]{"start"};
 		my $end       = $hash[$key]{"end"};
 		my $mfei      = $hash[$key]{"mfei"};
+		
 		my $nameSeq   = $hash[$key]{"name"};
 		my $structure = $hash[$key]{"structure"};
 		my $dna       = $hash[$key]{"dna"};
@@ -284,7 +284,7 @@ sub treat_candidates {
 				if ( $i == 0 ) {
 					$max = $key;
 					$newHash{$max}{'max'} = {
-						"mfei"      => $tempHash{$key}{"mfei"},
+						"mfei"      => PipelineMiRNA::Utils::restrict_num_decimal_digits($tempHash{$key}{"mfei"},3),
 						"dna"       => $tempHash{$key}{"dna"},
 						"structure" => $tempHash{$key}{"structure"},
 						"energy"    => $tempHash{$key}{"energy"}
@@ -294,7 +294,7 @@ sub treat_candidates {
 				else {
 
 					$newHash{$max}{$key} = {
-						"mfei"      => $tempHash{$key}{"mfei"},
+						"mfei"      => PipelineMiRNA::Utils::restrict_num_decimal_digits($tempHash{$key}{"mfei"},3),
 						"dna"       => $tempHash{$key}{"dna"},
 						"structure" => $tempHash{$key}{"structure"},
 						"energy"    => $tempHash{$key}{"energy"}

@@ -119,7 +119,8 @@ sub compute_energy {
             {
 
                 my $num = ( $mfe / $longueur ) * 100;
-                my $other = $num / ( ( $cg / $longueur ) * 100 );
+                my $other = PipelineMiRNA::Utils::restrict_num_decimal_digits($num / ( ( $cg / $longueur ) * 100 ),3);
+                $num = PipelineMiRNA::Utils::restrict_num_decimal_digits($num, 3);
                 open( my $RES, '>>', $MFEI_output ) || die "Unable to open: $!";
                 my $content =
                   $nameSeq . "\t" . $other . "\t" . $mfe . "\t" . $num;
