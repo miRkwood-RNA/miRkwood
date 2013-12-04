@@ -339,7 +339,7 @@ input#upload:hover { background: #eee; color: #111; border-color:#777; }
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:10pt;
-	border: 2px groove threedface;
+	border: 1px groove threedface;
 	-moz-border-radius: 5px;
 	-webkkit-border-radius: 5px;
 	border-radius: 5px;
