@@ -331,7 +331,7 @@ label { font-size: 1.4em; display: block; margin: .5em 10px .5em 0;  }
 input#upload:hover { background: #eee; color: #111; border-color:#777; }
 .forms
 {
-	background-color:#EEF5F5;
+	
 	border:  1px solid #cccccc;
 	color : black;
 	padding: 10px;
@@ -349,11 +349,6 @@ input#upload:hover { background: #eee; color: #111; border-color:#777; }
 	-webkit-padding-start: 0.75em;
 	-webkit-padding-end: 0.75em;
 	-webkit-padding-after: 0.625em;
-}
-.forms h2, h2::first-letter
-{
-	background-color:#EEF5F5;
-	blue
 }
 
 
@@ -465,8 +460,7 @@ input#upload
 
 #exportForm {
 	margin-left: 50px;
-	font-size:15px;
- 	font-family: "Times New Roman", Serif;
+
 }
 
 .main-full{
