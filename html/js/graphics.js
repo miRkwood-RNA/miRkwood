@@ -136,7 +136,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 	var table=document.createElement('table');
 	
 	
-	table.border='1';
+
 	var tbdy=document.createElement('tbody');
 	tbdy.id = 'cases';
 	table.appendChild(tbdy); //ajouter au tableau table
@@ -197,14 +197,21 @@ function createGrid(id,rowsNumber,columnsNumber)
 				var value = myResults.getFactorsNamesList()[j-1]; // ajouter critère
 				//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
 				if  (value.toString() == 'image')  {
-					td.innerHTML = '<h3 style="text-transform:capitalize;">2D structure</h3>' ;
+					td.innerHTML = '<h3>2D structure</h3>' ;
 				}
 				else if (value.toString() == 'quality') 
 				{
-					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-decoration:underline;text-transform:capitalize;">'+value.toString()+'</h3>';
-				}else 
+					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-decoration:underline;">'+value.toString()+'</h3>';
+				}else if (value.toString() == 'alignment') 
 				{
-					td.innerHTML = '<h3 style="text-transform:capitalize;">'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
+					td.innerHTML = '<h3>miRBase alignment</h3>';
+				}else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
+				{
+					td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ;
+				}
+				else 
+				{
+					td.innerHTML = '<h3 >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
 				}			
 				
 			}
@@ -260,7 +267,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			if ((i==0)&&(j==0))
 			{
 				var value = 'name';
-				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')"   style="text-decoration:underline;text-transform:capitalize;">'+value.toString()+'</h3>';
+				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')"   style="text-decoration:underline;">'+value.toString()+'</h3>';
 			}
 			
 			tr.appendChild(td); // ajoute colonne à la ligne
