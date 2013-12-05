@@ -373,8 +373,7 @@ sub merge_alignments {
         my ($current_left, $current_right) = split(/-/, $current_key);
         my $current_hit_count = scalar @{$alignments{$current_key}};
 
-        if ( ! ($current_right <= $stocked_right + 2 )) {
-
+        if ( $current_right > $stocked_right + 3 ) {
             # No merge ; drop the list of current hits in the hash (only if there are some)
             if (@stocked_hits){
                 push @{$merged_alignments{$final_key}}, @stocked_hits;
