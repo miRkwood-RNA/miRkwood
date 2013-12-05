@@ -10,5 +10,4 @@ if [ -z "$1" ]
 fi
 EXECUTION_PATH=$(readlink -f $1)
 cd $EXECUTION_PATH
-prove --r --lib --timer --formatter=TAP::Formatter::JUnit t/ | tee test-results.xml
-sh t/functional/run-functional-tests.sh | tee functional-test-results.txt
+perlcritic -profile $RESOURCE_PATH/perlcritic.rc lib/ scripts/ web_scripts/ | tee perlcritic.txt

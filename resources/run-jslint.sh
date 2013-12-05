@@ -1,5 +1,5 @@
 #!/bin/sh
-# Script that runs the tests.
+# Script that runs JSlint analysis.
 # Takes as argument the path in which to run
 RESOURCE_PATH=$(dirname $(readlink -f $0))
 if [ -z "$1" ]
@@ -9,6 +9,4 @@ if [ -z "$1" ]
 	exit 1
 fi
 EXECUTION_PATH=$(readlink -f $1)
-cd $EXECUTION_PATH
-prove --r --lib --timer --formatter=TAP::Formatter::JUnit t/ | tee test-results.xml
-sh t/functional/run-functional-tests.sh | tee functional-test-results.txt
+jshint --reporter=jslint $EXECUTION_PATH | tee jslint.txt
