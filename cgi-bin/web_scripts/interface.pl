@@ -53,19 +53,27 @@ $header_menu
 				  </tr>
 				</div>
 				<div class="forms">
-					<label class="textDiv" for="seqArea">
-					   <legend><h2>Paste your sequence(s)[<a href="./help.pl">?</a>]:</h2></legend>
-				    </label><br />
+					
+				    <p class="label"><b>Paste</b> your RNA sequences in FASTA
+					  format &nbsp;&nbsp;[<a href="./help.pl">?</a>]
+					</p>
 					<textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
-					<label class="textDiv" style="color:#333" for="seq">Or, upload file :</label><br />
-					<input type="file" name="seqFile" id="file" />
+					
+					<p>
+					  or
+					</p>
+					<p class="label">
+					  <b>upload</b> a file 
+					  <input type="file" name="seqFile" id="file" />
+					</p>
+					
 					<input id="seq_button" type="button" value="Example" onclick="generateExample();" />
 				</div>
 				  <div class="forms">
-					 <label class="checkbox" for="db"><h2>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i> :
-					<input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()"> </h2>               
+					<p class="label"><b>Mask </b>coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i> :
+					<input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()"> </p>               
 					<div id="menuDb"> 
-					<label class="choixDiv" for="db">Choose organism database :</label>
+					<p class="choixDiv" for="db">Choose organism database :</p>
 						<select class="db" name="db">
 							<option class="db" selected>ATpepTAIR10</option>
 							<option class="db">plante</option>
@@ -73,7 +81,7 @@ $header_menu
 					</div>
                </div>
                <div class="forms">
-				<h2>Select additional features:</h2>
+				<p><b>Select </b> additional features:</p>
 				<P>
                <P > <input class="checkbox" type="checkbox" checked="checked" name="randfold" value="randfoldChecked">Compute thermodynamic stability [<a href="./help.pl">?</a>]</input></P>
                   
@@ -93,9 +101,12 @@ $header_menu
 					</td>
 				  </tr>
 				</div>
-              <input style="margin-left:632px" type="submit" name="upload" id="upload" value="Submit JOB">
+	
+ 		 <div class="center">
+
+              <input type="submit" name="upload" id="upload" value="Run MiRNA">
                 
-            
+       </div>      
             
             </fieldset>
         

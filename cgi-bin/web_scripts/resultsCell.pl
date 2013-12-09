@@ -20,7 +20,7 @@ my $position = $cgi->param('position');
 my $typePage = $cgi->param('typePage');
 my $url      = $cgi->param('url');
 
-my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
+
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
@@ -43,16 +43,16 @@ Content-type: text/html
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
+    	<link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
         <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
-        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
-    
+            
         <script type="text/javascript" language="Javascript" src="$js"> </script>
         <title>MicroRNA identification</title>
     </head>
     <body>
         <div class="theme-border"></div>
         <div class="logo"></div>
-	$bioinfo_menu
+
         <div class="bloc_droit">
 
             $header_menu

@@ -37,9 +37,7 @@ div.figure p {
 }
 textarea {
 	width:400px;
-	height:100px;
 	border:1.5px solid #000000;
-	background-color:whitesmoke;
 	margin-left:00px;
 }
 
@@ -328,27 +326,13 @@ legend {
 	margin-bottom:-10pt;
 }
 label { font-size: 1.4em; display: block; margin: .5em 10px .5em 0;  }
-input#upload:hover { background: #eee; color: #111; border-color:#777; }
+
 .forms
 {
-	
-	border:  1px solid #cccccc;
-	color : black;
+	border: 1px solid #CCCCCC;
+	color: #000000;
+	margin: auto auto 10pt;
 	padding: 10px;
-	margin-top:auto;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:10pt;
-	border: 1px groove threedface;
-	-moz-border-radius: 5px;
-	-webkkit-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-margin-start: 2px;
-	-webkit-margin-end: 2px;
-	-webkit-padding-before: 0.35em;
-	-webkit-padding-start: 0.75em;
-	-webkit-padding-end: 0.75em;
-	-webkit-padding-after: 0.625em;
 }
 
 .forms h2
@@ -357,27 +341,7 @@ input#upload:hover { background: #eee; color: #111; border-color:#777; }
 	
 }
 
-input#upload
-{
-	width: 7em;
-	height: 3em;
-	background: 
-	#E33E3E;
-	margin: 0px auto;
-	padding: 3px;
-	color: 
-	white;
-	vertical-align: text-bottom;
-	text-align: center;
-	font-size: 10pt;
-	font-weight: bold;	background:#b5cfd2 url('cell-blue.jpg');
-	cursor: pointer;
-	position: relative;
-	display: block;
-	-moz-border-radius: 5px;
-	-webkkit-border-radius: 5px;
-	border-radius: 5px;
-}
+
 
 .waitMessage {
   display: block;
@@ -456,8 +420,7 @@ input#upload
 }
 
 .main-full{
-	/*left:-185px;*/
-	width:730px;
+	margin-left:-170px;
 }
 
 div#id_job {

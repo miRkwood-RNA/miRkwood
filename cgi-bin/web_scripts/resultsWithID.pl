@@ -13,7 +13,7 @@ use PipelineMiRNA::WebTemplate;
 
 my $cgi = CGI->new;
 
-my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
+
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 my $web_root     = PipelineMiRNA::Paths->get_web_root();
@@ -34,8 +34,9 @@ Content-type: application/xhtml+xml
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
     <head>
+   		     <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
         <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
-        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
+   
         <script type="text/javascript" language="Javascript" src="$js1"> </script>
         <script type="text/javascript" src="$js2"></script>
         <script type="text/javascript" src="$js3"></script>
@@ -60,7 +61,7 @@ if($valid){
 $HTML_header    <body onload="main('all');">
     <div class="theme-border"></div>
     <div class="logo"></div>
-    $bioinfo_menu
+
 <div class="bloc_droit">
 
 $header_menu
@@ -102,7 +103,7 @@ $HTML_header
 <body>
     <div class="theme-border"></div>
     <div class="logo"></div>
-    $bioinfo_menu
+   
     <div class="bloc_droit">
         $header_menu
         <div class="main">
