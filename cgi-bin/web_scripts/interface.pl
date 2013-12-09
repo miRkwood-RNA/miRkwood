@@ -70,7 +70,7 @@ $header_menu
 					<input id="seq_button" type="button" value="Example" onclick="generateExample();" />
 				</div>
 				  <div class="forms">
-					<p class="label"><b>Mask </b>coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i> :
+					<p class="label"><b>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i></b> :
 					<input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()"> </p>               
 					<div id="menuDb"> 
 					<p class="choixDiv" for="db">Choose organism database :</p>
@@ -81,7 +81,7 @@ $header_menu
 					</div>
                </div>
                <div class="forms">
-				<p><b>Select </b> additional features:</p>
+				<p><b>Select additional features</b>:</p>
 				<P>
                <P > <input class="checkbox" type="checkbox" checked="checked" name="randfold" value="randfoldChecked">Compute thermodynamic stability [<a href="./help.pl">?</a>]</input></P>
                   
