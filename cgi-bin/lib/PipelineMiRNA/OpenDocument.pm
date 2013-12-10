@@ -65,9 +65,9 @@ sub prepare_document {
         margin_bottom=>'4mm',
     );
     $s0->set_properties(
-            area   => 'text',
-            size   => '9pt',
-        );
+        area   => 'text',
+        size   => '9pt',
+    );
     $doc->register_style($s0);
 
     # Monospace
@@ -88,30 +88,31 @@ sub prepare_document {
     $doc->register_style($s);
 
     # Hairpin (Monospace style)
-    my $s2 = odf_style->create(
+    odf_style->create(
         'paragraph',
-        name => "Hairpin",
-        parent => "Monospace"
-    );
-    $s2->set_properties(
+        name  => "Hairpin",
+        parent => "Monospace",
         area   => 'text',
         size   => '8pt',
-        font   => 'Monospace',
-    );
-    $doc->register_style($s2);
+    )->register($doc);
 
     # Alignment (Monospace style)
-    my $s3 = odf_style->create(
+    odf_style->create(
         'paragraph',
-        name => "Alignment",
-        parent => "Monospace"
-    );
-    $s3->set_properties(
+        name  => "Alignment",
+        parent => "Monospace",
         area   => 'text',
         size   => '9pt',
-        font   => 'Monospace',
-    );
-    $doc->register_style($s3);
+    )->register($doc);
+
+    # StandardBold (Monospace style)
+    odf_style->create(
+        'paragraph',
+        name  => "StandardBold",
+        parent => "Standard",
+        area   => 'text',
+        weight => 'bold',
+    )->register($doc);
 
     # Level 2 Heading style creation
     $doc->insert_style(
@@ -166,7 +167,7 @@ sub prepare_document {
     $doc->insert_style(
         odf_create_style(
                 'graphic',
-                name            => "Classic",
+                name        => "Classic",
                 align       => 'center',
                 margin_top  => '5mm'
                 ),
@@ -181,9 +182,6 @@ sub prepare_document {
             margin_top  => '5mm'
         )
     );
-
-
-
 
     return $doc;
 }
@@ -243,7 +241,7 @@ sub generate_report {
             my ( $start, $end ) = split( m/[-]/xms, ${$candidate}{'position'} );
             $context->append_element(
                 odf_create_heading(
-                    level => 2,
+                    level => 1,
                     text  => $key,
                 )
             );
@@ -271,8 +269,21 @@ sub generate_report {
             } else {
                 $subtext.= "(This stem-loop structure is the MFE structure)"
             }
-            $list->add_item(text => "Sequence and stem-loop structure:\n$vienna_seq \n$subtext", style => "Monospace");
-
+            my $item = $list->add_item(text => "Sequence and stem-loop structure: ", style => "Standard");
+#            $item->add(text => "Sequence and stem-loop structure:\n$vienna_seq \n$subtext", style => "Monospace");
+            $item->append_element(
+            odf_create_paragraph(
+                text    => $vienna_seq,
+                style   =>'Monospace'
+                )
+            );
+            my $para1 = $item->append_element(
+            odf_create_paragraph(
+                text    => $subtext,
+                style   =>'Standard'
+                )
+            );
+            $para1->set_span(filter  => "structure", style   => 'StandardBold');
 
             # Section secondary structure
 
@@ -355,7 +366,7 @@ sub add_ODF_alignments{
     $context->append_element(
         odf_create_heading(
             level => 3,
-            text  => "Mirbase alignments",
+            text  => "miRBase alignments",
         )
     );
 
