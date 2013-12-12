@@ -1,0 +1,275 @@
+--- p_value
+--- '0.125000'
+--- position
+--- 187-322
+--- alignments
+---
+101-121:
+- alignment: 'g-uccugccuugcaucaacugaau
+
+    | ||| ||||||||||||||||||
+
+    gaucccgccuugcaucaacugaau
+
+'
+  begin_query: 24
+  begin_target: 99
+  def_query: MIMAT0022678 Acacia auriculiformis miR168 | :[revcomp]
+  end_query: 0
+  end_target: 122
+  name: aau-miR168
+  score: -2
+  seq: GATCCCGCCTTGCATCAACTGAAT
+  strand_target: +
+- alignment: 'ccugccuugcaucaacugaa
+
+    || |||||||| ||| ||||
+
+    cccgccuugcaccaagugaa
+
+'
+  begin_query: 0
+  begin_target: 101
+  def_query: MIMAT0015191 Zea mays miR168a* |
+  end_query: 20
+  end_target: 121
+  name: zma-miR168a*
+  score: -3
+  seq: CCCGCCTTGCACCAAGTGAA
+  strand_target: +
+- alignment: 'ccugccuugcaucaacugaa
+
+    || |||||||||||| ||||
+
+    cccgccuugcaucaagugaa
+
+'
+  begin_query: 0
+  begin_target: 101
+  def_query: MIMAT0015192 Zea mays miR168b* |
+  end_query: 20
+  end_target: 121
+  name: zma-miR168b*
+  score: -2
+  seq: CCCGCCTTGCATCAAGTGAA
+  strand_target: +
+- alignment: 'ccugccuugcaucaacugaau
+
+    || ||||||||||||||||||
+
+    cccgccuugcaucaacugaau
+
+'
+  begin_query: 0
+  begin_target: 101
+  def_query: MIMAT0017482 Arabidopsis lyrata miR168a* | mtr-miR168c* MIMAT0022236
+    Medicago truncatula miR168c* |
+  end_query: 21
+  end_target: 122
+  name: aly-miR168a*
+  score: -1
+  seq: CCCGCCTTGCATCAACTGAAT
+  strand_target: +
+- alignment: 'ccugccuugcaucaacugaau
+
+    || | |||| |||||||||||
+
+    cccgucuuguaucaacugaau
+
+'
+  begin_query: 0
+  begin_target: 101
+  def_query: MIMAT0017484 Arabidopsis lyrata miR168b* |
+  end_query: 21
+  end_target: 122
+  name: aly-miR168b*
+  score: -3
+  seq: CCCGTCTTGTATCAACTGAAT
+  strand_target: +
+18-38:
+- alignment: 'uucgcuuggugcaggucggg
+
+    ||| ||||||||| | ||||
+
+    uucacuuggugcaaggcggg
+
+'
+  begin_query: 20
+  begin_target: 17
+  def_query: MIMAT0015191 Zea mays miR168a* | :[revcomp]
+  end_query: 0
+  end_target: 37
+  name: zma-miR168a*
+  score: -3
+  seq: TTCACTTGGTGCAAGGCGGG
+  strand_target: +
+- alignment: 'ucgcuuggugcaggucggg
+
+    |||||||||||||||||||
+
+    ucgcuuggugcaggucggg
+
+'
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0020985 Glycine max miR168b |
+  end_query: 19
+  end_target: 37
+  name: gma-miR168b
+  score: 0
+  seq: TCGCTTGGTGCAGGTCGGG
+  strand_target: +
+- alignment: 'ucgcuuggugcaggucggga
+
+    ||||||||||||||||||||
+
+    ucgcuuggugcaggucggga
+
+'
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0022751 Cucumis melo miR168 |
+  end_query: 20
+  end_target: 38
+  name: cme-miR168
+  score: 0
+  seq: TCGCTTGGTGCAGGTCGGGA
+  strand_target: +
+- alignment: "ucgcuuggugcaggucggga-\n||||||||||||| |||||| \nucgcuuggugcagaucgggac\n"
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0001045 Oryza sativa miR168a | sbi-miR168 MIMAT0001452 Sorghum bicolor
+    miR168 | sof-miR168a MIMAT0001665 Saccharum officinarum miR168a | zma-miR168a
+    MIMAT0001726 Zea mays miR168a | zma-miR168b MIMAT0001727 Zea mays miR168b | hvu-miR168-5p
+    MIMAT0018215 Hordeum vulgare miR168-5p | bdi-miR168 MIMAT0020673 Brachypodium
+    distachyon miR168 | ssp-miR168a MIMAT0020294 Saccharum ssp. miR168a |
+  end_query: 21
+  end_target: 38
+  name: osa-miR168a
+  score: -2
+  seq: TCGCTTGGTGCAGATCGGGAC
+  strand_target: +
+- alignment: "ucgcuuggugcaggucggga-\n|||||||| |||| |||||| \nucgcuugg-gcagaucgggac\n"
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0001666 Saccharum officinarum miR168b |
+  end_query: 20
+  end_target: 38
+  name: sof-miR168b
+  score: -3
+  seq: TCGCTTGGGCAGATCGGGAC
+  strand_target: +
+- alignment: 'ucgcuuggugcaggucgggaa
+
+    |||||||||||||||||||||
+
+    ucgcuuggugcaggucgggaa
+
+'
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0000198 Arabidopsis thaliana miR168a | ath-miR168b MIMAT0000199
+    Arabidopsis thaliana miR168b | gma-miR168 MIMAT0001681 Glycine max miR168 | ptc-miR168a
+    MIMAT0001949 Populus trichocarpa miR168a | ptc-miR168b MIMAT0001950 Populus trichocarpa
+    miR168b | bna-miR168 MIMAT0005625 Brassica napus miR168 | vvi-miR168 MIMAT0005675
+    Vitis vinifera miR168 | ccl-miR168 MIMAT0014073 Citrus clementine miR168 | crt-miR168
+    MIMAT0014086 Citrus reticulata miR168 | rco-miR168 MIMAT0014168 Ricinus communis
+    miR168 | aly-miR168a MIMAT0017481 Arabidopsis lyrata miR168a | aly-miR168b MIMAT0017483
+    Arabidopsis lyrata miR168b | tcc-miR168 MIMAT0020390 Theobroma cacao miR168 |
+    mtr-miR168b MIMAT0021270 Medicago truncatula miR168b | mtr-miR168c MIMAT0022235
+    Medicago truncatula miR168c | vun-miR168 MIMAT0022758 Vigna unguiculata miR168
+    |
+  end_query: 21
+  end_target: 39
+  name: ath-miR168a
+  score: 0
+  seq: TCGCTTGGTGCAGGTCGGGAA
+  strand_target: +
+- alignment: 'ucgcuuggugcaggucgggaa
+
+    | ||||||||| |||||||||
+
+    uugcuuggugcuggucgggaa
+
+'
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0011089 Medicago truncatula miR168 |
+  end_query: 21
+  end_target: 39
+  name: mtr-miR168
+  score: -2
+  seq: TTGCTTGGTGCTGGTCGGGAA
+  strand_target: +
+- alignment: "ucgcuuggugcaggucgggaa\n  ||||||||||| |||||||\naggcuuggugcagcucgggaa\n"
+  begin_query: 0
+  begin_target: 18
+  def_query: MIMAT0001046 Oryza sativa miR168b |
+  end_query: 21
+  end_target: 39
+  name: osa-miR168b
+  score: -3
+  seq: AGGCTTGGTGCAGCTCGGGAA
+  strand_target: +
+--- hairpin
+--- "     g      ucu      c          u     acg-     -  --   c          u-  u\nuuacg
+  cgguuu   gauucg uuggugcagg cggga    gcuug gc  cga gguuucauau  ug c\n||||| ||||||
+  \  |||||| |||||||||| |||||    ||||| ||  ||| ||||||||||  || \naaugu gccaag   cuaagu
+  aacuacguuc guccu    ugagu cg  gcu ccaaagugug  ac u\n     a      u--      c          c
+  \    guca     u  au   -          uc  c\n"
+--- alignment
+--- 1
+--- quality
+--- 2
+--- alternatives
+---
+contig15916__123-364:
+  mfei: '-0.75'
+  sequence: cagcagauauauauuauuuauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguug
+  structure: ((((((........((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....))))))))))))))))
+contig15916__133-362:
+  mfei: '-0.77'
+  sequence: auauuauuuauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauugu
+  structure: (((.((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....)))))))))).)))
+contig15916__141-358:
+  mfei: '-0.74'
+  sequence: uauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaaua
+  structure: (((((((....((...((....((((((....(((.....(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).))))))))))))....))))))...))..))...)))))))
+contig15916__143-366:
+  mfei: '-0.70'
+  sequence: uucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguugga
+  structure: ((((...((((.((((.((.((((((....(((.....(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).))))))))))))....))))))........)).)))).))))...))))
+contig15916__198-313:
+  mfei: '-0.84'
+  sequence: uucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaa
+  structure: (((.((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))
+contig15916__234-365:
+  mfei: '-0.37'
+  sequence: ccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguugg
+  structure: (((((((((((((.....(((((((((.((.(....((((.................................................))))....).))))))...))))).....))))).))))))))
+contig15916__251-369:
+  mfei: '-0.41'
+  sequence: gucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguuggagau
+  structure: ((((((((.((((..(.((...(..((((..((((((((....(((((((...............))))))).......).)).)))))))))..)...)).)..)))).).)))))))
+--- Vienna_optimal
+--- (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
+--- name
+--- contig15916
+--- image
+--- /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline1/contig15916/contig15916__187-322/image.png
+--- amfe
+--- '-42.13'
+--- length
+--- 136
+--- mfei
+--- '-0.84'
+--- mfe
+--- '-57.3'
+--- DNASequence
+--- uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
+--- Vienna
+--- (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
+--- mirdup_validation
+---
+contig15916__101-121: 1
+contig15916__18-38: 1

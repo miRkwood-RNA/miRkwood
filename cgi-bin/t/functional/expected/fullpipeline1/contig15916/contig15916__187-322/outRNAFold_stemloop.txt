@@ -1,1 +1,3 @@
-outRNAFold_optimal.txt
+>contig15916__187-322
+uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
+(((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).))))) (-57.30)

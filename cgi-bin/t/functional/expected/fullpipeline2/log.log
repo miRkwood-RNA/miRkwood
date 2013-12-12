@@ -1,0 +1,75 @@
+[DEBUG] BEGIN execute_scripts
+[DEBUG] FilteringCDS
+[DEBUG] Opening multifasta /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/Sequences.fas
+[DEBUG] Calling parse_multi_fasta() on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/Sequences.fas
+[DEBUG] Iterating over names
+[DEBUG] Considering >contig15750
+[DEBUG] Running RNAfold
+[DEBUG] Running RNAstemloop on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/RNALfold.out
+[DEBUG] Processing RNAstemloop output for optimal /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/rnastemloop_optimal.out
+[DEBUG] Running RNAeval in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/rnaeval_optimal.out
+[DEBUG] Processing RNAstemloop output for stemloop /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/rnastemloop_stemloop.out
+[DEBUG] Running RNAeval in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/rnaeval_stemloop.out
+[DEBUG] Considering >contig15916
+[DEBUG] Running RNAfold
+[DEBUG] Running RNAstemloop on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/RNALfold.out
+[DEBUG] Processing RNAstemloop output for optimal /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/rnastemloop_optimal.out
+[DEBUG] Running RNAeval in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/rnaeval_optimal.out
+[DEBUG] Processing RNAstemloop output for stemloop /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/rnastemloop_stemloop.out
+[DEBUG] Running RNAeval in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/rnaeval_stemloop.out
+[DEBUG] A posteriori tests in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/
+[DEBUG] Considering log.log
+[DEBUG] Considering ..
+[DEBUG] Considering contig15916
+[DEBUG] Entering sequence /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916
+[DEBUG] Considering rnaeval_optimal.out
+[DEBUG] Considering rnastemloop_optimal.out
+[DEBUG] Considering rnastemloop_stemloop.out
+[DEBUG] Considering ..
+[DEBUG] Considering rnaeval_stemloop.out
+[DEBUG] Considering .
+[DEBUG] Considering contig15916__187-322
+[DEBUG] Entering candidate contig15916__187-322
+[DEBUG] Converting optimal to CT in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/outB2ct_optimal.ct
+[DEBUG] Converting stemloop to CT in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/outB2ct_stemloop.ct
+[DEBUG] Generating image using VARNA in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/image.png
+[DEBUG] Running test_mfei on contig15916__187-322
+[DEBUG] Running test_randfold on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/seq.txt
+[DEBUG] Running test_alignment on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/outB2ct_stemloop.ct
+[DEBUG] cd /var/www/arn/cgi-bin/programs/exonerate-2.2.0-i386/bin && exonerate -E --model affine:bestfit /var/www/arn/cgi-bin/data/MirbaseFile.txt /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/seqWithN.txt -d /var/www/arn/cgi-bin/data/matrix --bestn 1 --score -3 -e -1 -o -1 --showvulgar no --showalignment no --verbose 0 --ryo '- name : %qi\n  begin_target  : %tab\n  end_target    : %tae\n  strand_target : %tS\n  begin_query   : %qab\n  end_query     : %qae\n  def_query     : %qd\n  seq_query     : %qas\n  score: %s\n  alignment: |{\n    %Pqs %Pts %Pl}\n'> /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15916/contig15916__187-322/alignement.txt  2> /dev/null
+[DEBUG] Done with candidate contig15916__187-322
+[DEBUG] Pseudo Serializing candidate information:
+ /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/, contig15916, contig15916__187-322
+[DEBUG] Like, really
+[DEBUG] Done with serializing contig15916__187-322
+[DEBUG] Considering RNALfold.out
+[DEBUG] Done with initial sequence contig15916
+[DEBUG] Considering outBlast.txt
+[DEBUG] Considering .
+[DEBUG] Considering run_options.cfg
+[DEBUG] Considering contig15750
+[DEBUG] Entering sequence /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750
+[DEBUG] Considering rnaeval_optimal.out
+[DEBUG] Considering rnastemloop_optimal.out
+[DEBUG] Considering rnastemloop_stemloop.out
+[DEBUG] Considering ..
+[DEBUG] Considering rnaeval_stemloop.out
+[DEBUG] Considering .
+[DEBUG] Considering contig15750__34-195
+[DEBUG] Entering candidate contig15750__34-195
+[DEBUG] Converting optimal to CT in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/outB2ct_optimal.ct
+[DEBUG] Converting stemloop to CT in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/outB2ct_stemloop.ct
+[DEBUG] Generating image using VARNA in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/image.png
+[DEBUG] Running test_mfei on contig15750__34-195
+[DEBUG] Running test_randfold on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/seq.txt
+[DEBUG] Running test_alignment on /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/outB2ct_stemloop.ct
+[DEBUG] cd /var/www/arn/cgi-bin/programs/exonerate-2.2.0-i386/bin && exonerate -E --model affine:bestfit /var/www/arn/cgi-bin/data/MirbaseFile.txt /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/seqWithN.txt -d /var/www/arn/cgi-bin/data/matrix --bestn 1 --score -3 -e -1 -o -1 --showvulgar no --showalignment no --verbose 0 --ryo '- name : %qi\n  begin_target  : %tab\n  end_target    : %tae\n  strand_target : %tS\n  begin_query   : %qab\n  end_query     : %qae\n  def_query     : %qd\n  seq_query     : %qas\n  score: %s\n  alignment: |{\n    %Pqs %Pts %Pl}\n'> /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/contig15750/contig15750__34-195/alignement.txt  2> /dev/null
+[DEBUG] Done with candidate contig15750__34-195
+[DEBUG] Pseudo Serializing candidate information:
+ /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/, contig15750, contig15750__34-195
+[DEBUG] Like, really
+[DEBUG] Done with serializing contig15750__34-195
+[DEBUG] Considering RNALfold.out
+[DEBUG] Done with initial sequence contig15750
+[DEBUG] Considering sequenceUpload.fas
+[DEBUG] Considering Sequences.fas

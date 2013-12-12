@@ -1,1 +1,0 @@
-outRNAFold_optimal.txt
