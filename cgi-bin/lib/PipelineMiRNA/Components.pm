@@ -111,11 +111,8 @@ sub compute_energy {
             {
                 $cg++;
             }
-            if (
-                ( $longueur == $variable[1] )
-
-                && ( $nameSeq eq $sequence_name )
-              ) # tester si la longueur actuelle est égale à la longueur de la séquence
+            if ( $longueur == $variable[1] )
+            # tester si la longueur actuelle est égale à la longueur de la séquence
             {
 
                 my $num = ( $mfe / $longueur ) * 100;

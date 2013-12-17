@@ -48,6 +48,7 @@ results.prototype.getSequenceByNameFactors = function(name,pos)
 	factors.mfe = seq.getAttribute("mfe");
 	factors.p_value = seq.getAttribute("p_value");
 	factors.Vienna = seq.getAttribute("Vienna");
+	factors.identifier = seq.getAttribute("identifier");
 	factors.DNASequence = seq.getAttribute("DNASequence");	
 	factors.image = seq.getAttribute("image");	
 	return factors;
@@ -119,6 +120,14 @@ results.prototype.getFactorsNamesList = function()
 results.prototype.getSequenceNameByIndex = function(ind)
 {
 	return this.SequencesXML[ind].getAttribute("name");
+}
+
+/**
+ * Retourner identifiant candidat à partir d'un indice
+ */
+results.prototype.getIdentifierByIndex = function(ind)
+{
+	return this.SequencesXML[ind].getAttribute("identifier");
 }
 
 /**

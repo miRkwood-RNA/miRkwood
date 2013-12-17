@@ -84,15 +84,17 @@ sub main_entry {
 
 	debug( 'Iterating over names', $debug );
 
+    my $sequence_dir_name = 0;
+
 	foreach my $name ( keys %tab ) {
-		debug( "Considering $name", $debug );
+        $sequence_dir_name++;
+        debug( "Considering sequence $sequence_dir_name: $name", $debug );
 		my $temp_file = File::Spec->catfile( $job_dir, 'tempFile.txt' );
 		open( my $TEMPFILE_FH, '>', $temp_file )
 		  or die "Error when opening tempfile -$temp_file-: $!";
 		chmod 0777, $temp_file;
 		print $TEMPFILE_FH "$name\n$tab{$name}";
-		my $name = substr $name, 1;
-		my $sequence_dir = File::Spec->catdir( $job_dir, $name );
+		my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
 		mkdir $sequence_dir;
 
 		my $rnalfold_output =
@@ -322,8 +324,12 @@ sub create_directories {
 
 	my (%newHash) = %{ +shift };
 	my $current_sequence_dir = shift;
+	
+	my $candidate_counter = 0;
+	
 	foreach my $key ( sort keys %newHash ) {
-		my $candidate_dir = File::Spec->catdir( $current_sequence_dir, $key );
+	    $candidate_counter++;
+		my $candidate_dir = File::Spec->catdir( $current_sequence_dir, $candidate_counter );
 		mkdir $candidate_dir;
 
 		#Writing seq.txt
@@ -404,7 +410,8 @@ sub process_tests {
 	my @dirs;
 	@dirs = readdir DIR;
 	closedir DIR;
-
+    my $candidates_dir = File::Spec->catdir($job_dir, 'candidates');
+    mkdir $candidates_dir;
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
 		debug( "Considering $dir", 1 );
@@ -434,13 +441,12 @@ sub process_tests {
 "Pseudo Serializing candidate information:\n $job_dir, $dir, $subDir",
 						1
 					);
-					debug( "Like, really", 1 );
 
 					if (
 						!eval {
 							PipelineMiRNA::Candidate
 							  ->serialize_candidate_information(
-								$job_dir, $dir, $subDir );
+								$job_dir, $dir, $subDir, $candidates_dir );
 						}
 					  )
 					{
@@ -458,6 +464,7 @@ sub process_tests {
 			debug( "Done with initial sequence $dir", 1 );
 		}    # foreach my $dir (@dirs)
 	}    #process_tests
+	debug( "Done with all the tests", 1 );
 	return 0;
 }
 

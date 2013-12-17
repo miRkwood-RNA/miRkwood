@@ -239,10 +239,11 @@ sub generate_report {
         {
             my $candidate = $results{$key};
             my ( $start, $end ) = split( m/[-]/xms, ${$candidate}{'position'} );
+            my $candidate_name = PipelineMiRNA::Candidate->get_name($candidate);
             $context->append_element(
                 odf_create_heading(
                     level => 1,
-                    text  => $key,
+                    text  => $candidate_name,
                 )
             );
 

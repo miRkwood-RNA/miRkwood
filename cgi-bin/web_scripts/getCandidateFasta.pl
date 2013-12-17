@@ -14,10 +14,8 @@ use PipelineMiRNA::WebTemplate;
 my $cgi = CGI->new();
 
 my $jobId    = $cgi->param('jobId');
-my $name     = $cgi->param('name');
-my $position = $cgi->param('position');
+my $candidate_id   = $cgi->param('id');
 
-my $candidate_name = $name . '__' . $position;
 my $job            = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
 my %candidate;
@@ -26,7 +24,7 @@ if (
     !eval {
         %candidate =
           PipelineMiRNA::Candidate->retrieve_candidate_information( $job,
-            $name, $candidate_name );
+            $candidate_id );
     }
   )
 {
@@ -36,6 +34,7 @@ if (
         'No results for the given identifiers');
 }
 else {
+    my $candidate_name = PipelineMiRNA::Candidate->get_name(\%candidate);
     my $fasta = PipelineMiRNA::Candidate->candidateAsFasta(\%candidate);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt

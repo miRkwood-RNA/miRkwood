@@ -14,21 +14,20 @@ use PipelineMiRNA::WebTemplate;
 my $cgi            = CGI->new();
 
 my $jobId          = $cgi->param('jobId');
-my $name           = $cgi->param('name');
-my $position       = $cgi->param('position');
+my $candidate_id   = $cgi->param('id');
 my $optimal        = $cgi->param('optimal');
 
-my $candidate_name = $name.'__'.$position;
 my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
 my %candidate;
-my $filename = $candidate_name;
-my $header = ">$candidate_name";
 
-if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $name, $candidate_name);}) {
+if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
     print PipelineMiRNA::WebTemplate::get_error_page("No results for the given identifiers");
 }else{
+    my $candidate_name = PipelineMiRNA::Candidate->get_name(\%candidate);
+    my $filename = $candidate_name;
+    my $header = ">$candidate_name";
     my $vienna = PipelineMiRNA::Candidate->candidateAsVienna(\%candidate, $optimal);
     if ($optimal){
         $filename .= "_optimal"

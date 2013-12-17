@@ -63,6 +63,19 @@ sub jobId_to_jobPath {
     return $jobPath;
 }
 
+=method get_candidates_dir
+
+
+=cut
+
+sub get_candidates_dir {
+    my ( $self, @args ) = @_;
+    my $id_job      = shift @args;
+    my $results_dir = $self->jobId_to_jobPath($id_job);
+    my $candidates_dir = File::Spec->catdir( $results_dir, 'candidates');
+    return $candidates_dir;
+}
+
 =method is_valid_jobID
 
 Test whether a jobID is valid - ie if there are results for it.
@@ -91,35 +104,24 @@ sub get_structure_for_jobID {
     my $job_dir = $self->jobId_to_jobPath($jobId);
     PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path($job_dir));
     my %myResults = ();
-
-    opendir DIR, $job_dir;    #ouverture répertoire job
-    my @dirs;
-    @dirs = readdir DIR;
+    my $candidates_dir = $self->get_candidates_dir($jobId);
+    opendir DIR, $candidates_dir;    #ouverture répertoire job
+    my @files;
+    @files = readdir DIR;
     closedir DIR;
-    foreach my $dir (@dirs)    # parcours du contenu
+    foreach my $file (@files)    # parcours du contenu
     {
-        my $full_dir = File::Spec->catdir( $job_dir, $dir );
-        if (    $dir ne "."
-             && $dir ne ".."
-             && -d $full_dir )    #si fichier est un répertoire
+        my $full_file = File::Spec->catfile( $candidates_dir, $file );
+        if (    $file ne "."
+             && $file ne "..")
         {
-            opendir DIR, $full_dir;    # ouverture du sous répertoire
-            my @files;
-            @files = readdir DIR;
-            closedir DIR;
-            foreach my $subDir (@files) {
-                my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
-                if (    ( $subDir ne "." )
-                     && ( $subDir ne ".." )
-                     && -d $subDir_full ) # si le fichier est de type repertoire
-                {
-                    my %candidate;
-                    if (! eval { %candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job_dir, $dir, $subDir) } ) {
-                        # Catching, do nothing
-                    }else{
-                        $myResults{$subDir} = \%candidate;
-                    }
-                }
+            my %candidate;
+            %candidate = PipelineMiRNA::Candidate->deserialize_candidate($full_file);
+            if (! eval { %candidate = PipelineMiRNA::Candidate->deserialize_candidate($full_file) } ){
+                # Catching, do nothing
+            }else{
+                my $identifier = $candidate{'identifier'};
+                $myResults{$identifier} = \%candidate;
             }
         }
     }
@@ -247,7 +249,7 @@ sub resultstruct2pseudoXML {
 
     my @optional_fields = $self->get_optional_candidate_fields();
     my @headers1 = ('name', 'position','length','strand','quality', @optional_fields);
-    my @headers2 = ('Vienna', 'DNASequence');
+    my @headers2 = ('Vienna', 'DNASequence', 'identifier');
 
     my $result = "<results id='all'>\n";
     my @keys = sort { PipelineMiRNA::Utils::get_element_of_split($results{$a}{'position'}, '-', 0) <=>

@@ -27,26 +27,32 @@ Check correctness and get the result for a given candidate
 
 Arguments:
 - $job - the job identifier
-- $dir - the sequence name
-- $subDir - the candidate name
-
+- $id - the candidate identifier
 =cut
 
 sub retrieve_candidate_information {
     my ( $self, @args ) = @_;
     my $job = shift @args;
-    my $dir = shift @args;
-    my $subDir = shift @args;
-
-    my $candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
-#    die($candidate_dir);
-    if ( ! -e $candidate_dir ){
-        die('Unvalid candidate information');
+    my $id = shift @args;
+    my $candidate_file = File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
+    if ( ! -e $candidate_file ){
+        die("Unvalid candidate information");
 
     }else{
-        my $candidate_file = File::Spec->catfile($candidate_dir, $candidate_base_filename);
         return $self->deserialize_candidate($candidate_file);
     }
+}
+
+=method make_candidate_filename
+
+Return the candidate filename based on the identifier.
+
+=cut
+
+sub make_candidate_filename {
+    my ( $self, @args ) = @_;
+    my $identifier = shift @args;
+    return $identifier . '.yml';
 }
 
 =method serialize_candidate_information
@@ -59,17 +65,16 @@ sub serialize_candidate_information {
     my $job_dir = shift @args;
     my $seq_dir = shift @args;
     my $can_dir = shift @args;
+    my $serialization_dir = shift @args;
 
     my $full_candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
-
     my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
     my %candidate = $self->parse_candidate_information($full_candidate_dir);
-    $candidate{'name'} = $seq_dir;    #récupération nom séquence
+    $candidate{'identifier'} = "$seq_dir-$can_dir";
+#    $candidate{'name'} = $seq_dir;    #récupération nom séquence
     $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
 
-    my @position = split( /__/, $can_dir );
-    $candidate{'position'} = $position[1];
-    $candidate{'length'} = PipelineMiRNA::Utils::get_element_of_split($position[1],'-', 1) - PipelineMiRNA::Utils::get_element_of_split($position[1],'-', 0) +1;
+    $candidate{'length'} = PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 1) - PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 0) +1;
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
     my %alignments;
     if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
@@ -98,7 +103,7 @@ sub serialize_candidate_information {
 #    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_prediction.txt");
 #    $candidate{'mirdup_prediction'} = \%{PipelineMiRNA::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
 
-    return $self->serialize_candidate( \%candidate, $full_candidate_dir );
+    return $self->serialize_candidate( \%candidate, $serialization_dir );
 }
 
 =method parse_candidate_information
@@ -140,7 +145,9 @@ sub parse_candidate_information {
     {
         my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_stemloop_out);
 
-
+        my @position = split( /__/, $vienna_res[0]);
+        $result{'name'} = $position[0];
+        $result{'position'} = $position[1];
         $result{'DNASequence'} = $vienna_res[1];
         $result{'Vienna'} = $vienna_res[2];
     }
@@ -179,6 +186,7 @@ sub serialize_candidate{
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
     my $serialization_path = shift @args;
+    my $candidate_base_filename = $self->make_candidate_filename($candidate{'identifier'});
     my $serialization_file = File::Spec->catfile($serialization_path, $candidate_base_filename);
     return YAML::XS::DumpFile($serialization_file, %candidate);
 }
@@ -249,6 +257,19 @@ sub get_relative_image {
     return PipelineMiRNA::Paths->filesystem_to_relative_path($image);
 }
 
+=method get_name
+
+Return the name of the given candidate,
+constructed by concatenating sequence name and position.
+
+=cut
+
+sub get_name {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    return $candidate{'name'}.'__'.$candidate{'position'};
+}
+
 =method candidateAsVienna
 
 Convert a given candidate to Vienna dot-bracket format
@@ -260,7 +281,7 @@ sub candidateAsVienna {
     my %candidate = %{shift @args};
     my $optimal = shift @args;
     my $output = "";
-    my $candidate_name = $candidate{'name'}.'__'.$candidate{'position'};
+    my $candidate_name = $self->get_name(\%candidate);
     my $header = ">$candidate_name";
     my $structure;
     if ($optimal){
@@ -284,7 +305,8 @@ sub candidateAsFasta {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
     my $output = "";
-    $output .= '>'.$candidate{'name'} . '__' . $candidate{'position'} . "\n" . $candidate{'DNASequence'} . "\n";
+    my $candidate_name = $self->get_name(\%candidate);
+    $output .= '>'.$candidate_name . "\n" . $candidate{'DNASequence'} . "\n";
     return $output;
 }
 
@@ -405,11 +427,6 @@ sub merge_alignments {
 sub make_alignments_HTML {
     my ($self, @args) = @_;
     my %candidate = %{shift @args};
-    my $job = shift @args;
-    my $dir = shift @args;
-    my $subDir = shift @args;
-
-    my $candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job,  $dir, $subDir);
 
     # Alignments
 
@@ -432,7 +449,7 @@ sub make_alignments_HTML {
         my ($left, $right) = split(/-/, $position);
 
         # MiRdup
-        my $mirdup_key = $dir . '__' . $position;
+        my $mirdup_key = $self->get_name(\%candidate);
         my $mirdup_prediction;
         if ( $mirdup_results{$mirdup_key} ){
             $mirdup_prediction = 'This prediction is validated by miRdup.';

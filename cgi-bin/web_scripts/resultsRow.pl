@@ -23,10 +23,8 @@ my $js  = PipelineMiRNA::WebTemplate->get_js_file();
 
 my $cgi            = CGI->new();
 my $jobId          = $cgi->param('jobID');
-my $name           = $cgi->param('nameSeq');
-my $position       = $cgi->param('position');
+my $candidate_id   = $cgi->param('id');
 
-my $candidate_name = $name.'__'.$position;
 my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 my $returnlink = PipelineMiRNA::WebTemplate::get_link_back_to_results($jobId);
 my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
@@ -34,7 +32,7 @@ my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results
 my %candidate;
 my $html_contents;
 
-if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $name, $candidate_name);}) {
+if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
     $html_contents = "No results for the given identifiers";
 }else{
@@ -43,9 +41,9 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
     my $size = length $candidate{'DNASequence'};
 
-    my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&name=$name&position=$position";
-    my $linkVienna = "./exportVienna.pl?jobId=$jobId&name=$name&position=$position";
-    my $linkAlternatives = "./exportAlternativesVienna.pl?jobId=$jobId&name=$name&position=$position";
+    my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&id=$candidate_id";
+    my $linkVienna = "./exportVienna.pl?jobId=$jobId&id=$candidate_id";
+    my $linkAlternatives = "./exportAlternativesVienna.pl?jobId=$jobId&id=$candidate_id";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
     my $Vienna_HTML = "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -64,7 +62,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
     my $alignmentHTML;
     if($candidate{'alignment'}){
-         $alignmentHTML = PipelineMiRNA::Candidate->make_alignments_HTML(\%candidate, $job, $name, $candidate_name);
+         $alignmentHTML = PipelineMiRNA::Candidate->make_alignments_HTML(\%candidate);
     } else {
         $alignmentHTML = "No alignment has been found.";
     }
@@ -76,7 +74,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           <b>Name: </b>$candidate{'name'}
         </li>
         <li>
-          <b>Position:</b> $position ($size nt)
+          <b>Position:</b> $candidate{'position'} ($size nt)
         </li>
         <li>
           <b>Strand:</b>
@@ -89,7 +87,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         </li>
         </ul>
         <h2>Secondary structure</h2>
-        <img id='structure' src='$image_url' height='400px' alt='$candidate_name secondary structure'>
+        <img id='structure' src='$image_url' height='400px' alt='$candidate{'name'} secondary structure'>
         $Vienna_HTML
         <h2>Thermodynamics stability</h2>
         <ul>
@@ -121,7 +119,7 @@ Content-type: text/html
 		<title>MicroRNA identification</title>
 	</head>
 	<body>
-	   <h1>Results for $name, $position</h1>
+	   <h1>Results for $candidate{'name'}, $candidate{'position'}</h1>
 	    $return_html
         $html_contents
         $return_html

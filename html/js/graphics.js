@@ -59,10 +59,8 @@ function showCellInfo(i,j)
 	} 
 	if ((i!=0)&&(j==0)) 
 	{
-		var nameTemp = myResults.getSequenceNameByIndex(i-1);
-		var positions = myResults.getValuesByFactorName("position");
-		var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
-		window.open("./resultsRow.pl?jobID="+id_job+"&nameSeq="+nameTemp+"&position="+factorsTemp.position);
+		var identifier = myResults.getIdentifierByIndex(i-1);
+		window.open("./resultsRow.pl?jobID="+id_job+"&id="+identifier);
 		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>Sequence Informations </u></h2><br/> <li><b>Name sequence :</b> " + nameTemp + "</li><br/><li> <b>MFEI : </b>" + factorsTemp.mfei + "</li> <br/> <li><b>P_value :</b> " + factorsTemp.p_value + "</li><br/> <li><b>Initial position : </b>" + factorsTemp.position +"</li> <br/> </div>"
 	} 
 	/**
@@ -337,10 +335,12 @@ function getChecked()
 	{
 		if (document.getElementById('checkbox'+i).checked == true )
 		{
-			var nameTemp = myResults.getSequenceNameByIndex(i-1);
-			var positions = myResults.getValuesByFactorName("position");
-			var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
-			tab.push(nameTemp+"__"+factorsTemp.position);
+			var identifier = myResults.getIdentifierByIndex(i-1);
+			// var nameTemp = myResults.getSequenceNameByIndex(i-1);
+			// var positions = myResults.getValuesByFactorName("position");
+			// var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
+			//tab.push(nameTemp+"__"+factorsTemp.position);
+			tab.push(identifier);
 		}
 	}
 	return tab;
@@ -352,13 +352,11 @@ function getChecked()
  */
 function exportTo(id, webroot)
 {
-
 	var radios = document.getElementsByName('export');
 	for (var i = 0, length = radios.length; i < length; i++) {
     		if (radios[i].checked) {
 			// do whatever you want with the checked radio
 			var checked = radios[i].value;
-		
 			// only one radio can be logically checked, don't check the rest
 			break;
 		}
