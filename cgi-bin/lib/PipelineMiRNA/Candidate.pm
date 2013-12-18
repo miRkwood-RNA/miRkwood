@@ -82,7 +82,7 @@ sub serialize_candidate_information {
     } else {
         %alignments = $self->merge_alignments(\%alignments);
         my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
-        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $seq_dir,
+        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $candidate{'name'},
                                                                          $candidate{'DNASequence'}, $candidate{'Vienna'},
                                                                          keys %alignments);
         $candidate{'alignments'} = \%alignments;
@@ -449,7 +449,7 @@ sub make_alignments_HTML {
         my ($left, $right) = split(/-/, $position);
 
         # MiRdup
-        my $mirdup_key = $self->get_name(\%candidate);
+        my $mirdup_key = $candidate{'name'} . '__' . $position;
         my $mirdup_prediction;
         if ( $mirdup_results{$mirdup_key} ){
             $mirdup_prediction = 'This prediction is validated by miRdup.';
