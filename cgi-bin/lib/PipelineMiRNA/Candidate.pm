@@ -98,7 +98,6 @@ sub serialize_candidate_information {
 Get the results for a given candidate
 
 Arguments:
-- $candidate_dir - the unprefixed path to the candidate results
 - $full_candidate_dir - the prefixed path to the candidate results
 
 =cut
