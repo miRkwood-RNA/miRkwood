@@ -245,7 +245,7 @@ sub compute_quality {
     if ( $length > 80 && $length < 200 ){
         $quality += 1;
     }
-    $quality += $self->has_mirdup_validation(\%candidate);
+    $quality += $self->compute_alignment_quality(\%candidate);
     return $quality;
 }
 

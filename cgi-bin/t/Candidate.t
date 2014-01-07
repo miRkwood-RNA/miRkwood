@@ -36,7 +36,7 @@ my %expected = ('name' => 'contig15750',
                 'Vienna_optimal' => $struct,
                 'alignment' => 2,
                 'alignment_existence' => 1,
-                'quality' => '3',
+                'quality' => '4',
 );
 delete $pseudo_candidate{'alignments'};
 delete $pseudo_candidate{'mirdup_validation'};
