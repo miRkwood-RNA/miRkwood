@@ -104,7 +104,11 @@ ok(
 
 ok( my $result1 = PipelineMiRNA::Candidate->compute_quality( \%candidate ),
     'can call compute_quality()' );
-is( $result1, 2, 'compute_quality returns the expected value' );
+is( $result1, 3, 'compute_quality returns the expected value' );
+
+ok( my $has_mirdup_validation_result = PipelineMiRNA::Candidate->has_mirdup_validation( \%candidate ),
+    'can call has_mirdup_validation()' );
+is( $has_mirdup_validation_result, 1, '$has_mirdup_validation returns the expected value' );
 
 ok( my $result2 = PipelineMiRNA::Candidate->get_absolute_image( \%candidate ),
     'can call get_absolute_image()' );

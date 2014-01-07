@@ -166,6 +166,7 @@ sub parse_candidate_information {
     }
 
     # Computing general quality
+    $result{'alignment'} = $self->compute_alignment_quality(\%result);
     $result{'quality'} = $self->compute_quality(\%result);
 
     return %result;
@@ -207,6 +208,24 @@ sub deserialize_candidate{
     return YAML::XS::LoadFile($serialization_file);
 }
 
+=method has_mirdup_validation
+
+Return whether the given candidate has at least
+one alignment which has been validated by MirDup.
+
+=cut
+
+sub has_mirdup_validation{
+    my ($self, @args) = @_;
+    my %candidate = %{shift @args};
+    my %mirdup_results = %{$candidate{'mirdup_validation'}};
+    if (scalar (grep( /^1$/, values %mirdup_results )) >= 1){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 =method compute_quality
 
 Compute a general quality score
@@ -227,7 +246,20 @@ sub compute_quality {
     if ( $length > 80 && $length < 200 ){
         $quality += 1;
     }
+    $quality += $self->has_mirdup_validation(\%candidate);
     return $quality;
+}
+
+=method compute_alignment_quality
+
+Compute the alignment quality score
+
+=cut
+
+sub compute_alignment_quality {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    return $candidate{'alignment_existence'} + $self->has_mirdup_validation(\%candidate);
 }
 
 =method get_absolute_image
