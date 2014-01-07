@@ -75,20 +75,7 @@ sub serialize_candidate_information {
     $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
 
     $candidate{'length'} = PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 1) - PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 0) +1;
-    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
-    my %alignments;
-    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
-        # Catching exception
-    } else {
-        %alignments = $self->merge_alignments(\%alignments);
-        my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
-        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $candidate{'name'},
-                                                                         $candidate{'DNASequence'}, $candidate{'Vienna'},
-                                                                         keys %alignments);
-        $candidate{'alignments'} = \%alignments;
-        $candidate{'mirdup_validation'} = \%mirdup_results;
 
-    }
 
     my $alternative_candidates_file = File::Spec->catfile($full_candidate_dir, 'alternativeCandidates.txt');
     if (-e $alternative_candidates_file){
@@ -164,7 +151,19 @@ sub parse_candidate_information {
 
     #Récupération alignement avec mirBase
     my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
-    $result{'alignment'} = ( -e $file_alignement && ! -z $file_alignement );
+    $result{'alignment_existence'} = ( -e $file_alignement && ! -z $file_alignement );
+    my %alignments;
+    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
+        # Catching exception
+    } else {
+        %alignments = $self->merge_alignments(\%alignments);
+        my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
+        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $result{'name'},
+                                                                         $result{'DNASequence'}, $result{'Vienna'},
+                                                                         keys %alignments);
+        $result{'alignments'} = \%alignments;
+        $result{'mirdup_validation'} = \%mirdup_results;
+    }
 
     # Computing general quality
     $result{'quality'} = $self->compute_quality(\%result);

@@ -34,9 +34,12 @@ my %expected = ('name' => 'contig15750',
                 'DNASequence' => $seq,
                 'Vienna' => $struct,
                 'Vienna_optimal' => $struct,
-                'alignment' => 1,
-                'quality' => '2',
+                'alignment' => 2,
+                'alignment_existence' => 1,
+                'quality' => '3',
 );
+delete $pseudo_candidate{'alignments'};
+delete $pseudo_candidate{'mirdup_validation'};
 is_deeply( \%pseudo_candidate, \%expected, 'parse candidate information ok' );
 
 my %dummy_alignments = ();
