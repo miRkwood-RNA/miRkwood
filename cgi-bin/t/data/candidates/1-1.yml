@@ -484,6 +484,8 @@
   score: -3
   seq: AGCCAAGGATGACTTGCCGG
   strand_target: +
+--- identifier
+--- 1-1
 --- hairpin
 --- "      u  au      a        u   cuu    u  -  c      -     u         --    uca-
   \       \ngagagg uc  acauga gagaagag gcu   auua gu ag caagga ugaau gccuaauga  cagc
@@ -498,19 +500,19 @@
 --- alternatives
 ---
 contig15750__52-177:
-  mfei: '-0.891489361702128'
+  mfei: '-0.89'
   sequence: gagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuuc
   structure: ((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))))))))))
 contig15750__54-177:
-  mfei: '-0.858695652173913'
+  mfei: '-0.86'
   sequence: gaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuuc
   structure: ((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))..))))))
 contig15750__64-168:
-  mfei: '-0.879487179487179'
+  mfei: '-0.88'
   sequence: cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg
   structure: ((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))
 contig15750__73-158:
-  mfei: '-0.981818181818182'
+  mfei: '-0.98'
   sequence: uagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacug
   structure: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
 --- Vienna_optimal
@@ -518,11 +520,13 @@ contig15750__73-158:
 --- name
 --- contig15750
 --- image
---- /var/www/arn/results/jobNov191713542013/contig15750/contig15750__34-195/image.png
+--- /var/www/arn/results/jobDec181721032013/1/1/image.png
+--- length
+--- 162
 --- amfe
---- '-37.0987654320988'
+--- '-37.10'
 --- mfei
---- '-1.00166666666667'
+--- '-1.00'
 --- mfe
 --- '-60.1'
 --- DNASequence
