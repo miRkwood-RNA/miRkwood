@@ -244,11 +244,19 @@ function createGrid(id,rowsNumber,columnsNumber)
 				else if( factor =='alignment') //cas lien alignement 
 				{
 					var value = myResults.getValueByFactor(i-1,'alignment');
+					str = "<img src='/arn/html/style/check.png' alt='arobas' style='width:15px; height:15px;' /> 	 ";
 					if (value == 1)
 					{
 						
 						//td.innerHTML = "<a target='_blank' href='./resultsCell.pl?typePage=alignement&amp;url="+value+ "'>View alignment</a>  "; // ajouter la valeur à la cellule
-						td.innerHTML = "<img src='/arn/html/style/check.png' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
+						//td.innerHTML = "<img src='/arn/html/style/check.png' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
+						
+						var string = repeat(str, parseInt(value));
+						td.innerHTML =  string;
+					}else if (value == 2) {
+						//td.innerHTML = "<img src='/arn/html/style/check.png' alt='arobas' style='width:15px; height:15px;' /><img src='/arn/html/style/check.png' alt='arobas' style='width:15px; height:15px;' />";
+						var string = repeat(str, parseInt(value));
+						td.innerHTML =  string;
 					}
 					else
 					{
