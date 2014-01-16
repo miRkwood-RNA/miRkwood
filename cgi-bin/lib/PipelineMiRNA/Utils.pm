@@ -138,6 +138,26 @@ sub filter_fasta {
     return;
 }
 
+
+=method mask_sequence_nucleotide
+
+Mask a typical FASTA line with 'N' symbol
+
+Input:
+ - a sequence string
+Output:
+ - the masked sequence
+
+=cut
+
+sub mask_sequence_nucleotide {
+    my (@args) = @_;
+    my $sequence = shift @args;
+    chomp $sequence;
+    $sequence =~ s/[wrkmsyd]/n/g;
+    return $sequence;
+}
+
 =method find_matching_count
 
 Get the number of matchings in a stemloop.

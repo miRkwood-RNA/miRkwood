@@ -15,6 +15,7 @@ use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Results;
+use PipelineMiRNA::Utils;
 use PipelineMiRNA::WebTemplate;
 
 my $cgi = new CGI;
@@ -56,82 +57,60 @@ mkdir $absolute_job_dir;
 my $log_file = File::Spec->catfile( $absolute_job_dir, 'log.log' );
 local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
-my $sequence_origin = File::Spec->catfile( $absolute_job_dir, 'sequence.fas' );
+my $sequence_origin_file = File::Spec->catfile( $absolute_job_dir, 'sequence.fas' );
 my $sequence_load   = File::Spec->catfile( $absolute_job_dir, 'sequenceLoad.fas' );
 my $sequence_upload = File::Spec->catfile( $absolute_job_dir, 'sequenceUpload.fas' );
 
 my $seqArea = $cgi->param('seqArea');
-
-if ( $seqArea eq "" )    # cas upload fichier
+my $seq = q{};
+if ( $seqArea eq q{} )    # cas upload fichier
 {
     debug("Sequences are a FASTA file uploaded", 1);
-    my $seq = "";
     my $upload = $cgi->upload('seqFile')
       || die "Error when getting seqFile: $!";
     while ( my $ligne = <$upload> ) {
         $seq .= $ligne;
     }
-    open( INPUT, '>>', $sequence_origin )
-      || die "Error when opening -$sequence_origin-: $!";
-    print INPUT lc($seq) . "\n";    ##mise en minuscules
-    close INPUT;
-    chmod 777, $sequence_origin;
-    $seq = lc($seq) . "\n";
-
-    my $fasta_cmd = "sh $formatFasta_bin $sequence_origin $sequence_load";
-    debug("Run shell script $fasta_cmd", 1);
-    system($fasta_cmd);             # script qui elimine les retour a la ligne
-
-    if ( $seq !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
-    {                               # erreur de syntaxe
-        print $cgi->redirect($error_url);
-        exit;
-    }
-}
-else                                #cas textArea
-{
+}else{
     debug('Sequences are provided through the text area', 1);
-    open( INPUT, '>>', $sequence_origin )
-      or die "Error when opening -$sequence_origin-: $!";
-    print INPUT lc($seqArea);
-    system( "sed -i 'N;s/\r//g' " . $sequence_origin )
-      ;    #commande sed permettant d'eliminer les caracteres du (copier-coller)
-    system("sh $formatFasta_bin $sequence_origin $sequence_load")
-      ;    # script qui elimine les retour a la ligne
-    while ( my $ligne = <INPUT> ) {
-        $seqArea .= $ligne;
-    }
-    $seqArea = lc($seqArea) . "\n";    #mise en miniscule
+    $seq = $seqArea;
+}
+$seq = lc($seq) . "\n";
 
-    if ( $seqArea !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
-    {                                  # erreur de syntaxe
-        print $cgi->redirect($error_url);
-        exit;
-    }
-    close INPUT;
+if ( $seq !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
+{                               # erreur de syntaxe
+    print $cgi->redirect($error_url);
+    exit;
 }
 
-open( LOAD, '<', $sequence_load )
-  or die "Error when opening -$sequence_load-: $!";
-open( OUTPUT, '>>', $sequence_upload )
+open( my $INPUT, '>>', $sequence_origin_file )
+  or die "Error when opening -$sequence_origin_file-: $!";
+print $INPUT $seq . "\n";
+close $INPUT
+  or die "Error when closing -$sequence_origin_file-: $!";
+chmod 777, $sequence_origin_file;
+
+my $sed_cmd = "sed -i 'N;s/\r//g' " . $sequence_origin_file;
+# commande sed permettant d'eliminer les caracteres du (copier-coller)
+system( $sed_cmd  );
+
+open( my $LOAD, '<', $sequence_origin_file )
+  or die "Error when opening -$sequence_origin_file-: $!";
+open( my $OUTPUT, '>>', $sequence_upload )
   or die "Error when opening -$sequence_upload-: $!";
 my $name;
-while ( my $line = <LOAD> ) {
-    if ( $line =~ /^>/ ) {
+while ( my $line = <$LOAD> ) {
+    if ( $line =~ /^>/smx ) {
         $name = $line;
     }
     else {
-        $line =~ s/w/n/g;
-        $line =~ s/r/n/g;
-        $line =~ s/k/n/g;
-        $line =~ s/m/n/g;
-        $line =~ s/s/n/g;
-        $line =~ s/y/n/g;
-        $line =~ s/d/n/g;
-        print OUTPUT $name . $line;
+        my $cleaned_line = PipelineMiRNA::Utils::mask_sequence_nucleotide($line);
+        print $OUTPUT $name . $cleaned_line . "\n";
         $name = "";
     }
 }
+close $OUTPUT or die("Error when closing $sequence_upload: $!");
+close $LOAD or die("Error when closing $sequence_load: $!");
 unlink($sequence_load);
 
 # redirection vers la page wait en attendant le calcul
@@ -163,7 +142,7 @@ debug("Running perl script $cmd", 1);
 system($cmd);
 my $finish_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
 open( my $finish, '>', $finish_file ) || die "$!";
-close $finish_file;
+close $finish;
 debug("Writing finish file $finish_file", 1);
 
 close $log_file;
