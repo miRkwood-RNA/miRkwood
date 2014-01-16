@@ -76,10 +76,10 @@ Parse the CT file and fill the MFEI output file.
 =cut
 
 sub compute_energy {
-    my ( $CT, $MFEI_output, $sequence_name ) = @_;
+    my ( $CT_file, $MFEI_output_file, $sequence_name ) = @_;
 
     # ouverture du fichier de sortie de Unafold
-    open( my $FOut, '<', $CT ) || die "Unable to open CT file: $!";
+    open( my $FOut, '<', $CT_file ) || die "Unable to open CT file: $!";
 
     my $cg = 0;
     my ( $nameSeq, $mfe, $longueur );
@@ -118,12 +118,12 @@ sub compute_energy {
                 my $num = ( $mfe / $longueur ) * 100;
                 my $other = PipelineMiRNA::Utils::restrict_num_decimal_digits($num / ( ( $cg / $longueur ) * 100 ),3);
                 $num = PipelineMiRNA::Utils::restrict_num_decimal_digits($num, 3);
-                open( my $RES, '>>', $MFEI_output ) || die "Unable to open: $!";
+                open( my $RES, '>>', $MFEI_output_file ) || die "Unable to open: $!";
                 my $content =
                   $nameSeq . "\t" . $other . "\t" . $mfe . "\t" . $num;
                 print $RES $content;
                 close $RES or die "Unable to close: $!";
-                chmod 777, $MFEI_output;
+                chmod 777, $MFEI_output_file;
             }
 
         }    # /Else− not ENERGY line

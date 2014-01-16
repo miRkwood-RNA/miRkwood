@@ -218,7 +218,7 @@ sub has_mirdup_validation{
     my ($self, @args) = @_;
     my %candidate = %{shift @args};
     my %mirdup_results = %{$candidate{'mirdup_validation'}};
-    if (scalar (grep( /^1$/, values %mirdup_results )) >= 1){
+    if (scalar (grep { /^1$/ } values %mirdup_results ) >= 1){
         return 1;
     }else{
         return 0;

@@ -37,7 +37,7 @@ sub CONFIG_FILE{
     my ($self, @args) = @_;
     if (@args == 1){
         $CONFIG_FILE = shift @args;
-        $CONFIG = new Config::Simple(syntax=>'ini');
+        $CONFIG = Config::Simple->new(syntax=>'ini');
         $CONFIG->read($CONFIG_FILE);
     }
     return $CONFIG_FILE;
