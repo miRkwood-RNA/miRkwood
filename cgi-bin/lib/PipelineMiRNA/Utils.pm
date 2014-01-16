@@ -138,6 +138,26 @@ sub filter_fasta {
     return;
 }
 
+=method is_fasta
+
+Checks whether the given string is a FASTA sequence
+
+Input:
+ - a sequence string
+Output:
+ - True or False
+
+=cut
+
+sub is_fasta {
+    my (@args) = @_;
+    my $sequence = shift @args;
+    if ($sequence !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/){
+        return 0;
+    }else{
+        return 1;
+    }
+}
 
 =method mask_sequence_nucleotide
 

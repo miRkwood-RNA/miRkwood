@@ -77,7 +77,7 @@ if ( $seqArea eq q{} )    # cas upload fichier
 }
 $seq = lc($seq) . "\n";
 
-if ( $seq !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
+if ( ! PipelineMiRNA::Utils::is_fasta($seq) )
 {                               # erreur de syntaxe
     print $cgi->redirect($error_url);
     exit;

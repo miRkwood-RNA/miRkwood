@@ -180,3 +180,15 @@ END
 
 is ($hairpin_with_mature, $expected13,
     'make_hairpin_with_mature ok on edge case');
+
+my $input_fasta_ok = ">Seq
+aatgagtaagataaa
+";
+ok(my $fasta_ok_res = PipelineMiRNA::Utils::is_fasta($input_fasta_ok),
+   'Can call is_fasta on a correct FASTA');
+is($fasta_ok_res, 1,
+   'is_fasta detects a correct FASTA');
+
+my $input_fasta_wrong = "Toto";
+is(PipelineMiRNA::Utils::is_fasta($input_fasta_wrong), 0,
+   'is_fasta detects a wrong FASTA');
