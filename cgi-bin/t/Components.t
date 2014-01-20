@@ -226,3 +226,11 @@ cagccaaggaugacuugccga
         $exonerate_output_file);
 
 is_deeply( \%output, \%exonerate_expected, 'Parsing Exonerate output ok' );
+
+my $CT_file_input = input_file('candidate1', 'outB2ct_stemloop.ct' );
+my $output_file = 'output_file.txt';
+PipelineMiRNA::Components::mask_CT_file($CT_file_input, $output_file);
+my $mask_CT_file_output = slurp_file($output_file);
+my $mask_CT_file_expected = slurp_file(input_file('candidate1', 'seqWithN.txt' ));
+is( $mask_CT_file_output, $mask_CT_file_expected,
+    'mask_CT_file ok' );
