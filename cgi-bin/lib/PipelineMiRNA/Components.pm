@@ -226,7 +226,7 @@ sub mask_CT_file {
         }
     }
 ## lecture du tableau associatif et generation fichier boucleTermWithN.txt ##
-    open( my $RES, '>>', $boucleTermWithN_out )
+    open( my $RES, '>', $boucleTermWithN_out )
       or die "Error when opening $boucleTermWithN_out: $!";
     foreach my $sequenceNom ( keys %tab ) {
         print $RES '>' . $sequenceNom . "\n";
