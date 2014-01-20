@@ -118,18 +118,17 @@ sub compute_energy {
                 my $num = ( $mfe / $longueur ) * 100;
                 my $other = PipelineMiRNA::Utils::restrict_num_decimal_digits($num / ( ( $cg / $longueur ) * 100 ),3);
                 $num = PipelineMiRNA::Utils::restrict_num_decimal_digits($num, 3);
-                open( my $RES, '>>', $MFEI_output_file ) || die "Unable to open: $!";
+                open( my $RES, '>', $MFEI_output_file ) || die "Unable to open $MFEI_output_file: $!";
                 my $content =
                   $nameSeq . "\t" . $other . "\t" . $mfe . "\t" . $num;
                 print $RES $content;
                 close $RES or die "Unable to close: $!";
-                chmod 777, $MFEI_output_file;
             }
 
         }    # /Else− not ENERGY line
     }    # /While
     close $FOut or die "Unable to close: $!";
-    return;
+    return $MFEI_output_file;
 }
 
 =method mask_CT_file
