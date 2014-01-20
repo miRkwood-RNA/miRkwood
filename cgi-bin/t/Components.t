@@ -229,8 +229,20 @@ is_deeply( \%output, \%exonerate_expected, 'Parsing Exonerate output ok' );
 
 my $CT_file_input = input_file('candidate1', 'outB2ct_stemloop.ct' );
 my $output_file = 'output_file.txt';
-PipelineMiRNA::Components::mask_CT_file($CT_file_input, $output_file);
+ok (PipelineMiRNA::Components::mask_CT_file($CT_file_input, $output_file),
+    'can call mask_CT_file()' );
 my $mask_CT_file_output = slurp_file($output_file);
 my $mask_CT_file_expected = slurp_file(input_file('candidate1', 'seqWithN.txt' ));
 is( $mask_CT_file_output, $mask_CT_file_expected,
     'mask_CT_file ok' );
+
+my $candidate_ct_file = input_file('candidate1', 'outB2ct_optimal.ct' );
+my $compute_energy_output_file = 'compute_energy_output_file.txt';
+ok( PipelineMiRNA::Components::compute_energy( $candidate_ct_file,
+                                               $compute_energy_output_file,
+                                               'name_seq' ),
+    'can call compute_energy()' );
+my $compute_energy_output = slurp_file($compute_energy_output_file);
+my $compute_energy_expected = slurp_file(input_file('candidate1', 'outMFEI.txt' ));
+is( $compute_energy_output, $compute_energy_expected,
+    'compute_energy ok' );
