@@ -16,3 +16,12 @@ BEGIN {
 require_ok('PipelineMiRNA::Results');
 
 my $candidates_dir = input_file('candidates');
+
+ok(
+    my %results = PipelineMiRNA::Results->deserialize_results($candidates_dir),
+    'Can call deserialize_results'
+);
+
+my @keys       = keys %results;
+my $identifier = $keys[0];
+is( $identifier, '1-1', 'deserialize_results correctly deserialized data' );

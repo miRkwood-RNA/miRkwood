@@ -103,8 +103,23 @@ sub get_structure_for_jobID {
     my $jobId   = shift @args;
     my $job_dir = $self->jobId_to_jobPath($jobId);
     PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path($job_dir));
-    my %myResults = ();
     my $candidates_dir = $self->get_candidates_dir($jobId);
+    return $self->deserialize_results($candidates_dir);
+}
+
+=method deserialize_results
+
+Retrieve the results in the given directory
+
+Usage:
+my %results = PipelineMiRNA::Results->deserialize_results( $candidates_dir );
+
+=cut
+
+sub deserialize_results {
+    my ( $self, @args ) = @_;
+    my $candidates_dir   = shift @args;
+    my %myResults = ();
     opendir DIR, $candidates_dir;    #ouverture répertoire job
     my @files;
     @files = readdir DIR;
