@@ -107,6 +107,22 @@ sub get_structure_for_jobID {
     return $self->deserialize_results($candidates_dir);
 }
 
+=method has_candidates
+
+Parse and serialize the results structure of $job_dir
+
+Usage:
+PipelineMiRNA::Results->has_candidates( \%myResults );
+
+=cut
+
+sub has_candidates {
+    my ( $self, @args ) = @_;
+    my $results = shift @args;
+    my %results = %{$results};
+    return ( keys %results > 0);
+}
+
 =method deserialize_results
 
 Retrieve the results in the given directory
