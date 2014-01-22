@@ -42,7 +42,7 @@ $header_menu
 
 <div class="main">
 
-        <form  name="form" onsubmit="verifySequence()" onsubmit="wainting()" method="post" action="./results.pl" enctype="multipart/form-data">
+        <form  name="form" onsubmit="return verifySequence();" onsubmit="wainting()" method="post" action="./results.pl" enctype="multipart/form-data">
             <fieldset id="fieldset">    
 				 <div class="forms">
 				<tr>
