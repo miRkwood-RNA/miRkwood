@@ -1,0 +1,6 @@
+<results id='all'>
+<Sequence name='contig15750' position='34-195' length='162' strand='' quality='2' mfe='-60.1' mfei='-1.00' amfe='-37.10' p_value='0.125000' alignment='1' image='/arn/results/jobDec181721032013/1/1/image.png' Vienna='((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))' DNASequence='gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc' identifier='1-1'></Sequence>
+</results>
+<results id='all2'>
+<Sequence name='contig15750' position='34-195' length='162' strand='' quality='2' mfe='-60.1' mfei='-1.00' amfe='-37.10' p_value='0.125000' alignment='1' image='/arn/results/jobDec181721032013/1/1/image.png' Vienna='((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))' DNASequence='gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc' identifier='1-1'></Sequence>
+</results>
