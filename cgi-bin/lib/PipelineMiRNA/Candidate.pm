@@ -129,13 +129,11 @@ sub parse_candidate_information {
                                        'outRNAFold_stemloop.txt' );
     if ( -e $rnafold_stemloop_out )                  # si fichier existe
     {
+        my @res = PipelineMiRNA::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
+        ($result{'name'}, $result{'position'}, $result{'DNASequence'}, $result{'Vienna'}) = @res;
+
         my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_stemloop_out);
 
-        my @position = split( /__/, $vienna_res[0]);
-        $result{'name'} = $position[0];
-        $result{'position'} = $position[1];
-        $result{'DNASequence'} = $vienna_res[1];
-        $result{'Vienna'} = $vienna_res[2];
     }
 
     #Récupération séquence et format Vienna

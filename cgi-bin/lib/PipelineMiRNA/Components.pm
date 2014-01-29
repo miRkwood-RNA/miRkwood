@@ -337,4 +337,24 @@ END
     return $result;
 }
 
+=method get_data_from_rnafold_out
+
+Retrieve sequence name, position, sequence & structure from
+a RNAfold output.
+
+=cut
+
+sub get_data_from_rnafold_out {
+    my @args                            = @_;
+    my $candidate_rnafold_stemploop_out = shift @args;
+    my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output(
+        $candidate_rnafold_stemploop_out);
+    my @position    = split( /__/, $vienna_res[0] );
+    my $name        = $position[0];
+    my $position    = $position[1];
+    my $DNASequence = $vienna_res[1];
+    my $Vienna      = $vienna_res[2];
+    return ( $name, $position, $DNASequence, $Vienna );
+}
+
 1;
