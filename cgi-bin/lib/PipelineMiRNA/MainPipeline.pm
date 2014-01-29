@@ -17,7 +17,6 @@ use PipelineMiRNA::MiRdup;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Candidate;
-use PipelineMiRNA::Results;
 use PipelineMiRNA::Components;
 use PipelineMiRNA::PosterioriTests;
 use Log::Message::Simple qw[msg error debug];

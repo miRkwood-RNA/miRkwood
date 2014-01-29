@@ -11,7 +11,6 @@ use YAML::XS;
 
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
-use PipelineMiRNA::MiRdup;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::WebTemplate;
