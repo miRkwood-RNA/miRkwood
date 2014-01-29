@@ -291,7 +291,11 @@ sub resultstruct2pseudoXML {
         my $value = $results{$key};
         $result .= "<Sequence";
         for my $header (@headers1){
-            $result .= " $header='${$value}{$header}'";
+            my $contents = ${$value}{$header};
+            if (!$contents){
+                $contents = q{};
+            }
+            $result .= " $header='$contents'";
         }
         my $img = PipelineMiRNA::Candidate->get_relative_image($value);
         $result .= " image='$img'";
@@ -313,7 +317,11 @@ sub resultstruct2pseudoXML {
         my $value = $results{$key};
         $result .= "<Sequence";
         for my $header (@headers1){
-            $result .= " $header='${$value}{$header}'";
+            my $contents = ${$value}{$header};
+            if (!$contents){
+                $contents = q{};
+            }
+            $result .= " $header='$contents'";
         }
         my $img = PipelineMiRNA::Candidate->get_relative_image($value);
         $result .= " image='$img'";
