@@ -13,6 +13,7 @@ use File::Copy;
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
+use PipelineMiRNA::MiRdup;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Candidate;
@@ -527,9 +528,41 @@ sub process_tests_for_candidate {
 		debug( "Running test_alignment on $candidate_ct_stemloop_file", 1 );
 		my $file_alignement = PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
 			$candidate_ct_stemloop_file );
+		post_process_alignments($candidate_dir, $candidate_rnafold_stemploop_out, $file_alignement);
 	}    # if file
 
 	return;
 }
+
+=method post_process_alignments
+
+
+=cut
+
+sub post_process_alignments {
+    my @args = @_;
+    my $candidate_dir = shift @args;
+    my $candidate_rnafold_stemploop_out = shift @args;
+    my $file_alignement = shift @args;
+
+    my @res = PipelineMiRNA::Components::get_data_from_rnafold_out($candidate_rnafold_stemploop_out);
+    my ($name, $position, $DNASequence, $Vienna) = @res;
+    my %alignments;
+    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
+        # Catching exception
+    } else {
+        %alignments = PipelineMiRNA::Components::merge_alignments(\%alignments);
+        my $tmp_file = File::Spec->catfile($candidate_dir, "mirdup_validation.txt");
+        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $name,
+                                                                         $DNASequence, $Vienna,
+                                                                         keys %alignments);
+        my $mirdup_results_file = File::Spec->catfile($candidate_dir, 'mirdup_results.yml');
+        YAML::XS::DumpFile($mirdup_results_file, %mirdup_results);
+
+        my $alignments_results_file = File::Spec->catfile($candidate_dir, 'merged_alignments.yml');
+        YAML::XS::DumpFile($alignments_results_file, %alignments);
+    }
+}
+
 
 1;

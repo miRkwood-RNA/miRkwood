@@ -147,20 +147,17 @@ sub parse_candidate_information {
     }
 
     #Récupération alignement avec mirBase
-    my $file_alignement = File::Spec->catfile($full_candidate_dir, 'alignement.txt');
-    $result{'alignment_existence'} = ( -e $file_alignement && ! -z $file_alignement );
-    my %alignments;
-    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
-        # Catching exception
-    } else {
-        %alignments = $self->merge_alignments(\%alignments);
-        my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_validation.txt");
-        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $result{'name'},
-                                                                         $result{'DNASequence'}, $result{'Vienna'},
-                                                                         keys %alignments);
-        $result{'alignments'} = \%alignments;
-        $result{'mirdup_validation'} = \%mirdup_results;
-    }
+
+    my $mirdup_results_file = File::Spec->catfile($full_candidate_dir, 'mirdup_results.yml');
+    my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
+
+    my $alignments_results_file = File::Spec->catfile($full_candidate_dir, 'merged_alignments.yml');
+    my %alignments = YAML::XS::LoadFile($alignments_results_file);
+
+
+    $result{'alignment_existence'} = ( -e $alignments_results_file && ! -z $alignments_results_file );
+    $result{'alignments'} = \%alignments;
+    $result{'mirdup_validation'} = \%mirdup_results;
 
     # Computing general quality
     $result{'alignment'} = $self->compute_alignment_quality(\%result);
