@@ -130,7 +130,9 @@ sub predict_sequence_with_mirdup {
 Validate using miRdup
 
 Usage:
-    my $res_file = PipelineMiRNA::MiRdup->predict_with_mirdup('prediction_results.txt', \%sequences);
+my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $name,
+                                                                 $DNASequence, $Vienna,
+                                                                 @alignments);
 
 =cut
 
