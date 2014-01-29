@@ -258,7 +258,14 @@ Compute the alignment quality score
 sub compute_alignment_quality {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
-    return $candidate{'alignment_existence'} + $self->has_mirdup_validation(\%candidate);
+    my $alignment_existence = 0;
+    if ($candidate{'alignment_existence'}){
+        $alignment_existence = $candidate{'alignment_existence'};
+    }else{
+        $alignment_existence = 0;
+    }
+    my $has_mirdup_validation = $self->has_mirdup_validation(\%candidate);
+    return $alignment_existence + $has_mirdup_validation;
 }
 
 =method get_absolute_image
