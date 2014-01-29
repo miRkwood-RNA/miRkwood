@@ -402,57 +402,6 @@ sub make_Vienna_viz {
     return $string
 }
 
-=method merge_alignments
-
-Merge overlapping alignments.
-Given ordered positions, merge in [a..b] all [c..d] if a<=c and d<=b+2
-
-=cut
-
-sub merge_alignments {
-    my ($self, @args) = @_;
-    my $alignments = shift @args;
-    my %alignments = %{$alignments};
-
-    my %merged_alignments;
-    my ($stocked_left, $stocked_right) = (-10, -10);
-
-    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 0) <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 0) )
-                      ||
-                      ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 1)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 1) )
-                    } keys %alignments;
-    my @stocked_hits;
-    my $final_key;
-    my $final_hit_count = -1;
-    foreach my $current_key (@keys) {
-        my ($current_left, $current_right) = split(/-/, $current_key);
-        my $current_hit_count = scalar @{$alignments{$current_key}};
-
-        if ( $current_right > $stocked_right + 3 ) {
-            # No merge ; drop the list of current hits in the hash (only if there are some)
-            if (@stocked_hits){
-                push @{$merged_alignments{$final_key}}, @stocked_hits;
-            }
-
-            # Reinitialise
-            $final_hit_count = -1;
-            @stocked_hits = ();
-            ($stocked_left, $stocked_right) = ($current_left, $current_right);
-        }
-        if ($current_hit_count > $final_hit_count){
-            # This position holds more hits than the previous, so it will be our new key
-            $final_hit_count = $current_hit_count;
-            $final_key = $current_key;
-        }
-        # Stock the current hits
-        push @stocked_hits, @{$alignments{$current_key}};
-    }
-    # Drop the remaining hits in the hash
-    push @{$merged_alignments{$final_key}}, @stocked_hits;
-    return %merged_alignments;
-}
 
 =method make_alignments_HTML
 
