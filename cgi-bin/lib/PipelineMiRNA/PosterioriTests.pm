@@ -57,7 +57,7 @@ sub test_alignment {
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
     PipelineMiRNA::Programs::run_exonerate( $seqN, $exonerate_out )
       or die("Problem when running Exonerate");
-    return -e $exonerate_out;
+    return $exonerate_out;
 }
 
 1;

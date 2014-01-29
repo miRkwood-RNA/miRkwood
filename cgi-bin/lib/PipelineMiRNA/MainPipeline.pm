@@ -525,7 +525,7 @@ sub process_tests_for_candidate {
 	}
 	if ( $cfg->param('options.align') ) {
 		debug( "Running test_alignment on $candidate_ct_stemloop_file", 1 );
-		PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
+		my $file_alignement = PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
 			$candidate_ct_stemloop_file );
 	}    # if file
 
