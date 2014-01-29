@@ -67,7 +67,7 @@ is_deeply( \%tab4, \%expected4,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );
 
 ##################################################################
-diag('Testing find_matching_count()');
+# Testing find_matching_count()
 is( PipelineMiRNA::Utils::find_matching_count('()..'), 1, 'one - matching left' );
 is( PipelineMiRNA::Utils::find_matching_count('..()'), 1, 'one - matching right' );
 is( PipelineMiRNA::Utils::find_matching_count('.().'), 1, 'one - matching middle' );
@@ -75,16 +75,16 @@ is( PipelineMiRNA::Utils::find_matching_count('(..)'), 1, 'one - matching across
 is( PipelineMiRNA::Utils::find_matching_count('(.().)'), 2, 'two - matching across' );
 
 ##################################################################
-diag('Testing make_loop()');
-use Data::Dumper;
+# Testing make_loop()
+
 ok( my @res5 = PipelineMiRNA::Utils::make_loop('123'),
     'Can call make_loop() with 3 elements');
-#print Dumper(@res5);
+
 is_deeply( \@res5, [ [], ['1'], [' ', '2'], ['3'], [] ], 'make_loop() with 3 elements ok' );
 
 ok( my @res6 = PipelineMiRNA::Utils::make_loop('1234'),
     'Can call make_loop() with 4 elements');
-#print Dumper(@res6);
+
 is_deeply( \@res6, [ ['1'], [' ', '2'], [' '], [' ', '3'], ['4'] ], 'make_loop() with 4 elements ok' );
 
 ok( my @res7 = PipelineMiRNA::Utils::make_loop('12345'),
@@ -95,7 +95,7 @@ ok( my @res8 = PipelineMiRNA::Utils::make_loop('123456'),
     'Can call make_loop() with 5 elements');
 my @expected8 = [ ['12'], [' ', ' ', '3'], [' ', ' '], [' ', ' ', '4'], ['65'] ];
 is_deeply( \@res8, @expected8, 'make_loop() with 6 elements ok' );
-    
+
 my $sequence1 = "cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg";
 my $vienna1   = "((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))";
 
