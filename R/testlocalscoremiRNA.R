@@ -2,13 +2,13 @@ setwd("/home/jeanfred/Workbench/)
 
 library(pvalues)
 
-calcfinalres=function(x,posdep,minadjtags=2,B=500){
+calcfinalres=function(x,posdep,minadjtags=2,nbpermutations=500){
   score=localScore(x)
   if(nrow(score)==0){resScLoc=NULL}else{
     lengthsig=length(x)-c(0,cumsum(score[,"length"])[-nrow(score)])
     subseqMatrix=cbind("nbmeas"=score[,"length"], "lengthsig"=lengthsig, "localscore"=score[,"score"])
     keeppos=which(subseqMatrix[,"nbmeas"]>=minadjtags)
-    resScLoc=data.frame(score[keeppos,],pvalueResampling(subseqMatrix[keeppos,],B, x, nbThreads=1, seed=123))
+    resScLoc=data.frame(score[keeppos,],pvalueResampling(subseqMatrix[keeppos,], nbpermutations, x, nbThreads=1, seed=123))
   }
   signifreg=resScLoc[which(resScLoc$pvalue<=0.05),]
   finalres=data.frame("startreg"=signifreg$start+posdep,"endreg"=signifreg$end+posdep,signifreg)
