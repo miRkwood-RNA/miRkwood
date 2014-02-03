@@ -146,18 +146,15 @@ sub parse_candidate_information {
     }
 
     #Récupération alignement avec mirBase
-
-    my $mirdup_results_file = File::Spec->catfile($full_candidate_dir, 'mirdup_results.yml');
-    my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
-
     my $alignments_results_file = File::Spec->catfile($full_candidate_dir, 'merged_alignments.yml');
-    my %alignments = YAML::XS::LoadFile($alignments_results_file);
-
-
+    my $mirdup_results_file = File::Spec->catfile($full_candidate_dir, 'mirdup_results.yml');
     $result{'alignment_existence'} = ( -e $alignments_results_file && ! -z $alignments_results_file );
-    $result{'alignments'} = \%alignments;
-    $result{'mirdup_validation'} = \%mirdup_results;
-
+#    if ($result{'alignment_existence'}){
+#        my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
+#        my %alignments = YAML::XS::LoadFile($alignments_results_file);
+#        $result{'alignments'} = \%alignments;
+#        $result{'mirdup_validation'} = \%mirdup_results;
+#    }
     # Computing general quality
     $result{'alignment'} = $self->compute_alignment_quality(\%result);
     $result{'quality'} = $self->compute_quality(\%result);
@@ -211,9 +208,11 @@ one alignment which has been validated by MirDup.
 sub has_mirdup_validation{
     my ($self, @args) = @_;
     my %candidate = %{shift @args};
-    my %mirdup_results = %{$candidate{'mirdup_validation'}};
-    if (scalar (grep { /^1$/ } values %mirdup_results ) >= 1){
-        return 1;
+    if ($candidate{'mirdup_validation'}){
+        my %mirdup_results = %{$candidate{'mirdup_validation'}};
+        if (scalar (grep { /^1$/ } values %mirdup_results ) >= 1){
+            return 1;
+        }
     }else{
         return 0;
     }
