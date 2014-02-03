@@ -1,6 +1,6 @@
 ###attention, dans le resampling le seuil n'avait pas été enlevé à countsBruit
 
-setwd("/home/marot/Documents/Donnees/miRNA")
+setwd("/home/jeanfred/Workbench/)
 
 library(pvalues)
 
@@ -18,6 +18,7 @@ calcfinalres=function(x,posdep,minadjtags=2,B=500){
 }
 
 signal=read.table("countschr2.bedgraphBaseByBase")
+#On a deux régions dans notre BED
 countsRegInt=signal[which(signal[,2]==19150000),5]
 countsBruit=signal[which(signal[,2]==200000),5]
 
@@ -30,9 +31,12 @@ llseuil=lapply(3:8,FUN=function(seuil){
   res=list(finalresint,finalresb)
   res  
 })
+# llseuil est une liste
 
 allfinalresint=lapply(llseuil,FUN=function(x) x[[1]])
 allfinalresb=lapply(llseuil,FUN=function(x) x[[2]])
+#On récupère le 1 et le 2 élément de la liste
+
 
 #filtre pour background
 
