@@ -1,5 +1,3 @@
-###attention, dans le resampling le seuil n'avait pas été enlevé à countsBruit
-
 setwd("/home/jeanfred/Workbench/)
 
 library(pvalues)
@@ -10,7 +8,7 @@ calcfinalres=function(x,posdep,minadjtags=2,B=500){
     lengthsig=length(x)-c(0,cumsum(score[,"length"])[-nrow(score)])
     subseqMatrix=cbind("nbmeas"=score[,"length"], "lengthsig"=lengthsig, "localscore"=score[,"score"])
     keeppos=which(subseqMatrix[,"nbmeas"]>=minadjtags)
-    resScLoc=data.frame(score[keeppos,],pvalueResampling(subseqMatrix[keeppos,],B, countsBruit,nbThreads=1,seed=123))
+    resScLoc=data.frame(score[keeppos,],pvalueResampling(subseqMatrix[keeppos,],B, x, nbThreads=1, seed=123))
   }
   signifreg=resScLoc[which(resScLoc$pvalue<=0.05),]
   finalres=data.frame("startreg"=signifreg$start+posdep,"endreg"=signifreg$end+posdep,signifreg)
