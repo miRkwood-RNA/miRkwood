@@ -14,7 +14,7 @@ name = args[3]
 # Setting global variables
 seuil = 70
 posdep = 0
-nbpermutations = 5
+nbpermutations = 80
 
 #
 calcfinalres=function(x, start_position, minadjtags=2, permutations_number=nbpermutations){
