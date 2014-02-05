@@ -10,7 +10,7 @@ args<-commandArgs(TRUE)
 working_directory = args[1]
 bedfile = args[2]
 name = args[3]
-seuil = args[4]
+seuil = as.integer(args[4])
 
 # Setting global variables
 posdep = 0
@@ -37,16 +37,20 @@ processChr = function(counts, start_position){
 }
 
 
-main=function(file_path, threshold, start_position, chr_name){
+main = function(file_path, threshold, start_position, chr_name){
     signal = read.table(file_path)
     setwd(working_directory)
-    cat("Start",file="0-start.txt",sep="\n")
+    start_file = paste(chr_name, '-begin.txt', sep="")
+    cat("Start", file=start_file, sep="\n")
 
     counts_chr = signal[,5]
     res_chr = processChr(counts_chr, start_position)
-    cat("Chr",file="1-done.txt",sep="\n")
+    end_file = paste(chr_name, '-done.txt', sep="")
+    cat("Done", file=end_file, sep="\n")
+
     resTogive = data.frame("chr"=chr_name, res_chr)
-    write.table(resTogive, "peaksfound.txt", row.names=FALSE)
+    output_name = paste(chr_name, '-peaks.txt', sep="")
+    write.table(resTogive, output_name, row.names=FALSE)
     resTogive
 }
 
