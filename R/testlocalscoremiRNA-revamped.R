@@ -10,9 +10,9 @@ args<-commandArgs(TRUE)
 working_directory = args[1]
 bedfile = args[2]
 name = args[3]
+seuil = args[4]
 
 # Setting global variables
-seuil = 70
 posdep = 0
 nbpermutations = 80
 
