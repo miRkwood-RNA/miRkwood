@@ -8,50 +8,58 @@ use Getopt::Long;
 use File::Copy;
 use File::Spec;
 
-use PipelineMiRNA::MainPipeline;
-
-my $man = 0;
+my $man  = 0;
 my $help = 0;
 
 # Pipeline options
-my $randfold = 0;
-my $mfei = 0;
-my $align = 0;
+my $randfold     = 0;
+my $mfei         = 0;
+my $align        = 0;
 my $species_mask = '';
 
-my $mask = 0;
+my $mask          = 0;
 my $output_folder = 'results_directory';
 
 ## Parse options
 GetOptions(
-randfold   => \$randfold,
-mfei       => \$mfei,
-align      => \$align,
-'species-mask=s' => \$species_mask,
-'output=s' => \$output_folder,
-'help|?'   => \$help,
-man        => \$man
-)
- ||  pod2usage(-verbose => 0);
-pod2usage(-verbose => 1)  if ($help);
-pod2usage(-verbose => 2)  if ($man);
+    randfold         => \$randfold,
+    mfei             => \$mfei,
+    align            => \$align,
+    'species-mask=s' => \$species_mask,
+    'output=s'       => \$output_folder,
+    'help|?'         => \$help,
+    man              => \$man
+) || pod2usage( -verbose => 0 );
+pod2usage( -verbose => 1 ) if ($help);
+pod2usage( -verbose => 2 ) if ($man);
 
-pod2usage("$0: No FASTA files given.")  if (@ARGV == 0);
+pod2usage("$0: No FASTA files given.") if ( @ARGV == 0 );
 
-if($species_mask){
+if ($species_mask) {
     $mask = 1;
 }
 my $fasta_file = $ARGV[0];
-(-e $fasta_file) or die("$fasta_file is not a file");
+( -e $fasta_file ) or die("$fasta_file is not a file");
 
-mkdir $output_folder;
+if ( !-e $output_folder ) {
+    print "Creating $output_folder\n";
+    mkdir $output_folder or die("Error when creating $output_folder");
+}
+my $tmp_pieces_folder = File::Spec->catdir( $output_folder, 'pieces' );
+mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
+
+# Importing stuff after directory creation
+use PipelineMiRNA;
+use PipelineMiRNA::CLI;
+use PipelineMiRNA::MainPipeline;
 
 my $seq_name = 'Sequences.fas';
-my $seq_path = File::Spec->catfile($output_folder, $seq_name);
-File::Copy::copy( $fasta_file, $seq_path);
+my $seq_path = File::Spec->catfile( $output_folder, $seq_name );
 
-PipelineMiRNA::MainPipeline::main_entry( $mask, $mfei, $randfold, $align, $output_folder, $species_mask );
-
+File::Copy::copy( $fasta_file, $seq_path );
+PipelineMiRNA::MainPipeline::main_entry( $mask, $mfei, $randfold, $align,
+    $output_folder, $species_mask );
+PipelineMiRNA::CLI::process_results_dir_for_offline($output_folder);
 
 __END__
 
