@@ -21,6 +21,10 @@ Then(/^a no sequence warning is provided$/) do
   @browser.alert.ok
 end
 
+Then(/^I stay on the MiRNA interface page$/) do
+  @browser.button(:id => 'upload').should exist
+end
+
 Then(/^I get the waiting page$/) do
   @browser.div(:class => "waitMessage").should exist
 end

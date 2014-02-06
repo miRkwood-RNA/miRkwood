@@ -9,6 +9,7 @@ Feature: MiRNA
         Given I am on MiRNA interface page
         When I launch the pipeline
         Then a no sequence warning is provided
+        And I stay on the MiRNA interface page
 
     Scenario: Results on example
         Given I am on MiRNA interface page
