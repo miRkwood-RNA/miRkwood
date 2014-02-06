@@ -1,5 +1,7 @@
 require "watir-webdriver"
 require "rspec/expectations"
+require 'page-object'
+require 'page-object/page_factory'
 
 browser = nil
 Browser = Watir::Browser
@@ -14,6 +16,8 @@ elsif ENV['PHANTOM']
 else
   browser = Browser.new
 end
+
+World(PageObject::PageFactory)
 
 Before do
   @browser = browser

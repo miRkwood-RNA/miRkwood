@@ -7,9 +7,7 @@ Feature: MiRNA
 
     Scenario: Warning if no sequence
         Given I am on MiRNA interface page
-        When I launch the pipeline
-        Then a no sequence warning is provided
-        And I stay on the MiRNA interface page
+        Then a no sequence warning is provided when I launch the pipeline
 
     Scenario: Results on example
         Given I am on MiRNA interface page

@@ -1,36 +1,35 @@
 Given(/^I am on MiRNA interface page$/) do
-  @browser.goto("http://bioinfotest.lifl.fr/")
-  @browser.a(:text => "MiRNA").click
+  visit InterfacePage
 end
 
 When(/^I use the Example feature$/) do
-  @browser.button(:id => "seq_button").click
+  on(InterfacePage).example_button
 end
 
 When(/^I launch the pipeline$/) do
-  @browser.button(:id => "upload").click
+  on(InterfacePage).run_button
 end
 
 Then(/^a sequence gets filled$/) do
-  @browser.textarea(:id => "seqArea").value.should include("contig15750") 
+  on(InterfacePage).sequence_area.should include("contig15750")
 end
 
-Then(/^a no sequence warning is provided$/) do
-  @browser.alert.should exist
-  @browser.alert.text.should include("You must provide sequences")
-  @browser.alert.ok
-end
-
-Then(/^I stay on the MiRNA interface page$/) do
-  @browser.button(:id => 'upload').should exist
+Then(/^a no sequence warning is provided when I launch the pipeline$/) do
+  on(InterfacePage) do |page|
+    message = page.alert do
+      page.run_button
+    end
+  message.should == "You must provide sequences"
+  end
 end
 
 Then(/^I get the waiting page$/) do
-  @browser.div(:class => "waitMessage").should exist
+  on(WaitingPage).loaded?
 end
 
 Then(/^I get the results page$/) do
-  @browser.div(:id => "table").wait_until_present
-  @browser.div(:id => "table").should exist
+  on(ResultsPage).wait_until do
+     on(ResultsPage).results?
+  end
 end
 
