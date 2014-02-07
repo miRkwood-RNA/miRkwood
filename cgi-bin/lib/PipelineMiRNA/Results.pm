@@ -286,7 +286,6 @@ Convert the results structure to to pseudo XML format
 =cut
 
 sub resultstruct2pseudoXML {
-    
     my ( $self, @args ) = @_;
     my $results = shift @args;
     my %results = %{$results};
@@ -346,5 +345,49 @@ sub resultstruct2pseudoXML {
     $result .= "</results>";
     return $result;
 }
+
+=method resultstruct2table
+
+Convert the results structure to HTML table
+
+=cut
+
+sub resultstruct2table {
+    my ( $self, @args ) = @_;
+    my $results = shift @args;
+    my %results = %{$results};
+
+    my @optional_fields = $self->get_optional_candidate_fields();
+    my @headers = ('position','length','strand','quality', @optional_fields);
+
+    my $HTML_results = '';
+    $HTML_results .= "<table>\n<tbody>";
+    $HTML_results .= "<tr>";
+    for my $header (('name'), @headers){
+
+        $HTML_results .= "<th>$header</th>\n";
+    }
+    $HTML_results .= "</tr>\n";
+    while ( my ($key, $value) = each %results )
+    {
+      $HTML_results .= '<tr>';
+      my $anchor = "${$value}{'name'}-${$value}{'position'}";
+      my $contents = "<a href='#$anchor'>${$value}{'name'}</a>";
+      $HTML_results .= "<td>$contents</td>\n";
+      for my $header (@headers){
+          my $td_content = "";
+          my $contents = ${$value}{$header};
+          if (!$contents){
+              $contents = '';
+          }
+          $HTML_results .= "<td>$contents</td>\n";
+      }
+      $HTML_results .= "\n</tr>\n";
+    }
+    $HTML_results .= "</tbody>\n</table>\n";
+
+    return $HTML_results;
+}
+
 
 1;
