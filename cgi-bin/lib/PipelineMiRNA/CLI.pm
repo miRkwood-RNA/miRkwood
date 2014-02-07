@@ -20,6 +20,7 @@ sub process_results_dir_for_offline {
 
     my %results = PipelineMiRNA::Results->deserialize_results($candidates_dir);
 
+    make_all_exports(\%results, $output_folder);
     my $html = make_html_from_results( \%results, $output_folder );
 
     my $html_page = File::Spec->catfile( $output_folder, 'results.html' );
@@ -59,6 +60,45 @@ END_TXT
       PipelineMiRNA::WebTemplate::get_simple_results_page( $page, $css );
 
     return $html;
+}
+
+sub make_all_exports {
+    my (@args)    = @_;
+    my $results_ref = shift @args;
+    my $output_folder = shift @args;
+    my $pieces_folder = File::Spec->catdir('pieces');
+
+    my $fasta_file =
+      File::Spec->catfile( $pieces_folder, "candidates.fa" );
+    open( my $FASTA_FILE,
+        '>', File::Spec->catfile( $output_folder, $fasta_file ) )
+      or die("Cannot open $fasta_file: $!");
+    print $FASTA_FILE PipelineMiRNA::Results->export('fas', $results_ref);
+    close($FASTA_FILE);
+
+    my $vienna_file =
+      File::Spec->catfile( $pieces_folder, "candidates.txt" );
+    open( my $VIENNA_FILE,
+        '>', File::Spec->catfile( $output_folder, $vienna_file ) )
+      or die("Cannot open $vienna_file: $!");
+    print $VIENNA_FILE PipelineMiRNA::Results->export('dot', $results_ref);
+    close($VIENNA_FILE);
+
+    my $gff_file =
+      File::Spec->catfile( $pieces_folder, "candidates.gff" );
+    open( my $GFF_FILE,
+        '>', File::Spec->catfile( $output_folder, $gff_file ) )
+      or die("Cannot open $gff_file: $!");
+    print $GFF_FILE PipelineMiRNA::Results->export('gff', $results_ref);
+    close($GFF_FILE);
+
+    my $csv_file =
+      File::Spec->catfile( $pieces_folder, "candidates.csv" );
+    open( my $CSV_FILE,
+        '>', File::Spec->catfile( $output_folder, $csv_file ) )
+      or die("Cannot open $gff_file: $!");
+    print $CSV_FILE PipelineMiRNA::Results->resultstruct2csv( $results_ref );
+    close($CSV_FILE);
 }
 
 sub make_candidate_page {
