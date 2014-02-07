@@ -37,8 +37,8 @@ else {
 
 sub exportAsGFF {
     my $id_job = shift @_;
-    use PipelineMiRNA::GFF;
-    my $gff = PipelineMiRNA::GFF->generate_GFF_from_ID($id_job, \@sequences_to_export);
+    my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+    my $gff = PipelineMiRNA::Results->export('gff', \%myResults , \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/gff
 Content-disposition: attachment;filename=Results-$id_job.gff

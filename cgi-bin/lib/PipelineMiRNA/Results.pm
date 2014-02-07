@@ -225,7 +225,16 @@ sub export {
     my $no_seq_selected = ! (scalar @sequences_to_export);
 
     my %results = %{$results_ref};
+
     my $output = "";
+    # Writing the header
+    my $header;
+    given ($export_type) {
+        when (/fas/) { $header = q{}; }
+        when (/dot/) { $header = q{}; }
+        when (/gff/) { $header = '##gff-version 3' . "\n"; }
+    }
+    $output .= $header;
 
     my @keys = sort keys %results;
     foreach my $key(@keys)
@@ -236,6 +245,7 @@ sub export {
             given ($export_type) {
                 when (/fas/) { $output .= PipelineMiRNA::Candidate->candidateAsFasta($value); }
                 when (/dot/) { $output .= PipelineMiRNA::Candidate->candidateAsVienna($value); }
+                when (/gff/) { $output .= PipelineMiRNA::Candidate->candidate_as_gff($value); }
             }
         }
     }

@@ -66,10 +66,21 @@ is( $output_export_fasta, $expected_export_fasta,
 ok(
     my $output_export_vienna =
       PipelineMiRNA::Results->export( 'dot', \%results, ['1-1'] ),
-    'can call export for FASTA'
+    'can call export for Vienna'
 );
 my $expected_export_vienna =
   slurp_file( input_file('Results.export.vienna.output') );
 
 is( $output_export_vienna, $expected_export_vienna,
     'export for Vienna return the correct value' );
+
+ok(
+    my $output_export_gff =
+      PipelineMiRNA::Results->export( 'gff', \%results, ['1-1'] ),
+    'can call export for GFF'
+);
+my $expected_export_gff =
+  slurp_file( input_file('Results.export.gff.output') );
+
+is( $output_export_gff, $expected_export_gff,
+    'export for GFF return the correct value' );
