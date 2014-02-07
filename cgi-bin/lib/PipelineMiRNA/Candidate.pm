@@ -340,6 +340,34 @@ sub candidateAsFasta {
     return $output;
 }
 
+=method candidate_as_gff
+
+Convert a given candidate to a GFF line.
+
+Usage:
+my $gff_line = PipelineMiRNA::Candidate->candidate_as_gff($value);
+
+=cut
+
+sub candidate_as_gff {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my ( $start, $end ) = split( m/[-]/xms, $candidate{'position'} );
+    my $text .= q{} .              # BEGIN
+      $candidate{'name'} . "\t" .   # seqid
+      '.' . "\t" .                  # source
+      'miRNA' . "\t" .              # type
+      $start . "\t" .               # start
+      $end . "\t" .                 # end
+      '.' . "\t" .                  # score
+      '.' . "\t" .                  # strand
+      '.' . "\t" .                  # phase
+      '.' . "\t" .                  # attributes
+      "\n";
+    return $text;
+}
+
+
 =method alternativeCandidatesAsVienna
 
 Return alternative candidates as Vienna dot-bracket

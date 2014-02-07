@@ -34,7 +34,7 @@ sub generate_GFF {
     }
     my $no_seq_selected = ! (scalar @sequences_to_export);
 
-    my $output = '##gff-version 3';
+    my $output = '##gff-version 3' . "\n";
 
     my @keys = sort keys %results;
     foreach my $key(@keys)
@@ -42,37 +42,10 @@ sub generate_GFF {
         if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
         {
             my $value = $results{$key};
-            $output .= $self->make_gff_line_for_candidate($value);
+            $output .= PipelineMiRNA::Candidate->candidate_as_gff($value);
         }
     }
     return $output;
-}
-
-=method make_gff_line_for_candidate
-
-Generate a GFF line from a candidate structure.
-
-Usage:
-my $gff_line = PipelineMiRNA::GFF->make_gff_line_for_candidate($value);(\%candidate);
-
-=cut
-
-sub make_gff_line_for_candidate {
-    my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my ( $start, $end ) = split( m/[-]/xms, $candidate{'position'} );
-    my $text .= "\n" .              # BEGIN
-      $candidate{'name'} . "\t" .   # seqid
-      '.' . "\t" .                  # source
-      'miRNA' . "\t" .              # type
-      $start . "\t" .               # start
-      $end . "\t" .                 # end
-      '.' . "\t" .                  # score
-      '.' . "\t" .                  # strand
-      '.' . "\t" .                  # phase
-      '.' . "\t" .                  # attributes
-      q{};
-    return $text;
 }
 
 =method generate_GFF_from_ID

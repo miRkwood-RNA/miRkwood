@@ -95,6 +95,14 @@ file_exists_ok($expected_file5);
 my $expected5 = slurp_file($expected_file5);
 is( $result5, $expected5, 'candidateAsFasta returns the expected value' );
 
+ok( my $result_gff = PipelineMiRNA::Candidate->candidate_as_gff( \%candidate ),
+    'can call candidate_as_gff()' );
+my $expected_file_gff = input_file('candidate_as_gff.out');
+file_exists_ok($expected_file_gff);
+my $expected_gff = slurp_file($expected_file_gff);
+is( $result_gff, $expected_gff, 'candidate_as_gff returns the expected value' );
+
+
 ok(
     my $result6 =
       PipelineMiRNA::Candidate->alternativeCandidatesAsVienna( \%candidate ),
