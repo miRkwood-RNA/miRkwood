@@ -149,12 +149,12 @@ sub parse_candidate_information {
     my $alignments_results_file = File::Spec->catfile($full_candidate_dir, 'merged_alignments.yml');
     my $mirdup_results_file = File::Spec->catfile($full_candidate_dir, 'mirdup_results.yml');
     $result{'alignment_existence'} = ( -e $alignments_results_file && ! -z $alignments_results_file );
-#    if ($result{'alignment_existence'}){
-#        my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
-#        my %alignments = YAML::XS::LoadFile($alignments_results_file);
-#        $result{'alignments'} = \%alignments;
-#        $result{'mirdup_validation'} = \%mirdup_results;
-#    }
+    if ($result{'alignment_existence'}){
+        my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
+        my %alignments = YAML::XS::LoadFile($alignments_results_file);
+        $result{'alignments'} = \%alignments;
+        $result{'mirdup_validation'} = \%mirdup_results;
+    }
     # Computing general quality
     $result{'alignment'} = $self->compute_alignment_quality(\%result);
     $result{'quality'} = $self->compute_quality(\%result);
