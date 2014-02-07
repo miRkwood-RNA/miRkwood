@@ -15,25 +15,26 @@ use Data::Dumper;
 =method generate_GFF
 
 Generate a GFF file from the results structure.
-
+Filtering on the provided array of name
 Usage:
-my $gff = PipelineMiRNA::GFF->generate_GFF(\%results);
+my $gff = PipelineMiRNA::GFF->generate_GFF(\%results, \@seqs_to_export);
 
 =cut
 
 sub generate_GFF {
     my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my @sequences_to_export = shift @args;
+    my $results_ref = shift @args;
+    my @sequences_to_export = @{ shift @args };
+    my %results = %{$results_ref};
 
-    my %results = %{$results};
+    my $no_seq_selected = ! (scalar @sequences_to_export);
 
     my $output = '##gff-version 3';
 
     my @keys = sort keys %results;
     foreach my $key(@keys)
     {
-        if (  $key ~~ \@sequences_to_export )
+        if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
         {
             my $value = $results{$key};
             $output .= $self->make_gff_line_for_candidate($value);
@@ -81,9 +82,9 @@ my $gff = PipelineMiRNA::GFF->generate_GFF($id_job);
 sub generate_GFF_from_ID {
     my ( $self, @args ) = @_;
     my $jobId   = shift @args;
-    my @sequences_to_export = shift @args;
+    my $sequences_to_export_ref = shift @args;
     my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
-    return $self->generate_GFF( \%results, \@sequences_to_export);
+    return $self->generate_GFF( \%results, $sequences_to_export_ref);
 }
 
 1;
