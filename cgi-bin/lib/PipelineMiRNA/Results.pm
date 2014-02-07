@@ -215,15 +215,22 @@ Convert the results
 sub export {
     my ( $self, @args ) = @_;
     my $export_type = shift @args;
-    my $results = shift @args;
-    my @sequences_to_export = shift @args;
-    my %results = %{$results};
+    my $results_ref = shift @args;
+    my $sequences_to_export_ref = shift @args;
+
+    my @sequences_to_export;
+    if (! eval { @sequences_to_export = @{$sequences_to_export_ref} } ){
+        @sequences_to_export = ();
+    }
+    my $no_seq_selected = ! (scalar @sequences_to_export);
+
+    my %results = %{$results_ref};
     my $output = "";
 
     my @keys = sort keys %results;
     foreach my $key(@keys)
     {
-        if (  $key ~~ \@sequences_to_export )
+        if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
         {
             my $value = $results{$key};
             given ($export_type) {
@@ -243,9 +250,15 @@ Convert the results structure to CSV
 
 sub resultstruct2csv {
     my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my @tab = shift @args;
-    my %results = %{$results};
+    my $results_ref = shift @args;
+    my $sequences_to_export_ref = shift @args;
+
+    my @sequences_to_export;
+    if (! eval { @sequences_to_export = @{$sequences_to_export_ref} } ){
+        @sequences_to_export = ();
+    }
+    my $no_seq_selected = ! (scalar @sequences_to_export);
+    my %results = %{$results_ref};
     my @optional_fields = $self->get_optional_candidate_fields();
     my @csv_headers = ('name', 'position', @optional_fields, 'Vienna', 'DNASequence');
     my $result = join( ',', @csv_headers ) . "\n";
@@ -253,7 +266,7 @@ sub resultstruct2csv {
     my @keys = sort keys %results;
     foreach my $key(@keys)
     {
-        if (  $key ~~ \@tab ) 
+        if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
         {
             my $value = $results{$key};
             for my $header (@csv_headers)

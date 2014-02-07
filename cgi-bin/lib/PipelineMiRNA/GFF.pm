@@ -24,9 +24,14 @@ my $gff = PipelineMiRNA::GFF->generate_GFF(\%results, \@seqs_to_export);
 sub generate_GFF {
     my ( $self, @args ) = @_;
     my $results_ref = shift @args;
-    my @sequences_to_export = @{ shift @args };
+    my $sequences_to_export_ref = shift @args;
+
     my %results = %{$results_ref};
 
+    my @sequences_to_export;
+    if (! eval { @sequences_to_export = @{$sequences_to_export_ref} } ){
+        @sequences_to_export = ();
+    }
     my $no_seq_selected = ! (scalar @sequences_to_export);
 
     my $output = '##gff-version 3';
