@@ -89,19 +89,17 @@ sub main_entry {
 	foreach my $name ( keys %tab ) {
         $sequence_dir_name++;
         debug( "Considering sequence $sequence_dir_name: $name", $debug );
-		my $temp_file = File::Spec->catfile( $job_dir, 'tempFile.txt' );
-		open( my $TEMPFILE_FH, '>', $temp_file )
-		  or die "Error when opening tempfile -$temp_file-: $!";
-		chmod 0777, $temp_file;
-		print $TEMPFILE_FH "$name\n$tab{$name}";
-		my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
-		mkdir $sequence_dir;
 
-		my $rnalfold_output =
-		  File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
-		debug( 'Running RNAfold', $debug );
-		PipelineMiRNA::Programs::run_rnalfold_on_file( $temp_file, $rnalfold_output )
-		  or die("Problem when running RNALfold: $!");
+        my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
+        mkdir $sequence_dir;
+
+        my $rnalfold_output =
+          File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
+        debug( 'Running RNAfold', $debug );
+
+		my $temp_file = File::Spec->catfile( $job_dir, 'tempFile.txt' );
+        PipelineMiRNA::Programs::run_rnalfold( $name, $tab{$name}, $temp_file, $rnalfold_output )
+         or die("Problem when running RNALfold: $!");
 
 		## Appel de RNAstemloop
 		my $rnastemloop_out_optimal =
@@ -112,7 +110,7 @@ sub main_entry {
 		PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
 			$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
 		  or die("Problem when running RNAstemloop");
-		unlink $temp_file;
+
 		process_RNAstemloop_wrapper( $rnastemloop_out_optimal,  'optimal' );
 		process_RNAstemloop_wrapper( $rnastemloop_out_stemloop, 'stemloop' );
 		my $current_sequence_dir = dirname($rnastemloop_out_stemloop);

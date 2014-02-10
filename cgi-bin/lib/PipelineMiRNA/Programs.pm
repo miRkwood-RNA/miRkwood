@@ -111,6 +111,28 @@ sub run_rnalfold_on_file {
     return ( -e $output );
 }
 
+=method run_rnalfold
+
+Run RNAfold on the given FASTA sequence
+Return the results of run_rnalfold_on_file
+
+=cut
+
+sub run_rnalfold {
+    my ( @args ) = @_;
+    my $sequence_name = shift @args;
+    my $sequence      = shift @args;
+    my $temp_file     = shift @args;
+    my $output_file   = shift @args;
+    open( my $TEMPFILE_FH, '>', $temp_file )
+      or die "Error when opening tempfile -$temp_file-: $!";
+    print $TEMPFILE_FH "$sequence_name\n$sequence";
+    close $TEMPFILE_FH;
+    my $result = run_rnalfold_on_file($temp_file, $output_file);
+    unlink $TEMPFILE_FH;
+    return $result;
+}
+
 =method run_rnaeval
 
 Run RNAeval on the file
