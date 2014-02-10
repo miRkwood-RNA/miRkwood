@@ -445,11 +445,11 @@ sub make_alignments_HTML {
     my $predictionCounter = 0;
 
     # Sorting by position
-    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, 0)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, 0)
+    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 0)  <=>
+                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 0)
                       ) ||
-                      ( PipelineMiRNA::Utils::get_element_of_split($a, 1)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, 1))
+                      ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 1)  <=>
+                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 1))
                     } keys %alignments;
 
     foreach my $position (@keys) {
