@@ -47,6 +47,9 @@ width:80%;
 th, td {
 border:1px solid black;
 }
+span.mature {
+    color: blue;
+}
 END_TXT
     my $page = '<h2>Overview of results</h2>';
     $page .= PipelineMiRNA::Results->resultstruct2table( \%results );
