@@ -100,7 +100,7 @@ sub main_entry {
 		my $rnalfold_output =
 		  File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
 		debug( 'Running RNAfold', $debug );
-		PipelineMiRNA::Programs::run_rnalfold( $temp_file, $rnalfold_output )
+		PipelineMiRNA::Programs::run_rnalfold_on_file( $temp_file, $rnalfold_output )
 		  or die("Problem when running RNALfold: $!");
 
 		## Appel de RNAstemloop

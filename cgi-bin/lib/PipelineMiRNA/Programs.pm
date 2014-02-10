@@ -96,14 +96,14 @@ sub convert_to_ct {
     return ( -e $ct_file );
 }
 
-=method run_rnalfold
+=method run_rnalfold_on_file
 
 Run RNAfold on the given FASTA file
 Return whether the output file exists.
 
 =cut
 
-sub run_rnalfold {
+sub run_rnalfold_on_file {
     my ( $input, $output ) = @_;
     my $options = '-L 400';
     my $rnalfold_cmd = "$rnalfold_bin $options < $input > $output";
