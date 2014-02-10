@@ -20,7 +20,6 @@ sub process_results_dir_for_offline {
 
     my %results = PipelineMiRNA::Results->deserialize_results($candidates_dir);
 
-    make_all_exports(\%results, $output_folder);
     my $html = make_html_from_results( \%results, $output_folder );
 
     my $html_page = File::Spec->catfile( $output_folder, 'results.html' );
@@ -51,6 +50,8 @@ border:1px solid black;
 END_TXT
     my $page = '<h2>Overview of results</h2>';
     $page .= PipelineMiRNA::Results->resultstruct2table( \%results );
+
+    $page.= make_all_exports(\%results, $output_folder);
     while ( my ( $key, $value ) = each %results ) {
         my $candidate_html =
           make_candidate_page( $value, $pieces_folder, $output_folder );
@@ -99,6 +100,14 @@ sub make_all_exports {
       or die("Cannot open $gff_file: $!");
     print $CSV_FILE PipelineMiRNA::Results->resultstruct2csv( $results_ref );
     close($CSV_FILE);
+
+    my $html = "<h3>Get results as</h3> <ul>";
+    $html .= "<li><a href='$csv_file'>tab-delimited format (csv)</a></li>";
+    $html .= "<li><a href='$fasta_file'>Fasta</a></li>";
+    $html .= "<li><a href='$vienna_file'>dot-bracket format (plain sequence + secondary structure)</a></li>";
+    $html .= "<li><a href='$gff_file'>gff format</a></li>";
+    $html .= "</ul>";
+    return $html;
 }
 
 sub make_candidate_page {
