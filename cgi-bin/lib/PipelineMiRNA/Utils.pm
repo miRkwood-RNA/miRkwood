@@ -18,15 +18,16 @@ Output: reverse complement of the ARN sequence
 =cut
 
 sub reverse_complement {
-	my $rna = 'ACGU';
+    my @args = @_;
+    my $rna  = shift @args;
 
-	# reverse the  sequence
-	my $revcomp = reverse($rna);
+    # reverse the  sequence
+    my $revcomp = reverse($rna);
 
-	# complement the reversed sequence
-	$revcomp =~ tr/ACGUTacgut/UGCAAugcaa/;
+    # complement the reversed sequence
+    $revcomp =~ tr/ACGUTacgut/UGCAAugcaa/;
 
-	return $revcomp;
+    return $revcomp;
 }
 
 =method parse_multi_fasta
