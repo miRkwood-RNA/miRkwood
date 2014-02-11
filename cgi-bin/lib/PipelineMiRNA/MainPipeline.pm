@@ -131,8 +131,8 @@ sub process_sequence {
 		$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
 	  or die("Problem when running RNAstemloop");
 
-	process_RNAstemloop_wrapper( $rnastemloop_out_optimal,  'optimal' );
-	process_RNAstemloop_wrapper( $rnastemloop_out_stemloop, 'stemloop' );
+	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal,  'optimal' );
+	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
 	my $current_sequence_dir = dirname($rnastemloop_out_stemloop);
 	my $rnaeval_out          =
 	  File::Spec->catfile( $current_sequence_dir, "rnaeval_stemloop.out" );
@@ -143,13 +143,12 @@ sub process_sequence {
 	close($eval);
 }
 
-=method process_RNAstemloop_wrapper
+=method run_RNAeval_on_RNAstemloop_output
 
-Wrap process_RNAstemloop()
 
 =cut
 
-sub process_RNAstemloop_wrapper {
+sub run_RNAeval_on_RNAstemloop_output {
 	my ( $rnastemloop_out, $suffix ) = @_;
 	my $current_sequence_dir = dirname($rnastemloop_out);
 	debug( "Processing RNAstemloop output for $suffix $rnastemloop_out", 1 );
