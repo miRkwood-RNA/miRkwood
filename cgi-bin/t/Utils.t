@@ -192,3 +192,28 @@ is($fasta_ok_res, 1,
 my $input_fasta_wrong = "Toto";
 is(PipelineMiRNA::Utils::is_fasta($input_fasta_wrong), 0,
    'is_fasta detects a wrong FASTA');
+
+my @reverse_complement_values = (
+    [ "AA", "UU" ],
+    [ "UU", "AA" ],
+    [ "CC", "GG" ],
+    [ "GG", "CC" ],
+    [ "AC", "GU" ],
+    [ "AU", "AU" ],
+    [ "AG", "CU" ],
+);
+
+foreach my $couple (@reverse_complement_values) {
+    ok(
+        my $reverse_complement_res =
+          PipelineMiRNA::Utils::reverse_complement( @{$couple}[0] ),
+        'Can call reverse_complement'
+    );
+    is( $reverse_complement_res, @{$couple}[1],
+        "reverse_complement correctly works @{$couple}[0] --> @{$couple}[1]" );
+    is(
+        PipelineMiRNA::Utils::reverse_complement($reverse_complement_res),
+        @{$couple}[0],
+"reverse_complement correctly works back @{$couple}[0] --> @{$couple}[1] --> @{$couple}[0]"
+    );
+}
