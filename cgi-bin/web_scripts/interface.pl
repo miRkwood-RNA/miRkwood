@@ -13,7 +13,7 @@ my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
 my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
 my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
-my $js  = PipelineMiRNA::WebTemplate->get_js_file();
+my $js          = PipelineMiRNA::WebTemplate->get_js_file();
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
@@ -68,17 +68,18 @@ $header_menu
 					</p>
 					
 					<input id="seq_button" type="button" value="Example" onclick="generateExample();" />
-				</div>
-				  <div class="forms">
-					<p class="label"><b>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i></b> :
+										 <P > <input class="checkbox" type="checkbox" checked="checked" name="strand" value="strand">Process both strand </input></P>
+						<p class="label"><b>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i></b> :
 					<input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()"> </p>               
+
 					<div id="menuDb"> 
 					<p class="choixDiv" for="db">Choose organism database :</p>
 						<select class="db" name="db">
 							<option class="db" selected>ATpepTAIR10</option>
 							<option class="db">plante</option>
 						</select>
-					</div>
+				</div>
+				 
                </div>
                <div class="forms">
 				<p><b>Select additional features</b>:</p>
