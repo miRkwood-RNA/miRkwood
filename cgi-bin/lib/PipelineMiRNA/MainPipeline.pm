@@ -132,13 +132,12 @@ sub process_sequence {
 	  or die("Problem when running RNAstemloop");
 
 	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal,  'optimal' );
-	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
-	my $current_sequence_dir = dirname($rnastemloop_out_stemloop);
-	my $rnaeval_out          =
-	  File::Spec->catfile( $current_sequence_dir, "rnaeval_stemloop.out" );
+	my $rnaeval_out =
+	   run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
+
 	open( my $stem, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $eval, '<', $rnaeval_out ) or die $!;
-	process_RNAstemloop( $current_sequence_dir, 'stemloop', $stem, $eval );
+	process_RNAstemloop( $sequence_dir, 'stemloop', $stem, $eval );
 	close($stem);
 	close($eval);
 }
@@ -159,7 +158,7 @@ sub run_RNAeval_on_RNAstemloop_output {
 	PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
 	  or die("Problem when running RNAeval");
 
-	return 0;
+	return $rnaeval_out;
 }
 
 =method process_RNAstemloop
