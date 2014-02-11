@@ -135,11 +135,11 @@ sub process_sequence {
 	my $rnaeval_out =
 	   run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
 
-	open( my $stem, '<', $rnastemloop_out_stemloop ) or die $!;
-	open( my $eval, '<', $rnaeval_out ) or die $!;
-	process_RNAstemloop( $sequence_dir, 'stemloop', $stem, $eval );
-	close($stem);
-	close($eval);
+	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
+	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
+	process_RNAstemloop( $sequence_dir, 'stemloop', $STEM_FH, $EVAL_FH );
+	close($STEM_FH);
+	close($EVAL_FH);
 }
 
 =method run_RNAeval_on_RNAstemloop_output
@@ -170,24 +170,24 @@ Writes the sequence on disk (seq.txt) and outRNAFold.txt
 =cut
 
 sub process_RNAstemloop {
-	my @args                   = @_;
-	my ($current_sequence_dir) = shift @args;
-	my ($suffix)               = shift @args;
-	my ($stem)                 = shift @args;
-	my ($eval)                 = shift @args;
-	my $j                      = 0;
+	my @args           = @_;
+	my ($sequence_dir) = shift @args;
+	my ($suffix)       = shift @args;
+	my ($STEM_FH)      = shift @args;
+	my ($EVAL_FH)      = shift @args;
+	my $index          = 0;
 	my $line2;
 	my ( $nameSeq, $dna, $Vienna );
 	my @hash = ();
 
-	while ( my $line = <$stem> ) {
+	while ( my $line = <$STEM_FH> ) {
 
 		if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
 			$nameSeq = $1;
 		}
 		elsif ( ( $line =~ /^[a-zA-Z]/ ) ) { # récupération de la sequence adn
 			$dna = substr $line, 0, -1;
-			$line2 = substr( <$eval>, 0, -1 );    # the sequence as well
+			$line2 = substr( <$EVAL_FH>, 0, -1 );    # the sequence as well
 
 			if ( $dna ne $line2 ) {
 				                                  # Should not happen
@@ -196,7 +196,7 @@ sub process_RNAstemloop {
 		}
 		elsif ( ( $line =~ /(.*)/ ) ) {
 			$Vienna = $1;
-			$line2  = <$eval>;    # the structure as well, and the energy
+			$line2  = <$EVAL_FH>;    # the structure as well, and the energy
 			if ( my ( $structure, $energy ) =
 				PipelineMiRNA::Parsers::parse_Vienna_line($line2) )
 			{                     # We have a structure
@@ -220,7 +220,7 @@ sub process_RNAstemloop {
 					}
 					my $num = ( $energy / $longueur ) * 100;
 					my $mfei = $num / ( ( $cg / $longueur ) * 100 );
-					$hash[ $j++ ] = {
+					$hash[ $index++ ] = {
 						"name"      => $nameSeq,
 						"start"     => $1,
 						"end"       => $2,
@@ -242,7 +242,7 @@ sub process_RNAstemloop {
 		}    #if $line1
 	}    #while $line=<IN>
 	my %newHash = treat_candidates( \@hash );
-	create_directories( \%newHash, $current_sequence_dir );
+	create_directories( \%newHash, $sequence_dir );
 }
 
 =method treat_candidates
