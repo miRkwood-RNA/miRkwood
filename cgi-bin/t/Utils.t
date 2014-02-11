@@ -217,3 +217,11 @@ foreach my $couple (@reverse_complement_values) {
 "reverse_complement correctly works back @{$couple}[0] --> @{$couple}[1] --> @{$couple}[0]"
     );
 }
+
+ok(
+    my $compute_mfei_res =
+      PipelineMiRNA::Utils::compute_mfei( $sequence1, -34.30 ),
+    'Can call compute_mfei'
+);
+is( $compute_mfei_res, -0.879487179487179,
+    'compute_mfei returns the expected value' );

@@ -535,3 +535,34 @@ sub restrict_num_decimal_digits {
 	}
 	return $num;
 }
+
+=method compute_mfei
+
+Compute the MFEI of a given sequence
+
+=cut
+
+sub compute_mfei {
+    my @args     = @_;
+    my $sequence = shift @args;
+    my $energy   = shift @args;
+
+    my @dna      = split( //, $sequence );
+    my $length   = scalar @dna;
+    my $gc_count = 0;
+
+    for ( my $i = 0 ; $i < $length ; $i++ ) {
+        if (
+            $dna[$i] =~ m{
+              [cg]     # G or C
+            }smxi
+          )
+        {
+            $gc_count++;
+        }
+    }
+
+    my $num = ( $energy / $length ) * 100;
+    my $mfei = $num / ( ( $gc_count / $length ) * 100 );
+    return $mfei;
+}
