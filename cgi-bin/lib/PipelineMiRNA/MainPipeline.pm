@@ -86,44 +86,61 @@ sub main_entry {
 
     my $sequence_dir_name = 0;
 
-	foreach my $name ( keys %tab ) {
-        $sequence_dir_name++;
+    while ( my ($name, $sequence) = each %tab) {
         debug( "Considering sequence $sequence_dir_name: $name", $debug );
-
+        $sequence_dir_name++;
         my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
         mkdir $sequence_dir;
+        process_sequence( $sequence_dir, $name, $sequence );
+    }
+    process_tests( $job_dir );
+    return;
+}
 
-        my $rnalfold_output =
-          File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
-        debug( 'Running RNAfold', $debug );
+=method process_sequence
 
-		my $temp_file = File::Spec->catfile( $job_dir, 'tempFile.txt' );
-        PipelineMiRNA::Programs::run_rnalfold( $name, $tab{$name}, $temp_file, $rnalfold_output )
-         or die("Problem when running RNALfold: $!");
+Process a single sequence
 
-		## Appel de RNAstemloop
-		my $rnastemloop_out_optimal =
-		  File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
-		my $rnastemloop_out_stemloop =
-		  File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
-		debug( "Running RNAstemloop on $rnalfold_output", $debug );
-		PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
-			$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
-		  or die("Problem when running RNAstemloop");
+ Usage : process_sequence( $sequence_dir, $name, $sequence );
+ Return: -
 
-		process_RNAstemloop_wrapper( $rnastemloop_out_optimal,  'optimal' );
-		process_RNAstemloop_wrapper( $rnastemloop_out_stemloop, 'stemloop' );
-		my $current_sequence_dir = dirname($rnastemloop_out_stemloop);
-		my $rnaeval_out          =
-		  File::Spec->catfile( $current_sequence_dir, "rnaeval_stemloop.out" );
-		open( my $stem, '<', $rnastemloop_out_stemloop ) or die $!;
-		open( my $eval, '<', $rnaeval_out ) or die $!;
-		process_RNAstemloop( $current_sequence_dir, 'stemloop', $stem, $eval );
-		close($stem);
-		close($eval);
-	}
-	process_tests( $job_dir );
-	return;
+=cut
+
+sub process_sequence {
+    my @args = @_;
+    my $sequence_dir = shift @args;
+    my $name = shift @args;
+    my $sequence = shift @args;
+
+    ## Running RNALfold
+    debug( 'Running RNALfold', 1 );
+    my $rnalfold_output =
+      File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
+
+	my $temp_file = File::Spec->catfile( $sequence_dir, 'tempFile.txt' );
+    PipelineMiRNA::Programs::run_rnalfold( $name, $sequence, $temp_file, $rnalfold_output )
+     or die("Problem when running RNALfold: $!");
+
+	## Running RNAstemloop
+	my $rnastemloop_out_optimal =
+	  File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
+	my $rnastemloop_out_stemloop =
+	  File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
+	debug( "Running RNAstemloop on $rnalfold_output", 1 );
+	PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
+		$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
+	  or die("Problem when running RNAstemloop");
+
+	process_RNAstemloop_wrapper( $rnastemloop_out_optimal,  'optimal' );
+	process_RNAstemloop_wrapper( $rnastemloop_out_stemloop, 'stemloop' );
+	my $current_sequence_dir = dirname($rnastemloop_out_stemloop);
+	my $rnaeval_out          =
+	  File::Spec->catfile( $current_sequence_dir, "rnaeval_stemloop.out" );
+	open( my $stem, '<', $rnastemloop_out_stemloop ) or die $!;
+	open( my $eval, '<', $rnaeval_out ) or die $!;
+	process_RNAstemloop( $current_sequence_dir, 'stemloop', $stem, $eval );
+	close($stem);
+	close($eval);
 }
 
 =method process_RNAstemloop_wrapper
