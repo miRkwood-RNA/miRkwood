@@ -13,37 +13,23 @@ use PipelineMiRNA::WebTemplate;
 
 my $cgi = CGI->new;
 
-
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 my $web_root     = PipelineMiRNA::Paths->get_web_root();
-my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
-my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
-my $js1 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js');
-my $js2 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'graphics.js');
-my $js3 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js');
-my $js4 = File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'imgpreview.full.jquery.js');
+
+
+my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
+my @js  = ( File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js'),
+            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'graphics.js'),
+            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js'),
+            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'imgpreview.full.jquery.js'),
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js'
+          );
 
 my $id_job = $cgi->param('run_id'); # récupération id job
 my $name_job = $cgi->param('nameJob'); # récupération id job
 
-my $HTML_header = <<"END_TXT";
-Content-type: application/xhtml+xml
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
-    <head>
-   		     <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
-        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
-   
-        <script type="text/javascript" language="Javascript" src="$js1"> </script>
-        <script type="text/javascript" src="$js2"></script>
-        <script type="text/javascript" src="$js3"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript"></script>
-        <script src="$js4" type="text/javascript"></script>
-    </head>
-END_TXT
+my $html = '';
 
 my $HTML_additional = "";
 unless (!$name_job)
@@ -57,62 +43,56 @@ if($valid){
     my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
     my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
 
-    print <<"HTML";
-$HTML_header    <body onload="main('all');">
+    my $body = <<"END_TXT";
+<body onload="main('all');">
     <div class="theme-border"></div>
     <div class="logo"></div>
-
-<div class="bloc_droit">
-
-$header_menu
-
+    <div class="bloc_droit">
+    $header_menu
 <div class="main main-full">
-$HTML_additional
-<div  id="select" > 
-	<div style="width: 500px"  class="forms">
-		<p  ><b>Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) :</b></p> 
-		<form id= 'exportForm'>
-		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
-		<input type="radio" name="export" value="fas"/>fasta format<br/>
-		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
-		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
-		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
-		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job", "$web_root")'/>
-		</form>
-	</div>
-		<p style='font-size:14px' ><br/>	Click on a name to see the full HTML report. Click on the checkbox to select an entry.<br/><br/>
-		<input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/>
-		</p>
-</div>
+    $HTML_additional
+    <div  id="select" > 
+    	<div style="width: 500px"  class="forms">
+    		<p  ><b>Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) :</b></p> 
+    		<form id= 'exportForm'>
+    		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
+    		<input type="radio" name="export" value="fas"/>fasta format<br/>
+    		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
+    		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
+    		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
+    		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job", "$web_root")'/>
+    		</form>
+    	</div>
+    		<p style='font-size:14px' ><br/>	Click on a name to see the full HTML report. Click on the checkbox to select an entry.<br/><br/>
+    		<input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/>
+    		</p>
+    </div>
     
-        <div id="table" ></div>
-        <div id="singleCell"> </div>
-$HTML_results
-       
-        <div id="id_job" >$id_job</div>
-    </div><!-- main -->
-    </div><!-- bloc droit-->
-    	$footer
-    </body>
-</html>
-HTML
+    <div id="table" ></div>
+    <div id="singleCell"> </div>
+    $HTML_results
+    
+    <div id="id_job" >$id_job</div>
+</div><!-- main -->
+</div><!-- bloc droit-->
+$footer
+</body>
+END_TXT
+
+    $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
 
 }else{
-    print <<"HTML";
-$HTML_header
-<body>
-    <div class="theme-border"></div>
-    <div class="logo"></div>
-   
-    <div class="bloc_droit">
-        $header_menu
-        <div class="main">
-        $HTML_additional
-            <p>No results available for the given job identifier $id_job: $valid </p>
-        </div><!-- main -->
-    </div><!-- bloc droit-->
-    $footer
-    </body>
-</html>
-HTML
+    my $page = <<"END_TXT";
+<div class="main">
+    $HTML_additional
+    <p>No results available for the given job identifier $id_job: $valid </p>
+</div><!-- main -->
+END_TXT
+
+    $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js, 1);
 }
+print <<"DATA" or die("Error when displaying HTML: $!");
+Content-type: text/html
+
+$html
+DATA

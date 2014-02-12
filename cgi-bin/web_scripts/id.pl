@@ -7,67 +7,30 @@ use FindBin;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::WebTemplate;
 
-my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
-my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
-my $footer       = PipelineMiRNA::WebTemplate::get_footer();
+my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
+my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 
-my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
-my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
-my $js  = PipelineMiRNA::WebTemplate->get_js_file();
+my $page = <<"END_TXT";
+<div class="main">
+  <h2>Retrieve result with an ID</h2>
+  <div class="forms">
+    <form method="post" action="./resultsWithID.pl">
+      <p>The ID remains valid 24 hours after sequence submission.</p>
+      <p><b>Enter the ID :</b>
+        <input type="text" name="run_id" size="20">
+        <input type="hidden" name="command" value="result">
+        <input type="submit" value="Go">
+      </p>
+    </form>
+  </div> <!-- form -->
+</div>
+END_TXT
+
+my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-<link type="text/css" rel="stylesheet" href="$bioinfo_css" />
-<link type="text/css" rel="stylesheet" href="$project_css" />
-
-		<script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
-	
-		
-		<title>MicroRNA identification</title>
-
-
-</head>
-<body>
-<div class="theme-border"></div>
-<div class="logo"></div>
-
-$bioinfo_menu
-
-<div class="bloc_droit">
-
-$header_menu
-
-<div class="main">
-
-<br>
-
-<h2> Retrieve result with an ID</h2>
-
-<br>
-
-<div class="forms">
-<form method="post" action="./resultsWithID.pl">
-<p>The ID remains valid 24 hours after sequence submission.</p>
-<p>
-
-<b>  Enter the ID :</b>  
-<input type="text" name="run_id" size="20">
-<input type="hidden" name="command" value="result">
-<input type="submit" value="Go"></p>
-</form>
-</div> <!-- form -->
-<br>
-</div>
-</div> <!-- bloc droit -->
-$footer
-
-</body>
-</html>
-
+$html
 DATA
 ###End###

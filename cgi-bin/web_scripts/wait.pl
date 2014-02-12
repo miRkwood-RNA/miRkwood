@@ -14,8 +14,7 @@ use PipelineMiRNA;
 use PipelineMiRNA::WebTemplate;
 
 my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
-my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
-my $web_root   = PipelineMiRNA::Paths->get_web_root();
+
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
 my $mail   = $html->param('mail');
@@ -61,47 +60,30 @@ if ( $mail ne q{} ) {
 "<p>An E-mail notification will be sent to <strong>$mail</strong> as soon as the job is completed.</p>";
 }
 
-my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
-my $project_css = PipelineMiRNA::WebTemplate->get_css_file();
-my $js  = PipelineMiRNA::WebTemplate->get_js_file();
+my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
+my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
+
+my $page = <<"END_TXT";
+<div class="main">
+  <div class="dialog">
+    <div class="waitMessage">
+      <p>Your request has been successfully submitted.<p>
+      <p>Your ID is <B>$jobId</B>.</p>
+      $email_HTML
+      <p>This page is updated every five seconds.</p>
+      <p>You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.</p>
+    </div>
+  </div><!-- dialog -->
+</div><!-- main -->
+END_TXT
+
+my $html_text = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+
+$html_text =~ s/<meta/<meta http-equiv='Refresh' content='6;URL=$waiting_url'><meta/;
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <meta http-equiv='Refresh' content='6;URL=$waiting_url'>
-        <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
-        <link title="test" type="text/css" rel="stylesheet" href="$bioinfo_css" />
-        <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
-        <title>miREST :: identification of miRNA/miRNA hairpins in plants</title>
-    </head>
-    <body>
-       <div class="logo"></div> 
-		
-       <div class="theme-border"></div>
-        $bioinfo_menu
-        <div class="bloc_droit">
-            $header_menu
-            <div class="main">
-                <div class="dialog">
-                    <br/><br/>
-                    <div class="waitMessage">
-                        <p>Your request has been successfully submitted.<p>
-                        <p>Your ID is <B>$jobId</B>.</p>
-                        $email_HTML
-
-                        <p>This page is updated every five seconds.</p>
-                        <p>You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.</p>
-                    </div>
-                </div><!-- dialog -->
-            </div><!-- main -->
-        </div><!-- bloc droit-->
-      $footer
-    </body>
-</html>
+$html_text
 DATA
 ###End###

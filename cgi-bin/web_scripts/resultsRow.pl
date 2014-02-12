@@ -13,17 +13,12 @@ use PipelineMiRNA::Results;
 use PipelineMiRNA::Candidate;
 use PipelineMiRNA::WebTemplate;
 
-my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
-my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
-my $footer       = PipelineMiRNA::WebTemplate::get_footer();
-
-my $bioinfo_css = PipelineMiRNA::WebTemplate->get_server_css_file();
-my $project_css = File::Spec->catfile(PipelineMiRNA::Paths->get_css_path(), 'results.css');
-my $js  = PipelineMiRNA::WebTemplate->get_js_file();
-
 my $cgi            = CGI->new();
 my $jobId          = $cgi->param('jobID');
 my $candidate_id   = $cgi->param('id');
+
+my @css = (File::Spec->catfile(PipelineMiRNA::Paths->get_css_path(), 'results.css'));
+my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 
 my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 my $returnlink = PipelineMiRNA::WebTemplate::get_link_back_to_results($jobId);
@@ -67,7 +62,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         $alignmentHTML = "No alignment has been found.";
     }
 
-    $html_contents ="
+    $html_contents = <<"END_TXT";
             <div id = 'showInfo'>
         <ul>
         <li>
@@ -105,26 +100,23 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         $alignmentHTML
 
     </div><!-- showInfo -->
-"
+END_TXT
 }
+
+my $body  = <<"END_TXT";
+    <body>
+       <h1>Results for $candidate{'name'}, $candidate{'position'}</h1>
+        $return_html
+        $html_contents
+        $return_html
+    </body>
+END_TXT
+
+my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-        <link title="test" type="text/css" rel="stylesheet" href="$project_css" />
-		<script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
-		<title>MicroRNA identification</title>
-	</head>
-	<body>
-	   <h1>Results for $candidate{'name'}, $candidate{'position'}</h1>
-	    $return_html
-        $html_contents
-        $return_html
-	</body>
-</html>
-
+$html
 DATA
 ###End###
