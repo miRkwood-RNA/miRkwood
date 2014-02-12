@@ -137,9 +137,12 @@ sub process_sequence {
 
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
-	process_RNAstemloop( $sequence_dir, 'stemloop', $STEM_FH, $EVAL_FH );
+	my $res = process_RNAstemloop( $sequence_dir, 'stemloop', $STEM_FH, $EVAL_FH );
+	my @hash = @{$res};
 	close($STEM_FH);
 	close($EVAL_FH);
+    my %newHash = treat_candidates( \@hash );
+    create_directories( \%newHash, $sequence_dir );
 }
 
 =method run_RNAeval_on_RNAstemloop_output
@@ -227,8 +230,7 @@ sub process_RNAstemloop {
 			# Should not happen
 		}    #if $line1
 	}    #while $line=<IN>
-	my %newHash = treat_candidates( \@hash );
-	create_directories( \%newHash, $sequence_dir );
+	return \@hash;
 }
 
 =method treat_candidates
