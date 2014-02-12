@@ -75,9 +75,9 @@
       <li class="case Rna">
         <a href="http://www.rnaspace.org/">RNAspace</a>
       </li>
-    <!-- MiRNA -->
+    <!-- miRkwood -->
       <li class="case Rna">
-      	  <a href="/cgi-bin/MiRNA/web_scripts/interface.pl">MiRNA</a>
+      	  <a href="/cgi-bin/MiRNA/web_scripts/interface.pl">miRkwood</a>
       </li>
     </ul>
     

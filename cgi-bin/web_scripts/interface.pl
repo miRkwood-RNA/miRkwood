@@ -62,7 +62,7 @@ my $page = <<"END_TXT";
           </tr>
         </div>
         <div class="center">
-           <input type="submit" name="upload" id="upload" value="Run MiRNA">
+           <input type="submit" name="upload" id="upload" value="Run miRkwood">
         </div>
     </fieldset>
   </form>

@@ -13,15 +13,15 @@ my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 my $page = <<"END_TXT";
 
 <div class="main">
-  <h2>What is miREST</h2>
+  <h2>What is miRkwood</h2>
   <p>
     <a name="fasta"></a> 
-    miREST is a pipeline for the identification of miRNA and their hairpins precursors from assembled EST (Sanger or 454) or from short (<10 kb) genomic sequences. It is dedicated to plants. Fonctionnement du programme selon choix final et paramétrage des outils.
+    miRkwood is a pipeline for the identification of miRNA and their hairpins precursors from assembled EST (Sanger or 454) or from short (<10 kb) genomic sequences. It is dedicated to plants. Fonctionnement du programme selon choix final et paramétrage des outils.
   </p>
 
   <h2>Input</h2>
   <p>
-    miREST input is (Multi)Fasta format. A sequence in FASTA format consists of a single-line description, followed by lines of sequence data. The first character of the description line is a greater-than (">") symbol in the first column. All lines should be shorter than 80 characters:
+    miRkwood input is (Multi)Fasta format. A sequence in FASTA format consists of a single-line description, followed by lines of sequence data. The first character of the description line is a greater-than (">") symbol in the first column. All lines should be shorter than 80 characters:
     Fasta file example 
   </p>
   <div class="exemple">
@@ -33,7 +33,7 @@ my $page = <<"END_TXT";
     </pre>
   </div>
   <p>
-    You can either paste or upload a file. Lower-case and upper-case letters are both accepted. Note that even if the full standard IUPAC nucleic acid code, numerical digits 0, ..., 9, - and dot . symbols are accepted, they are ignored by miREST. 
+    You can either paste or upload a file. Lower-case and upper-case letters are both accepted. Note that even if the full standard IUPAC nucleic acid code, numerical digits 0, ..., 9, - and dot . symbols are accepted, they are ignored by miRkwood.
   </p>
 
   <h2>Mask coding regions</h2>

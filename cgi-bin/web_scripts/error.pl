@@ -15,7 +15,7 @@ my $page = <<"END_TXT";
   <div id="page">
     <h2>Error!</h2>
     <div class="section">
-      MiREST could not recognize the format of one or more sequences.
+      miRkwood could not recognize the format of one or more sequences.
     </div>
     <ul>
       <li>Your data set should include <b>at least two</b> distinct sequences.</li>
@@ -38,7 +38,7 @@ cggccgagatcaggcgatgcatgcgcagggagcaggcgagcatgtagcatgctagctgtcgcgagcact
       </li>
       <li><b>Lower-case and upper-case</b> letters are both accepted.</li>
       <li>The full  standard <b>IUPAC</b> nucleic acid code is not supported : only <tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt> and <tt>U</tt> symbols are recognized.</li>
-      <li><b>Numerical digits <tt>0</tt>, ..., <tt>9</tt>, <tt>-</tt> and dot <tt>.</tt></b> symbols are accepted. They are simply ignored by MiREST.</li>
+      <li><b>Numerical digits <tt>0</tt>, ..., <tt>9</tt>, <tt>-</tt> and dot <tt>.</tt></b> symbols are accepted. They are simply ignored by miRkwood.</li>
     </ul>
     <br /><br />
     <div class="home-made-center">

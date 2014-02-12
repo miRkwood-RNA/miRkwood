@@ -166,7 +166,7 @@ sub get_simple_results_page {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>MiRest - MicroRNA identification</title>
+        <title>miRkwood - MicroRNA identification</title>
         <STYLE type="text/css">$css</STYLE>
    </head>
     <body>
@@ -230,7 +230,7 @@ sub get_HTML_page_for_body {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
-        <title>miREST - MicroRNA identification</title>
+        <title>miRkwood - MicroRNA identification</title>
         $css_html
         $js_html
     </head>

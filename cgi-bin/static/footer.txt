@@ -3,7 +3,7 @@
      <table class="footerTable">
      	    <tr>
 		<td align="left">
-		For questions about <b>MiRNA</b> or for bug reports, please contact MiRNA team
+		For questions about <b>miRkwood</b> or for bug reports, please contact miRkwood team
 		</td>
 		<td align="right">
 		2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>
