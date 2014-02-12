@@ -200,8 +200,8 @@ sub get_HTML_page_for_content {
         <div class="bloc_droit">
         $header_menu
             $page
-        $footer
         </div><!-- bloc droit-->
+        $footer
     </body>
 END_TXT
     my $HTML = get_HTML_page_for_body($body, $css_files, $js_files);
