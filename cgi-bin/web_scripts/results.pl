@@ -121,23 +121,25 @@ my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $arguments;
 print $cgi->redirect( -uri => $waiting_url  );
 print "Location: $waiting_url \n\n";
 
-my $check    = $cgi->param('check');
+my $filter   = $cgi->param('check');
 my $mfei     = $cgi->param('mfei');
 my $randfold = $cgi->param('randfold');
 my $align    = $cgi->param('align');
 my $plant    = $cgi->param('db');
+my $strand   = $cgi->param('strand');
 if ( !$plant ) {
     $plant = "NonePlant";
 }
+if ( $strand   ) { $strand   = 1 } else { $strand   = 0 }
 if ( $mfei     ) { $mfei     = 1 } else { $mfei     = 0 }
 if ( $randfold ) { $randfold = 1 } else { $randfold = 0 }
 if ( $align    ) { $align    = 1 } else { $align    = 0 }
-if ( $check    ) { $check    = 1 } else { $check    = 0 }
+if ( $filter   ) { $filter   = 1 } else { $filter  = 0 }
 
 #execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $check $mfei $randfold $align $absolute_job_dir $plant";
+"perl -I$dirLib $perl_script $filter $strand $mfei $randfold $align $absolute_job_dir $plant";
 debug("Running perl script $cmd", 1);
 system($cmd);
 my $finish_file = File::Spec->catfile( $absolute_job_dir, 'finished' );

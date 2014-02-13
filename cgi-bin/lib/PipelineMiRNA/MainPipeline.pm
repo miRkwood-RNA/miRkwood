@@ -31,8 +31,9 @@ Write the run options to the job configuration file.
 =cut
 
 sub write_config {
-	my ( $mfe, $randfold, $align, $run_options_file ) = @_;
+	my ( $strands, $mfe, $randfold, $align, $run_options_file ) = @_;
 	my $run_options = PipelineMiRNA->CONFIG();
+	$run_options->param( "options.strands",  $strands );
 	$run_options->param( "options.mfe",      $mfe );
 	$run_options->param( "options.randfold", $randfold );
 	$run_options->param( "options.align",    $align );
@@ -50,14 +51,14 @@ Run the pipeline.
 =cut
 
 sub main_entry {
-	my ( $filter, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
+	my ( $filter, $strand, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
 	my $debug    = 1;
 	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
 	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
 	my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
 	PipelineMiRNA->CONFIG_FILE($run_options_file);
-	write_config( $mfe, $randfold, $align, $run_options_file );
+	write_config( $strand, $mfe, $randfold, $align, $run_options_file );
 
 	debug( 'BEGIN execute_scripts', $debug );
 	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
