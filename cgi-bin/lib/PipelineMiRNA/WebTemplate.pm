@@ -216,12 +216,12 @@ sub get_HTML_page_for_body {
 
     my $css_html = '';
     foreach my $css (@css_files){
-        $css_html .= "<link type='text/css' rel='stylesheet' href='$css' />";
+        $css_html .= "<link type='text/css' rel='stylesheet' href='$css' />\n";
     }
 
     my $js_html = '';
     foreach my $js (@js_files){
-        $js_html .= "<script type='text/javascript' src='$js'></script>";
+        $js_html .= "<script type='text/javascript' src='$js'></script>\n";
     }
 
     my $HTML = <<"END_TXT";
@@ -231,9 +231,7 @@ sub get_HTML_page_for_body {
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
         <title>miRkwood - MicroRNA identification</title>
-        $css_html
-        $js_html
-    </head>
+        $css_html        $js_html    </head>
     $body
 </html>
 END_TXT
