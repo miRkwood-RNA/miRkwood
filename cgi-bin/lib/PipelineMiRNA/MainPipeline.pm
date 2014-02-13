@@ -50,7 +50,7 @@ Run the pipeline.
 =cut
 
 sub main_entry {
-	my ( $check, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
+	my ( $filter, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
 	my $debug    = 1;
 	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
 	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
@@ -61,10 +61,8 @@ sub main_entry {
 
 	debug( 'BEGIN execute_scripts', $debug );
 	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
-	if ( $check eq 'checked' ) {
+	if ( $filter ) {
 		debug( 'FilteringCDS', $debug );
-
-		#Filtering CDS
 		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $plant );
 	}
 	else {
