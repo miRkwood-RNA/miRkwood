@@ -12,6 +12,7 @@ my $man  = 0;
 my $help = 0;
 
 # Pipeline options
+my $both_strands = 0;
 my $randfold     = 0;
 my $mfei         = 0;
 my $align        = 0;
@@ -25,6 +26,7 @@ GetOptions(
     randfold         => \$randfold,
     mfei             => \$mfei,
     align            => \$align,
+    'both-strands'   => \$both_strands,
     'species-mask=s' => \$species_mask,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
@@ -69,15 +71,19 @@ __END__
 
 =head1 NAME
 
-MiREST - A micro-RNA analysis pipeline
+miRkwood - A micro-RNA analysis pipeline
 
 =head1 SYNOPSIS
 
-sample [options] [FASTA files]
+mirkwood [options] [FASTA files]
 
 =head1 OPTIONS
 
 =over 8
+
+=item B<-both-strands>
+
+Process both strands
 
 =item B<-species-mask>
 
@@ -107,7 +113,6 @@ Prints the manual page and exits.
 
 =head1 DESCRIPTION
 
-B<MiREST> will read the given input file(s) and do something
-useful with the contents thereof.
+B<miRkwood> is a micro-RNA analysis pipeline.
 
 =cut
