@@ -41,12 +41,16 @@ if ($species_mask) {
 my $fasta_file = $ARGV[0];
 ( -e $fasta_file ) or die("$fasta_file is not a file");
 
-if ( !-e $output_folder ) {
-    print "Creating $output_folder\n";
-    mkdir $output_folder or die("Error when creating $output_folder");
+
+my $abs_output_folder = File::Spec->rel2abs($output_folder);
+if ( !-e $abs_output_folder ) {
+    print "Creating $abs_output_folder\n";
+    mkdir $output_folder or die("Error when creating $abs_output_folder");
 }
-my $tmp_pieces_folder = File::Spec->catdir( $output_folder, 'pieces' );
-mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
+my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );
+if ( !-e $tmp_pieces_folder ) {
+    mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
+}
 
 # Importing stuff after directory creation
 use PipelineMiRNA;
@@ -54,12 +58,12 @@ use PipelineMiRNA::CLI;
 use PipelineMiRNA::MainPipeline;
 
 my $seq_name = 'Sequences.fas';
-my $seq_path = File::Spec->catfile( $output_folder, $seq_name );
 
+my $seq_path = File::Spec->catfile( $abs_output_folder, $seq_name );
 File::Copy::copy( $fasta_file, $seq_path );
 PipelineMiRNA::MainPipeline::main_entry( $mask, $mfei, $randfold, $align,
-    $output_folder, $species_mask );
-PipelineMiRNA::CLI::process_results_dir_for_offline($output_folder);
+    $abs_output_folder, $species_mask );
+PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder);
 
 __END__
 
