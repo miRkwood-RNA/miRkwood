@@ -309,9 +309,12 @@ sub resultstruct2pseudoXML {
     my @headers2 = ('Vienna', 'DNASequence', 'identifier');
 
     my $result = "<results id='all'>\n";
-    my @keys = sort { $results{$a}{'position_start'} <=>
-                      $results{$b}{'position_start'}
-                    } keys %results;
+    my @keys = sort { ( $results{$b}{'name'} cmp
+                        $results{$a}{'name'} )
+                      ||
+                      ( $results{$a}{'position_start'} <=>
+                        $results{$b}{'position_start'} )
+                 } keys %results;
 
     foreach my $key (@keys) {
         my $value = $results{$key};
