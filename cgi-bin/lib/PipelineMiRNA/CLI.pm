@@ -8,6 +8,15 @@ use warnings;
 use PipelineMiRNA::MainPipeline;
 use PipelineMiRNA::Results;
 
+=method process_results_dir_for_offline
+
+Process the results in the given directory for offline use.
+
+Usage:
+  PipelineMiRNA::CLI::process_results_dir_for_offline($folder);
+
+=cut
+
 sub process_results_dir_for_offline {
     my @args          = @_;
     my $output_folder = shift @args;
@@ -28,6 +37,14 @@ sub process_results_dir_for_offline {
     close($HTML)
       or die("Cannot close $html_page: $!");
 }
+
+=method make_html_from_results
+
+Given a reference to a results hash, makes the HTML
+Usage:
+  my $html = make_html_from_results( \%results, $output_folder );
+
+=cut
 
 sub make_html_from_results {
     my @args    = @_;
@@ -63,6 +80,16 @@ END_TXT
 
     return $html;
 }
+
+=method make_all_exports
+
+Given a reference to a results hash, generates the various
+exports in the given output directory.
+
+Usage:
+  my $html = make_all_exports(\%results, $output_folder);
+
+=cut
 
 sub make_all_exports {
     my (@args)    = @_;
@@ -110,6 +137,15 @@ sub make_all_exports {
     $html .= "</ul>";
     return $html;
 }
+
+=method make_candidate_page
+
+Given a candidate hash, make the HTML page
+
+Usage:
+  my $html = make_candidate_page( \$candidate, $pieces_folder, $output_folder );
+
+=cut
 
 sub make_candidate_page {
     my (@args)        = @_;
