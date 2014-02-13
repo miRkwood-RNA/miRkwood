@@ -281,7 +281,11 @@ sub resultstruct2csv {
             my $value = $results{$key};
             for my $header (@csv_headers)
             {
-                $result .= "${$value}{$header},";
+                my $contents = ${$value}{$header};
+                if (!defined $contents){
+                    $contents = q{};
+                }
+                $result .= "$contents,";
             }
             $result .= "\n";
         }
@@ -314,7 +318,7 @@ sub resultstruct2pseudoXML {
         $result .= "<Sequence";
         for my $header (@headers1){
             my $contents = ${$value}{$header};
-            if (!$contents){
+            if (!defined $contents){
                 $contents = q{};
             }
             $result .= " $header='$contents'";
@@ -340,7 +344,7 @@ sub resultstruct2pseudoXML {
         $result .= "<Sequence";
         for my $header (@headers1){
             my $contents = ${$value}{$header};
-            if (!$contents){
+            if (!defined $contents){
                 $contents = q{};
             }
             $result .= " $header='$contents'";
@@ -387,8 +391,8 @@ sub resultstruct2table {
       for my $header (@headers){
           my $td_content = "";
           my $contents = ${$value}{$header};
-          if (!$contents){
-              $contents = '';
+          if (!defined $contents){
+              $contents = q{};
           }
           $HTML_results .= "<td>$contents</td>\n";
       }
