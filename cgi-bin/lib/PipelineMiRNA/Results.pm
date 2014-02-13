@@ -309,8 +309,8 @@ sub resultstruct2pseudoXML {
     my @headers2 = ('Vienna', 'DNASequence', 'identifier');
 
     my $result = "<results id='all'>\n";
-    my @keys = sort { PipelineMiRNA::Utils::get_element_of_split($results{$a}{'position'}, '-', 0) <=>
-                      PipelineMiRNA::Utils::get_element_of_split($results{$b}{'position'}, '-', 0)
+    my @keys = sort { $results{$a}{'position_start'} <=>
+                      $results{$b}{'position_start'}
                     } keys %results;
 
     foreach my $key (@keys) {
@@ -336,8 +336,8 @@ sub resultstruct2pseudoXML {
     @keys = sort { ( $results{$b}{'quality'} cmp
                      $results{$a}{'quality'} )
                    ||
-                   ( PipelineMiRNA::Utils::get_element_of_split($results{$a}{'position'}, '-', 0) <=>
-                     PipelineMiRNA::Utils::get_element_of_split($results{$b}{'position'}, '-', 0) )
+                   ( $results{$a}{'position_start'} <=>
+                     $results{$b}{'position_start'} )
                  } keys %results;
     foreach my $key (@keys) {
         my $value = $results{$key};
