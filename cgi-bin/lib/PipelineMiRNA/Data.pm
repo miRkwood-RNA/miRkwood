@@ -43,9 +43,9 @@ sub get_mirdup_data_path {
     return File::Spec->catdir( $dirData, 'mirdup');
 }
 
-=method get_mirdup_data_path
+=method get_mirdup_model_name
 
-Return the path to the mirdup data directory
+Return the name of the mirdup model
 
 =cut
 
