@@ -158,24 +158,6 @@ sub make_url {
     return $url;
 }
 
-sub get_simple_results_page {
-    my @args = @_;
-    my $page = shift @args;
-    my $css  = shift @args;
-    my $HTML = <<"END_TXT";
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <title>miRkwood - MicroRNA identification</title>
-        <STYLE type="text/css">$css</STYLE>
-   </head>
-    <body>
-        $page
-    </body>
-</html>
-END_TXT
-    return $HTML
-}
 
 sub get_HTML_page_for_content {
     my @args      = @_;

@@ -7,7 +7,6 @@ use warnings;
 
 use PipelineMiRNA::MainPipeline;
 use PipelineMiRNA::Results;
-use PipelineMiRNA::WebTemplate;
 
 sub process_results_dir_for_offline {
     my @args          = @_;
@@ -60,8 +59,7 @@ END_TXT
           make_candidate_page( $value, $pieces_folder, $output_folder );
         $page .= $candidate_html;
     }
-    my $html =
-      PipelineMiRNA::WebTemplate::get_simple_results_page( $page, $css );
+    my $html = get_simple_results_page( $page, $css );
 
     return $html;
 }
@@ -228,6 +226,34 @@ sub make_candidate_page {
 $alignmentHTML
 END_TXT
     return $html;
+}
+
+=method get_simple_results_page
+
+Make a simple HTML page with the given body and CSS.
+
+Usage:
+  my $html = get_simple_results_page( $page, $css );
+
+=cut
+
+sub get_simple_results_page {
+    my @args = @_;
+    my $page = shift @args;
+    my $css  = shift @args;
+    my $HTML = <<"END_TXT";
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>miRkwood - MicroRNA identification</title>
+        <STYLE type="text/css">$css</STYLE>
+    </head>
+    <body>
+        $page
+    </body>
+</html>
+END_TXT
+    return $HTML
 }
 
 1;
