@@ -46,11 +46,6 @@ HTML
 is( $result4, $expected4,
     'get_error_page returns expected value');
 
-ok( my $result5 = PipelineMiRNA::WebTemplate::make_mirbase_link('ABCDE'),
-    'can call make_mirbase_link()');
-is( $result5, 'http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ABCDE',
-    'make_mirbase_link returns expected value');
-
 ok( $ENV{SERVER_NAME} = 'toto',
     'Can set SERVER_NAME variable');
 ok( my $result6 = PipelineMiRNA::WebTemplate::make_url('ABCDE'),

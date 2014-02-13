@@ -225,3 +225,14 @@ ok(
 );
 is( $compute_mfei_res, -0.879487179487179,
     'compute_mfei returns the expected value' );
+
+ok(
+    my $make_mirbase_link_output =
+      PipelineMiRNA::Utils::make_mirbase_link('ABCDE'),
+    'can call make_mirbase_link()'
+);
+is(
+    $make_mirbase_link_output,
+    'http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ABCDE',
+    'make_mirbase_link returns expected value'
+);

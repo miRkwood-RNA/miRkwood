@@ -7,6 +7,7 @@ use warnings;
 
 use File::Spec;
 use File::Copy;
+use PipelineMiRNA::Utils;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Results;
 use PipelineMiRNA::Candidate;
@@ -452,7 +453,7 @@ sub add_ODF_alignments{
                     my @splitted_one = split(/ /, $seq);
                     my $name = $splitted_one[0];
                     my $mirbase_id = $splitted_one[1];
-                    my $mirbase_link = PipelineMiRNA::WebTemplate::make_mirbase_link($mirbase_id);
+                    my $mirbase_link = PipelineMiRNA::Utils::make_mirbase_link($mirbase_id);
                     push @mirbase_links, $mirbase_link;
                     push @mirbase_ids, $mirbase_id;
                 }

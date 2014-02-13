@@ -566,3 +566,16 @@ sub compute_mfei {
     my $mfei = $num / ( ( $gc_count / $length ) * 100 );
     return $mfei;
 }
+
+=method make_mirbase_link
+
+Return the URL to MirBase given the identifier
+
+=cut
+
+sub make_mirbase_link {
+    my @args = @_;
+    my $id   = shift @args;
+    my $url  = 'http://mirbase.org/cgi-bin/mirna_entry.pl?acc=';
+    return $url . $id;
+}
