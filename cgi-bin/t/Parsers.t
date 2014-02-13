@@ -96,3 +96,14 @@ $expected6{'contig15750__34-195'} = {
 };
 
 is_deeply( \%alternatives, \%expected6, 'Alternative candidate file is correctly parsed' );
+
+my $blastout_file = input_file('blastx.out');
+file_exists_ok($blastout_file);
+ok(
+    my $index_blast_output_result =
+      PipelineMiRNA::Parsers::index_blast_output($blastout_file),
+    'Can call index_blast_output'
+);
+my $index_blast_output_expected = { 'arabidopsis_filtered' => 1 };
+is_deeply( $index_blast_output_result, $index_blast_output_expected,
+    'BLAST output file correctly parsed' );

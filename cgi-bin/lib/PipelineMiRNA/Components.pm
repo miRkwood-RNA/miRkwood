@@ -45,16 +45,7 @@ sub filter_CDS {
     ) or die('Problem when running Blastx');
     chmod 777, $blast_output;
 
-    my %blast_seqs;
-
-    # Looping in blast_output, indexing sequences found
-    open( my $FOut, '<', $blast_output )
-      || die "Problème à l\'ouverture : $!";
-    while ( my $line = <$FOut> ) {
-        my @name = split( '\t', $line );
-        $blast_seqs{ $name[0] } = 1;
-    }
-    close $FOut || die "Problème à la fermeture : $!";
+    my %blast_seqs = %{PipelineMiRNA::Parsers::index_blast_output($blast_output)};
 
     # Looping in uploaded_sequences, copying only the files not found in Blast
     open( my $FSeq, '<', $uploaded_sequences )

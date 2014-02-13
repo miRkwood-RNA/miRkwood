@@ -201,4 +201,27 @@ sub parse_alternative_candidates_file {
     return %results;
 }
 
+=method index_blast_output
+
+Looping in blast_output, indexing sequences found
+
+=cut
+
+sub index_blast_output {
+    my @args         = @_;
+    my $blast_output = shift @args;
+
+    my %blast_seqs;
+    open( my $FOut, '<', $blast_output )
+      || die "Error opening $blast_output: $!";
+    while ( my $line = <$FOut> ) {
+        my @name = split( '\t', $line );
+        $blast_seqs{ $name[0] } = 1;
+    }
+    close $FOut
+      || die "Error closing $blast_output: $!";
+
+    return \%blast_seqs;
+}
+
 1;
