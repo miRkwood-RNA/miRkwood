@@ -30,6 +30,20 @@ sub reverse_complement {
     return $revcomp;
 }
 
+=method get_position_from_opposite_strand
+
+
+=cut
+
+sub get_position_from_opposite_strand {
+    my @args   = @_;
+    my $start  = shift @args;
+    my $end    = shift @args;
+    my $length = shift @args;
+    my @res = ($length - $end - 1, $length - $start - 1,);
+    return \@res ;
+}
+
 =method parse_multi_fasta
 
 Parse a multi FASTA

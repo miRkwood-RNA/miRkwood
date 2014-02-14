@@ -236,3 +236,24 @@ is(
     'http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ABCDE',
     'make_mirbase_link returns expected value'
 );
+
+my @opposite_strand_values = (
+    [ [ 3,   7,   10 ],  [ 2,  6 ] ],
+    [ [ 3,   7,   20 ],  [ 12, 16 ] ],
+    [ [ 2,   4,   9 ],   [ 4,  6 ] ],
+    [ [ 143, 366, 369 ], [ 2,  225 ] ],
+);
+
+foreach my $couple (@opposite_strand_values) {
+    my @arrary = @{$couple};
+    ok(
+        my $opposite_strand_res =
+          PipelineMiRNA::Utils::get_position_from_opposite_strand(
+            @{ @{$couple}[0] }
+          ),
+        'Can call get_position_from_opposite_strand'
+    );
+    is_deeply( $opposite_strand_res, @{$couple}[1],
+"get_position_from_opposite_strand (@{@{$couple}[0]}) --> (@{@{$couple}[1]}) ok"
+    );
+}
