@@ -61,9 +61,9 @@ use PipelineMiRNA::MainPipeline;
 
 my $seq_name = 'Sequences.fas';
 my $seq_path = File::Spec->catfile( $abs_output_folder, $seq_name );
-my $strand = 0;
+
 File::Copy::copy( $fasta_file, $seq_path );
-PipelineMiRNA::MainPipeline::main_entry( $mask, $strand, $mfei, $randfold, $align,
+PipelineMiRNA::MainPipeline::main_entry( $mask, $both_strands, $mfei, $randfold, $align,
     $abs_output_folder, $species_mask );
 PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder);
 
