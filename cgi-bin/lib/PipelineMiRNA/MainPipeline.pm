@@ -140,7 +140,7 @@ sub process_sequence {
 
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
-	my $res = process_RNAstemloop( $sequence_dir, 'stemloop', $STEM_FH, $EVAL_FH );
+	my $res = process_RNAstemloop( $sequence_dir, $STEM_FH, $EVAL_FH );
 	close($STEM_FH);
 	close($EVAL_FH);
 	return $res;
@@ -176,7 +176,6 @@ Writes the sequence on disk (seq.txt) and outRNAFold.txt
 sub process_RNAstemloop {
 	my @args           = @_;
 	my ($sequence_dir) = shift @args;
-	my ($suffix)       = shift @args;
 	my ($STEM_FH)      = shift @args;
 	my ($EVAL_FH)      = shift @args;
 	my $index          = 0;
