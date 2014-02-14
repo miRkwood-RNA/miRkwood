@@ -360,17 +360,16 @@ my $gff_line = PipelineMiRNA::Candidate->candidate_as_gff($value);
 sub candidate_as_gff {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
-    my ( $start, $end ) = split( m/[-]/xms, $candidate{'position'} );
-    my $text .= q{} .              # BEGIN
-      $candidate{'name'} . "\t" .   # seqid
-      '.' . "\t" .                  # source
-      'miRNA' . "\t" .              # type
-      $start . "\t" .               # start
-      $end . "\t" .                 # end
-      '.' . "\t" .                  # score
-      '.' . "\t" .                  # strand
-      '.' . "\t" .                  # phase
-      '.' . "\t" .                  # attributes
+    my $text .= q{} .                       # BEGIN
+      $candidate{'name'} . "\t" .           # seqid
+      '.' . "\t" .                          # source
+      'miRkwood' . "\t" .                   # type
+      $candidate{'position_start'} . "\t" . # start
+      $candidate{'position_end'} . "\t" .   # end
+      '.' . "\t" .                          # score
+      $candidate{'strand'} . "\t" .         # strand
+      '.' . "\t" .                          # phase
+      '.' . "\t" .                          # attributes
       "\n";
     return $text;
 }
