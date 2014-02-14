@@ -256,29 +256,23 @@ sub treat_candidates {
 		my $structure = $hash[$key]{"structure"};
 		my $dna       = $hash[$key]{"dna"};
 		my $energy    = $hash[$key]{"energy"};
-		if (
+		
+        $tempHash{$nameSeq} = {
+            "mfei"      => $mfei,
+            "dna"       => $dna,
+            "structure" => $structure,
+            "energy"    => $energy
+        };
+
+		if (! (
 			(
 				$end >= $hash[ $key + 1 ]{"end"}
 				|| ( $hash[ $key + 1 ]{"start"} < ( $start + $end ) / 2 )
 			)
-			&& ( $key != $nb - 1 )
+			&& ( $key != $nb - 1 ) )
 		  )
 		{
-			$tempHash{$nameSeq} = {
-				"mfei"      => $mfei,
-				"dna"       => $dna,
-				"structure" => $structure,
-				"energy"    => $energy
-			};
 
-		}
-		else {
-			$tempHash{$nameSeq} = {
-				"mfei"      => $mfei,
-				"dna"       => $dna,
-				"structure" => $structure,
-				"energy"    => $energy
-			};
 			my $max;
 			my @keys =
 			  sort { $tempHash{$a}{"mfei"} <=> $tempHash{$b}{"mfei"} }
