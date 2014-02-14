@@ -72,7 +72,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           <b>Position:</b> $candidate{'position'} ($size nt)
         </li>
         <li>
-          <b>Strand:</b>
+          <b>Strand:</b> $candidate{'strand'}
         </li>
         <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
