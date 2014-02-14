@@ -37,6 +37,7 @@ my %expected = ('name' => 'contig15750',
                 'alignment' => 2,
                 'alignment_existence' => 1,
                 'quality' => '4',
+                'strand'  => '+',
 );
 delete $pseudo_candidate{'alignments'};
 delete $pseudo_candidate{'mirdup_validation'};
@@ -59,7 +60,7 @@ ok(
 
 ok( my $result1 = PipelineMiRNA::Candidate->compute_quality( \%candidate ),
     'can call compute_quality()' );
-is( $result1, 3, 'compute_quality returns the expected value' );
+is( $result1, 4, 'compute_quality returns the expected value' );
 
 ok( my $has_mirdup_validation_result = PipelineMiRNA::Candidate->has_mirdup_validation( \%candidate ),
     'can call has_mirdup_validation()' );
