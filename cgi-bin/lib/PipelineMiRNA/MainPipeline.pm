@@ -90,7 +90,11 @@ sub main_entry {
         $sequence_dir_name++;
         my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
         mkdir $sequence_dir;
-        process_sequence( $sequence_dir, $name, $sequence );
+
+        my $res = process_sequence( $sequence_dir, $name, $sequence );
+        my @hash = @{$res};
+        my %newHash = treat_candidates( \@hash );
+        create_directories( \%newHash, $sequence_dir );
     }
     process_tests( $job_dir );
     return;
@@ -137,11 +141,9 @@ sub process_sequence {
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
 	my $res = process_RNAstemloop( $sequence_dir, 'stemloop', $STEM_FH, $EVAL_FH );
-	my @hash = @{$res};
 	close($STEM_FH);
 	close($EVAL_FH);
-    my %newHash = treat_candidates( \@hash );
-    create_directories( \%newHash, $sequence_dir );
+	return $res;
 }
 
 =method run_RNAeval_on_RNAstemloop_output
