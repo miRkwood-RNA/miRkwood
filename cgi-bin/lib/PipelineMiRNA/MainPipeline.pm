@@ -91,8 +91,19 @@ sub main_entry {
         my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
         mkdir $sequence_dir;
 
-        my $res = process_sequence( $sequence_dir, $name, $sequence );
-        my @hash = @{$res};
+        my $res = process_sequence( $sequence_dir, $name, $sequence, '+' );
+        my @hash1 = @{$res};
+        my @hash;
+        my $cfg = PipelineMiRNA->CONFIG();
+        if ( $cfg->param('options.strands') ) {
+            debug( "Processing the other strand", 1 );
+            my $reversed_sequence = PipelineMiRNA::Utils::reverse_complement($sequence);
+            my $res2 = process_sequence( $sequence_dir, $name, $reversed_sequence, '-');
+            my @hash2 = @{$res2};
+            @hash = sort { $a->{start} <=> $b->{start} } (@hash1, @hash2);
+        } else {
+            @hash = @hash1;
+        }
         my %newHash = treat_candidates( \@hash );
         create_directories( \%newHash, $sequence_dir );
     }
@@ -112,8 +123,9 @@ Process a single sequence
 sub process_sequence {
     my @args = @_;
     my $sequence_dir = shift @args;
-    my $name = shift @args;
+    my $name     = shift @args;
     my $sequence = shift @args;
+    my $strand   = shift @args;
 
     ## Running RNALfold
     debug( 'Running RNALfold', 1 );
@@ -137,10 +149,10 @@ sub process_sequence {
 	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal,  'optimal' );
 	my $rnaeval_out =
 	   run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
-
+    my $seq_length = length $sequence;
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
-	my $res = process_RNAstemloop( $sequence_dir, $STEM_FH, $EVAL_FH );
+	my $res = process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH, $EVAL_FH );
 	close($STEM_FH);
 	close($EVAL_FH);
 	return $res;
@@ -176,6 +188,8 @@ Writes the sequence on disk (seq.txt) and outRNAFold.txt
 sub process_RNAstemloop {
 	my @args           = @_;
 	my ($sequence_dir) = shift @args;
+	my ($strand)       = shift @args;
+	my ($seq_length)   = shift @args;
 	my ($STEM_FH)      = shift @args;
 	my ($EVAL_FH)      = shift @args;
 	my $index          = 0;
@@ -208,8 +222,13 @@ sub process_RNAstemloop {
 
 				if ( $nameSeq =~ /.*__(\d*)-(\d*)$/ ) {
 					my $mfei = PipelineMiRNA::Utils::compute_mfei($dna, $energy);
-					my ($start, $end);
-					($start, $end) = ($1, $2);
+                    my ($start, $end);
+                    if( $strand eq '-' ){
+                        my $res = PipelineMiRNA::Utils::get_position_from_opposite_strand($1, $2, $seq_length);
+                        ($start, $end) = @{$res};
+                    } else {
+                        ($start, $end) = ($1, $2);
+                    }
 					$hash[ $index++ ] = {
 						"name"      => $nameSeq,
 						"start"     => $start,
@@ -217,6 +236,7 @@ sub process_RNAstemloop {
 						"mfei"      => $mfei,
 						"dna"       => $dna,
 						"structure" => $structure,
+						"strand"    => $strand,
 						"energy"    => $energy
 					};
 
@@ -256,12 +276,14 @@ sub treat_candidates {
 		my $nameSeq   = $hash[$key]{"name"};
 		my $structure = $hash[$key]{"structure"};
 		my $dna       = $hash[$key]{"dna"};
+		my $strand    = $hash[$key]{"strand"};
 		my $energy    = $hash[$key]{"energy"};
-		
+
         $tempHash{$nameSeq} = {
             "mfei"      => $mfei,
             "dna"       => $dna,
             "structure" => $structure,
+            "strand"    => $strand,
             "energy"    => $energy
         };
 
@@ -285,9 +307,9 @@ sub treat_candidates {
 						"mfei"      => PipelineMiRNA::Utils::restrict_num_decimal_digits($tempHash{$key}{"mfei"},3),
 						"dna"       => $tempHash{$key}{"dna"},
 						"structure" => $tempHash{$key}{"structure"},
+						"strand"    => $tempHash{$key}{"strand"},
 						"energy"    => $tempHash{$key}{"energy"}
 					};
-
 				}
 				else {
 
@@ -295,6 +317,7 @@ sub treat_candidates {
 						"mfei"      => PipelineMiRNA::Utils::restrict_num_decimal_digits($tempHash{$key}{"mfei"},3),
 						"dna"       => $tempHash{$key}{"dna"},
 						"structure" => $tempHash{$key}{"structure"},
+						"strand"    => $tempHash{$key}{"strand"},
 						"energy"    => $tempHash{$key}{"energy"}
 					};
 
@@ -335,6 +358,14 @@ sub create_directories {
 		  or die "Error when opening $candidate_sequence: $!";
 		print $OUT ">$key\n$newHash{$key}{'max'}{'dna'}\n";
 		close $OUT;
+
+        my $strand_file =
+          File::Spec->catfile( $candidate_dir, 'strand.txt' );
+        open( my $STRAND_FH, '>', $strand_file )
+          or die "Error when opening $strand_file: $!";
+        print $STRAND_FH $newHash{$key}{'max'}{'strand'};
+        close $STRAND_FH;
+
 
 		for my $name ( keys %{ $newHash{$key} } ) {
 			if ( $name eq 'max' ) {
