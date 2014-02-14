@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
 
+# PODNAME: mirkwood.pl
+# ABSTRACT: miRkwood - A micro-RNA analysis pipeline
+
 use warnings;
 use strict;
 
@@ -68,10 +71,6 @@ PipelineMiRNA::MainPipeline::main_entry( $mask, $both_strands, $mfei, $randfold,
 PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder);
 
 __END__
-
-=head1 NAME
-
-miRkwood - A micro-RNA analysis pipeline
 
 =head1 SYNOPSIS
 
