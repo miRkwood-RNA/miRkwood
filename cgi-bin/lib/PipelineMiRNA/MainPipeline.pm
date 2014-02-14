@@ -208,11 +208,12 @@ sub process_RNAstemloop {
 
 				if ( $nameSeq =~ /.*__(\d*)-(\d*)$/ ) {
 					my $mfei = PipelineMiRNA::Utils::compute_mfei($dna, $energy);
-
+					my ($start, $end);
+					($start, $end) = ($1, $2);
 					$hash[ $index++ ] = {
 						"name"      => $nameSeq,
-						"start"     => $1,
-						"end"       => $2,
+						"start"     => $start,
+						"end"       => $end,
 						"mfei"      => $mfei,
 						"dna"       => $dna,
 						"structure" => $structure,
