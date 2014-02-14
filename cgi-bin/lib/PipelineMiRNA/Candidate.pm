@@ -110,7 +110,7 @@ sub parse_candidate_information {
       File::Spec->catfile( $full_candidate_dir, 'strand.txt' );
     if ( -e $strand_file )    # si fichier existe
     {
-        $result{'strand'} = PipelineMiRNA::Utils::slurp_file($strand_file);
+        chomp ($result{'strand'} = PipelineMiRNA::Utils::slurp_file($strand_file));
     }
 
     my $pvalue =
