@@ -15,25 +15,24 @@ use Log::Message::Simple qw[msg error debug];
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Data;
 
-my $dirProgs = PipelineMiRNA::Paths->get_programs_path();
+my %programs_config = PipelineMiRNA::Paths->get_programs_config();
 
-my $vienna_dir   = File::Spec->catfile( $dirProgs,   'ViennaRNA-2.1.2' );
-my $vienna_progs_dir = File::Spec->catdir( $vienna_dir, 'Progs');
+my $vienna_progs_dir = $programs_config{'vienna_package'};
 my $rnafold_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAfold' );
 my $rnalfold_bin = File::Spec->catfile( $vienna_progs_dir, 'RNALfold' );
 my $rnaeval_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAeval' );
-my $b2ct_bin     = File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
+my $b2ct_bin     = File::Spec->catfile( $programs_config{'vienna_utils'}, 'b2ct' );
 
-my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
-my $exonerate_dir =
-  File::Spec->catdir( $dirProgs, 'exonerate-2.2.0-i386', 'bin' );
+my $randfold_bin = $programs_config{'randfold'};
+my $exonerate_dir = $programs_config{'exonerate'};
+
 my $exonerate_bin = 'exonerate';
-my $varna_bin        = File::Spec->catfile( $dirProgs, 'VARNAv3-9.jar' );
-my $rnastemploop_bin = File::Spec->catfile( $dirProgs, 'RNAstemloop' );
+my $varna_bin        = $programs_config{'varna'};
+my $rnastemploop_bin = $programs_config{'rnastemloop'};
 my $blastx_bin = 'blastx';
 #File::Spec->catfile( $dirProgs, 'blastx' );
 
-my $miRdup_jar = File::Spec->catfile( $dirProgs, 'miRdup_1.2', 'miRdup.jar' );
+my $miRdup_jar = $programs_config{'miRdup'};
 
 
 =method list_programs
@@ -46,7 +45,8 @@ sub list_programs {
     my @args = @_;
     return (
         $rnafold_bin,  $rnalfold_bin, $rnaeval_bin,
-        $randfold_bin, $varna_bin,    $rnastemploop_bin,
+        $randfold_bin, 
+#$varna_bin,    $rnastemploop_bin,
         $miRdup_jar
     );
 }

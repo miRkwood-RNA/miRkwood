@@ -21,6 +21,18 @@ sub get_config {
     return %{YAML::LoadFile($config_file )};
 }
 
+=method get_programs_config
+
+Get the YAML programs configuration file contents.
+
+=cut
+
+sub get_programs_config {
+    my ($self, @args) = @_;
+    my $config_file = File::Spec->catfile(File::Basename::dirname(__FILE__), 'programs.cfg');
+    return %{YAML::LoadFile($config_file )};
+}
+
 =method get_job_config_path
 
 Given a job directory, return the path to the job configuration file
@@ -93,18 +105,6 @@ sub get_data_path {
     my ($self, @args) = @_;
     my %config = $self->get_config();
     return $config{'data'};
-}
-
-=method get_programs_path
-
-Return the project programs directory
-
-=cut
-
-sub get_programs_path {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'programs'};
 }
 
 =method get_static_path
