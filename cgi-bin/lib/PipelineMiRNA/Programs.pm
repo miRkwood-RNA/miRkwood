@@ -25,8 +25,6 @@ my $rnaeval_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAeval' );
 my $b2ct_bin     = File::Spec->catfile( $vienna_dir, 'Utils', 'b2ct' );
 
 my $randfold_bin = File::Spec->catfile( $dirProgs, 'randfold-2.0', 'randfold' );
-my $selfcontain_bin =
-  File::Spec->catfile( $dirProgs, 'selfcontain_unix', 'selfcontain.py' );
 my $exonerate_dir =
   File::Spec->catdir( $dirProgs, 'exonerate-2.2.0-i386', 'bin' );
 my $exonerate_bin = 'exonerate';
@@ -158,23 +156,6 @@ sub run_randfold {
     my ( $input, $output ) = @_;
     my $randfold_cmd = "$randfold_bin -d $input 7 > $output";
     system($randfold_cmd);
-    return ( -e $output );
-}
-
-=method run_selfcontain
-
-Run SelfContain on the given sequence file
-Return whether the output file exists.
-
-=cut
-
-sub run_selfcontain {
-    my ( $input, $output ) = @_;
-    my $num_contexts = 100;
-    my $selfcontain_cmd =
-      "python $selfcontain_bin -i $input -n $num_contexts  > $output";
-    debug($selfcontain_cmd, 1);
-    system($selfcontain_cmd);
     return ( -e $output );
 }
 
