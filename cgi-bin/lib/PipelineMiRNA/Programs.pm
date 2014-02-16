@@ -181,9 +181,13 @@ sub run_exonerate {
                     .'  score: %s\n'
                     .'  alignment: |{\n'
                     .'    %Pqs %Pts %Pl}\n';
-    my $exonerate_cmd =
-        "cd $exonerate_dir && "
-      . "$exonerate_bin " . "-E "
+
+    my $exonerate_cmd = '';
+    if( $exonerate_dir ){
+        $exonerate_cmd .="cd $exonerate_dir && "
+    }
+    $exonerate_cmd =
+        "$exonerate_bin " . "-E "
       . "--model affine:bestfit $mirbase_file $input "
       . "-d $matrix_file "
       . '--bestn 1 '
