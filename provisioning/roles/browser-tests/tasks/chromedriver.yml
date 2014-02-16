@@ -1,0 +1,16 @@
+---
+# file: chromedriver.yml
+
+- name: Download chromedriver Linux 64bit
+  get_url: dest=/tmp/chromedriver.zip url=http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip 
+
+- name: Ensure unzip is installed
+  apt: pkg=unzip state=present
+
+- name: Install chromedriver in path
+  command: unzip /tmp/chromedriver.zip -d /usr/bin
+
+- name: Make chromedriver executable
+  file:
+    path=/usr/bin/chromedriver
+    mode=0555

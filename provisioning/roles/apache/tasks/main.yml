@@ -1,0 +1,30 @@
+---
+- name: Install Apache
+  apt: pkg=apache2 state=installed
+
+- name: miRkwood virtual host
+  copy: 
+    src: mirkwood.conf 
+    dest: /etc/apache2/sites-available/mirkwood.conf
+  notify: Restart Apache
+
+- name: Enable miRkwood virtualhost
+  file:
+    src: /etc/apache2/sites-available/mirkwood.conf
+    dest: /etc/apache2/sites-enabled/mirkwood
+    state: link
+  notify: Restart Apache
+
+- name: Disable default Apache virtualhost
+  file:
+    dest: /etc/apache2/sites-enabled/000-default
+    state: absent
+  notify: Restart Apache
+
+- name: Make style directory
+  file:
+    path=/home/vagrant/Style
+    state=directory
+
+- name: Get BioInfo CSS
+  get_url: dest=/home/vagrant/Style/ url=http://bioinfo.lifl.fr/Style/bioinfo.css

@@ -1,0 +1,34 @@
+---
+# This playbook deploys miRkwood
+- hosts: all
+  sudo: True
+  roles:
+    - mirkwood-software
+    - browser-tests
+    - apache
+  tasks:
+    - name: Install Perl packages
+      apt: pkg={{ item }} state=installed
+      with_items:
+        - libconfig-simple-perl
+        - libyaml-perl
+
+    - name: Create results directory
+      file:
+        path=/home/vagrant/results
+        state=directory
+        owner=www-data  
+        group=www-data
+
+    - name: Prepare results directory
+      file:
+        src=/home/vagrant/results
+        dest=/mirkwood-results
+        state=link
+
+    - name: Making appropriate links
+      file:
+        src=/vagrant/
+        dest=/mirkwood
+        state=link
+

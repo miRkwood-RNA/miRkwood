@@ -1,0 +1,39 @@
+---
+# file: main.yml
+
+- name: Ensure build-essential is installed
+  apt: pkg=build-essential state=present
+
+#- include: rnastemloop.yml
+
+- include: vienna-rna.yml
+
+- stat:
+    path=/usr/local/bin/revcomp
+    follow=true
+  register: revcomp
+
+- include: squid.yml
+  when: revcomp.stat.exists == false
+
+- stat:
+    path=/usr/bin/randfold
+    follow=true
+  register: randfold
+
+- include: randfold.yml
+  when: randfold.stat.exists == false
+
+- name: Ensure exonerate is installed
+  apt: pkg=exonerate state=present
+
+- name: Ensure NCBI blast+ is installed
+  apt: pkg=ncbi-blast+ state=present
+
+- stat:
+    path=/opt/miRdup/miRdup.jar
+    follow=true
+  register: miRdup
+
+- include: mirdup.yml
+  when: miRdup.stat.exists == false

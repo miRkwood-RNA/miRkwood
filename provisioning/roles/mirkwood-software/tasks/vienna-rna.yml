@@ -1,0 +1,10 @@
+---
+- name: Ensure pycurl is installed
+  apt: pkg=python-pycurl state=present
+
+- name: Ensure ViennaRNA Package repository is installed
+  apt_repository: repo='deb http://ppa.launchpad.net/j-4/vienna-rna/ubuntu precise main' state=present
+
+- name: Ensure ViennaRNA Package is installed
+  apt: pkg=vienna-rna state=present force=yes
+
