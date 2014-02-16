@@ -1,7 +1,8 @@
 class InterfacePage
   include PageObject
 
-  page_url 'http://bioinfotest.lifl.fr/cgi-bin/MiRNA/web_scripts/interface.pl'
+  include URL
+  page_url URL.url() + 'interface.pl'
 
   button('example_button', :id => "seq_button")
   button('run_button', :id => "upload")
