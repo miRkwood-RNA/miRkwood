@@ -273,7 +273,12 @@ sub resultstruct2csv {
     my @csv_headers = ('name', 'position_start', 'position_end', 'quality', @optional_fields, 'Vienna', 'DNASequence');
     my $result = join( ',', @csv_headers ) . "\n";
 
-    my @keys = sort keys %results;
+    my @keys = sort { ( $results{$a}{'name'} cmp
+                        $results{$b}{'name'} )
+                      ||
+                      ( $results{$a}{'position_start'} <=>
+                        $results{$b}{'position_start'} )
+                 } keys %results;
     foreach my $key(@keys)
     {
         if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
