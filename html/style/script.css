@@ -343,15 +343,24 @@ label { font-size: 1.4em; display: block; margin: .5em 10px .5em 0;  }
 
 
 .waitMessage {
+
   display: block;
   text-align: center;
   padding: 1em 30px 30px;
-  background: transparent url(waiting.gif) center bottom no-repeat;
+
   font-size: 16px;
   font-weight: bold;
   margin: 1em 0 3em;
 }
 
+
+#waitGif {
+
+  height : 200px;
+
+  background:  url(waiting.gif) center  no-repeat;
+
+}
 
   
 

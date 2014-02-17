@@ -45,8 +45,8 @@ sub list_programs {
     my @args = @_;
     return (
         $rnafold_bin,  $rnalfold_bin, $rnaeval_bin,
-        $randfold_bin, 
-#$varna_bin,    $rnastemploop_bin,
+        $randfold_bin, $rnastemploop_bin,
+	$varna_bin,    
         $miRdup_jar
     );
 }

@@ -70,8 +70,12 @@ my $page = <<"END_TXT";
       <p>Your request has been successfully submitted.<p>
       <p>Your ID is <B>$jobId</B>.</p>
       $email_HTML
-      <p>This page is updated every five seconds.</p>
+
       <p>You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.</p>
+      <p>Please wait...</p>
+    </div>
+	<div id="waitGif">
+      
     </div>
   </div><!-- dialog -->
 </div><!-- main -->
