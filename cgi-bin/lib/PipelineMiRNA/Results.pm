@@ -270,7 +270,7 @@ sub resultstruct2csv {
     my $no_seq_selected = ! (scalar @sequences_to_export);
     my %results = %{$results_ref};
     my @optional_fields = $self->get_optional_candidate_fields();
-    my @csv_headers = ('name', 'position_start', 'position_end', @optional_fields, 'Vienna', 'DNASequence');
+    my @csv_headers = ('name', 'position_start', 'position_end', 'quality', @optional_fields, 'Vienna', 'DNASequence');
     my $result = join( ',', @csv_headers ) . "\n";
 
     my @keys = sort keys %results;
