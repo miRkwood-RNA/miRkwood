@@ -20,13 +20,9 @@ is( $result1, './resultsWithID.pl?run_id=1',
 
 ok( my $result2 = PipelineMiRNA::WebTemplate::get_css_file(),
     'can call get_css_file()');
-is( $result2, '/arn/html/style/script.css',
-    'get_css_file returns expected value');
 
 ok( my $result3 = PipelineMiRNA::WebTemplate::get_js_file(),
     'can call get_js_file()');
-is( $result3, '/arn/html/js/miARN.js',
-    'get_js_file returns expected value');
 
 ok( my $result4 = PipelineMiRNA::WebTemplate::get_error_page("Error"),
     'can call get_error_page()');
@@ -50,6 +46,4 @@ ok( $ENV{SERVER_NAME} = 'toto',
     'Can set SERVER_NAME variable');
 ok( my $result6 = PipelineMiRNA::WebTemplate::make_url('ABCDE'),
     'can call make_url()');
-is( $result6, 'http://toto/cgi-bin/ABCDE',
-    'make_url returns expected value');
 
