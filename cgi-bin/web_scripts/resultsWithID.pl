@@ -28,21 +28,23 @@ my @js  = ( File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js
 
 my $id_job = $cgi->param('run_id'); # récupération id job
 my $name_job = $cgi->param('nameJob'); # récupération id job
-
+$name_job =~ s/_/ /g;#replace _ with space in name job
 my $html = '';
 
 my $HTML_additional = "";
+$HTML_additional .= "<p><b>Job ID  : </b>".$id_job.'</p>';
 unless (!$name_job)
 {
-    $HTML_additional .= "<h2>Title Job : ".$name_job."</h2>";
+    $HTML_additional .= "<p><b>Job title  : </b>".$name_job.'</p>';
 }
 
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
 
 if($valid){
     my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+    my $nb_results = PipelineMiRNA::Results->number_of_results( \%myResults);
     my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
-
+	$HTML_additional .= "<p><b>".$nb_results."  miRNA precursors found</b></p>";
     my $body = <<"END_TXT";
 <body onload="main('all');">
     <div class="theme-border"></div>
@@ -56,14 +58,14 @@ if($valid){
     		<p  ><b>Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) :</b></p> 
     		<form id= 'exportForm'>
     		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
-    		<input type="radio" name="export" value="fas"/>fasta format<br/>
+    		<input type="radio" name="export" value="fas"/>FASTA format<br/>
     		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
     		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
-    		<input type="radio" name="export" value="gff"/>gff format<br/><br/>
+    		<input type="radio" name="export" value="gff"/>GFF format<br/><br/>
     		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job", "$web_root")'/>
     		</form>
     	</div>
-    		<p style='font-size:14px' ><br/>	Click on a name to see the full HTML report. Click on the checkbox to select an entry.<br/><br/>
+    		<p style='font-size:14px' ><br/>	Click on the line to see the HTML report of pre-miRNA. Click on the checkbox to select an entry.<br/><br/>
     		<input class="myButton" type="button" id="sort" value="Sort by quality" onclick='changeValue();'/>
     		</p>
     </div>

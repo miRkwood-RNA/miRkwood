@@ -83,7 +83,7 @@ END_TXT
 
 my $html_text = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
 
-$html_text =~ s/<meta/<meta http-equiv='Refresh' content='6;URL=$waiting_url'><meta/;
+$html_text =~ s/<meta/<meta http-equiv='Refresh' content='10;URL=$waiting_url'><meta/;
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

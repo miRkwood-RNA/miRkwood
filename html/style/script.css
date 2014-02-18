@@ -88,19 +88,13 @@ textarea {
 }
 .checkbox
 {
-
-	color: black;
-	font-family:  Verdana, Arial, Helvetica, sans-serif;
-	font-size: 13px;
-	line-height: 24px;
-	margin-left: 00px;
 	margin-top: 20px;
-	margin-bottom: 0px;
-	font-weight: bold;
-	z-index: 1000;
-
 }
 
+#exempleClear{
+
+	margin-left: 500px;
+}
 .choixDiv
 {
 	color: black;
@@ -134,22 +128,7 @@ pre
 
 #CDS 
 {
-	border-top: 1px solid #E9EDEB;
-	background: #E9EDEB;
-	background: -webkit-gradient(linear, left top, left bottom, from(#7C7F7D), to(#7C7F7D));
-	background: -moz-linear-gradient(top, #7C7F7D, #7C7F7D);
-	padding: 4px 12px;
-	-webkit-border-radius: 18px;
-	-moz-border-radius: 18px;
-	border-radius: 18px;
-	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-	box-shadow: rgba(0,0,0,1) 0 1px 0;
-	text-shadow: rgba(0,0,0,.4) 0 1px 0;
-	color: #E9EDEB;
-	font-size: 10px;
-	font-family: Helvetica, Arial, Sans-Serif;
-	text-decoration: none;
+
 	vertical-align: middle;
 }
 #table

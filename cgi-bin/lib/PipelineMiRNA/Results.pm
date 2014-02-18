@@ -368,6 +368,20 @@ sub resultstruct2pseudoXML {
     return $result;
 }
 
+=method number_of_results
+
+return total number of candidates 
+
+=cut
+
+sub number_of_results {
+	my ( $self, @args ) = @_;
+    my $results = shift @args;
+    my %results = %{$results};
+	my $size = scalar keys %results;
+	return $size;
+}
+
 =method resultstruct2table
 
 Convert the results structure to HTML table

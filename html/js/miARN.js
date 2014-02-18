@@ -18,6 +18,18 @@ function showHideBlock()
 /**
  * 
  */
+
+/**
+ * 
+ */
+function ResetForm() 
+{ 
+	document.forms.form.reset();
+}
+
+/**
+ * 
+ */
 function wainting()
 {	
     document.getElementById('upload').disabled="true";

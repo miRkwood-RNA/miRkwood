@@ -18,26 +18,25 @@ my $page = <<"END_TXT";
       <div class="forms">
         <tr>
           <td class="label">
-          Enter a <b> name </b>for your job  <i>(optional)</i></i>:
+          &nbsp;<b> Job title </b> (optional):
           <input type="text" name="job" size="20">
           </td>
         </tr>
       </div>
       <div class="forms">
         <p class="label">
-          <b>Paste</b> your RNA sequences in FASTA format &nbsp;&nbsp;[<a href="./help.pl">?</a>]
+          <b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="./help.pl">?</a>]
         </p>
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
-        <p>or</p>
+      
         <p class="label">
-          <b>upload</b> a file
+            <p>or, upload a file</p>
           <input type="file" name="seqFile" id="file" />
         </p>
-        <input id="seq_button" type="button" value="Example" onclick="generateExample();" />
-        <p><input class="checkbox" type="checkbox" checked="checked" name="strand" value="strand">Process both strand </input></p>
-        <p class="label">
-          <b>Mask coding regions [<a href="./help.pl">?</a>] <i><small>(may be slow) </small></i></b> :
-          <input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()">
+        
+        <p><input class="checkbox" type="checkbox"  name="strand" value="strand">Process both strand </input></p>
+        <p ><input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()">Mask coding regions <i>(BlastX) </i></input> :
+        
         </p>
         <div id="menuDb">
           <p class="choixDiv" for="db">Choose organism database :</p>
@@ -46,17 +45,21 @@ my $page = <<"END_TXT";
             <option class="db">plante</option>
           </select>
         </div>
+        <p id='exempleClear'>
+        <a  onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();" />run with an example</a>
+      </p>
       </div>
       <div class="forms">
-        <p><b>Select additional features</b>:</p>
+        <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors:</p>
         <P>
-          <P><input class="checkbox" type="checkbox" checked="checked" name="randfold" value="randfoldChecked">Compute thermodynamic stability [<a href="./help.pl">?</a>]</input></P>
-          <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" value="mfeiChecked">Compute MFE/MFEI/AMFE (minimal folding energy)[<a href="./help.pl">?</a>]</input></P>
-          <P><input class="checkbox" type="checkbox" checked="checked" name="align" value="alignChecked">Align against mature microRNAs miRBase [<a href="./help.pl">?</a>]</input></P>
+          
+          <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" value="mfeiChecked">Select only sequences with MFEI < -0.6</input></P>
+          <P><input class="checkbox" type="checkbox" name="randfold" value="randfoldChecked">Compute thermodynamic stability <i>(shuffled sequences)</i></input></P>
+          <P><input class="checkbox" type="checkbox" checked="checked" name="align" value="alignChecked">Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></input></P>
        </div>
        <div class="forms">
          <tr>
-           <td class="label">Enter your <b>E-mail</b> address <i>(optional)</i>:
+           <td class="label"> <b>E-mail address</b> <i>(optional)</i>:
              <input type="text" name="mail" size="20">
            </td>
           </tr>
