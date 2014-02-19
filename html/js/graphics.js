@@ -187,20 +187,23 @@ function createGrid(id,rowsNumber,columnsNumber)
 				//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
 				if  (value.toString() == 'image')  {
 					td.innerHTML = '<h3>2D structure</h3>' ;
+				}else if (value.toString() == 'strand') 
+				{
+					td.innerHTML = '<h3>+/-</h3>' ;
 				}
 				else if (value.toString() == 'quality') 
 				{
-					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-decoration:underline;">'+value.toString()+'</h3>';
+					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
 				}else if (value.toString() == 'alignment') 
 				{
-					td.innerHTML = '<h3>miRBase alignment</h3>';
+					td.innerHTML = '<h3 >conserved miRNA</h3>';
 				}else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
 				{
 					td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ;
 				}
 				else 
 				{
-					td.innerHTML = '<h3 >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
+					td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
 				}			
 				
 			}
@@ -264,7 +267,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			if ((i==0)&&(j==0))
 			{
 				var value = 'name';
-				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')"   style="text-decoration:underline;">'+value.toString()+'</h3>';
+				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
 			}
 			
 			tr.appendChild(td); // ajoute colonne à la ligne
@@ -281,7 +284,7 @@ function createGrid(id,rowsNumber,columnsNumber)
  * 
  */
 function checkboxSelect()
-{
+{	
 	if (document.getElementById('checkboxSelect').checked == true)
 	{
 		selectAll();

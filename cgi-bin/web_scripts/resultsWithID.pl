@@ -58,7 +58,7 @@ if($valid){
     $HTML_additional
     <div  id="select" > 
     	<div style="width: 500px"  class="forms">
-    		<p  ><b>Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) :</b></p> 
+    		<p  >Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) in one of the following formats:</p> 
     		<form id= 'exportForm'>
     		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
     		<input type="radio" name="export" value="fas"/>FASTA format<br/>
@@ -93,8 +93,7 @@ END_TXT
     $header_menu
 <div class="main main-full">
     $HTML_additional
-    <br>
-    <h2>No result found</h2>
+ 
    
 </div><!-- main -->
 </div><!-- bloc droit-->

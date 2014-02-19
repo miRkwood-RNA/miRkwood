@@ -103,7 +103,7 @@ results.prototype.getValuesByFactorName = function(factor)
  */
 results.prototype.getFactorsNamesList = function()
 {
-	var allNames = new Array(  "position", "length" ,"strand", "quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
+	var allNames = new Array(  "position","strand", "quality", "length"  , "mfe","mfei","amfe","p_value", "alignment", "image"  );
 	var names = new Array();
 	for(var i = 0;i < allNames.length;i++)
 	{
@@ -143,7 +143,7 @@ results.prototype.getFactorNameByIndex = function(ind)
  */
 results.prototype.getIndexByFactorName = function(factor)
 {
-	var allNames = new Array(  "name", "position","length","strand","quality" , "mfe","mfei","amfe","p_value", "alignment", "image"  );
+	var allNames = new Array(  "name", "position","strand","quality" ,"length", "mfe","mfei","amfe","p_value", "alignment", "image"  );
 	var names = new Array();
 	var index = 0;
 	for(var i = 0;i < allNames.length;i++)
