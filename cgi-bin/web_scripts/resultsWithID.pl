@@ -45,7 +45,9 @@ if($valid){
     my $nb_results = PipelineMiRNA::Results->number_of_results( \%myResults);
     my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
 	$HTML_additional .= "<p><b>".$nb_results."  miRNA precursors found</b></p>";
-    my $body = <<"END_TXT";
+   	my $body ="";
+   	if ($nb_results != 0) {
+    $body = <<"END_TXT";
 <body onload="main('all');">
     <div class="theme-border"></div>
     <div class="logo"></div>
@@ -81,7 +83,24 @@ if($valid){
 $footer
 </body>
 END_TXT
-
+   	} else {
+   		$body = <<"END_TXT";
+<body onload="main('all');">
+    <div class="theme-border"></div>
+    <div class="logo"></div>
+    <div class="bloc_droit">
+    $header_menu
+<div class="main main-full">
+    $HTML_additional
+    <br>
+    <h2>No result found</h2>
+   
+</div><!-- main -->
+</div><!-- bloc droit-->
+$footer
+</body>
+END_TXT
+   	}
     $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
 
 }else{

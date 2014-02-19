@@ -10,7 +10,7 @@ function main(id)
 	//#######plugin imgPreview########
 	jQuery.noConflict();
 	(function($){  
-		
+
 	$('tbody#cases a').imgPreview({
 		containerID: 'imgPreviewWithStyles',
 		imgCSS: {
@@ -226,7 +226,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					var value = myResults.getValueByFactor(i-1,'image');
 			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
-					td.innerHTML = "<img src='/arn/html/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
+					td.innerHTML = "<a  href='" +value + "'><img src='/arn/html/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
 					
 					//var a=document.createElement('a'); 
 					//var value = a.setAttribute("href","../images/".myResults.getValueByIndices(i-1,j-1));
