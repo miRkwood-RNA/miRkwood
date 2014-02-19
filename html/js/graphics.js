@@ -389,16 +389,17 @@ function sortingTable(id)
 }
 
 
-function changeValue()
-{
-	if (document.getElementById('sort').value == 'Sort by position')
-		
-	{
-		document.getElementById('sort').value = 'Sort by quality';
+function sortBy(sortValue)
+{ 
+	if (sortValue == 'quality')
+	{	
+		document.getElementById('hrefquality').style.color= 'black'
+		document.getElementById('hrefposition').style.color= 'blue'
 		sortingTable('all');
 	} else 
-	{
-		document.getElementById('sort').value = 'Sort by position';
+	{	
+		document.getElementById('hrefposition').style.color= 'black'
+		document.getElementById('hrefquality').style.color= 'blue'
 		sortingTable('all2');
 	}
 	 	

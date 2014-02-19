@@ -25,6 +25,8 @@ function showHideBlock()
 function ResetForm() 
 { 
 	document.forms.form.reset();
+	document.getElementById('menuDb').style.visibility='hidden';
+	document.getElementById('menuDb').style.display='none';
 }
 
 /**
