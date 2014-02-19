@@ -22,8 +22,9 @@ my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::Web
 my @js  = ( File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js'),
             File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'graphics.js'),
             File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js'),
-            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'imgpreview.full.jquery.js'),
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js'
+            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'jquery.min.js'),
+        	File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'imgpreview.full.jquery.js')
+            
           );
 
 my $id_job = $cgi->param('run_id'); # récupération id job
