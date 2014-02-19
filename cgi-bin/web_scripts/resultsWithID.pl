@@ -67,7 +67,7 @@ if($valid){
     	</div>
     		<p style='font-size:14px' ><br/>	Click on the line to see the HTML report of pre-miRNA. Click on the checkbox to select an entry.<br/><br/>
     		
-    		<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >Sort by quality</a>
+    		<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
     		</p>
     </div>
     

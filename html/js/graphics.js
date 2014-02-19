@@ -46,23 +46,14 @@ function main(id)
 function showCellInfo(i,j)
 {
 	var id_job = document.getElementById('id_job').innerHTML;
-	if ((i!=0)&&(j!=0))
-	{
+	if ((i!=0))
+	{var identifier = myResults.getIdentifierByIndex(i-1);
+		window.open("./resultsRow.pl?jobID="+id_job+"&id="+identifier);
 		var factor = myResults.getFactorsNamesList()[j-1];
-		if ((factor != "image") &&(factor != "alignment") &&(factor != "mfei")&&(factor != "mfe")&&(factor != "amfe")&&(factor != "position")&&(factor != "p_value"))
-		{
-			window.open("./resultsCell.pl?typePage=simpleCell&nameSeq="+myResults.getSequenceNameByIndex(i-1)+"&factor="+ myResults.getFactorNameByIndex(j-1)+"&value="+myResults.getValueByIndices(i-1,j-1)+"&position="+myResults.getValueByIndices(i-1,0));
-			
-			
-		}
+		
 	
 	} 
-	if ((i!=0)&&(j==0)) 
-	{
-		var identifier = myResults.getIdentifierByIndex(i-1);
-		window.open("./resultsRow.pl?jobID="+id_job+"&id="+identifier);
-		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>Sequence Informations </u></h2><br/> <li><b>Name sequence :</b> " + nameTemp + "</li><br/><li> <b>MFEI : </b>" + factorsTemp.mfei + "</li> <br/> <li><b>P_value :</b> " + factorsTemp.p_value + "</li><br/> <li><b>Initial position : </b>" + factorsTemp.position +"</li> <br/> </div>"
-	} 
+	
 	/**
 	if ((i==0)&&(j!=0))  
 	{	
@@ -235,7 +226,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					var value = myResults.getValueByFactor(i-1,'image');
 			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
-					td.innerHTML = "<a  href='" +value + "'><a target='_blank' href='./resultsCell.pl?typePage=image&amp;url=" +value + "'><img src='/arn/html/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
+					td.innerHTML = "<img src='/arn/html/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
 					
 					//var a=document.createElement('a'); 
 					//var value = a.setAttribute("href","../images/".myResults.getValueByIndices(i-1,j-1));
