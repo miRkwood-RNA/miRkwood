@@ -416,7 +416,7 @@ sub make_Vienna_viz {
 
         $viennaString   .= substr $Vienna,      $_ - 1, 1;
         $sequenceString .= substr $DNASequence, $_ - 1, 1;
-        if ( $_ % 50 == 0 ) {
+        if ( $_ % 60 == 0 ) {
 
             $string .= $viennaString . "\n" . $sequenceString . "\n\n";
             $viennaString   = q{};
