@@ -82,7 +82,6 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           $alternatives_HTML
         </li>
         </ul>
-        <h2>Secondary structure</h2>
         <img id='structure' src='$image_url' height='400px' alt='$candidate{'name'} secondary structure'>
         <h2>Thermodynamics stability</h2>
         <ul>
@@ -95,8 +94,11 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         <li>
           <b>MFEI:</b> $candidate{'mfei'}
         </li>
+        <li>
+          <b>Shuffles:</b>
+        </li>
         </ul>
-        <h2>miRBase alignments</h2>
+        <h2>Conserved mature miRNA</h2>
         $alignmentHTML
 
     </div><!-- showInfo -->
