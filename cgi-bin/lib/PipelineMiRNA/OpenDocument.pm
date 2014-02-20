@@ -264,6 +264,7 @@ sub generate_report {
             $list->add_item(text => "Name: ${$candidate}{'name'}", style => "Standard");
             $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => "Standard");
             $list->add_item(text => "Strand:", style => "Standard");
+            $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => "Standard");
 
             my $subtext = "";
             if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){

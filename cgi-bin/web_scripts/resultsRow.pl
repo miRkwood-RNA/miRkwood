@@ -75,6 +75,9 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           <b>Strand:</b> $candidate{'strand'}
         </li>
         <li>
+          <b>G+C content:</b> $candidate{'%GC'}%
+        </li>
+        <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
         </li>
         $Vienna_HTML
