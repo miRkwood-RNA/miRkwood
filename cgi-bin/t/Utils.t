@@ -201,6 +201,7 @@ my @reverse_complement_values = (
     [ "AC", "GU" ],
     [ "AU", "AU" ],
     [ "AG", "CU" ],
+    [ $sequence1,  'ccgauuaagucagucaagaaaugaacgccuaauaaaccaacaaagagucguuuuuuaaacgacuugagcugucauuaggcaauucauccuuggcuacauaauaag'],
 );
 
 foreach my $couple (@reverse_complement_values) {
