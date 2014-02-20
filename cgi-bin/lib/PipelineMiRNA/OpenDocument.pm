@@ -450,7 +450,7 @@ sub add_ODF_alignments{
                     my $mirbase_id = $splitted_one[1];
                     my $mirbase_link = PipelineMiRNA::Utils::make_mirbase_link($mirbase_id);
                     push @mirbase_links, $mirbase_link;
-                    push @mirbase_ids, $mirbase_id;
+                    push @mirbase_ids, $name;
                 }
             }
             my $para_seqs = odf_create_paragraph(
