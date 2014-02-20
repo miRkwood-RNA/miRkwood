@@ -490,6 +490,8 @@
 --- 1
 --- identifier
 --- 1-1
+--- '%GC'
+--- '37.04'
 --- hairpin
 --- "      u  au      a        u   cuu    u  -  c      -     u         --    uca-
   \       \ngagagg uc  acauga gagaagag gcu   auua gu ag caagga ugaau gccuaauga  cagc
@@ -502,7 +504,7 @@
 --- strand
 --- +
 --- quality
---- 4
+--- 3
 --- alternatives
 ---
 contig15750__52-177:
@@ -533,8 +535,6 @@ contig15750__73-158:
 --- '-37.10'
 --- length
 --- 162
---- amfe
---- '-37.10'
 --- mfei
 --- '-1.00'
 --- mfe

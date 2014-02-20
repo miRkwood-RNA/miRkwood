@@ -74,7 +74,9 @@ sub serialize_candidate_information {
     $candidate{'position_start'} = PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 0);
     $candidate{'position_end'} = PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 1);
     $candidate{'length'} = $candidate{'position_end'} - $candidate{'position_start'} +1;
-
+    $candidate{'%GC'} = PipelineMiRNA::Utils::restrict_num_decimal_digits(
+                            PipelineMiRNA::Utils::compute_gc_content($candidate{'DNASequence'}),
+                            3);
 
     my $alternative_candidates_file = File::Spec->catfile($full_candidate_dir, 'alternativeCandidates.txt');
     if (-e $alternative_candidates_file){
