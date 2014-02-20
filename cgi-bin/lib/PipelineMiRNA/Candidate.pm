@@ -418,12 +418,12 @@ sub make_Vienna_viz {
         $sequenceString .= substr $DNASequence, $_ - 1, 1;
         if ( $_ % 60 == 0 ) {
 
-            $string .= $viennaString . "\n" . $sequenceString . "\n\n";
+            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
             $viennaString   = q{};
             $sequenceString = q{};
         }
         if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
-            $string .= $viennaString . "\n" . $sequenceString . "\n\n";
+            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
         }
     }
     return $string
