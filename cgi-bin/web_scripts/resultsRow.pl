@@ -85,7 +85,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           $alternatives_HTML
         </li>
         </ul>
-        <img id='structure' src='$image_url' height='400px' alt='$candidate{'name'} secondary structure'>
+        <img id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>
         <h2>Thermodynamics stability</h2>
         <ul>
         <li>
