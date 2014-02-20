@@ -41,11 +41,11 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     my $linkAlternatives = "./exportAlternativesVienna.pl?jobId=$jobId&id=$candidate_id";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
-    my $Vienna_HTML = "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
+    my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if($candidate{'Vienna'} ne $candidate{'Vienna_optimal'}){
         $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>"
     } else {
-        $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li></ul>"
+        $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li>"
     }
 
     my $alternatives_HTML = '<b>Alternative candidates (dot-bracket format):</b> ';
@@ -77,13 +77,13 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
         </li>
+        $Vienna_HTML
         <li>
           $alternatives_HTML
         </li>
         </ul>
         <h2>Secondary structure</h2>
         <img id='structure' src='$image_url' height='400px' alt='$candidate{'name'} secondary structure'>
-        $Vienna_HTML
         <h2>Thermodynamics stability</h2>
         <ul>
         <li>
