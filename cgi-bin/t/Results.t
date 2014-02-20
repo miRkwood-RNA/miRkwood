@@ -79,8 +79,16 @@ ok(
       PipelineMiRNA::Results->export( 'gff', \%results, ['1-1'] ),
     'can call export for GFF'
 );
-my $expected_export_gff =
-  slurp_file( input_file('Results.export.gff.output') );
+my $expected_export_gff = slurp_file( input_file('Results.export.gff.output') );
 
 is( $output_export_gff, $expected_export_gff,
     'export for GFF return the correct value' );
+
+ok(
+    my $number_of_results_output =
+      PipelineMiRNA::Results->number_of_results( \%results ),
+    'can call number_of_results'
+);
+
+is( $number_of_results_output, 1,
+    'number_of_results return the correct value' );
