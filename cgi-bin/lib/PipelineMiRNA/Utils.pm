@@ -561,23 +561,12 @@ sub compute_mfei {
     my $sequence = shift @args;
     my $energy   = shift @args;
 
-    my @dna      = split( //, $sequence );
-    my $length   = scalar @dna;
-    my $gc_count = 0;
-
-    for ( my $i = 0 ; $i < $length ; $i++ ) {
-        if (
-            $dna[$i] =~ m{
-              [cg]     # G or C
-            }smxi
-          )
-        {
-            $gc_count++;
-        }
-    }
+    my $length   = length $sequence;
+    my $gc_content = compute_gc_content($sequence);
 
     my $num = ( $energy / $length ) * 100;
-    my $mfei = $num / ( ( $gc_count / $length ) * 100 );
+    my $mfei = $num / $gc_content;
+
     return $mfei;
 }
 
