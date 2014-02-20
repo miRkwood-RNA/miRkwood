@@ -564,10 +564,25 @@ sub compute_mfei {
     my $length   = length $sequence;
     my $gc_content = compute_gc_content($sequence);
 
-    my $num = ( $energy / $length ) * 100;
-    my $mfei = $num / $gc_content;
+    my $amfe = compute_amfe($sequence, $energy);
+    my $mfei = $amfe / $gc_content;
 
     return $mfei;
+}
+
+=method compute_amfe
+
+Compute the AMFE of a given sequence
+
+=cut
+
+sub compute_amfe {
+    my @args     = @_;
+    my $sequence = shift @args;
+    my $energy   = shift @args;
+    my $length   = length $sequence;
+    my $amfe = ( $energy / $length ) * 100;
+    return $amfe;
 }
 
 =method compute_gc_content

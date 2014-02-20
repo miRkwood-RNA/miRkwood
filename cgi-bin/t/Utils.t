@@ -227,6 +227,21 @@ ok(
 is( $compute_mfei_res, -0.879487179487179,
     'compute_mfei returns the expected value' );
 
+ok(
+    my $compute_amfe_res =
+      PipelineMiRNA::Utils::compute_amfe( $sequence1, -34.30 ),
+    'Can call compute_amfe'
+);
+
+is(
+    $compute_amfe_res,
+    ( -34.3 / 105 ) * 100,
+    'compute_amfe returns the expected value (exact)'
+);
+
+is( $compute_amfe_res, -32.6666666666667,
+    'compute_amfe returns the expected value (rounded)' );
+
 ok( my $compute_gc_res = PipelineMiRNA::Utils::compute_gc_content($sequence1),
     'Can call compute_gc_content' );
 is(
