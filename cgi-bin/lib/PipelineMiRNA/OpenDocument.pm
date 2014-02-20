@@ -228,7 +228,7 @@ sub generate_report {
     $context->append_element(
         odf_create_heading(
             level => 1,
-            text  => 'PipelineMiRNA results',
+            text  => 'miRkwood results',
             style => 'Top title'
         )
     );
@@ -239,12 +239,11 @@ sub generate_report {
         if ( $key ~~ \@sequences_to_export )
         {
             my $candidate = $results{$key};
-            my ( $start, $end ) = split( m/[-]/xms, ${$candidate}{'position'} );
-            my $candidate_name = PipelineMiRNA::Candidate->get_name($candidate);
+            my ( $start, $end ) = (${$candidate}{'position_start'}, ${$candidate}{'position_end'} );
             $context->append_element(
                 odf_create_heading(
                     level => 1,
-                    text  => $candidate_name,
+                    text  => "Sequence: ${$candidate}{'name'}, ${$candidate}{'position'}",
                 )
             );
 
@@ -263,39 +262,29 @@ sub generate_report {
 
             $list->add_item(text => "Name: ${$candidate}{'name'}", style => "Standard");
             $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => "Standard");
-            $list->add_item(text => "Strand:", style => "Standard");
+            $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => "Standard");
             $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => "Standard");
 
             my $subtext = "";
             if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
                 $subtext .= ""
             } else {
-                $subtext.= "(This stem-loop structure is the MFE structure)"
+                $subtext.= "This stem-loop structure is the MFE structure"
             }
-            my $item = $list->add_item(text => "Sequence and stem-loop structure: ", style => "Standard");
-#            $item->add(text => "Sequence and stem-loop structure:\n$vienna_seq \n$subtext", style => "Monospace");
-            $item->append_element(
+            my $para1 = $context->append_element(
             odf_create_paragraph(
                 text    => $vienna_seq,
                 style   =>'Monospace'
                 )
             );
-            my $para1 = $item->append_element(
+            my $para2 = $context->append_element(
             odf_create_paragraph(
                 text    => $subtext,
                 style   =>'Standard'
                 )
             );
-            $para1->set_span(filter  => "structure", style   => 'StandardBold');
+            $para2->set_span(filter  => "structure", style   => 'StandardBold');
 
-            # Section secondary structure
-
-            $context->append_element(
-                odf_create_heading(
-                    level => 3,
-                    text  => "Secondary structure",
-                )
-            );
 
             # Copying the image
             my $img_path      = ${$candidate}{'image'};
@@ -369,7 +358,7 @@ sub add_ODF_alignments{
     $context->append_element(
         odf_create_heading(
             level => 3,
-            text  => "miRBase alignments",
+            text  => "Conserved mature miRNA",
         )
     );
 
