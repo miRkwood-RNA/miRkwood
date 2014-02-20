@@ -226,6 +226,17 @@ ok(
 is( $compute_mfei_res, -0.879487179487179,
     'compute_mfei returns the expected value' );
 
+ok( my $compute_gc_res = PipelineMiRNA::Utils::compute_gc_content($sequence1),
+    'Can call compute_gc_content' );
+is(
+    $compute_gc_res,
+    ( 39 / 105 * 100 ),
+    'compute_gc_content returns the expected value (exact)'
+);
+
+is( $compute_gc_res, 37.142857142857146,
+    'compute_gc_content returns the expected value (rounded)' );
+
 ok(
     my $make_mirbase_link_output =
       PipelineMiRNA::Utils::make_mirbase_link('ABCDE'),

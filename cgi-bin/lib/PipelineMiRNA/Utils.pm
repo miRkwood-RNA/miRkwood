@@ -581,6 +581,33 @@ sub compute_mfei {
     return $mfei;
 }
 
+=method compute_gc_content
+
+Compute the GC content of a given sequence
+Returns the percentage (float between 0 and 100).
+=cut
+
+sub compute_gc_content {
+    my @args     = @_;
+    my $sequence = shift @args;
+
+    my @dna      = split( //, $sequence );
+    my $length   = scalar @dna;
+    my $gc_count = 0;
+
+    for my $nucl ( @dna ) {
+        if (
+            $nucl =~ m{
+              [cg]     # G or C
+            }smxi
+          )
+        {
+            $gc_count++;
+        }
+    }
+    return  $gc_count / $length * 100;
+}
+
 =method make_mirbase_link
 
 Return the URL to MirBase given the identifier
