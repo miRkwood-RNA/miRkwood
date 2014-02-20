@@ -241,11 +241,6 @@ sub compute_quality {
             $quality += 1;
         }
     }
-    my $length = length ($candidate{'DNASequence'});
-
-    if ( $length > 80 && $length < 200 ){
-        $quality += 1;
-    }
     $quality += $self->compute_alignment_quality(\%candidate);
     return $quality;
 }
