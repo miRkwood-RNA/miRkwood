@@ -229,10 +229,15 @@ sub export {
     my $output = "";
     # Writing the header
     my $header;
+    my $gff_header = "##gff-version 3
+# miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
+# Note, these sequences do not represent the full primary transcript,
+# rather a predicted stem-loop portion that includes the precursor.
+";
     given ($export_type) {
         when (/fas/) { $header = q{}; }
         when (/dot/) { $header = q{}; }
-        when (/gff/) { $header = '##gff-version 3' . "\n"; }
+        when (/gff/) { $header = $gff_header . "\n"; }
     }
     $output .= $header;
 

@@ -357,16 +357,17 @@ my $gff_line = PipelineMiRNA::Candidate->candidate_as_gff($value);
 sub candidate_as_gff {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
+    my $candidate_name = 'preMir_' . $self->get_name(\%candidate);
     my $text .= q{} .                       # BEGIN
       $candidate{'name'} . "\t" .           # seqid
-      '.' . "\t" .                          # source
-      'miRkwood' . "\t" .                   # type
+      'miRkwood' . "\t" .                   # source
+      'miRNA_primary_transcript' . "\t" .   # type
       $candidate{'position_start'} . "\t" . # start
       $candidate{'position_end'} . "\t" .   # end
       '.' . "\t" .                          # score
       $candidate{'strand'} . "\t" .         # strand
       '.' . "\t" .                          # phase
-      '.' . "\t" .                          # attributes
+      "Name=$candidate_name" . "\t" .       # attributes
       "\n";
     return $text;
 }
