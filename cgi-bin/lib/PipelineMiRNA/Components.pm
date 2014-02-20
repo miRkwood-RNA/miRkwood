@@ -106,12 +106,13 @@ sub compute_energy {
             # tester si la longueur actuelle est égale à la longueur de la séquence
             {
 
-                my $num = ( $mfe / $longueur ) * 100;
-                my $other = PipelineMiRNA::Utils::restrict_num_decimal_digits($num / ( ( $cg / $longueur ) * 100 ),3);
-                $num = PipelineMiRNA::Utils::restrict_num_decimal_digits($num, 3);
+                my $amfe = ( $mfe / $longueur ) * 100;
+                my $gc_content = ( ( $cg / $longueur ) * 100 );
+                my $mfei = PipelineMiRNA::Utils::restrict_num_decimal_digits($amfe / $gc_content,3);
+                $amfe = PipelineMiRNA::Utils::restrict_num_decimal_digits($amfe, 3);
                 open( my $RES, '>', $MFEI_output_file ) || die "Unable to open $MFEI_output_file: $!";
                 my $content =
-                  $nameSeq . "\t" . $other . "\t" . $mfe . "\t" . $num;
+                  $nameSeq . "\t" . $mfei . "\t" . $mfe . "\t" . $amfe;
                 print $RES $content;
                 close $RES or die "Unable to close: $!";
             }
