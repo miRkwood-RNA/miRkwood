@@ -237,7 +237,7 @@ sub compute_quality {
     my %candidate = %{shift @args};
     my $quality = 0;
     if ( $candidate{'mfei'} ) {
-        if ( $candidate{'mfei'} < -0.7 ){
+        if ( $candidate{'mfei'} < -0.8 ){
             $quality += 1;
         }
     }
