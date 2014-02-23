@@ -186,7 +186,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				var value = myResults.getFactorsNamesList()[j-1]; // ajouter critère
 				//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
 				if  (value.toString() == 'image')  {
-					td.innerHTML = '<h3>2D structure</h3>' ;
+					td.innerHTML = '<h3>2D<br>structure</h3>' ;
 				}else if (value.toString() == 'strand') 
 				{
 					td.innerHTML = '<h3>+/-</h3>' ;
@@ -196,7 +196,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
 				}else if (value.toString() == 'alignment') 
 				{
-					td.innerHTML = '<h3 >conserved miRNA</h3>';
+					td.innerHTML = '<h3 >conserved<br>miRNA</h3>';
 				}else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
 				{
 					td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ;
@@ -210,7 +210,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			if ((i!=0)&&(j==0)) // ajouter nom séquence 
 			{
 				 var value = myResults.getSequencesNamesList()[i-1];
-				 td.innerHTML = "<a class='name'>"+value + "</a>"; // ajouter la valeur à la cellule
+				 td.innerHTML = "<a class='name'>"+value.substr(0,29)  + "</a>"; // ajouter la valeur à la cellule
 			}
 			if ((i!=0)&&(j!=0))  // cas cellule
 			{

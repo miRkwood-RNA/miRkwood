@@ -86,10 +86,7 @@ textarea {
     margin-top:20px;
     margin-left:190px;
 }
-.checkbox
-{
-	margin-top: 20px;
-}
+
 
 #exempleClear{
 
@@ -101,8 +98,8 @@ textarea {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 24px;
-	margin-left: 330px;
-	margin-top: 10px;
+	margin-left: 300px;
+	margin-top: -27px;
 	margin-bottom: 0px;
 	z-index: 1000;
 }
@@ -123,7 +120,11 @@ pre
 	height:24px;
 	line-height: 24px;
 	margin-left: 540px;
-	font-weight: bold;
+	margin-top: -10px;
+}
+.selectdb
+{
+	margin-top: -18px;
 }
 
 #CDS 
@@ -249,13 +250,12 @@ tfoot td
 #table tbody th.factors
 {	border-width: 1px;	font-size: 1.3em;
 	padding: 12px;
-   	font-family: "Times New Roman", Serif;
-	border-style: solid;	
+   	border-style: solid;	
 	text-align: center;
 	border-color: #999999;
 	white-space: nowrap;
 	
-	background:#C0C0C0;
+	background:rgba(192, 192, 192, 0.95);
 }
 
 #table tbody td 
@@ -430,14 +430,4 @@ span.mature {
     border: none;
 }
 
-#checkboxSelect {
-	-ms-transform: scale(2); /* IE */
-	-moz-transform: scale(2); /* FF */
-	-webkit-transform: scale(2); /* Safari and Chrome */
-	-o-transform: scale(2); /* Opera */
-	padding: 10px;
-	margin-top: 20px;
-	width :10px;
-	height :10px;
-}
 

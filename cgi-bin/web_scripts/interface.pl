@@ -18,7 +18,7 @@ my $page = <<"END_TXT";
       <div class="forms">
         <tr>
           <td class="label">
-          &nbsp;<b> Job title </b> (optional):
+          &nbsp;<b> Job title </b> (optional)
           <input type="text" name="job" size="20">
           </td>
         </tr>
@@ -30,27 +30,27 @@ my $page = <<"END_TXT";
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
       
         <p class="label">
-            <p>or, upload a file</p>
-          <input type="file" name="seqFile" id="file" />
+            <p>or, upload a file <input type="file" name="seqFile" id="file" /> </p>
         </p>
-        
-        <p><input class="checkbox" type="checkbox"  name="strand" value="strand">Process both strand </input></p>
-        <p ><input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()">Mask coding regions <i>(BlastX) </i></input> :
+        <br>
+        <p><input class="checkbox" type="checkbox"  name="strand" value="strand">Scan both strands </input></p>
+        <p ><input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()">Mask coding regions <i>(BlastX) </i></input> 
         
         </p>
         <div id="menuDb">
           <p class="choixDiv" for="db">Choose organism database :</p>
-          <select class="db" name="db">
+          <p class="selectdb" ><select class="db" name="db">
             <option class="db" selected>ATpepTAIR10</option>
             <option class="db">plante</option>
-          </select>
+          </select></p>
         </div>
         <p id='exempleClear'>
         <a  onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();" />run with an example</a>
       </p>
       </div>
       <div class="forms">
-        <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors:</p>
+        <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors</p>
+        <br>
         <P>
           
           <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" value="mfeiChecked">Select only sequences with MFEI < -0.6</input></P>
@@ -59,7 +59,7 @@ my $page = <<"END_TXT";
        </div>
        <div class="forms">
          <tr>
-           <td class="label"> <b>E-mail address</b> <i>(optional)</i>:
+           <td class="label">&nbsp; <b>E-mail address</b> (optional)
              <input type="text" name="mail" size="20">
            </td>
           </tr>

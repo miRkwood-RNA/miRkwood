@@ -33,10 +33,10 @@ $name_job =~ s/_/ /g;#replace _ with space in name job
 my $html = '';
 
 my $HTML_additional = "";
-$HTML_additional .= "<p><b>Job ID  : </b>".$id_job.'</p>';
+$HTML_additional .= "<p style='font-size:14px'><b>Job ID  : </b>".$id_job.'</p>';
 unless (!$name_job)
 {
-    $HTML_additional .= "<p><b>Job title  : </b>".$name_job.'</p>';
+    $HTML_additional .= "<p style='font-size:14px'><b>Job title  : </b>".$name_job.'</p>';
 }
 
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
@@ -45,7 +45,7 @@ if($valid){
     my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
     my $nb_results = PipelineMiRNA::Results->number_of_results( \%myResults);
     my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
-	$HTML_additional .= "<p><b>".$nb_results."  miRNA precursors found</b></p>";
+	$HTML_additional .= "<p style='font-size:14px'><b>".$nb_results."  miRNA precursors found</b></p>";
    	my $body ="";
    	if ($nb_results != 0) {
     $body = <<"END_TXT";
@@ -57,8 +57,8 @@ if($valid){
 <div class="main main-full">
     $HTML_additional
     <div  id="select" > 
-    	<div style="width: 500px"  class="forms">
-    		<p  >Export selected entries \( <a onclick='selectAll()' >Select all<\/a> /  <a  onclick='deSelectAll()'  >Deselect all</a> \) in one of the following formats:</p> 
+    	<div style="width: 510px"  class="forms">
+    		<p  >Export selected entries \(<a onclick='selectAll()' >select all<\/a>/<a  onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p> 
     		<form id= 'exportForm'>
     		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
     		<input type="radio" name="export" value="fas"/>FASTA format<br/>
@@ -68,9 +68,9 @@ if($valid){
     		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job", "$web_root")'/>
     		</form>
     	</div>
-    		<p style='font-size:14px' ><br/>	Click on the line to see the HTML report of pre-miRNA. Click on the checkbox to select an entry.<br/><br/>
+    		<p style='font-size:14px;white-space: nowrap' ><br/>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.</p>
     		
-    		<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
+  			 <p style='font-size:14px'> 		<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
     		</p>
     </div>
     
