@@ -34,7 +34,7 @@ my $page = <<"END_TXT";
         </p>
         <br>
         <p><input class="checkbox" type="checkbox"  name="strand" value="strand">Scan both strands </input></p>
-        <p ><input  id ="CDS" type="checkbox" name="check" value="checked" onclick="showHideBlock()">Mask coding regions <i>(BlastX) </i></input> 
+        <p ><input  id ="CDS" type="checkbox" name="check"  onclick="showHideBlock()">Mask coding regions <i>(BlastX) </i></input> 
         
         </p>
         <div id="menuDb">

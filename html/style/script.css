@@ -327,7 +327,7 @@ label { font-size: 1.4em; display: block; margin: .5em 10px .5em 0;  }
   text-align: center;
   padding: 1em 30px 30px;
 
-  font-size: 16px;
+  font-size: 14px;
 
   margin: 1em 0 3em;
 }
@@ -338,6 +338,7 @@ label { font-size: 1.4em; display: block; margin: .5em 10px .5em 0;  }
   height : 200px;
 
   background:  url(waiting.gif) center  no-repeat;
+  background-size:120px 100px;
 
 }
 
