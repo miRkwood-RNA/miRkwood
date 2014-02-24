@@ -88,9 +88,9 @@ function colorOver(a,b)
 		}
 	}
 	for (var j=0;j<columnsNumber+1;j++)
-	{
-	
+	{	
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','#EDEDED');
+		document.getElementById('checkboxSelect'+a).setAttribute('bgcolor','#EDEDED');
 	}
 }
 
@@ -106,6 +106,7 @@ function colorOut(a,b)
 	for (var j=0;j<columnsNumber+1;j++)
 	{
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','white');
+		document.getElementById('checkboxSelect'+a).setAttribute('bgcolor','white');
 	}
 }
 
@@ -142,6 +143,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			checkbox.id = "checkbox"+i;
 			checkbox.setAttribute("class" , "allCheckbox");
 			var td=document.createElement('td');
+			td.id = "checkboxSelect"+i;
 			tr.appendChild(td);
 			td.appendChild(checkbox);
 		}else {
