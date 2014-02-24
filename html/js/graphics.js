@@ -79,14 +79,14 @@ function showCellInfo(i,j)
  */
 function colorOver(a,b)
 {
-	for (var i=0;i<rowsNumber+1;i++)
-	{
+	//for (var i=0;i<rowsNumber+1;i++)
+	//{
 	
-		if (b == myResults.getIndexByFactorName('image')) //gerer que la couleur de la colonne de l'image  
-		{
-			document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
-		}
-	}
+		//if (b == myResults.getIndexByFactorName('image')) //gerer que la couleur de la colonne de l'image  
+		//{
+			//document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
+		//}
+	//}
 	for (var j=0;j<columnsNumber+1;j++)
 	{	
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','#EDEDED');
