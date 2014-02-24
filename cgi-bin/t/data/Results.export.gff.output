@@ -1,2 +1,6 @@
 ##gff-version 3
-contig15750	.	miRkwood	34	195	.	+	.	.	
+# miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
+# Note, these sequences do not represent the full primary transcript,
+# rather a predicted stem-loop portion that includes the precursor.
+
+contig15750	miRkwood	miRNA_primary_transcript	34	195	.	+	.	Name=preMir_contig15750__34-195	
