@@ -28,6 +28,10 @@ my @js  = ( File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js
           );
 
 my $id_job = $cgi->param('run_id'); # récupération id job
+my $dirJob_name = 'job' . $id_job;
+my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
+my $job_dir     = File::Spec->catdir( $results_dir, $dirJob_name );
+my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
 my $name_job = $cgi->param('nameJob'); # récupération id job
 $name_job =~ s/_/ /g;#replace _ with space in name job
 my $html = '';
@@ -46,6 +50,9 @@ if($valid){
     my $nb_results = PipelineMiRNA::Results->number_of_results( \%myResults);
     my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
 	$HTML_additional .= "<p style='font-size:14px'><b>".$nb_results."  miRNA precursors found</b></p>";
+	unless ( -e $is_finished ) {
+		$HTML_additional .= "<p style='font-size:14px;color:red'><b>Still processing...</b></p>";
+	}
    	my $body ="";
    	if ($nb_results != 0) {
     $body = <<"END_TXT";
