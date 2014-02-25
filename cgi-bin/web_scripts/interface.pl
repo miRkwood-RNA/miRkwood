@@ -40,8 +40,9 @@ my $page = <<"END_TXT";
         <div id="menuDb">
           <p class="choixDiv" for="db">Choose organism database :</p>
           <p class="selectdb" ><select class="db" name="db">
-            <option class="db" selected>ATpepTAIR10</option>
-            <option class="db">plante</option>
+            <option class="db" selected>Arabidopsis_thaliana</option>
+            <option class="db">Oryza_sativa</option>
+            <option class="db">Medicago_truncatula</option> 
           </select></p>
         </div>
         <p id='exempleClear'>
