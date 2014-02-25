@@ -29,8 +29,7 @@ my $exonerate_dir = $programs_config{'exonerate'};
 my $exonerate_bin = 'exonerate';
 my $varna_bin        = $programs_config{'varna'};
 my $rnastemploop_bin = $programs_config{'rnastemloop'};
-my $blastx_bin = 'blastx';
-#File::Spec->catfile( $dirProgs, 'blastx' );
+my $blastx_bin = $programs_config{'blastx'};
 
 my $miRdup_jar = $programs_config{'miRdup'};
 
