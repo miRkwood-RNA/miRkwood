@@ -12,7 +12,15 @@
          <? include("./static/bioinfo_menu.txt") ?>
         <div class="bloc_droit">
         <? include("./static/header_menu.txt") ?>
-            
+<div class="main">
+         <p>  miRkwood is a computational pipeline for the identification of plant miRNAs and their hairpin precursors. It can be used with short  genomicregions or assembled expressed sequences (Sanger or NGS).  </p>
+<ul>
+ <li>see user manual
+<li>see an example
+<li>use web server
+</ul>
+ <p>The method is is specifically calibrated for plant miRNAs, that have a large structural diversity. It first identifies potential pre-miRNAs on the basis of the secondary structure, and then refines this result through a variety of additional complementary features that bring new evidence to the prediction:  Thermodynamical stability, conservation of the mature miRNA, nature of complementarity of the miRNA-miRNA* duplex. </p>
+ </div>
         </div><!-- bloc droit-->
        <? include("./static/footer.txt") ?>
     </body>
