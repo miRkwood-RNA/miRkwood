@@ -186,15 +186,20 @@ sub run_exonerate {
         $exonerate_cmd .="cd $exonerate_dir && "
     }
     $exonerate_cmd =
-        "$exonerate_bin " . "-E "
-      . "--model affine:bestfit $mirbase_file $input "
-      . "-d $matrix_file "
-      . '--bestn 1 '
-      . '--score -3 '
-      . '-e -1 -o -1 '
-      . '--showvulgar no --showalignment no --verbose 0 '
-      . "--ryo '$output_fmt'"
-      . "> $output  2> /dev/null";
+        "$exonerate_bin "
+      . "--exhaustive "             # Exhaustive alignment
+      . "--model affine:bestfit "   # Best location alignment of the query onto the target
+      . "$mirbase_file $input "
+      . "--dnasubmat $matrix_file " # Substitution matrix to be used for DNA comparison
+      . '--bestn 1 '                # Report the single best result for each query
+      . '--score -3 '               # Overall score threshold
+      . '--gapextend -1 '           # Gap extension penalty
+      . '--gapopen -1 '             # Gap open penalty
+      . '--showvulgar no '          # Do not show the alignments in "vulgar" format.
+      . '--showalignment no '       # Do not show the human readable alignment
+      . '--verbose 0 '              # Verbose to minimum
+      . "--ryo '$output_fmt'"       # Using custom output format
+      . "> $output  2> /dev/null";  # Stdout to file, stderr to /dev/null
 
     debug($exonerate_cmd, 1);
     system($exonerate_cmd);
