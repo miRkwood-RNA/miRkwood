@@ -1,8 +1,0 @@
-<div class="frametitle">
- <h1>miRkwood</h1>
-   <div class="menu_central">
-     <a href="./interface.pl">home</a>
-     <a href="./help.pl">help</a>
-     <a href="./id.pl">retrieve result with an ID</a>
-   </div>
-</div>

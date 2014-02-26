@@ -1,0 +1,9 @@
+<div class="frametitle">
+ <h1>miRkwood</h1>
+   <div class="menu_central">
+     <a href="/arn/html">home</a>
+     <a href="/cgi-bin/interface.pl">Web server</a>
+     <a href="/cgi-bin/help.pl">help</a>
+     <a href="/cgi-bin/id.pl">retrieve result with an ID</a>
+   </div>
+</div>

@@ -77,7 +77,7 @@
       </li>
     <!-- miRkwood -->
       <li class="case Rna">
-      	  <a href="/cgi-bin/MiRNA/web_scripts/interface.pl">miRkwood</a>
+      	  <a href="/arn/html/">miRkwood</a>
       </li>
     </ul>
     
