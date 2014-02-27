@@ -146,9 +146,9 @@ sub process_sequence {
 		$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
 	  or die("Problem when running RNAstemloop");
 
-	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal,  'optimal' );
 	my $rnaeval_out =
-	   run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
+	   run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal,  'optimal' );
+    run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
     my $seq_length = length $sequence;
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
