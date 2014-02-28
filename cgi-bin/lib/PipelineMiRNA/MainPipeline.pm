@@ -104,8 +104,8 @@ sub main_entry {
         } else {
             @hash = @hash1;
         }
-        my %newHash = treat_candidates( \@hash );
-        create_directories( \%newHash, $sequence_dir );
+        my %candidates_hash = merge_candidates( \@hash );
+        create_directories(\%candidates_hash, $sequence_dir );
     }
     process_tests( $job_dir );
     return;
@@ -254,83 +254,78 @@ sub process_RNAstemloop {
 	return \@hash;
 }
 
-=method treat_candidates
+=method is_to_merge
 
-Process the candidates and try merging them.
+Test whether two candidates (based on their positions)
+must be merged.
 
 =cut
 
-sub treat_candidates {
+sub is_to_merge{
+    my @args      = @_;
+    my $start     = shift @args;
+    my $end       = shift @args;
+    my $ref_start = shift @args;
+    my $ref_end   = shift @args;
+    return ($end <= $ref_end || $start < ($ref_start + $ref_end) / 2 )
+}
 
-	my (@hash)   = @{ +shift };
-	my %newHash  = ();
-	my %tempHash = ();
-	my $i        = 0;
-	foreach my $key ( keys @hash ) {
 
-		my $nb        = scalar @hash;
-		my $start     = $hash[$key]{"start"};
-		my $end       = $hash[$key]{"end"};
-		my $mfei      = $hash[$key]{"mfei"};
-		
-		my $nameSeq   = $hash[$key]{"name"};
-		my $structure = $hash[$key]{"structure"};
-		my $dna       = $hash[$key]{"dna"};
-		my $strand    = $hash[$key]{"strand"};
-		my $energy    = $hash[$key]{"energy"};
+=method merge_candidates
 
-        $tempHash{$nameSeq} = {
-            "mfei"      => $mfei,
-            "dna"       => $dna,
-            "structure" => $structure,
-            "strand"    => $strand,
-            "energy"    => $energy
-        };
+Process the candidates and try merging them.
+We assume the candidates array is already sorted by growing position
 
-		if (! (
-			(
-				$end >= $hash[ $key + 1 ]{"end"}
-				|| ( $hash[ $key + 1 ]{"start"} < ( $start + $end ) / 2 )
-			)
-			&& ( $key != $nb - 1 ) )
-		  )
-		{
+=cut
 
-			my $max;
-			my @keys =
-			  sort { $tempHash{$a}{"mfei"} <=> $tempHash{$b}{"mfei"} }
-			  keys(%tempHash);
-			foreach my $key (@keys) {
-				if ( $i == 0 ) {
-					$max = $key;
-					$newHash{$max}{'max'} = {
-						"mfei"      => PipelineMiRNA::Utils::restrict_num_decimal_digits($tempHash{$key}{"mfei"},3),
-						"dna"       => $tempHash{$key}{"dna"},
-						"structure" => $tempHash{$key}{"structure"},
-						"strand"    => $tempHash{$key}{"strand"},
-						"energy"    => $tempHash{$key}{"energy"}
-					};
-				}
-				else {
+sub merge_candidates {
 
-					$newHash{$max}{$key} = {
-						"mfei"      => PipelineMiRNA::Utils::restrict_num_decimal_digits($tempHash{$key}{"mfei"},3),
-						"dna"       => $tempHash{$key}{"dna"},
-						"structure" => $tempHash{$key}{"structure"},
-						"strand"    => $tempHash{$key}{"strand"},
-						"energy"    => $tempHash{$key}{"energy"}
-					};
+    my (@candidates_array) = @{ +shift };
+    my $nb_candidates = scalar @candidates_array;
 
-				}
-				$i++;
-			}
-			%tempHash = ();
-			$i        = 0;
-		}
+    my @merged_candidates = ();
+    my %final_hash        = ();
 
-	}
+    my %reference_candidate = %{ $candidates_array[0] };
+    my %best_candidate      = %reference_candidate;
+    my %current_candidate;
+    for my $candidate_index ( 1 .. $#candidates_array ) {
+        %current_candidate = %{ $candidates_array[$candidate_index] };
+        my $start = $current_candidate{"start"};
+        my $end   = $current_candidate{"end"};
 
-	return %newHash;
+        my ( $ref_start, $ref_end ) =
+          ( $reference_candidate{"start"}, $reference_candidate{"end"} );
+        if ( is_to_merge( $start, $end, $ref_start, $ref_end ) ) {
+
+            if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
+                push @merged_candidates, {%best_candidate};
+                %best_candidate = %current_candidate;
+            }
+            else {
+                push @merged_candidates, {%current_candidate};
+            }
+
+        }
+        else {
+            my $final_name = $best_candidate{'name'};
+            $final_hash{$final_name}                 = {};
+            $final_hash{$final_name}{'max'}          = {%best_candidate};
+            $final_hash{$final_name}{'alternatives'} = [@merged_candidates];
+            @merged_candidates                       = undef;
+            @merged_candidates                       = ();
+            %reference_candidate                     = %current_candidate;
+            %best_candidate                          = %reference_candidate;
+        }
+
+    }    #foreach
+
+    #	push @merged_candidates, { %current_candidate };
+    my $final_name = $best_candidate{'name'};
+    $final_hash{$final_name}                 = {};
+    $final_hash{$final_name}{'max'}          = {%best_candidate};
+    $final_hash{$final_name}{'alternatives'} = [@merged_candidates];
+    return %final_hash;
 }
 
 =method create_directories
@@ -340,68 +335,64 @@ Create the necessary directories.
 =cut
 
 sub create_directories {
+    my @args                 = @_;
+    my (%candidates_hash)    = %{ shift @args };
+    my $current_sequence_dir = shift @args;
+    my $candidate_counter    = 0;
+    foreach my $key ( sort keys %candidates_hash ) {
+        $candidate_counter++;
+        my $candidate_dir =
+          File::Spec->catdir( $current_sequence_dir, $candidate_counter );
+        mkdir $candidate_dir;
+        my $candidate_ref = $candidates_hash{$key}{'max'};
+        populate_candidate_directory( $candidate_dir, $candidate_ref,
+            $candidates_hash{$key}{'alternatives'} );
+    }
+    return;
+}
 
-	my (%newHash) = %{ +shift };
-	my $current_sequence_dir = shift;
-	
-	my $candidate_counter = 0;
-	
-	foreach my $key ( sort keys %newHash ) {
-	    $candidate_counter++;
-		my $candidate_dir = File::Spec->catdir( $current_sequence_dir, $candidate_counter );
-		mkdir $candidate_dir;
+=method populate_candidate_directory
 
-		#Writing seq.txt
-		my $candidate_sequence =
-		  File::Spec->catfile( $candidate_dir, 'seq.txt' );
-		open( my $OUT, '>', $candidate_sequence )
-		  or die "Error when opening $candidate_sequence: $!";
-		print $OUT ">$key\n$newHash{$key}{'max'}{'dna'}\n";
-		close $OUT;
+Populate a candidate directory with the sequence, strand & so on.
 
-        my $strand_file =
-          File::Spec->catfile( $candidate_dir, 'strand.txt' );
-        open( my $STRAND_FH, '>', $strand_file )
-          or die "Error when opening $strand_file: $!";
-        print $STRAND_FH $newHash{$key}{'max'}{'strand'};
-        close $STRAND_FH;
+=cut
 
+sub populate_candidate_directory {
+    my @args               = @_;
+    my $candidate_dir      = shift @args;
+    my %candidate          = %{ shift @args };
+    my @alternatives_array = @{ shift @args };
 
-		for my $name ( keys %{ $newHash{$key} } ) {
-			if ( $name eq 'max' ) {
-				process_outRNAFold(
-					$candidate_dir,
-					'optimal',
-					$key,
-					$newHash{$key}{'max'}{'dna'},
-					$newHash{$key}{'max'}{'structure'},
-					$newHash{$key}{'max'}{'energy'}
-				);
-				process_outRNAFold(
-					$candidate_dir,
-					'stemloop',
-					$key,
-					$newHash{$key}{'max'}{'dna'},
-					$newHash{$key}{'max'}{'structure'},
-					$newHash{$key}{'max'}{'energy'}
-				);
-			}
-			else {
+    #Writing seq.txt
+    my $candidate_sequence = File::Spec->catfile( $candidate_dir, 'seq.txt' );
+    open( my $SEQ_FH, '>', $candidate_sequence )
+      or die "Error when opening $candidate_sequence: $!";
+    print $SEQ_FH ">$candidate{'name'}\n$candidate{'dna'}\n";
+    close $SEQ_FH;
 
-				#Writing alternativeCandidates.txt
-				my $alternative_candidates =
-				  File::Spec->catfile( $candidate_dir,
-					'alternativeCandidates.txt' );
-				open( my $OUT2, '>>', $alternative_candidates )
-				  or die "Error when opening $alternative_candidates: $!";
-				print $OUT2
-">$name\t$newHash{$key}{$name}{'dna'}\t$newHash{$key}{$name}{'structure'}\t$newHash{$key}{$name}{'mfei'}\n";
+    #Writing strand
+    my $strand_file = File::Spec->catfile( $candidate_dir, 'strand.txt' );
+    open( my $STRAND_FH, '>', $strand_file )
+      or die "Error when opening $strand_file: $!";
+    print $STRAND_FH $candidate{'strand'};
+    close $STRAND_FH;
 
-			}
-		}
-		close $OUT;
-	}
+    process_outRNAFold( $candidate_dir, 'optimal', $candidate{'name'},
+        $candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
+    process_outRNAFold( $candidate_dir, 'stemloop', $candidate{'name'},
+        $candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
 
+    #Writing alternativeCandidates.txt
+    my $alternative_candidates =
+      File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
+    open( my $OUT2, '>>', $alternative_candidates )
+      or die "Error when opening $alternative_candidates: $!";
+    foreach my $alternative (@alternatives_array) {
+        print $OUT2
+">$alternative->{'name'}\t$alternative->{'dna'}\t$alternative->{'structure'}\t$alternative->{'mfei'}\n";
+    }
+    close $OUT2;
+    return;
 }
 
 =method process_outRNAFold
