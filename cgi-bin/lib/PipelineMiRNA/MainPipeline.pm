@@ -309,11 +309,10 @@ sub merge_candidates {
         %current_candidate = %{ $candidates_array[$candidate_index] };
         my $start = $current_candidate{'start'};
         my $end   = $current_candidate{'end'};
-
         my ( $ref_start, $ref_end ) =
           ( $reference_candidate{'start'}, $reference_candidate{'end'} );
         if ( is_included( $start, $end, $ref_start, $ref_end ) ) {
-            if ( $best_candidate{'mfei'} <= 0.8 ) {
+            if ( $best_candidate{'mfei'} <= -0.8 ) {
                 push @merged_candidates, {%current_candidate};
             }
             else {
