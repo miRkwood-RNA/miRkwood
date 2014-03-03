@@ -254,22 +254,39 @@ sub process_RNAstemloop {
 	return \@hash;
 }
 
-=method is_to_merge
+=method is_overlapping
 
-Test whether two candidates (based on their positions)
-must be merged.
+Test whether one candidate is overlapping with the other
+(based on their positions).
 
 =cut
 
-sub is_to_merge{
+sub is_overlapping {
     my @args      = @_;
-    my $start     = shift @args;
-    my $end       = shift @args;
-    my $ref_start = shift @args;
-    my $ref_end   = shift @args;
-    return ($end <= $ref_end || $start < ($ref_start + $ref_end) / 2 )
+    my $start     = shift @args or die('Not enough values provided');
+    my $end       = shift @args or die('Not enough values provided');
+    my $ref_start = shift @args or die('Not enough values provided');
+    my $ref_end   = shift @args or die('Not enough values provided');
+    $ref_start <= $start or die('Positions should be ordered');
+    return ( $start < ( $ref_start + $ref_end ) / 2 );
 }
 
+=method is_included
+
+Test whether one candidate is included into the other
+(based on their positions).
+
+=cut
+
+sub is_included {
+    my @args      = @_;
+    my $start     = shift @args or die('Not enough values provided');
+    my $end       = shift @args or die('Not enough values provided');
+    my $ref_start = shift @args or die('Not enough values provided');
+    my $ref_end   = shift @args or die('Not enough values provided');
+    $ref_start <= $start or die('Positions should be ordered');
+    return ( $end <= $ref_end );
+}
 
 =method merge_candidates
 
@@ -283,21 +300,34 @@ sub merge_candidates {
     my (@candidates_array) = @{ +shift };
     my $nb_candidates = scalar @candidates_array;
 
-    my @merged_candidates = ();
-    my %final_hash        = ();
-
+    my @merged_candidates   = ();
+    my %final_hash          = ();
     my %reference_candidate = %{ $candidates_array[0] };
     my %best_candidate      = %reference_candidate;
     my %current_candidate;
     for my $candidate_index ( 1 .. $#candidates_array ) {
         %current_candidate = %{ $candidates_array[$candidate_index] };
-        my $start = $current_candidate{"start"};
-        my $end   = $current_candidate{"end"};
+        my $start = $current_candidate{'start'};
+        my $end   = $current_candidate{'end'};
 
         my ( $ref_start, $ref_end ) =
-          ( $reference_candidate{"start"}, $reference_candidate{"end"} );
-        if ( is_to_merge( $start, $end, $ref_start, $ref_end ) ) {
+          ( $reference_candidate{'start'}, $reference_candidate{'end'} );
+        if ( is_included( $start, $end, $ref_start, $ref_end ) ) {
+            if ( $best_candidate{'mfei'} <= 0.8 ) {
+                push @merged_candidates, {%current_candidate};
+            }
+            else {
+                if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
+                    push @merged_candidates, {%best_candidate};
+                    %best_candidate = %current_candidate;
+                }
+                else {
+                    push @merged_candidates, {%current_candidate};
+                }
+            }
 
+        }
+        elsif ( is_overlapping( $start, $end, $ref_start, $ref_end ) ) {
             if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
                 push @merged_candidates, {%best_candidate};
                 %best_candidate = %current_candidate;
@@ -305,7 +335,6 @@ sub merge_candidates {
             else {
                 push @merged_candidates, {%current_candidate};
             }
-
         }
         else {
             my $final_name = $best_candidate{'name'};
@@ -319,8 +348,6 @@ sub merge_candidates {
         }
 
     }    #foreach
-
-    #	push @merged_candidates, { %current_candidate };
     my $final_name = $best_candidate{'name'};
     $final_hash{$final_name}                 = {};
     $final_hash{$final_name}{'max'}          = {%best_candidate};
