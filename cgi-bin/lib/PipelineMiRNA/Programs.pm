@@ -144,6 +144,21 @@ sub run_rnaeval {
     return ( -e $output );
 }
 
+=method run_slow_randfold
+
+Run Randfold on the given file
+Return whether the output file exists.
+
+=cut
+
+sub run_slow_randfold {
+    my ( $input, $output ) = @_;
+    my $nb_iterations = 7;
+    my $randfold_cmd = "$randfold_bin -d $input $nb_iterations > $output";
+    system($randfold_cmd);
+    return ( -e $output );
+}
+
 =method run_randfold
 
 Run Randfold on the given file
@@ -152,10 +167,15 @@ Return whether the output file exists.
 =cut
 
 sub run_randfold {
+    my @args = @_;
+    my $input_file = shift @args;
+    my $output_file = shift @args;
+    my $iterations  = shift @args;
     my ( $input, $output ) = @_;
-    my $randfold_cmd = "$randfold_bin -d $input 7 > $output";
+    my $randfold_cmd = "python $randfold_bin --iterations $iterations --fast --fasta $input_file > $output";
+    debug($randfold_cmd, 1);
     system($randfold_cmd);
-    return ( -e $output );
+    return ( -e $output_file );
 }
 
 =method run_exonerate
