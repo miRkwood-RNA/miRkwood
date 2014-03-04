@@ -172,7 +172,7 @@ sub run_randfold {
     my $output_file = shift @args;
     my $iterations  = shift @args;
     my ( $input, $output ) = @_;
-    my $randfold_cmd = "python $randfold_bin --iterations $iterations --fast --fasta $input_file > $output";
+    my $randfold_cmd = "$randfold_bin --iterations $iterations --fast --fasta $input_file > $output";
     debug($randfold_cmd, 1);
     system($randfold_cmd);
     return ( -e $output_file );
