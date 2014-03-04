@@ -31,8 +31,8 @@ Run the Randfold a posteriori test
 
 sub test_randfold {
     my ( $candidate_dir, $seq_file ) = @_;
-    my $randfold_out = File::Spec->catfile( $candidate_dir, 'pvalue.txt' );
-    PipelineMiRNA::Programs::run_randfold( $seq_file, $randfold_out )
+    my $randfold_out = File::Spec->catfile( $candidate_dir, 'randfold.out' );
+    PipelineMiRNA::Programs::run_randfold( $seq_file, $randfold_out, 200)
       or die("Problem when running Randfold");
     chmod 777, $randfold_out;
     return -e $randfold_out;

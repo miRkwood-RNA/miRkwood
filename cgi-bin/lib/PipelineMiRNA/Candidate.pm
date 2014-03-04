@@ -115,11 +115,11 @@ sub parse_candidate_information {
         chomp ($result{'strand'} = PipelineMiRNA::Utils::slurp_file($strand_file));
     }
 
-    my $pvalue =
-      File::Spec->catfile( $full_candidate_dir, 'pvalue.txt' );
-    if ( -e $pvalue )    # si fichier existe
+    my $randfold_output =
+      File::Spec->catfile( $full_candidate_dir, 'randfold.out' );
+    if ( -e $randfold_output )    # si fichier existe
     {
-        $result{'p_value'} = PipelineMiRNA::Parsers::parse_pvalue($pvalue);
+        $result{'p_value'} = PipelineMiRNA::Parsers::parse_pvalue($randfold_output);
     }
 
     #Récupération valeur MFEI
