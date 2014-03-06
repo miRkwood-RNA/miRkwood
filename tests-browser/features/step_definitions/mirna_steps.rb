@@ -14,6 +14,14 @@ Then(/^a sequence gets filled$/) do
   on(InterfacePage).sequence_area.should include("contig15750")
 end
 
+When(/^I use the Clear feature$/) do
+  on(InterfacePage).area_clear
+end
+
+Then(/^the sequence area is clear$/) do
+  on(InterfacePage).sequence_area.should eq('')
+end
+
 Then(/^a no sequence warning is provided when I launch the pipeline$/) do
   on(InterfacePage) do |page|
     message = page.alert do
