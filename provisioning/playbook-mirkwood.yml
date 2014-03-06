@@ -12,6 +12,7 @@
       with_items:
         - libconfig-simple-perl
         - libyaml-perl
+        - libfile-which-perl
 
     - name: Create results directory
       file:

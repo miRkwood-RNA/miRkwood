@@ -1,5 +1,6 @@
 libconfig-simple-perl
 libyaml-libyaml-perl
+libfile-which-perl
 libxml-twig-perl
 libimage-size-perl
 libfile-type-perl
