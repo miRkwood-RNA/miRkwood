@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use File::Spec;
+use File::Which;
 use FindBin qw($Bin);
 use Cwd qw(abs_path);
 use File::Basename qw(dirname);
@@ -59,7 +60,7 @@ List the missing binaries among those needed in the pipeline.
 sub list_unavailable_programs {
     my @args       = @_;
     my @programs   = list_programs();
-    my @unexisting = grep { !-f $_ } @programs;
+    my @unexisting = grep { !-f $_ && ! which($_) } @programs;
     return @unexisting;
 }
 
