@@ -46,7 +46,7 @@ my $page = <<"END_TXT";
           </select></p>
         </div>
         <p id='exempleClear'>
-        <a  onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();" />run with an example</a>
+        <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();" />run with an example</a>
       </p>
       </div>
       <div class="forms">
