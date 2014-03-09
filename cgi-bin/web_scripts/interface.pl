@@ -33,8 +33,8 @@ my $page = <<"END_TXT";
             <p>or, upload a file <input type="file" name="seqFile" id="file" /> </p>
         </p>
         <br>
-        <p><input class="checkbox" type="checkbox"  name="strand" value="strand">Scan both strands </input></p>
-        <p ><input  id ="CDS" type="checkbox" name="check"  onclick="showHideBlock()">Mask coding regions <i>(BlastX) </i></input> 
+        <p><input class="checkbox" type="checkbox" name="strand" id="strand" value="strand"/>&#160;<label for='strand'>Scan both strands</label></p>
+        <p><input class="checkbox" type="checkbox" name='CDS' id ="CDS" onclick="showHideBlock()"/>&#160;<label for='CDS'>Mask coding regions <i>(BlastX)</i></label>
         
         </p>
         <div id="menuDb">
@@ -54,9 +54,9 @@ my $page = <<"END_TXT";
         <br>
         <P>
           
-          <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" value="mfeiChecked">Select only sequences with MFEI < -0.6</input></P>
-          <P><input class="checkbox" type="checkbox" name="randfold" value="randfoldChecked">Compute thermodynamic stability <i>(shuffled sequences)</i></input></P>
-          <P><input class="checkbox" type="checkbox" checked="checked" name="align" value="alignChecked">Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></input></P>
+          <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />&#160;<label for='mfei'>Select only sequences with MFEI < -0.6</label></P>
+          <P><input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />&#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label></P>
+          <P><input class="checkbox" type="checkbox" checked="checked" name="align" id="align" value="alignChecked" />&#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label></P>
        </div>
        <div class="forms">
          <tr>
