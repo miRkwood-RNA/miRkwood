@@ -1,6 +1,9 @@
 ---
 - name: Install Apache
-  apt: pkg=apache2 state=installed
+  apt: pkg=apache2 state=present
+
+- name: Install PHP
+  apt: pkg=libapache2-mod-php5 state=present
 
 - name: miRkwood virtual host
   copy: 
