@@ -37,3 +37,6 @@
 
 - include: mirdup.yml
   when: miRdup.stat.exists == false
+
+
+- include: varna.yml
