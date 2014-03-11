@@ -17,19 +17,19 @@ my $page = <<"END_TXT";
     <fieldset id="fieldset">
       <div class="forms">
         <tr>
-          <td class="label">
+          <td>
           &nbsp;<b> Job title </b> (optional)
           <input type="text" name="job" size="20">
           </td>
         </tr>
       </div>
       <div class="forms">
-        <p class="label">
+        <p>
           <b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="./help.pl">?</a>]
         </p>
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
       
-        <p class="label">
+        <p>
             <p>or, upload a file <input type="file" name="seqFile" id="file" /> </p>
         </p>
         <br>
@@ -60,7 +60,7 @@ my $page = <<"END_TXT";
        </div>
        <div class="forms">
          <tr>
-           <td class="label">&nbsp; <b>E-mail address</b> (optional)
+           <td>&nbsp; <b>E-mail address</b> (optional)
              <input type="text" name="mail" size="20">
            </td>
           </tr>
