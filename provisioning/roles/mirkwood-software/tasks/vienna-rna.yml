@@ -8,3 +8,9 @@
 - name: Ensure ViennaRNA Package is installed
   apt: pkg=vienna-rna state=present force=yes
 
+- name: Install b2ct
+  file:
+    src=/usr/share/ViennaRNA/bin/b2ct
+    dest=/usr/bin/b2ct
+    state=link
+
