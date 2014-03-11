@@ -13,59 +13,55 @@ my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 
 my $page = <<"END_TXT";
 <div class="main">
-  <form  name="form" onsubmit="return verifySequence();" onsubmit="wainting()" method="post" action="./results.pl" enctype="multipart/form-data">
+  <form id='form' onsubmit="return verifySequence();" method="post" action="./results.pl" enctype="multipart/form-data">
     <fieldset id="fieldset">
       <div class="forms">
-        <tr>
-          <td>
           <label for='job'>&nbsp;<b>Job title</b> (optional)</label>
-          <input type="text" id ='job' name="job" size="20">
-          </td>
-        </tr>
+          <input type="text" id ='job' name="job" size="20"/>
       </div>
       <div class="forms">
         <p>
           <label for='seqArea'><b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="./help.pl">?</a>]</label>
         </p>
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
-      
+
         <p>
             <label for='seqFile'>or, upload a file</label><input type="file" name="seqFile" id="seqFile" />
         </p>
-        <br>
-        <p><input class="checkbox" type="checkbox" name="strand" id="strand" value="strand"/>&#160;<label for='strand'>Scan both strands</label></p>
-        <p><input class="checkbox" type="checkbox" name='CDS' id ="CDS" onclick="showHideBlock()"/>&#160;<label for='CDS'>Mask coding regions <i>(BlastX)</i></label>
-        
+        <br/>
+        <p><input class="checkbox" type="checkbox" name="strand" id="strand" value="strand"/>
+            &#160;<label for='strand'>Scan both strands</label></p>
+        <p><input class="checkbox" type="checkbox" name='CDS' id ="CDS" onclick="showHideBlock()"/>
+            &#160;<label for='CDS'>Mask coding regions <i>(BlastX)</i></label>
+
         </p>
         <div id="menuDb">
           <label class="choixDiv selectdb" for="db">Choose organism database:</label>
           <select class="db" name="db" id='db'>
-            <option class="db" selected>Arabidopsis_thaliana</option>
+            <option class="db" selected="selected">Arabidopsis_thaliana</option>
             <option class="db">Oryza_sativa</option>
             <option class="db">Medicago_truncatula</option> 
           </select>
         </div>
         <p id='exempleClear'>
-        <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();" />run with an example</a>
+        <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();">run with an example</a>
       </p>
       </div>
       <div class="forms">
         <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors</p>
-        <br>
-        <P>
-          <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />&#160;<label for='mfei'>Select only sequences with MFEI < -0.6</label></P>
-          <P><input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />&#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label></P>
-          <P><input class="checkbox" type="checkbox" checked="checked" name="align" id="align" value="alignChecked" />&#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label></P>
+          <p><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
+            &#160;<label for='mfei'>Select only sequences with MFEI &lt; -0.6</label></p>
+          <p><input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />
+            &#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label></p>
+          <p><input class="checkbox" type="checkbox" checked="checked" name="align" id="align" value="alignChecked" />
+            &#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label></p>
        </div>
        <div class="forms">
-         <tr>
-           <td><label for='mail'>&nbsp;<b>E-mail address</b> (optional)</label>
-             <input type="text" id='mail' name="mail" size="20">
-           </td>
-          </tr>
+         <label for='mail'>&nbsp;<b>E-mail address</b> (optional)</label>
+         <input type="text" id='mail' name="mail" size="20"/>
         </div>
         <div class="center">
-           <input type="submit" name="upload" id="upload" value="Run miRkwood">
+           <input type="submit" name="upload" id="upload" value="Run miRkwood"/>
         </div>
     </fieldset>
   </form>
