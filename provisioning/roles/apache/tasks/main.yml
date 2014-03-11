@@ -24,10 +24,11 @@
     state: absent
   notify: Restart Apache
 
-- name: Make style directory
-  file:
+- stat:
     path=/home/vagrant/Style
-    state=directory
+    follow=true
+  register: style
 
-- name: Get BioInfo CSS
-  get_url: dest=/home/vagrant/Style/ url=http://bioinfo.lifl.fr/Style/bioinfo.css
+- include: bioinfo-style.yml
+  when: style.stat.exists == false
+
