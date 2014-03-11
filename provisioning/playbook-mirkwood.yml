@@ -4,7 +4,7 @@
   sudo: True
   roles:
     - mirkwood-software
-    - browser-tests
+#    - browser-tests
     - apache
   tasks:
     - name: Install Perl packages
