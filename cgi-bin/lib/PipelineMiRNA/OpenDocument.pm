@@ -45,14 +45,23 @@ sub prepare_document {
     );
 
     # Basic paragraph style creation
-    $elt = $doc->insert_style(
-        odf_create_style(
-            'paragraph',
-            name        => 'Basic',
-            margin_top  => '0mm',
-            margin_left => '0mm'
-        )
-    );
+    odf_style->create(
+        'paragraph',
+        name        => 'Basic',
+        margin_top  => '0mm',
+        margin_left => '0mm',
+        area   => 'text',
+        size   => '10pt',
+    )->register($doc);
+
+    # None paragraph style creation
+    odf_style->create(
+        'paragraph',
+        name   => 'None',
+        parent => "Basic",
+        area   => 'text',
+        size   => '0pt',
+    )->register($doc);
 
     # Other MiRBase sequences
     my $s0 = odf_style->create(
@@ -81,12 +90,21 @@ sub prepare_document {
         margin_top=>'4mm',
     );
     $s->set_properties(
-            area   => 'text',
-            size   => '11pt',
-            color  => 'black',
-            font   => 'Monospace',
+        area   => 'text',
+        size   => '10pt',
+        color  => 'black',
+        font   => 'Monospace',
         );
     $doc->register_style($s);
+
+    # Vienna (Monospace style)
+    odf_style->create(
+        'paragraph',
+        name  => "Vienna",
+        parent => "Monospace",
+        area   => 'text',
+        size   => '8pt',
+    )->register($doc);
 
     # Hairpin (Monospace style)
     odf_style->create(
@@ -115,38 +133,57 @@ sub prepare_document {
         weight => 'bold',
     )->register($doc);
 
-    # Level 2 Heading style creation
-    $doc->insert_style(
-        odf_create_style(
-            'paragraph',
-            name           => 'Level 2 Heading',
-            keep_with_next => 'always',
-            margin_top     => '1cm',
-            margin_bottom  => '4mm'
-        )
-    )->set_properties(
-        area   => 'text',
-        size   => '16pt',
-        weight => 'bold',
-        style  => 'italic',
-        color  => 'navy blue'
-    );
-
-    # Level 3 Heading style creation
-    $doc->insert_style(
-        odf_create_style(
-            'paragraph',
-            name           => 'Level 3 Heading',
-            keep_with_next => 'always',
-            margin_top     => '1cm',
-            margin_bottom  => '4mm'
-        )
-    )->set_properties(
+   # Level 1 Heading style creation
+    odf_style->create(
+        'paragraph',
+        name           => 'Level 1 Heading',
+        keep_with_next => 'always',
+        margin_top     => '1cm',
+        margin_bottom  => '4mm',
         area   => 'text',
         size   => '14pt',
-        weight => 'bold',,
-        color  => 'navy blue'
-    );
+        weight => 'bold',
+    )->register($doc);
+
+    # Level 2 Heading style creation
+    odf_style->create(
+        'paragraph',
+        name   => 'Level 2 Heading',
+        parent => "Level 1 Heading",
+        area   => 'text',
+        size   => '12pt',
+        weight => 'bold',
+        style  => 'italic',
+    )->register($doc);
+
+    # Level 3 Heading style creation
+    odf_style->create(
+        'paragraph',
+        name           => 'Level 3 Heading',
+        keep_with_next => 'always',
+        margin_top     => '2mm',
+        margin_bottom  => '1mm',
+        area   => 'text',
+        size   => '11pt',
+        weight => 'bold',
+    )->register($doc);
+
+    # Level 4 Heading style creation
+    odf_style->create(
+        'paragraph',
+        name  => 'Level 4 Heading',
+        parent => "Level 3 Heading",
+        area   => 'text',
+        size   => '10pt',
+    )->register($doc);
+
+    # Level 5 Heading style creation
+    odf_style->create(
+        'paragraph',
+        name  => 'Level 5 Heading',
+        parent => "Level 4 Heading",
+        area   => 'text',
+    )->register($doc);
 
     # top title style
     $doc->insert_style(
@@ -159,7 +196,7 @@ sub prepare_document {
         )
       )->set_properties(
         area   => 'text',
-        size   => '200%',
+        size   => '20pt',
         weight => 'bold',
         color  => 'navy blue'
       );
@@ -248,6 +285,7 @@ sub generate_report {
             $context->append_element(
                 odf_create_heading(
                     level => 1,
+                    style => 'Level 1 Heading',
                     text  => "Sequence: ${$candidate}{'name'}, ${$candidate}{'position'}",
                 )
             );
@@ -265,10 +303,10 @@ sub generate_report {
               PipelineMiRNA::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
                 ${$candidate}{'DNASequence'} );
 
-            $list->add_item(text => "Name: ${$candidate}{'name'}", style => "Standard");
-            $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => "Standard");
-            $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => "Standard");
-            $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => "Standard");
+            $list->add_item(text => "Name: ${$candidate}{'name'}", style => "Basic");
+            $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => "Basic");
+            $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => "Basic");
+            $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => "Basic");
 
             my $subtext = "";
             if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
@@ -279,13 +317,13 @@ sub generate_report {
             my $para1 = $context->append_element(
             odf_create_paragraph(
                 text    => $vienna_seq,
-                style   =>'Monospace'
+                style   =>'Vienna'
                 )
             );
             my $para2 = $context->append_element(
             odf_create_paragraph(
                 text    => $subtext,
-                style   =>'Standard'
+                style   =>'Basic'
                 )
             );
             $para2->set_span(filter  => "structure", style   => 'StandardBold');
@@ -322,21 +360,22 @@ sub generate_report {
             $context->append_element(
                 odf_create_heading(
                     level => 3,
+                    style => 'Level 3 Heading',
                     text  => "Thermodynamics stability",
                 )
             );
 
             $para =
-              $context->append_element( odf_create_paragraph() );
+              $context->append_element( odf_create_paragraph(style =>'None') );
 
             $list = $para->insert_element(
                     odf_create_list, position => NEXT_SIBLING
                     );
 
             # TODO: maybe we do not have those ; infer that from  run_options config file
-            $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => "Standard");
-            $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => "Standard");
-            $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => "Standard");
+            $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => "Basic");
+            $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => "Basic");
+            $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => "Basic");
 
 
             # Section Mirbase alignments
@@ -363,6 +402,7 @@ sub add_ODF_alignments{
     $context->append_element(
         odf_create_heading(
             level => 3,
+            style => 'Level 3 Heading',
             text  => "Conserved mature miRNA",
         )
     );
@@ -398,6 +438,7 @@ sub add_ODF_alignments{
         $context->append_element(
             odf_create_heading(
                 level => 4,
+                style => 'Level 4 Heading',
                 text  => $title,
             )
         );
@@ -411,6 +452,7 @@ sub add_ODF_alignments{
         $context->append_element(
             odf_create_heading(
                 level => 5,
+                style => 'Level 5 Heading',
                 text  => 'Alignments',
             )
         );
