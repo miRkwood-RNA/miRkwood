@@ -18,19 +18,19 @@ my $page = <<"END_TXT";
       <div class="forms">
         <tr>
           <td>
-          &nbsp;<b> Job title </b> (optional)
-          <input type="text" name="job" size="20">
+          <label for='job'>&nbsp;<b>Job title</b> (optional)</label>
+          <input type="text" id ='job' name="job" size="20">
           </td>
         </tr>
       </div>
       <div class="forms">
         <p>
-          <b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="./help.pl">?</a>]
+          <label for='seqArea'><b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="./help.pl">?</a>]</label>
         </p>
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
       
         <p>
-            <p>or, upload a file <input type="file" name="seqFile" id="file" /> </p>
+            <label for='seqFile'>or, upload a file</label><input type="file" name="seqFile" id="seqFile" />
         </p>
         <br>
         <p><input class="checkbox" type="checkbox" name="strand" id="strand" value="strand"/>&#160;<label for='strand'>Scan both strands</label></p>
@@ -38,12 +38,12 @@ my $page = <<"END_TXT";
         
         </p>
         <div id="menuDb">
-          <p class="choixDiv" for="db">Choose organism database :</p>
-          <p class="selectdb" ><select class="db" name="db">
+          <label class="choixDiv selectdb" for="db">Choose organism database:</label>
+          <select class="db" name="db" id='db'>
             <option class="db" selected>Arabidopsis_thaliana</option>
             <option class="db">Oryza_sativa</option>
             <option class="db">Medicago_truncatula</option> 
-          </select></p>
+          </select>
         </div>
         <p id='exempleClear'>
         <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();" />run with an example</a>
@@ -53,15 +53,14 @@ my $page = <<"END_TXT";
         <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors</p>
         <br>
         <P>
-          
           <P><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />&#160;<label for='mfei'>Select only sequences with MFEI < -0.6</label></P>
           <P><input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />&#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label></P>
           <P><input class="checkbox" type="checkbox" checked="checked" name="align" id="align" value="alignChecked" />&#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label></P>
        </div>
        <div class="forms">
          <tr>
-           <td>&nbsp; <b>E-mail address</b> (optional)
-             <input type="text" name="mail" size="20">
+           <td><label for='mail'>&nbsp;<b>E-mail address</b> (optional)</label>
+             <input type="text" id='mail' name="mail" size="20">
            </td>
           </tr>
         </div>

@@ -16,8 +16,8 @@ my $page = <<"END_TXT";
   <div class="forms">
     <form method="post" action="./resultsWithID.pl">
       <p>The ID remains valid 15 days after sequence submission.</p>
-      <p><b>Enter the ID :</b>
-        <input type="text" name="run_id" size="20">
+      <label for='run_id'><b>Enter the ID:</b></label>
+        <input type="text" name="run_id" id='run_id' size="20">
         <input type="hidden" name="command" value="result">
         <input type="submit" value="Go">
       </p>
