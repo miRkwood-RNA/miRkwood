@@ -67,12 +67,12 @@ if($valid){
     	<div style="width: 510px"  class="forms">
     		<p  >Export selected entries \(<a onclick='selectAll()' >select all<\/a>/<a  onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p> 
     		<form id= 'exportForm'>
-    		<input type="radio" name="export" checked='checked' value="csv"  />tab-delimited format (csv)<br/>
-    		<input type="radio" name="export" value="fas"/>FASTA format<br/>
-    		<input type="radio" name="export" value="dot"/>dot-bracket format (plain sequence + secondary structure)<br/>
-    		<input type="radio" name="export" value="odf"/>full report in document format (odf)<br/>
-    		<input type="radio" name="export" value="gff"/>GFF format<br/><br/>
-    		<input style="margin-left:360px" class="myButton" type="button" name="bout" value="Export" onclick='exportTo("$id_job", "$web_root")'/>
+                <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tab-delimited format (csv)</label><br/>
+                <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
+                <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
+                <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (odf)</label><br/>
+                <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/><br/>
+                <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_root")'/>
     		</form>
     	</div>
     		<p style='font-size:14px;white-space: nowrap' ><br/>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.</p>
