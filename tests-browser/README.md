@@ -32,3 +32,7 @@ To run tests with a specific browser:
     cucumber BROWSER=chrome
     cucumber BROWSER=phantomjs
 
+To run tests CI-style:
+
+    bundle exec cucumber --format pretty --format junit --out . --format html --out browsertest-report.html
+
