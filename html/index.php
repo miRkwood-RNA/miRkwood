@@ -18,7 +18,7 @@
 <ul>
  <li>see user manual</li>
  <li>see an example</li>
- <li>use web server</li>
+ <li><a href='/cgi-bin/interface.pl'>use web server</a></li>
 </ul>
 <p>The method is is specifically calibrated for plant miRNAs, that have a large structural diversity. It first identifies potential pre-miRNAs on the basis of the secondary structure, and then refines this result through a variety of additional complementary features that bring new evidence to the prediction:  Thermodynamical stability, conservation of the mature miRNA, nature of complementarity of the miRNA-miRNA* duplex. </p>
  </div>

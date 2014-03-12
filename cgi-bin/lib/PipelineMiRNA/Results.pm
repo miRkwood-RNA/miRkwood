@@ -24,7 +24,7 @@ sub get_optional_candidate_fields {
 	push @fields, ( 'mfe', 'mfei', 'amfe' );
 	
 	if ( $cfg->param('options.randfold') ) {
-		push @fields, ('p_value');
+		push @fields, ('shuffles');
 	}
 	if ( $cfg->param('options.align') ) {
 		push @fields, ('alignment');
@@ -398,7 +398,7 @@ sub resultstruct2pseudoXML {
 	return $result;
 }
 
-=method filter_sequence_by_mfei
+=method select_sequences_by_mfei
 
 Select only sequences with MFEI < -0.6
 =cut

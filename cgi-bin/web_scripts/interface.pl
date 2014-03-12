@@ -49,13 +49,13 @@ my $page = <<"END_TXT";
       </div>
       <div class="forms">
         <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors</p>
-          <p><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
+        <div id='listParam'>  <p><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
             &#160;<label for='mfei'>Select only sequences with MFEI &lt; -0.6</label></p>
           <p><input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />
             &#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label></p>
           <p><input class="checkbox" type="checkbox" checked="checked" name="align" id="align" value="alignChecked" />
             &#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label></p>
-       </div>
+        </div></div>
        <div class="forms">
          <label for='mail'>&nbsp;<b>E-mail address</b> (optional)</label>
          <input type="text" id='mail' name="mail" size="20"/>

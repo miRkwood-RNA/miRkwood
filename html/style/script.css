@@ -94,14 +94,8 @@ textarea {
 }
 .choixDiv
 {
-	color: black;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 24px;
-	margin-left: 300px;
-	margin-top: -27px;
-	margin-bottom: 0px;
-	z-index: 1000;
+	margin-left: 263px;
+
 }
 pre 
 {
@@ -109,18 +103,15 @@ pre
 	width: 500px;
 	line-height: 1.3em;
 }
-
+#listParam
+{
+    
+    margin-top:-5px;
+}
 .db
 {
-	border: 1px solid #ccc;
-	color: black;
-	font-family:  Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	width: 130px;
-	height:24px;
-	line-height: 24px;
-	margin-left: 540px;
-	margin-top: -10px;
+	font-size: 13px;
+	margin-left: 13px;
 }
 .selectdb
 {
@@ -248,9 +239,9 @@ tfoot td
 ----------------------------------------------- */
 
 #table tbody th.factors
-{	border-width: 1px;	font-size: 1.3em;
-	padding: 12px;
-   	border-style: solid;	
+{	border-width: 1px;
+	font-size: 1.3em;
+	border-style: solid;	
 	text-align: center;
 	border-color: #999999;
 	white-space: nowrap;
