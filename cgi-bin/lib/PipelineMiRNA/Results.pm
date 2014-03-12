@@ -18,20 +18,18 @@ Return the optional fields based on the current configuration
 =cut
 
 sub get_optional_candidate_fields {
-    my ( $self, @args ) = @_;
-    my @fields = ();
-    my $cfg = PipelineMiRNA->CONFIG();
-
-    if ($cfg->param('options.mfe')){
-        push @fields, ('mfe', 'mfei', 'amfe');
-    }
-    if ($cfg->param('options.randfold')){
-        push @fields, ('p_value');
-    }
-    if ($cfg->param('options.align')){
-        push @fields, ('alignment')
-    }
-    return @fields;
+	my ( $self, @args ) = @_;
+	my @fields = ();
+	my $cfg    = PipelineMiRNA->CONFIG();
+	push @fields, ( 'mfe', 'mfei', 'amfe' );
+	
+	if ( $cfg->param('options.randfold') ) {
+		push @fields, ('p_value');
+	}
+	if ( $cfg->param('options.align') ) {
+		push @fields, ('alignment');
+	}
+	return @fields;
 }
 
 =method make_job_id
@@ -41,11 +39,11 @@ Return a jobId (based on the current time)
 =cut
 
 sub make_job_id {
-    my ( $self, @args ) = @_;
-    my $now = gmctime();
-    $now =~ s/[: ]//g;
-    $now = substr( $now, 3 );
-    return $now;
+	my ( $self, @args ) = @_;
+	my $now = gmctime();
+	$now =~ s/[: ]//g;
+	$now = substr( $now, 3 );
+	return $now;
 }
 
 =method jobId_to_jobPath
@@ -55,12 +53,12 @@ Get the job path from a job identifier
 =cut
 
 sub jobId_to_jobPath {
-    my ( $self, @args ) = @_;
-    my $id_job      = shift @args;
-    my $dirJob_name = 'job' . $id_job;
-    my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
-    my $jobPath = File::Spec->catdir( $results_dir, $dirJob_name);
-    return $jobPath;
+	my ( $self, @args ) = @_;
+	my $id_job      = shift @args;
+	my $dirJob_name = 'job' . $id_job;
+	my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
+	my $jobPath     = File::Spec->catdir( $results_dir, $dirJob_name );
+	return $jobPath;
 }
 
 =method get_candidates_dir
@@ -69,11 +67,11 @@ sub jobId_to_jobPath {
 =cut
 
 sub get_candidates_dir {
-    my ( $self, @args ) = @_;
-    my $id_job      = shift @args;
-    my $results_dir = $self->jobId_to_jobPath($id_job);
-    my $candidates_dir = File::Spec->catdir( $results_dir, 'candidates');
-    return $candidates_dir;
+	my ( $self, @args ) = @_;
+	my $id_job         = shift @args;
+	my $results_dir    = $self->jobId_to_jobPath($id_job);
+	my $candidates_dir = File::Spec->catdir( $results_dir, 'candidates' );
+	return $candidates_dir;
 }
 
 =method is_valid_jobID
@@ -83,10 +81,10 @@ Test whether a jobID is valid - ie if there are results for it.
 =cut
 
 sub is_valid_jobID {
-    my ( $self, @args ) = @_;
-    my $id_job          = shift @args;
-    my $full_path = $self->jobId_to_jobPath($id_job);
-    return (-e $full_path);
+	my ( $self, @args ) = @_;
+	my $id_job    = shift @args;
+	my $full_path = $self->jobId_to_jobPath($id_job);
+	return ( -e $full_path );
 }
 
 =method get_structure_for_jobID
@@ -99,12 +97,13 @@ my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
 =cut
 
 sub get_structure_for_jobID {
-    my ( $self, @args ) = @_;
-    my $jobId   = shift @args;
-    my $job_dir = $self->jobId_to_jobPath($jobId);
-    PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path($job_dir));
-    my $candidates_dir = $self->get_candidates_dir($jobId);
-    return $self->deserialize_results($candidates_dir);
+	my ( $self, @args ) = @_;
+	my $jobId   = shift @args;
+	my $job_dir = $self->jobId_to_jobPath($jobId);
+	PipelineMiRNA->CONFIG_FILE(
+		PipelineMiRNA::Paths->get_job_config_path($job_dir) );
+	my $candidates_dir = $self->get_candidates_dir($jobId);
+	return $self->deserialize_results($candidates_dir);
 }
 
 =method has_candidates
@@ -117,10 +116,10 @@ PipelineMiRNA::Results->has_candidates( \%myResults );
 =cut
 
 sub has_candidates {
-    my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my %results = %{$results};
-    return ( keys %results > 0);
+	my ( $self, @args ) = @_;
+	my $results = shift @args;
+	my %results = %{$results};
+	return ( keys %results > 0 );
 }
 
 =method deserialize_results
@@ -133,32 +132,41 @@ my %results = PipelineMiRNA::Results->deserialize_results( $candidates_dir );
 =cut
 
 sub deserialize_results {
-    my ( $self, @args ) = @_;
-    my $candidates_dir   = shift @args;
-    my %myResults = ();
-    opendir DIR, $candidates_dir;    #ouverture répertoire job
-    my @files;
-    @files = readdir DIR;
-    closedir DIR;
-    foreach my $file (@files)    # parcours du contenu
-    {
-        my $full_file = File::Spec->catfile( $candidates_dir, $file );
-        if (    $file ne "."
-             && $file ne "..")
-        {
-            my %candidate;
-            %candidate = PipelineMiRNA::Candidate->deserialize_candidate($full_file);
-            if (! eval { %candidate = PipelineMiRNA::Candidate->deserialize_candidate($full_file) } ){
-                # Catching, do nothing
-            }else{
-                my $identifier = $candidate{'identifier'};
-                $myResults{$identifier} = \%candidate;
-            }
-        }
-    }
-    return %myResults;
-}
+	my ( $self, @args ) = @_;
+	my $candidates_dir = shift @args;
+	my %myResults      = ();
+	opendir DIR, $candidates_dir;    #ouverture répertoire job
+	my @files;
+	@files = readdir DIR;
+	closedir DIR;
+	foreach my $file (@files)        # parcours du contenu
+	{
+		my $full_file = File::Spec->catfile( $candidates_dir, $file );
+		if (   $file ne "."
+			&& $file ne ".." )
+		{
+			my %candidate;
+			%candidate =
+			  PipelineMiRNA::Candidate->deserialize_candidate($full_file);
+			if (
+				!eval {
+					%candidate =
+					  PipelineMiRNA::Candidate->deserialize_candidate(
+						$full_file);
+				}
+			  )
+			{
 
+				# Catching, do nothing
+			}
+			else {
+				my $identifier = $candidate{'identifier'};
+				$myResults{$identifier} = \%candidate;
+			}
+		}
+	}
+	return %myResults;
+}
 
 =method serialize_results
 
@@ -170,40 +178,50 @@ PipelineMiRNA::Results->serialize_results($job_dir);
 =cut
 
 sub serialize_results {
-    my ( $self, @args ) = @_;
-    my $relative_job_dir   = shift @args;
-    my $job_dir = PipelineMiRNA::Paths->get_absolute_path($relative_job_dir);
-    opendir DIR, $job_dir;    #ouverture répertoire job
-    my @dirs;
-    @dirs = readdir DIR;
-    closedir DIR;
-    foreach my $dir (@dirs)    # parcours du contenu
-    {
-        my $full_dir = File::Spec->catdir( $job_dir, $dir );
-        if (    $dir ne "."
-             && $dir ne ".."
-             && -d $full_dir )    #si fichier est un répertoire
-        {
-            opendir DIR, $full_dir;    # ouverture du sous répertoire
-            my @files;
-            @files = readdir DIR;
-            closedir DIR;
-            foreach my $subDir (@files) {
-                my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
-                if (    ( $subDir ne "." )
-                     && ( $subDir ne ".." )
-                     && -d $subDir_full ) # si le fichier est de type repertoire
-                {
-                    if (! eval { PipelineMiRNA::Candidate->serialize_candidate_information($relative_job_dir, $dir, $subDir)} ) {
-                        # Catching
-                    }else{
-                        # All is well
-                    }
-                }
-            }
-        }
-    }
-    return;
+	my ( $self, @args ) = @_;
+	my $relative_job_dir = shift @args;
+	my $job_dir = PipelineMiRNA::Paths->get_absolute_path($relative_job_dir);
+	opendir DIR, $job_dir;    #ouverture répertoire job
+	my @dirs;
+	@dirs = readdir DIR;
+	closedir DIR;
+	foreach my $dir (@dirs)    # parcours du contenu
+	{
+		my $full_dir = File::Spec->catdir( $job_dir, $dir );
+		if (   $dir ne "."
+			&& $dir ne ".."
+			&& -d $full_dir )    #si fichier est un répertoire
+		{
+			opendir DIR, $full_dir;    # ouverture du sous répertoire
+			my @files;
+			@files = readdir DIR;
+			closedir DIR;
+			foreach my $subDir (@files) {
+				my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
+				if (   ( $subDir ne "." )
+					&& ( $subDir ne ".." )
+					&& -d $subDir_full )  # si le fichier est de type repertoire
+				{
+					if (
+						!eval {
+							PipelineMiRNA::Candidate
+							  ->serialize_candidate_information(
+								$relative_job_dir, $dir, $subDir );
+						}
+					  )
+					{
+
+						# Catching
+					}
+					else {
+
+						# All is well
+					}
+				}
+			}
+		}
+	}
+	return;
 }
 
 =method export
@@ -213,48 +231,56 @@ Convert the results
 =cut
 
 sub export {
-    my ( $self, @args ) = @_;
-    my $export_type = shift @args;
-    my $results_ref = shift @args;
-    my $sequences_to_export_ref = shift @args;
+	my ( $self, @args ) = @_;
+	my $export_type             = shift @args;
+	my $results_ref             = shift @args;
+	my $sequences_to_export_ref = shift @args;
 
-    my @sequences_to_export;
-    if (! eval { @sequences_to_export = @{$sequences_to_export_ref} } ){
-        @sequences_to_export = ();
-    }
-    my $no_seq_selected = ! (scalar @sequences_to_export);
+	my @sequences_to_export;
+	if ( !eval { @sequences_to_export = @{$sequences_to_export_ref} } ) {
+		@sequences_to_export = ();
+	}
+	my $no_seq_selected = !( scalar @sequences_to_export );
 
-    my %results = %{$results_ref};
+	my %results = %{$results_ref};
 
-    my $output = "";
-    # Writing the header
-    my $header;
-    my $gff_header = "##gff-version 3
+	my $output = "";
+
+	# Writing the header
+	my $header;
+	my $gff_header = "##gff-version 3
 # miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
 # Note, these sequences do not represent the full primary transcript,
 # rather a predicted stem-loop portion that includes the precursor.
 ";
-    given ($export_type) {
-        when (/fas/) { $header = q{}; }
-        when (/dot/) { $header = q{}; }
-        when (/gff/) { $header = $gff_header . "\n"; }
-    }
-    $output .= $header;
+	given ($export_type) {
+		when (/fas/) { $header = q{}; }
+		when (/dot/) { $header = q{}; }
+		when (/gff/) { $header = $gff_header . "\n"; }
+	}
+	$output .= $header;
 
-    my @keys = sort keys %results;
-    foreach my $key(@keys)
-    {
-        if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
-        {
-            my $value = $results{$key};
-            given ($export_type) {
-                when (/fas/) { $output .= PipelineMiRNA::Candidate->candidateAsFasta($value); }
-                when (/dot/) { $output .= PipelineMiRNA::Candidate->candidateAsVienna($value); }
-                when (/gff/) { $output .= PipelineMiRNA::Candidate->candidate_as_gff($value); }
-            }
-        }
-    }
-    return $output;
+	my @keys = sort keys %results;
+	foreach my $key (@keys) {
+		if ( ( $key ~~@sequences_to_export ) || ($no_seq_selected) ) {
+			my $value = $results{$key};
+			given ($export_type) {
+				when (/fas/) {
+					$output .=
+					  PipelineMiRNA::Candidate->candidateAsFasta($value);
+				}
+				when (/dot/) {
+					$output .=
+					  PipelineMiRNA::Candidate->candidateAsVienna($value);
+				}
+				when (/gff/) {
+					$output .=
+					  PipelineMiRNA::Candidate->candidate_as_gff($value);
+				}
+			}
+		}
+	}
+	return $output;
 }
 
 =method resultstruct2csv
@@ -264,43 +290,42 @@ Convert the results structure to CSV
 =cut
 
 sub resultstruct2csv {
-    my ( $self, @args ) = @_;
-    my $results_ref = shift @args;
-    my $sequences_to_export_ref = shift @args;
+	my ( $self, @args ) = @_;
+	my $results_ref             = shift @args;
+	my $sequences_to_export_ref = shift @args;
 
-    my @sequences_to_export;
-    if (! eval { @sequences_to_export = @{$sequences_to_export_ref} } ){
-        @sequences_to_export = ();
-    }
-    my $no_seq_selected = ! (scalar @sequences_to_export);
-    my %results = %{$results_ref};
-    my @optional_fields = $self->get_optional_candidate_fields();
-    my @csv_headers = ('name', 'position_start', 'position_end', 'quality', '%GC', @optional_fields, 'Vienna', 'DNASequence');
-    my $result = join( ',', @csv_headers ) . "\n";
+	my @sequences_to_export;
+	if ( !eval { @sequences_to_export = @{$sequences_to_export_ref} } ) {
+		@sequences_to_export = ();
+	}
+	my $no_seq_selected = !( scalar @sequences_to_export );
+	my %results         = %{$results_ref};
+	my @optional_fields = $self->get_optional_candidate_fields();
+	my @csv_headers     = (
+		'name', 'position_start', 'position_end', 'quality', '%GC',
+		@optional_fields, 'Vienna', 'DNASequence'
+	);
+	my $result = join( ',', @csv_headers ) . "\n";
 
-    my @keys = sort { ( $results{$a}{'name'} cmp
-                        $results{$b}{'name'} )
-                      ||
-                      ( $results{$a}{'position_start'} <=>
-                        $results{$b}{'position_start'} )
-                 } keys %results;
-    foreach my $key(@keys)
-    {
-        if ( ($key ~~ @sequences_to_export) || ( $no_seq_selected ) )
-        {
-            my $value = $results{$key};
-            for my $header (@csv_headers)
-            {
-                my $contents = ${$value}{$header};
-                if (!defined $contents){
-                    $contents = q{};
-                }
-                $result .= "$contents,";
-            }
-            $result .= "\n";
-        }
-    }
-    return $result;
+	my @keys = sort {
+		( $results{$a}{'name'} cmp $results{$b}{'name'} )
+		  || (
+			$results{$a}{'position_start'} <=> $results{$b}{'position_start'} )
+	} keys %results;
+	foreach my $key (@keys) {
+		if ( ( $key ~~@sequences_to_export ) || ($no_seq_selected) ) {
+			my $value = $results{$key};
+			for my $header (@csv_headers) {
+				my $contents = ${$value}{$header};
+				if ( !defined $contents ) {
+					$contents = q{};
+				}
+				$result .= "$contents,";
+			}
+			$result .= "\n";
+		}
+	}
+	return $result;
 }
 
 =method resultstruct2pseudoXML
@@ -310,67 +335,88 @@ Convert the results structure to to pseudo XML format
 =cut
 
 sub resultstruct2pseudoXML {
-    my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my %results = %{$results};
+	my ( $self, @args ) = @_;
+	my $results = shift @args;
+	my %results = %{$results};
 
-    my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers1 = ('name', 'position','length','strand','quality', @optional_fields);
-    my @headers2 = ('Vienna', 'DNASequence', 'identifier');
+	my @optional_fields = $self->get_optional_candidate_fields();
+	my @headers1        =
+	  ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields );
+	my @headers2 = ( 'Vienna', 'DNASequence', 'identifier' );
 
-    my $result = "<results id='all'>\n";
-    my @keys = sort { ( $results{$b}{'name'} cmp
-                        $results{$a}{'name'} )
-                      ||
-                      ( $results{$a}{'position_start'} <=>
-                        $results{$b}{'position_start'} )
-                 } keys %results;
+	my $result = "<results id='all'>\n";
+	my @keys = sort {
+		( $results{$b}{'name'} cmp $results{$a}{'name'} )
+		  || (
+			$results{$a}{'position_start'} <=> $results{$b}{'position_start'} )
+	} keys %results;
 
-    foreach my $key (@keys) {
-        my $value = $results{$key};
-        $result .= "<Sequence";
-        for my $header (@headers1){
-            my $contents = ${$value}{$header};
-            if (!defined $contents){
-                $contents = q{};
-            }
-            $result .= " $header='$contents'";
-        }
-        my $img = PipelineMiRNA::Candidate->get_relative_image($value);
-        $result .= " image='$img'";
-        for my $header (@headers2){
-            $result .= " $header='${$value}{$header}'";
-        }
-        $result .= "></Sequence>\n";
-    }
-    $result .= "</results>\n";
-    $result .= "<results id='all2'>\n";
-    @keys = sort keys %results;
-    @keys = sort { ( $results{$b}{'quality'} cmp
-                     $results{$a}{'quality'} )
-                   ||
-                   ( $results{$a}{'position_start'} <=>
-                     $results{$b}{'position_start'} )
-                 } keys %results;
-    foreach my $key (@keys) {
-        my $value = $results{$key};
-        $result .= "<Sequence";
-        for my $header (@headers1){
-            my $contents = ${$value}{$header};
-            if (!defined $contents){
-                $contents = q{};
-            }
-            $result .= " $header='$contents'";
-        }
-        my $img = PipelineMiRNA::Candidate->get_relative_image($value);
-        $result .= " image='$img'";
-        for my $header (@headers2){
-            $result .= " $header='${$value}{$header}'";
-        }
-        $result .= "></Sequence>\n";
-    }
-    $result .= "</results>";
-    return $result;
+	foreach my $key (@keys) {
+		my $value = $results{$key};
+
+		$result .= "<Sequence";
+		for my $header (@headers1) {
+			my $contents = ${$value}{$header};
+			if ( !defined $contents ) {
+				$contents = q{};
+			}
+			$result .= " $header='$contents'";
+		}
+		my $img = PipelineMiRNA::Candidate->get_relative_image($value);
+		$result .= " image='$img'";
+		for my $header (@headers2) {
+			$result .= " $header='${$value}{$header}'";
+		}
+		$result .= "></Sequence>\n";
+	}
+	$result .= "</results>\n";
+	$result .= "<results id='all2'>\n";
+	@keys = sort keys %results;
+	@keys = sort {
+		( $results{$b}{'quality'} cmp $results{$a}{'quality'} )
+		  || (
+			$results{$a}{'position_start'} <=> $results{$b}{'position_start'} )
+	} keys %results;
+	foreach my $key (@keys) {
+		my $value = $results{$key};
+		$result .= "<Sequence";
+		for my $header (@headers1) {
+			my $contents = ${$value}{$header};
+			if ( !defined $contents ) {
+				$contents = q{};
+			}
+			$result .= " $header='$contents'";
+		}
+		my $img = PipelineMiRNA::Candidate->get_relative_image($value);
+		$result .= " image='$img'";
+		for my $header (@headers2) {
+			$result .= " $header='${$value}{$header}'";
+		}
+		$result .= "></Sequence>\n";
+	}
+	$result .= "</results>";
+	return $result;
+}
+
+=method filter_sequence_by_mfei
+
+Select only sequences with MFEI < -0.6
+=cut
+
+sub select_sequences_by_mfei {
+	my ( $self, @args ) = @_;
+	my $results         = shift @args;
+	my %results         = %{$results};
+	my @optional_fields = $self->get_optional_candidate_fields();
+	my @keys            = keys %results;
+	foreach my $key (@keys) {
+		my $value  = $results{$key};
+		my $energy = ${$value}{'mfei'};
+		if ( $energy > -0.6 ) {
+			delete $results{$key};
+		}
+	}
+	return %results;
 }
 
 =method number_of_results
@@ -381,9 +427,9 @@ return total number of candidates
 
 sub number_of_results {
 	my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my %results = %{$results};
-	my $size = scalar keys %results;
+	my $results = shift @args;
+	my %results = %{$results};
+	my $size    = scalar keys %results;
 	return $size;
 }
 
@@ -394,41 +440,40 @@ Convert the results structure to HTML table
 =cut
 
 sub resultstruct2table {
-    my ( $self, @args ) = @_;
-    my $results = shift @args;
-    my %results = %{$results};
+	my ( $self, @args ) = @_;
+	my $results = shift @args;
+	my %results = %{$results};
 
-    my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers = ('position','length','strand','quality', @optional_fields);
+	my @optional_fields = $self->get_optional_candidate_fields();
+	my @headers         =
+	  ( 'position', 'length', 'strand', 'quality', @optional_fields );
 
-    my $HTML_results = '';
-    $HTML_results .= "<table>\n<tbody>";
-    $HTML_results .= "<tr>";
-    for my $header (('name'), @headers){
+	my $HTML_results = '';
+	$HTML_results .= "<table>\n<tbody>";
+	$HTML_results .= "<tr>";
+	for my $header ( ('name'), @headers ) {
 
-        $HTML_results .= "<th>$header</th>\n";
-    }
-    $HTML_results .= "</tr>\n";
-    while ( my ($key, $value) = each %results )
-    {
-      $HTML_results .= '<tr>';
-      my $anchor = "${$value}{'name'}-${$value}{'position'}";
-      my $contents = "<a href='#$anchor'>${$value}{'name'}</a>";
-      $HTML_results .= "<td>$contents</td>\n";
-      for my $header (@headers){
-          my $td_content = "";
-          my $contents = ${$value}{$header};
-          if (!defined $contents){
-              $contents = q{};
-          }
-          $HTML_results .= "<td>$contents</td>\n";
-      }
-      $HTML_results .= "\n</tr>\n";
-    }
-    $HTML_results .= "</tbody>\n</table>\n";
+		$HTML_results .= "<th>$header</th>\n";
+	}
+	$HTML_results .= "</tr>\n";
+	while ( my ( $key, $value ) = each %results ) {
+		$HTML_results .= '<tr>';
+		my $anchor   = "${$value}{'name'}-${$value}{'position'}";
+		my $contents = "<a href='#$anchor'>${$value}{'name'}</a>";
+		$HTML_results .= "<td>$contents</td>\n";
+		for my $header (@headers) {
+			my $td_content = "";
+			my $contents   = ${$value}{$header};
+			if ( !defined $contents ) {
+				$contents = q{};
+			}
+			$HTML_results .= "<td>$contents</td>\n";
+		}
+		$HTML_results .= "\n</tr>\n";
+	}
+	$HTML_results .= "</tbody>\n</table>\n";
 
-    return $HTML_results;
+	return $HTML_results;
 }
-
 
 1;

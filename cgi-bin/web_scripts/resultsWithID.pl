@@ -13,49 +13,67 @@ use PipelineMiRNA::WebTemplate;
 
 my $cgi = CGI->new;
 
-my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
-my $footer       = PipelineMiRNA::WebTemplate::get_footer();
-my $web_root     = PipelineMiRNA::Paths->get_web_root();
+my $header_menu = PipelineMiRNA::WebTemplate::get_header_menu();
+my $footer      = PipelineMiRNA::WebTemplate::get_footer();
+my $web_root    = PipelineMiRNA::Paths->get_web_root();
 
+my @css = (
+	PipelineMiRNA::WebTemplate->get_server_css_file(),
+	PipelineMiRNA::WebTemplate->get_css_file()
+);
+my @js = (
+	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'results.js' ),
+	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'graphics.js' ),
+	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'miARN.js' ),
+	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'jquery.min.js' ),
+	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(),
+		'imgpreview.full.jquery.js' )
 
-my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
-my @js  = ( File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'results.js'),
-            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'graphics.js'),
-            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js'),
-            File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'jquery.min.js'),
-        	File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'imgpreview.full.jquery.js')
-            
-          );
+);
 
-my $id_job = $cgi->param('run_id'); # récupération id job
+my $id_job      = $cgi->param('run_id');    # récupération id job
 my $dirJob_name = 'job' . $id_job;
 my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
 my $job_dir     = File::Spec->catdir( $results_dir, $dirJob_name );
 my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
-my $name_job = $cgi->param('nameJob'); # récupération id job
-$name_job =~ s/_/ /g;#replace _ with space in name job
+my $name_job = $cgi->param('nameJob');      # récupération id job
+$name_job =~ s/_/ /g;                       #replace _ with space in name job
 my $html = '';
 
 my $HTML_additional = "";
-$HTML_additional .= "<p style='font-size:14px'><b>Job ID  : </b>".$id_job.'</p>';
-unless (!$name_job)
-{
-    $HTML_additional .= "<p style='font-size:14px'><b>Job title  : </b>".$name_job.'</p>';
+$HTML_additional .=
+  "<p style='font-size:14px'><b>Job ID  : </b>" . $id_job . '</p>';
+unless ( !$name_job ) {
+	$HTML_additional .=
+	  "<p style='font-size:14px'><b>Job title  : </b>" . $name_job . '</p>';
 }
 
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
 
-if($valid){
-    my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
-    my $nb_results = PipelineMiRNA::Results->number_of_results( \%myResults);
-    my $HTML_results = PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults);
-	$HTML_additional .= "<p style='font-size:14px'><b>".$nb_results."  miRNA precursors found</b></p>";
-	unless ( -e $is_finished ) {
-		$HTML_additional .= "<p style='font-size:14px;color:red'><b>Still processing...</b></p>";
+if ($valid) {
+	my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+	my $cfg       = PipelineMiRNA->CONFIG();
+
+	if ( $cfg->param('options.mfe') ) {
+		%myResults =
+		  PipelineMiRNA::Results->select_sequences_by_mfei( \%myResults );
 	}
-   	my $body ="";
-   	if ($nb_results != 0) {
-    $body = <<"END_TXT";
+
+	my $nb_results   = PipelineMiRNA::Results->number_of_results( \%myResults );
+	my $HTML_results =
+	  PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults );
+
+	$HTML_additional .=
+	    "<p style='font-size:14px'><b>"
+	  . $nb_results
+	  . "  miRNA precursors found</b></p>";
+	unless ( -e $is_finished ) {
+		$HTML_additional .=
+		  "<p style='font-size:14px;color:red'><b>Still processing...</b></p>";
+	}
+	my $body = "";
+	if ( $nb_results != 0 ) {
+		$body = <<"END_TXT";
 <body onload="main('all');">
     <div class="theme-border"></div>
     <div class="logo"></div>
@@ -91,8 +109,9 @@ if($valid){
 $footer
 </body>
 END_TXT
-   	} else {
-   		$body = <<"END_TXT";
+	}
+	else {
+		$body = <<"END_TXT";
 <body onload="main('all');">
     <div class="theme-border"></div>
     <div class="logo"></div>
@@ -107,18 +126,22 @@ END_TXT
 $footer
 </body>
 END_TXT
-   	}
-    $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
+	}
+	$html =
+	  PipelineMiRNA::WebTemplate::get_HTML_page_for_body( $body, \@css, \@js );
 
-}else{
-    my $page = <<"END_TXT";
+}
+else {
+	my $page = <<"END_TXT";
 <div class="main">
     $HTML_additional
     <p>No results available for the given job identifier $id_job: $valid </p>
 </div><!-- main -->
 END_TXT
 
-    $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js, 1);
+	$html =
+	  PipelineMiRNA::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js,
+		1 );
 }
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

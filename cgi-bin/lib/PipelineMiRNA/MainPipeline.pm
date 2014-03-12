@@ -52,7 +52,7 @@ Run the pipeline.
 
 sub main_entry {
 	my ( $filter, $strand, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
-	my $debug    = 1;
+	my $debug = 1;
 	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
 	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
@@ -62,7 +62,7 @@ sub main_entry {
 
 	debug( 'BEGIN execute_scripts', $debug );
 	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
-	if ( $filter ) {
+	if ($filter) {
 		debug( 'FilteringCDS', $debug );
 		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $plant );
 	}
@@ -83,32 +83,35 @@ sub main_entry {
 
 	debug( 'Iterating over names', $debug );
 
-    my $sequence_dir_name = 0;
+	my $sequence_dir_name = 0;
 
-    while ( my ($name, $sequence) = each %tab) {
-        debug( "Considering sequence $sequence_dir_name: $name", $debug );
-        $sequence_dir_name++;
-        my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
-        mkdir $sequence_dir;
+	while ( my ( $name, $sequence ) = each %tab ) {
+		debug( "Considering sequence $sequence_dir_name: $name", $debug );
+		$sequence_dir_name++;
+		my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
+		mkdir $sequence_dir;
 
-        my $res = process_sequence( $sequence_dir, $name, $sequence, '+' );
-        my @hash1 = @{$res};
-        my @hash;
-        my $cfg = PipelineMiRNA->CONFIG();
-        if ( $cfg->param('options.strands') ) {
-            debug( "Processing the other strand", 1 );
-            my $reversed_sequence = PipelineMiRNA::Utils::reverse_complement($sequence);
-            my $res2 = process_sequence( $sequence_dir, $name, $reversed_sequence, '-');
-            my @hash2 = @{$res2};
-            @hash = sort { $a->{start} <=> $b->{start} } (@hash1, @hash2);
-        } else {
-            @hash = @hash1;
-        }
-        my %candidates_hash = merge_candidates( \@hash );
-        create_directories(\%candidates_hash, $sequence_dir );
-    }
-    process_tests( $job_dir );
-    return;
+		my $res = process_sequence( $sequence_dir, $name, $sequence, '+' );
+		my @hash1 = @{$res};
+		my @hash;
+		my $cfg = PipelineMiRNA->CONFIG();
+		if ( $cfg->param('options.strands') ) {
+			debug( "Processing the other strand", 1 );
+			my $reversed_sequence =
+			  PipelineMiRNA::Utils::reverse_complement($sequence);
+			my $res2 =
+			  process_sequence( $sequence_dir, $name, $reversed_sequence, '-' );
+			my @hash2 = @{$res2};
+			@hash = sort { $a->{start} <=> $b->{start} } ( @hash1, @hash2 );
+		}
+		else {
+			@hash = @hash1;
+		}
+		my %candidates_hash = merge_candidates( \@hash );
+		create_directories( \%candidates_hash, $sequence_dir );
+	}
+	process_tests($job_dir);
+	return;
 }
 
 =method process_sequence
@@ -121,20 +124,20 @@ Process a single sequence
 =cut
 
 sub process_sequence {
-    my @args = @_;
-    my $sequence_dir = shift @args;
-    my $name     = shift @args;
-    my $sequence = shift @args;
-    my $strand   = shift @args;
+	my @args         = @_;
+	my $sequence_dir = shift @args;
+	my $name         = shift @args;
+	my $sequence     = shift @args;
+	my $strand       = shift @args;
 
-    ## Running RNALfold
-    debug( 'Running RNALfold', 1 );
-    my $rnalfold_output =
-      File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
+	## Running RNALfold
+	debug( 'Running RNALfold', 1 );
+	my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
 
 	my $temp_file = File::Spec->catfile( $sequence_dir, 'tempFile.txt' );
-    PipelineMiRNA::Programs::run_rnalfold( $name, $sequence, $temp_file, $rnalfold_output )
-     or die("Problem when running RNALfold: $!");
+	PipelineMiRNA::Programs::run_rnalfold( $name, $sequence, $temp_file,
+		$rnalfold_output )
+	  or die("Problem when running RNALfold: $!");
 
 	## Running RNAstemloop
 	my $rnastemloop_out_optimal =
@@ -147,12 +150,14 @@ sub process_sequence {
 	  or die("Problem when running RNAstemloop");
 
 	my $rnaeval_out =
-	   run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal,  'optimal' );
-    run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
-    my $seq_length = length $sequence;
+	  run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal, 'optimal' );
+	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop,  'stemloop' );
+	my $seq_length = length $sequence;
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
 	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
-	my $res = process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH, $EVAL_FH );
+	my $res =
+	  process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH,
+		$EVAL_FH );
 	close($STEM_FH);
 	close($EVAL_FH);
 	return $res;
@@ -207,7 +212,8 @@ sub process_RNAstemloop {
 			$line2 = substr( <$EVAL_FH>, 0, -1 );    # the sequence as well
 
 			if ( $dna ne $line2 ) {
-				                                  # Should not happen
+
+				# Should not happen
 			}
 
 		}
@@ -216,19 +222,23 @@ sub process_RNAstemloop {
 			$line2  = <$EVAL_FH>;    # the structure as well, and the energy
 			if ( my ( $structure, $energy ) =
 				PipelineMiRNA::Parsers::parse_Vienna_line($line2) )
-			{                     # We have a structure
+			{                        # We have a structure
 				if ( $Vienna ne $structure ) {
 				}
 
 				if ( $nameSeq =~ /.*__(\d*)-(\d*)$/ ) {
-					my $mfei = PipelineMiRNA::Utils::compute_mfei($dna, $energy);
-                    my ($start, $end);
-                    if( $strand eq '-' ){
-                        my $res = PipelineMiRNA::Utils::get_position_from_opposite_strand($1, $2, $seq_length);
-                        ($start, $end) = @{$res};
-                    } else {
-                        ($start, $end) = ($1, $2);
-                    }
+					my $mfei =
+					  PipelineMiRNA::Utils::compute_mfei( $dna, $energy );
+					my ( $start, $end );
+					if ( $strand eq '-' ) {
+						my $res =
+						  PipelineMiRNA::Utils::get_position_from_opposite_strand
+						  ( $1, $2, $seq_length );
+						( $start, $end ) = @{$res};
+					}
+					else {
+						( $start, $end ) = ( $1, $2 );
+					}
 					$hash[ $index++ ] = {
 						"name"      => $nameSeq,
 						"start"     => $start,
@@ -262,13 +272,13 @@ Test whether one candidate is overlapping with the other
 =cut
 
 sub is_overlapping {
-    my @args      = @_;
-    my $start     = shift @args or die('Not enough values provided');
-    my $end       = shift @args or die('Not enough values provided');
-    my $ref_start = shift @args or die('Not enough values provided');
-    my $ref_end   = shift @args or die('Not enough values provided');
-    $ref_start <= $start or die('Positions should be ordered');
-    return ( $start < ( $ref_start + $ref_end ) / 2 );
+	my @args      = @_;
+	my $start     = shift @args or die('Not enough values provided');
+	my $end       = shift @args or die('Not enough values provided');
+	my $ref_start = shift @args or die('Not enough values provided');
+	my $ref_end   = shift @args or die('Not enough values provided');
+	$ref_start <= $start or die('Positions should be ordered');
+	return ( $start < ( $ref_start + $ref_end ) / 2 );
 }
 
 =method is_included
@@ -279,13 +289,13 @@ Test whether one candidate is included into the other
 =cut
 
 sub is_included {
-    my @args      = @_;
-    my $start     = shift @args or die('Not enough values provided');
-    my $end       = shift @args or die('Not enough values provided');
-    my $ref_start = shift @args or die('Not enough values provided');
-    my $ref_end   = shift @args or die('Not enough values provided');
-    $ref_start <= $start or die('Positions should be ordered');
-    return ( $end <= $ref_end );
+	my @args      = @_;
+	my $start     = shift @args or die('Not enough values provided');
+	my $end       = shift @args or die('Not enough values provided');
+	my $ref_start = shift @args or die('Not enough values provided');
+	my $ref_end   = shift @args or die('Not enough values provided');
+	$ref_start <= $start or die('Positions should be ordered');
+	return ( $end <= $ref_end );
 }
 
 =method merge_candidates
@@ -297,61 +307,61 @@ We assume the candidates array is already sorted by growing position
 
 sub merge_candidates {
 
-    my (@candidates_array) = @{ +shift };
-    my $nb_candidates = scalar @candidates_array;
+	my (@candidates_array) = @{ +shift };
+	my $nb_candidates = scalar @candidates_array;
 
-    my @merged_candidates   = ();
-    my %final_hash          = ();
-    my %reference_candidate = %{ $candidates_array[0] };
-    my %best_candidate      = %reference_candidate;
-    my %current_candidate;
-    for my $candidate_index ( 1 .. $#candidates_array ) {
-        %current_candidate = %{ $candidates_array[$candidate_index] };
-        my $start = $current_candidate{'start'};
-        my $end   = $current_candidate{'end'};
-        my ( $ref_start, $ref_end ) =
-          ( $reference_candidate{'start'}, $reference_candidate{'end'} );
-        if ( is_included( $start, $end, $ref_start, $ref_end ) ) {
-            if ( $best_candidate{'mfei'} <= -0.8 ) {
-                push @merged_candidates, {%current_candidate};
-            }
-            else {
-                if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
-                    push @merged_candidates, {%best_candidate};
-                    %best_candidate = %current_candidate;
-                }
-                else {
-                    push @merged_candidates, {%current_candidate};
-                }
-            }
+	my @merged_candidates   = ();
+	my %final_hash          = ();
+	my %reference_candidate = %{ $candidates_array[0] };
+	my %best_candidate      = %reference_candidate;
+	my %current_candidate;
+	for my $candidate_index ( 1 .. $#candidates_array ) {
+		%current_candidate = %{ $candidates_array[$candidate_index] };
+		my $start = $current_candidate{'start'};
+		my $end   = $current_candidate{'end'};
+		my ( $ref_start, $ref_end ) =
+		  ( $reference_candidate{'start'}, $reference_candidate{'end'} );
+		if ( is_included( $start, $end, $ref_start, $ref_end ) ) {
+			if ( $best_candidate{'mfei'} <= -0.8 ) {
+				push @merged_candidates, {%current_candidate};
+			}
+			else {
+				if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
+					push @merged_candidates, {%best_candidate};
+					%best_candidate = %current_candidate;
+				}
+				else {
+					push @merged_candidates, {%current_candidate};
+				}
+			}
 
-        }
-        elsif ( is_overlapping( $start, $end, $ref_start, $ref_end ) ) {
-            if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
-                push @merged_candidates, {%best_candidate};
-                %best_candidate = %current_candidate;
-            }
-            else {
-                push @merged_candidates, {%current_candidate};
-            }
-        }
-        else {
-            my $final_name = $best_candidate{'name'};
-            $final_hash{$final_name}                 = {};
-            $final_hash{$final_name}{'max'}          = {%best_candidate};
-            $final_hash{$final_name}{'alternatives'} = [@merged_candidates];
-            @merged_candidates                       = undef;
-            @merged_candidates                       = ();
-            %reference_candidate                     = %current_candidate;
-            %best_candidate                          = %reference_candidate;
-        }
+		}
+		elsif ( is_overlapping( $start, $end, $ref_start, $ref_end ) ) {
+			if ( $current_candidate{'mfei'} < $best_candidate{'mfei'} ) {
+				push @merged_candidates, {%best_candidate};
+				%best_candidate = %current_candidate;
+			}
+			else {
+				push @merged_candidates, {%current_candidate};
+			}
+		}
+		else {
+			my $final_name = $best_candidate{'name'};
+			$final_hash{$final_name}                 = {};
+			$final_hash{$final_name}{'max'}          = {%best_candidate};
+			$final_hash{$final_name}{'alternatives'} = [@merged_candidates];
+			@merged_candidates                       = undef;
+			@merged_candidates                       = ();
+			%reference_candidate                     = %current_candidate;
+			%best_candidate                          = %reference_candidate;
+		}
 
-    }    #foreach
-    my $final_name = $best_candidate{'name'};
-    $final_hash{$final_name}                 = {};
-    $final_hash{$final_name}{'max'}          = {%best_candidate};
-    $final_hash{$final_name}{'alternatives'} = [@merged_candidates];
-    return %final_hash;
+	}    #foreach
+	my $final_name = $best_candidate{'name'};
+	$final_hash{$final_name}                 = {};
+	$final_hash{$final_name}{'max'}          = {%best_candidate};
+	$final_hash{$final_name}{'alternatives'} = [@merged_candidates];
+	return %final_hash;
 }
 
 =method create_directories
@@ -361,20 +371,20 @@ Create the necessary directories.
 =cut
 
 sub create_directories {
-    my @args                 = @_;
-    my (%candidates_hash)    = %{ shift @args };
-    my $current_sequence_dir = shift @args;
-    my $candidate_counter    = 0;
-    foreach my $key ( sort keys %candidates_hash ) {
-        $candidate_counter++;
-        my $candidate_dir =
-          File::Spec->catdir( $current_sequence_dir, $candidate_counter );
-        mkdir $candidate_dir;
-        my $candidate_ref = $candidates_hash{$key}{'max'};
-        populate_candidate_directory( $candidate_dir, $candidate_ref,
-            $candidates_hash{$key}{'alternatives'} );
-    }
-    return;
+	my @args                 = @_;
+	my (%candidates_hash)    = %{ shift @args };
+	my $current_sequence_dir = shift @args;
+	my $candidate_counter    = 0;
+	foreach my $key ( sort keys %candidates_hash ) {
+		$candidate_counter++;
+		my $candidate_dir =
+		  File::Spec->catdir( $current_sequence_dir, $candidate_counter );
+		mkdir $candidate_dir;
+		my $candidate_ref = $candidates_hash{$key}{'max'};
+		populate_candidate_directory( $candidate_dir, $candidate_ref,
+			$candidates_hash{$key}{'alternatives'} );
+	}
+	return;
 }
 
 =method populate_candidate_directory
@@ -384,41 +394,41 @@ Populate a candidate directory with the sequence, strand & so on.
 =cut
 
 sub populate_candidate_directory {
-    my @args               = @_;
-    my $candidate_dir      = shift @args;
-    my %candidate          = %{ shift @args };
-    my @alternatives_array = @{ shift @args };
+	my @args               = @_;
+	my $candidate_dir      = shift @args;
+	my %candidate          = %{ shift @args };
+	my @alternatives_array = @{ shift @args };
 
-    #Writing seq.txt
-    my $candidate_sequence = File::Spec->catfile( $candidate_dir, 'seq.txt' );
-    open( my $SEQ_FH, '>', $candidate_sequence )
-      or die "Error when opening $candidate_sequence: $!";
-    print $SEQ_FH ">$candidate{'name'}\n$candidate{'dna'}\n";
-    close $SEQ_FH;
+	#Writing seq.txt
+	my $candidate_sequence = File::Spec->catfile( $candidate_dir, 'seq.txt' );
+	open( my $SEQ_FH, '>', $candidate_sequence )
+	  or die "Error when opening $candidate_sequence: $!";
+	print $SEQ_FH ">$candidate{'name'}\n$candidate{'dna'}\n";
+	close $SEQ_FH;
 
-    #Writing strand
-    my $strand_file = File::Spec->catfile( $candidate_dir, 'strand.txt' );
-    open( my $STRAND_FH, '>', $strand_file )
-      or die "Error when opening $strand_file: $!";
-    print $STRAND_FH $candidate{'strand'};
-    close $STRAND_FH;
+	#Writing strand
+	my $strand_file = File::Spec->catfile( $candidate_dir, 'strand.txt' );
+	open( my $STRAND_FH, '>', $strand_file )
+	  or die "Error when opening $strand_file: $!";
+	print $STRAND_FH $candidate{'strand'};
+	close $STRAND_FH;
 
-    process_outRNAFold( $candidate_dir, 'optimal', $candidate{'name'},
-        $candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
-    process_outRNAFold( $candidate_dir, 'stemloop', $candidate{'name'},
-        $candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
+	process_outRNAFold( $candidate_dir, 'optimal', $candidate{'name'},
+		$candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
+	process_outRNAFold( $candidate_dir, 'stemloop', $candidate{'name'},
+		$candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
 
-    #Writing alternativeCandidates.txt
-    my $alternative_candidates =
-      File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
-    open( my $OUT2, '>>', $alternative_candidates )
-      or die "Error when opening $alternative_candidates: $!";
-    foreach my $alternative (@alternatives_array) {
-        print $OUT2
+	#Writing alternativeCandidates.txt
+	my $alternative_candidates =
+	  File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
+	open( my $OUT2, '>>', $alternative_candidates )
+	  or die "Error when opening $alternative_candidates: $!";
+	foreach my $alternative (@alternatives_array) {
+		print $OUT2
 ">$alternative->{'name'}\t$alternative->{'dna'}\t$alternative->{'structure'}\t$alternative->{'mfei'}\n";
-    }
-    close $OUT2;
-    return;
+	}
+	close $OUT2;
+	return;
 }
 
 =method process_outRNAFold
@@ -447,15 +457,15 @@ Perform the a posteriori tests for a given job
 =cut
 
 sub process_tests {
-	my ( $job_dir ) = @_;
+	my ($job_dir) = @_;
 	debug( "A posteriori tests in $job_dir", 1 );
 	##Traitement fichier de sortie outStemloop
 	opendir DIR, $job_dir;    #ouverture répertoire job
 	my @dirs;
 	@dirs = readdir DIR;
 	closedir DIR;
-    my $candidates_dir = File::Spec->catdir($job_dir, 'candidates');
-    mkdir $candidates_dir;
+	my $candidates_dir = File::Spec->catdir( $job_dir, 'candidates' );
+	mkdir $candidates_dir;
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
 		debug( "Considering $dir", 1 );
@@ -489,8 +499,8 @@ sub process_tests {
 					if (
 						!eval {
 							PipelineMiRNA::Candidate
-							  ->serialize_candidate_information(
-								$job_dir, $dir, $subDir, $candidates_dir );
+							  ->serialize_candidate_information( $job_dir, $dir,
+								$subDir, $candidates_dir );
 						}
 					  )
 					{
@@ -556,11 +566,11 @@ sub process_tests_for_candidate {
 	my $cfg = PipelineMiRNA->CONFIG();
 
 	####calcul MFEI (appel script energie.pl)
-	if ( $cfg->param('options.mfe') ) {
-		debug( "Running test_mfei on $file", 1 );
-		PipelineMiRNA::PosterioriTests::test_mfei( $candidate_dir,
-			$candidate_ct_optimal_file, $file );
-	}
+
+	debug( "Running test_mfei on $file", 1 );
+	PipelineMiRNA::PosterioriTests::test_mfei( $candidate_dir,
+		$candidate_ct_optimal_file, $file );
+
 	####calcul p-value randfold
 	if ( $cfg->param('options.randfold') ) {
 		debug( "Running test_randfold on $seq_file", 1 );
@@ -569,9 +579,12 @@ sub process_tests_for_candidate {
 	}
 	if ( $cfg->param('options.align') ) {
 		debug( "Running test_alignment on $candidate_ct_stemloop_file", 1 );
-		my $file_alignement = PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
+		my $file_alignement =
+		  PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
 			$candidate_ct_stemloop_file );
-		post_process_alignments($candidate_dir, $candidate_rnafold_stemploop_out, $file_alignement);
+		post_process_alignments( $candidate_dir,
+			$candidate_rnafold_stemploop_out,
+			$file_alignement );
 	}    # if file
 
 	return;
@@ -583,29 +596,43 @@ sub process_tests_for_candidate {
 =cut
 
 sub post_process_alignments {
-    my @args = @_;
-    my $candidate_dir = shift @args;
-    my $candidate_rnafold_stemploop_out = shift @args;
-    my $file_alignement = shift @args;
+	my @args                            = @_;
+	my $candidate_dir                   = shift @args;
+	my $candidate_rnafold_stemploop_out = shift @args;
+	my $file_alignement                 = shift @args;
 
-    my @res = PipelineMiRNA::Components::get_data_from_rnafold_out($candidate_rnafold_stemploop_out);
-    my ($name, $position, $DNASequence, $Vienna) = @res;
-    my %alignments;
-    if (! eval {%alignments = PipelineMiRNA::Components::parse_custom_exonerate_output($file_alignement);}) {
-        # Catching exception
-    } else {
-        %alignments = PipelineMiRNA::Components::merge_alignments(\%alignments);
-        my $tmp_file = File::Spec->catfile($candidate_dir, "mirdup_validation.txt");
-        my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $name,
-                                                                         $DNASequence, $Vienna,
-                                                                         keys %alignments);
-        my $mirdup_results_file = File::Spec->catfile($candidate_dir, 'mirdup_results.yml');
-        YAML::XS::DumpFile($mirdup_results_file, %mirdup_results);
+	my @res =
+	  PipelineMiRNA::Components::get_data_from_rnafold_out(
+		$candidate_rnafold_stemploop_out);
+	my ( $name, $position, $DNASequence, $Vienna ) = @res;
+	my %alignments;
+	if (
+		!eval {
+			%alignments =
+			  PipelineMiRNA::Components::parse_custom_exonerate_output(
+				$file_alignement);
+		}
+	  )
+	{
 
-        my $alignments_results_file = File::Spec->catfile($candidate_dir, 'merged_alignments.yml');
-        YAML::XS::DumpFile($alignments_results_file, %alignments);
-    }
+		# Catching exception
+	}
+	else {
+		%alignments =
+		  PipelineMiRNA::Components::merge_alignments( \%alignments );
+		my $tmp_file =
+		  File::Spec->catfile( $candidate_dir, "mirdup_validation.txt" );
+		my %mirdup_results =
+		  PipelineMiRNA::MiRdup->validate_with_mirdup( $tmp_file, $name,
+			$DNASequence, $Vienna, keys %alignments );
+		my $mirdup_results_file =
+		  File::Spec->catfile( $candidate_dir, 'mirdup_results.yml' );
+		YAML::XS::DumpFile( $mirdup_results_file, %mirdup_results );
+
+		my $alignments_results_file =
+		  File::Spec->catfile( $candidate_dir, 'merged_alignments.yml' );
+		YAML::XS::DumpFile( $alignments_results_file, %alignments );
+	}
 }
-
 
 1;
