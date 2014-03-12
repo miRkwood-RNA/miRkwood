@@ -119,7 +119,7 @@ sub parse_candidate_information {
       File::Spec->catfile( $full_candidate_dir, 'randfold.out' );
     if ( -e $randfold_output )    # si fichier existe
     {
-        $result{'p_value'} = PipelineMiRNA::Parsers::parse_pvalue($randfold_output);
+        $result{'shuffles'} = PipelineMiRNA::Parsers::parse_pvalue($randfold_output);
     }
 
     #Récupération valeur MFEI
