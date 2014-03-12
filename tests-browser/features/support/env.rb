@@ -6,6 +6,15 @@ require 'page-object/page_factory'
 browser = nil
 Browser = Watir::Browser
 
+if ENV['HEADLESS']
+  require 'headless'
+  headless = Headless.new
+  headless.start
+  at_exit do
+    headless.destroy
+  end
+end
+
 if ENV['BROWSER'] == 'firefox'
   browser = Browser.new :ff
 elsif ENV['BROWSER'] == 'chrome'
