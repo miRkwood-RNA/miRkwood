@@ -28,7 +28,7 @@ Or through `bundle`:
 
 To run tests with a specific browser:
 
-    cucumber CHROME=true
-    cucumber FIREFOX=true
-    cucumber PHANTOM=true
+    cucumber BROWSER=firefox
+    cucumber BROWSER=chrome
+    cucumber BROWSER=phantomjs
 

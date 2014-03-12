@@ -6,12 +6,12 @@ require 'page-object/page_factory'
 browser = nil
 Browser = Watir::Browser
 
-if ENV['FIREFOX']
+if ENV['BROWSER'] == 'firefox'
   browser = Browser.new :ff
-elsif ENV['CHROME']
+elsif ENV['BROWSER'] == 'chrome'
   Selenium::WebDriver::Chrome.path = '/usr/bin/chromium-browser'
   browser = Browser.new :chrome
-elsif ENV['PHANTOM']
+elsif ENV['BROWSER'] == 'phantomjs'
   browser = Watir::Browser.new :phantomjs
 else
   browser = Browser.new
