@@ -437,26 +437,22 @@ sub make_hairpin_with_mature {
 		my $converted_left = $length - $right;
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $converted_left, $pseudo_size, $bottom );
+		my $bottom_mature = substr( $bottom, $true_left, $size );
 		substr( $bottom, $true_left, $size ) =
-		    '<span class="mature">'
-		  . substr( $bottom, $true_left, $size )
-		  . '</span>';
+		    '<span class="mature">' . $bottom_mature . '</span>';
+		my $lower_mature = substr( $lower, $true_left, $size );
 		substr( $lower, $true_left, $size ) =
-		    '<span class="mature">'
-		  . substr( $lower, $true_left, $size )
-		  . '</span>';
+		    '<span class="mature">' . $lower_mature . '</span>';
 	}
 	else {
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $left, $pseudo_size, $top );
-		substr( $top, $true_left, $size ) =
-		    '<span class="mature">'
-		  . substr( $top, $true_left, $size )
-		  . '</span>';
+	    my $top_mature = substr( $top, $true_left, $size );
+		substr( $top, $true_left, $size) =
+		    '<span class="mature">' . $top_mature . '</span>';
+		my $upper_mature = substr( $upper, $true_left, $size );
 		substr( $upper, $true_left, $size ) =
-		    '<span class="mature">'
-		  . substr( $upper, $true_left, $size )
-		  . '</span>';
+		    '<span class="mature">' . $upper_mature . '</span>';
 
 	}
 	$hairpin_with_mature = <<"END";
