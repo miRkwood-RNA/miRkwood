@@ -25,14 +25,6 @@ ok( my $result2 = PipelineMiRNA::WebTemplate::get_css_file(),
 ok( my $result3 = PipelineMiRNA::WebTemplate::get_js_file(),
     'can call get_js_file()');
 
-ok( my $result4 = PipelineMiRNA::WebTemplate::get_error_page("Error"),
-    'can call get_error_page()');
-my $expected_file4 = input_file('WebTemplate.get_error_page.out');
-file_exists_ok($expected_file4);
-my $expected4 = "Content-type: text/html\n\n" . slurp_file($expected_file4);
-is( $result4, $expected4,
-    'get_error_page returns expected value');
-
 ok( $ENV{SERVER_NAME} = 'toto',
     'Can set SERVER_NAME variable');
 ok( my $result6 = PipelineMiRNA::WebTemplate::make_url('ABCDE'),
