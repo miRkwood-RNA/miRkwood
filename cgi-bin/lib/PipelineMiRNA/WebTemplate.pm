@@ -113,21 +113,16 @@ Return a generic error page
 sub get_error_page {
     my @args = @_;
     my $error_message = shift @args;
-    my $css = get_css_file();
-    my $js  = get_js_file();
-    my $html = <<"HTML";
+    my @css = (get_server_css_file(), get_css_file());
+    my @js  = (get_js_file());
+
+    my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content("<br/>$error_message", \@css, \@js);
+    my $res = <<"HTML";
 Content-type: text/html
 
-<html>
-    <head>
-        <LINK rel="stylesheet" type="text/css" href="$css" />
-        <script src="$js" type="text/javascript" LANGUAGE="JavaScript"></script>
-        <title>MicroRNA identification</title>
-    </head>
-    <body>
-        $error_message
-    </body>
+$html
 HTML
+    return $res;
 }
 
 
