@@ -107,7 +107,13 @@ sub main_entry {
 		else {
 			@hash = @hash1;
 		}
-		my %candidates_hash = merge_candidates( \@hash );
+		my %candidates_hash;
+		if (@hash) {
+			%candidates_hash = merge_candidates( \@hash );
+		}
+		else {
+		    %candidates_hash = ();
+		}
 		create_directories( \%candidates_hash, $sequence_dir );
 	}
 	process_tests($job_dir);
