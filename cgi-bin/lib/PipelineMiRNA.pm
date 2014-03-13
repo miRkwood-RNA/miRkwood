@@ -21,6 +21,8 @@ sub LOGFH{
         my $log_file = shift @args;
         open( my $LOG, '>>', $log_file ) || die "Error when opening log file $log_file: $!";
         $LOG_FH = $LOG;
+        use CGI::Carp qw(carpout);
+        carpout($LOG);
     }
     return $LOG_FH;
 }
