@@ -181,6 +181,30 @@ END
 is ($hairpin_with_mature, $expected13,
     'make_hairpin_with_mature ok on edge case');
 
+# Bug 2014-03-13
+my $hairpin2 = <<"END";
+    gg   c  --------      uaaaa   aac    c    u
+agug  ugg gc        gggagc     uca   ucua gcug u
+||||  ||| ||        ||||||     |||   |||| |||| 
+ucac  acc cg        cccucg     agu   aggu uggc u
+    aa   -  uuuaacuu      uggga   c--    -    a
+';
+END
+ok (my $hairpin_with_mature2 = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin2, 45, 66, 84),
+    'Can call make_hairpin_with_mature on other edge case');
+
+my $expected2 = <<"END";
+    gg   c  --------      uaaaa   aac    c    u
+agug  ugg gc        gggagc     uca   ucua gcug u
+||||  ||| ||        ||||||     |||   |||| |||| 
+ucac  acc cg       <span class="mature"> cccucg     agu   aggu </span>uggc u
+    aa   -  uuuaacu<span class="mature">u      uggga   c--    -</span>    a
+END
+
+is ($hairpin_with_mature2, $expected2,
+    'make_hairpin_with_mature ok on other edge case');
+
+
 my $input_fasta_ok = ">Seq
 aatgagtaagataaa
 ";

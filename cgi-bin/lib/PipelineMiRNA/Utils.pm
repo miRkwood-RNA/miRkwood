@@ -431,7 +431,7 @@ sub make_hairpin_with_mature {
 	my $hairpin_with_mature;
 	my $pseudo_size = $right - $left;
 	my $l           = length($top);
-	if ( $left >= $l ) {
+	if ( $right >= $l ) {
 
 		#on the other side
 		my $converted_left = $length - $right;
