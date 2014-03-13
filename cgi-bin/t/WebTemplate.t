@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More qw/no_plan/;
+use Test::File;
 
 use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
@@ -26,19 +27,9 @@ ok( my $result3 = PipelineMiRNA::WebTemplate::get_js_file(),
 
 ok( my $result4 = PipelineMiRNA::WebTemplate::get_error_page("Error"),
     'can call get_error_page()');
-my $expected4 = <<"HTML";
-Content-type: text/html
-
-<html>
-    <head>
-        <LINK rel="stylesheet" type="text/css" href="$result2" />
-        <script src="$result3" type="text/javascript" LANGUAGE="JavaScript"></script>
-        <title>MicroRNA identification</title>
-    </head>
-    <body>
-        Error
-    </body>
-HTML
+my $expected_file4 = input_file('WebTemplate.get_error_page.out');
+file_exists_ok($expected_file4);
+my $expected4 = "Content-type: text/html\n\n" . slurp_file($expected_file4);
 is( $result4, $expected4,
     'get_error_page returns expected value');
 

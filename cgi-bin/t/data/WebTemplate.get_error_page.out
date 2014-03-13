@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
+        <title>miRkwood - MicroRNA identification</title>
+        <link type='text/css' rel='stylesheet' href='/Style/bioinfo.css' />
+<link type='text/css' rel='stylesheet' href='/html/style/script.css' />
+        <script type='text/javascript' src='/html/js/miARN.js'></script>
+    </head>
+        <body>
+        <div class="theme-border"></div>
+        <div class="logo"></div>
+        <!-- debut du fichier qui represente le menu colore vertical de gauche -->
+
+<div class="bloc_gauche">
+  <div class="menu">
+      
+    <!-- DNA -->
+    <ul class="menu_partie"> 
+      <li class ="case_titre DNA_titre">
+	<a href="/DNA/">DNA</a> 
+      </li>
+    <!-- YASS -->  
+      <li class ="case DNA">
+	<a href="/yass/">YASS</a>
+      </li>
+    <!-- Magnolia -->
+      <li class="case DNA">
+        <a href="/magnolia/">Magnolia</a>
+      </li>
+    <!-- Mreps --> 
+      <li class ="case DNA">
+	<a href="/mreps/">mreps</a>
+      </li>
+    </ul>
+    
+    
+    <!-- HTS -->
+    <ul class="menu_partie">
+      <li class="case_titre HTS_titre">
+	<a href="/HTS/">HTS</a>
+      </li>
+    <!-- SortMeRNA -->
+      <li class="case HTS">
+        <a href="/RNA/sortmerna/">SortMeRNA</a>
+      </li>
+    <!-- CRAC -->
+      <li class="case HTS">
+	<a href="/crac/">CRAC</a>
+      </li>    
+    <!-- Vidjil -->
+      <li class="case HTS">
+	<a href="/vidjil/">Vidjil</a>
+      </li>
+    <!-- SToRM -->
+      <li class="case HTS">
+	<a href="/yass/iedera_solid/storm/">SToRM</a>
+      </li>
+    </ul>
+    
+    <!-- RNA -->
+    <ul class="menu_partie"> 
+      <li class="case_titre Rna_titre">
+	<a href="/RNA/">RNA</a>
+      </li>
+    <!-- Carnac -->
+      <li class="case Rna">
+	<a href="/RNA/carnac/">Carnac</a>
+      </li>
+    <!-- RNAfamily -->
+      <li class="case Rna">
+	<a href="/RNA/RNAfamily/rnafamily.php">RNAfamily</a>
+      </li>
+    <!-- Gardenia -->
+      <li class="case Rna">
+	<a href="/RNA/gardenia/">Gardenia</a>
+      </li>
+    <!-- Regliss -->
+      <li class="case Rna">
+	<a href="/RNA/regliss/">Regliss</a>
+      </li>
+    <!-- GC-seq -->  
+      <li class="case Rna">
+	<a href="/CGseq/">CG-seq</a>
+      </li>
+    <!-- RNAspace -->
+      <li class="case Rna">
+        <a href="http://www.rnaspace.org/">RNAspace</a>
+      </li>
+    <!-- miRkwood -->
+      <li class="case Rna">
+      	  <a href="/arn/html/">miRkwood</a>
+      </li>
+    </ul>
+    
+    
+    <!-- Proteins -->
+    <ul class="menu_partie">
+      <li class="case_titre proteins_titre">
+	<a href="/proteins/">Proteins</a>
+      </li>
+    <!-- Path -->
+      <li class ="case proteins">
+        <a href="/path/">Path</a>
+      </li>
+    <!-- Protea -->
+      <li class="case proteins">
+	<a href="/protea/">Protea</a>
+      </li>    
+    <!-- Reblosum -->
+      <li class="case proteins">
+	<a href="/reblosum/">ReBLOSUM</a>
+      </li>
+    </ul>        
+    
+    
+    <!-- TFM -->
+    <ul class="menu_partie"> 
+      <li class="case_titre Tfm_titre">
+	<a href="/TFM/">TFM</a>
+      </li>
+    <!-- TFM-Explorer -->
+      <li class ="case Tfm">
+	<a href="/TFM/TFME/">TFM-Explorer</a>
+      </li>
+    <!-- TFM-Scan -->
+      <li class ="case Tfm">
+	<a href="/TFM/TFMscan/">TFM-Scan</a>
+      </li>
+    <!-- TFM-Pvalue -->
+      <li class="case Tfm">
+	<a href="/TFM/TFMpvalue/">TFM-Pvalue</a>
+      </li>
+    <!-- TFM-CUDA -->
+      <li class="case Tfm">
+	<a href="/TFM/TFM-CUDA/">TFM-CUDA</a>
+      </li>
+    </ul>
+
+    <!-- NRP -->
+    <ul class="menu_partie">
+      <li class ="case_titre Nrp_titre">
+	<a href="/norine/">NRP</a>
+      </li>
+    <!-- Norine -->
+      <li class ="case Nrp"> 
+	<a href="/norine/">Norine</a>
+      </li>
+    </ul>
+
+    <!-- Cacolac -->
+    <ul class="menu_partie">
+      <li class ="case_titre cacolac_titre">
+	<a href="/cacolac/">Cacolac</a>
+      </li>
+      <li class ="case cacolac"> 
+	<a href="/cgi-bin/cacolac/cacolac.py">Cacolac</a>
+      </li>
+
+    </ul>
+
+  </div>
+     
+</div> <!-- bloc gauche-->
+
+<!-- fin du fichier menu.txt -->
+
+
+        <div class="bloc_droit">
+        <div class="frametitle">
+ <h1>miRkwood</h1>
+   <div class="menu_central">
+     <a href="/arn/html">home</a>
+     <a href="/cgi-bin/interface.pl">web server</a>
+     <a href="/cgi-bin/help.pl">help</a>
+     <a href="/cgi-bin/id.pl">retrieve result with an ID</a>
+   </div>
+</div>
+
+            <br/>Error
+        </div><!-- bloc droit-->
+        <div class="theme-border-footer"></div>
+<div class="copyright">
+     <table class="footerTable">
+     	    <tr>
+		<td align="left">
+		For questions about <b>miRkwood</b> or for bug reports, please contact miRkwood team
+		</td>
+		<td align="right">
+		2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>
+        	</td>
+	     </tr>
+     </table>
+</div>
+    </body>
+
+</html>
+
