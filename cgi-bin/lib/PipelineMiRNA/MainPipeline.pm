@@ -105,6 +105,12 @@ sub main_entry {
 		else {
 			@hash = @hash1;
 		}
+
+        if ( $cfg->param('options.mfe') ) {
+            debug('Select only sequences with MFEI < -0.6', PipelineMiRNA->DEBUG() );
+            @hash = grep { mfei_below_threshold($_, -0.6) } @hash;
+        }
+
 		my %candidates_hash;
 		if (@hash) {
 			%candidates_hash = merge_candidates( \@hash );
@@ -112,10 +118,26 @@ sub main_entry {
 		else {
 		    %candidates_hash = ();
 		}
+
 		create_directories( \%candidates_hash, $sequence_dir );
 	}
 	process_tests($job_dir);
 	return;
+}
+
+=method mfei_below_threshold
+
+Return whether a given candidate has its mfei above a given threshold
+
+=cut
+
+sub mfei_below_threshold {
+    my @args      = @_;
+    my $candidate = shift @args;
+    my $threshold = shift @args;
+    my %current_candidate = %{ $candidate };
+    my $mfei = $current_candidate{'mfei'};
+    return $mfei < $threshold;
 }
 
 =method process_sequence
