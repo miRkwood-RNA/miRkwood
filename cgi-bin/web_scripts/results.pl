@@ -3,7 +3,6 @@ use strict;
 use warnings;
 
 use CGI;
-use CGI::Carp qw(fatalsToBrowser);
 use Cwd qw( abs_path );
 use File::Basename qw(dirname);
 use File::Spec;
