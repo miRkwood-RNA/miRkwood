@@ -27,6 +27,22 @@ sub LOGFH{
     return $LOG_FH;
 }
 
+our $DEBUG;
+
+=method DEBUG
+
+Set and get the debug verbosity
+
+=cut
+
+sub DEBUG{
+    my ($self, @args) = @_;
+    if (@args == 1){
+        $DEBUG = shift @args;
+    }
+    return $DEBUG;
+}
+
 
 our $CONFIG_FILE;
 our $CONFIG;

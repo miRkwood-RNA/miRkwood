@@ -174,7 +174,7 @@ sub run_randfold {
     my $iterations  = shift @args;
     my ( $input, $output ) = @_;
     my $randfold_cmd = "$randfold_bin --iterations $iterations --fast --fasta $input_file > $output";
-    debug($randfold_cmd, 1);
+    debug($randfold_cmd, PipelineMiRNA->DEBUG());
     system($randfold_cmd);
     return ( -e $output_file );
 }
@@ -222,7 +222,7 @@ sub run_exonerate {
       . "--ryo '$output_fmt'"       # Using custom output format
       . "> $output  2> /dev/null";  # Stdout to file, stderr to /dev/null
 
-    debug($exonerate_cmd, 1);
+    debug($exonerate_cmd, PipelineMiRNA->DEBUG());
     system($exonerate_cmd);
     return ( -e $output );
 }

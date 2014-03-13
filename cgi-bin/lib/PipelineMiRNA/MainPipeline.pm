@@ -5,7 +5,6 @@ package PipelineMiRNA::MainPipeline;
 use strict;
 use warnings;
 
-use CGI::Carp qw(fatalsToBrowser);
 use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
@@ -52,41 +51,40 @@ Run the pipeline.
 
 sub main_entry {
 	my ( $filter, $strand, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
-	my $debug = 1;
 	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
 	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
-
+    PipelineMiRNA->DEBUG(1);
 	my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
 	PipelineMiRNA->CONFIG_FILE($run_options_file);
 	write_config( $strand, $mfe, $randfold, $align, $run_options_file );
 
-	debug( 'BEGIN execute_scripts', $debug );
+	debug( 'BEGIN execute_scripts', PipelineMiRNA->DEBUG() );
 	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
 	if ($filter) {
-		debug( 'FilteringCDS', $debug );
+		debug( 'FilteringCDS', PipelineMiRNA->DEBUG() );
 		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $plant );
 	}
 	else {
 		my $sequence_uploaded =
 		  File::Spec->catfile( $job_dir, 'sequenceUpload.fas' );
-		debug( "Moving file $sequence_uploaded to $sequences_input", $debug );
+		debug( "Moving file $sequence_uploaded to $sequences_input", PipelineMiRNA->DEBUG() );
 		File::Copy::move( $sequence_uploaded, $sequences_input );
 	}
 
 	##Passage du multifasta -> fasta et appel au script Stemloop
-	debug( "Opening multifasta $sequences_input", $debug );
+	debug( "Opening multifasta $sequences_input", PipelineMiRNA->DEBUG() );
 	open my $ENTREE_FH, '<', $sequences_input
 	  or die "Error when opening sequences -$sequences_input-: $!";
-	debug( "Calling parse_multi_fasta() on $sequences_input", $debug );
+	debug( "Calling parse_multi_fasta() on $sequences_input", PipelineMiRNA->DEBUG() );
 	my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
 	close $ENTREE_FH;
 
-	debug( 'Iterating over names', $debug );
+	debug( 'Iterating over names', PipelineMiRNA->DEBUG() );
 
 	my $sequence_dir_name = 0;
 
 	while ( my ( $name, $sequence ) = each %tab ) {
-		debug( "Considering sequence $sequence_dir_name: $name", $debug );
+		debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
 		$sequence_dir_name++;
 		my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
 		mkdir $sequence_dir;
@@ -96,7 +94,7 @@ sub main_entry {
 		my @hash;
 		my $cfg = PipelineMiRNA->CONFIG();
 		if ( $cfg->param('options.strands') ) {
-			debug( "Processing the other strand", 1 );
+			debug( "Processing the other strand", PipelineMiRNA->DEBUG() );
 			my $reversed_sequence =
 			  PipelineMiRNA::Utils::reverse_complement($sequence);
 			my $res2 =
@@ -137,7 +135,7 @@ sub process_sequence {
 	my $strand       = shift @args;
 
 	## Running RNALfold
-	debug( 'Running RNALfold', 1 );
+	debug( 'Running RNALfold', PipelineMiRNA->DEBUG() );
 	my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
 
 	my $temp_file = File::Spec->catfile( $sequence_dir, 'tempFile.txt' );
@@ -150,7 +148,7 @@ sub process_sequence {
 	  File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
 	my $rnastemloop_out_stemloop =
 	  File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
-	debug( "Running RNAstemloop on $rnalfold_output", 1 );
+	debug( "Running RNAstemloop on $rnalfold_output", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
 		$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
 	  or die("Problem when running RNAstemloop");
@@ -177,11 +175,11 @@ sub process_sequence {
 sub run_RNAeval_on_RNAstemloop_output {
 	my ( $rnastemloop_out, $suffix ) = @_;
 	my $current_sequence_dir = dirname($rnastemloop_out);
-	debug( "Processing RNAstemloop output for $suffix $rnastemloop_out", 1 );
+	debug( "Processing RNAstemloop output for $suffix $rnastemloop_out", PipelineMiRNA->DEBUG() );
 	my $rnaeval_out =
 	  File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
-	debug( "Running RNAeval in $rnaeval_out", 1 );
+	debug( "Running RNAeval in $rnaeval_out", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
 	  or die("Problem when running RNAeval");
 
@@ -259,7 +257,7 @@ sub process_RNAstemloop {
 				}
 			}
 			else {
-				debug( "No structure found in $line2", 1 );
+				debug( "No structure found in $line2", PipelineMiRNA->DEBUG() );
 			}    # if $line2
 		}
 		else {
@@ -312,7 +310,6 @@ We assume the candidates array is already sorted by growing position
 =cut
 
 sub merge_candidates {
-
 	my (@candidates_array) = @{ +shift };
 	my $nb_candidates = scalar @candidates_array;
 
@@ -464,7 +461,7 @@ Perform the a posteriori tests for a given job
 
 sub process_tests {
 	my ($job_dir) = @_;
-	debug( "A posteriori tests in $job_dir", 1 );
+	debug( "A posteriori tests in $job_dir", PipelineMiRNA->DEBUG() );
 	##Traitement fichier de sortie outStemloop
 	opendir DIR, $job_dir;    #ouverture répertoire job
 	my @dirs;
@@ -474,19 +471,19 @@ sub process_tests {
 	mkdir $candidates_dir;
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
-		debug( "Considering $dir", 1 );
+		debug( "Considering $dir", PipelineMiRNA->DEBUG() );
 		my $sequence_dir = File::Spec->catdir( $job_dir, $dir );
 		if (   $dir ne '.'
 			&& $dir ne '..'
 			&& -d $sequence_dir )    #si fichier est un répertoire
 		{
-			debug( "Entering sequence $sequence_dir", 1 );
+			debug( "Entering sequence $sequence_dir", PipelineMiRNA->DEBUG() );
 			opendir DIR, $sequence_dir;    # ouverture du sous répertoire
 			my @files;
 			@files = readdir DIR;
 			closedir DIR;
 			foreach my $subDir (@files) {
-				debug( "Considering $subDir", 1 );
+				debug( "Considering $subDir", PipelineMiRNA->DEBUG() );
 				my $candidate_dir =
 				  File::Spec->catdir( $sequence_dir, $subDir );
 				if (   $subDir ne '.'
@@ -494,12 +491,12 @@ sub process_tests {
 					&& -d $candidate_dir
 				  )    # si le fichier est de type repertoire
 				{
-					debug( "Entering candidate $subDir", 1 );
+					debug( "Entering candidate $subDir", PipelineMiRNA->DEBUG() );
 					process_tests_for_candidate( $candidate_dir, $subDir );
-					debug( "Done with candidate $subDir", 1 );
+					debug( "Done with candidate $subDir", PipelineMiRNA->DEBUG() );
 					debug(
 "Pseudo Serializing candidate information:\n $job_dir, $dir, $subDir",
-						1
+						PipelineMiRNA->DEBUG()
 					);
 
 					if (
@@ -512,19 +509,19 @@ sub process_tests {
 					{
 
 						# Catching
-						debug( "Serialization failed", 1 );
+						carp( "Serialization failed" );
 					}
 					else {
-						debug( "Done with serializing $subDir", 1 );
+						debug( "Done with serializing $subDir", PipelineMiRNA->DEBUG() );
 
 						# All is well
 					}
 				}    # foreach my $file (@files)
 			}    # if directory
-			debug( "Done with initial sequence $dir", 1 );
+			debug( "Done with initial sequence $dir", PipelineMiRNA->DEBUG() );
 		}    # foreach my $dir (@dirs)
 	}    #process_tests
-	debug( "Done with all the tests", 1 );
+	debug( "Done with all the tests", PipelineMiRNA->DEBUG() );
 	return 0;
 }
 
@@ -551,40 +548,40 @@ sub process_tests_for_candidate {
 	####conversion en format CT
 	my $candidate_ct_optimal_file =
 	  File::Spec->catfile( $candidate_dir, 'outB2ct_optimal.ct' );
-	debug( "Converting optimal to CT in $candidate_ct_optimal_file", 1 );
+	debug( "Converting optimal to CT in $candidate_ct_optimal_file", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::Programs::convert_to_ct( $candidate_rnafold_optimal_out,
 		$candidate_ct_optimal_file )
 	  or die('Problem when converting to CT format');
 
 	my $candidate_ct_stemloop_file =
 	  File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
-	debug( "Converting stemloop to CT in $candidate_ct_stemloop_file", 1 );
+	debug( "Converting stemloop to CT in $candidate_ct_stemloop_file", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::Programs::convert_to_ct( $candidate_rnafold_stemploop_out,
 		$candidate_ct_stemloop_file )
 	  or die('Problem when converting to CT format');
 
 	my $varna_image = File::Spec->catfile( $candidate_dir, 'image.png' );
-	debug( "Generating image using VARNA in $varna_image", 1 );
+	debug( "Generating image using VARNA in $varna_image", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::Programs::run_varna( $candidate_ct_stemloop_file,
 		$varna_image )
-	  or die('Problem during image generation using VARNA');
+	  or carp('Problem during image generation using VARNA');
 
 	my $cfg = PipelineMiRNA->CONFIG();
 
 	####calcul MFEI (appel script energie.pl)
 
-	debug( "Running test_mfei on $file", 1 );
+	debug( "Running test_mfei on $file", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::PosterioriTests::test_mfei( $candidate_dir,
 		$candidate_ct_optimal_file, $file );
 
 	####calcul p-value randfold
 	if ( $cfg->param('options.randfold') ) {
-		debug( "Running test_randfold on $seq_file", 1 );
+		debug( "Running test_randfold on $seq_file", PipelineMiRNA->DEBUG() );
 		PipelineMiRNA::PosterioriTests::test_randfold( $candidate_dir,
 			$seq_file );
 	}
 	if ( $cfg->param('options.align') ) {
-		debug( "Running test_alignment on $candidate_ct_stemloop_file", 1 );
+		debug( "Running test_alignment on $candidate_ct_stemloop_file", PipelineMiRNA->DEBUG() );
 		my $file_alignement =
 		  PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
 			$candidate_ct_stemloop_file );
