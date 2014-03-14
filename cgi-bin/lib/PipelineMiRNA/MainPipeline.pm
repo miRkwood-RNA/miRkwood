@@ -175,17 +175,20 @@ sub process_sequence {
 		$rnastemloop_out_stemloop, $rnastemloop_out_optimal )
 	  or die("Problem when running RNAstemloop");
 
-	my $rnaeval_out =
+	my $rnaeval_out_optimal =
 	  run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal, 'optimal' );
+    my $rnaeval_out_stemloop =
 	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop,  'stemloop' );
 	my $seq_length = length $sequence;
 	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
-	open( my $EVAL_FH, '<', $rnaeval_out ) or die $!;
+	open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
+	open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
 	my $res =
 	  process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH,
-		$EVAL_FH );
+		$EVAL_OPT_FH, $EVAL_STEM_FH );
 	close($STEM_FH);
-	close($EVAL_FH);
+	close($EVAL_OPT_FH);
+	close($EVAL_STEM_FH);
 	return $res;
 }
 
@@ -222,39 +225,41 @@ sub process_RNAstemloop {
 	my ($strand)       = shift @args;
 	my ($seq_length)   = shift @args;
 	my ($STEM_FH)      = shift @args;
-	my ($EVAL_FH)      = shift @args;
+	my ($EVAL_OPT_FH)  = shift @args;
+	my ($EVAL_STEM_FH) = shift @args;
 	my $index          = 0;
-	my $line2;
-	my ( $nameSeq, $dna, $Vienna );
+	my ($line_eval_opt, $line_eval_stem);
+	my ( $nameSeq, $dna, $structure_stemloop );
 	my @hash = ();
 
-	while ( my $line = <$STEM_FH> ) {
+	while ( my $stem_line = <$STEM_FH> ) {
 
-		if ( ( $line =~ /^>(.*)/ ) ) {    # nom sequence
+		if ( ( $stem_line =~ /^>(.*)/ ) ) {    # nom sequence
 			$nameSeq = $1;
 		}
-		elsif ( ( $line =~ /^[a-zA-Z]/ ) ) { # récupération de la sequence adn
-			$dna = substr $line, 0, -1;
-			$line2 = substr( <$EVAL_FH>, 0, -1 );    # the sequence as well
-
-			if ( $dna ne $line2 ) {
-
-				# Should not happen
+		elsif ( ( $stem_line =~ /^[a-zA-Z]/ ) ) { # récupération de la sequence adn
+			$dna = substr $stem_line, 0, -1;
+			$line_eval_opt = substr( <$EVAL_OPT_FH>, 0, -1 );    # the sequence as well
+			$line_eval_stem = substr( <$EVAL_STEM_FH>, 0, -1 );    # the sequence as well
+			if ( $dna ne $line_eval_opt || $dna ne $line_eval_stem ) {
+				warn ('The sequences differ in RNAeval and RNAstemloop output');
 			}
-
 		}
-		elsif ( ( $line =~ /(.*)/ ) ) {
-			$Vienna = $1;
-			$line2  = <$EVAL_FH>;    # the structure as well, and the energy
-			if ( my ( $structure, $energy ) =
-				PipelineMiRNA::Parsers::parse_Vienna_line($line2) )
+		elsif ( ( $stem_line =~ /(.*)/ ) ) {
+			$structure_stemloop = $1;
+			$line_eval_opt = <$EVAL_OPT_FH>;    # the structure as well, and the energy
+			$line_eval_stem = <$EVAL_STEM_FH>;
+			
+			my ( $structure_optimal, $energy_optimal ) =
+                PipelineMiRNA::Parsers::parse_Vienna_line($line_eval_opt);
+			my ( $structure_stemloop, $energy_stemloop ) =
+                PipelineMiRNA::Parsers::parse_Vienna_line($line_eval_stem);
+			if ($structure_optimal)
 			{                        # We have a structure
-				if ( $Vienna ne $structure ) {
-				}
 
 				if ( $nameSeq =~ /.*__(\d*)-(\d*)$/ ) {
 					my $mfei =
-					  PipelineMiRNA::Utils::compute_mfei( $dna, $energy );
+					  PipelineMiRNA::Utils::compute_mfei( $dna, $energy_optimal );
 					my ( $start, $end );
 					if ( $strand eq '-' ) {
 						my $res =
@@ -271,20 +276,21 @@ sub process_RNAstemloop {
 						"end"       => $end,
 						"mfei"      => $mfei,
 						"dna"       => $dna,
-						"structure" => $structure,
+						"structure_optimal" => $structure_optimal,
+						"structure_stemloop" => $structure_stemloop,
 						"strand"    => $strand,
-						"energy"    => $energy
+						"energy_optimal" => $energy_optimal,
+						"energy_stemloop" => $energy_stemloop
 					};
 
 				}
 			}
 			else {
-				debug( "No structure found in $line2", PipelineMiRNA->DEBUG() );
+				warn( "No structure found in $line_eval_opt" );
 			}    # if $line2
 		}
 		else {
-
-			# Should not happen
+            warn( "Unrecognized line " );
 		}    #if $line1
 	}    #while $line=<IN>
 	return \@hash;
@@ -439,9 +445,9 @@ sub populate_candidate_directory {
 	close $STRAND_FH;
 
 	process_outRNAFold( $candidate_dir, 'optimal', $candidate{'name'},
-		$candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
+		$candidate{'dna'}, $candidate{'structure_optimal'}, $candidate{'energy_optimal'} );
 	process_outRNAFold( $candidate_dir, 'stemloop', $candidate{'name'},
-		$candidate{'dna'}, $candidate{'structure'}, $candidate{'energy'} );
+		$candidate{'dna'}, $candidate{'structure_stemloop'}, $candidate{'energy_stemloop'} );
 
 	#Writing alternativeCandidates.txt
 	my $alternative_candidates =
@@ -451,7 +457,7 @@ sub populate_candidate_directory {
 		  or die "Error when opening $alternative_candidates: $!";
 		foreach my $alternative (@alternatives_array) {
 			print $OUT2
-">$alternative->{'name'}\t$alternative->{'dna'}\t$alternative->{'structure'}\t$alternative->{'mfei'}\n";
+">$alternative->{'name'}\t$alternative->{'dna'}\t$alternative->{'structure_optimal'}\t$alternative->{'mfei'}\n";
 		}
 		close $OUT2;
     }
