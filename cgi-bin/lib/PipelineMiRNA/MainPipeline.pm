@@ -172,7 +172,7 @@ sub process_sequence {
 	  File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
 	debug( "Running RNAstemloop on $rnalfold_output", PipelineMiRNA->DEBUG() );
 	PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
-		$rnastemloop_out_optimal, $rnastemloop_out_stemloop )
+		$rnastemloop_out_stemloop, $rnastemloop_out_optimal )
 	  or die("Problem when running RNAstemloop");
 
 	my $rnaeval_out =
