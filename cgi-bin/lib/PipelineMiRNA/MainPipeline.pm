@@ -8,6 +8,7 @@ use warnings;
 use File::Path 'rmtree';
 use File::Basename;
 use Cwd qw( abs_path );
+use Carp;
 use File::Copy;
 use PipelineMiRNA;
 use PipelineMiRNA::Paths;
@@ -501,7 +502,6 @@ sub process_tests {
 	mkdir $candidates_dir;
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
-		debug( "Considering $dir", PipelineMiRNA->DEBUG() );
 		my $sequence_dir = File::Spec->catdir( $job_dir, $dir );
 		if (   $dir ne '.'
 			&& $dir ne '..'
@@ -513,7 +513,6 @@ sub process_tests {
 			@files = readdir DIR;
 			closedir DIR;
 			foreach my $subDir (@files) {
-				debug( "Considering $subDir", PipelineMiRNA->DEBUG() );
 				my $candidate_dir =
 				  File::Spec->catdir( $sequence_dir, $subDir );
 				if (   $subDir ne '.'
@@ -524,10 +523,6 @@ sub process_tests {
 					debug( "Entering candidate $subDir", PipelineMiRNA->DEBUG() );
 					process_tests_for_candidate( $candidate_dir, $subDir );
 					debug( "Done with candidate $subDir", PipelineMiRNA->DEBUG() );
-					debug(
-"Pseudo Serializing candidate information:\n $job_dir, $dir, $subDir",
-						PipelineMiRNA->DEBUG()
-					);
 
 					if (
 						!eval {
