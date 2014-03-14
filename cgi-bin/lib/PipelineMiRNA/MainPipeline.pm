@@ -446,13 +446,15 @@ sub populate_candidate_directory {
 	#Writing alternativeCandidates.txt
 	my $alternative_candidates =
 	  File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
-	open( my $OUT2, '>>', $alternative_candidates )
-	  or die "Error when opening $alternative_candidates: $!";
-	foreach my $alternative (@alternatives_array) {
-		print $OUT2
+	if (@alternatives_array){
+		open( my $OUT2, '>>', $alternative_candidates )
+		  or die "Error when opening $alternative_candidates: $!";
+		foreach my $alternative (@alternatives_array) {
+			print $OUT2
 ">$alternative->{'name'}\t$alternative->{'dna'}\t$alternative->{'structure'}\t$alternative->{'mfei'}\n";
-	}
-	close $OUT2;
+		}
+		close $OUT2;
+    }
 	return;
 }
 
