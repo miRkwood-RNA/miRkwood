@@ -191,7 +191,7 @@ Output:
 sub is_fasta {
 	my (@args) = @_;
 	my $sequence = shift @args;
-	if ( $sequence !~ /^( *>.+[\r\n]+([-\. atcgunwkmsydr0-9]+[\r\n]+)+){1,}$/ )
+	if ( $sequence !~ /^( *>.+[\r\n]+([-\. atcgu]+[\r\n]+)+){1,}$/ )
 	{
 		return 0;
 	}

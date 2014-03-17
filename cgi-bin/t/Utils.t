@@ -204,18 +204,41 @@ END
 is ($hairpin_with_mature2, $expected2,
     'make_hairpin_with_mature ok on other edge case');
 
-
-my $input_fasta_ok = ">Seq
+my @input_fasta_ok = (
+    '>Seq
 aatgagtaagataaa
-";
-ok(my $fasta_ok_res = PipelineMiRNA::Utils::is_fasta($input_fasta_ok),
-   'Can call is_fasta on a correct FASTA');
-is($fasta_ok_res, 1,
-   'is_fasta detects a correct FASTA');
+',
+    '>Seq1
+aatgagtaagataaa
+>Seq2
+agctagctgatgcga
+',
+    '>zma-mir167i_mi0001823
+acuucgcuggugugagagcuugaagcugcccggccucccaagugcucgaucgguggcgcuucaccagaucauguugcagcuucacucucucgcaaccagcgaa
+'
+);
 
-my $input_fasta_wrong = "Toto";
-is(PipelineMiRNA::Utils::is_fasta($input_fasta_wrong), 0,
-   'is_fasta detects a wrong FASTA');
+foreach my $input_fasta (@input_fasta_ok) {
+    ok( my $fasta_ok_res = PipelineMiRNA::Utils::is_fasta($input_fasta),
+        'Can call is_fasta on a correct FASTA' );
+    is( $fasta_ok_res, 1, 'is_fasta detects a correct FASTA' );
+}
+
+my @input_fasta_wrong = (
+    '>Seq
+aatgagtnaagataaa
+',
+    '>Seq1
+aatgagtaagataaa
+>Seq2
+agctangctgatgcga
+',
+    'Toto'
+);
+foreach my $input_fasta (@input_fasta_wrong) {
+    is( PipelineMiRNA::Utils::is_fasta($input_fasta),
+        0, 'is_fasta detects a wrong FASTA' );
+}
 
 my @reverse_complement_values = (
     [ "AA", "UU" ],
