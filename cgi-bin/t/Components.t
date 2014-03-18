@@ -171,18 +171,18 @@ file_exists_ok($exonerate_output_file);
 
 #my %exonerate_expected = ('A' => 'B');
 my %exonerate_expected = (
-    '37-58' => [
+    '38-58' => [
         {
             'alignment' => 'uguagccaaggaugaauugcc
 ||||||||||||  | |||||
 uguagccaaggacaacuugcc
 ',
             'name'  => 'aly-miR169a*',
-            'begin_target' => '37',
+            'begin_target' => '38',
             'end_target' => '58',
             'strand_target' => '+',
             'begin_query' => '21',
-            'end_query' => '0',
+            'end_query' => '1',
             'def_query' => 'MIMAT0017486 Arabidopsis lyrata miR169a*:[revcomp]',
             'score' => '-3',
             'seq' => 'TGTAGCCAAGGACAACTTGCC'
@@ -193,27 +193,27 @@ uguagccaaggacaacuugcc
 ug-agccaaggaugacuugccg
 ',
             'name'  => 'aly-miR169d',
-            'begin_target' => '37',
+            'begin_target' => '38',
             'end_target' => '58',
             'strand_target' => '+',
-            'begin_query' => '0',
+            'begin_query' => '1',
             'end_query' => '21',
             'def_query' => 'MIMAT0017491 Arabidopsis lyrata miR169d',
             'score' => '-3',
             'seq'   => 'TGAGCCAAGGATGACTTGCCG'
         }
     ],
-    '39-60' => [
+    '40-60' => [
         {
             'alignment' => 'uagccaaggaugaauugccua
  |||||||||||| ||||| |
 cagccaaggaugacuugccga
 ',
             'name'  => 'aly-miR169a',
-            'begin_target' => '39',
+            'begin_target' => '40',
             'end_target' => '60',
             'strand_target' => '+',
-            'begin_query' => '0',
+            'begin_query' => '1',
             'end_query' => '21',
             'def_query' => 'MIMAT0017485 Arabidopsis lyrata miR169a',
             'score' => '-3',

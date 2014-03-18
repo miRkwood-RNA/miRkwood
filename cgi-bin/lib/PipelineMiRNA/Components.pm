@@ -261,16 +261,23 @@ sub parse_custom_exonerate_output{
 
     my %results;
     foreach my $element (@contents){
-         my $key = "$element->{'begin_target'}-$element->{'end_target'}";
+        my ($begin_target, $end_target) = ($element->{'begin_target'} + 1, $element->{'end_target'});
+        my ($begin_query, $end_query) = ($element->{'begin_query'}, $element->{'end_query'});
+        if ($begin_query < $end_query){
+            $begin_query += 1;
+        }else{
+            $end_query += 1;
+        }
+        my $key = "$begin_target-$end_target";
          my $value = {
              'name' => $element->{'name'},
              'seq' => $element->{'seq'},
              'score' => $element->{'score'},
-             'begin_target' => $element->{'begin_target'},
-             'end_target' => $element->{'end_target'},
+             'begin_target' => $begin_target,
+             'end_target' => $end_target,
              'strand_target' => $element->{'strand_target'},
-             'begin_query' => $element->{'begin_query'},
-             'end_query' => $element->{'end_query'},
+             'begin_query' => $begin_query,
+             'end_query' => $end_query,
              'def_query' => $element->{'def_query'},
              'seq' => $element->{'seq_query'},
              'score' => $element->{'score'},
