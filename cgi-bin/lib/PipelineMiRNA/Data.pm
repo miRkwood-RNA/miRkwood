@@ -7,8 +7,6 @@ use warnings;
 
 use PipelineMiRNA::Paths;
 
-my $dirData = PipelineMiRNA::Paths->get_data_path();
-
 =method get_mirbase_file
 
 Return the path to the Mirbase file
@@ -17,7 +15,7 @@ Return the path to the Mirbase file
 
 sub get_mirbase_file {
     my @args = @_;
-    return File::Spec->catfile( $dirData, 'MirbaseFile.txt' );
+    return File::Spec->catfile( PipelineMiRNA::Paths->get_data_path(), 'MirbaseFile.txt' );
 }
 
 
@@ -29,7 +27,7 @@ Return the path to the matrix file
 
 sub get_matrix_file {
     my @args = @_;
-    return File::Spec->catfile( $dirData, 'matrix' );
+    return File::Spec->catfile( PipelineMiRNA::Paths->get_data_path(), 'matrix' );
 }
 
 =method get_mirdup_data_path
@@ -40,7 +38,7 @@ Return the path to the mirdup data directory
 
 sub get_mirdup_data_path {
     my @args = @_;
-    return File::Spec->catdir( $dirData, 'mirdup');
+    return File::Spec->catdir( PipelineMiRNA::Paths->get_data_path(), 'mirdup');
 }
 
 =method get_mirdup_model_name
