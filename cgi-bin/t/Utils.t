@@ -156,7 +156,7 @@ my $right1 = 21;
 
 ok( my ($true_left1, $size1) = PipelineMiRNA::Utils::compute_mature_boundaries($left1, $right1, $top1),
     'Can call compute_mature_boundaries');
-is_deeply([$true_left1, $size1], [58, 21], 'compute_mature_boundaries ok with gaps before start');
+is_deeply([$true_left1, $size1], [57, 22], 'compute_mature_boundaries ok with gaps before start');
 
 
 
@@ -174,8 +174,8 @@ my $expected13 = <<"END";
    a--      ca  cac-      g u       a-  g   aaaaaa     g
 ggu   gagacu  uc    ccggca c cuguaau  gg acu      gugau a
 |||   ||||||  ||    |||||| | |||||||  || |||      ||||| 
-cca   uucugg  ag    ggcugu g g<span class="mature">guauug  cc uga      uac</span>ua u
-   gca      cg  acua      g u <span class="mature">      cg  g   g-----   </span>  a
+cca   uucugg  ag    ggcugu g g<span class="mature">guauug  cc uga      uacua</span> u
+   gca      cg  acua      g u <span class="mature">      cg  g   g-----     </span>a
 END
 
 is ($hairpin_with_mature, $expected13,
@@ -197,8 +197,8 @@ my $expected2 = <<"END";
     gg   c  --------      uaaaa   aac    c    u
 agug  ugg gc        gggagc     uca   ucua gcug u
 ||||  ||| ||        ||||||     |||   |||| |||| 
-ucac  acc cg       <span class="mature"> cccucg     agu   aggu </span>uggc u
-    aa   -  uuuaacu<span class="mature">u      uggga   c--    -</span>    a
+ucac  acc cg       <span class="mature"> cccucg     agu   aggu u</span>ggc u
+    aa   -  uuuaacu<span class="mature">u      uggga   c--    - </span>   a
 END
 
 is ($hairpin_with_mature2, $expected2,

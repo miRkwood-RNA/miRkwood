@@ -414,7 +414,7 @@ sub compute_mature_boundaries {
 	my $gap_count = 0;
 	$gap_count++ while ( $sub_string =~ m/-/g );
 	my $real_size = $size + $gap_count;
-	return ( $real_left, $real_size );
+	return ( $real_left - 1, $real_size + 1 );
 }
 
 =method make_hairpin_with_mature
@@ -434,7 +434,7 @@ sub make_hairpin_with_mature {
 	if ( $right >= $l ) {
 
 		#on the other side
-		my $converted_left = $length - $right;
+		my $converted_left = $length - $right + 1;
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $converted_left, $pseudo_size, $bottom );
 		my $bottom_mature = substr( $bottom, $true_left, $size );
