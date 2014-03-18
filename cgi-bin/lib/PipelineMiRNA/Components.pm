@@ -5,9 +5,9 @@ package PipelineMiRNA::Components;
 use strict;
 use warnings;
 
-use YAML::XS;
 use File::Spec;
 use Class::Struct;
+use PipelineMiRNA::Paths;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Parsers;
@@ -254,9 +254,8 @@ Usage: parse_exonerate_alignment($alignment);
 sub parse_custom_exonerate_output{
     my @args = @_;
     my $yaml_file = shift @args;
-    check_yaml_file($yaml_file);
 
-    my $yaml = YAML::XS::LoadFile($yaml_file) or die("Error when parsing YAML file $yaml_file");
+    my $yaml = PipelineMiRNA::Paths::get_yaml_file($yaml_file) or die("Error when parsing YAML file $yaml_file");
     my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
 
     my %results;
@@ -352,21 +351,6 @@ sub get_data_from_rnafold_out {
     my $DNASequence = $vienna_res[1];
     my $Vienna      = $vienna_res[2];
     return ( $name, $position, $DNASequence, $Vienna );
-}
-
-=method check_yaml_file
-
-Check whether a given file is suitable for YAML deserialization.
-
-=cut
-
-sub check_yaml_file {
-    my @args      = @_;
-    my $yaml_file = shift @args;
-    ( -e $yaml_file )  or die("Error, YAML file $yaml_file does not exist");
-    ( !-z $yaml_file ) or die("Error, YAML file $yaml_file is empty");
-    ( -r $yaml_file )  or die("Error, YAML file $yaml_file is not readable");
-    return;
 }
 
 =method merge_alignments
