@@ -26,7 +26,6 @@ my $local_dir = dirname( abs_path($0) );
 my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
 my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
-my $formatFasta_bin = File::Spec->catfile( $dirScript, 'formatFasta.sh' );
 my $error_url = PipelineMiRNA::WebTemplate::make_url('error.pl');
 my $root = PipelineMiRNA::Paths->get_results_filesystem_path();
 
@@ -57,7 +56,6 @@ my $log_file = File::Spec->catfile( $absolute_job_dir, 'log.log' );
 local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
 my $sequence_origin_file = File::Spec->catfile( $absolute_job_dir, 'sequence.fas' );
-my $sequence_load   = File::Spec->catfile( $absolute_job_dir, 'sequenceLoad.fas' );
 my $sequence_upload = File::Spec->catfile( $absolute_job_dir, 'sequenceUpload.fas' );
 
 my $seqArea = $cgi->param('seqArea');
@@ -74,43 +72,30 @@ if ( $seqArea eq q{} )    # cas upload fichier
     debug('Sequences are provided through the text area', 1);
     $seq = $seqArea;
 }
-$seq = lc($seq) . "\n";
+
+$seq = PipelineMiRNA::Utils::cleanup_fasta_sequence($seq);
 
 if ( ! PipelineMiRNA::Utils::is_fasta($seq) )
-{                               # erreur de syntaxe
+{
     print $cgi->redirect($error_url);
     exit;
 }
 
-open( my $INPUT, '>>', $sequence_origin_file )
-  or die "Error when opening -$sequence_origin_file-: $!";
-print $INPUT $seq . "\n";
-close $INPUT
-  or die "Error when closing -$sequence_origin_file-: $!";
-chmod 777, $sequence_origin_file;
-
-my $sed_cmd = "sed -i 'N;s/\r//g' " . $sequence_origin_file;
-# commande sed permettant d'eliminer les caracteres du (copier-coller)
-system( $sed_cmd  );
-
-open( my $LOAD, '<', $sequence_origin_file )
-  or die "Error when opening -$sequence_origin_file-: $!";
 open( my $OUTPUT, '>>', $sequence_upload )
   or die "Error when opening -$sequence_upload-: $!";
 my $name;
-while ( my $line = <$LOAD> ) {
+my @lines = split /\n/, $seq;
+foreach my $line (@lines) {
     if ( $line =~ /^>/smx ) {
         $name = $line;
     }
     else {
         my $cleaned_line = PipelineMiRNA::Utils::mask_sequence_nucleotide($line);
-        print $OUTPUT $name . $cleaned_line . "\n";
+        print $OUTPUT $name . "\n" . $cleaned_line . "\n";
         $name = "";
     }
 }
 close $OUTPUT or die("Error when closing $sequence_upload: $!");
-close $LOAD or die("Error when closing $sequence_load: $!");
-unlink($sequence_load);
 
 # redirection vers la page wait en attendant le calcul
 my $arguments = '?jobId=' . $jobId . '&nameJob=' . $nameJob . '&mail=' . $mail;
