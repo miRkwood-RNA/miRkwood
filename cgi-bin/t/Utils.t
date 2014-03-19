@@ -331,3 +331,12 @@ foreach my $couple (@opposite_strand_values) {
 "get_position_from_opposite_strand (@{@{$couple}[0]}) --> (@{@{$couple}[1]}) ok"
     );
 }
+
+my $cleanup_fasta_sequence = ">sequence1\nTAGCTGATGCATCGAGCGAT\r";
+my $cleanup_fasta_sequence_expected = ">sequence1
+tagctgatgcatcgagcgat
+";
+ok( my $cleanup_fasta_sequence_out = PipelineMiRNA::Utils::cleanup_fasta_sequence($cleanup_fasta_sequence),
+    'Can call cleanup_fasta_sequence' );
+is( $cleanup_fasta_sequence_out, $cleanup_fasta_sequence_expected,
+    "cleanup_fasta_sequence correctly cleans the sequence");

@@ -30,6 +30,21 @@ sub reverse_complement {
     return $revcomp;
 }
 
+=method cleanup_fasta_sequence
+
+Cleans up the FASTA sequence:
+- copy-paste symbols
+- lowercase
+
+=cut
+
+sub cleanup_fasta_sequence {
+    my @args     = @_;
+    my $sequence = shift @args;
+    $sequence =~ s/\r//g;
+    $sequence = lc($sequence) . "\n";
+}
+
 =method get_position_from_opposite_strand
 
 
