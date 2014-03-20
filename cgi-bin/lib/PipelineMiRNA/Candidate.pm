@@ -473,7 +473,8 @@ sub make_alignments_HTML {
         my $hairpin_with_mature =
             PipelineMiRNA::Utils::make_hairpin_with_mature($candidate{'hairpin'},
                                                            $left, $right,
-                                                           length $candidate{'DNASequence'});
+                                                           length $candidate{'DNASequence'},
+                                                           'html');
         $predictionCounter += 1;
 
         # Sorting the hit list by descending value of the 'score' element

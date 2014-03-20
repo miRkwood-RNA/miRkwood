@@ -167,19 +167,22 @@ ggu   gagacu  uc    ccggca c cuguaau  gg acu      gugau a
 cca   uucugg  ag    ggcugu g gguauug  cc uga      uacua u
    gca      cg  acua      g u       cg  g   g-----     a
 END
-ok (my $hairpin_with_mature = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin1, 56, 75, 105),
-    'Can call make_hairpin_with_mature on edge case');
+ok (my $make_hairpin_with_mature_html_1 = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin1, 56, 75, 105, 'html'),
+    'Can call make_hairpin_with_mature in HTML on edge case');
 
-my $expected13 = <<"END";
-   a--      ca  cac-      g u       a-  g   aaaaaa     g
-ggu   gagacu  uc    ccggca c cuguaau  gg acu      gugau a
-|||   ||||||  ||    |||||| | |||||||  || |||      ||||| 
-cca   uucugg  ag    ggcugu g g<span class="mature">guauug  cc uga      uacua</span> u
-   gca      cg  acua      g u <span class="mature">      cg  g   g-----     </span>a
-END
+my $make_hairpin_with_mature_html_1_out = slurp_file( input_file('Utils.make_hairpin_with_mature.1.html.txt') );
 
-is ($hairpin_with_mature, $expected13,
-    'make_hairpin_with_mature ok on edge case');
+is ($make_hairpin_with_mature_html_1, $make_hairpin_with_mature_html_1_out,
+    'make_hairpin_with_mature in HTML ok on edge case');
+
+ok (my $make_hairpin_with_mature_ascii_1 = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin1, 56, 75, 105, 'ascii'),
+    'Can call make_hairpin_with_mature in ASCII on edge case');
+
+my $make_hairpin_with_mature_ascii_1_out = slurp_file( input_file('Utils.make_hairpin_with_mature.1.ascii.txt') );
+
+is ($make_hairpin_with_mature_ascii_1, $make_hairpin_with_mature_ascii_1_out,
+    'make_hairpin_with_mature in ASCII ok on edge case');
+
 
 # Bug 2014-03-13
 my $hairpin2 = <<"END";
@@ -190,19 +193,19 @@ ucac  acc cg        cccucg     agu   aggu uggc u
     aa   -  uuuaacuu      uggga   c--    -    a
 ';
 END
-ok (my $hairpin_with_mature2 = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin2, 45, 66, 84),
-    'Can call make_hairpin_with_mature on other edge case');
+ok (my $make_hairpin_with_mature_html_2 = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin2, 45, 66, 84, 'html'),
+    'Can call make_hairpin_with_mature in HTML mode on other edge case');
+my $make_hairpin_with_mature_html_2_out = slurp_file( input_file('Utils.make_hairpin_with_mature.2.html.txt') );
+is ($make_hairpin_with_mature_html_2, $make_hairpin_with_mature_html_2_out,
+    'make_hairpin_with_mature in HTML ok on other edge case');
 
-my $expected2 = <<"END";
-    gg   c  --------      uaaaa   aac    c    u
-agug  ugg gc        gggagc     uca   ucua gcug u
-||||  ||| ||        ||||||     |||   |||| |||| 
-ucac  acc cg       <span class="mature"> cccucg     agu   aggu u</span>ggc u
-    aa   -  uuuaacu<span class="mature">u      uggga   c--    - </span>   a
-END
 
-is ($hairpin_with_mature2, $expected2,
-    'make_hairpin_with_mature ok on other edge case');
+ok (my $make_hairpin_with_mature_ascii_2 = PipelineMiRNA::Utils::make_hairpin_with_mature($hairpin2, 45, 66, 84, 'ascii'),
+    'Can call make_hairpin_with_mature in HTML mode on other edge case');
+my $make_hairpin_with_mature_ascii_2_out = slurp_file( input_file('Utils.make_hairpin_with_mature.2.ascii.txt') );
+is ($make_hairpin_with_mature_ascii_2, $make_hairpin_with_mature_ascii_2_out,
+    'make_hairpin_with_mature in ASCII ok on edge case');
+
 
 my @input_fasta_ok = (
     '>Seq

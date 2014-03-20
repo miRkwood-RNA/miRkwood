@@ -5,6 +5,7 @@ package PipelineMiRNA::Utils;
 use strict;
 use warnings;
 
+use feature 'switch';
 
 =method reverse_complement
 
@@ -441,11 +442,14 @@ make an hairpin with the mature standing out in HTML.
 
 sub make_hairpin_with_mature {
 	my (@args) = @_;
-	my ( $hairpin, $left, $right, $length ) = @args;
-	my ( $top, $upper, $middle, $lower, $bottom ) = split( /\n/, $hairpin );
+	my ( $hairpin, $left, $right, $length, $mode ) = @args;
+	my ( $top, $upper, $middle, $lower, $bottom )  = split( /\n/, $hairpin );
 	my $hairpin_with_mature;
 	my $pseudo_size = $right - $left;
 	my $l           = length($top);
+    if (!$mode){
+        $mode = 'ascii';
+    }
 	if ( $right >= $l ) {
 
 		#on the other side
@@ -453,21 +457,37 @@ sub make_hairpin_with_mature {
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $converted_left, $pseudo_size, $bottom );
 		my $bottom_mature = substr( $bottom, $true_left, $size );
-		substr( $bottom, $true_left, $size ) =
-		    '<span class="mature">' . $bottom_mature . '</span>';
 		my $lower_mature = substr( $lower, $true_left, $size );
-		substr( $lower, $true_left, $size ) =
-		    '<span class="mature">' . $lower_mature . '</span>';
+        given ($mode) {
+                when (/html/) {
+                    $bottom_mature = '<span class="mature">' . $bottom_mature . '</span>';
+                    $lower_mature  = '<span class="mature">' . $lower_mature . '</span>';
+                }
+                when (/ascii/) {
+                    $bottom_mature = uc $bottom_mature;
+                    $lower_mature  = uc $lower_mature;
+                }
+        }
+		substr( $bottom, $true_left, $size ) = $bottom_mature;
+		substr( $lower, $true_left, $size )  = $lower_mature;
 	}
 	else {
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $left, $pseudo_size, $top );
 	    my $top_mature = substr( $top, $true_left, $size );
-		substr( $top, $true_left, $size) =
-		    '<span class="mature">' . $top_mature . '</span>';
 		my $upper_mature = substr( $upper, $true_left, $size );
-		substr( $upper, $true_left, $size ) =
-		    '<span class="mature">' . $upper_mature . '</span>';
+        given ($mode) {
+                when (/html/) {
+                    $top_mature   = '<span class="mature">' . $top_mature . '</span>';
+                    $upper_mature = '<span class="mature">' . $upper_mature . '</span>';
+                }
+                when (/ascii/) {
+                    $top_mature   = uc $top_mature;
+                    $upper_mature = uc $upper_mature;
+                }
+        }
+		substr( $top, $true_left, $size) = $top_mature;
+		substr( $upper, $true_left, $size ) = $upper_mature;
 
 	}
 	$hairpin_with_mature = <<"END";
