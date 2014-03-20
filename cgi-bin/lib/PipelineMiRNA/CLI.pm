@@ -33,9 +33,11 @@ sub process_results_dir_for_offline {
     my $html_page = File::Spec->catfile( $output_folder, 'results.html' );
     open( my $HTML, '>', $html_page )
       or die("Cannot open $html_page: $!");
-    print $HTML $html;
+    print {$HTML} $html
+      or die("Cannot write in $html_page: $!");
     close($HTML)
       or die("Cannot close $html_page: $!");
+    return;
 }
 
 =method make_html_from_results
@@ -70,7 +72,7 @@ END_TXT
     my $page = '<h2>Overview of results</h2>';
     $page .= PipelineMiRNA::Results->resultstruct2table( \%results );
 
-    $page.= make_all_exports(\%results, $output_folder);
+    $page .= make_all_exports( \%results, $output_folder );
     while ( my ( $key, $value ) = each %results ) {
         my $candidate_html =
           make_candidate_page( $value, $pieces_folder, $output_folder );
@@ -92,49 +94,52 @@ Usage:
 =cut
 
 sub make_all_exports {
-    my (@args)    = @_;
-    my $results_ref = shift @args;
+    my (@args)        = @_;
+    my $results_ref   = shift @args;
     my $output_folder = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
 
-    my $fasta_file =
-      File::Spec->catfile( $pieces_folder, "candidates.fa" );
+    my $fasta_file = File::Spec->catfile( $pieces_folder, 'candidates.fa' );
     open( my $FASTA_FILE,
         '>', File::Spec->catfile( $output_folder, $fasta_file ) )
       or die("Cannot open $fasta_file: $!");
-    print $FASTA_FILE PipelineMiRNA::Results->export('fas', $results_ref);
-    close($FASTA_FILE);
+    print {$FASTA_FILE} PipelineMiRNA::Results->export( 'fas', $results_ref )
+      or die("Cannot write in $fasta_file: $!");
+    close($FASTA_FILE)
+      or die("Cannot close file $fasta_file: $!");
 
-    my $vienna_file =
-      File::Spec->catfile( $pieces_folder, "candidates.txt" );
+    my $vienna_file = File::Spec->catfile( $pieces_folder, 'candidates.txt' );
     open( my $VIENNA_FILE,
         '>', File::Spec->catfile( $output_folder, $vienna_file ) )
       or die("Cannot open $vienna_file: $!");
-    print $VIENNA_FILE PipelineMiRNA::Results->export('dot', $results_ref);
-    close($VIENNA_FILE);
+    print {$VIENNA_FILE} PipelineMiRNA::Results->export( 'dot', $results_ref )
+      or die("Cannot write in file $vienna_file: $!");
+    close($VIENNA_FILE)
+      or die("Cannot close file $vienna_file: $!");
 
-    my $gff_file =
-      File::Spec->catfile( $pieces_folder, "candidates.gff" );
-    open( my $GFF_FILE,
-        '>', File::Spec->catfile( $output_folder, $gff_file ) )
+    my $gff_file = File::Spec->catfile( $pieces_folder, 'candidates.gff' );
+    open( my $GFF_FILE, '>', File::Spec->catfile( $output_folder, $gff_file ) )
       or die("Cannot open $gff_file: $!");
-    print $GFF_FILE PipelineMiRNA::Results->export('gff', $results_ref);
-    close($GFF_FILE);
+    print {$GFF_FILE} PipelineMiRNA::Results->export( 'gff', $results_ref )
+      or die("Cannot write in file $gff_file: $!");
+    close($GFF_FILE)
+      or die("Cannot close file $gff_file: $!");
 
-    my $csv_file =
-      File::Spec->catfile( $pieces_folder, "candidates.csv" );
-    open( my $CSV_FILE,
-        '>', File::Spec->catfile( $output_folder, $csv_file ) )
-      or die("Cannot open $gff_file: $!");
-    print $CSV_FILE PipelineMiRNA::Results->resultstruct2csv( $results_ref );
-    close($CSV_FILE);
+    my $csv_file = File::Spec->catfile( $pieces_folder, 'candidates.csv' );
+    open( my $CSV_FILE, '>', File::Spec->catfile( $output_folder, $csv_file ) )
+      or die("Cannot open file $csv_file: $!");
+    print {$CSV_FILE} PipelineMiRNA::Results->resultstruct2csv($results_ref)
+      or die("Cannot write in file $csv_file: $!");
+    close($CSV_FILE)
+      or die("Cannot close file $csv_file: $!");
 
-    my $html = "<h3>Get results as</h3> <ul>";
+    my $html = '<h3>Get results as</h3> <ul>';
     $html .= "<li><a href='$csv_file'>tab-delimited format (csv)</a></li>";
     $html .= "<li><a href='$fasta_file'>Fasta</a></li>";
-    $html .= "<li><a href='$vienna_file'>dot-bracket format (plain sequence + secondary structure)</a></li>";
+    $html .=
+"<li><a href='$vienna_file'>dot-bracket format (plain sequence + secondary structure)</a></li>";
     $html .= "<li><a href='$gff_file'>gff format</a></li>";
-    $html .= "</ul>";
+    $html .= '</ul>';
     return $html;
 }
 
@@ -161,36 +166,45 @@ sub make_candidate_page {
       File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );
     open( my $FASTA_FILE,
         '>', File::Spec->catfile( $output_folder, $candidate_fasta_file ) )
-      or die("Cannot open $candidate_fasta_file: $!");
-    print $FASTA_FILE PipelineMiRNA::Candidate->candidateAsFasta( \%candidate );
-    close($FASTA_FILE);
+      or die("Cannot open file $candidate_fasta_file: $!");
+    print {$FASTA_FILE}
+      PipelineMiRNA::Candidate->candidateAsFasta( \%candidate )
+      or die("Cannot write in file $candidate_fasta_file: $!");
+    close($FASTA_FILE)
+      or die("Cannot close file $candidate_fasta_file: $!");
 
     my $vienna_file =
       File::Spec->catfile( $pieces_folder, "$candidate_name.txt" );
     open( my $VIENNA_FILE,
         '>', File::Spec->catfile( $output_folder, $vienna_file ) )
       or die("Cannot open $vienna_file: $!");
-    print $VIENNA_FILE PipelineMiRNA::Candidate->candidateAsVienna( \%candidate,
-        0 );
-    close($VIENNA_FILE);
+    print {$VIENNA_FILE}
+      PipelineMiRNA::Candidate->candidateAsVienna( \%candidate, 0 )
+      or die("Cannot write in file $vienna_file: $!");
+    close($VIENNA_FILE)
+      or die("Cannot close file $vienna_file: $!");
 
     my $vienna_file_optimal =
       File::Spec->catfile( $pieces_folder, $candidate_name . '_optimal.txt' );
     open( my $VIENNA_FILE_OPT,
         '>', File::Spec->catfile( $output_folder, $vienna_file_optimal ) )
       or die("Cannot open $vienna_file_optimal: $!");
-    print $VIENNA_FILE_OPT PipelineMiRNA::Candidate->candidateAsVienna(
-        \%candidate, 1 );
-    close($VIENNA_FILE_OPT);
+    print {$VIENNA_FILE_OPT}
+      PipelineMiRNA::Candidate->candidateAsVienna( \%candidate, 1 )
+      or die("Cannot write in file $vienna_file_optimal: $!");
+    close($VIENNA_FILE_OPT)
+      or die("Cannot close file $vienna_file_optimal: $!");
 
     my $alternatives_file = File::Spec->catfile( $pieces_folder,
         $candidate_name . '__alternatives.txt' );
     open( my $ALT_FILE, '>',
         File::Spec->catfile( $output_folder, $alternatives_file ) )
       or die("Cannot open $alternatives_file: $!");
-    print $ALT_FILE PipelineMiRNA::Candidate->alternativeCandidatesAsVienna(
-        \%candidate );
-    close($ALT_FILE);
+    print {$ALT_FILE}
+      PipelineMiRNA::Candidate->alternativeCandidatesAsVienna( \%candidate )
+      or die("Cannot write in file $alternatives_file: $!");
+    close($ALT_FILE)
+      or die("Cannot close file $alternatives_file: $!");
 
     my $linkFasta         = "$candidate_fasta_file";
     my $linkVienna        = "$vienna_file";
@@ -205,7 +219,7 @@ sub make_candidate_page {
     }
     else {
         $Vienna_HTML .=
-          "<br/>This stem-loop structure is the MFE structure.</li></ul>";
+          '<br/>This stem-loop structure is the MFE structure.</li></ul>';
     }
     my $alternatives_HTML =
       '<b>Alternative candidates (dot-bracket format):</b> ';
@@ -213,16 +227,16 @@ sub make_candidate_page {
         $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>";
     }
     else {
-        $alternatives_HTML .= "<i>None</i>";
+        $alternatives_HTML .= '<i>None</i>';
     }
 
-    my $alignmentHTML = "";
+    my $alignmentHTML = q{};
     if ( $candidate{'alignment'} ) {
         $alignmentHTML =
           PipelineMiRNA::Candidate->make_alignments_HTML( \%candidate );
     }
     else {
-        $alignmentHTML = "No alignment has been found.";
+        $alignmentHTML = 'No alignment has been found.';
     }
     my $html = <<"END_TXT";
 <h2 id='$candidate{'name'}-$candidate{'position'}'>Results for $candidate{'name'}, $candidate{'position'}</h2>
@@ -289,7 +303,7 @@ sub get_simple_results_page {
     </body>
 </html>
 END_TXT
-    return $HTML
+    return $HTML;
 }
 
 1;
