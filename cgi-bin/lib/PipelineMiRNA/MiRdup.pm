@@ -17,17 +17,18 @@ formatted for MiRdup prediction
 =cut
 
 sub make_prediction_source_file {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
     my $output_file = shift @args;
-    my $sequences = shift @args;
-    my %sequences = %{$sequences};
+    my $sequences   = shift @args;
+    my %sequences   = %{$sequences};
     open( my $FOut, '>', $output_file )
       or die "Error when opening $output_file: $!";
-    while ( my ($name, $seq) = each %sequences ){
-          print {$FOut} "$name\t$seq\n";
+    while ( my ( $name, $seq ) = each %sequences ) {
+        print {$FOut} "$name\t$seq\n"
+          or die("Cannot write in file $output_file: $!");
     }
     close $FOut or die "Error when closing $output_file: $!";
-    return (-e $output_file);
+    return ( -e $output_file );
 }
 
 =method make_validation_source_file
@@ -38,21 +39,22 @@ formatted for MiRdup validation
 =cut
 
 sub make_validation_source_file {
-    my ($self, @args) = @_;
-    my $name_base = shift @args;
+    my ( $self, @args ) = @_;
+    my $name_base  = shift @args;
     my $mature_seq = shift @args;
-    my $structure = shift @args;
+    my $structure  = shift @args;
     my @alignments = @args;
 
     my @results;
     foreach my $position (@alignments) {
-        my ($left, $right) = split(/-/, $position);;
+        my ( $left, $right ) = split( /-/smx, $position );
         my $name = $name_base . '__' . $position;
-        my $precursor_seq = substr($mature_seq, $left, $right - $left);
-        my $res = $name . "\t" .
-                  $precursor_seq . "\t" .
-                  $mature_seq . "\t" .
-                  $structure;
+        my $precursor_seq = substr( $mature_seq, $left, $right - $left );
+        my $res =
+            $name . "\t"
+          . $precursor_seq . "\t"
+          . $mature_seq . "\t"
+          . $structure;
         push @results, $res;
     }
     return join("\n", @results);
@@ -69,12 +71,14 @@ Usage:
 =cut
 
 sub parse_predictions_file {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
     my $prediction_file = shift @args;
-    my %results = ();
-    open( my $FH, '<', $prediction_file ) or die "Error when opening file $prediction_file: $!";
+    my %results         = ();
+    open( my $FH, '<', $prediction_file )
+      or die "Error when opening file $prediction_file: $!";
     while ( my $line = <$FH> ) {
-        my ($name, $precursor, $structure, $predict5, $predict3) = split('\t', $line);
+        my ( $name, $precursor, $structure, $predict5, $predict3 ) =
+          split( /\t/smx, $line );
         $predict5 =~ m{
             ^([acgtuACGTU]*)
             (.*)$
@@ -96,16 +100,18 @@ Usage:
 =cut
 
 sub predict_with_mirdup {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
     my $prediction_file = shift @args;
-    my %sequences = %{shift @args};
-    my ($volume, $origin_directories, $origin_file) = File::Spec->splitpath($prediction_file);
-    $self->make_prediction_source_file($prediction_file, \%sequences)
-        or die "Error when making prediction_source_file: $!";
-    my $result_file = PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence_file($prediction_file);
+    my %sequences       = %{ shift @args };
+    my ( $volume, $origin_directories, $origin_file ) =
+      File::Spec->splitpath($prediction_file);
+    $self->make_prediction_source_file( $prediction_file, \%sequences )
+      or die "Error when making prediction_source_file: $!";
+    my $result_file =
+      PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence_file(
+        $prediction_file);
     return $self->parse_predictions_file($result_file);
 }
-
 
 =method predict_sequence_with_mirdup
 
@@ -118,10 +124,12 @@ Usage:
 =cut
 
 sub predict_sequence_with_mirdup {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
     my $prediction_path = shift @args;
-    my $sequence = shift @args;
-    my $result_file = PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence($prediction_path, $sequence);
+    my $sequence        = shift @args;
+    my $result_file =
+      PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence(
+        $prediction_path, $sequence );
     return $self->parse_predictions_file($result_file);
 }
 
@@ -137,18 +145,22 @@ my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $nam
 =cut
 
 sub validate_with_mirdup {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
     my $output_file = shift @args;
-    my $name_base = shift @args;
-    my $mature_seq = shift @args;
-    my $structure = shift @args;
-    my @alignments = @args;
+    my $name_base   = shift @args;
+    my $mature_seq  = shift @args;
+    my $structure   = shift @args;
+    my @alignments  = @args;
 
     open( my $FOut, '>', $output_file )
       or die "Error when opening $output_file: $!";
-    print {$FOut} $self->make_validation_source_file($name_base, $mature_seq,$structure, @alignments);
+    print {$FOut}
+      $self->make_validation_source_file( $name_base, $mature_seq, $structure,
+        @alignments )
+      or die("Cannot write in file $output_file: $!");
     close $FOut or die "Error when closing $output_file: $!";
-    my $result_file = PipelineMiRNA::Programs::run_mirdup_validation_on_file($output_file);
+    my $result_file =
+      PipelineMiRNA::Programs::run_mirdup_validation_on_file($output_file);
     return $self->parse_validation_output($result_file);
 }
 
@@ -163,13 +175,15 @@ Usage:
 =cut
 
 sub parse_validation_output {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
     my $validation_file = shift @args;
-    my %results = ();
-    my %boolean_mapping = ('true'=> 1, 'false' => 0);
-    open( my $FH, '<', $validation_file ) or die "Error when opening file $validation_file: $!";
+    my %results         = ();
+    my %boolean_mapping = ( 'true' => 1, 'false' => 0 );
+    open( my $FH, '<', $validation_file )
+      or die "Error when opening file $validation_file: $!";
     while ( my $line = <$FH> ) {
-        my ($name, $mature, $precursor, $structure, $validation, $confidence) = split('\t', $line);
+        my ( $name, $mature, $precursor, $structure, $validation, $confidence )
+          = split( /\t/xms, $line );
         $validation = $boolean_mapping{$validation};
         $results{$name} = $validation;
     }
