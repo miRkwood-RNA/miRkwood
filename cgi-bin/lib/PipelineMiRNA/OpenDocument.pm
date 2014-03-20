@@ -392,13 +392,10 @@ sub generate_report {
 
 =cut
 
-sub add_ODF_alignments{
+sub add_ODF_alignments {
     my ( $self, @args ) = @_;
-    my $context = shift @args;
-    my %candidate = %{shift @args};
-    my %alignments = %{$candidate{'alignments'}};
-    my %mirdup_results = %{$candidate{'mirdup_validation'}};
-
+    my $context   = shift @args;
+    my %candidate = %{ shift @args };
     $context->append_element(
         odf_create_heading(
             level => 3,
@@ -406,6 +403,19 @@ sub add_ODF_alignments{
             text  => "Conserved mature miRNA",
         )
     );
+
+    my $alignmentHTML;
+    if ( !$candidate{'alignment_existence'} ) {
+        $context->append_element(
+            odf_create_paragraph(
+                text  => 'No alignment has been found.',
+                style => 'Basic'
+            )
+        );
+        return 0;
+    }
+    my %alignments     = %{ $candidate{'alignments'} };
+    my %mirdup_results = %{ $candidate{'mirdup_validation'} };
 
     my @TOC;
     my $predictionCounter = 0;
@@ -418,21 +428,30 @@ sub add_ODF_alignments{
                         PipelineMiRNA::Utils::get_element_of_split($b, '-', 1))
                     } keys %alignments;
     foreach my $position (@keys) {
-        my ($left, $right) = split(/-/, $position);
+        my ( $left, $right ) = split( /-/, $position );
 
         # MiRdup
-#        my $mirdup_key = $dir . '__' . $position;
-#        my $mirdup_prediction;
-#        if ( $mirdup_results{$mirdup_key} ){
-#            $mirdup_prediction = 'This prediction is validated by MiRdup';
-#        } else {
-#            $mirdup_prediction = 'This prediction is not validated by MiRdup';
-#        }
+        my $mirdup_key = $candidate{'name'} . '__' . $position;
+        my $mirdup_prediction;
+        if ( $mirdup_results{$mirdup_key} ) {
+            $mirdup_prediction = 'This prediction is validated by miRdup.';
+        }
+        else {
+            $mirdup_prediction = 'This prediction is not validated by miRdup.';
+        }
+
+        # Hairpin
+        my $hairpin_with_mature =
+            PipelineMiRNA::Utils::make_hairpin_with_mature($candidate{'hairpin'},
+                                                           $left, $right,
+                                                           length $candidate{'DNASequence'},
+                                                           'ascii');
 
         $predictionCounter += 1;
 
         # Sorting the hit list by descending value of the 'score' element
-        my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$alignments{$position}};
+        my @hits =
+          sort { $b->{'score'} <=> $a->{'score'} } @{ $alignments{$position} };
         my $title = "Prediction $predictionCounter: $position";
 
         $context->append_element(
@@ -444,8 +463,15 @@ sub add_ODF_alignments{
         );
         $context->append_element(
             odf_create_paragraph(
-                text    => $candidate{'hairpin'},
-                style   =>'Hairpin'
+                text  => $hairpin_with_mature,
+                style => 'Hairpin'
+            )
+        );
+
+        $context->append_element(
+            odf_create_paragraph(
+                text  => $mirdup_prediction,
+                style => 'Basic'
             )
         );
 
