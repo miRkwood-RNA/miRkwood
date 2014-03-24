@@ -34,7 +34,7 @@ is( $validation_source . "\n", $validation_source_expected,
     "make_validation_source_file returns a correct file") ;
 
 
-my $validation_file = input_file('sequencesToValidate.txt.plant.model.miRdup.tab.txt');
+my $validation_file = input_file('MiRdup.sequencesToValidate.txt.plant.model.miRdup.tab.txt');
 file_exists_ok($validation_file);
 ok( my %result = PipelineMiRNA::MiRdup->parse_validation_output($validation_file),
     'Can call parse_validation_output');

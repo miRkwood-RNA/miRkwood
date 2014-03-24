@@ -29,7 +29,7 @@ is_deeply( \@result2, @expected2,
 
 # P_value
 
-my $p_value_file = input_file('pvalue.txt');
+my $p_value_file = input_file('Parsers.pvalue.txt');
 file_exists_ok($p_value_file);
 my $expected3 = '0.125000';
 my $result3   = PipelineMiRNA::Parsers::parse_pvalue($p_value_file);
@@ -37,7 +37,7 @@ is( $result3, $expected3, 'p_value file is correctly parsed' );
 
 # MFEI
 
-my $mfei_file = input_file('outMFEI.txt');
+my $mfei_file = input_file('Parsers.outMFEI.txt');
 file_exists_ok($mfei_file);
 my @expected4 = [ '-1.00166666666667', '-60.1', '-37.0987654320988' ];
 my @result4 = PipelineMiRNA::Parsers::parse_mfei($mfei_file);
@@ -45,8 +45,8 @@ is_deeply( \@result4, @expected4, 'MFEI file is correctly parsed' );
 
 # Vienna
 
-my $vienna_file1 = input_file('outViennaTraited.txt');
-my $vienna_file2 = input_file('outViennaTraited2.txt');
+my $vienna_file1 = input_file('Parsers.outViennaTraited.txt');
+my $vienna_file2 = input_file('Parsers.outViennaTraited2.txt');
 file_exists_ok($vienna_file1);
 file_exists_ok($vienna_file2);
 my @expected5 = ['gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc',
@@ -59,7 +59,7 @@ is_deeply( \@result6, @expected5, 'Vienna file "with breakspace" is correctly pa
 
 # Selfcontain
 
-my $selfcontain_file = input_file('selfContain.txt');
+my $selfcontain_file = input_file('Parsers.selfContain.txt');
 file_exists_ok($selfcontain_file);
 my $expected7 = '0';
 my $result7   = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_file);
@@ -78,7 +78,7 @@ ok( my @result8 = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_file),
     'Can call parse_RNAfold_output()' );
 is_deeply (\@result8 , \@expected8, 'Converting RNAfold output in ViennaTraited ok');
 
-my $alternative_candidates_file = input_file('alternativeCandidates.txt');
+my $alternative_candidates_file = input_file('Parsers.alternativeCandidates.txt');
 file_exists_ok($alternative_candidates_file);
 ok( my %alternatives = PipelineMiRNA::Parsers::parse_alternative_candidates_file($alternative_candidates_file),
     'Can callparse_alternative_candidates_file');
@@ -97,7 +97,7 @@ $expected6{'contig15750__34-195'} = {
 
 is_deeply( \%alternatives, \%expected6, 'Alternative candidate file is correctly parsed' );
 
-my $blastout_file = input_file('blastx.out');
+my $blastout_file = input_file('Parsers.blastx.out');
 file_exists_ok($blastout_file);
 ok(
     my $index_blast_output_result =

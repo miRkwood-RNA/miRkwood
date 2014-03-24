@@ -166,7 +166,7 @@ foreach (@alignment_values){
 }
 
 
-my $exonerate_output_file = input_file('exonerate_output.yaml');
+my $exonerate_output_file = input_file('Components.parse_custom_exonerate_output.in');
 file_exists_ok($exonerate_output_file);
 
 #my %exonerate_expected = ('A' => 'B');
