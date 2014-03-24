@@ -5,7 +5,6 @@ package PipelineMiRNA::Candidate;
 use strict;
 use warnings;
 
-use Data::Dumper;
 use File::Spec;
 use YAML::XS;
 

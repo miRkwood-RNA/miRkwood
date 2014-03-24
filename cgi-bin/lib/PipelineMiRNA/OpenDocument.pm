@@ -245,7 +245,6 @@ sub generate_report {
     my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
 
     my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
-    use Data::Dumper;
 
     my $doc = $self->prepare_document();
 
