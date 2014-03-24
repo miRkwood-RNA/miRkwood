@@ -58,7 +58,7 @@ sub prepare_document {
     odf_style->create(
         'paragraph',
         name   => 'None',
-        parent => "Basic",
+        parent => 'Basic',
         area   => 'text',
         size   => '0pt',
     )->register($doc);
@@ -66,8 +66,8 @@ sub prepare_document {
     # Other MiRBase sequences
     my $s0 = odf_style->create(
         'paragraph',
-        name => "MirbaseSequences",
-        parent => "Basic");
+        name => 'MirbaseSequences',
+        parent => 'Basic');
     $s0->set_properties(
         area=>'paragraph',
         margin_left=>'4mm',
@@ -81,8 +81,8 @@ sub prepare_document {
     $doc->register_style($s0);
 
     # Monospace
-    $doc->set_font_declaration("Monospace");
-    my $s = odf_style->create('paragraph', name => "Monospace");
+    $doc->set_font_declaration('Monospace');
+    my $s = odf_style->create('paragraph', name => 'Monospace');
     $s->set_properties(
         area=>'paragraph',
         margin_left=>'4mm',
@@ -100,8 +100,8 @@ sub prepare_document {
     # Vienna (Monospace style)
     odf_style->create(
         'paragraph',
-        name  => "Vienna",
-        parent => "Monospace",
+        name  => 'Vienna',
+        parent => 'Monospace',
         area   => 'text',
         size   => '8pt',
     )->register($doc);
@@ -109,8 +109,8 @@ sub prepare_document {
     # Hairpin (Monospace style)
     odf_style->create(
         'paragraph',
-        name  => "Hairpin",
-        parent => "Monospace",
+        name  => 'Hairpin',
+        parent => 'Monospace',
         area   => 'text',
         size   => '8pt',
     )->register($doc);
@@ -118,8 +118,8 @@ sub prepare_document {
     # Alignment (Monospace style)
     odf_style->create(
         'paragraph',
-        name  => "Alignment",
-        parent => "Monospace",
+        name  => 'Alignment',
+        parent => 'Monospace',
         area   => 'text',
         size   => '9pt',
     )->register($doc);
@@ -127,8 +127,8 @@ sub prepare_document {
     # StandardBold (Monospace style)
     odf_style->create(
         'paragraph',
-        name  => "StandardBold",
-        parent => "Standard",
+        name  => 'StandardBold',
+        parent => 'Standard',
         area   => 'text',
         weight => 'bold',
     )->register($doc);
@@ -149,7 +149,7 @@ sub prepare_document {
     odf_style->create(
         'paragraph',
         name   => 'Level 2 Heading',
-        parent => "Level 1 Heading",
+        parent => 'Level 1 Heading',
         area   => 'text',
         size   => '12pt',
         weight => 'bold',
@@ -172,7 +172,7 @@ sub prepare_document {
     odf_style->create(
         'paragraph',
         name  => 'Level 4 Heading',
-        parent => "Level 3 Heading",
+        parent => 'Level 3 Heading',
         area   => 'text',
         size   => '10pt',
     )->register($doc);
@@ -181,7 +181,7 @@ sub prepare_document {
     odf_style->create(
         'paragraph',
         name  => 'Level 5 Heading',
-        parent => "Level 4 Heading",
+        parent => 'Level 4 Heading',
         area   => 'text',
     )->register($doc);
 
@@ -205,7 +205,7 @@ sub prepare_document {
     $doc->insert_style(
         odf_create_style(
                 'graphic',
-                name        => "Classic",
+                name        => 'Classic',
                 align       => 'center',
                 margin_top  => '5mm'
                 ),
@@ -215,7 +215,7 @@ sub prepare_document {
     $doc->insert_style(
         odf_create_style(
             'paragraph',
-            name        => "Centré",
+            name        => 'Centré',
             align       => 'center',
             margin_top  => '5mm'
         )
@@ -303,16 +303,16 @@ sub generate_report {
               PipelineMiRNA::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
                 ${$candidate}{'DNASequence'} );
 
-            $list->add_item(text => "Name: ${$candidate}{'name'}", style => "Basic");
-            $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => "Basic");
-            $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => "Basic");
-            $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => "Basic");
+            $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');
+            $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => 'Basic');
+            $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => 'Basic');
+            $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
 
-            my $subtext = "";
+            my $subtext = qw{};
             if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
-                $subtext .= ""
+                $subtext .= qw{}
             } else {
-                $subtext.= "This stem-loop structure is the MFE structure"
+                $subtext.= 'This stem-loop structure is the MFE structure'
             }
             my $para1 = $context->append_element(
             odf_create_paragraph(
@@ -326,7 +326,7 @@ sub generate_report {
                 style   =>'Basic'
                 )
             );
-            $para2->set_span(filter  => "structure", style   => 'StandardBold');
+            $para2->set_span(filter  => 'structure', style   => 'StandardBold');
 
 
             # Copying the image
@@ -361,7 +361,7 @@ sub generate_report {
                 odf_create_heading(
                     level => 3,
                     style => 'Level 3 Heading',
-                    text  => "Thermodynamics stability",
+                    text  => 'Thermodynamics stability',
                 )
             );
 
@@ -373,9 +373,9 @@ sub generate_report {
                     );
 
             # TODO: maybe we do not have those ; infer that from  run_options config file
-            $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => "Basic");
-            $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => "Basic");
-            $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => "Basic");
+            $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => 'Basic');
+            $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => 'Basic');
+            $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => 'Basic');
 
 
             # Section Mirbase alignments
@@ -400,11 +400,10 @@ sub add_ODF_alignments {
         odf_create_heading(
             level => 3,
             style => 'Level 3 Heading',
-            text  => "Conserved mature miRNA",
+            text  => 'Conserved mature miRNA',
         )
     );
 
-    my $alignmentHTML;
     if ( !$candidate{'alignment_existence'} ) {
         $context->append_element(
             odf_create_paragraph(
@@ -417,7 +416,6 @@ sub add_ODF_alignments {
     my %alignments     = %{ $candidate{'alignments'} };
     my %mirdup_results = %{ $candidate{'mirdup_validation'} };
 
-    my @TOC;
     my $predictionCounter = 0;
 
     # Sorting by position
@@ -451,7 +449,7 @@ sub add_ODF_alignments {
 
         # Sorting the hit list by descending value of the 'score' element
         my @hits =
-          sort { $b->{'score'} <=> $a->{'score'} } @{ $alignments{$position} };
+          reverse sort { $a->{'score'} <=> $b->{'score'} } @{ $alignments{$position} };
         my $title = "Prediction $predictionCounter: $position";
 
         $context->append_element(
@@ -488,23 +486,21 @@ sub add_ODF_alignments {
             my $names = $hit->{'name'} . q{ } . $hit->{'def_query'};
 
             my $name;
-            my $html_name;
             my @splitted = split('\|', $names);
 
             my $spacing = 15;
             my ($top, $middle, $bottom) = split(/\n/, $alignment);
             $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
-            $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
+            $middle = sprintf "%-${spacing}s %3s %s %s", qw{},    qw{},                   $middle, qw{};
 
-            my $title = '';
+            my $mirbase_title = qw{};
             if( (scalar @splitted) > 1 ) {
-                $title = 'miRBase sequences: ';
+                $mirbase_title = 'miRBase sequences: ';
             }else{
-                $title = 'miRBase sequence: ';
+                $mirbase_title = 'miRBase sequence: ';
             }
 
-            $name = "miRBase";
-            my @sequences;
+            $name = 'miRBase';
 
             my @mirbase_links;
             my @mirbase_ids;
@@ -514,15 +510,15 @@ sub add_ODF_alignments {
                 if ($seq =~ 'revcomp'){
                 } else {
                     my @splitted_one = split(/ /, $seq);
-                    my $name = $splitted_one[0];
+                    my $local_name = $splitted_one[0];
                     my $mirbase_id = $splitted_one[1];
                     my $mirbase_link = PipelineMiRNA::Utils::make_mirbase_link($mirbase_id);
                     push @mirbase_links, $mirbase_link;
-                    push @mirbase_ids, $name;
+                    push @mirbase_ids, $local_name;
                 }
             }
             my $para_seqs = odf_create_paragraph(
-                text    => $title . join(', ', @mirbase_ids),
+                text    => $mirbase_title . join(', ', @mirbase_ids),
                 style   => 'MirbaseSequences'
             );
             foreach my $i (0..$#mirbase_ids){

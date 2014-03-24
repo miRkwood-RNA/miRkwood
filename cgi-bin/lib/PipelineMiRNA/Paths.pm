@@ -215,7 +215,6 @@ sub get_yaml_file {
     my $yaml;
     if ( !eval { $yaml = YAML::XS::LoadFile($yaml_file); } ) {
         croak("Error, YAML file $yaml_file is malformed");
-        return;
     }
     else {
         return $yaml;

@@ -33,7 +33,7 @@ sub test_randfold {
     my ( $candidate_dir, $seq_file ) = @_;
     my $randfold_out = File::Spec->catfile( $candidate_dir, 'randfold.out' );
     PipelineMiRNA::Programs::run_randfold( $seq_file, $randfold_out, 200)
-      or die("Problem when running Randfold");
+      or die('Problem when running Randfold');
     chmod 777, $randfold_out;
     return -e $randfold_out;
 }
@@ -56,7 +56,7 @@ sub test_alignment {
     PipelineMiRNA::Components::mask_CT_file($CT_file, $seqN);
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
     PipelineMiRNA::Programs::run_exonerate( $seqN, $exonerate_out )
-      or die("Problem when running Exonerate");
+      or die('Problem when running Exonerate');
     return $exonerate_out;
 }
 

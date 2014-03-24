@@ -151,7 +151,7 @@ sub parse_RNAfold_output {
     my (@args)      = @_;
     my ($file)  = shift @args;
     my ( $nameSeq, $dna, $structure, $energy );
-    my $result = "";
+    my $result = qw{};
     open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
     while ( my $line = <$INPUT_FH> ) {
         if ( $line =~ m{
@@ -215,7 +215,7 @@ sub index_blast_output {
     open( my $FOut, '<', $blast_output )
       || die "Error opening $blast_output: $!";
     while ( my $line = <$FOut> ) {
-        my @name = split( '\t', $line );
+        my @name = split( /\t/, $line );
         $blast_seqs{ $name[0] } = 1;
     }
     close $FOut

@@ -46,7 +46,7 @@ sub list_programs {
     return (
         $rnafold_bin,  $rnalfold_bin, $rnaeval_bin,
         $randfold_bin, $rnastemploop_bin,
-	$varna_bin,    
+	    $varna_bin,
         $miRdup_jar
     );
 }
@@ -89,7 +89,7 @@ Return whether the output file exists.
 sub convert_to_ct {
     my ( $rnafold_out, $ct_file ) = @_;
     my $b2ct_cmd = "$b2ct_bin < $rnafold_out > $ct_file";
-    system($b2ct_cmd);    
+    system($b2ct_cmd);
     chmod 0777, $ct_file;
     return ( -e $ct_file );
 }
@@ -124,8 +124,10 @@ sub run_rnalfold {
     my $output_file   = shift @args;
     open( my $TEMPFILE_FH, '>', $temp_file )
       or die "Error when opening tempfile -$temp_file-: $!";
-    print $TEMPFILE_FH "$sequence_name\n$sequence";
-    close $TEMPFILE_FH;
+    print {$TEMPFILE_FH} "$sequence_name\n$sequence"
+      or die "Error when writing in $temp_file: $!";
+    close $TEMPFILE_FH
+      or die "Error when closing $temp_file: $!";
     my $result = run_rnalfold_on_file($temp_file, $output_file);
     unlink $TEMPFILE_FH;
     return $result;
@@ -172,8 +174,7 @@ sub run_randfold {
     my $input_file = shift @args;
     my $output_file = shift @args;
     my $iterations  = shift @args;
-    my ( $input, $output ) = @_;
-    my $randfold_cmd = "$randfold_bin --iterations $iterations --fast --fasta $input_file > $output";
+    my $randfold_cmd = "$randfold_bin --iterations $iterations --fast --fasta $input_file > $output_file";
     debug($randfold_cmd, PipelineMiRNA->DEBUG());
     system($randfold_cmd);
     return ( -e $output_file );
@@ -202,14 +203,14 @@ sub run_exonerate {
                     .'  alignment: |{\n'
                     .'    %Pqs %Pts %Pl}\n';
 
-    my $exonerate_cmd = '';
+    my $exonerate_cmd = qw{};
     if( $exonerate_dir ){
         $exonerate_cmd .="cd $exonerate_dir && "
     }
     $exonerate_cmd =
         "$exonerate_bin "
-      . "--exhaustive "             # Exhaustive alignment
-      . "--model affine:bestfit "   # Best location alignment of the query onto the target
+      . '--exhaustive '             # Exhaustive alignment
+      . '--model affine:bestfit '   # Best location alignment of the query onto the target
       . "$mirbase_file $input "
       . "--dnasubmat $matrix_file " # Substitution matrix to be used for DNA comparison
       . '--bestn 1 '                # Report the single best result for each query
