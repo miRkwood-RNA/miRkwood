@@ -11,5 +11,5 @@ fi
 EXECUTION_PATH=$(readlink -f $1)
 cd $EXECUTION_PATH
 prove --r --lib --timer --formatter=TAP::Formatter::JUnit t/ | tee test-results.xml
-dzil cover -select_re=lib/PipelineMiRNA/*
+dzil cover -select_re=lib/PipelineMiRNA/* -outputdir $EXECUTION_PATH/cover_db
 # sh t/functional/run-functional-tests.sh | tee functional-test-results.txt
