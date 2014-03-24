@@ -84,21 +84,21 @@ is(
 
 ok( my $result4 = PipelineMiRNA::Candidate->candidateAsVienna( \%candidate ),
     'can call candidateAsVienna()' );
-my $expected_file4 = input_file('candidateAsVienna.out');
+my $expected_file4 = input_file('Candidate.candidateAsVienna.out');
 file_exists_ok($expected_file4);
 my $expected4 = slurp_file($expected_file4);
 is( $result4, $expected4, 'candidateAsVienna returns the expected value' );
 
 ok( my $result5 = PipelineMiRNA::Candidate->candidateAsFasta( \%candidate ),
     'can call candidateAsFasta()' );
-my $expected_file5 = input_file('candidateAsFasta.out');
+my $expected_file5 = input_file('Candidate.candidateAsFasta.out');
 file_exists_ok($expected_file5);
 my $expected5 = slurp_file($expected_file5);
 is( $result5, $expected5, 'candidateAsFasta returns the expected value' );
 
 ok( my $result_gff = PipelineMiRNA::Candidate->candidate_as_gff( \%candidate ),
     'can call candidate_as_gff()' );
-my $expected_file_gff = input_file('candidate_as_gff.out');
+my $expected_file_gff = input_file('Candidate.candidate_as_gff.out');
 file_exists_ok($expected_file_gff);
 my $expected_gff = slurp_file($expected_file_gff);
 is( $result_gff, $expected_gff, 'candidate_as_gff returns the expected value' );
@@ -109,7 +109,7 @@ ok(
       PipelineMiRNA::Candidate->alternativeCandidatesAsVienna( \%candidate ),
     'can call alternativeCandidatesAsVienna()'
 );
-my $expected_file6 = input_file('alternativeCandidatesAsVienna.out');
+my $expected_file6 = input_file('Candidate.alternativeCandidatesAsVienna.out');
 file_exists_ok($expected_file6);
 my $expected6 = slurp_file($expected_file6);
 is( $result6, $expected6,
@@ -121,7 +121,7 @@ ok(
     ),
     'can call make_alignments_HTML()'
 );
-my $expected_file7 = input_file('make_alignments_HTML.out');
+my $expected_file7 = input_file('Candidate.make_alignments_HTML.out');
 file_exists_ok($expected_file7);
 my $expected7 = slurp_file($expected_file7);
 #is( $result7, $expected7,
