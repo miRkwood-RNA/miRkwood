@@ -230,7 +230,7 @@ Output:
 sub is_fasta_line {
     my (@args) = @_;
     my $line = shift @args;
-    if ( $line =~ m{^\s*[atcgu]+\s*$}xms ) {
+    if ( $line =~ m{^\s*[ATGCUatcgu]+\s*$}xms ) {
         return 1;
     }
     else {
