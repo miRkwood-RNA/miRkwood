@@ -209,9 +209,9 @@ and returns its content if so.
 sub get_yaml_file {
     my @args      = @_;
     my $yaml_file = shift @args;
-    ( -e $yaml_file )  or die("Error, YAML file $yaml_file does not exist");
-    ( !-z $yaml_file ) or die("Error, YAML file $yaml_file is empty");
-    ( -r $yaml_file )  or die("Error, YAML file $yaml_file is not readable");
+    ( -e $yaml_file )  or confess("Error, YAML file $yaml_file does not exist");
+    ( !-z $yaml_file ) or confess("Error, YAML file $yaml_file is empty");
+    ( -r $yaml_file )  or confess("Error, YAML file $yaml_file is not readable");
     my $yaml;
     if ( !eval { $yaml = YAML::XS::LoadFile($yaml_file); } ) {
         croak("Error, YAML file $yaml_file is malformed");
