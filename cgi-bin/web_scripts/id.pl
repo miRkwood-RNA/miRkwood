@@ -12,7 +12,9 @@ my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 
 my $page = <<"END_TXT";
 <div class="main">
+  <br/>
   <h2>Retrieve result with an ID</h2>
+  <br/>
   <div class="forms">
     <form method="post" action="./resultsWithID.pl">
       <p>The ID remains valid 15 days after sequence submission.</p>
