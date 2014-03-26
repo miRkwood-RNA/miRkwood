@@ -104,7 +104,7 @@ sub main_entry {
 			@hash = sort { $a->{start} <=> $b->{start} } ( @hash1, @hash2 );
 		}
 		else {
-			@hash = @hash1;
+			@hash = sort { $a->{start} <=> $b->{start} } ( @hash1 );
 		}
 
         if ( $cfg->param('options.mfe') ) {
@@ -310,7 +310,7 @@ sub is_overlapping {
 	my $end       = shift @args or die('Not enough values provided');
 	my $ref_start = shift @args or die('Not enough values provided');
 	my $ref_end   = shift @args or die('Not enough values provided');
-	$ref_start <= $start or die('Positions should be ordered');
+	$ref_start <= $start or die("Positions should be ordered : $ref_start <= $start");
 	return ( $start < ( $ref_start + $ref_end ) / 2 );
 }
 
@@ -327,7 +327,7 @@ sub is_included {
 	my $end       = shift @args or die('Not enough values provided');
 	my $ref_start = shift @args or die('Not enough values provided');
 	my $ref_end   = shift @args or die('Not enough values provided');
-	$ref_start <= $start or die('Positions should be ordered');
+	$ref_start <= $start or die("Positions should be ordered : $ref_start <= $start");
 	return ( $end <= $ref_end );
 }
 
