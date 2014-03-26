@@ -310,9 +310,15 @@ sub run_mirdup_prediction_on_sequence {
       . '.generatedmirnas.'
       . $miRdup_model_name
       . '.miRdupOutput.txt';
-    my $run_mirdup_cmd =
-"java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -u $sequence -f $output_root > /dev/null 2>&1";
-    chdir($miRdup_model_path) or die "$!";
+
+    my $run_mirdup_cmd = "cd $miRdup_model_path && "
+        . "java -jar $miRdup_jar"
+        . " -r $vienna_progs_dir/"
+        . " -d $miRdup_model_name"
+        . ' -predict'
+        . " -u $sequence"
+        . " -f $output_root"
+        . " > /dev/null 2>&1";
     system($run_mirdup_cmd);
 
     my @old_files = glob "$miRdup_model_path/$output_root*";
@@ -342,9 +348,14 @@ sub run_mirdup_prediction_on_sequence_file {
     my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
     my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
 
-    my $run_mirdup_cmd =
-"java -jar $miRdup_jar -r $vienna_progs_dir/ -d $miRdup_model_name -predict -i $prediction_source_file -f out  > /dev/null 2>&1";
-    chdir($miRdup_model_path) or die "$!";
+    my $run_mirdup_cmd = "cd $miRdup_model_path && "
+        . "java -jar $miRdup_jar"
+        . " -r $vienna_progs_dir/"
+        . " -d $miRdup_model_name"
+        . ' -predict'
+        . " -i $prediction_source_file"
+        . ' -f out'
+        . "  > /dev/null 2>&1";
     system($run_mirdup_cmd);
 
     my $output_file =
@@ -370,9 +381,12 @@ sub run_mirdup_validation_on_file {
     my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
     my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
 
-    my $run_mirdup_cmd =
-"java -jar $miRdup_jar -r $vienna_progs_dir/ -c $miRdup_model_name -v $validation_source_file > /dev/null 2>&1";
-    chdir($miRdup_model_path) or die "$!";
+    my $run_mirdup_cmd = "cd $miRdup_model_path && "
+        . "java -jar $miRdup_jar"
+        . " -r $vienna_progs_dir/"
+        . " -c $miRdup_model_name"
+        . " -v $validation_source_file"
+        . " > /dev/null 2>&1";
     system($run_mirdup_cmd);
 
     my $output_file =
