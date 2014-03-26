@@ -642,8 +642,8 @@ sub post_process_alignments {
 		}
 	  )
 	{
-
-		# Catching exception
+	    # Catching exception
+        carp("Exception when parsing exonerate output $file_alignement");
 	}
 	else {
 		%alignments =
