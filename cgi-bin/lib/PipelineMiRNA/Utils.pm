@@ -193,6 +193,51 @@ sub filter_fasta {
 	return;
 }
 
+=method is_fasta_header
+
+Checks whether the given string is an accepted FASTA header
+
+Input:
+ - a sequence string
+Output:
+ - True or False
+
+=cut
+
+sub is_fasta_header {
+    my (@args) = @_;
+    my $line = shift @args;
+    if ( $line =~ m{^\s*>}xms ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+=method is_fasta_line
+
+Checks whether the given string is an accepted FASTA sequence
+(ie constituted of A, T, G, C or U)
+
+Input:
+ - a sequence string
+Output:
+ - True or False
+
+=cut
+
+sub is_fasta_line {
+    my (@args) = @_;
+    my $line = shift @args;
+    if ( $line =~ m{^\s*[atcgu]+\s*$}xms ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
 =method is_fasta
 
 Checks whether the given string is a FASTA sequence
@@ -205,15 +250,16 @@ Output:
 =cut
 
 sub is_fasta {
-	my (@args) = @_;
-	my $sequence = shift @args;
-	if ( $sequence !~ /^( *>.+[\r\n]+([-\. atcgu]+[\r\n]+)+){1,}$/ )
-	{
-		return 0;
-	}
-	else {
-		return 1;
-	}
+    my (@args) = @_;
+    my $sequence = shift @args;
+    my @lines = split /\n/smx, $sequence;
+    foreach my $line (@lines) {
+        if ( !is_fasta_header($line) && !is_fasta_line($line) ) {
+            warn "Problem with line $line";
+            return 0;
+        }
+    }
+    return 1;
 }
 
 =method mask_sequence_nucleotide
