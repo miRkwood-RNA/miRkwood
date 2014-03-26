@@ -237,7 +237,7 @@ Return whether the output files exist.
 
 sub run_rnastemloop {
     my ( $input, $output_stemloop, $output_optimal ) = @_;
-    my $rnastemloop_cmd = "$rnastemploop_bin -i $input --output-stemloop $output_stemloop --output-optimal $output_optimal";
+    my $rnastemloop_cmd = "$rnastemploop_bin -i $input -s $output_stemloop -o $output_optimal";
     system($rnastemloop_cmd);
     return ( -e $output_stemloop && -e $output_optimal);
 }
