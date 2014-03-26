@@ -5,35 +5,20 @@ package PipelineMiRNA::Paths;
 use strict;
 use warnings;
 use Cwd;
-use Carp;
 use File::Spec;
 use File::Basename;
-use YAML::XS;
+
+use PipelineMiRNA;
 
 =method get_config
 
-Get the YAML configuration file contents.
+Get the configuration file contents.
 
 =cut
 
 sub get_config {
     my ($self, @args) = @_;
-    my $config_file = File::Spec->catfile(File::Basename::dirname(__FILE__), 'pipeline.cfg');
-    my $yaml = get_yaml_file($config_file);
-    return %{$yaml};
-}
-
-=method get_programs_config
-
-Get the YAML programs configuration file contents.
-
-=cut
-
-sub get_programs_config {
-    my ($self, @args) = @_;
-    my $config_file = File::Spec->catfile(File::Basename::dirname(__FILE__), 'programs.cfg');
-    my $yaml = get_yaml_file($config_file);
-    return %{$yaml};
+    return PipelineMiRNA->PIPELINE_CONFIG();
 }
 
 =method get_job_config_path
@@ -197,28 +182,6 @@ sub filesystem_to_relative_path {
     my $web_path        = PipelineMiRNA::Paths->get_results_web_path();
     $path =~ s/$filesystem_path/$web_path/g;
     return $path;
-}
-
-=method get_yaml_file
-
-Check whether a given file is suitable for YAML deserialization,
-and returns its content if so.
-
-=cut
-
-sub get_yaml_file {
-    my @args      = @_;
-    my $yaml_file = shift @args;
-    ( -e $yaml_file )  or confess("Error, YAML file $yaml_file does not exist");
-    ( !-z $yaml_file ) or confess("Error, YAML file $yaml_file is empty");
-    ( -r $yaml_file )  or confess("Error, YAML file $yaml_file is not readable");
-    my $yaml;
-    if ( !eval { $yaml = YAML::XS::LoadFile($yaml_file); } ) {
-        croak("Error, YAML file $yaml_file is malformed");
-    }
-    else {
-        return $yaml;
-    }
 }
 
 1;

@@ -255,7 +255,7 @@ sub parse_custom_exonerate_output{
     my @args = @_;
     my $yaml_file = shift @args;
 
-    my $yaml = PipelineMiRNA::Paths::get_yaml_file($yaml_file) or die("Error when parsing YAML file $yaml_file");
+    my $yaml = PipelineMiRNA::get_yaml_file($yaml_file) or die("Error when parsing YAML file $yaml_file");
     my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
 
     my %results;

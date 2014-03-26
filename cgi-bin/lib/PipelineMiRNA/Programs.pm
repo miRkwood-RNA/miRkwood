@@ -16,24 +16,38 @@ use Log::Message::Simple qw[msg error debug];
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Data;
 
-my %programs_config = PipelineMiRNA::Paths->get_programs_config();
+our $vienna_progs_dir;
+our $rnafold_bin;
+our $rnalfold_bin;
+our $rnaeval_bin;
+our $b2ct_bin;
+our $randfold_bin;
+our ($exonerate_dir, $exonerate_bin);
+our $varna_bin;
+our $rnastemploop_bin;
+our $blastx_bin;
+our $miRdup_jar;
 
-my $vienna_progs_dir = $programs_config{'vienna_package'};
-my $rnafold_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAfold' );
-my $rnalfold_bin = File::Spec->catfile( $vienna_progs_dir, 'RNALfold' );
-my $rnaeval_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAeval' );
-my $b2ct_bin     = File::Spec->catfile( $programs_config{'vienna_utils'}, 'b2ct' );
+sub init_programs{
+    my @args = @_;
+    my %programs_config = PipelineMiRNA::PROGRAMS_CONFIG();
+    $vienna_progs_dir = $programs_config{'vienna_package'};
+    $rnafold_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAfold' );
+    $rnalfold_bin = File::Spec->catfile( $vienna_progs_dir, 'RNALfold' );
+    $rnaeval_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAeval' );
+    $b2ct_bin     = File::Spec->catfile( $programs_config{'vienna_utils'}, 'b2ct' );
 
-my $randfold_bin = $programs_config{'randfold'};
-my $exonerate_dir = $programs_config{'exonerate'};
+    $randfold_bin = $programs_config{'randfold'};
+    $exonerate_dir = $programs_config{'exonerate'};
 
-my $exonerate_bin = 'exonerate';
-my $varna_bin        = $programs_config{'varna'};
-my $rnastemploop_bin = $programs_config{'rnastemloop'};
-my $blastx_bin = $programs_config{'blastx'};
+    $exonerate_bin = 'exonerate';
+    $varna_bin        = $programs_config{'varna'};
+    $rnastemploop_bin = $programs_config{'rnastemloop'};
+    $blastx_bin = $programs_config{'blastx'};
 
-my $miRdup_jar = $programs_config{'miRdup'};
-
+    $miRdup_jar = $programs_config{'miRdup'};
+    return 1;
+}
 
 =method list_programs
 
@@ -43,6 +57,7 @@ List all the binaries needed in the pipeline.
 
 sub list_programs {
     my @args = @_;
+    init_programs();
     return (
         $rnafold_bin,  $rnalfold_bin, $rnaeval_bin,
         $randfold_bin, $rnastemploop_bin,

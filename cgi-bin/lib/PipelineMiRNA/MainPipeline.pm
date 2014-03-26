@@ -59,6 +59,8 @@ sub main_entry {
 	PipelineMiRNA->CONFIG_FILE($run_options_file);
 	write_config( $strand, $mfe, $randfold, $align, $run_options_file );
 
+    PipelineMiRNA::Programs::init_programs();
+
 	debug( 'BEGIN execute_scripts', PipelineMiRNA->DEBUG() );
 	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
 	if ($filter) {
