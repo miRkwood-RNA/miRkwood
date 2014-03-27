@@ -60,69 +60,6 @@ sub filter_CDS {
     return $input_sequences;
 }
 
-=method compute_energy
-
-Parse the CT file and fill the MFEI output file.
-
-=cut
-
-sub compute_energy {
-    my ( $CT_file, $MFEI_output_file, $sequence_name ) = @_;
-
-    # ouverture du fichier de sortie de Unafold
-    open( my $FOut, '<', $CT_file ) || die "Unable to open CT file: $!";
-
-    my $cg = 0;
-    my ( $nameSeq, $mfe, $longueur );
-    while ( my $line = <$FOut> ) {
-        my @variable = split( '\s+', $line );
-
-        if (
-            $variable[2] =~ m{
-                          ^              # Begin of line
-                          ENERGY         # ENERGY
-                        }smx
-          )
-        {
-
-            # Récupération du nom de la séquence
-            $nameSeq = substr $variable[5], 0;
-
-            # Récupération du MFE
-            $mfe      = substr $variable[4], 0;
-            $longueur = $variable[1];
-            $cg       = 0;
-        }
-        else {    # Not the ENERGY line
-            if (
-                $variable[2] =~ m{
-                              [CG]     # G or C
-                            }smxi
-              )
-            {
-                $cg++;
-            }
-            if ( $longueur == $variable[1] )
-            # tester si la longueur actuelle est égale à la longueur de la séquence
-            {
-
-                my $amfe = ( $mfe / $longueur ) * 100;
-                my $gc_content = ( ( $cg / $longueur ) * 100 );
-                my $mfei = PipelineMiRNA::Utils::restrict_num_decimal_digits($amfe / $gc_content,3);
-                $amfe = PipelineMiRNA::Utils::restrict_num_decimal_digits($amfe, 3);
-                open( my $RES, '>', $MFEI_output_file ) || die "Unable to open $MFEI_output_file: $!";
-                my $content =
-                  $nameSeq . "\t" . $mfei . "\t" . $mfe . "\t" . $amfe;
-                print $RES $content;
-                close $RES or die "Unable to close: $!";
-            }
-
-        }    # /Else− not ENERGY line
-    }    # /While
-    close $FOut or die "Unable to close: $!";
-    return $MFEI_output_file;
-}
-
 =method mask_CT_file
 
 Mask the CT file and outputting to boucleTermWithN_out file

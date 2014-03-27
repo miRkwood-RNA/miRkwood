@@ -9,20 +9,6 @@ use File::Spec;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Components;
 
-=method test_mfei
-
-Run the MFEI a posteriori test
-
-=cut
-
-sub test_mfei {
-    my ( $candidate_dir, $candidate_ct_file, $seq ) = @_;
-    my $MFEI_output = File::Spec->catfile( $candidate_dir, 'outMFEI.txt' );
-    PipelineMiRNA::Components::compute_energy( $candidate_ct_file, $MFEI_output,
-        $seq );
-    return -e $MFEI_output;
-}
-
 =method test_randfold
 
 Run the Randfold a posteriori test

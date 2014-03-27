@@ -453,6 +453,14 @@ sub populate_candidate_directory {
 	process_outRNAFold( $candidate_dir, 'stemloop', $candidate{'name'},
 		$candidate{'dna'}, $candidate{'structure_stemloop'}, $candidate{'energy_stemloop'} );
 
+	# Writing energy file
+	my $energy_file = File::Spec->catfile( $candidate_dir, 'outMFEI.txt' );
+    open( my $ENERGY_FH, '>', $energy_file )
+        or die "Unable to open $energy_file: $!";
+    my $content = $candidate{'name'} . "\t" . $candidate{'mfei'} . "\t" . $candidate{'energy_optimal'} . "\t" . $candidate{'amfe'};
+    print $ENERGY_FH $content;
+    close $ENERGY_FH or die "Unable to close: $!";
+
 	#Writing alternativeCandidates.txt
 	my $alternative_candidates =
 	  File::Spec->catfile( $candidate_dir, 'alternativeCandidates.txt' );
@@ -596,12 +604,6 @@ sub process_tests_for_candidate {
 
 	my $cfg = PipelineMiRNA->CONFIG();
 
-	####calcul MFEI (appel script energie.pl)
-
-	debug( "Running test_mfei on $file", PipelineMiRNA->DEBUG() );
-	PipelineMiRNA::PosterioriTests::test_mfei( $candidate_dir,
-		$candidate_ct_optimal_file, $file );
-
 	####calcul p-value randfold
 	if ( $cfg->param('options.randfold') ) {
 		debug( "Running test_randfold on $seq_file", PipelineMiRNA->DEBUG() );
@@ -616,7 +618,7 @@ sub process_tests_for_candidate {
 		post_process_alignments( $candidate_dir,
 			$candidate_rnafold_stemploop_out,
 			$file_alignement );
-	}    # if file
+	}
 
 	return;
 }
