@@ -261,8 +261,8 @@ sub process_RNAstemloop {
 			{                        # We have a structure
 
 				if ( $nameSeq =~ /.*__(\d*)-(\d*)$/ ) {
-					my $mfei =
-					  PipelineMiRNA::Utils::compute_mfei( $dna, $energy_optimal );
+					my ($mfei, $amfe) =
+					  PipelineMiRNA::Utils::compute_mfei_and_amfe( $dna, $energy_optimal );
 					my ( $start, $end );
 					if ( $strand eq '-' ) {
 						my $res =
@@ -278,6 +278,7 @@ sub process_RNAstemloop {
 						"start"     => $start,
 						"end"       => $end,
 						"mfei"      => $mfei,
+						"amfe"      => $amfe,
 						"dna"       => $dna,
 						"structure_optimal" => $structure_optimal,
 						"structure_stemloop" => $structure_stemloop,

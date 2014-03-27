@@ -627,13 +627,13 @@ sub restrict_num_decimal_digits {
 	return $num;
 }
 
-=method compute_mfei
+=method compute_mfei_and_amfe
 
-Compute the MFEI of a given sequence
+Compute the MFEI and the AMFE of a given sequence
 
 =cut
 
-sub compute_mfei {
+sub compute_mfei_and_amfe {
     my @args     = @_;
     my $sequence = shift @args;
     my $energy   = shift @args;
@@ -644,7 +644,7 @@ sub compute_mfei {
     my $amfe = compute_amfe($sequence, $energy);
     my $mfei = $amfe / $gc_content;
 
-    return $mfei;
+    return ($mfei, $amfe);
 }
 
 =method compute_amfe
