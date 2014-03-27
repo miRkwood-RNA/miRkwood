@@ -52,12 +52,6 @@ my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
 
 if ($valid) {
 	my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
-	my $cfg       = PipelineMiRNA->CONFIG();
-
-	if ( $cfg->param('options.mfe') ) {
-		%myResults =
-		  PipelineMiRNA::Results->select_sequences_by_mfei( \%myResults );
-	}
 
 	my $nb_results   = PipelineMiRNA::Results->number_of_results( \%myResults );
 	my $HTML_results =
