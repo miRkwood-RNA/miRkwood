@@ -270,22 +270,26 @@ foreach my $couple (@reverse_complement_values) {
 }
 
 ok(
-    my $compute_mfei_res =
-      PipelineMiRNA::Utils::compute_mfei( $sequence1, -34.30 ),
-    'Can call compute_mfei'
+    my ($compute_mfei_res, $compute_amfe_res) =
+      PipelineMiRNA::Utils::compute_mfei_and_amfe( $sequence1, -34.30 ),
+    'Can call compute_mfei_and_amfe'
 );
 is( $compute_mfei_res, -0.879487179487179,
-    'compute_mfei returns the expected value' );
+    'compute_mfei_and_amfe returns the expected MFEI value' );
+
+my $expected_amfe = ( -34.3 / 105 ) * 100;
+
+is( $compute_amfe_res, $expected_amfe,
+    'compute_mfei_and_amfe returns the expected AMFE value' );
 
 ok(
-    my $compute_amfe_res =
+    my $compute_amfe_res_bis =
       PipelineMiRNA::Utils::compute_amfe( $sequence1, -34.30 ),
     'Can call compute_amfe'
 );
 
 is(
-    $compute_amfe_res,
-    ( -34.3 / 105 ) * 100,
+    $compute_amfe_res, $expected_amfe,
     'compute_amfe returns the expected value (exact)'
 );
 

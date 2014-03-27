@@ -237,15 +237,6 @@ is( $mask_CT_file_output, $mask_CT_file_expected,
     'mask_CT_file ok' );
 
 my $candidate_ct_file = input_file('candidate1', 'outB2ct_optimal.ct' );
-my $compute_energy_output_file = 'compute_energy_output_file.txt';
-ok( PipelineMiRNA::Components::compute_energy( $candidate_ct_file,
-                                               $compute_energy_output_file,
-                                               'name_seq' ),
-    'can call compute_energy()' );
-my $compute_energy_output = slurp_file($compute_energy_output_file);
-my $compute_energy_expected = slurp_file(input_file('candidate1', 'outMFEI.txt' ));
-is( $compute_energy_output, $compute_energy_expected,
-    'compute_energy ok' );
 
 ## merge_alignments
 
