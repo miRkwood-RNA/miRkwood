@@ -421,4 +421,10 @@ span.mature {
     border: none;
 }
 
+.warning {
+	font-size:14px;
+	font-weight:bold;
+	color:red;
+}
+
 

@@ -63,7 +63,7 @@ if ($valid) {
 	  . "  miRNA precursors found</b></p>";
 	unless ( -e $is_finished ) {
 		$HTML_additional .=
-		  "<p style='font-size:14px;color:red'><b>Still processing...</b></p>";
+		  "<p class='warning'>Still processing...<br/>Below we show some preliminary results</p>";
 	}
 	my $body = "";
 	if ( $nb_results != 0 ) {
