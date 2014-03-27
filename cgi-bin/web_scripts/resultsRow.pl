@@ -7,6 +7,7 @@ use CGI::Carp qw(fatalsToBrowser);
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
+use PipelineMiRNA;
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Results;
@@ -26,6 +27,9 @@ my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results
 
 my %candidate;
 my $html_contents;
+
+my $cfg_path = PipelineMiRNA::Paths->get_job_config_path($job);
+PipelineMiRNA->CONFIG_FILE($cfg_path);
 
 if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
@@ -54,12 +58,23 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     } else {
         $alternatives_HTML .= "<i>None</i>"
     }
+    my $cfg = PipelineMiRNA->CONFIG();
 
     my $alignmentHTML;
-    if($candidate{'alignment'}){
-         $alignmentHTML = PipelineMiRNA::Candidate->make_alignments_HTML(\%candidate);
-    } else {
-        $alignmentHTML = "No alignment has been found.";
+
+    if ( !$cfg->param('options.align') ) {
+        $alignmentHTML = qw{};
+    }
+    else {
+        $alignmentHTML = '<h2>Conserved mature miRNA</h2>';
+
+        if ( $candidate{'alignment'} ) {
+            $alignmentHTML .=
+              PipelineMiRNA::Candidate->make_alignments_HTML( \%candidate );
+        }
+        else {
+            $alignmentHTML .= "No alignment has been found.";
+        }
     }
 
     $html_contents = <<"END_TXT";
@@ -101,7 +116,6 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           <b>Shuffles:</b>
         </li>
         </ul>
-        <h2>Conserved mature miRNA</h2>
         $alignmentHTML
 
     </div><!-- showInfo -->
