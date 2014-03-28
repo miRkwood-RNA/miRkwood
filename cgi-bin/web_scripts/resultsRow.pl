@@ -82,6 +82,13 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         $imgHTML = "<img id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>"
     }
 
+    my $shufflesHTML = '';
+    if ( $cfg->param('options.randfold') ) {
+        $shufflesHTML = "<li>
+          <b>Shuffles:</b> $candidate{'shuffles'}
+        </li>"
+    }
+
     $html_contents = <<"END_TXT";
             <div id = 'showInfo'>
         <ul>
@@ -117,9 +124,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         <li>
           <b>MFEI:</b> $candidate{'mfei'}
         </li>
-        <li>
-          <b>Shuffles:</b>
-        </li>
+        $shufflesHTML
         </ul>
         $alignmentHTML
 
