@@ -77,6 +77,11 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
         }
     }
 
+    my $imgHTML = '';
+    if ( $cfg->param('options.varna') ) {
+        $imgHTML = "<img id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>"
+    }
+
     $html_contents = <<"END_TXT";
             <div id = 'showInfo'>
         <ul>
@@ -100,7 +105,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
           $alternatives_HTML
         </li>
         </ul>
-        <img id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>
+        $imgHTML
         <h2>Thermodynamics stability</h2>
         <ul>
         <li>
