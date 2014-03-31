@@ -79,7 +79,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
     my $imgHTML = '';
     if ( $cfg->param('options.varna') ) {
-        $imgHTML = "<img id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>"
+        $imgHTML = "<img class='structure' id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>"
     }
 
     my $shufflesHTML = '';

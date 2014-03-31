@@ -2,15 +2,14 @@
 body {
     background: #FFFFFF;
     color: #000000;
+    padding-left: 10pt;
 }
 
 pre.alignment {
-    margin-left: 20px;
     line-height: 1.3em;
 }
 
 h2 {
-    padding-left: 8pt;
     width: 100%;
     padding-top: 5pt;
     padding-bottom: 5pt;
@@ -19,23 +18,27 @@ h2 {
 }
 
 h3 {
-    padding: 6px 6px 6px 10px;
+    padding: 6px 6px 6px 0px;
     font-size: 12pt;
     font-weight: bold;
 }
 
 
 h4 {
-    padding: 6px 6px 6px 15px;
+    padding: 6px 6px 6px 0px;
     font-size: 11pt;
     font-weight: bold;
 }
 
-ul li {
+ul {
     list-style-type: square;
-    padding-left: 3pt;
-    padding-bottom : 1pt;
-    padding-top: 1pt;
+	margin-left: -4pt;
+}
+li {
+    padding-left: 2pt;
+	margin-left: -10pt;
+    padding-bottom : 2pt;
+    padding-top: 2pt;
 }
 
 span.mature {
@@ -44,7 +47,6 @@ span.mature {
 
 span.others {
     display: inline-block;
-    margin-left: 20px;
     margin-bottom: 20px;
 }
 
@@ -59,5 +61,9 @@ a[href]:hover{
 
 a.returnlink {
 	font-size: smaller;
-	font-style: italic;
+	padding-left: 4pt;
+}
+
+img.structure{
+	padding-left: 4pt;
 }
