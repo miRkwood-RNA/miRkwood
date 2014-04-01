@@ -609,6 +609,9 @@ sub get_element_of_split {
  
 restrict the number of digits after the decimal point
 
+Usage:
+    my $num = PipelineMiRNA::Utils::restrict_num_decimal_digits($number, 3);
+
 =cut
 
 sub restrict_num_decimal_digits {
