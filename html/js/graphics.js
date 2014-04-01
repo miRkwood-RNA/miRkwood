@@ -256,7 +256,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					}
 					else
 					{
-						td.innerHTML = "<img src='/arn/html/style/cross.png' alt='None' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
+						td.innerHTML = "";
 					
 					}
 				}
