@@ -222,7 +222,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				if ( factor =='quality') 
 				{	
 					var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices 				
-					var string = repeat("<img src='/arn/html/style/Star.png' alt='arobas' style='width:15px; height:15px;' /> 	 ", parseInt(value))
+					var string = repeat("<img src='/arn/html/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
 				
 					td.innerHTML = string;
 				}
@@ -231,7 +231,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					var value = myResults.getValueByFactor(i-1,'image');
 			
 					//td.innerHTML = "<a target='_blank' href='"+ value + "'>"+myResults.getSequencesNamesList()[i-1]+"</a>  "; // ajouter la valeur à la cellule
-					td.innerHTML = "<a  href='" +value + "'><img src='/arn/html/style/loupe.png' alt='arobas' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
+					td.innerHTML = "<a  href='" +value + "'><img src='/arn/html/style/loupe.png' alt='preview' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
 					
 					//var a=document.createElement('a'); 
 					//var value = a.setAttribute("href","../images/".myResults.getValueByIndices(i-1,j-1));
@@ -240,7 +240,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				else if( factor =='alignment') //cas lien alignement 
 				{
 					var value = myResults.getValueByFactor(i-1,'alignment');
-					str = "<img src='/arn/html/style/check.png' alt='arobas' style='width:15px; height:15px;' /> 	 ";
+					str = "<img src='/arn/html/style/check.png' alt='yes' style='width:15px; height:15px;' /> 	 ";
 					if (value == 1)
 					{
 						
@@ -256,7 +256,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 					}
 					else
 					{
-						td.innerHTML = "<img src='/arn/html/style/cross.svg' alt='arobas' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
+						td.innerHTML = "<img src='/arn/html/style/cross.png' alt='None' style='width:15px; height:15px;' />"; // ajouter la valeur à la cellule
 					
 					}
 				}
