@@ -340,6 +340,9 @@ sub resultstruct2pseudoXML {
 	my %results = %{$results};
 
 	my @optional_fields = $self->get_optional_candidate_fields();
+
+	my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
+
 	my @headers1        =
 	  ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields );
 	my @headers2 = ( 'Vienna', 'DNASequence', 'identifier' );
@@ -357,6 +360,9 @@ sub resultstruct2pseudoXML {
 		$result .= "<Sequence";
 		for my $header (@headers1) {
 			my $contents = ${$value}{$header};
+			if ( $header ~~ @fields_to_truncate){
+			    $contents = PipelineMiRNA::Utils::restrict_num_decimal_digits($contents, 3);
+			}
 			if ( !defined $contents ) {
 				$contents = q{};
 			}
