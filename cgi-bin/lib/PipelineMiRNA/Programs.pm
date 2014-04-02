@@ -277,6 +277,7 @@ sub run_blast {
       . "-db $database "
       . "$blastx_options "
       . "-out $output";
+    debug($blastx_cmd, PipelineMiRNA->DEBUG());
     system($blastx_cmd);
     return ( -e $output );
 }
