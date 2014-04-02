@@ -105,7 +105,7 @@ my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $arguments;
 print $cgi->redirect( -uri => $waiting_url  );
 print "Location: $waiting_url \n\n";
 
-my $filter   = $cgi->param('check');
+my $filter   = $cgi->param('CDS');
 my $mfei     = $cgi->param('mfei');
 my $randfold = $cgi->param('randfold');
 my $align    = $cgi->param('align');
