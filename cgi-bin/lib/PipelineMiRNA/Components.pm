@@ -282,12 +282,10 @@ sub get_data_from_rnafold_out {
     my $candidate_rnafold_stemploop_out = shift @args;
     my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output(
         $candidate_rnafold_stemploop_out);
-    my @position    = split( /__/, $vienna_res[0] );
-    my $name        = $position[0];
-    my $position    = $position[1];
+    my ($name, $left, $right) = ($vienna_res[0] =~ /^\s*(.*)__(\d+)-(\d+)$/xms);
     my $DNASequence = $vienna_res[1];
     my $Vienna      = $vienna_res[2];
-    return ( $name, $position, $DNASequence, $Vienna );
+    return ( $name, "$left-$right", $DNASequence, $Vienna );
 }
 
 =method merge_alignments
