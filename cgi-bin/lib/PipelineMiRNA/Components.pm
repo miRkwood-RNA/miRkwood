@@ -270,6 +270,19 @@ END
     return $result;
 }
 
+=method get_name_and_position_from_header
+
+Get sequence name and position based on the FASTA header in RNAfold output.
+
+=cut
+
+sub get_name_and_position_from_header {
+    my @args = @_;
+    my $header = shift @args;
+    my ($name, $left, $right) = ($header =~ /^\s*(.*)__(\d+)-(\d+)$/xms);
+    return ($name, $left, $right)
+}
+
 =method get_data_from_rnafold_out
 
 Retrieve sequence name, position, sequence & structure from
@@ -282,7 +295,7 @@ sub get_data_from_rnafold_out {
     my $candidate_rnafold_stemploop_out = shift @args;
     my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output(
         $candidate_rnafold_stemploop_out);
-    my ($name, $left, $right) = ($vienna_res[0] =~ /^\s*(.*)__(\d+)-(\d+)$/xms);
+    my ($name, $left, $right) = get_name_and_position_from_header($vienna_res[0]);
     my $DNASequence = $vienna_res[1];
     my $Vienna      = $vienna_res[2];
     return ( $name, "$left-$right", $DNASequence, $Vienna );

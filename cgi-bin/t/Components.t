@@ -296,3 +296,26 @@ push @{ $expected_merged3{'1-21'} },
   ( 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M' );
 is_deeply( \%merged_alignments3, \%expected_merged3,
     'merge_alignments ok on edge case' );
+
+# get_name_and_position_from_header()
+
+my @get_name_and_position_from_header_values = (
+    [ '>contig15916__187-322', [ '>contig15916', '187', '322' ] ],
+    [
+        '>random_seq_from_cds__no_72421__9-108',
+        [ '>random_seq_from_cds__no_72421', '9', '108' ]
+    ],
+);
+foreach my $couple (@get_name_and_position_from_header_values) {
+    my @array = @{$couple};
+    ok(
+        my @get_name_and_position_from_header_res =
+          PipelineMiRNA::Components::get_name_and_position_from_header(
+            @{$couple}[0]
+          ),
+        'Can call get_name_and_position_from_header'
+    );
+    is_deeply( \@get_name_and_position_from_header_res, @{$couple}[1],
+"get_name_and_position_from_header (@{$couple}[0]) --> (@{@{$couple}[1]}) ok"
+    );
+}
