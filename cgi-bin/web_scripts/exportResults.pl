@@ -73,7 +73,7 @@ sub exportAsFasta {
     my $fasta = PipelineMiRNA::Results->export('fas', \%myResults , \@sequences_to_export);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt
-Content-disposition: attachment;filename=Results-$id_job.txt
+Content-disposition: attachment;filename=Results-$id_job.fa
 
 $fasta
 DATA
