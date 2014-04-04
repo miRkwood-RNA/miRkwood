@@ -1,0 +1,16 @@
+div.example{
+	
+}
+
+pre.alignment {
+    line-height: 1.3em;
+}
+
+span.mature {
+    color: blue;
+}
+
+span.others {
+    display: inline-block;
+    margin-bottom: 20px;
+}

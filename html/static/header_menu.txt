@@ -3,7 +3,7 @@
    <div class="menu_central">
      <a href="/arn/html">home</a>
      <a href="/cgi-bin/interface.pl">web server</a>
-     <a href="/cgi-bin/help.pl">help</a>
+     <a href="/arn/html/help.php">help</a>
      <a href="/cgi-bin/id.pl">retrieve result with an ID</a>
    </div>
 </div>
