@@ -110,6 +110,7 @@ sub main_entry {
 		create_directories( \%candidates_hash, $sequence_dir );
 	}
 	process_tests($job_dir);
+	debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
 	return;
 }
 
