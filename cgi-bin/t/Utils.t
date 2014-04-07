@@ -347,3 +347,24 @@ ok( my $cleanup_fasta_sequence_out = PipelineMiRNA::Utils::cleanup_fasta_sequenc
     'Can call cleanup_fasta_sequence' );
 is( $cleanup_fasta_sequence_out, $cleanup_fasta_sequence_expected,
     "cleanup_fasta_sequence correctly cleans the sequence");
+
+##### get_name_from_FASTA_header ####
+
+my @get_name_from_FASTA_header_values = (
+    [ '>contig15916', '>contig15916' ],
+    [ '>random_seq_from_cds__no_72421',
+      '>random_seq_from_cds__no_72421' ],
+    [ '>random 54%gc, 100000nt',
+      '>random'],
+);
+foreach my $couple (@get_name_from_FASTA_header_values) {
+    my ($input, $expected) = @{$couple};
+    ok(
+        my $get_name_and_position_from_header_res =
+          PipelineMiRNA::Utils::get_name_from_FASTA_header($input),
+        'Can call get_name_from_FASTA_header'
+    );
+    is_deeply( $get_name_and_position_from_header_res, $expected,
+"get_name_from_FASTA_header ($input) --> ($expected) ok"
+    );
+}
