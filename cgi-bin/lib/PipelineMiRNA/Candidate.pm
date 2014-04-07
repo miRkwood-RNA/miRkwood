@@ -70,8 +70,7 @@ sub serialize_candidate_information {
     $candidate{'identifier'} = "$seq_dir-$can_dir";
 #    $candidate{'name'} = $seq_dir;    #récupération nom séquence
     $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
-    $candidate{'position_start'} = PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 0);
-    $candidate{'position_end'} = PipelineMiRNA::Utils::get_element_of_split($candidate{'position'},'-', 1);
+    $candidate{'position'} = "$candidate{'position_start'}-$candidate{'position_end'}";
     $candidate{'length'} = $candidate{'position_end'} - $candidate{'position_start'} +1;
     $candidate{'%GC'} = PipelineMiRNA::Utils::restrict_num_decimal_digits(
                             PipelineMiRNA::Utils::compute_gc_content($candidate{'DNASequence'}),
@@ -107,11 +106,12 @@ sub parse_candidate_information {
     my $full_candidate_dir = shift @args;
     my %result = ();
 
-    my $strand_file =
-      File::Spec->catfile( $full_candidate_dir, 'strand.txt' );
-    if ( -e $strand_file )    # si fichier existe
+    my $seq_info_file =
+      File::Spec->catfile( $full_candidate_dir, 'sequence_information.txt' );
+    if ( -e $seq_info_file )    # si fichier existe
     {
-        chomp ($result{'strand'} = PipelineMiRNA::Utils::slurp_file($strand_file));
+        my @res = PipelineMiRNA::Components::get_sequence_information($seq_info_file);
+        ($result{'strand'}, $result{'position_start'}, $result{'position_end'}) = @res;
     }
 
     my $randfold_output =
@@ -138,7 +138,8 @@ sub parse_candidate_information {
     if ( -e $rnafold_stemloop_out )                  # si fichier existe
     {
         my @res = PipelineMiRNA::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
-        ($result{'name'}, $result{'position'}, $result{'DNASequence'}, $result{'Vienna'}) = @res;
+        my $devnull;
+        ($result{'name'}, $devnull, $result{'DNASequence'}, $result{'Vienna'}) = @res;
 
         my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_stemloop_out);
 

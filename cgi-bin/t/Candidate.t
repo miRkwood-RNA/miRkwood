@@ -26,7 +26,9 @@ ok(
 my $seq    = 'gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc';
 my $struct = '((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))';
 my %expected = ('name' => 'contig15750',
-                'position' => '34-195',
+#                'position' => '34-195',
+                'position_start' => '34',
+                'position_end' => '195',
                 'shuffles' => '0.125000',
                 'amfe'    => '-37.10',
                 'mfei' => '-1.00',

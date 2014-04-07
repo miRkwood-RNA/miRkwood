@@ -426,12 +426,12 @@ sub populate_candidate_directory {
 	print $SEQ_FH ">$candidate{'name'}\n$candidate{'dna'}\n";
 	close $SEQ_FH;
 
-	#Writing strand
-	my $strand_file = File::Spec->catfile( $candidate_dir, 'strand.txt' );
-	open( my $STRAND_FH, '>', $strand_file )
-	  or die "Error when opening $strand_file: $!";
-	print $STRAND_FH $candidate{'strand'};
-	close $STRAND_FH;
+	#Writing sequence information
+	my $seq_info_file = File::Spec->catfile( $candidate_dir, 'sequence_information.txt' );
+	open( my $SEQ_INFO_FH, '>', $seq_info_file )
+	  or die "Error when opening $seq_info_file: $!";
+	print $SEQ_INFO_FH $candidate{'strand'} . "\t" .  $candidate{'start'} . "\t" . $candidate{'end'};
+	close $SEQ_INFO_FH;
 
 	process_outRNAFold( $candidate_dir, 'optimal', $candidate{'name'},
 		$candidate{'dna'}, $candidate{'structure_optimal'}, $candidate{'energy_optimal'} );
