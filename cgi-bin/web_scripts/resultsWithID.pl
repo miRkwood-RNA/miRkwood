@@ -36,16 +36,19 @@ my $dirJob_name = 'job' . $id_job;
 my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
 my $job_dir     = File::Spec->catdir( $results_dir, $dirJob_name );
 my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
-my $name_job = $cgi->param('nameJob');      # récupération id job
-$name_job =~ s/_/ /g;                       #replace _ with space in name job
+
+my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
+PipelineMiRNA->CONFIG_FILE($run_options_file);
+my $cfg = PipelineMiRNA->CONFIG();
+
 my $html = '';
 
 my $HTML_additional = "";
 $HTML_additional .=
   "<p style='font-size:14px'><b>Job ID  : </b>" . $id_job . '</p>';
-unless ( !$name_job ) {
+if ( $cfg->param('job.title') ) {
 	$HTML_additional .=
-	  "<p style='font-size:14px'><b>Job title  : </b>" . $name_job . '</p>';
+	  "<p style='font-size:14px'><b>Job title  : </b>" . $cfg->param('job.title') . '</p>';
 }
 
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);

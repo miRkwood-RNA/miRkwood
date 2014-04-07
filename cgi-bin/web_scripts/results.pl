@@ -19,7 +19,16 @@ use PipelineMiRNA::WebTemplate;
 
 my $cgi = new CGI;
 my $mail = $cgi->param('mail');
-my $nameJob = $cgi->param('job');
+my $filter   = $cgi->param('CDS');
+my $mfei     = $cgi->param('mfei');
+my $randfold = $cgi->param('randfold');
+my $align    = $cgi->param('align');
+my $plant    = $cgi->param('db');
+my $strand   = $cgi->param('strand');
+my $job_title=  $cgi->param('job');
+if ( !$plant ) {
+    $plant = "NonePlant";
+}
 
 my $local_dir = dirname( abs_path($0) );
 
@@ -98,32 +107,30 @@ foreach my $line (@lines) {
 close $OUTPUT or die("Error when closing $sequence_upload: $!");
 
 # redirection vers la page wait en attendant le calcul
-my $arguments = '?jobId=' . $jobId . '&nameJob=' . $nameJob . '&mail=' . $mail;
+my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail;
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $arguments;
 
 
 print $cgi->redirect( -uri => $waiting_url  );
 print "Location: $waiting_url \n\n";
 
-my $filter   = $cgi->param('CDS');
-my $mfei     = $cgi->param('mfei');
-my $randfold = $cgi->param('randfold');
-my $align    = $cgi->param('align');
-my $plant    = $cgi->param('db');
-my $strand   = $cgi->param('strand');
-if ( !$plant ) {
-    $plant = "NonePlant";
-}
 if ( $strand   ) { $strand   = 1 } else { $strand   = 0 }
 if ( $mfei     ) { $mfei     = 1 } else { $mfei     = 0 }
 if ( $randfold ) { $randfold = 1 } else { $randfold = 0 }
 if ( $align    ) { $align    = 1 } else { $align    = 0 }
 if ( $filter   ) { $filter   = 1 } else { $filter  = 0 }
+if ( !$job_title ) {
+    $job_title = 0;
+}
 
-#execution de tous les scripts de traitements
+my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($absolute_job_dir);
+PipelineMiRNA->CONFIG_FILE($run_options_file);
+PipelineMiRNA::write_config( $run_options_file, $strand, $mfei, $randfold, $align, $job_title, $plant );
+
+# execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $filter $strand $mfei $randfold $align $absolute_job_dir $plant";
+"perl -I$dirLib $perl_script $absolute_job_dir";
 debug("Running perl script $cmd", 1);
 system($cmd);
 my $finish_file = File::Spec->catfile( $absolute_job_dir, 'finished' );

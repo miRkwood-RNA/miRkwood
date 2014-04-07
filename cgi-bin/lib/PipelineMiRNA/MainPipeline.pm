@@ -24,23 +24,6 @@ use Log::Message::Simple qw[msg error debug];
 ### Data ##
 my $dirData = PipelineMiRNA::Paths->get_data_path();
 
-=method write_config
-
-Write the run options to the job configuration file.
-
-=cut
-
-sub write_config {
-	my ( $strands, $mfe, $randfold, $align, $run_options_file ) = @_;
-	my $run_options = PipelineMiRNA->CONFIG();
-	$run_options->param( "options.strands",  $strands );
-	$run_options->param( "options.mfe",      $mfe );
-	$run_options->param( "options.randfold", $randfold );
-	$run_options->param( "options.align",    $align );
-	$run_options->param( 'options.varna',    1 );
-	PipelineMiRNA->CONFIG($run_options);
-}
-
 =method main_entry
 
 Run the pipeline.
@@ -52,21 +35,22 @@ Run the pipeline.
 =cut
 
 sub main_entry {
-	my ( $filter, $strand, $mfe, $randfold, $align, $job_dir, $plant ) = @_;
+	my ( $job_dir  ) = @_;
 	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
 	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
     PipelineMiRNA->DEBUG(1);
-	my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
-	PipelineMiRNA->CONFIG_FILE($run_options_file);
-	write_config( $strand, $mfe, $randfold, $align, $run_options_file );
+
+    my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
+    PipelineMiRNA->CONFIG_FILE($run_options_file);
+    my $cfg = PipelineMiRNA->CONFIG();
 
     PipelineMiRNA::Programs::init_programs();
 
 	debug( 'BEGIN execute_scripts', PipelineMiRNA->DEBUG() );
 	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
-	if ($filter) {
+	if ($cfg->param('options.filter')) {
 		debug( 'FilteringCDS', PipelineMiRNA->DEBUG() );
-		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $plant );
+		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
 	}
 	else {
 		my $sequence_uploaded =
@@ -96,7 +80,7 @@ sub main_entry {
 		my $res = process_sequence( $sequence_dir, $name, $sequence, '+' );
 		my @hash1 = @{$res};
 		my @hash;
-		my $cfg = PipelineMiRNA->CONFIG();
+
 		if ( $cfg->param('options.strands') ) {
 			debug( "Processing the other strand", PipelineMiRNA->DEBUG() );
 			my $reversed_sequence =

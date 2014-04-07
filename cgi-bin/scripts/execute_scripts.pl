@@ -13,6 +13,6 @@ BEGIN {
 
 
 ## Code ##
-my ( $ifilterCDS, $istrand, $imfei, $irandfold,  $ialign, $idirJob, $iplant ) = @ARGV;
+my ( $idirJob ) = @ARGV;
 
-PipelineMiRNA::MainPipeline::main_entry( $ifilterCDS, $istrand, $imfei, $irandfold, $ialign, $idirJob, $iplant );
+PipelineMiRNA::MainPipeline::main_entry( $idirJob );

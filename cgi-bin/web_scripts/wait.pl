@@ -25,7 +25,7 @@ my $name    = $nameJob;
 my $check;
 if ( $nameJob eq q{} ) { $check = 'noTitle' }
 
-my $res_arguments = '?run_id=' . $jobId . '&nameJob=' . $name;
+my $res_arguments = '?run_id=' . $jobId;
 my $results_page  = 'resultsWithID.pl';
 my $results_link  = $results_page . $res_arguments;
 my $results_baseurl = PipelineMiRNA::WebTemplate::make_url($results_page);

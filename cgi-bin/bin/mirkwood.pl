@@ -61,14 +61,20 @@ if ( !-e $tmp_pieces_folder ) {
 use PipelineMiRNA;
 use PipelineMiRNA::CLI;
 use PipelineMiRNA::MainPipeline;
+use PipelineMiRNA::Paths;
 
 my $seq_name = 'Sequences.fas';
 my $seq_path = File::Spec->catfile( $abs_output_folder, $seq_name );
 
 File::Copy::copy( $fasta_file, $seq_path );
-PipelineMiRNA::MainPipeline::main_entry( $mask, $both_strands, $mfei, $randfold, $align,
-    $abs_output_folder, $species_mask );
-PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder);
+
+my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
+PipelineMiRNA->CONFIG_FILE($run_options_file);
+PipelineMiRNA::write_config( $run_options_file, $both_strands, $mfei, $randfold, $align, "", $species_mask );
+
+
+PipelineMiRNA::MainPipeline::main_entry( $abs_output_folder );
+PipelineMiRNA::CLI::process_results_dir_for_offline( $abs_output_folder );
 
 __END__
 
