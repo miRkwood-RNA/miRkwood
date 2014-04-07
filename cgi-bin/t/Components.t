@@ -305,6 +305,10 @@ my @get_name_and_position_from_header_values = (
         '>random_seq_from_cds__no_72421__9-108',
         [ '>random_seq_from_cds__no_72421', '9', '108' ]
     ],
+    [
+        '> random 54%gc, 100000nt__9-108',
+        [ '> random 54%gc, 100000nt', '9', '108' ]
+    ],
 );
 foreach my $couple (@get_name_and_position_from_header_values) {
     my @array = @{$couple};
