@@ -35,8 +35,9 @@ open( my $INPUT_FH2, '<', $fastaFile2 ) or die "Fail to open: $!";
 ok( my %tab2 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH2),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH2;
+
 my %expected2 =
-  ( '>fasta1' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
+  ( '>fasta1_Drosophila_simulans_st' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
 is_deeply( \%tab2, \%expected2,
            'Parsing FASTA with long header with parse_multi_fasta ok' );
 
@@ -46,9 +47,8 @@ open( my $INPUT_FH3, '<', $fastaFile3 ) or die "Fail to open: $!";
 ok( my %tab3 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH3),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH3;
-my %expected3 = ( '>gi-425626932-gb-JX648278.1-' =>
+my %expected3 = ( '>gi-425626932-gb-JX648278.1-_D' =>
                   'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
-
 is_deeply( \%tab3, \%expected3,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );
 
@@ -352,10 +352,17 @@ is( $cleanup_fasta_sequence_out, $cleanup_fasta_sequence_expected,
 
 my @get_name_from_FASTA_header_values = (
     [ '>contig15916', '>contig15916' ],
+    [ '> contig15916', '>_contig15916' ],
     [ '>random_seq_from_cds__no_72421',
       '>random_seq_from_cds__no_72421' ],
     [ '>random 54%gc, 100000nt',
-      '>random'],
+      '>random_54%gc,_100000nt'],
+    [ '>aly-MIR169a MI0014545',
+      '>aly-MIR169a_MI0014545'],
+    [ '>gi|425626932|gb|JX648278.1| Drosophila simulans strain Eden3',
+      '>gi-425626932-gb-JX648278.1-_D'],
+    [ '>gi|425626932|gb|JX648278.11| Drosophila simulans strain Eden3',
+      '>gi-425626932-gb-JX648278.11-'],
 );
 foreach my $couple (@get_name_from_FASTA_header_values) {
     my ($input, $expected) = @{$couple};

@@ -107,8 +107,10 @@ sub get_name_from_FASTA_header {
         $to_uppercase = shift @args;
     }
     my $SPACE = q{ };
-    my $nameSeq = ( split( $SPACE, $header ) )[0];
+    my $nameSeq = substr( $header, 0, 30 );
+    $nameSeq =~ s/^\s+|\s+$//xmsg;
     $nameSeq =~ s/\|/-/xmsg;
+    $nameSeq =~ s/\s/_/xmsg;
     if ($to_uppercase) {
         $nameSeq = uc $nameSeq;
     }
