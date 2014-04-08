@@ -84,7 +84,7 @@ sub parse_multi_fasta {
 	while ( my $line = <$INPUT_FH> ) {
 		if ( grep { /^>/smx } $line ) {
 			chomp $line;
-            $nameSeq = sanitize_sequence_name($line);
+            $nameSeq = $line;
 			$tab{$nameSeq} = $EMPTY;
 		}
 		else {
