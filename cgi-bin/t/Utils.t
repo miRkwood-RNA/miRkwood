@@ -348,9 +348,9 @@ ok( my $cleanup_fasta_sequence_out = PipelineMiRNA::Utils::cleanup_fasta_sequenc
 is( $cleanup_fasta_sequence_out, $cleanup_fasta_sequence_expected,
     "cleanup_fasta_sequence correctly cleans the sequence");
 
-##### get_name_from_FASTA_header ####
+##### sanitize_sequence_name ####
 
-my @get_name_from_FASTA_header_values = (
+my @sanitize_sequence_name_values = (
     [ '>contig15916', '>contig15916' ],
     [ '> contig15916', '>_contig15916' ],
     [ '>random_seq_from_cds__no_72421',
@@ -364,14 +364,14 @@ my @get_name_from_FASTA_header_values = (
     [ '>gi|425626932|gb|JX648278.11| Drosophila simulans strain Eden3',
       '>gi-425626932-gb-JX648278.11-'],
 );
-foreach my $couple (@get_name_from_FASTA_header_values) {
+foreach my $couple (@sanitize_sequence_name_values) {
     my ($input, $expected) = @{$couple};
     ok(
-        my $get_name_and_position_from_header_res =
-          PipelineMiRNA::Utils::get_name_from_FASTA_header($input),
-        'Can call get_name_from_FASTA_header'
+        my $sanitize_sequence_name_res =
+          PipelineMiRNA::Utils::sanitize_sequence_name($input),
+        'Can call sanitize_sequence_name'
     );
-    is_deeply( $get_name_and_position_from_header_res, $expected,
-"get_name_from_FASTA_header ($input) --> ($expected) ok"
+    is_deeply( $sanitize_sequence_name_res, $expected,
+"sanitize_sequence_name ($input) --> ($expected) ok"
     );
 }

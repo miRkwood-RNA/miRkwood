@@ -84,7 +84,7 @@ sub parse_multi_fasta {
 	while ( my $line = <$INPUT_FH> ) {
 		if ( grep { /^>/smx } $line ) {
 			chomp $line;
-            $nameSeq = get_name_from_FASTA_header($line);
+            $nameSeq = sanitize_sequence_name($line);
 			$tab{$nameSeq} = $EMPTY;
 		}
 		else {
@@ -95,11 +95,11 @@ sub parse_multi_fasta {
 	return %tab;
 }
 
-=method get_name_from_FASTA_header
+=method sanitize_sequence_name
 
 =cut
 
-sub get_name_from_FASTA_header {
+sub sanitize_sequence_name {
     my @args   = @_;
     my $header = shift @args;
     my $to_uppercase = 0;
