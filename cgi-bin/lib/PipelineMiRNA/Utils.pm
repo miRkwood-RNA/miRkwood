@@ -85,6 +85,7 @@ sub parse_multi_fasta {
 		if ( grep { /^>/smx } $line ) {
 			chomp $line;
             $nameSeq = $line;
+            $nameSeq =~ s/\s/_/xmsg;
 			$tab{$nameSeq} = $EMPTY;
 		}
 		else {

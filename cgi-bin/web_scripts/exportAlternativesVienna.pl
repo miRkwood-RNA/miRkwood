@@ -26,7 +26,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     # Catching exception
     print PipelineMiRNA::WebTemplate::get_error_page("No results for the given identifiers");
 }else{
-    my $filename = PipelineMiRNA::Candidate->get_name(\%candidate).'_alternatives';
+    my $filename = PipelineMiRNA::Candidate->get_shortened_name(\%candidate).'_alternatives';
     my $alternatives = PipelineMiRNA::Candidate->alternativeCandidatesAsVienna(\%candidate);
 
     print <<"DATA" or die "Error when printing content: $!";

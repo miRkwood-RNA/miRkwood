@@ -34,7 +34,7 @@ if (
         'No results for the given identifiers');
 }
 else {
-    my $candidate_name = PipelineMiRNA::Candidate->get_name(\%candidate);
+    my $candidate_name = PipelineMiRNA::Candidate->get_shortened_name(\%candidate);
     my $fasta = PipelineMiRNA::Candidate->candidateAsFasta(\%candidate);
     print <<"DATA" or die "Error when printing content: $!";
 Content-type: text/txt

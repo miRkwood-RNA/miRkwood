@@ -37,7 +37,7 @@ ok( my %tab2 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH2),
 close $INPUT_FH2;
 
 my %expected2 =
-  ( '>fasta1_Drosophila_simulans_st' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
+  ( '>fasta1_Drosophila_simulans_strain_Eden32' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
 is_deeply( \%tab2, \%expected2,
            'Parsing FASTA with long header with parse_multi_fasta ok' );
 
@@ -47,7 +47,7 @@ open( my $INPUT_FH3, '<', $fastaFile3 ) or die "Fail to open: $!";
 ok( my %tab3 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH3),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH3;
-my %expected3 = ( '>gi-425626932-gb-JX648278.1-_D' =>
+my %expected3 = ( '>gi|425626932|gb|JX648278.1|_Drosophila_simulans_strain_Eden32' =>
                   'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
 is_deeply( \%tab3, \%expected3,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );

@@ -344,7 +344,7 @@ sub resultstruct2pseudoXML {
 	my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
 
 	my @headers1        =
-	  ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields );
+	  ( 'position', 'length', 'strand', 'quality', @optional_fields );
 	my @headers2 = ( 'Vienna', 'DNASequence', 'identifier' );
 
 	my $result = "<results id='all'>\n";
@@ -358,6 +358,8 @@ sub resultstruct2pseudoXML {
 		my $value = $results{$key};
 
 		$result .= "<Sequence";
+		my $name = PipelineMiRNA::Candidate->get_shortened_sequence_name($value);
+		$result .= " name='$name'";
 		for my $header (@headers1) {
 			my $contents = ${$value}{$header};
 			if ( $header ~~ @fields_to_truncate){
@@ -386,6 +388,8 @@ sub resultstruct2pseudoXML {
 	foreach my $key (@keys) {
 		my $value = $results{$key};
 		$result .= "<Sequence";
+	    my $name = PipelineMiRNA::Candidate->get_shortened_sequence_name($value);
+        $result .= " name='$name'";
 		for my $header (@headers1) {
 			my $contents = ${$value}{$header};
 			if ( !defined $contents ) {

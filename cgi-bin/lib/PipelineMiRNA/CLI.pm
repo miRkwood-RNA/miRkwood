@@ -160,7 +160,7 @@ sub make_candidate_page {
 
     my $size = length $candidate{'DNASequence'};
 
-    my $candidate_name = PipelineMiRNA::Candidate->get_name( \%candidate );
+    my $candidate_name = PipelineMiRNA::Candidate->get_shortened_name( \%candidate );
 
     my $candidate_fasta_file =
       File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );

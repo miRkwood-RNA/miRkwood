@@ -25,7 +25,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     # Catching exception
     print PipelineMiRNA::WebTemplate::get_error_page("No results for the given identifiers");
 }else{
-    my $candidate_name = PipelineMiRNA::Candidate->get_name(\%candidate);
+    my $candidate_name = PipelineMiRNA::Candidate->get_shortened_name(\%candidate);
     my $filename = $candidate_name;
     my $header = ">$candidate_name";
     my $vienna = PipelineMiRNA::Candidate->candidateAsVienna(\%candidate, $optimal);

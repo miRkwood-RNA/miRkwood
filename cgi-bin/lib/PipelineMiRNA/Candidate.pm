@@ -305,6 +305,33 @@ sub get_name {
     return $candidate{'name'}.'__'.$candidate{'position'};
 }
 
+=method get_shortened_sequence_name
+
+Return the name of the sequence for the given candidate,
+shortened and sanitized
+
+=cut
+
+sub get_shortened_sequence_name {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    return PipelineMiRNA::Utils::sanitize_sequence_name($candidate{'name'});
+}
+
+=method get_shortened_name
+
+Return the shortened name of the candidate
+
+=cut
+
+sub get_shortened_name {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+    my $name = $self->get_shortened_sequence_name(\%candidate);
+    return $name . '__' . $candidate{'position'};
+}
+
+
 =method candidateAsVienna
 
 Convert a given candidate to Vienna dot-bracket format
@@ -357,7 +384,7 @@ my $gff_line = PipelineMiRNA::Candidate->candidate_as_gff($value);
 sub candidate_as_gff {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
-    my $candidate_name = 'preMir_' . $self->get_name(\%candidate);
+    my $candidate_name = 'preMir_' . $self->get_shortened_name(\%candidate);
     my $text .= q{} .                       # BEGIN
       $candidate{'name'} . "\t" .           # seqid
       'miRkwood' . "\t" .                   # source
