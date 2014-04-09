@@ -11,27 +11,6 @@ use Time::gmtime;
 use PipelineMiRNA::Candidate;
 use PipelineMiRNA::Utils;
 
-=method get_optional_candidate_fields
-
-Return the optional fields based on the current configuration
-
-=cut
-
-sub get_optional_candidate_fields {
-	my ( $self, @args ) = @_;
-	my @fields = ();
-	my $cfg    = PipelineMiRNA->CONFIG();
-	push @fields, ( 'mfe', 'mfei', 'amfe' );
-	
-	if ( $cfg->param('options.randfold') ) {
-		push @fields, ('shuffles');
-	}
-	if ( $cfg->param('options.align') ) {
-		push @fields, ('alignment');
-	}
-	return @fields;
-}
-
 =method make_job_id
 
 Return a jobId (based on the current time)
@@ -300,7 +279,7 @@ sub resultstruct2csv {
 	}
 	my $no_seq_selected = !( scalar @sequences_to_export );
 	my %results         = %{$results_ref};
-	my @optional_fields = $self->get_optional_candidate_fields();
+	my @optional_fields = PipelineMiRNA::Candidate->get_optional_candidate_fields();
 	my @csv_headers     = (
 		'name', 'position_start', 'position_end', 'quality', '%GC',
 		@optional_fields, 'Vienna', 'DNASequence'
@@ -417,7 +396,6 @@ sub select_sequences_by_mfei {
 	my ( $self, @args ) = @_;
 	my $results         = shift @args;
 	my %results         = %{$results};
-	my @optional_fields = $self->get_optional_candidate_fields();
 	my @keys            = keys %results;
 	foreach my $key (@keys) {
 		my $value  = $results{$key};
@@ -454,7 +432,7 @@ sub resultstruct2table {
 	my $results = shift @args;
 	my %results = %{$results};
 
-	my @optional_fields = $self->get_optional_candidate_fields();
+	my @optional_fields = PipelineMiRNA::Candidate->get_optional_candidate_fields();
 	my @headers         =
 	  ( 'position', 'length', 'strand', 'quality', @optional_fields );
 

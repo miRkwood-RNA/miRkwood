@@ -574,4 +574,24 @@ INNER
 
 }
 
+=method get_optional_candidate_fields
+
+Return the optional fields based on the current configuration
+
+=cut
+
+sub get_optional_candidate_fields {
+    my ( $self, @args ) = @_;
+    my @fields = ();
+    my $cfg    = PipelineMiRNA->CONFIG();
+    push @fields, ( 'mfe', 'mfei', 'amfe' );
+    if ( $cfg->param('options.randfold') ) {
+        push @fields, ('shuffles');
+    }
+    if ( $cfg->param('options.align') ) {
+        push @fields, ('alignment');
+    }
+    return @fields;
+}
+
 1;
