@@ -594,4 +594,49 @@ sub get_optional_candidate_fields {
     return @fields;
 }
 
+=method candidate_as_pseudoXML
+
+Convert a given candidate to a pseudo XML
+
+Usage:
+my $xml_element = PipelineMiRNA::Candidate->candidate_as_pseudoXML($value);
+
+=cut
+
+sub candidate_as_pseudoXML {
+    my ( $self, @args ) = @_;
+    my %candidate = %{shift @args};
+
+    my $name = $self->get_shortened_sequence_name(\%candidate);
+
+    my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
+
+    my @optional_fields = $self->get_optional_candidate_fields();
+    my @headers1        =
+      ( 'position', 'length', 'strand', 'quality', @optional_fields );
+    my @headers2 = ( 'Vienna', 'DNASequence', 'identifier' );
+
+    my $result = "<Sequence";
+
+    $result .= " name='$name'";
+    for my $header (@headers1) {
+        my $contents = $candidate{$header};
+        if ( $header ~~ @fields_to_truncate){
+            $contents = PipelineMiRNA::Utils::restrict_num_decimal_digits($contents, 3);
+        }
+        if ( !defined $contents ) {
+            $contents = q{};
+        }
+        $result .= " $header='$contents'";
+    }
+    my $img = $self->get_relative_image(\%candidate);
+    $result .= " image='$img'";
+    for my $header (@headers2) {
+        $result .= " $header='$candidate{$header}'";
+    }
+    $result .= "></Sequence>";
+
+    return $result;
+}
+
 1;

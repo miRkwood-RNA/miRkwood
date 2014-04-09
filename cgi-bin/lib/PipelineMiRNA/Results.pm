@@ -318,14 +318,6 @@ sub resultstruct2pseudoXML {
 	my $results = shift @args;
 	my %results = %{$results};
 
-	my @optional_fields = $self->get_optional_candidate_fields();
-
-	my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
-
-	my @headers1        =
-	  ( 'position', 'length', 'strand', 'quality', @optional_fields );
-	my @headers2 = ( 'Vienna', 'DNASequence', 'identifier' );
-
 	my $result = "<results id='all'>\n";
 	my @keys = sort {
 		( $results{$b}{'name'} cmp $results{$a}{'name'} )
@@ -335,26 +327,7 @@ sub resultstruct2pseudoXML {
 
 	foreach my $key (@keys) {
 		my $value = $results{$key};
-
-		$result .= "<Sequence";
-		my $name = PipelineMiRNA::Candidate->get_shortened_sequence_name($value);
-		$result .= " name='$name'";
-		for my $header (@headers1) {
-			my $contents = ${$value}{$header};
-			if ( $header ~~ @fields_to_truncate){
-			    $contents = PipelineMiRNA::Utils::restrict_num_decimal_digits($contents, 3);
-			}
-			if ( !defined $contents ) {
-				$contents = q{};
-			}
-			$result .= " $header='$contents'";
-		}
-		my $img = PipelineMiRNA::Candidate->get_relative_image($value);
-		$result .= " image='$img'";
-		for my $header (@headers2) {
-			$result .= " $header='${$value}{$header}'";
-		}
-		$result .= "></Sequence>\n";
+        $result .= PipelineMiRNA::Candidate->candidate_as_pseudoXML($value) . "\n";
 	}
 	$result .= "</results>\n";
 	$result .= "<results id='all2'>\n";
@@ -366,22 +339,7 @@ sub resultstruct2pseudoXML {
 	} keys %results;
 	foreach my $key (@keys) {
 		my $value = $results{$key};
-		$result .= "<Sequence";
-	    my $name = PipelineMiRNA::Candidate->get_shortened_sequence_name($value);
-        $result .= " name='$name'";
-		for my $header (@headers1) {
-			my $contents = ${$value}{$header};
-			if ( !defined $contents ) {
-				$contents = q{};
-			}
-			$result .= " $header='$contents'";
-		}
-		my $img = PipelineMiRNA::Candidate->get_relative_image($value);
-		$result .= " image='$img'";
-		for my $header (@headers2) {
-			$result .= " $header='${$value}{$header}'";
-		}
-		$result .= "></Sequence>\n";
+		$result .= PipelineMiRNA::Candidate->candidate_as_pseudoXML($value) . "\n";
 	}
 	$result .= "</results>";
 	return $result;
