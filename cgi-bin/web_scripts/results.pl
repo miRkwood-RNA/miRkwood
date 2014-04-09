@@ -134,10 +134,5 @@ my $cmd =
 debug("Running perl script $cmd", 1);
 system($cmd);
 debug("Getting back from Perl script", 1);
-my $finish_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
-open( my $finish, '>', $finish_file )
-    or die "Error when opening $finish_file: $!";
-close $finish;
-debug("Writing finish file $finish_file", 1);
 
 close $log_file;

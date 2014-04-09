@@ -111,6 +111,11 @@ sub main_entry {
 	}
 	process_tests($job_dir);
 	debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
+    my $finish_file = File::Spec->catfile( $job_dir, 'finished' );
+    open( my $finish, '>', $finish_file )
+        or die "Error when opening $finish_file: $!";
+    close $finish;
+    debug("Writing finish file $finish_file", PipelineMiRNA->DEBUG() );
 	return;
 }
 
