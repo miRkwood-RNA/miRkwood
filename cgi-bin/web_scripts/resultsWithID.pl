@@ -82,7 +82,7 @@ if ($valid) {
     	<div style="width: 510px"  class="forms">
     		<p  >Export selected entries \(<a onclick='selectAll()' >select all<\/a>/<a  onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p> 
     		<form id= 'exportForm'>
-                <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tab-delimited format (csv)</label><br/>
+                <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (csv)</label><br/>
                 <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
                 <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
                 <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (odf)</label><br/>
