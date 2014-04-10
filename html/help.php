@@ -5,15 +5,16 @@
 		<link type='text/css' rel='stylesheet' href='./style/help.css' />
 		<link type='text/css' rel='stylesheet' href='./style/rna.css' />
         <script type='text/javascript' src='/js/miARN.js'></script>
-        <title>MicroRNA identification</title>
+        <title>miRkwood - MicroRNA identification - Help</title>
     </head>
  <body>
         <div class="theme-border"></div>
         <div class="logo"></div>
-         <? include("./static/bioinfo_menu.txt") ?>
+
         <div class="bloc_droit">
         <? include("./static/header_menu.txt") ?>
-<div class="main">
+
+<div class="main-full">
 <p>This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
 The method implemented in miRkwood is described in full detail in this other page.</p>
 
@@ -118,41 +119,41 @@ The method implemented in miRkwood is described in full detail in this other pag
 
 <p>It begins with the following information.</p>
 
-<ul>
-<li><strong>Name:</strong> Name of the initial sequence, as specified in the heading of the FASTA format</li>
+<dl>
+<dt>Name</dt><dd>Name of the initial sequence, as specified in the heading of the FASTA format</dd>
 
-<li><strong>Position:</strong> Start and end positions of the putative pre-miRNA in the original sequence. The length is indicated in parentheses</li>
 
-<li><strong>Strand:</strong> + (forward) or - (reverse complement)</li>
+<dt>Position</dt><dd>Start and end positions of the putative pre-miRNA in the original sequence. The length is indicated in parentheses</dd>
 
-<li><strong>GC content:</strong> Percentage of bases that are either guanine or cytosine</li>
+<dt>Strand</dt><dd>+ (forward) or - (reverse complement)</dd>
 
-<li><strong>Sequence (FASTA format):</strong> Link to download the sequence</li>
+<dt>GC content</dt><dd>Percentage of bases that are either guanine or cytosine</dd>
 
-<li><strong>Stem-loop structure:</strong> Link to download the secondary structure in dot-bracket format.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a "(" at position <em>i</em> and a ")" at position <em>j</em>. Unpaired bases are represented by dots. </li>
+<dt>Sequence (FASTA format)</dt><dd>Link to download the sequence</dd>
 
-<pre>
+<dt>Stem-loop structure</dt><dd>Link to download the secondary structure in dot-bracket format.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a "(" at position <em>i</em> and a ")" at position <em>j</em>. Unpaired bases are represented by dots.
+<pre class='example'>
 > Sample_1001-1085, stemloop structure
 cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
 (((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
-</pre>
+</pre> </dd>
 
-<li><strong>Optimal MFE secondary structure:</strong> If the stem-loop structure is not the MFE structure, we also provide a link to download the MFE structure.</li>
+<dt>Optimal MFE secondary structure</dt><dd>If the stem-loop structure is not the MFE structure, we also provide a link to download the MFE structure.</dd>
 
-<li><strong>Alternative candidates (dot-bracket format):</strong> This is the set of stem-loop sequences that overlap the current prediction. The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.</li>
-</ul>
+<dt>Alternative candidates (dot-bracket format)</dt><dd>This is the set of stem-loop sequences that overlap the current prediction. The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.</dd>
+</dl>
 <p>The stem-loop structure of the miRNA precursor is also displayed with Varna.</p>
 
 <h3>Thermodynamics stability</h3>
-<ul>
-<li><strong>MFE:</strong> Value of the Minimum Free Energy (computed by <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>)</li>
+<dd>
+<dt>MFE</dt><dd>Value of the Minimum Free Energy (computed by <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>)</dd>
 
-<li><strong>AMFE:</strong> Value of the adjusted MFE : MFE &divide; (sequence length) &times; 100</li>
+<dt>AMFE</dt><dd>Value of the adjusted MFE : MFE &divide; (sequence length) &times; 100</dd>
 
-<li><strong>MFEI:</strong> Value of the minimum folding energy index (<a href='#mfei_definition'>see definition</a>).</li>
+<dt>MFEI</dt><dd>Value of the minimum folding energy index (<a href='#mfei_definition'>see definition</a>).</dd>
 
-<li><strong>Shuffles:</strong> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (see Compute thermodynamic stability).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</li>
-</ul>
+<dt>Shuffles</dt><dd>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (see Compute thermodynamic stability).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</dd>
+</dd>
 
 <h3>Conservation of the mature miRNA</h3>
 

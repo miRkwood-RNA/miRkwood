@@ -1,5 +1,70 @@
-div.example{
-	
+
+body {
+	font-family: sans-serif;
+	font-size: 10pt;
+    counter-reset:section;
+    text-align: justify;
+}
+
+h2 {
+    padding-top:   15pt;
+    margin-right:  -50px;
+    padding-bottom: 5pt;
+    font-size:     16pt;
+    font-weight:   bold;
+    border-bottom: 2px solid #F4BA31;
+    counter-reset:subsection;
+}
+
+h2:before {
+    counter-increment:section;
+    content:counter(section) ". ";
+    font-weight:bold;
+}
+
+/* Overriding bioinfo.css */
+h2:first-letter {
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: inherit;
+}
+
+.menu_central {
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+
+h3 {
+    padding-bottom: 6px;
+    margin-right:  -50px;
+    font-size:     12pt;
+    font-weight:   bold;
+    text-align:    left;
+    border-bottom: 1px solid #F4BA31;
+}
+
+h3:before
+    {
+    counter-increment:subsection;
+    content:counter(section) "." counter(subsection) " ";
+    }
+
+p {
+    text-align: justify;
+    padding: 2px 0px 2px 0px;
+}
+
+p.equation {
+    text-align: center;
+    font-family:monospace;
+}
+
+.example{
+    text-align: justify;
+    padding-top: 5px;
+    padding-left: 15px;
+    margin: 2px 70px 2px 40px;
+    background-color: #EEE;
 }
 
 pre.alignment {
@@ -13,4 +78,28 @@ span.mature {
 span.others {
     display: inline-block;
     margin-bottom: 20px;
+}
+
+.main-full{
+    margin-left:-170px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 60px;
+    line-height: 20px;
+}
+
+ol li {
+    padding-left: 3pt;
+    padding-bottom: 3pt;
+    text-align: justify;
+    padding-right: 30px;
+}
+
+dt {
+    padding-top: 5px;
+    padding-left: 15px;
+    font-weight:bold;
+}
+dd {
+
 }
