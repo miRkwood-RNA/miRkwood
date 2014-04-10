@@ -16,7 +16,7 @@
 
 <div class="main-full">
 <p>This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
-The method implemented in miRkwood is described in full detail in this other page.</p>
+For the full detail of the method implemented in miRkwood, see <a href="method.php">miRkwood method</a>.</p>
 
 <div class="table-of-contents">
 <ol>
@@ -50,13 +50,13 @@ The method implemented in miRkwood is described in full detail in this other pag
 
 <h3>Parameters</h3>
 
-<p>miRkwood folds the input sequence to identify miRNA precursor secondary structures (see miRkwood method for more explanation on this step). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins.</p>
+<p>miRkwood folds the input sequence to identify miRNA precursor secondary structures (for more explanation on this step, see <a href="method.php">miRkwood method</a>). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins.</p>
 
 <p id='mfei_definition'><strong>Select only sequences with MFEI < -0.6:</strong> MFEI is the minimal folding free energy index. It is calculated by the following equation:</p>
 
 <p class='equation'>MFEI = [MFE / sequence length x 100] / (G+C%).</p>
 
-<p>where MFE (minimal free energy) denotes the negative folding free energies of a secondary structure, and is calculated using the Matthews-Turner nearest neighbor model implemented in <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>. When checked, this option removes all candidate pre-miRNAs with an MFEI greater than or equal to -0.6. Indeed, more than 96% of miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI (for more details, see <a href='./mirkwood/method.php'>miRkwood method</a>).</p>
+<p>where MFE (minimal free energy) denotes the negative folding free energies of a secondary structure, and is calculated using the Matthews-Turner nearest neighbor model implemented in <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>. When checked, this option removes all candidate pre-miRNAs with an MFEI greater than or equal to -0.6. Indeed, more than 96% of miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI (for more details, see <a href='method.php'>miRkwood method</a>).</p>
 
 <p><strong>Compute thermodynamic stability:</strong> The significance of the stability of the sequence can also be measured by comparison with other equivalent sequences. <em><a href='http://www.ncbi.nlm.nih.gov/pubmed/15217813'>Bonnet et al</a></em> have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.  We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </p>
 
@@ -82,7 +82,7 @@ The method implemented in miRkwood is described in full detail in this other pag
 
 <p id='definition_quality'><strong>Quality:</strong> The quality is a distinctive feature of miRkwood. It is a combination of all other criteria described afterwards, and allows to rank the predictions according to the significance, from zero- to three- stars. It is calculated as follows: 
 <ul>
-<li><em>MFEI &lt; -0.8:</em> add one star. This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins (see XXX)</li>
+<li><em>MFEI &lt; -0.8:</em> add one star. This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins (see <a href="method.php">miRkwood method</a>).</li>
 
 <li><em>Existence of a conserved miRNA in miRBase (alignment):</em> add one star. We allow up to three errors in the alignment with mature miRBase, which corresponds to an estimated P-value of  3E-2 for each pre-miRNA. Alignments with 2 errors or less have an estimated P-value of 4E-3.
 
