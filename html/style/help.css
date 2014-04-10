@@ -89,8 +89,8 @@ span.others {
 }
 
 ol li {
-    padding-left: 3pt;
-    padding-bottom: 3pt;
+    padding-left: 0.6em;
+    padding-bottom: 0.5em;
     text-align: justify;
     padding-right: 30px;
 }
