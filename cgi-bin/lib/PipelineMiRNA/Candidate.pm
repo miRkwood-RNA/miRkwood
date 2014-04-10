@@ -627,6 +627,9 @@ sub candidate_as_pseudoXML {
         if ( !defined $contents ) {
             $contents = q{};
         }
+        if ( $header eq 'shuffles' && $contents == 1){
+            $contents = q{};
+        }
         $result .= " $header='$contents'";
     }
     my $img = $self->get_relative_image(\%candidate);
