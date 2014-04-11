@@ -66,13 +66,15 @@ p.equation {
 
 .example{
     text-align: justify;
-    padding-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 15px;
     margin: 2px 70px 2px 40px;
     background-color: #EEE;
 }
 
 pre.alignment {
+    margin-top:0px;
     line-height: 1.3em;
 }
 
@@ -82,7 +84,6 @@ span.mature {
 
 span.others {
     display: inline-block;
-    margin-bottom: 20px;
 }
 
 .main-full{
