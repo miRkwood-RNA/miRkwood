@@ -15,6 +15,8 @@
         <?php include("./static/header_menu.txt") ?>
 
 <div class="main-full">
+<p><a href='/mirkwood/'>miRkwood</a> is a computational pipeline for the identification of plant miRNAs and their hairpin precursors.</p>
+  
 <p>This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
 For the full detail of the method implemented in miRkwood, see <a href="method.php">miRkwood method</a>.</p>
 
@@ -55,19 +57,29 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 
 <p>miRkwood folds the input sequence to identify miRNA precursor secondary structures (for more explanation on this step, see <a href="method.php">miRkwood method</a>). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins.</p>
 
+
+<p>When all options are unchecked, no criteria is applied,
+and the list of predictions is exactly the list of all  candidate
+pre-miRNAs obtained with the folding step.</p>
+
 <dl>
 <dt id='mfei_definition'>Select only sequences with MFEI &lt; -0.6</dt>
 <dd>MFEI is the minimal folding free energy index. It is calculated by the following equation:
 
 <p class='equation'>MFEI = [MFE / sequence length x 100] / (G+C%)</p>
 
-where MFE (minimal free energy) denotes the negative folding free energies of a secondary structure, and is calculated using the Matthews-Turner nearest neighbor model implemented in <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>. When checked, this option removes all candidate pre-miRNAs with an MFEI greater than or equal to -0.6. Indeed, more than 96% of miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI (for more details, see <a href='method.php'>miRkwood method</a>).</dd>
+where MFE (minimal free energy) denotes the negative folding free
+  energies of a secondary structure, and is calculated using the
+  Matthews-Turner nearest neighbor model implemented in <a
+  href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>. When
+  checked, this option removes all candidate pre-miRNAs with an MFEI
+  greater than or equal to -0.6. Indeed, more than 96% of plant miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI (for more details, see <a href='method.php'>miRkwood method</a>).</dd>
 
 <dt id='compute-thermodynamic-stability'>Compute thermodynamic stability</dt>
 <dd>The significance of the stability of the sequence can also be measured by comparison with other equivalent sequences. <em><a href='http://www.ncbi.nlm.nih.gov/pubmed/15217813'>Bonnet et al</a></em> have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.  We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </dd>
 
 <dt id='flag-conserved-mature-mirnas'>Flag conserved mature miRNAs</dt>
-<dd>Some families of mature miRNAs are highly conserved through evolution. In this case, it is possible to localize  the mature miRNA within the pre-miRNA  by similarity. For that,  we compare each sequence with  the mature miRNAs of plant (<i>Viridiplantae</i>) deposited in <a href='http://www.mirbase.org/ftp.shtml'>miRBase</a> (Release 20). Alignments are performed with <a href='https://www.ebi.ac.uk/~guy/exonerate/'>Exonerate</a>, which implements an exact model for pairwise alignment. We select alignments with at most three errors (mismatch, deletion or insertion) against the full-length mature miRNA and that occur in one of the two arms of the stem-loop.  The putative location obtained is then validated with <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>, that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRbase Viridiplantae v20.</dd>
+<dd>Some families of mature miRNAs are highly conserved through evolution. In this case, it is possible to localize  the mature miRNA within the pre-miRNA  by similarity. For that,  we compare each sequence with  the mature miRNAs of plant (<i>Viridiplantae</i>) deposited in <a href='http://www.mirbase.org/ftp.shtml'>miRBase</a> (Release 20). Alignments are performed with <a href='https://www.ebi.ac.uk/~guy/exonerate/'>Exonerate</a>, which implements an exact model for pairwise alignment. We select alignments with at most three errors (mismatch, deletion or insertion) against the full-length mature miRNA and that occur in one of the two arms of the stem-loop.  The putative location obtained is then validated with <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>, that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRBase Viridiplantae v20.</dd>
 </dl>
 
 <h3>Submission</h3>
@@ -106,16 +118,16 @@ where MFE (minimal free energy) denotes the negative folding free energies of a 
 </dd>
 
 <dt>MFE</dt>
-<dd>value of the minimal free energy (computed with <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>).</dd>
+<dd>Value of the minimal free energy (computed with <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>).</dd>
 
 <dt>MFEI</dt>
-<dd>value of the MFEI (<a href='#mfei_definition'>see definition</a>).</dd>
+<dd>Value of the MFEI (<a href='#mfei_definition'>see definition</a>).</dd>
 
 <dt>Shuffles (option)</dt>
-<dd>proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see <em>Compute thermodynamic stability</em></a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</dd>
+<dd>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</dd>
 
 <dt>miRBase alignment (option)</dt>
-<dd>This cell is checked when an alignment between the candidate sequence and miRBase is found (<a href='#flag-conserved-mature-mirnas'>see <em>Flag conserved mature miRNAs</em></a>). It is doubled checked when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML or ODF report.</dd>
+<dd>This cell is checked when an alignment between the candidate sequence and miRBase is found (<a href='#flag-conserved-mature-mirnas'>see Flag conserved mature miRNAs</a>). It is doubled checked when the location of the candidate mature miRNA is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. The alignments are visible in the HTML or ODF report.</dd>
 
 <dt>2D structure</dt>
 <dd>You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href='http://varna.lri.fr/'>Varna</a>.</dd>
@@ -148,7 +160,9 @@ where MFE (minimal free energy) denotes the negative folding free energies of a 
 
 <p>The HTML report contains all information related to a given predicted pre-miRNA.</p>
 
-<p>It begins with the following information.</p>
+<h3>Header</h3>
+
+<p>The report begins with the following information.</p>
 
 <dl>
 <dt>Name</dt>
@@ -182,7 +196,7 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
 <dd>This is the set of stem-loop sequences that overlap the current prediction. The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.</dd>
 </dl>
 
-<p>The stem-loop structure of the miRNA precursor is also displayed with Varna.</p>
+<p>The stem-loop structure of the miRNA precursor is also displayed with  <a href='http://varna.lri.fr/'>Varna</a>.</p>
 
 <h3>Thermodynamics stability</h3>
 <dl>
@@ -196,7 +210,7 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
 <dd>Value of the minimum folding energy index (<a href='#mfei_definition'>see definition</a>).</dd>
 
 <dt>Shuffles</dt>
-<dd>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see <em>Compute thermodynamic stability</em></a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</dd>
+<dd>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.1, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.1, we say that it is non significant, and do not report any value.</dd>
 </dl>
 
 <h3>Conservation of the mature miRNA</h3>
@@ -211,9 +225,11 @@ miRBase           1 ucgcuuggugcagaucgggac 21
 <span class="others">miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001045'>osa-miR168a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001452'>sbi-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001665'>sof-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001726'>zma-miR168a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001727'>zma-miR168b-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018215'>hvu-miR168-5p</a></span>
 </div>
 
-<p>query is the user sequence, and miRBase designates the mature miRNA found in miRBase. It is possible to access the corresponding mirBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated with <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
-    
+<p><tt>query</tt> is the user sequence, and <tt>miRBase</tt> designates the mature miRNA found in miRBase. It is possible to access the corresponding miBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
 
+<p>
+TO ADD
+</p>
 
  </div>
         </div><!-- bloc droit-->
