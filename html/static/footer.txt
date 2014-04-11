@@ -3,7 +3,27 @@
      <table class="footerTable">
      	    <tr>
 		<td align="left">
-		For questions about <b>miRkwood</b> or for bug reports, please contact miRkwood team
+		For questions about <b>miRkwood</b> or for bug reports, please contact <script type="text/javascript">
+	<!--
+	    function escramble()
+	    {
+	    var a,b,c,d,e,f;
+	    a=  '<a href="';
+	    b=  'mai';
+	    c= 'mirkw';
+	    b+= 'lto:';
+	    d=  'ood@u';
+	    i= 'niv-l';
+	    j= 'ille1.fr';
+	    e=  '">';
+	    g=  '<';
+	    h=  '/a>';
+	    document.write(a+b+c+d+i+j+'?Subject=[miRkwood]'+e+'the mirRkwood team'+g+h);
+	    }
+	    escramble();
+
+            //-->
+	    </script>
 		</td>
 		<td align="right">
 		2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>

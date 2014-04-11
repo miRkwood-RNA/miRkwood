@@ -31,6 +31,27 @@
 Mohcen Benmounah, Jean-Fr&eacute;d&eacute;ric Berthelot, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (LIFL and Inria Lille)</p>
 
 <h2>Contact</h2>
+<p><script type="text/javascript">
+<!--
+	    function escramble()
+	    {
+	    var a,b,c,d,e,f;
+	    a=  '<a href="';
+	    b=  'mai';
+	    c= 'mirkw';
+	    b+= 'lto:';
+	    d=  'ood@u';
+	    i= 'niv-l';
+	    j= 'ille1.fr';
+	    e=  '">';
+	    g=  '<';
+	    h=  '/a>';
+	    document.write(a+b+c+d+i+j+'?Subject=[miRkwood]'+e+c+d+i+j+g+h);
+	    }
+	    escramble();
+
+            //-->
+	    </script></p>
  </div>
         </div><!-- bloc droit-->
        <? include("./static/footer.txt") ?>
