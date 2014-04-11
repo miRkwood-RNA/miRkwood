@@ -73,6 +73,11 @@ p.equation {
     background-color: #EEE;
 }
 
+div.table-of-contents{
+    border-left: 6px solid #BFBEBD;
+    margin-left: 30px;
+}
+
 pre.alignment {
     margin-top:0px;
     line-height: 1.3em;
