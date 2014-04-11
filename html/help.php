@@ -80,7 +80,7 @@ where MFE (minimal free energy) denotes the negative folding free energies of a 
 <dd>You can enter your email address to be notified when the job is finished. The email contains a link to access the results for 2 weeks.</dd>
 </dl>
 
-
+<hr class='section' />
 <h2 id='results_page'>Result page</h2>
 
 <p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>) You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
@@ -121,8 +121,8 @@ where MFE (minimal free energy) denotes the negative folding free energies of a 
 <dd>You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href='http://varna.lri.fr/'>Varna</a>.</dd>
 </dl>
 
-
-<h2>Export</h2>
+<hr class='section' />
+<h2 id='export'>Export</h2>
 
 <p>Results, or a selection of them, can also be exported to a variety of formats, and saved to a local folder for further analyses.</p>
 <dl>
@@ -143,7 +143,7 @@ where MFE (minimal free energy) denotes the negative folding free energies of a 
 
 </dl>
 
-
+<hr class='section' />
 <h2 id='html_report'>HTML Report</h2>
 
 <p>The HTML report contains all information related to a given predicted pre-miRNA.</p>
