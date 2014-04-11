@@ -325,10 +325,9 @@ legend {
 
 #waitGif {
 
-  height : 200px;
-
-  background:  url(waiting.gif) center  no-repeat;
-  background-size:120px 100px;
+  height : 170px;
+  background:  url(waiting.gif) center no-repeat;
+  background-size:105px 75px;
 
 }
 
