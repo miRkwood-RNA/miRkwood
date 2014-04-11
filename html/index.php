@@ -8,19 +8,29 @@
         <title>miRkwood - MicroRNA identification</title>
     </head>
  <body>
-        <div class="theme-border"></div>
+<div class="theme-border"></div>
         <div class="logo"></div>
          <? include("./static/bioinfo_menu.txt") ?>
         <div class="bloc_droit">
         <? include("./static/header_menu.txt") ?>
 <div class="main">
-         <p>  miRkwood is a computational pipeline for the identification of plant miRNAs and their hairpin precursors. It can be used with short  genomicregions or assembled expressed sequences (Sanger or NGS).  </p>
+
+    <p>miRkwood is a computational pipeline for the identification of miRNAs and their hairpin precursors. The method is specifically calibrated for plant miRNAs, that have a large structural diversity. It can be used with short (&#60;100 kb) genomic regions or assembled expressed sequences (Sanger or NGS).</p>
+
+    <p>miRkwood first identifies potential pre-miRNAs on the basis of the secondary structure, and then refines this result through a variety of additional complementary features that bring new evidence to the prediction:  Thermodynamical stability, conservation of the mature miRNA, nature of complementarity of the miRNA-miRNA* duplex.</p>
+
+
 <ul>
- <li>see user manual</li>
- <li>see an example</li>
+ <li><a href='help.php'>read user manual</a></li>
+ <li><a href='method.php'>learn about the method</a></li>
  <li><a href='/cgi-bin/interface.pl'>use web server</a></li>
 </ul>
-<p>The method is is specifically calibrated for plant miRNAs, that have a large structural diversity. It first identifies potential pre-miRNAs on the basis of the secondary structure, and then refines this result through a variety of additional complementary features that bring new evidence to the prediction:  Thermodynamical stability, conservation of the mature miRNA, nature of complementarity of the miRNA-miRNA* duplex. </p>
+
+<h2>Authors</h2>
+<p>Sylvain Legrand, <a href='http://pdv.univ-lille1.fr/labo/sitesadv/'>SADV</a> (University of Lille and INRA)<br/>
+Mohcen Benmounah, Jean-Fr&eacute;d&eacute;ric Berthelot, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (LIFL and Inria Lille)</p>
+
+<h2>Contact</h2>
  </div>
         </div><!-- bloc droit-->
        <? include("./static/footer.txt") ?>
