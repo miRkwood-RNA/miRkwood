@@ -197,6 +197,7 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
 </dl>
 
 <p>The stem-loop structure of the miRNA precursor is also displayed with  <a href='http://varna.lri.fr/'>Varna</a>.</p>
+<img style='width:400px; display: block; margin: 0 auto;' src='style/structure.png' alt='The stem-loop structure of the miRNA precursor' />
 
 <h3>Thermodynamics stability</h3>
 <dl>

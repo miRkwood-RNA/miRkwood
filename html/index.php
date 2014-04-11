@@ -26,6 +26,8 @@
  <li><a href='/cgi-bin/interface.pl'>use web server</a></li>
 </ul>
 
+<img style='width:542px; display: block; margin: 0 auto;' src='style/diagram.png'/ alt='miRkwood diagram'>
+
 <h2>Authors</h2>
 <p>Sylvain Legrand, <a href='http://pdv.univ-lille1.fr/labo/sitesadv/'>SADV</a> (University of Lille and INRA)<br/>
 Mohcen Benmounah, Jean-Fr&eacute;d&eacute;ric Berthelot, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (LIFL and Inria Lille)</p>
