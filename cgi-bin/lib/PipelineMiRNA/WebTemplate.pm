@@ -194,7 +194,7 @@ sub get_HTML_page_for_body {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <meta name="keywords" content="RNA, ARN, mfold, fold, structure, prediction, secondary structure" />
+        <meta name="keywords" content="microRNA, miRNA, premir, plant, arabidopsis thaliana, mirkwood, RNAfold" />
         <title>miRkwood - MicroRNA identification</title>
         $css_html        $js_html    </head>
     $body
