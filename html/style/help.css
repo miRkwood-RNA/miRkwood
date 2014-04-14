@@ -22,13 +22,13 @@ h2:before {
 }
 
 hr.section{
+    margin-left:0;
     text-align:left;
     width:28%;
-    margin-top:20px;
-    height:3px; 
+    margin-top:10px;
+    height:4px;
     background-color:#f4ba31;
-    border:0; 
-    color: #f4ba31; 
+    border:0;
 }
 
 /* Overriding bioinfo.css */

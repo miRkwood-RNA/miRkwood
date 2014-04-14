@@ -26,7 +26,7 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 
 <br> 
 
-<hr size="4" width="28%" color="#f4ba31" align=left>
+<hr class='section'/>
 
 <div class="table-of-contents">
   <ol>
@@ -57,7 +57,7 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 </ol>
 </div>
 
-<hr size="4" width="28%" color="#f4ba31" align=left>
+<hr class='section'/>
 
 
 <h2 id='input_form'>Input form</h2>
@@ -127,7 +127,7 @@ where MFE (minimal free energy) denotes the negative folding free
 <dd>You can enter your email address to be notified when the job is finished. The email contains a link to access the results for 2 weeks.</dd>
 </dl>
 
-<hr size="4" width="28%" color="#f4ba31" align=left>
+<hr class='section'/>
 
 <h2 id='results_page'>Result page</h2>
 
