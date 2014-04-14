@@ -138,7 +138,7 @@ else {
 	my $page = <<"END_TXT";
 <div class="main">
     $HTML_additional
-    <p>No results available for the given job identifier $id_job: $valid </p>
+    <p>No results available for the given job identifier $id_job.</p>
 </div><!-- main -->
 END_TXT
 
