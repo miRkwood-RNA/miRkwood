@@ -31,13 +31,10 @@ my @js = (
 
 );
 
-my $id_job      = $cgi->param('run_id');    # récupération id job
-my $dirJob_name = 'job' . $id_job;
-my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
-my $job_dir     = File::Spec->catdir( $results_dir, $dirJob_name );
-my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
+my $id_job = $cgi->param('run_id');    # récupération id job
+my $job_path = PipelineMiRNA::Results->jobId_to_jobPath($id_job);
 
-my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
+my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_path);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
 my $cfg = PipelineMiRNA->CONFIG();
 
@@ -64,8 +61,7 @@ if ($valid) {
 	    "<p class='header-results'><b>"
 	  . $nb_results
 	  . "  miRNA precursor(s) found</b></p>";
-	unless ( -e $is_finished ) {
-		
+	unless ( PipelineMiRNA::Results->is_job_finished($id_job) ) {
         if ($nb_results > 0){
             $HTML_additional .=
 		    "<p class='warning'>Still processing...<br/>Below we show some preliminary results</p>";

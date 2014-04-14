@@ -40,6 +40,21 @@ sub jobId_to_jobPath {
 	return $jobPath;
 }
 
+=method is_job_finished
+
+Return whether a job is finished or not
+
+=cut
+
+sub is_job_finished {
+    my ( $self, @args ) = @_;
+    my $id_job      = shift @args;
+    my $job_dir     = $self->jobId_to_jobPath($id_job);
+    my $is_finished_file = File::Spec->catfile( $job_dir, 'finished' );
+    return (-e $is_finished_file);
+}
+
+
 =method get_candidates_dir
 
 
