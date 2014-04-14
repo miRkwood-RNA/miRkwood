@@ -50,28 +50,7 @@ function showCellInfo(i,j)
 	{var identifier = myResults.getIdentifierByIndex(i-1);
 		window.open("./resultsRow.pl?jobID="+id_job+"&id="+identifier);
 		var factor = myResults.getFactorsNamesList()[j-1];
-		
-	
-	} 
-	
-	/**
-	if ((i==0)&&(j!=0))  
-	{	
-		var factor = myResults.getFactorsNamesList()[j-1];
-		if ((factor != "image") &&(factor != "quality") &&(factor != "alignment")&&(factor != "amfe")&&(factor != "mfe")&&(factor != "position")) // quand on clique pas sur image et alignement 
-		{
-			var values= "";
-			var factorsTemp = myResults.getFactorNameByIndex(j-1);
-			var valuesFactor = myResults.getValuesByFactorName(factorsTemp);
-			//for (var i=0;i<valuesFactor.length;i++)
-			//{
-			//	values = values + "<li>"+valuesFactor[i]+"</li>" ; 
-			//}
-			var names = myResults.getSequencesNamesList();
-			window.open("./resultsCol.pl?factor="+factorsTemp+"&values="+ valuesFactor+"&length="+ valuesFactor.length+"&names="+ names);
-		//document.getElementById("singleCell").innerHTML="<div id = 'showInfo'> <h2 class='titre'><u>List of " + factorsTemp +"s</u></h2><br/>"+ values + " <br/> </div>"
-		}
-	}  */
+	}
 }
 
 /**
@@ -79,14 +58,6 @@ function showCellInfo(i,j)
  */
 function colorOver(a,b)
 {
-	//for (var i=0;i<rowsNumber+1;i++)
-	//{
-	
-		//if (b == myResults.getIndexByFactorName('image')) //gerer que la couleur de la colonne de l'image  
-		//{
-			//document.getElementById('cell-'+i+'-'+b).setAttribute('bgcolor','#EDEDED'); 
-		//}
-	//}
 	for (var j=0;j<columnsNumber+1;j++)
 	{	
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','#EDEDED');
@@ -115,12 +86,6 @@ function colorOut(a,b)
  */
 function createGrid(id,rowsNumber,columnsNumber)
 {
-	
-	//var div  = document.getElementById('select');
-	
-	//div.id = "select";
-	//div.innerHTML = "<p style='font-size:15px' >Export selected entries \( <a onclick='selectAll("+rowsNumber+")' href='#' class='myButton'>Select all<\/a> /          <a  onclick='deSelectAll("+rowsNumber+")'  href='#' class='myButton'>Deselect all</a> \)</p ><p>rrrrfdd</p><p>rrrrfdd</p>";
-	
 	var tar=document.getElementById(id); // div "table"
 	//tar.appendChild(div);
 	var table=document.createElement('table');
