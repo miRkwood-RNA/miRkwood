@@ -171,7 +171,7 @@ Write the run options to the job configuration file.
 =cut
 
 sub write_config {
-    my ( $run_options_file, $strands, $mfe, $randfold, $align, $job_title, $plant) = @_;
+    my ( $run_options_file, $strands, $mfe, $randfold, $align, $job_title, $plant, $varna ) = @_;
     my $run_options = PipelineMiRNA->CONFIG();
     $run_options->param( "job.title",        $job_title );
     $run_options->param( "job.plant",        $plant );
@@ -179,7 +179,7 @@ sub write_config {
     $run_options->param( "options.mfe",      $mfe );
     $run_options->param( "options.randfold", $randfold );
     $run_options->param( "options.align",    $align );
-    $run_options->param( 'options.varna',    1 );
+    $run_options->param( 'options.varna',    $varna );
     PipelineMiRNA->CONFIG($run_options);
 }
 

@@ -64,12 +64,20 @@ sub serialize_candidate_information {
     my $can_dir = shift @args;
     my $serialization_dir = shift @args;
 
+    my $cfg    = PipelineMiRNA->CONFIG();
+
     my $full_candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
     my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
     my %candidate = $self->parse_candidate_information($full_candidate_dir);
     $candidate{'identifier'} = "$seq_dir-$can_dir";
 #    $candidate{'name'} = $seq_dir;    #récupération nom séquence
-    $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
+
+    if ( $cfg->param('options.varna') ) {
+        $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
+    } else {
+        $candidate{'image'} = '';
+    }
+
     $candidate{'position'} = "$candidate{'position_start'}-$candidate{'position_end'}";
     $candidate{'length'} = $candidate{'position_end'} - $candidate{'position_start'} +1;
     $candidate{'%GC'} = PipelineMiRNA::Utils::restrict_num_decimal_digits(
