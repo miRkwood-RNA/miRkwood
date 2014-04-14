@@ -111,11 +111,8 @@ sub main_entry {
 	}
 	process_tests($job_dir);
 	debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
-    my $finish_file = File::Spec->catfile( $job_dir, 'finished' );
-    open( my $finish, '>', $finish_file )
-        or die "Error when opening $finish_file: $!";
-    close $finish;
-    debug("Writing finish file $finish_file", PipelineMiRNA->DEBUG() );
+    mark_job_as_finished($job_dir);
+    debug("Writing finish file", PipelineMiRNA->DEBUG() );
 	return;
 }
 
@@ -657,6 +654,22 @@ sub post_process_alignments {
 		  File::Spec->catfile( $candidate_dir, 'merged_alignments.yml' );
 		YAML::XS::DumpFile( $alignments_results_file, %alignments );
 	}
+}
+
+=method mark_job_as_finished
+
+Mark the current job as finished
+
+=cut
+
+sub mark_job_as_finished {
+    my ( @args ) = @_;
+    my $job_dir     = shift @args;
+    my $is_finished_file = File::Spec->catfile( $job_dir, 'finished' );
+    open( my $finish, '>', $is_finished_file )
+        or die "Error when opening $is_finished_file: $!";
+    close $finish;
+    return (-e $is_finished_file);
 }
 
 1;
