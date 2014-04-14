@@ -113,7 +113,9 @@ END_TXT
 		$body = <<"END_TXT";
 <body onload="main('all');">
     <div class="theme-border"></div>
-    <div class="logo"></div>
+    <a href="/">
+        <div class="logo"></div>
+    </a>
     <div class="bloc_droit">
     $header_menu
 <div class="main main-full">

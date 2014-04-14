@@ -9,7 +9,9 @@
     </head>
  <body>
 <div class="theme-border"></div>
-        <div class="logo"></div>
+        <a href="/">
+            <div class="logo"></div>
+        </a>
          <? include("./static/bioinfo_menu.txt") ?>
         <div class="bloc_droit">
         <? include("./static/header_menu.txt") ?>

@@ -9,8 +9,9 @@
     </head>
  <body>
         <div class="theme-border"></div>
-        <div class="logo"></div>
-
+        <a href="/">
+            <div class="logo"></div>
+        </a>
         <div class="bloc_droit">
         <?php include("./static/header_menu.txt") ?>
 

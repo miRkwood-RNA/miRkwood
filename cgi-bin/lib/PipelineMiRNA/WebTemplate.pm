@@ -160,7 +160,9 @@ sub get_HTML_page_for_content {
     my $body = <<"END_TXT";
     <body>
         <div class="theme-border"></div>
-        <div class="logo"></div>
+        <a href="/">
+            <div class="logo"></div>
+        </a>
         $bioinfo_menu
         <div class="bloc_droit">
         $header_menu
