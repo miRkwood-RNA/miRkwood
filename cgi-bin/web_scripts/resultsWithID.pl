@@ -45,10 +45,10 @@ my $html = '';
 
 my $HTML_additional = "";
 $HTML_additional .=
-  "<p style='font-size:14px'><b>Job ID  : </b>" . $id_job . '</p>';
+  "<p class='header-results'><b>Job ID:</b> " . $id_job . '</p>';
 if ( $cfg->param('job.title') ) {
 	$HTML_additional .=
-	  "<p style='font-size:14px'><b>Job title  : </b>" . $cfg->param('job.title') . '</p>';
+	  "<p class='header-results'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
 }
 
 my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
@@ -61,9 +61,9 @@ if ($valid) {
 	  PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults );
 
 	$HTML_additional .=
-	    "<p style='font-size:14px'><b>"
+	    "<p class='header-results'><b>"
 	  . $nb_results
-	  . "  miRNA precursors found</b></p>";
+	  . "  miRNA precursor(s) found</b></p>";
 	unless ( -e $is_finished ) {
 		
         if ($nb_results > 0){
@@ -85,21 +85,20 @@ if ($valid) {
     $header_menu
 <div class="main main-full">
     $HTML_additional
-    <div  id="select" > 
+    <div id="select" >
     	<div style="width: 510px"  class="forms">
-    		<p  >Export selected entries \(<a onclick='selectAll()' >select all<\/a>/<a  onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p> 
+    		<p class='text-results'>Export selected entries \(<a onclick='selectAll()' >select all<\/a>/<a  onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p> 
     		<form id= 'exportForm'>
                 <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (CSV)</label><br/>
                 <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
                 <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
                 <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
-                <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/><br/>
+                <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label>
                 <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_root")'/>
     		</form>
     	</div>
-    		<p style='font-size:14px;white-space: nowrap' ><br/>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.</p>
-    		
-  			 <p style='font-size:14px'> 		<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
+    		<p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
+  			<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
     		</p>
     </div>
     

@@ -290,7 +290,7 @@ legend {
 	
 }
 #select {
-	margin-top:50px;
+	margin-top:10px;
 	
 	margin-bottom:-10pt;
 }
@@ -424,6 +424,10 @@ span.mature {
 	font-size:14px;
 	font-weight:bold;
 	color:red;
+}
+
+.header-results {
+	font-size:14px;
 }
 
 
