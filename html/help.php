@@ -15,19 +15,50 @@
         <?php include("./static/header_menu.txt") ?>
 
 <div class="main-full">
-<p><a href='/mirkwood/'>miRkwood</a> is a computational pipeline for the identification of plant miRNAs and their hairpin precursors.</p>
+
+
   
-<p>This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
+<p><a href='/mirkwood/'>miRkwood</a> is a computational pipeline for
+  the identification of plant miRNAs and their hairpin precursors.</p>
+  <p>
+  This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
 For the full detail of the method implemented in miRkwood, see <a href="method.php">miRkwood method</a>.</p>
 
+<br> 
+
+<hr size="4" width="28%" color="#f4ba31" align=left>
+
 <div class="table-of-contents">
-<ol>
-	<li><a href="#input_form">Input form</a></li>
-	<li><a href="#results_page">Result page</a></li>
-	<li><a href="#export">Export</a></li>
-	<li><a href="#html_report">HTML report</a></li>
+  <ol>
+    <li><a href="#input_form">Input form</a>
+    <ol>
+      <li> Enter query sequence </li>
+      <li> Parameters</li>
+      <li> Submit the job</li> 
+    </ol>
+   </li>
+   <li><a href="#results_page">Result page</a></li>
+   <li><a href="#export">Export</a>
+   <ol>
+     <li> Tabular format (CSV) </li>
+     <li> FASTA</li>
+     <li> dot-bracket format (plain sequence + secondary structure) </li>
+     <li> Full report in document format (ODF)</li>
+     <li> GFF format</li>
+   </ol>
+ </li> 
+ <li><a href="#html_report">HTML report</a>
+  <ol>
+    <li> Header</li>
+    <li> Thermodynamic stability</li>
+    <li> Conservation of the mature miRNA</li> 
+  </ol>
+ </li>
 </ol>
 </div>
+
+<hr size="4" width="28%" color="#f4ba31" align=left>
+
 
 <h2 id='input_form'>Input form</h2>
 
@@ -51,7 +82,11 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 <dd>miRkwood normally analyses data in forward direction only. Checking this option will cause the program to search both the forward and reverse complement strands.</dd>
 
 <dt>Mask coding regions</dt>
-<dd>This option allows selecting non-coding sequences in the input data by masking putative coding regions. It consists in a BlastX search against the protein sequences from the chosen species (E-value=1E-5).  Currently available species are: <i>Arabidopsis thaliana</i>, <i>Medicago truncatula</i> (<a href='http://www.jcvi.org/medicago/'>Medicago truncatula genome project</a>, Mt4.0) and <i>Oriza sativa</i> (<a href='http://rice.plantbiology.msu.edu/'>Rice genome annotation project</a>, V7.0).</dd>
+<dd>This option allows selecting non-coding sequences in the input
+  data by masking putative coding regions. It consists in a BlastX
+  search against the protein sequences from the chosen species
+  (E-value=1E-5).  Currently available species are: <i>Arabidopsis
+  thaliana</i> (<a href="http://www.arabidopsis.org/">TAIR</a>, V10), <i>Medicago truncatula</i> (<a href='http://www.jcvi.org/medicago/'>Medicago truncatula genome project</a>, Mt4.0) and <i>Oriza sativa</i> (<a href='http://rice.plantbiology.msu.edu/'>Rice genome annotation project</a>, V7.0).</dd>
 </dl>
 <h3>Parameters</h3>
 
@@ -92,10 +127,13 @@ where MFE (minimal free energy) denotes the negative folding free
 <dd>You can enter your email address to be notified when the job is finished. The email contains a link to access the results for 2 weeks.</dd>
 </dl>
 
-<hr class='section' />
+<hr size="4" width="28%" color="#f4ba31" align=left>
+
 <h2 id='results_page'>Result page</h2>
 
-<p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>) You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
+SCREENSHOT
+
+<p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>). You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
 <dl>
 <dt>Name</dt>
 <dd>Name of the original sequence, as specified in the heading of the FASTA format.</dd>
@@ -107,13 +145,13 @@ where MFE (minimal free energy) denotes the negative folding free
 <dd>Strand, forward or reverse complement. </dd>
 
 <dt id='definition_quality'>Quality</dt>
-<dd>The quality is a distinctive feature of miRkwood. It is a combination of all other criteria described afterwards, and allows to rank the predictions according to the significance, from zero- to three- stars. It is calculated as follows:
+<dd>The quality is a distinctive feature of miRkwood. It is a combination of all other criteria described afterwards, and allows to rank the predictions according to the significance, from zero- to three- stars. It is calculated as follows.
 <ul>
 <li><em>MFEI &lt; -0.8:</em> add one star. This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins (see <a href="method.php">miRkwood method</a>).</li>
 
 <li><em>Existence of a conserved miRNA in miRBase (alignment):</em> add one star. We allow up to three errors in the alignment with mature miRBase, which corresponds to an estimated P-value of  3E-2 for each pre-miRNA. Alignments with 2 errors or less have an estimated P-value of 4E-3.</li>
 
-<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star</li>
+<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star</li>.
 </ul>
 </dd>
 
@@ -137,23 +175,67 @@ where MFE (minimal free energy) denotes the negative folding free
 <h2 id='export'>Export</h2>
 
 <p>Results, or a selection of them, can also be exported to a variety of formats, and saved to a local folder for further analyses.</p>
-<dl>
-<dt>GFF</dt>
-<dd>General annotation format, that displays the list of positions of pre-miRNA found (see more explanation on <a href='http://www.ensembl.org/info/website/upload/gff.html'>Ensembl documentation</a>)</dd>
 
-<dt>FASTA</dt>
-<dd>This is the compilation of all pre-miRNA sequences found</dd>
 
-<dt>Dot-bracket notation</dt>
-<dd>This is the compilation of all pre-miRNA sequences found, together with the predicted secondary structure. The secondary structure is given as a set of matching parentheses (see more explanation on <a href='http://www.tbi.univie.ac.at/RNA/bracket.html'>Vienna website</a>).</dd>
+<h3>Tabular format (CSV)</h3>
+<p>
+It contains the same information as the result table, plus the FASTA
+sequences and the dot-bracket secondary structures. The CSV  
+format is supported by spreadsheets like Excel. </p>
 
-<dt>CSV (comma separated value)</dt>
-<dd>It contains the same information as the result table, plus the FASTA sequences and the dot-bracket secondary structures. This tabular format is supported by spreadsheets like Excel.</dd>
 
-<dt>ODF</dt>
-<dd>This is an equivalent of the <a href='#html_report'>HTML report</a>, and contains the full report of the predictions. This document format is compatible with Word or OpenOffice.</dd>
 
-</dl>
+<h3>FASTA</h3>
+
+<p>
+This is the compilation of all pre-miRNA sequences found in FASTA
+format. The header of the FASTA format contains the initial name of the
+sequence, as well as the positions and the strand of the predicted pre-miRNA.
+</p>
+
+<h3 id='dot_bracket'>Dot-bracket format</h3>
+<p>
+This is the compilation of all pre-miRNA sequences found, together
+with the predicted secondary structure.  The first line contains a
+FASTA-like header. The second line contains the nucleic acid
+sequence. The last line contains the secondary structure, that is
+given as a set of matching brackets.  A base pair between bases
+<em>i</em> and <em>j</em> is represented by a "(" at position
+<em>i</em> and a ")" at position <em>j</em>. Unpaired bases are
+represented by dots (see more explanation on <a
+href='http://www.tbi.univie.ac.at/RNA/bracket.html'>Vienna
+website</a>).</p>
+<pre class='example'>
+> Sample_1001-1085, stemloop structure
+cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
+(((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
+</pre>
+
+
+<h3>Full report in document format (ODF)</h3>
+
+<p>This is an equivalent of the <a href='#html_report'>HTML report</a>, and contains the full report of the predictions. This document format is compatible with Word or OpenOffice.</p>
+
+<h3>GFF format</h3>
+
+<p>General annotation format, that displays the list of positions of pre-miRNA found (see more explanation on <a href='http://www.ensembl.org/info/website/upload/gff.html'>Ensembl documentation</a>)</p>
+
+<pre class="example">
+##gff-version 3
+# miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
+# Note, these sequences do not represent the full primary transcript,
+# rather a predicted stem-loop portion that includes the precursor.
+
+sample  miRkwood  miRNA_primary_transcript  1001 1085	.  +  . Name=preMir_sample_1001-1085	
+</pre>
+
+
+<p>
+Following the convention of miRBase, we consider that hairpin
+precursors have type <tt>miRNA_primary_transcript</tt> even if they
+are shorter than the primary transcript.
+</p> 
+
 
 <hr class='section' />
 <h2 id='html_report'>HTML Report</h2>
@@ -166,27 +248,23 @@ where MFE (minimal free energy) denotes the negative folding free
 
 <dl>
 <dt>Name</dt>
-<dd>Name of the initial sequence, as specified in the heading of the FASTA format</dd>
+<dd>Name of the initial sequence, as specified in the heading of the FASTA format.</dd>
 
 <dt>Position</dt>
-<dd>Start and end positions of the putative pre-miRNA in the original sequence. The length is indicated in parentheses</dd>
+<dd>Start and end positions of the putative pre-miRNA in the original sequence. The length is indicated in parentheses.</dd>
 
 <dt>Strand</dt>
-<dd>+ (forward) or - (reverse complement)</dd>
+<dd>+ (forward) or - (reverse complement).</dd>
 
 <dt>GC content</dt>
-<dd>Percentage of bases that are either guanine or cytosine</dd>
+<dd>Percentage of bases that are either guanine or cytosine.</dd>
 
 <dt>Sequence (FASTA format)</dt>
-<dd>Link to download the sequence</dd>
+<dd>Link to download the sequence.</dd>
 
 <dt>Stem-loop structure</dt>
-<dd>Link to download the secondary structure in dot-bracket format.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a "(" at position <em>i</em> and a ")" at position <em>j</em>. Unpaired bases are represented by dots.
-<pre class='example'>
-> Sample_1001-1085, stemloop structure
-cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
-(((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
-</pre>
+<dd>Link to download the secondary structure in dot-bracket format
+  (<a href='#dot_bracket'>see definition</a>). 
 </dd>
 
 <dt>Optimal MFE secondary structure</dt>
@@ -202,7 +280,7 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
 <h3>Thermodynamics stability</h3>
 <dl>
 <dt>MFE</dt>
-<dd>Value of the Minimum Free Energy (computed by <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>)</dd>
+<dd>Value of the Minimum Free Energy (computed by <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>).</dd>
 
 <dt>AMFE</dt>
 <dd>Value of the adjusted MFE : MFE &divide; (sequence length) &times; 100</dd>
@@ -214,7 +292,7 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
 <dd>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.1, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.1, we say that it is non significant, and do not report any value.</dd>
 </dl>
 
-<h3>Conservation of the mature miRNA</h3>
+<h3>Conservation of the miRNA</h3>
 
 <p>All alignments with miRBase are reported and gathered according to their positions.</p>
 <div class='example'>
@@ -226,14 +304,16 @@ miRBase           1 ucgcuuggugcagaucgggac 21
 <span class="others">miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001045'>osa-miR168a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001452'>sbi-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001665'>sof-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001726'>zma-miR168a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001727'>zma-miR168b-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018215'>hvu-miR168-5p</a></span>
 </div>
 
-<p><tt>query</tt> is the user sequence, and <tt>miRBase</tt> designates the mature miRNA found in miRBase. It is possible to access the corresponding miBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
+<p><tt>query</tt> is the user sequence, and <tt>miRBase</tt>
+designates the mature miRNA  (or the miRNA*) found in miRBase. It is possible to access the corresponding miRBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
 
 <p>
 TO ADD
 </p>
+  
+</div> <!-- main full -->
 
- </div>
-        </div><!-- bloc droit-->
+</div><!-- bloc droit-->
        <?php include("./static/footer.txt") ?>
     </body>
     
