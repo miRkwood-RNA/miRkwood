@@ -22,9 +22,13 @@ h2:before {
 }
 
 hr.section{
-    text-align:center;
-    width:200px;
-    margin-top:30px;
+    text-align:left;
+    width:28%;
+    margin-top:20px;
+    height:3px; 
+    background-color:#f4ba31;
+    border:0; 
+    color: #f4ba31; 
 }
 
 /* Overriding bioinfo.css */
@@ -56,7 +60,7 @@ h3:before
 
 p {
     text-align: justify;
-    padding: 2px 0px 2px 0px;
+    padding: 1px 0px 1px 0px;
 }
 
 p.equation {
@@ -74,8 +78,22 @@ p.equation {
 }
 
 div.table-of-contents{
-    border-left: 6px solid #BFBEBD;
+    /*border-left: 6px solid #BFBEBD;*/
     margin-left: 30px;
+}
+
+/* table-of-content */
+ol {
+    counter-reset: item
+}
+li {
+    display: block
+}
+/* end table-of-content */
+
+li:before {
+    content: counters(item, ".")" ";
+    counter-increment: item
 }
 
 pre.alignment {
@@ -93,9 +111,10 @@ span.others {
 
 .main-full{
     margin-left:-170px;
+    padding-left:20px; 
     padding-top: 25px;
     padding-bottom: 25px;
-    padding-right: 60px;
+    padding-right: 100px;
     line-height: 20px;
 }
 
@@ -104,6 +123,7 @@ ol li {
     padding-bottom: 0.5em;
     text-align: justify;
     padding-right: 30px;
+    
 }
 
 dt {
@@ -112,5 +132,6 @@ dt {
     font-weight:bold;
 }
 dd {
-
+ padding-top: 4px; 
+ padding-bottom: 6px;
 }
