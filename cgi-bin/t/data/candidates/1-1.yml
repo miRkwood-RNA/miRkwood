@@ -1,6 +1,6 @@
 --- shuffles
 --- '0.125000'
---- position_end
+--- end_position
 --- 195
 --- alignments
 ---
@@ -529,7 +529,7 @@ contig15750__73-158:
 --- contig15750
 --- image
 --- /var/www/arn/results/jobDec181721032013/1/1/image.png
---- position_start
+--- start_position
 --- 34
 --- amfe
 --- '-37.10'

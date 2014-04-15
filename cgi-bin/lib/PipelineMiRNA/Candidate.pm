@@ -78,8 +78,8 @@ sub serialize_candidate_information {
         $candidate{'image'} = '';
     }
 
-    $candidate{'position'} = "$candidate{'position_start'}-$candidate{'position_end'}";
-    $candidate{'length'} = $candidate{'position_end'} - $candidate{'position_start'} +1;
+    $candidate{'position'} = "$candidate{'start_position'}-$candidate{'end_position'}";
+    $candidate{'length'} = $candidate{'end_position'} - $candidate{'start_position'} +1;
     $candidate{'%GC'} = PipelineMiRNA::Utils::restrict_num_decimal_digits(
                             PipelineMiRNA::Utils::compute_gc_content($candidate{'DNASequence'}),
                             3);
@@ -119,7 +119,7 @@ sub parse_candidate_information {
     if ( -e $seq_info_file )    # si fichier existe
     {
         my @res = PipelineMiRNA::Components::get_sequence_information($seq_info_file);
-        ($result{'strand'}, $result{'position_start'}, $result{'position_end'}) = @res;
+        ($result{'strand'}, $result{'start_position'}, $result{'end_position'}) = @res;
     }
 
     my $randfold_output =
@@ -397,8 +397,8 @@ sub candidate_as_gff {
       $candidate{'name'} . "\t" .           # seqid
       'miRkwood' . "\t" .                   # source
       'miRNA_primary_transcript' . "\t" .   # type
-      $candidate{'position_start'} . "\t" . # start
-      $candidate{'position_end'} . "\t" .   # end
+      $candidate{'start_position'} . "\t" . # start
+      $candidate{'end_position'} . "\t" .   # end
       '.' . "\t" .                          # score
       $candidate{'strand'} . "\t" .         # strand
       '.' . "\t" .                          # phase

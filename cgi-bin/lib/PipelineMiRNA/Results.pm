@@ -296,7 +296,7 @@ sub resultstruct2csv {
 	my %results         = %{$results_ref};
 	my @optional_fields = PipelineMiRNA::Candidate->get_optional_candidate_fields();
 	my @csv_headers     = (
-		'name', 'position_start', 'position_end', 'quality', '%GC',
+		'name', 'start_position', 'end_position', 'quality', '%GC',
 		@optional_fields, 'Vienna', 'DNASequence'
 	);
 	my $result = join( ',', @csv_headers ) . "\n";
@@ -304,7 +304,7 @@ sub resultstruct2csv {
 	my @keys = sort {
 		( $results{$a}{'name'} cmp $results{$b}{'name'} )
 		  || (
-			$results{$a}{'position_start'} <=> $results{$b}{'position_start'} )
+			$results{$a}{'start_position'} <=> $results{$b}{'start_position'} )
 	} keys %results;
 	foreach my $key (@keys) {
 		if ( ( $key ~~@sequences_to_export ) || ($no_seq_selected) ) {
@@ -337,7 +337,7 @@ sub resultstruct2pseudoXML {
 	my @keys = sort {
 		( $results{$b}{'name'} cmp $results{$a}{'name'} )
 		  || (
-			$results{$a}{'position_start'} <=> $results{$b}{'position_start'} )
+			$results{$a}{'start_position'} <=> $results{$b}{'start_position'} )
 	} keys %results;
 
 	foreach my $key (@keys) {
@@ -350,7 +350,7 @@ sub resultstruct2pseudoXML {
 	@keys = sort {
 		( $results{$b}{'quality'} cmp $results{$a}{'quality'} )
 		  || (
-			$results{$a}{'position_start'} <=> $results{$b}{'position_start'} )
+			$results{$a}{'start_position'} <=> $results{$b}{'start_position'} )
 	} keys %results;
 	foreach my $key (@keys) {
 		my $value = $results{$key};

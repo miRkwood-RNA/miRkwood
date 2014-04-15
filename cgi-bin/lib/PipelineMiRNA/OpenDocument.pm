@@ -272,15 +272,15 @@ sub generate_report {
     my @keys = sort { ( $results{$a}{'name'} cmp
                         $results{$b}{'name'} )
                       ||
-                      ( $results{$a}{'position_start'} <=>
-                        $results{$b}{'position_start'} )
+                      ( $results{$a}{'start_position'} <=>
+                        $results{$b}{'start_position'} )
                  } keys %results;
 
     foreach my $key (@keys) {
         if ( $key ~~ \@sequences_to_export )
         {
             my $candidate = $results{$key};
-            my ( $start, $end ) = (${$candidate}{'position_start'}, ${$candidate}{'position_end'} );
+            my ( $start, $end ) = (${$candidate}{'start_position'}, ${$candidate}{'end_position'} );
             $context->append_element(
                 odf_create_heading(
                     level => 1,
