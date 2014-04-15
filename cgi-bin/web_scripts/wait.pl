@@ -12,6 +12,7 @@ use FindBin;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA;
 use PipelineMiRNA::WebTemplate;
+use PipelineMiRNA::Results;
 
 my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
 
@@ -34,18 +35,12 @@ my $results_url   = $results_baseurl . $res_arguments;
 my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
 
-my $dirJob_name = 'job' . $jobId;
-
-my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
-my $job_dir     = File::Spec->catdir( $results_dir, $dirJob_name );
-my $is_finished = File::Spec->catfile( $job_dir, 'finished' );
-
 my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
 my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer       = PipelineMiRNA::WebTemplate::get_footer();
 
 #le calcul est fini
-if ( -e $is_finished ) {
+if ( PipelineMiRNA::Results->is_job_finished($jobId) ) {
     my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
     my $email_cmd = "perl $email_script $results_baseurl $jobId $mail $name ";
     system($email_cmd);
