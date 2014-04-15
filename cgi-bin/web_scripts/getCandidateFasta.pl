@@ -37,8 +37,8 @@ else {
     my $candidate_name = PipelineMiRNA::Candidate->get_shortened_name(\%candidate);
     my $fasta = PipelineMiRNA::Candidate->candidateAsFasta(\%candidate);
     print <<"DATA" or die "Error when printing content: $!";
-Content-type: text/txt
-Content-disposition: attachment;filename=$candidate_name.fa
+Content-type: text/plain
+Content-disposition: inline;filename=$candidate_name.fa
 
 $fasta
 DATA
