@@ -126,8 +126,7 @@ pre
 #table
 {
 	width:750px;
-        margin-top:5%;
-	margin-bottom:5%;
+        margin-top:10px;
 }
 #seq
 {
@@ -299,7 +298,7 @@ legend {
 {
 	border: 1px solid #CCCCCC;
 	color: #000000;
-	margin-bottom:  10px;
+	margin-bottom: 30px;
 	padding: 10px;
 }
 
