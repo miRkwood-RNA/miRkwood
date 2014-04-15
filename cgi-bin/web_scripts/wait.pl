@@ -23,9 +23,6 @@ my $nameJob = $html->param('nameJob');
 $nameJob =~ s/ /_/g;#replace spaces with '_' in name job
 my $name    = $nameJob;
 
-my $check;
-if ( $nameJob eq q{} ) { $check = 'noTitle' }
-
 my $res_arguments = '?run_id=' . $jobId;
 my $results_page  = 'resultsWithID.pl';
 my $results_link  = $results_page . $res_arguments;
@@ -35,11 +32,6 @@ my $results_url   = $results_baseurl . $res_arguments;
 my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
 
-my $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
-my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
-my $footer       = PipelineMiRNA::WebTemplate::get_footer();
-
-#le calcul est fini
 if ( PipelineMiRNA::Results->is_job_finished($jobId) ) {
     my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
     my $email_cmd = "perl $email_script $results_baseurl $jobId $mail $name ";
@@ -68,10 +60,8 @@ my $page = <<"END_TXT";
 
       <p>You will be redirect to the <a href="./$results_link">results page</a> once the job is completed.</p>
       <p>Please wait...</p>
-    </div>
-	<div id="waitGif">
-      
-    </div>
+    </div><!-- waitMessage -->
+	<div id="waitGif"></div>
   </div><!-- dialog -->
 </div><!-- main -->
 END_TXT
