@@ -64,14 +64,14 @@ sub main_entry {
 	open my $ENTREE_FH, '<', $sequences_input
 	  or die "Error when opening sequences -$sequences_input-: $!";
 	debug( "Calling parse_multi_fasta() on $sequences_input", PipelineMiRNA->DEBUG() );
-	my %tab = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
+	my @fasta_array = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
 	close $ENTREE_FH;
 
 	debug( 'Iterating over names', PipelineMiRNA->DEBUG() );
 
 	my $sequence_dir_name = 0;
-
-	while ( my ( $name, $sequence ) = each %tab ) {
+    foreach my $item (@fasta_array){
+        my ($name, $sequence) = @{$item};
 		debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
 		$sequence_dir_name++;
 		my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );

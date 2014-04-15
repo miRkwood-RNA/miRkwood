@@ -72,28 +72,39 @@ Output: An hash shortname=>sequence
 =cut
 
 sub parse_multi_fasta {
-	my @args         = @_;
-	my ($INPUT_FH)   = shift @args;
-	my $to_uppercase = 0;
-	if (@args) {
-		$to_uppercase = shift @args;
-	}
-	my %tab   = ();
-	my $EMPTY = q{};
-	my $nameSeq;
-	while ( my $line = <$INPUT_FH> ) {
-		if ( grep { /^>/smx } $line ) {
-			chomp $line;
+    my @args         = @_;
+    my ($INPUT_FH)   = shift @args;
+    my $to_uppercase = 0;
+    if (@args) {
+        $to_uppercase = shift @args;
+    }
+    my %tab   = ();
+    my $EMPTY = q{};
+    my $nameSeq;
+    my @array       = ();
+    my $current_seq = $EMPTY;
+    while ( my $line = <$INPUT_FH> ) {
+        if ( grep { /^>/smx } $line ) {
+            if ($current_seq) {
+                my @res = ( $nameSeq, $current_seq );
+                push @array, \@res;
+            }
+            chomp $line;
             $nameSeq = $line;
             $nameSeq =~ s/\s/_/xmsg;
-			$tab{$nameSeq} = $EMPTY;
-		}
-		else {
-			chomp $line;
-			$tab{$nameSeq} = $tab{$nameSeq} . $line;
-		}
-	}
-	return %tab;
+
+            $current_seq = $EMPTY;
+        }
+        else {
+            chomp $line;
+            $current_seq .= $line;
+        }
+    }
+    if ($current_seq) {
+        my @res = ( $nameSeq, $current_seq );
+        push @array, \@res;
+    }
+    return @array;
 }
 
 =method sanitize_sequence_name

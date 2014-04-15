@@ -18,52 +18,55 @@ my $fastaFile1 = input_file('Utils.fasta1.fa');
 file_exists_ok($fastaFile1);
 
 open( my $INPUT_FH, '<', $fastaFile1 ) or die "Fail to open: $!";
-ok( my %tab = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH),
+ok( my @fasta_array = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH;
 
-my %expected = (
-    '>fasta11' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC',
-    '>fasta12' =>
-'ACTGAGATCGCAACTAATTTATTTATTCGCTCGTATAATGTATACATTAGATAGAGGCCTAGCCTCTTAGTCGAAAAGCCC',
-);
-is_deeply( \%tab, \%expected, 'FASTA parsing with parse_multi_fasta is ok' );
+my @expected11 = ('>fasta11', 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC');
+my @expected12 = ('>fasta12', 'ACTGAGATCGCAACTAATTTATTTATTCGCTCGTATAATGTATACATTAGATAGAGGCCTAGCCTCTTAGTCGAAAAGCCC');
+my @expected1 = (\@expected11, \@expected12);
+is_deeply( \@fasta_array, \@expected1, 'FASTA parsing with parse_multi_fasta is ok' );
 
 my $fastaFile2 = input_file('Utils.fasta_long_header.fa');
 file_exists_ok($fastaFile2);
 open( my $INPUT_FH2, '<', $fastaFile2 ) or die "Fail to open: $!";
-ok( my %tab2 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH2),
+ok( my @fasta_array2 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH2),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH2;
 
-my %expected2 =
-  ( '>fasta1_Drosophila_simulans_strain_Eden32' => 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
-is_deeply( \%tab2, \%expected2,
+my @expected21 =
+  ( '>fasta1_Drosophila_simulans_strain_Eden32', 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC' );
+my @expected2 = (\@expected21);
+is_deeply( \@fasta_array2, \@expected2,
            'Parsing FASTA with long header with parse_multi_fasta ok' );
 
 my $fastaFile3 = input_file('Utils.fasta_with_pipes.fa');
 file_exists_ok($fastaFile3);
 open( my $INPUT_FH3, '<', $fastaFile3 ) or die "Fail to open: $!";
-ok( my %tab3 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH3),
+ok( my @fasta_array3 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH3),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH3;
-my %expected3 = ( '>gi|425626932|gb|JX648278.1|_Drosophila_simulans_strain_Eden32' =>
-                  'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC', );
-is_deeply( \%tab3, \%expected3,
+my @expected31 = ( '>gi|425626932|gb|JX648278.1|_Drosophila_simulans_strain_Eden32',
+                   'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC');
+my @expected3 = (\@expected31);
+is_deeply( \@fasta_array3, \@expected3,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );
 
 my $fastaFile4 = input_file('Utils.fasta2.fa');
 file_exists_ok($fastaFile4);
 open( my $INPUT_FH4, '<', $fastaFile4 ) or die "Fail to open: $!";
-ok( my %tab4 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH4),
+ok( my @fasta_array4 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH4),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH4;
-my %expected4 = ( '>contig15750' =>
-                  'aatgagtaagataaattgctaattaaatgcgacgagaggttcatacatgaagagaagagtgctcttattatgtagccaaggatgaattgcctaatgacagctcaagtcgtttaaaaaacgactctttgttggtttattaggcgttcatttcttgactgacttaatcggctttttttcatcatgttagatcttctcaacttgttacgagcatatcgttcaatattttcatagtcttcttgtaatatgactttgtcaagtcatttcatatagctacttatgtgtagctattattgtcataattattatatagattatatacttaaagagagacttgtaagggatttaagatgtttagataatcatgtaacattcttgtcaagttatgatcaagcattat',
-                  '>contig15916' =>
+my @expected41 = ('>contig15750',
+                  'aatgagtaagataaattgctaattaaatgcgacgagaggttcatacatgaagagaagagtgctcttattatgtagccaaggatgaattgcctaatgacagctcaagtcgtttaaaaaacgactctttgttggtttattaggcgttcatttcttgactgacttaatcggctttttttcatcatgttagatcttctcaacttgttacgagcatatcgttcaatattttcatagtcttcttgtaatatgactttgtcaagtcatttcatatagctacttatgtgtagctattattgtcataattattatatagattatatacttaaagagagacttgtaagggatttaagatgtttagataatcatgtaacattcttgtcaagttatgatcaagcattat'
+                  );
+my @expected42 = ('>contig15916',
                   'aaaaaacctcacatacagcccccgtatctctctctctctataattgataggctattttcttctctctctagaaatgagcttacatggcatgcagatccattgcttatttataggtatagatacagcagatatatattatttattcatatatgtgtatcgaggtatcggaagaagaaattttcattgttacggcggttttctgattcgcttggtgcaggtcgggaacggcttggccgacggtttcatatttgtctccactgtgtgaaacctcgtagcttgagtactgtcctgccttgcatcaactgaatctgaaccgatgtaaatgatctgtgaccggtgtaggagaattggatgaatattgttggagat'
                   );
-is_deeply( \%tab4, \%expected4,
+
+my @expected4 = (\@expected41, \@expected42);
+is_deeply( \@fasta_array4, \@expected4,
            'Parsing FASTA with pipes using parse_multi_fasta ok' );
 
 ##################################################################
