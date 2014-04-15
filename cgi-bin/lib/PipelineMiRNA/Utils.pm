@@ -663,7 +663,10 @@ sub compute_mfei_and_amfe {
     my $gc_content = compute_gc_content($sequence);
 
     my $amfe = compute_amfe($sequence, $energy);
-    my $mfei = $amfe / $gc_content;
+    my $mfei = 0;
+    if ($gc_content) {
+        $mfei = $amfe / $gc_content;
+    }
 
     return ($mfei, $amfe);
 }

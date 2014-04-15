@@ -307,6 +307,20 @@ is(
 is( $compute_gc_res, 37.142857142857146,
     'compute_gc_content returns the expected value (rounded)' );
 
+
+my $no_gc_sequence = 'UAUAUAUAUAUAUAUAUAUAUAUAUAUAUA';
+my $compute_gc_res_no_gc = PipelineMiRNA::Utils::compute_gc_content($no_gc_sequence);
+is( $compute_gc_res_no_gc, 0, 'Can call compute_gc_content on no GC sequence' );
+
+ok(
+    my ($compute_mfei_res_no_gc, $compute_amfe_res_no_gc) =
+      PipelineMiRNA::Utils::compute_mfei_and_amfe( $no_gc_sequence, 60 ),
+    'Can call compute_mfei_and_amfe on no GC sequence'
+);
+is( $compute_mfei_res_no_gc, 0, 'compute_mfei_and_amfe on no GC sequence returns a MFEI of 0' );
+is( $compute_amfe_res_no_gc, 200, 'compute_mfei_and_amfe on no GC sequence returns the correct AMFE' );
+
+
 ok(
     my $make_mirbase_link_output =
       PipelineMiRNA::Utils::make_mirbase_link('ABCDE'),
