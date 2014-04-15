@@ -72,7 +72,7 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 </ol>
 <p>Results are displayed on a new page.</p>
 
-<h3>Enter query sequence</h3>
+<h3 id='query_sequence'>Enter query sequence</h3>
 
 <p>miRkwood input is (Multi) FASTA  format.  Lower-case and upper-case letters are both accepted, as well as T/U.  Other characters, such as N, R, Y,&#8230; are prohibited.</p>
 
@@ -89,7 +89,7 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
   (E-value=1E-5).  Currently available species are: <i>Arabidopsis
   thaliana</i> (<a href="http://www.arabidopsis.org/">TAIR</a>, V10), <i>Medicago truncatula</i> (<a href='http://www.jcvi.org/medicago/'>Medicago truncatula genome project</a>, Mt4.0) and <i>Oriza sativa</i> (<a href='http://rice.plantbiology.msu.edu/'>Rice genome annotation project</a>, V7.0).</dd>
 </dl>
-<h3>Parameters</h3>
+<h3 id='parameters'>Parameters</h3>
 
 <p>miRkwood folds the input sequence to identify miRNA precursor secondary structures (for more explanation on this step, see <a href="method.php">miRkwood method</a>). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins.</p>
 

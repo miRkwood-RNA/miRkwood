@@ -4,12 +4,15 @@ use warnings;
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use FindBin;
+use File::Spec;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::WebTemplate;
 
 my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
 my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
+
+my $help_page = File::Spec->catfile( PipelineMiRNA::Paths->get_css_path(), '..', 'help.php');
 
 my $page = <<"END_TXT";
 <div class="main">
@@ -21,7 +24,7 @@ my $page = <<"END_TXT";
       </div>
       <div class="forms">
         <p>
-          <label for='seqArea'><b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="./help.pl">?</a>]</label>
+          <label for='seqArea'><b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="$help_page#query_sequence">?</a>]</label>
         </p>
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
 
@@ -48,7 +51,7 @@ my $page = <<"END_TXT";
       </p>
       </div>
       <div class="forms">
-        <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors</p>
+        <p><b>Parameters</b>: Choose the annotation criteria for the miRNA precursors [<a href="$help_page#parameters">?</a>]</p>
         <div id='listParam'>  <p><input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
             &#160;<label for='mfei'>Select only sequences with MFEI &lt; -0.6</label></p>
           <p><input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />
