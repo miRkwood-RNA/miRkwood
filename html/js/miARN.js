@@ -54,10 +54,8 @@ function verifySequence()
  */
 function generateExample() {
     var exampleSeqs =
-    ['>contig15750',
-     'aatgagtaagataaattgctaattaaatgcgacgagaggttcatacatgaagagaagagtgctcttattatgtagccaaggatgaattgcctaatgacagctcaagtcgtttaaaaaacgactctttgttggtttattaggcgttcatttcttgactgacttaatcggctttttttcatcatgttagatcttctcaacttgttacgagcatatcgttcaatattttcatagtcttcttgtaatatgactttgtcaagtcatttcatatagctacttatgtgtagctattattgtcataattattatatagattatatacttaaagagagacttgtaagggatttaagatgtttagataatcatgtaacattcttgtcaagttatgatcaagcattat',
-     '>contig15916',
-     'aaaaaacctcacatacagcccccgtatctctctctctctataattgataggctattttcttctctctctagaaatgagcttacatggcatgcagatccattgcttatttataggtatagatacagcagatatatattatttattcatatatgtgtatcgaggtatcggaagaagaaattttcattgttacggcggttttctgattcgcttggtgcaggtcgggaacggcttggccgacggtttcatatttgtctccactgtgtgaaacctcgtagcttgagtactgtcctgccttgcatcaactgaatctgaaccgatgtaaatgatctgtgaccggtgtaggagaattggatgaatattgttggagat',
+    ['>sample',
+     'GGTATGTATTACTCTTATCATTCATTACTTTGTGCCACGTGCTATATATATTACTCCCTCTGTCCCATTACAGTTGGCCACAATTTTTTCGGCACGGAGATTAAGAAAATGCTTTTGTAAGGTATAAAATGTTAAGGGCCCACCTACTTTTTGAGTTTTATGTGTTAAATTTTTGCTTTTTTTATAAAGGGGCCAACTGTAATGGGACATTCCAAAATGGAAAAATGGCCAACTGTAATGGGACGGAGGGAGTAGTTAGACTCTTGGT',
     ].join('\n');
     document.getElementById('seqArea').value = exampleSeqs;
 }
