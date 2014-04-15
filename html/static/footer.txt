@@ -18,7 +18,7 @@
 	    e=  '">';
 	    g=  '<';
 	    h=  '/a>';
-	    document.write(a+b+c+d+i+j+'?Subject=[miRkwood]'+e+'the mirRkwood team'+g+h);
+	    document.write(a+b+c+d+i+j+e+'the mirRkwood team'+g+h);
 	    }
 	    escramble();
 
