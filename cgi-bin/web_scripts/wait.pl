@@ -14,8 +14,6 @@ use PipelineMiRNA;
 use PipelineMiRNA::WebTemplate;
 use PipelineMiRNA::Results;
 
-my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
-
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
 my $mail   = $html->param('mail');
@@ -33,9 +31,9 @@ my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail
 my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
 
 if ( PipelineMiRNA::Results->is_job_finished($jobId) ) {
-    my $email_script = File::Spec->catfile( $dirScript, 'email.pl' );
-    my $email_cmd = "perl $email_script $results_baseurl $jobId $mail $name ";
-    system($email_cmd);
+    if ( $mail ne q{} ) {
+        PipelineMiRNA::WebTemplate::send_email($mail, $jobId, $name);
+    }
     print $html->redirect( -uri => $results_url )
       or die("Error when redirecting: $!");
     exit;

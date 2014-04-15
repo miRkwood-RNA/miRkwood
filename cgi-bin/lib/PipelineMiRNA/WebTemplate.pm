@@ -206,4 +206,53 @@ END_TXT
     return $HTML;
 }
 
+sub send_email {
+    my @args  = @_;
+    my $to    = shift @args;
+    my $jobId = shift @args;
+    my $title = ' ';
+    if (@args) {
+        $title = shift @args;
+    }
+    use MIME::Lite;
+
+    my $results_page  = 'resultsWithID.pl';
+    my $results_baseurl = make_url($results_page);
+
+    my $from = 'mirkwood@univ-lille1.fr';
+    my $subject = "[miRkwood] Results for job $jobId";
+
+    my $res_arguments = "?run_id=$jobId";
+    my $results_url   = $results_baseurl . $res_arguments;
+
+    my $msg;
+    if ($title){
+        $msg = "Your miRkwood job \"$title\" is completed.";
+    } else {
+        $msg = 'Your miRkwood job is completed.';
+    }
+
+
+    my $message = <<"DATA";
+Dear miRkwood user,
+
+$msg
+
+Results are available at $results_url
+
+Thank you for using miRkwood!
+
+-- 
+The miRkwood team
+DATA
+
+    my $email = MIME::Lite->new(
+                 From     => $from,
+                 To       => $to,
+                 Subject  => $subject,
+                 Data     => $message
+                 );
+    $email->send('sendmail');
+}
+
 1;
