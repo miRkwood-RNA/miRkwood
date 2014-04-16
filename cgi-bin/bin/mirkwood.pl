@@ -66,7 +66,7 @@ use PipelineMiRNA::CLI;
 use PipelineMiRNA::MainPipeline;
 use PipelineMiRNA::Paths;
 
-my $seq_name = 'Sequences.fas';
+my $seq_name = 'input_sequences.fas';
 my $seq_path = File::Spec->catfile( $abs_output_folder, $seq_name );
 
 File::Copy::copy( $fasta_file, $seq_path );

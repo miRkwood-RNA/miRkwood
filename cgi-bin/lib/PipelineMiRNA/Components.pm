@@ -33,7 +33,7 @@ sub filter_CDS {
     my ( $dirData, $dirJob, $plant ) = @_;
 
     my $uploaded_sequences =
-      File::Spec->catfile( $dirJob, 'sequenceUpload.fas' );
+      File::Spec->catfile( $dirJob, 'input_sequences.fas' );
     my $input_sequences = File::Spec->catfile( $dirJob, 'Sequences.fas' );
 
     my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );

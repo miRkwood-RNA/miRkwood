@@ -65,7 +65,7 @@ my $log_file = File::Spec->catfile( $absolute_job_dir, 'log.log' );
 local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
 
 my $sequence_origin_file = File::Spec->catfile( $absolute_job_dir, 'sequence.fas' );
-my $sequence_upload = File::Spec->catfile( $absolute_job_dir, 'sequenceUpload.fas' );
+my $sequence_upload = File::Spec->catfile( $absolute_job_dir, 'input_sequences.fas' );
 
 my $seqArea = $cgi->param('seqArea');
 my $seq = q{};
