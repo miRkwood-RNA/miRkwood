@@ -16,7 +16,7 @@ my $help = 0;
 
 # Pipeline options
 my $both_strands = 0;
-my $randfold     = 0;
+my $shuffles     = 0;
 my $mfei         = 0;
 my $align        = 0;
 my $species_mask = '';
@@ -27,7 +27,7 @@ my $output_folder = 'results_directory';
 
 ## Parse options
 GetOptions(
-    randfold         => \$randfold,
+    shuffles         => \$shuffles,
     mfei             => \$mfei,
     align            => \$align,
     'both-strands'   => \$both_strands,
@@ -74,7 +74,7 @@ File::Copy::copy( $fasta_file, $seq_path );
 my $run_options_file =
   PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $both_strands, $mfei, $randfold,
+PipelineMiRNA::write_config( $run_options_file, $both_strands, $mfei, $shuffles,
     $align, "", $species_mask, $varna );
 
 PipelineMiRNA::MainPipeline::main_entry($abs_output_folder);
@@ -105,7 +105,7 @@ Process both strands
 
 Mask coding regions against the given organism
 
-=item B<--randfold>
+=item B<--shuffles>
 
 Compute thermodynamic stability
 
