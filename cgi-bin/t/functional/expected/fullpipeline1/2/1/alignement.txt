@@ -1,82 +1,10 @@
-- name : aau-miR168
-  begin_target  : 99
-  end_target    : 122
-  strand_target : +
-  begin_query   : 24
-  end_query     : 0
-  def_query     : MIMAT0022678 Acacia auriculiformis miR168 | :[revcomp]
-  seq_query     : GATCCCGCCTTGCATCAACTGAAT
-
-  score: -2
-  alignment: |
-    - - none
-    G g match
-    A - gap
-    - - none
-    T T match
-    C c match
-    C c match
-    C T match
-    G g match
-    C c match
-    C c match
-    T T match
-    T T match
-    G g match
-    C c match
-    A a match
-    T T match
-    C c match
-    A a match
-    A a match
-    C c match
-    T T match
-    G g match
-    A a match
-    A a match
-    T T match
-    - - none
-- name : aly-miR168a*
+- name : aly-miR168b-3p
   begin_target  : 101
   end_target    : 122
   strand_target : +
   begin_query   : 0
   end_query     : 21
-  def_query     : MIMAT0017482 Arabidopsis lyrata miR168a* | mtr-miR168c* MIMAT0022236 Medicago truncatula miR168c* | 
-  seq_query     : CCCGCCTTGCATCAACTGAAT
-
-  score: -1
-  alignment: |
-    - - none
-    C c match
-    C c match
-    C T match
-    G g match
-    C c match
-    C c match
-    T T match
-    T T match
-    G g match
-    C c match
-    A a match
-    T T match
-    C c match
-    A a match
-    A a match
-    C c match
-    T T match
-    G g match
-    A a match
-    A a match
-    T T match
-    - - none
-- name : aly-miR168b*
-  begin_target  : 101
-  end_target    : 122
-  strand_target : +
-  begin_query   : 0
-  end_query     : 21
-  def_query     : MIMAT0017484 Arabidopsis lyrata miR168b* | 
+  def_query     : MIMAT0017484 Arabidopsis lyrata miR168b-3p | 
   seq_query     : CCCGTCTTGTATCAACTGAAT
 
   score: -3
@@ -110,7 +38,7 @@
   strand_target : +
   begin_query   : 0
   end_query     : 21
-  def_query     : MIMAT0000198 Arabidopsis thaliana miR168a | ath-miR168b MIMAT0000199 Arabidopsis thaliana miR168b | gma-miR168 MIMAT0001681 Glycine max miR168 | ptc-miR168a MIMAT0001949 Populus trichocarpa miR168a | ptc-miR168b MIMAT0001950 Populus trichocarpa miR168b | bna-miR168 MIMAT0005625 Brassica napus miR168 | vvi-miR168 MIMAT0005675 Vitis vinifera miR168 | ccl-miR168 MIMAT0014073 Citrus clementine miR168 | crt-miR168 MIMAT0014086 Citrus reticulata miR168 | rco-miR168 MIMAT0014168 Ricinus communis miR168 | aly-miR168a MIMAT0017481 Arabidopsis lyrata miR168a | aly-miR168b MIMAT0017483 Arabidopsis lyrata miR168b | tcc-miR168 MIMAT0020390 Theobroma cacao miR168 | mtr-miR168b MIMAT0021270 Medicago truncatula miR168b | mtr-miR168c MIMAT0022235 Medicago truncatula miR168c | vun-miR168 MIMAT0022758 Vigna unguiculata miR168 | 
+  def_query     : MIMAT0000198 Arabidopsis thaliana miR168a | ath-miR168b MIMAT0000199 Arabidopsis thaliana miR168b | gma-miR168a MIMAT0001681 Glycine max miR168a | ptc-miR168a-5p MIMAT0001949 Populus trichocarpa miR168a-5p | ptc-miR168b-5p MIMAT0001950 Populus trichocarpa miR168b-5p | bna-miR168a MIMAT0005625 Brassica napus miR168a | vvi-miR168 MIMAT0005675 Vitis vinifera miR168 | ccl-miR168 MIMAT0014073 Citrus clementine miR168 | crt-miR168 MIMAT0014086 Citrus reticulata miR168 | rco-miR168 MIMAT0014168 Ricinus communis miR168 | aly-miR168a-5p MIMAT0017481 Arabidopsis lyrata miR168a-5p | aly-miR168b-5p MIMAT0017483 Arabidopsis lyrata miR168b-5p | tcc-miR168 MIMAT0020390 Theobroma cacao miR168 | mtr-miR168b MIMAT0021270 Medicago truncatula miR168b | mtr-miR168c-5p MIMAT0022235 Medicago truncatula miR168c-5p | vun-miR168 MIMAT0022758 Vigna unguiculata miR168 | mes-miR168a MIMAT0024414 Manihot esculenta miR168a | cca-miR168a MIMAT0024517 Cynara cardunculus miR168a | lus-miR168a MIMAT0027185 Linum usitatissimum miR168a | lus-miR168b MIMAT0027206 Linum usitatissimum miR168b | nta-miR168d MIMAT0024665 Nicotiana tabacum miR168d | nta-miR168e MIMAT0024666 Nicotiana tabacum miR168e | mdm-miR168a MIMAT0025932 Malus domestica miR168a | mdm-miR168b MIMAT0025933 Malus domestica miR168b | ppe-miR168 MIMAT0031454 Prunus persica miR168 | 
   seq_query     : TCGCTTGGTGCAGGTCGGGAA
 
   score: 0
@@ -134,6 +62,74 @@
     C c match
     G g match
     G g match
+    G g match
+    A a match
+    A a match
+    - - none
+- name : bdi-miR168-3p
+  begin_target  : 101
+  end_target    : 122
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0027053 Brachypodium distachyon miR168-3p | 
+  seq_query     : CCCGCCTTGCACCAAGTGAAT
+
+  score: -3
+  alignment: |
+    - - none
+    C c match
+    C c match
+    C T match
+    G g match
+    C c match
+    C c match
+    T T match
+    T T match
+    G g match
+    C c match
+    A a match
+    C T match
+    C c match
+    A a match
+    A a match
+    G c match
+    T T match
+    G g match
+    A a match
+    A a match
+    T T match
+    - - none
+- name : bna-miR168b
+  begin_target  : 18
+  end_target    : 39
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0023628 Brassica napus miR168b | 
+  seq_query     : TCGCTTGGTGCAGGTCGAGAA
+
+  score: -1
+  alignment: |
+    - - none
+    T T match
+    C c match
+    G g match
+    C c match
+    T T match
+    T T match
+    G g match
+    G g match
+    T T match
+    G g match
+    C c match
+    A a match
+    G g match
+    G g match
+    T T match
+    C c match
+    G g match
+    A g match
     G g match
     A a match
     A a match
@@ -203,13 +199,13 @@
     G g match
     G g match
     - - none
-- name : mtr-miR168
+- name : mtr-miR168a
   begin_target  : 18
   end_target    : 39
   strand_target : +
   begin_query   : 0
   end_query     : 21
-  def_query     : MIMAT0011089 Medicago truncatula miR168 | 
+  def_query     : MIMAT0011089 Medicago truncatula miR168a | 
   seq_query     : TTGCTTGGTGCTGGTCGGGAA
 
   score: -2
@@ -237,13 +233,48 @@
     A a match
     A a match
     - - none
-- name : osa-miR168a
+- name : nta-miR168a
   begin_target  : 18
   end_target    : 38
   strand_target : +
   begin_query   : 0
   end_query     : 21
-  def_query     : MIMAT0001045 Oryza sativa miR168a | sbi-miR168 MIMAT0001452 Sorghum bicolor miR168 | sof-miR168a MIMAT0001665 Saccharum officinarum miR168a | zma-miR168a MIMAT0001726 Zea mays miR168a | zma-miR168b MIMAT0001727 Zea mays miR168b | hvu-miR168-5p MIMAT0018215 Hordeum vulgare miR168-5p | bdi-miR168 MIMAT0020673 Brachypodium distachyon miR168 | ssp-miR168a MIMAT0020294 Saccharum ssp. miR168a | 
+  def_query     : MIMAT0024662 Nicotiana tabacum miR168a | nta-miR168b MIMAT0024663 Nicotiana tabacum miR168b | nta-miR168c MIMAT0024664 Nicotiana tabacum miR168c | sly-miR168a-5p MIMAT0031129 Solanum lycopersicum miR168a-5p | sly-miR168b-5p MIMAT0031131 Solanum lycopersicum miR168b-5p | 
+  seq_query     : TCGCTTGGTGCAGGTCGGGAC
+
+  score: -1
+  alignment: |
+    - - none
+    T T match
+    C c match
+    G g match
+    C c match
+    T T match
+    T T match
+    G g match
+    G g match
+    T T match
+    G g match
+    C c match
+    A a match
+    G g match
+    G g match
+    T T match
+    C c match
+    G g match
+    G g match
+    G g match
+    A a match
+    C - gap
+    - - none
+    - - none
+- name : osa-miR168a-5p
+  begin_target  : 18
+  end_target    : 38
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0001045 Oryza sativa miR168a-5p | sbi-miR168 MIMAT0001452 Sorghum bicolor miR168 | sof-miR168a MIMAT0001665 Saccharum officinarum miR168a | zma-miR168a-5p MIMAT0001726 Zea mays miR168a-5p | zma-miR168b-5p MIMAT0001727 Zea mays miR168b-5p | hvu-miR168-5p MIMAT0018215 Hordeum vulgare miR168-5p | bdi-miR168-5p MIMAT0020673 Brachypodium distachyon miR168-5p | ssp-miR168a MIMAT0020294 Saccharum ssp. miR168a | 
   seq_query     : TCGCTTGGTGCAGATCGGGAC
 
   score: -2
@@ -306,6 +337,74 @@
     A a match
     A a match
     - - none
+- name : ptc-miR168a-3p
+  begin_target  : 101
+  end_target    : 122
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0022896 Populus trichocarpa miR168a-3p | ptc-miR168b-3p MIMAT0022897 Populus trichocarpa miR168b-3p | aly-miR168a-3p MIMAT0017482 Arabidopsis lyrata miR168a-3p | mtr-miR168c-3p MIMAT0022236 Medicago truncatula miR168c-3p | sly-miR168b-3p MIMAT0031132 Solanum lycopersicum miR168b-3p | 
+  seq_query     : CCCGCCTTGCATCAACTGAAT
+
+  score: -1
+  alignment: |
+    - - none
+    C c match
+    C c match
+    C T match
+    G g match
+    C c match
+    C c match
+    T T match
+    T T match
+    G g match
+    C c match
+    A a match
+    T T match
+    C c match
+    A a match
+    A a match
+    C c match
+    T T match
+    G g match
+    A a match
+    A a match
+    T T match
+    - - none
+- name : sly-miR168a-3p
+  begin_target  : 101
+  end_target    : 122
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0031130 Solanum lycopersicum miR168a-3p | 
+  seq_query     : CCTGCCTTGCATCAACTGAAT
+
+  score: 0
+  alignment: |
+    - - none
+    C c match
+    C c match
+    T T match
+    G g match
+    C c match
+    C c match
+    T T match
+    T T match
+    G g match
+    C c match
+    A a match
+    T T match
+    C c match
+    A a match
+    A a match
+    C c match
+    T T match
+    G g match
+    A a match
+    A a match
+    T T match
+    - - none
 - name : sof-miR168b
   begin_target  : 18
   end_target    : 38
@@ -342,13 +441,13 @@
     C - gap
     - - none
     - - none
-- name : zma-miR168a*
+- name : zma-miR168a-3p
   begin_target  : 101
   end_target    : 121
   strand_target : +
   begin_query   : 0
   end_query     : 20
-  def_query     : MIMAT0015191 Zea mays miR168a* | 
+  def_query     : MIMAT0015191 Zea mays miR168a-3p | 
   seq_query     : CCCGCCTTGCACCAAGTGAA
 
   score: -3
@@ -375,46 +474,13 @@
     A a match
     A a match
     - - none
-- name : zma-miR168a*
-  begin_target  : 17
-  end_target    : 37
-  strand_target : +
-  begin_query   : 20
-  end_query     : 0
-  def_query     : MIMAT0015191 Zea mays miR168a* | :[revcomp]
-  seq_query     : TTCACTTGGTGCAAGGCGGG
-
-  score: -3
-  alignment: |
-    - - none
-    T T match
-    T T match
-    C c match
-    A g match
-    C c match
-    T T match
-    T T match
-    G g match
-    G g match
-    T T match
-    G g match
-    C c match
-    A a match
-    A g match
-    G g match
-    G T match
-    C c match
-    G g match
-    G g match
-    G g match
-    - - none
-- name : zma-miR168b*
+- name : zma-miR168b-3p
   begin_target  : 101
   end_target    : 121
   strand_target : +
   begin_query   : 0
   end_query     : 20
-  def_query     : MIMAT0015192 Zea mays miR168b* | 
+  def_query     : MIMAT0015192 Zea mays miR168b-3p | 
   seq_query     : CCCGCCTTGCATCAAGTGAA
 
   score: -2
