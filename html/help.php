@@ -308,9 +308,14 @@ miRBase           1 ucgcuuggugcagaucgggac 21
 <p><tt>query</tt> is the user sequence, and <tt>miRBase</tt>
 designates the mature miRNA  (or the miRNA*) found in miRBase. It is possible to access the corresponding miRBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
 
-<p>
-TO ADD
-</p>
+<pre class='example'>
+     g      ucu   <span class="mature">   c          u     </span>acg-     -  --   c          u-  u
+uuacg cgguuu   gau<span class="mature">ucg uuggugcagg cggga</span>    gcuug gc  cga gguuucauau  ug c
+||||| ||||||   |||||| |||||||||| |||||    ||||| ||  ||| ||||||||||  || 
+aaugu gccaag   cuaagu aacuacguuc guccu    ugagu cg  gcu ccaaagugug  ac u
+     a      u--      c          c     guca     u  au   -          uc  c
+</pre>
+</pre>
   
 </div> <!-- main full -->
 
