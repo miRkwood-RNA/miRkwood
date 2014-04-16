@@ -156,15 +156,8 @@ sub process_sequence {
 		$rnalfold_output )
 	  or die("Problem when running RNALfold: $!");
 
-	## Running RNAstemloop
-	my $rnastemloop_out_optimal =
-	  File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
-	my $rnastemloop_out_stemloop =
-	  File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
-	debug( "Running RNAstemloop on $rnalfold_output", PipelineMiRNA->DEBUG() );
-	PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
-		$rnastemloop_out_stemloop, $rnastemloop_out_optimal )
-	  or die("Problem when running RNAstemloop");
+	my ($rnastemloop_out_stemloop, $rnastemloop_out_optimal) =
+	   run_RNAstemloop_on_rnalfold_output($rnalfold_output, $sequence_dir);
 
 	my $rnaeval_out_optimal =
 	  run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal, 'optimal' );
@@ -181,6 +174,27 @@ sub process_sequence {
 	close($EVAL_OPT_FH);
 	close($EVAL_STEM_FH);
 	return $res;
+}
+
+=method run_RNAstemloop_on_rnalfold_output
+
+ Usage : run_RNAstemloop_on_rnalfold_output( $rnalfold_output, $sequence_dir );
+ Return: ($rnastemloop_out_stemloop, $rnastemloop_out_optimal);
+
+=cut
+
+sub run_RNAstemloop_on_rnalfold_output {
+    my @args = @_;
+    my $rnalfold_output = shift @args;
+    my $sequence_dir    = shift @args;
+    my $rnastemloop_out_optimal = File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
+    my $rnastemloop_out_stemloop =
+      File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
+    debug( "Running RNAstemloop on $rnalfold_output", PipelineMiRNA->DEBUG() );
+    PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
+        $rnastemloop_out_stemloop, $rnastemloop_out_optimal )
+      or die("Problem when running RNAstemloop");
+    return ($rnastemloop_out_stemloop, $rnastemloop_out_optimal);
 }
 
 =method run_RNAeval_on_RNAstemloop_output
