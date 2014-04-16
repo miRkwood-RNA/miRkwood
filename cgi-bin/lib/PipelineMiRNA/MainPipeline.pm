@@ -24,6 +24,23 @@ use Log::Message::Simple qw[msg error debug];
 ### Data ##
 my $dirData = PipelineMiRNA::Paths->get_data_path();
 
+=method setup_logging
+
+ Usage : setup_logging($job_dir)
+ Input : The job directory
+ Return: -
+
+=cut
+
+sub setup_logging {
+    my @args = @_;
+    my $job_dir = shift @args;
+    my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
+    $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
+    PipelineMiRNA->DEBUG(1);
+    return;
+}
+
 =method main_entry
 
 Run the pipeline.
@@ -36,9 +53,8 @@ Run the pipeline.
 
 sub main_entry {
 	my ( $job_dir  ) = @_;
-	my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
-	local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
-    PipelineMiRNA->DEBUG(1);
+
+	setup_logging($job_dir);
 
     my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
     PipelineMiRNA->CONFIG_FILE($run_options_file);
