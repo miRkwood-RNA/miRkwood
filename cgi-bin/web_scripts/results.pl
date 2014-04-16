@@ -125,7 +125,7 @@ if ( !$job_title ) {
 my $varna = 1;
 my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($absolute_job_dir);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $strand, $mfei, $randfold, $align, $job_title, $plant, $varna );
+PipelineMiRNA::write_config( $run_options_file, $strand, $filter, $mfei, $randfold, $align, $job_title, $plant, $varna );
 
 # execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
