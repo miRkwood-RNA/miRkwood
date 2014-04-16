@@ -42,7 +42,7 @@ if ( PipelineMiRNA::Results->is_job_finished($jobId) ) {
 my $email_HTML = '';
 if ( $mail ne q{} ) {
     $email_HTML =
-"<p>An E-mail notification will be sent to <strong>$mail</strong> as soon as the job is completed.</p>";
+"<p>An E-mail notification will be sent to <strong>$mail</strong><br/>as soon as the job is completed.</p>";
 }
 
 my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
