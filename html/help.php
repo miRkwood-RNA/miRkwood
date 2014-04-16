@@ -79,10 +79,10 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 <p>You can either paste or upload a file. The maximum size for a submission is 100 000 nt.</p>
 
 <dl>
-<dt>Scan both strands</dt>
+<dt id='scan-both-strands'>Scan both strands</dt>
 <dd>miRkwood normally analyses data in forward direction only. Checking this option will cause the program to search both the forward and reverse complement strands.</dd>
 
-<dt>Mask coding regions</dt>
+<dt id='mask-coding-regions'>Mask coding regions</dt>
 <dd>This option allows selecting non-coding sequences in the input
   data by masking putative coding regions. It consists in a BlastX
   search against the protein sequences from the chosen species

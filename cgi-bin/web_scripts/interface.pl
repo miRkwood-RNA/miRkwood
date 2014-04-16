@@ -33,11 +33,9 @@ my $page = <<"END_TXT";
         </p>
         <br/>
         <p><input class="checkbox" type="checkbox" name="strand" id="strand" value="strand"/>
-            &#160;<label for='strand'>Scan both strands</label></p>
+            &#160;<label for='strand'>Scan both strands</label> [<a href="$help_page#scan-both-strands">?</a>]</p>
         <p><input class="checkbox" type="checkbox" name='CDS' id ="CDS" onclick="showHideBlock()"/>
-            &#160;<label for='CDS'>Mask coding regions <i>(BlastX)</i></label>
-
-        </p>
+            &#160;<label for='CDS'>Mask coding regions <i>(BlastX)</i></label>  [<a href="$help_page#mask-coding-regions">?</a>]</p>
         <div id="menuDb">
           <label class="choixDiv selectdb" for="db">Choose organism database:</label>
           <select class="db" name="db" id='db'>
