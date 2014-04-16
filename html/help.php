@@ -152,7 +152,7 @@ SCREENSHOT
 
 <li><em>Existence of a conserved miRNA in miRBase (alignment):</em> add one star. We allow up to three errors in the alignment with mature miRBase, which corresponds to an estimated P-value of  3E-2 for each pre-miRNA. Alignments with 2 errors or less have an estimated P-value of 4E-3.</li>
 
-<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star</li>.
+<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star.</li>
 </ul>
 </dd>
 
