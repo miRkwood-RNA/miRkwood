@@ -83,18 +83,17 @@ div.table-of-contents{
 }
 
 /* table-of-content */
-ol {
+.table-of-contents ol {
     counter-reset: item
 }
-li {
+.table-of-contents li {
     display: block
 }
-/* end table-of-content */
-
-li:before {
+.table-of-contents li:before {
     content: counters(item, ".")" ";
     counter-increment: item
 }
+/* end table-of-content */
 
 pre.alignment {
     margin-top:0px;
