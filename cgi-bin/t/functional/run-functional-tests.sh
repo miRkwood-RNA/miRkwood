@@ -1,22 +1,24 @@
 #!/bin/sh
 
+# Initialisation
+SCRIPT=$(readlink -f $0)
+BASEDIR=$(dirname $SCRIPT)
+ROOTDIR=$BASEDIR/../..
+
 # Importing TAP library
 if [ -z "$LIBTAP_SH_HOME" ]
 then
-    if [ ! -f libtap.sh ]
+    if [ ! -f $BASEDIR/libtap.sh ]
     then
        wget --quiet "http://git.eyrie.org/?p=devel/c-tap-harness.git;a=blob_plain;f=tests/tap/libtap.sh;hb=HEAD" -O libtap.sh
     fi
-    LIBTAP="./libtap.sh"
+    LIBTAP="$BASEDIR/libtap.sh"
 else
     LIBTAP="$LIBTAP_SH_HOME/libtap.sh"
 fi
 . "$LIBTAP"
 
-# Initialisation
-SCRIPT=$(readlink -f $0)
-BASEDIR=$(dirname $SCRIPT)
-ROOTDIR=$BASEDIR/../..
+
 
 # Testing
 plan 3
