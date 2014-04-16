@@ -21,7 +21,7 @@ my $mfei         = 0;
 my $align        = 0;
 my $species_mask = '';
 my $no_varna     = 0;
-
+my $no_process   = 0;
 my $mask          = 0;
 my $output_folder = 'results_directory';
 
@@ -32,6 +32,7 @@ GetOptions(
     align            => \$align,
     'both-strands'   => \$both_strands,
     'no-varna'       => \$no_varna,
+    'no-process'     => \$no_process,
     'species-mask=s' => \$species_mask,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
@@ -59,10 +60,6 @@ if ( !-e $abs_output_folder ) {
     print "Creating $abs_output_folder\n";
     mkdir $output_folder or die("Error when creating $abs_output_folder");
 }
-my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );
-if ( !-e $tmp_pieces_folder ) {
-    mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
-}
 
 # Importing stuff after directory creation
 use PipelineMiRNA;
@@ -82,7 +79,14 @@ PipelineMiRNA::write_config( $run_options_file, $both_strands, $mfei, $randfold,
     $align, "", $species_mask, $varna );
 
 PipelineMiRNA::MainPipeline::main_entry($abs_output_folder);
-PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder);
+
+unless ($no_process) {
+	my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );
+	if ( !-e $tmp_pieces_folder ) {
+        mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
+    }
+	PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder) unless $no_process;
+}
 
 __END__
 
