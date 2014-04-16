@@ -20,5 +20,5 @@ is( $result1, 'a/b/run_options.cfg',
 
 ok( my $result2 = PipelineMiRNA::Paths->get_candidate_paths('a/b', 'c', 'd'),
     'can call get_candidate_paths()');
-is( $result2, 'a/b/c/d',
+is( $result2, 'a/b/workspace/c/d',
     'get_candidate_paths returns expected value');

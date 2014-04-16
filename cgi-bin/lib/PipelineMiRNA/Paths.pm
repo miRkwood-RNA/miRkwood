@@ -156,16 +156,30 @@ sub get_results_filesystem_path {
     return $config{'filesystem_results'};
 }
 
+=method get_workspace_path
+
+Return the path to the job workspace
+
+=cut
+
+sub get_workspace_path {
+    my ($self, @args) = @_;
+    my ($job_dir) = @args;
+    return File::Spec->catdir($job_dir, 'workspace');
+}
+
+
 =method get_candidate_paths
 
-Return both the server and absolute paths for a given candidate
+Return the path for a given candidate
 
 =cut
 
 sub get_candidate_paths {
     my ($self, @args) = @_;
     my ($job_dir,  $dir, $subDir) = @args;
-    my $candidate_dir = File::Spec->catdir($job_dir,  $dir, $subDir);
+    my $workspace = $self->get_workspace_path($job_dir);
+    my $candidate_dir = File::Spec->catdir($workspace, $dir, $subDir);
     return $candidate_dir;
 }
 

@@ -64,12 +64,14 @@ sub main_entry {
 
     my @sequences_array = get_sequences($job_dir);
 
+    my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
+    mkdir $workspace_dir;
 	my $sequence_dir_name = 0;
     foreach my $item (@sequences_array){
         my ($name, $sequence) = @{$item};
 		debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
 		$sequence_dir_name++;
-		my $sequence_dir = File::Spec->catdir( $job_dir, $sequence_dir_name );
+		my $sequence_dir = File::Spec->catdir( $workspace_dir, $sequence_dir_name );
 		mkdir $sequence_dir;
 
 		my $res = process_sequence( $sequence_dir, $name, $sequence, '+' );
@@ -552,8 +554,8 @@ Perform the a posteriori tests for a given job
 sub process_tests {
 	my ($job_dir) = @_;
 	debug( "A posteriori tests in $job_dir", PipelineMiRNA->DEBUG() );
-	##Traitement fichier de sortie outStemloop
-	opendir DIR, $job_dir;    #ouverture répertoire job
+    my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
+	opendir DIR, $workspace_dir;
 	my @dirs;
 	@dirs = readdir DIR;
 	closedir DIR;
@@ -561,7 +563,7 @@ sub process_tests {
 	mkdir $candidates_dir;
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
-		my $sequence_dir = File::Spec->catdir( $job_dir, $dir );
+		my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
 		if (   $dir ne '.'
 			&& $dir ne '..'
 			&& -d $sequence_dir )    #si fichier est un répertoire
