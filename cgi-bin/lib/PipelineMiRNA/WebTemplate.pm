@@ -227,9 +227,9 @@ sub send_email {
 
     my $msg;
     if ($title){
-        $msg = "Your miRkwood job \"$title\" is completed.";
+        $msg = "Your job \"$title\" is completed.";
     } else {
-        $msg = 'Your miRkwood job is completed.';
+        $msg = 'Your job is completed.';
     }
 
 
@@ -238,7 +238,8 @@ Dear miRkwood user,
 
 $msg
 
-Results are available at $results_url
+Results are available at
+$results_url
 
 Thank you for using miRkwood!
 
