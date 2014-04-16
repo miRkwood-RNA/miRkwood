@@ -6,3 +6,4 @@ libimage-size-perl
 libfile-type-perl
 libfile-slurp-perl
 libarchive-zip-perl
+libmime-lite-perl
