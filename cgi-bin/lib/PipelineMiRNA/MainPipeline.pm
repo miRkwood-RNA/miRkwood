@@ -62,31 +62,10 @@ sub main_entry {
 
     PipelineMiRNA::Programs::init_programs();
 
-	debug( 'BEGIN execute_scripts', PipelineMiRNA->DEBUG() );
-	my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
-	if ($cfg->param('options.filter')) {
-		debug( 'FilteringCDS', PipelineMiRNA->DEBUG() );
-		PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
-	}
-	else {
-		my $sequence_uploaded =
-		  File::Spec->catfile( $job_dir, 'sequenceUpload.fas' );
-		debug( "Moving file $sequence_uploaded to $sequences_input", PipelineMiRNA->DEBUG() );
-		File::Copy::move( $sequence_uploaded, $sequences_input );
-	}
-
-	##Passage du multifasta -> fasta et appel au script Stemloop
-	debug( "Opening multifasta $sequences_input", PipelineMiRNA->DEBUG() );
-	open my $ENTREE_FH, '<', $sequences_input
-	  or die "Error when opening sequences -$sequences_input-: $!";
-	debug( "Calling parse_multi_fasta() on $sequences_input", PipelineMiRNA->DEBUG() );
-	my @fasta_array = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
-	close $ENTREE_FH;
-
-	debug( 'Iterating over names', PipelineMiRNA->DEBUG() );
+    my @sequences_array = get_sequences($job_dir);
 
 	my $sequence_dir_name = 0;
-    foreach my $item (@fasta_array){
+    foreach my $item (@sequences_array){
         my ($name, $sequence) = @{$item};
 		debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
 		$sequence_dir_name++;
@@ -130,6 +109,41 @@ sub main_entry {
     mark_job_as_finished($job_dir);
     debug("Writing finish file", PipelineMiRNA->DEBUG() );
 	return;
+}
+
+=method get_sequences
+
+Get the sequences to process from the job directory
+This includes parsing, and masking if option selected.
+
+ Usage : my @fasta_array = get_sequences($job_dir);
+ Input : The job directory
+ Return: An array of couples (name, sequence)
+
+=cut
+
+sub get_sequences {
+    my @args = @_;
+    my $job_dir = shift @args;
+    my $cfg = PipelineMiRNA->CONFIG();
+    my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
+    if ($cfg->param('options.filter')) {
+        debug( 'FilteringCDS', PipelineMiRNA->DEBUG() );
+        PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
+    }
+    else {
+        my $sequence_uploaded =
+          File::Spec->catfile( $job_dir, 'input_sequences.fas' );
+        debug( "Moving file $sequence_uploaded to $sequences_input", PipelineMiRNA->DEBUG() );
+        File::Copy::move( $sequence_uploaded, $sequences_input );
+    }
+
+    open my $ENTREE_FH, '<', $sequences_input
+      or die "Error when opening sequences -$sequences_input-: $!";
+    debug( "Calling parse_multi_fasta() on $sequences_input", PipelineMiRNA->DEBUG() );
+    my @sequences_array = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
+    close $ENTREE_FH;
+    return @sequences_array;
 }
 
 =method mfei_below_threshold
