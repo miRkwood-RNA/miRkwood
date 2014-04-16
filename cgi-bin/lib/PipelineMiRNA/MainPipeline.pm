@@ -147,14 +147,7 @@ sub process_sequence {
 	my $sequence     = shift @args;
 	my $strand       = shift @args;
 
-	## Running RNALfold
-	debug( 'Running RNALfold', PipelineMiRNA->DEBUG() );
-	my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
-
-	my $temp_file = File::Spec->catfile( $sequence_dir, 'tempFile.txt' );
-	PipelineMiRNA::Programs::run_rnalfold( $name, $sequence, $temp_file,
-		$rnalfold_output )
-	  or die("Problem when running RNALfold: $!");
+	my $rnalfold_output = run_rnalfold_on_sequence($name, $sequence, $sequence_dir);
 
 	my ($rnastemloop_out_stemloop, $rnastemloop_out_optimal) =
 	   run_RNAstemloop_on_rnalfold_output($rnalfold_output, $sequence_dir);
@@ -175,6 +168,29 @@ sub process_sequence {
 	close($EVAL_STEM_FH);
 	return $res;
 }
+
+=method run_rnalfold_on_sequence
+
+ Usage : run_rnalfold_on_sequence( $name, $sequence, $sequence_dir);
+ Return: $rnalfold_output
+
+=cut
+
+sub run_rnalfold_on_sequence {
+    my @args = @_;
+    my $name     = shift @args;
+    my $sequence = shift @args;
+    my $sequence_dir = shift @args;
+    debug( 'Running RNALfold', PipelineMiRNA->DEBUG() );
+    my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
+
+    my $temp_file = File::Spec->catfile( $sequence_dir, 'tempFile.txt' );
+    PipelineMiRNA::Programs::run_rnalfold( $name, $sequence, $temp_file,
+        $rnalfold_output )
+      or die("Problem when running RNALfold: $!");
+    return $rnalfold_output;
+}
+
 
 =method run_RNAstemloop_on_rnalfold_output
 
