@@ -585,7 +585,7 @@ sub get_dirs_from_directory {
     opendir DIR, $parent_directory;
     my @dirs = grep { is_directory($_, $parent_directory) }  readdir DIR;;
     closedir DIR;
-    return @dirs;
+    return sort {$a <=> $b} @dirs;
 }
 
 
