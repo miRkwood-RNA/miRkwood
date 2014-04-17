@@ -556,6 +556,21 @@ sub process_outRNAFold {
 
 }
 
+=method is_directory
+
+Return whether the given file object (name and full path)
+is a directory or not.
+
+=cut
+
+sub is_directory{
+    my @args = @_;
+    my ($directory, $full_directory) = @args;
+    return ( $directory ne '.'
+             && $directory ne '..'
+             && -d $full_directory );
+}
+
 =method process_tests
 
 Perform the a posteriori tests for a given job
@@ -575,9 +590,7 @@ sub process_tests {
 	foreach my $dir (@dirs)    # parcours du contenu
 	{
 		my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
-		if (   $dir ne '.'
-			&& $dir ne '..'
-			&& -d $sequence_dir )    #si fichier est un répertoire
+		if ( is_directory($dir, $sequence_dir) )
 		{
 			debug( "Entering sequence $sequence_dir", PipelineMiRNA->DEBUG() );
 			opendir DIR, $sequence_dir;    # ouverture du sous répertoire
@@ -587,10 +600,7 @@ sub process_tests {
 			foreach my $subDir (@files) {
 				my $candidate_dir =
 				  File::Spec->catdir( $sequence_dir, $subDir );
-				if (   $subDir ne '.'
-					&& $subDir ne '..'
-					&& -d $candidate_dir
-				  )    # si le fichier est de type repertoire
+				if ( is_directory($subDir, $candidate_dir) )
 				{
 					debug( "Entering candidate $subDir", PipelineMiRNA->DEBUG() );
 					process_tests_for_candidate( $candidate_dir, $subDir );
