@@ -642,14 +642,6 @@ sub process_tests_for_candidate {
 	my $candidate_rnafold_stemploop_out =
 	  File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
 
-#	####conversion en format CT
-	my $candidate_ct_stemloop_file =
-	  File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
-	debug( "Converting stemloop to CT in $candidate_ct_stemloop_file", PipelineMiRNA->DEBUG() );
-	PipelineMiRNA::Programs::convert_to_ct( $candidate_rnafold_stemploop_out,
-		$candidate_ct_stemloop_file )
-	  or die('Problem when converting to CT format');
-
     my $cfg = PipelineMiRNA->CONFIG();
 
 	####calcul p-value randfold
@@ -658,11 +650,12 @@ sub process_tests_for_candidate {
 		PipelineMiRNA::PosterioriTests::test_randfold( $candidate_dir,
 			$seq_file );
 	}
+
 	if ( $cfg->param('options.align') ) {
-		debug( "Running test_alignment on $candidate_ct_stemloop_file", PipelineMiRNA->DEBUG() );
+		debug( "Running test_alignment on $candidate_rnafold_stemploop_out", PipelineMiRNA->DEBUG() );
 		my $file_alignement =
 		  PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
-			$candidate_ct_stemloop_file );
+			$candidate_rnafold_stemploop_out );
 		post_process_alignments( $candidate_dir,
 			$candidate_rnafold_stemploop_out,
 			$file_alignement );

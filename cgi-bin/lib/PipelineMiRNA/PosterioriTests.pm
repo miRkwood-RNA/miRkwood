@@ -32,14 +32,18 @@ Run the Alignment (exonerate) a posteriori test
 =cut
 
 sub test_alignment {
+    my ( $candidate_dir, $candidate_rnafold_stemploop_out ) = @_;
 
-    # creation sequence boucle terminale masquee avec des N pour
-    # chaque sequence (repertoire ) et resultat alignement mirBASE
-    my ( $candidate_dir, $CT_file ) = @_;
+    my $candidate_ct_stemloop_file =
+      File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
+    PipelineMiRNA::Programs::convert_to_ct( $candidate_rnafold_stemploop_out,
+        $candidate_ct_stemloop_file )
+      or die('Problem when converting to CT format');
+
     my $seqN = File::Spec->catfile( $candidate_dir, 'seqWithN.txt' );
 #    open( my $SEQN_FH, '>>', $seqN )
 #      or die "Impossible d'ouvrir le fichier d'entree  : $!";
-    PipelineMiRNA::Components::mask_CT_file($CT_file, $seqN);
+    PipelineMiRNA::Components::mask_CT_file($candidate_ct_stemloop_file, $seqN);
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
     PipelineMiRNA::Programs::run_exonerate( $seqN, $exonerate_out )
       or die('Problem when running Exonerate');
