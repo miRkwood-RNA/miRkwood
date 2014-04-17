@@ -94,6 +94,21 @@ sub run_varna_on_ct_file {
     return ( -e $varna_image );
 }
 
+=method run_varna_on_structure
+
+Run VARNA on the given structure
+Return whether the output file exists.
+
+=cut
+
+sub run_varna_on_structure {
+    my ( $sequence, $structure, $varna_image ) = @_;
+    my $varna_cmd =
+"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -sequenceDBN '$sequence' -structureDBN '$structure' -o $varna_image > /dev/null 2>&1";
+    system($varna_cmd);
+    return ( -e $varna_image );
+}
+
 =method convert_to_ct
 
 Convert to CT format using b2ct

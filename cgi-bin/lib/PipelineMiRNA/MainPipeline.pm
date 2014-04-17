@@ -523,6 +523,17 @@ sub populate_candidate_directory {
 		}
 		close $OUT2;
     }
+
+    # Writing VARNA image
+    my $cfg = PipelineMiRNA->CONFIG();
+
+    if ( $cfg->param('options.varna') ) {
+        my $varna_image = File::Spec->catfile( $candidate_dir, 'image.png' );
+        debug( "Generating image using VARNA in $varna_image", PipelineMiRNA->DEBUG() );
+        PipelineMiRNA::Programs::run_varna_on_structure( $candidate{'dna'}, $candidate{'structure_stemloop'}, $varna_image )
+          or carp('Problem during image generation using VARNA');
+    }
+
 	return;
 }
 
@@ -648,12 +659,6 @@ sub process_tests_for_candidate {
 
     my $cfg = PipelineMiRNA->CONFIG();
 
-    if ( $cfg->param('options.varna') ) {
-        my $varna_image = File::Spec->catfile( $candidate_dir, 'image.png' );
-        debug( "Generating image using VARNA in $varna_image", PipelineMiRNA->DEBUG() );
-        PipelineMiRNA::Programs::run_varna_on_ct_file( $candidate_ct_stemloop_file, $varna_image )
-          or carp('Problem during image generation using VARNA');
-    }
 	####calcul p-value randfold
 	if ( $cfg->param('options.randfold') ) {
 		debug( "Running test_randfold on $seq_file", PipelineMiRNA->DEBUG() );
