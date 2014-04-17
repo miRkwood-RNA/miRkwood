@@ -642,14 +642,7 @@ sub process_tests_for_candidate {
 	my $candidate_rnafold_stemploop_out =
 	  File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
 
-	####conversion en format CT
-	my $candidate_ct_optimal_file =
-	  File::Spec->catfile( $candidate_dir, 'outB2ct_optimal.ct' );
-	debug( "Converting optimal to CT in $candidate_ct_optimal_file", PipelineMiRNA->DEBUG() );
-	PipelineMiRNA::Programs::convert_to_ct( $candidate_rnafold_optimal_out,
-		$candidate_ct_optimal_file )
-	  or die('Problem when converting to CT format');
-
+#	####conversion en format CT
 	my $candidate_ct_stemloop_file =
 	  File::Spec->catfile( $candidate_dir, 'outB2ct_stemloop.ct' );
 	debug( "Converting stemloop to CT in $candidate_ct_stemloop_file", PipelineMiRNA->DEBUG() );
