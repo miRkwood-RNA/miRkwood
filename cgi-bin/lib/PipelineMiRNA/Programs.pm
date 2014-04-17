@@ -79,14 +79,14 @@ sub list_unavailable_programs {
     return @unexisting;
 }
 
-=method run_varna
+=method run_varna_on_ct_file
 
 Run VARNA on the given CT file
 Return whether the output file exists.
 
 =cut
 
-sub run_varna {
+sub run_varna_on_ct_file {
     my ( $candidate_ct_file, $varna_image ) = @_;
     my $varna_cmd =
 "/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";

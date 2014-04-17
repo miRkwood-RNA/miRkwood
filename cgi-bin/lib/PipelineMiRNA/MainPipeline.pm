@@ -651,7 +651,7 @@ sub process_tests_for_candidate {
     if ( $cfg->param('options.varna') ) {
         my $varna_image = File::Spec->catfile( $candidate_dir, 'image.png' );
         debug( "Generating image using VARNA in $varna_image", PipelineMiRNA->DEBUG() );
-        PipelineMiRNA::Programs::run_varna( $candidate_ct_stemloop_file, $varna_image )
+        PipelineMiRNA::Programs::run_varna_on_ct_file( $candidate_ct_stemloop_file, $varna_image )
           or carp('Problem during image generation using VARNA');
     }
 	####calcul p-value randfold
