@@ -558,18 +558,36 @@ sub process_outRNAFold {
 
 =method is_directory
 
-Return whether the given file object (name and full path)
+Return whether the given file object (name and parent)
 is a directory or not.
 
 =cut
 
 sub is_directory{
     my @args = @_;
-    my ($directory, $full_directory) = @args;
-    return ( $directory ne '.'
-             && $directory ne '..'
-             && -d $full_directory );
+    my ($directory_name, $parent_directory) = @args;
+    my $directory = File::Spec->catdir( $parent_directory, $directory_name );
+    return ( $directory_name ne '.'
+             && $directory_name ne '..'
+             && -d $directory );
 }
+
+=method get_dirs_from_directory
+
+Get the sub-directories from the given directory,
+avoiding self and parent.
+
+=cut
+
+sub get_dirs_from_directory {
+    my @args = @_;
+    my $parent_directory = shift @args;
+    opendir DIR, $parent_directory;
+    my @dirs = grep { is_directory($_, $parent_directory) }  readdir DIR;;
+    closedir DIR;
+    return @dirs;
+}
+
 
 =method process_tests
 
@@ -580,54 +598,44 @@ Perform the a posteriori tests for a given job
 sub process_tests {
 	my ($job_dir) = @_;
 	debug( "A posteriori tests in $job_dir", PipelineMiRNA->DEBUG() );
+    my $candidates_dir = File::Spec->catdir( $job_dir, 'candidates' );
     my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
-	opendir DIR, $workspace_dir;
-	my @dirs;
-	@dirs = readdir DIR;
-	closedir DIR;
-	my $candidates_dir = File::Spec->catdir( $job_dir, 'candidates' );
+
+	my @sequence_dirs = get_dirs_from_directory($workspace_dir);
+
 	mkdir $candidates_dir;
-	foreach my $dir (@dirs)    # parcours du contenu
+	foreach my $dir (@sequence_dirs)
 	{
 		my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
-		if ( is_directory($dir, $sequence_dir) )
-		{
-			debug( "Entering sequence $sequence_dir", PipelineMiRNA->DEBUG() );
-			opendir DIR, $sequence_dir;    # ouverture du sous répertoire
-			my @files;
-			@files = readdir DIR;
-			closedir DIR;
-			foreach my $subDir (@files) {
-				my $candidate_dir =
-				  File::Spec->catdir( $sequence_dir, $subDir );
-				if ( is_directory($subDir, $candidate_dir) )
-				{
-					debug( "Entering candidate $subDir", PipelineMiRNA->DEBUG() );
-					process_tests_for_candidate( $candidate_dir, $subDir );
-					debug( "Done with candidate $subDir", PipelineMiRNA->DEBUG() );
+		debug( "Entering sequence $sequence_dir", PipelineMiRNA->DEBUG() );
 
-					if (
-						!eval {
-							PipelineMiRNA::Candidate
-							  ->serialize_candidate_information( $job_dir, $dir,
-								$subDir, $candidates_dir );
-						}
-					  )
-					{
+		my @candidate_dirs = get_dirs_from_directory($sequence_dir);
+		foreach my $subDir (@candidate_dirs) {
+			my $candidate_dir =
+			  File::Spec->catdir( $sequence_dir, $subDir );
 
-						# Catching
-						carp( "Serialization failed" );
-					}
-					else {
-						debug( "Done with serializing $subDir", PipelineMiRNA->DEBUG() );
+			debug( "Entering candidate $subDir", PipelineMiRNA->DEBUG() );
+			process_tests_for_candidate( $candidate_dir, $subDir );
+			debug( "Done with candidate $subDir", PipelineMiRNA->DEBUG() );
 
-						# All is well
-					}
-				}    # foreach my $file (@files)
-			}    # if directory
-			debug( "Done with initial sequence $dir", PipelineMiRNA->DEBUG() );
-		}    # foreach my $dir (@dirs)
-	}    #process_tests
+			if (
+				!eval {
+					PipelineMiRNA::Candidate
+					  ->serialize_candidate_information( $job_dir, $dir,
+						$subDir, $candidates_dir );
+				}
+			  )
+			{
+				# Catching
+				carp( "Serialization failed" );
+			}
+			else {
+				debug( "Done with serializing $subDir", PipelineMiRNA->DEBUG() );
+				# All is well
+			}
+		} # foreach my $file (@files)
+		debug( "Done with initial sequence $dir", PipelineMiRNA->DEBUG() );
+	} # foreach my $dir (@dirs)
 	debug( "Done with all the tests", PipelineMiRNA->DEBUG() );
 	return 0;
 }
