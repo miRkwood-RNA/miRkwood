@@ -72,7 +72,7 @@ ok( my $result2 = PipelineMiRNA::Candidate->get_absolute_image( \%candidate ),
     'can call get_absolute_image()' );
 is(
     $result2,
-    '/var/www/arn/results/jobDec181721032013/1/1/image.png',
+    '/mirkwood/html/results/jobDec181721032013/1/1/image.png',
     'get_absolute_image returns the expected value'
 );
 
@@ -80,7 +80,7 @@ ok( my $result3 = PipelineMiRNA::Candidate->get_relative_image( \%candidate ),
     'can call get_relative_image()' );
 is(
     $result3,
-    '/arn/results/jobDec181721032013/1/1/image.png',
+    '/mirkwood/results/jobDec181721032013/1/1/image.png',
     'get_relative_image returns the expected value'
 );
 
