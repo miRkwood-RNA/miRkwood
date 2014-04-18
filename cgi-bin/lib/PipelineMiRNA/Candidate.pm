@@ -13,7 +13,7 @@ use PipelineMiRNA::Paths;
 use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Components;
-
+use PipelineMiRNA::WebPaths;
 
 my $candidate_base_filename = 'candidate.yml';
 
@@ -297,7 +297,7 @@ sub get_relative_image {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
     my $image = $candidate{'image'};
-    return PipelineMiRNA::Paths->filesystem_to_relative_path($image);
+    return PipelineMiRNA::WebPaths->filesystem_to_relative_path($image);
 }
 
 =method get_name

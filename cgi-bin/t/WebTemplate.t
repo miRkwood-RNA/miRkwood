@@ -27,6 +27,6 @@ ok( my $result3 = PipelineMiRNA::WebTemplate::get_js_file(),
 
 ok( $ENV{SERVER_NAME} = 'toto',
     'Can set SERVER_NAME variable');
-ok( my $result6 = PipelineMiRNA::WebTemplate::make_url('ABCDE'),
+ok( my $result6 = PipelineMiRNA::WebTemplate::get_cgi_url('ABCDE'),
     'can call make_url()');
 

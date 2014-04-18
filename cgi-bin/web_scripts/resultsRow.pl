@@ -8,7 +8,7 @@ use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA;
-use PipelineMiRNA::Paths;
+use PipelineMiRNA::WebPaths;
 use PipelineMiRNA::Utils;
 use PipelineMiRNA::Results;
 use PipelineMiRNA::Candidate;
@@ -18,7 +18,7 @@ my $cgi            = CGI->new();
 my $jobId          = $cgi->param('jobID');
 my $candidate_id   = $cgi->param('id');
 
-my @css = (File::Spec->catfile(PipelineMiRNA::Paths->get_css_path(), 'results.css'));
+my @css = (File::Spec->catfile(PipelineMiRNA::WebPaths->get_css_path(), 'results.css'));
 my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 
 my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);

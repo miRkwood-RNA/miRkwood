@@ -5,6 +5,7 @@ use warnings;
 
 use Config::Simple;
 use File::Basename;
+use Cwd;
 use CGI::Carp qw(carpout);
 use YAML::XS;
 
@@ -110,6 +111,36 @@ my $default_pipeline_cfg_file =
   File::Spec->catfile( File::Basename::dirname(__FILE__), 'pipeline.cfg' );
 PIPELINE_CONFIG_FILE($default_pipeline_cfg_file);
 
+our $WEB_CONFIG_FILE;
+our %WEB_CONFIG;
+
+=method WEB_CONFIG_FILE
+
+=cut
+
+sub WEB_CONFIG_FILE {
+    my (@args) = @_;
+    if ( @args == 1 ) {
+        $WEB_CONFIG_FILE = shift @args;
+        my $yaml = get_yaml_file($WEB_CONFIG_FILE);
+        %WEB_CONFIG = %{$yaml};
+    }
+    return $WEB_CONFIG_FILE;
+}
+
+=method WEB_CONFIG
+
+=cut
+
+sub WEB_CONFIG {
+    my ( $self, @args ) = @_;
+    return %WEB_CONFIG;
+}
+
+my $default_web_cfg_file =
+  File::Spec->catfile( File::Basename::dirname(__FILE__), 'web_config.cfg' );
+WEB_CONFIG_FILE($default_web_cfg_file);
+
 our $PROGRAMS_CONFIG_FILE;
 our %PROGRAMS_CONFIG;
 
@@ -180,6 +211,13 @@ sub write_config {
     $run_options->param( "options.align",    $align );
     $run_options->param( 'options.varna',    $varna );
     PipelineMiRNA->CONFIG($run_options);
+}
+
+our $mirkwood_path = Cwd::fast_abs_path( File::Spec->catdir(File::Basename::dirname(__FILE__), '..'));
+
+sub MIRKWOOD_PATH {
+    my @args = @_;
+    return $mirkwood_path;
 }
 
 1;

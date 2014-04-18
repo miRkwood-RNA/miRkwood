@@ -12,7 +12,7 @@ use PipelineMiRNA::WebTemplate;
 my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
 my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
 
-my $help_page = File::Spec->catfile( PipelineMiRNA::Paths->get_css_path(), '..', 'help.php');
+my $help_page = File::Spec->catfile( PipelineMiRNA::WebPaths->get_css_path(), '..', 'help.php');
 
 my $page = <<"END_TXT";
 <div class="main">

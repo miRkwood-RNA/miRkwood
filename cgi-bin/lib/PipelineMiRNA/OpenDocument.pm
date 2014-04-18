@@ -8,7 +8,7 @@ use warnings;
 use File::Spec;
 use File::Copy;
 use PipelineMiRNA::Utils;
-use PipelineMiRNA::Paths;
+use PipelineMiRNA::WebPaths;
 use PipelineMiRNA::Results;
 use PipelineMiRNA::Candidate;
 use ODF::lpOD;
@@ -556,7 +556,7 @@ sub get_ODF_path{
     my $ODT_filename = "Prediction_report_$jobId.odt";
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
     my $ODT_abspath = File::Spec->catfile( $jobPath, $ODT_filename );
-    my $ODT_serverpath = PipelineMiRNA::Paths->filesystem_to_relative_path($ODT_abspath);
+    my $ODT_serverpath = PipelineMiRNA::WebPaths->filesystem_to_relative_path($ODT_abspath);
     return ($ODT_abspath, $ODT_serverpath);
 }
 

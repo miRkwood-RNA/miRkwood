@@ -8,25 +8,27 @@ use File::Spec;
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
+use PipelineMiRNA::Paths;
 use PipelineMiRNA::Results;
+use PipelineMiRNA::WebPaths;
 use PipelineMiRNA::WebTemplate;
 
 my $cgi = CGI->new;
 
 my $header_menu = PipelineMiRNA::WebTemplate::get_header_menu();
 my $footer      = PipelineMiRNA::WebTemplate::get_footer();
-my $web_root    = PipelineMiRNA::Paths->get_web_root();
+my $web_scripts = PipelineMiRNA::WebPaths->get_web_scripts();
 
 my @css = (
 	PipelineMiRNA::WebTemplate->get_server_css_file(),
 	PipelineMiRNA::WebTemplate->get_css_file()
 );
 my @js = (
-	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'results.js' ),
-	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'graphics.js' ),
-	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'miARN.js' ),
-	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(), 'jquery.min.js' ),
-	File::Spec->catfile( PipelineMiRNA::Paths->get_js_path(),
+	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'results.js' ),
+	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'graphics.js' ),
+	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'miARN.js' ),
+	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'jquery.min.js' ),
+	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(),
 		'imgpreview.full.jquery.js' )
 
 );
@@ -90,7 +92,7 @@ if ($valid) {
                 <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
                 <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
                 <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label>
-                <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_root")'/>
+                <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts")'/>
     		</form>
     	</div>
     		<p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>

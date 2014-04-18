@@ -7,6 +7,7 @@ use warnings;
 
 use File::Spec;
 use PipelineMiRNA::Paths;
+use PipelineMiRNA::WebPaths;
 
 =method get_static_file
 
@@ -17,7 +18,7 @@ Return the contents of a given file in the stati directory
 sub get_static_file {
     my @args = @_;
     my $file_name = shift @args;
-    my $file = File::Spec->catfile(PipelineMiRNA::Paths->get_static_path(),
+    my $file = File::Spec->catfile(PipelineMiRNA::WebPaths->get_static_path(),
                                    $file_name);
     open my $FILE, '<', $file;
     my $contents = do { local $/; <$FILE> };
@@ -78,7 +79,7 @@ Return the project CSS file
 
 sub get_css_file {
     my @args = @_;
-    return File::Spec->catfile(PipelineMiRNA::Paths->get_css_path(), 'script.css');
+    return File::Spec->catfile(PipelineMiRNA::WebPaths->get_css_path(), 'script.css');
 }
 
 =method get_server_css_file
@@ -89,7 +90,7 @@ Return the server CSS file
 
 sub get_server_css_file {
     my @args = @_;
-    return File::Spec->catfile(PipelineMiRNA::Paths->get_server_css_path, 'bioinfo.css');
+    return File::Spec->catfile(PipelineMiRNA::WebPaths->get_server_css_path, 'bioinfo.css');
 }
 
 
@@ -101,7 +102,7 @@ Return the main JavaScript file
 
 sub get_js_file {
     my @args = @_;
-    return File::Spec->catfile(PipelineMiRNA::Paths->get_js_path(), 'miARN.js');
+    return File::Spec->catfile(PipelineMiRNA::WebPaths->get_js_path(), 'miARN.js');
 }
 
 =method get_error_page
@@ -126,17 +127,17 @@ HTML
 }
 
 
-=method make_url
+=method get_cgi_url
 
-Make an URL to the given page based on the server root
+Make an URL to the given CGI page
 
 =cut
 
-sub make_url {
+sub get_cgi_url {
     my @args = @_;
     my $page = shift @args;
     # dirname( $ENV{HTTP_REFERER} );
-    my $path = File::Spec->catfile($ENV{SERVER_NAME}, PipelineMiRNA::Paths->get_web_root(), $page);
+    my $path = File::Spec->catfile($ENV{SERVER_NAME}, PipelineMiRNA::WebPaths->get_web_scripts(), $page);
     my $url  = 'http://'. $path;
     return $url;
 }
@@ -217,7 +218,7 @@ sub send_email {
     use MIME::Lite;
 
     my $results_page  = 'resultsWithID.pl';
-    my $results_baseurl = make_url($results_page);
+    my $results_baseurl = get_cgi_url($results_page);
 
     my $from = 'mirkwood@univ-lille1.fr';
     my $subject = "[miRkwood] Results for job $jobId";

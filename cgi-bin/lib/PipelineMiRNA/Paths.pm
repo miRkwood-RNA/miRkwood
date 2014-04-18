@@ -34,55 +34,6 @@ sub get_job_config_path {
     return $job_config_path;
 }
 
-=method get_web_root
-
-Return the web root
-(ie in http://myserver.org/web_root/<pipeline.pl>)
-
-=cut
-
-sub get_web_root {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'web_root'};
-}
-
-=method get_css_path
-
-Return the project CSS directory
-
-=cut
-
-sub get_css_path {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'css'};
-}
-
-=method get_server_css_path
-
-Return the Server CSS directory
-
-=cut
-
-sub get_server_css_path {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'server_css'};
-}
-
-=method get_js_path
-
-Return the project JavaScript directory
-
-=cut
-
-sub get_js_path {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'js'};
-}
-
 =method get_data_path
 
 Return the project data directory
@@ -91,20 +42,7 @@ Return the project data directory
 
 sub get_data_path {
     my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'data'};
-}
-
-=method get_static_path
-
-Return the project static directory
-
-=cut
-
-sub get_static_path {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'static'};
+    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'data');
 }
 
 =method get_scripts_path
@@ -115,8 +53,7 @@ Return the project static directory
 
 sub get_scripts_path {
     my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'scripts'};
+    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'scripts');
 }
 
 =method get_lib_path
@@ -127,21 +64,7 @@ Return the project static directory
 
 sub get_lib_path {
     my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'lib'};
-}
-
-
-=method get_results_web_path
-
-Return the path to the results, as seen from the web
-
-=cut
-
-sub get_results_web_path {
-    my ($self, @args) = @_;
-    my %config = $self->get_config();
-    return $config{'web_results'};
+    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'lib');
 }
 
 =method get_results_filesystem_path
@@ -168,7 +91,6 @@ sub get_workspace_path {
     return File::Spec->catdir($job_dir, 'workspace');
 }
 
-
 =method get_candidate_paths
 
 Return the path for a given candidate
@@ -181,21 +103,6 @@ sub get_candidate_paths {
     my $workspace = $self->get_workspace_path($job_dir);
     my $candidate_dir = File::Spec->catdir($workspace, $dir, $subDir);
     return $candidate_dir;
-}
-
-=method filesystem_to_relative_path
-
-Convert a filesystem path to a web path
-
-=cut
-
-sub filesystem_to_relative_path {
-    my ($self, @args) = @_;
-    my $path = shift @args;
-    my $filesystem_path = PipelineMiRNA::Paths->get_results_filesystem_path();
-    my $web_path        = PipelineMiRNA::Paths->get_results_web_path();
-    $path =~ s/$filesystem_path/$web_path/g;
-    return $path;
 }
 
 1;

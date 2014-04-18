@@ -22,7 +22,7 @@ our $rnalfold_bin;
 our $rnaeval_bin;
 our $b2ct_bin;
 our $randfold_bin;
-our ($exonerate_dir, $exonerate_bin);
+our $exonerate_bin;
 our $varna_bin;
 our $rnastemploop_bin;
 our $blastx_bin;
@@ -31,21 +31,20 @@ our $miRdup_jar;
 sub init_programs{
     my @args = @_;
     my %programs_config = PipelineMiRNA::PROGRAMS_CONFIG();
-    $vienna_progs_dir = $programs_config{'vienna_package'};
-    $rnafold_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAfold' );
-    $rnalfold_bin = File::Spec->catfile( $vienna_progs_dir, 'RNALfold' );
-    $rnaeval_bin  = File::Spec->catfile( $vienna_progs_dir, 'RNAeval' );
-    $b2ct_bin     = File::Spec->catfile( $programs_config{'vienna_utils'}, 'b2ct' );
-
-    $randfold_bin = $programs_config{'randfold'};
-    $exonerate_dir = $programs_config{'exonerate'};
-
+    $rnafold_bin  = $programs_config{'rnafold'};
+    $rnalfold_bin = $programs_config{'rnalfold'};
+    $rnaeval_bin  = $programs_config{'rnaeval'};
+    $b2ct_bin     = $programs_config{'b2ct'};
+    $blastx_bin   = $programs_config{'blastx'};
+    $randfold_bin = $programs_config{'rnashuffles'};
     $exonerate_bin = 'exonerate';
     $varna_bin        = $programs_config{'varna'};
     $rnastemploop_bin = $programs_config{'rnastemloop'};
-    $blastx_bin = $programs_config{'blastx'};
 
-    $miRdup_jar = $programs_config{'miRdup'};
+    $miRdup_jar = $programs_config{'mirdup'};
+
+    $vienna_progs_dir = File::Basename::dirname(which($rnafold_bin));
+
     return 1;
 }
 
@@ -234,9 +233,6 @@ sub run_exonerate {
                     .'    %Pqs %Pts %Pl}\n';
 
     my $exonerate_cmd = qw{};
-    if( $exonerate_dir ){
-        $exonerate_cmd .="cd $exonerate_dir && "
-    }
     $exonerate_cmd =
         "$exonerate_bin "
       . '--exhaustive '             # Exhaustive alignment

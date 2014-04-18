@@ -35,7 +35,7 @@ my $local_dir = dirname( abs_path($0) );
 my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
 my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
 
-my $error_url = PipelineMiRNA::WebTemplate::make_url('error.pl');
+my $error_url = PipelineMiRNA::WebTemplate::get_cgi_url('error.pl');
 my $root = PipelineMiRNA::Paths->get_results_filesystem_path();
 
 if (! -e $root) {
@@ -108,7 +108,7 @@ close $OUTPUT or die("Error when closing $sequence_upload: $!");
 
 # redirection vers la page wait en attendant le calcul
 my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail;
-my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $arguments;
+my $waiting_url = PipelineMiRNA::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 
 print $cgi->redirect( -uri => $waiting_url  );

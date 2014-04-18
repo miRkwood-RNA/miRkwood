@@ -24,11 +24,11 @@ my $name    = $nameJob;
 my $res_arguments = '?run_id=' . $jobId;
 my $results_page  = 'resultsWithID.pl';
 my $results_link  = $results_page . $res_arguments;
-my $results_baseurl = PipelineMiRNA::WebTemplate::make_url($results_page);
+my $results_baseurl = PipelineMiRNA::WebTemplate::get_cgi_url($results_page);
 my $results_url   = $results_baseurl . $res_arguments;
 
 my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
-my $waiting_url = PipelineMiRNA::WebTemplate::make_url('wait.pl') . $wait_arguments;
+my $waiting_url = PipelineMiRNA::WebTemplate::get_cgi_url('wait.pl') . $wait_arguments;
 
 if ( PipelineMiRNA::Results->is_job_finished($jobId) ) {
     if ( $mail ne q{} ) {
