@@ -1,0 +1,29 @@
+#!/bin/sh
+# Script that deploys miRkwood from Subversion on a BioInfo-like environment
+# Takes as optional argument the revision to use
+
+REVISION=$1
+
+HTML_DIR=/bio1/www/html/mirkwood
+CGI_DIR=/bio1/www/cgi-bin/mirkwood
+SVN_USER=bonsai-ci
+
+if [ -n "$REVISION" ]; then
+    echo "Deploying specific revision $REVISION"
+    UP_REVISION="-r$REVISION"
+fi
+
+if [ -d "$HTML_DIR" ]; then
+    svn update $UP_REVISION $HTML_DIR
+else
+    echo "HTML directory does not exist, checking it out from SVN"
+    svn checkout svn+ssh://"$SVN_USER"@scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/html@$REVISION $HTML_DIR
+fi
+
+if [ -d "$CGI_DIR" ]; then
+    svn update $UP_REVISION $CGI_DIR
+else
+    echo "CGI directory does not exist, checking it out from SVN"
+    svn checkout svn+ssh://"$SVN_USER"@scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/cgi-bin@$REVISION $CGI_DIR
+fi
+
