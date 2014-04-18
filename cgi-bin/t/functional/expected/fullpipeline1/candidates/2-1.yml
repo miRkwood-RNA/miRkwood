@@ -255,14 +255,14 @@
 --- 1
 --- identifier
 --- 2-1
+--- '%GC'
+--- 50
 --- hairpin
 --- "     g      ucu      c          u     acg-     -  --   c          u-  u\nuuacg
   cgguuu   gauucg uuggugcagg cggga    gcuug gc  cga gguuucauau  ug c\n||||| ||||||
   \  |||||| |||||||||| |||||    ||||| ||  ||| ||||||||||  || \naaugu gccaag   cuaagu
   aacuacguuc guccu    ugagu cg  gcu ccaaagugug  ac u\n     a      u--      c          c
   \    guca     u  au   -          uc  c\n"
---- '%GC'
---- 50
 --- alignment
 --- 2
 --- strand

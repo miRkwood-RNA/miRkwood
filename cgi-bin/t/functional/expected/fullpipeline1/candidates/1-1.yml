@@ -659,8 +659,6 @@
 --- 1
 --- identifier
 --- 1-1
---- '%GC'
---- '37.04'
 --- hairpin
 --- "      u  au      a        u   cuu    u  -  c      -     u         --    uca-
   \       \ngagagg uc  acauga gagaagag gcu   auua gu ag caagga ugaau gccuaauga  cagc
@@ -668,6 +666,8 @@
   \ ||||    |||||||| a\ncucuuc ag  uguacu cuuuuuuu cgg   uaau ca uc guucuu acuug cggauuauu
   \ guug    ucagcaaaa\n      u  au      a        -   c--    u  g  a      u     -         ug
   \   uuuc        \n"
+--- '%GC'
+--- '37.04'
 --- alignment
 --- 1
 --- strand
