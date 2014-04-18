@@ -107,8 +107,7 @@ sub PIPELINE_CONFIG {
 }
 
 my $default_pipeline_cfg_file =
-  File::Spec->catfile( File::Basename::dirname(__FILE__),
-    'PipelineMiRNA', 'pipeline.cfg' );
+  File::Spec->catfile( File::Basename::dirname(__FILE__), 'pipeline.cfg' );
 PIPELINE_CONFIG_FILE($default_pipeline_cfg_file);
 
 our $PROGRAMS_CONFIG_FILE;
@@ -138,8 +137,7 @@ sub PROGRAMS_CONFIG {
 }
 
 my $default_programs_cfg_file =
-  File::Spec->catfile( File::Basename::dirname(__FILE__),
-    'PipelineMiRNA', 'programs.cfg' );
+  File::Spec->catfile( File::Basename::dirname(__FILE__), 'programs.cfg' );
 PROGRAMS_CONFIG_FILE($default_programs_cfg_file);
 
 =method get_yaml_file
