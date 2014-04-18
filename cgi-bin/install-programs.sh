@@ -19,27 +19,6 @@ cd ViennaRNA-2.1.2
 make
 cd $ROOT_PATH
 
-echo "Installing Randfold 2.0"
-
-echo "Installing Squid"
-wget http://selab.janelia.org/software/squid/squid.tar.gz
-tar xf squid.tar.gz
-cd squid-1.9g/
-./configure
-make install
-cd $ROOT_PATH
-
-wget http://bioinformatics.psb.ugent.be/supplementary_data/erbon/nov2003/downloads/randfold-2.0.tar.gz
-tar xf randfold-2.0.tar.gz
-cd randfold-2.0
-make
-cd $ROOT_PATH
-
-echo "Installing selfcontain"
-wget http://kim.bio.upenn.edu/software/rna-sc/selfcontain_unix.zip
-unzip selfcontain_unix.zip
-cd $ROOT_PATH
-
 echo "Installing VARNA 3.9"
 wget http://varna.lri.fr/bin/VARNAv3-9.jar
 cd $ROOT_PATH
