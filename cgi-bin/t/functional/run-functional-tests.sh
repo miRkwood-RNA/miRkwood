@@ -10,7 +10,7 @@ if [ -z "$LIBTAP_SH_HOME" ]
 then
     if [ ! -f $BASEDIR/libtap.sh ]
     then
-       wget --quiet "http://git.eyrie.org/?p=devel/c-tap-harness.git;a=blob_plain;f=tests/tap/libtap.sh;hb=HEAD" -O libtap.sh
+       wget --quiet "http://git.eyrie.org/?p=devel/c-tap-harness.git;a=blob_plain;f=tests/tap/libtap.sh;hb=HEAD" -O $BASEDIR/libtap.sh
     fi
     LIBTAP="$BASEDIR/libtap.sh"
 else
