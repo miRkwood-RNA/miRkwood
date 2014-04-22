@@ -698,6 +698,10 @@ sub post_process_alignments {
 		$candidate_rnafold_stemploop_out);
 	my ( $name, $position, $DNASequence, $Vienna ) = @res;
 	my %alignments;
+
+    if (-z $file_alignement){
+        return;
+    }
 	if (
 		!eval {
 			%alignments =
@@ -708,6 +712,7 @@ sub post_process_alignments {
 	{
 	    # Catching exception
         carp("Exception when parsing exonerate output $file_alignement");
+        return;
 	}
 	else {
 		%alignments =
