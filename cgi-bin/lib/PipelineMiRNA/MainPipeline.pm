@@ -287,13 +287,19 @@ sub process_RNAstemloop {
 
 	while ( my $stem_line = <$STEM_FH> ) {
 
-		if ( ( $stem_line =~ /^>(.*)/ ) ) {    # nom sequence
-			$nameSeq = $1;
+		if ( PipelineMiRNA::Utils::is_fasta_header( $stem_line )) {
+			$nameSeq = substr ($stem_line, 1, -1);
 		}
-		elsif ( ( $stem_line =~ /^[a-zA-Z]/ ) ) { # récupération de la sequence adn
+		elsif ( PipelineMiRNA::Utils::is_fasta_line($stem_line ) ) {
 			$dna = substr $stem_line, 0, -1;
 			$line_eval_opt = substr( <$EVAL_OPT_FH>, 0, -1 );    # the sequence as well
+			if ( PipelineMiRNA::Utils::is_fasta_header( $line_eval_opt ) ) {
+			    $line_eval_opt = substr( <$EVAL_OPT_FH>, 0, -1 );
+			}
 			$line_eval_stem = substr( <$EVAL_STEM_FH>, 0, -1 );    # the sequence as well
+	         if ( PipelineMiRNA::Utils::is_fasta_header( $line_eval_stem )) {
+                $line_eval_stem = substr( <$EVAL_STEM_FH>, 0, -1 );
+            }
 			if ( $dna ne $line_eval_opt || $dna ne $line_eval_stem ) {
 				warn ('The sequences differ in RNAeval and RNAstemloop output');
 			}
