@@ -98,6 +98,7 @@ sub main_entry {
 
 		my %candidates_hash;
 		if (@hash) {
+            debug("Merging candidates for sequence $name", PipelineMiRNA->DEBUG() );
 			%candidates_hash = merge_candidates( \@hash );
 		}
 		else {
