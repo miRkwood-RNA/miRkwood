@@ -189,15 +189,10 @@ sub process_sequence {
     my $rnaeval_out_stemloop =
 	run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop,  'stemloop' );
 	my $seq_length = length $sequence;
-	open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
-	open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
-	open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
-	my $res =
-	  process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH,
-		$EVAL_OPT_FH, $EVAL_STEM_FH );
-	close($STEM_FH);
-	close($EVAL_OPT_FH);
-	close($EVAL_STEM_FH);
+	my $res = process_RNAstemloop_on_filenames( $sequence_dir, $strand, $seq_length,
+	                                            $rnastemloop_out_stemloop,
+	                                            $rnaeval_out_optimal,
+	                                            $rnaeval_out_stemloop );
 	return $res;
 }
 
@@ -262,6 +257,35 @@ sub run_RNAeval_on_RNAstemloop_output {
 	  or die("Problem when running RNAeval");
 
 	return $rnaeval_out;
+}
+
+=method process_RNAstemloop_on_filenames
+
+Pass-through method for process_RNAstemloop
+
+=cut
+
+sub process_RNAstemloop_on_filenames {
+    my @args           = @_;
+    my ($sequence_dir) = shift @args;
+    my ($strand)       = shift @args;
+    my ($seq_length)   = shift @args;
+    my ($rnastemloop_out_stemloop)      = shift @args;
+    my ($rnaeval_out_optimal)  = shift @args;
+    my ($rnaeval_out_stemloop) = shift @args;
+
+    open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die $!;
+    open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
+    open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
+    my $msg = "Processing RNAstemloop ( $sequence_dir, $strand, $seq_length, $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
+    debug( $msg, PipelineMiRNA->DEBUG() );
+    my $res =
+      process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH,
+        $EVAL_OPT_FH, $EVAL_STEM_FH );
+    close($STEM_FH);
+    close($EVAL_OPT_FH);
+    close($EVAL_STEM_FH);
+    return $res;
 }
 
 =method process_RNAstemloop
