@@ -11,7 +11,7 @@ When(/^I launch the pipeline$/) do
 end
 
 Then(/^a sequence gets filled$/) do
-  on(InterfacePage).sequence_area.should include("contig15750")
+  on(InterfacePage).sequence_area.should include("sample")
 end
 
 When(/^I use the Clear feature$/) do
