@@ -16,7 +16,8 @@ my @islands = get_islands($bamfile,$mindepth,$expected_faidx,$read_group);
 =cut
 
 sub get_islands {
-    my ( $bamfile, $mindepth, $expected_faidx, $read_group ) = @_;
+    my ( $self, @args ) = @_;
+    my ( $bamfile, $mindepth, $expected_faidx, $read_group ) = @args;
 
     # go chr by chr, using the .fai index file to get the chr names
     my @chrs = ();
@@ -103,8 +104,8 @@ my @clusters = merge_clusters(\@islands,\$pad,\$genome);
 =cut
 
 sub merge_clusters {
-    my ( $input, $pad, $genome ) =
-      @_;    ## passed my reference .. array and scalar
+    my ( $self, @args ) = @_;
+    my ( $input, $pad, $genome ) = @args;
     my @output = ();
 
     my $this_start;
@@ -119,7 +120,7 @@ sub merge_clusters {
     my %chr_sizes = ();
     ## grab the chrom sizes, which you need to ensure that you don't pad off the end of the chroms
     # chrom sizes in column 1 from the fai file
-    my $fai_file = "$$genome" . "\.fai";
+    my $fai_file = "$genome" . "\.fai";
     unless ( -e $fai_file ) {
         warn(
 "\nFatal in sub-routine get_folding_regions : expected fai file $fai_file does not exist\n"
@@ -127,25 +128,24 @@ sub merge_clusters {
         exit;
     }
     my @fai_fields = ();
-    open( FAI, "$fai_file" );
-
-    while (<FAI>) {
+    open( my $FAI, "$fai_file" );
+    while (<$FAI>) {
         @fai_fields = split( "\t", $_ );
         $chr_sizes{ $fai_fields[0] } = $fai_fields[1];
     }
-    close FAI;
+    close $FAI;
     my $this_chr;
     my $entry;
     foreach my $in_clus (@$input) {
         if ( $in_clus =~ /^(\S+):(\d+)-(\d+)$/ ) {
             $this_chr          = $1;
             $this_start        = $2;
-            $this_padded_start = $this_start - $$pad;
+            $this_padded_start = $this_start - $pad;
             if ( $this_padded_start < 1 ) {
                 $this_padded_start = 1;
             }
             $this_stop        = $3;
-            $this_padded_stop = $this_stop + $$pad;
+            $this_padded_stop = $this_stop + $pad;
             if ( $this_padded_stop > $chr_sizes{$this_chr} ) {
                 $this_padded_stop = $chr_sizes{$this_chr};
             }
