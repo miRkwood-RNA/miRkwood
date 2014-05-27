@@ -42,13 +42,11 @@ sub get_islands {
     my %fai_hash   = ();
 
     open( my $FAI, '<', "$expected_faidx" )
-        or die "Error when opening $expected_faidx: $!";
+      or die "Error when opening $expected_faidx: $!";
     while (<$FAI>) {
         chomp;
         @fields = split( "\t", $_ );
         push( @chrs, $fields[0] );
-        $fai_hash{ $fields[0] } = $fields[1];
-        $genome_sum += $fields[1];
     }
     close $FAI;
 
@@ -134,24 +132,24 @@ sub merge_clusters {
     ## grab the chrom sizes, which you need to ensure that you don't pad off the end of the chroms
     # chrom sizes in column 1 from the fai file
     my $fai_file = "$genome" . '.fai';
-    if (! -e $fai_file ) {
+    if ( !-e $fai_file ) {
         warn(
 "\nFatal in sub-routine get_folding_regions : expected fai file $fai_file does not exist\n"
         );
         exit;
     }
     my @fai_fields = ();
-    open( my $FAI,  '<', "$fai_file" )
-        or die "Error when opening $fai_file: $!";
+    open( my $FAI, '<', "$fai_file" )
+      or die "Error when opening $fai_file: $!";
     while (<$FAI>) {
         @fai_fields = split( "\t", $_ );
         $chr_sizes{ $fai_fields[0] } = $fai_fields[1];
     }
     close $FAI
-        or die "Error when closing $fai_file: $!";
+      or die "Error when closing $fai_file: $!";
     my $this_chr;
     my $entry;
-    foreach my $in_clus (@{$input}  ) {
+    foreach my $in_clus ( @{$input} ) {
         if ( $in_clus =~ /^(\S+):(\d+)-(\d+)$/ ) {
             $this_chr          = $1;
             $this_start        = $2;
