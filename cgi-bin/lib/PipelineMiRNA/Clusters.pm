@@ -51,17 +51,7 @@ sub get_islands {
     close $FAI;
 
     my @islands = ();
-
-    my $last_start;
-    my $last_ok;
-
-    my $island;
-
     foreach my $chr (@chrs) {
-
-        $last_start = -1;
-        $last_ok    = -1;
-
         my $samtools_cmd = '';
         if ($read_group) {
             $samtools_cmd =
@@ -72,38 +62,52 @@ sub get_islands {
 "samtools view -F 0x4 -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |";
         }
         open( my $DEPTH, $samtools_cmd );
-        while (<$DEPTH>) {
-            chomp;
+        my @chr_islands =
+          $self->process_samtools_depth( $DEPTH, $chr, $mindepth );
+        push @islands, @chr_islands;
+        close $DEPTH;
+    }
+    return @islands;
+}
 
-            @fields = split( "\t", $_ );
-            if ( $fields[2] >= $mindepth ) {
+=method process_samtools_depth
 
-                if ( $last_ok == -1 ) {
-                    ## first start on the chr
-                    $last_start = $fields[1];
-                    $last_ok    = $fields[1];
-                }
-                elsif ( $fields[1] == $last_ok + 1 ) {
-                    ## continuing to extend an island
-                    $last_ok = $fields[1];
-                }
-                else {
-                    ## close the previous island, open a new one
 
-                    $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
-                    push( @islands, $island );
-                    $last_start = $fields[1];
-                    $last_ok    = $fields[1];
-                }
+=cut
+
+sub process_samtools_depth {
+    my ( $self, @args ) = @_;
+    my ( $DEPTH, $chr, $mindepth ) = @args;
+    my @fields;
+    my $last_start = -1;
+    my $last_ok    = -1;
+    my @islands    = ();
+    while (<$DEPTH>) {
+        chomp;
+        @fields = split( "\t", $_ );
+        if ( $fields[2] >= $mindepth ) {
+            if ( $last_ok == -1 ) {
+                ## first start on the chr
+                $last_start = $fields[1];
+                $last_ok    = $fields[1];
+            }
+            elsif ( $fields[1] == $last_ok + 1 ) {
+                ## continuing to extend an island
+                $last_ok = $fields[1];
+            }
+            else {
+                ## close the previous island, open a new one
+                my $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
+                push( @islands, $island );
+                $last_start = $fields[1];
+                $last_ok    = $fields[1];
             }
         }
-        close $DEPTH;
-        ## close the last one, if there is one
-        if ( $last_ok != -1 ) {
-            $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
-            push( @islands, $island );
-        }
-
+    }
+    ## close the last one, if there is one
+    if ( $last_ok != -1 ) {
+        my $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
+        push( @islands, $island );
     }
     return @islands;
 }
