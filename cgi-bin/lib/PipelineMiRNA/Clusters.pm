@@ -97,8 +97,8 @@ sub process_samtools_depth {
             }
             else {
                 ## close the previous island, open a new one
-                my $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
-                push( @islands, $island );
+                my @island = ($chr, $last_start, $last_ok);
+                push( @islands, \@island );
                 $last_start = $fields[1];
                 $last_ok    = $fields[1];
             }
@@ -106,8 +106,8 @@ sub process_samtools_depth {
     }
     ## close the last one, if there is one
     if ( $last_ok != -1 ) {
-        my $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
-        push( @islands, $island );
+        my @island = ($chr, $last_start, $last_ok);
+        push( @islands, \@island );
     }
     return @islands;
 }
@@ -152,77 +152,69 @@ sub merge_clusters {
     close $FAI
       or die "Error when closing $fai_file: $!";
     my $this_chr;
-    my $entry;
-    foreach my $in_clus ( @{$input} ) {
-        if ( $in_clus =~ /^(\S+):(\d+)-(\d+)$/ ) {
-            $this_chr          = $1;
-            $this_start        = $2;
-            $this_padded_start = $this_start - $pad;
-            if ( $this_padded_start < 1 ) {
-                $this_padded_start = 1;
-            }
-            $this_stop        = $3;
-            $this_padded_stop = $this_stop + $pad;
-            if ( $this_padded_stop > $chr_sizes{$this_chr} ) {
-                $this_padded_stop = $chr_sizes{$this_chr};
-            }
 
-            # special first case
-            if ( $last_chr eq 'null' ) {
-                $last_padded_start = $this_padded_start;
-                $last_padded_stop  = $this_padded_stop;
-                $last_start        = $this_start;
-                $last_stop         = $this_stop;
-            }
-            elsif ( $this_chr ne $last_chr ) {
-                $entry = "$last_chr" . ':' . "$last_start" . '-' . "$last_stop";
-                push( @output, $entry );
+    foreach my $in_clus ( @{$input} ) {
+        ($this_chr, $this_start, $this_stop) = @{$in_clus};
+
+        $this_padded_start = $this_start - $pad;
+        if ( $this_padded_start < 1 ) {
+            $this_padded_start = 1;
+        }
+
+        $this_padded_stop = $this_stop + $pad;
+        if ( $this_padded_stop > $chr_sizes{$this_chr} ) {
+            $this_padded_stop = $chr_sizes{$this_chr};
+        }
+
+        # special first case
+        if ( $last_chr eq 'null' ) {
+            $last_padded_start = $this_padded_start;
+            $last_padded_stop  = $this_padded_stop;
+            $last_start        = $this_start;
+            $last_stop         = $this_stop;
+        }
+        elsif ( $this_chr ne $last_chr ) {
+            my @entry = ($last_chr, $last_start, $last_stop);
+            push( @output, \@entry );
+            $last_padded_start = $this_padded_start;
+            $last_padded_stop  = $this_padded_stop;
+            $last_start        = $this_start;
+            $last_stop         = $this_stop;
+        }
+        else {
+            if ( $this_padded_start > $last_padded_stop ) {
+                ## no overlap between these padded clusters.
+                ## Report the last one, trimming off its dangling pads
+                my @entry = ($this_chr, $last_start, $last_stop);
+                push( @output, \@entry );
                 $last_padded_start = $this_padded_start;
                 $last_padded_stop  = $this_padded_stop;
                 $last_start        = $this_start;
                 $last_stop         = $this_stop;
             }
             else {
-                if ( $this_padded_start > $last_padded_stop ) {
-                    ## no overlap between these padded clusters.
-                    ## Report the last one, trimming off its dangling pads
-                    $entry =
-                      "$this_chr" . ':' . "$last_start" . '-' . "$last_stop";
-                    push( @output, $entry );
-                    $last_padded_start = $this_padded_start;
-                    $last_padded_stop  = $this_padded_stop;
-                    $last_start        = $this_start;
-                    $last_stop         = $this_stop;
-                }
-                else {
 
    # here, same chr, this_padded_start is <= last_padded_stop, so we are merging
-                    if ( $this_padded_start < $last_padded_start ) {
-                        $last_padded_start = $this_padded_start;
-                    }
-                    if ( $this_start < $last_start ) {
-                        $last_start = $this_start;
-                    }
-                    if ( $this_padded_stop > $last_padded_stop ) {
-                        $last_padded_stop = $this_padded_stop;
-                    }
-                    if ( $this_stop > $last_stop ) {
-                        $last_stop = $this_stop;
-                    }
+                if ( $this_padded_start < $last_padded_start ) {
+                    $last_padded_start = $this_padded_start;
+                }
+                if ( $this_start < $last_start ) {
+                    $last_start = $this_start;
+                }
+                if ( $this_padded_stop > $last_padded_stop ) {
+                    $last_padded_stop = $this_padded_stop;
+                }
+                if ( $this_stop > $last_stop ) {
+                    $last_stop = $this_stop;
                 }
             }
-            $last_chr = $this_chr;
         }
-        else {
-            warn(
-"\nFATAL: in sub-routine \'merge_clusters\' : failed to parse initial locus $in_clus\n"
-            );
-            exit;
-        }
-    }
+        $last_chr = $this_chr;
+
+    } # foreach locus
     ## last one
-    $entry = "$last_chr" . ':' . "$last_start" . '-' . "$last_stop";
-    push( @output, $entry );
+    my @entry = ($last_chr, $last_start, $last_stop);
+    push( @output, \@entry );
     return @output;
 }
 

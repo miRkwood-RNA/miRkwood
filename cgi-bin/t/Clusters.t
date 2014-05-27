@@ -49,7 +49,7 @@ ok(
     'Can call get_islands()'
 );
 my @get_islands_expected =
-  ( 'ChrC:6-77', 'ChrC:292-318', 'ChrC:448-478', 'ChrC:487-515' );
+  ( ['ChrC', 6, 77], ['ChrC', 292, 318], ['ChrC', 448, 478], ['ChrC', 487, 515] );
 is_deeply( \@get_islands_output, \@get_islands_expected,
     'get_islands returns the correct values' );
 
@@ -61,6 +61,6 @@ ok(
     ),
     'Can call merge_clusters()'
 );
-my @merge_clusters_expected = ( 'ChrC:6-77', 'ChrC:292-515' );
+my @merge_clusters_expected = ( ['ChrC', 6, 77], ['ChrC', 292, 515] );
 is_deeply( \@merge_clusters_output, \@merge_clusters_expected,
     'merge_clusters returns the correct values' );
