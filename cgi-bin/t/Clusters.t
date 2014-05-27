@@ -39,6 +39,7 @@ file_exists_ok($dummy_faidx_file);
 my $contents1 = slurp_file($faidx_file);
 my $contents2 = slurp_file($dummy_faidx_file);
 is( $contents1, $contents2, 'get_faidx_file created the correct index file' );
+unlink ($dummy_faidx_file, $dummy_genome_file);
 
 ## get_islands() ##
 
