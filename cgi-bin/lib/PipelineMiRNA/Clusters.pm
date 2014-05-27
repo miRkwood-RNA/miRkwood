@@ -5,7 +5,23 @@ package PipelineMiRNA::Clusters;
 use strict;
 use warnings;
 
-# The following code is largely taken from ShortStack by Michael J. Axtell
+=method get_faidx_file
+
+
+=cut
+
+sub get_faidx_file {
+    my ( $self, @args ) = @_;
+    my $genome_file    = shift @args;
+    my $expected_faidx = $genome_file . '.fai';
+    if ( !-e $expected_faidx ) {
+        my $samtools_cmd = "samtools faidx $genome_file";
+        system $samtools_cmd;
+    }
+    return $expected_faidx;
+}
+
+# The following methods are taken from ShortStack by Michael J. Axtell
 # Licensed under the GNU GPL v3
 
 =method get_islands

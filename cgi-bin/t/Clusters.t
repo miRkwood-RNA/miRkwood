@@ -20,8 +20,25 @@ file_exists_ok($bamfile);
 my $genome_file = input_file('Clusters.Athaliana_167-ChrC.fa');
 file_exists_ok($genome_file);
 
-my $faidx_file = $genome_file . '.fai';
+## get_faidx_file() ##
+
+ok( my $faidx_file = PipelineMiRNA::Clusters->get_faidx_file($genome_file),
+    'Can get existing FAIDX file' );
 file_exists_ok($faidx_file);
+
+my $dummy_genome_file = input_file('dummy_genome.fa');
+link( $genome_file, $dummy_genome_file );
+file_exists_ok($dummy_genome_file);
+
+ok(
+    my $dummy_faidx_file =
+      PipelineMiRNA::Clusters->get_faidx_file($dummy_genome_file),
+    'Can get unexisting FAIDX file'
+);
+file_exists_ok($dummy_faidx_file);
+my $contents1 = slurp_file($faidx_file);
+my $contents2 = slurp_file($dummy_faidx_file);
+is( $contents1, $contents2, 'get_faidx_file created the correct index file' );
 
 ## get_islands() ##
 
