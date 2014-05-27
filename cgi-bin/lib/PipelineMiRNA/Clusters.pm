@@ -20,20 +20,21 @@ sub get_islands {
     my ( $bamfile, $mindepth, $expected_faidx, $read_group ) = @args;
 
     # go chr by chr, using the .fai index file to get the chr names
-    my @chrs = ();
-    open( FAI, "$expected_faidx" );
-    my @fields = ();
-
+    my @chrs       = ();
+    my @fields     = ();
     my $genome_sum = 0;
     my %fai_hash   = ();
-    while (<FAI>) {
+
+    open( my $FAI, '<', "$expected_faidx" )
+        or die "Error when opening $expected_faidx: $!";
+    while (<$FAI>) {
         chomp;
         @fields = split( "\t", $_ );
         push( @chrs, $fields[0] );
         $fai_hash{ $fields[0] } = $fields[1];
         $genome_sum += $fields[1];
     }
-    close FAI;
+    close $FAI;
 
     my @islands = ();
 
@@ -42,23 +43,22 @@ sub get_islands {
 
     my $island;
 
-    my $mindpad;
-
     foreach my $chr (@chrs) {
 
         $last_start = -1;
         $last_ok    = -1;
+
+        my $samtools_cmd = '';
         if ($read_group) {
-            open( DEPTH,
-"samtools view -F 0x4 -r $read_group -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |"
-            );
+            $samtools_cmd =
+"samtools view -F 0x4 -r $read_group -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |";
         }
         else {
-            open( DEPTH,
-"samtools view -F 0x4 -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |"
-            );
+            $samtools_cmd =
+"samtools view -F 0x4 -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |";
         }
-        while (<DEPTH>) {
+        open( my $DEPTH, $samtools_cmd );
+        while (<$DEPTH>) {
             chomp;
 
             @fields = split( "\t", $_ );
@@ -76,25 +76,22 @@ sub get_islands {
                 else {
                     ## close the previous island, open a new one
 
-                    $island = "$chr" . ":" . "$last_start" . "-" . "$last_ok";
+                    $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
                     push( @islands, $island );
                     $last_start = $fields[1];
                     $last_ok    = $fields[1];
                 }
             }
         }
-        close DEPTH;
+        close $DEPTH;
         ## close the last one, if there is one
-        unless ( $last_ok == -1 ) {
-
-            $island = "$chr" . ":" . "$last_start" . "-" . "$last_ok";
+        if ( $last_ok != -1 ) {
+            $island = "$chr" . ':' . "$last_start" . '-' . "$last_ok";
             push( @islands, $island );
         }
 
     }
-    warn(" Done\n");
     return @islands;
-
 }
 
 =method merge_clusters
@@ -116,27 +113,29 @@ sub merge_clusters {
     my $last_padded_stop;
     my $this_padded_start;
     my $this_padded_stop;
-    my $last_chr  = "null";
+    my $last_chr  = 'null';
     my %chr_sizes = ();
     ## grab the chrom sizes, which you need to ensure that you don't pad off the end of the chroms
     # chrom sizes in column 1 from the fai file
-    my $fai_file = "$genome" . "\.fai";
-    unless ( -e $fai_file ) {
+    my $fai_file = "$genome" . '.fai';
+    if (! -e $fai_file ) {
         warn(
 "\nFatal in sub-routine get_folding_regions : expected fai file $fai_file does not exist\n"
         );
         exit;
     }
     my @fai_fields = ();
-    open( my $FAI, "$fai_file" );
+    open( my $FAI,  '<', "$fai_file" )
+        or die "Error when opening $fai_file: $!";
     while (<$FAI>) {
         @fai_fields = split( "\t", $_ );
         $chr_sizes{ $fai_fields[0] } = $fai_fields[1];
     }
-    close $FAI;
+    close $FAI
+        or die "Error when closing $fai_file: $!";
     my $this_chr;
     my $entry;
-    foreach my $in_clus (@$input) {
+    foreach my $in_clus (@{$input}  ) {
         if ( $in_clus =~ /^(\S+):(\d+)-(\d+)$/ ) {
             $this_chr          = $1;
             $this_start        = $2;
@@ -151,14 +150,14 @@ sub merge_clusters {
             }
 
             # special first case
-            if ( $last_chr eq "null" ) {
+            if ( $last_chr eq 'null' ) {
                 $last_padded_start = $this_padded_start;
                 $last_padded_stop  = $this_padded_stop;
                 $last_start        = $this_start;
                 $last_stop         = $this_stop;
             }
             elsif ( $this_chr ne $last_chr ) {
-                $entry = "$last_chr" . ":" . "$last_start" . "-" . "$last_stop";
+                $entry = "$last_chr" . ':' . "$last_start" . '-' . "$last_stop";
                 push( @output, $entry );
                 $last_padded_start = $this_padded_start;
                 $last_padded_stop  = $this_padded_stop;
@@ -167,9 +166,10 @@ sub merge_clusters {
             }
             else {
                 if ( $this_padded_start > $last_padded_stop ) {
-                    ## no overlap between these padded clusters.  Report the last one, trimming off its dangling pads
+                    ## no overlap between these padded clusters.
+                    ## Report the last one, trimming off its dangling pads
                     $entry =
-                      "$this_chr" . ":" . "$last_start" . "-" . "$last_stop";
+                      "$this_chr" . ':' . "$last_start" . '-' . "$last_stop";
                     push( @output, $entry );
                     $last_padded_start = $this_padded_start;
                     $last_padded_stop  = $this_padded_stop;
@@ -203,7 +203,7 @@ sub merge_clusters {
         }
     }
     ## last one
-    $entry = "$last_chr" . ":" . "$last_start" . "-" . "$last_stop";
+    $entry = "$last_chr" . ':' . "$last_start" . '-' . "$last_stop";
     push( @output, $entry );
     return @output;
 }
