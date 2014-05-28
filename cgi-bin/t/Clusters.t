@@ -106,3 +106,18 @@ is_deeply(
     \@get_sequences_from_clusters_expected,
     'get_sequences_from_clusters returns the correct values'
 );
+
+## get_clustered_sequences_from_bam() ##
+
+ok(
+    my @get_clustered_sequences_from_bam_output =
+      PipelineMiRNA::Clusters->get_clustered_sequences_from_bam(
+        $bamfile, $genome_file, $DEFAULT_mindepth, $DEFAULT_pad
+      ),
+    'Can call get_clustered_sequences_from_bam()'
+);
+is_deeply(
+    \@get_clustered_sequences_from_bam_output,
+    \@get_sequences_from_clusters_expected,
+    'get_clustered_sequences_from_bam returns the correct values'
+);

@@ -7,6 +7,20 @@ use warnings;
 
 use PipelineMiRNA::Utils;
 
+=method get_clustered_sequences_from_bam
+
+Given a BAM file
+
+=cut
+
+sub get_clustered_sequences_from_bam {
+    my ( $self, @args ) = @_;
+    my ( $bamfile, $genome, $mindepth, $pad ) = @args;
+    my @clusters = $self->get_clusters( $bamfile, $genome, $mindepth, $pad );
+    my @sequences = $self->get_sequences_from_clusters( $genome, \@clusters );
+    return @sequences;
+}
+
 =method get_sequences_from_clusters
 
 Returns the sequences extracted from the given genome
