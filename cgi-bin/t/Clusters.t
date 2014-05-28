@@ -67,3 +67,30 @@ ok(
 my @merge_clusters_expected = ( ['ChrC', 6, 77], ['ChrC', 292, 515] );
 is_deeply( \@merge_clusters_output, \@merge_clusters_expected,
     'merge_clusters returns the correct values' );
+
+## get_sequences_from_clusters() ##
+
+my @get_sequences_from_clusters_expected1 = (
+    'ChrC__6-77',
+'GAACGACGGGAATTGAACCCGCGATGGTGAATTCACAATCCACTGCCTTAATCCACTTGGCTACATCCGCCCCTACG'
+);
+my @get_sequences_from_clusters_expected2 = (
+    'ChrC__292-515',
+'AAAACGAGTAATATAAGCCCTCTTTCTTATTTAAAGAAGGCTTATATTGCTCGTTTTTTACTAAACTAGATCTAGACTAACACTAACGAATTATCCATTTGTAGATGGAGCCTCAACAGCAGCTAGGTCTAGAGGGAAGTTGTGAGCATTACGTTCATGCATAACTTCCATACCAAGGTTAGCACGGTTAATAATATCAGCCCAAGTATTAATAACACGTCCTTGACTATCAACTACTGATTGGTTGAAATTGAAACCATTTAGGTTGAAAGCCATAGTACTAATACCTAAAGCAGTAAACCAAATACCTACTACCGGCCAAGCCGCTAAGAAGAAATGTAAAGAACGAGAATTGTTGAAACTAGCATATTGGAAAATCAATCGGCCAAAATAACCGTGAGCAGCTACAATGTTGTAAGTTTCTTCTTCTTGCCCGAATCTGTAACCTTCATTAGCAGATTCATTTTCTGTGGTTTCCCTGATCAAACTAGAAGTTACCAAGGAACCATGCATAG'
+);
+my @get_sequences_from_clusters_expected = (
+    \@get_sequences_from_clusters_expected1,
+    \@get_sequences_from_clusters_expected2
+);
+ok(
+    my @get_sequences_from_clusters_output =
+      PipelineMiRNA::Clusters->get_sequences_from_clusters(
+        $genome_file, \@merge_clusters_output
+      ),
+    'Can call get_sequences_from_clusters()'
+);
+is_deeply(
+    \@get_sequences_from_clusters_output,
+    \@get_sequences_from_clusters_expected,
+    'get_sequences_from_clusters returns the correct values'
+);

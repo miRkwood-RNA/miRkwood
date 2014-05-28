@@ -5,6 +5,33 @@ package PipelineMiRNA::Clusters;
 use strict;
 use warnings;
 
+use PipelineMiRNA::Utils;
+
+=method get_sequences_from_clusters
+
+Returns the sequences extracted from the given genome
+based on the given clusters.
+
+=cut
+
+sub get_sequences_from_clusters {
+    my ( $self,   @args )     = @_;
+    my ( $genome, $clusters ) = @args;
+    my @clusters = @{$clusters};
+
+    my %sequences_hash = PipelineMiRNA::Utils::multifasta_to_hash($genome);
+    my @result;
+    foreach my $cluster (@clusters) {
+        my ( $chr, $start, $stop ) = @{$cluster};
+        my $original_seq = $sequences_hash{$chr};
+        my $sequence     = substr $original_seq, $start, $stop;
+        my $new_name     = $chr . "__$start-$stop";
+        my @res          = ( $new_name, $sequence );
+        push @result, \@res;
+    }
+    return @result;
+}
+
 =method get_faidx_file
 
 
