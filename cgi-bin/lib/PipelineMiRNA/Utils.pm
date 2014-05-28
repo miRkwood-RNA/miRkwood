@@ -92,6 +92,7 @@ sub parse_multi_fasta {
             chomp $line;
             $nameSeq = $line;
             $nameSeq =~ s/\s/_/xmsg;
+            $nameSeq =~ s/>//xmsg;
 
             $current_seq = $EMPTY;
         }

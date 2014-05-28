@@ -153,7 +153,7 @@ sub run_rnalfold {
     my $output_file   = shift @args;
     open( my $TEMPFILE_FH, '>', $temp_file )
       or die "Error when opening tempfile -$temp_file-: $!";
-    print {$TEMPFILE_FH} "$sequence_name\n$sequence"
+    print {$TEMPFILE_FH} ">$sequence_name\n$sequence"
       or die "Error when writing in $temp_file: $!";
     close $TEMPFILE_FH
       or die "Error when closing $temp_file: $!";

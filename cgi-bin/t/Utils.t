@@ -22,8 +22,8 @@ ok( my @fasta_array = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH;
 
-my @expected11 = ('>fasta11', 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC');
-my @expected12 = ('>fasta12', 'ACTGAGATCGCAACTAATTTATTTATTCGCTCGTATAATGTATACATTAGATAGAGGCCTAGCCTCTTAGTCGAAAAGCCC');
+my @expected11 = ('fasta11', 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC');
+my @expected12 = ('fasta12', 'ACTGAGATCGCAACTAATTTATTTATTCGCTCGTATAATGTATACATTAGATAGAGGCCTAGCCTCTTAGTCGAAAAGCCC');
 my @expected1 = (\@expected11, \@expected12);
 is_deeply( \@fasta_array, \@expected1, 'FASTA parsing with parse_multi_fasta is ok' );
 
@@ -35,7 +35,7 @@ ok( my @fasta_array2 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH2),
 close $INPUT_FH2;
 
 my @expected21 =
-  ( '>fasta1_Drosophila_simulans_strain_Eden32', 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC' );
+  ( 'fasta1_Drosophila_simulans_strain_Eden32', 'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC' );
 my @expected2 = (\@expected21);
 is_deeply( \@fasta_array2, \@expected2,
            'Parsing FASTA with long header with parse_multi_fasta ok' );
@@ -46,7 +46,7 @@ open( my $INPUT_FH3, '<', $fastaFile3 ) or die "Fail to open: $!";
 ok( my @fasta_array3 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH3),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH3;
-my @expected31 = ( '>gi|425626932|gb|JX648278.1|_Drosophila_simulans_strain_Eden32',
+my @expected31 = ( 'gi|425626932|gb|JX648278.1|_Drosophila_simulans_strain_Eden32',
                    'AATGTGCCAATCCCAATGTTAACCAAAAACTAAAAAAGTGAAACGAACATTGTC');
 my @expected3 = (\@expected31);
 is_deeply( \@fasta_array3, \@expected3,
@@ -58,10 +58,10 @@ open( my $INPUT_FH4, '<', $fastaFile4 ) or die "Fail to open: $!";
 ok( my @fasta_array4 = PipelineMiRNA::Utils::parse_multi_fasta($INPUT_FH4),
     'Can call parse_multi_fasta()' );
 close $INPUT_FH4;
-my @expected41 = ('>contig15750',
+my @expected41 = ('contig15750',
                   'aatgagtaagataaattgctaattaaatgcgacgagaggttcatacatgaagagaagagtgctcttattatgtagccaaggatgaattgcctaatgacagctcaagtcgtttaaaaaacgactctttgttggtttattaggcgttcatttcttgactgacttaatcggctttttttcatcatgttagatcttctcaacttgttacgagcatatcgttcaatattttcatagtcttcttgtaatatgactttgtcaagtcatttcatatagctacttatgtgtagctattattgtcataattattatatagattatatacttaaagagagacttgtaagggatttaagatgtttagataatcatgtaacattcttgtcaagttatgatcaagcattat'
                   );
-my @expected42 = ('>contig15916',
+my @expected42 = ('contig15916',
                   'aaaaaacctcacatacagcccccgtatctctctctctctataattgataggctattttcttctctctctagaaatgagcttacatggcatgcagatccattgcttatttataggtatagatacagcagatatatattatttattcatatatgtgtatcgaggtatcggaagaagaaattttcattgttacggcggttttctgattcgcttggtgcaggtcgggaacggcttggccgacggtttcatatttgtctccactgtgtgaaacctcgtagcttgagtactgtcctgccttgcatcaactgaatctgaaccgatgtaaatgatctgtgaccggtgtaggagaattggatgaatattgttggagat'
                   );
 
