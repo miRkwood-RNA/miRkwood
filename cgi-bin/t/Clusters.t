@@ -68,6 +68,18 @@ my @merge_clusters_expected = ( ['ChrC', 6, 77], ['ChrC', 292, 515] );
 is_deeply( \@merge_clusters_output, \@merge_clusters_expected,
     'merge_clusters returns the correct values' );
 
+## get_clusters() ##
+
+ok(
+    my @get_clusters_output =
+      PipelineMiRNA::Clusters->get_clusters(
+        $bamfile, $genome_file, $DEFAULT_mindepth, $DEFAULT_pad
+      ),
+    'Can call get_clusters()'
+);
+is_deeply(\@get_clusters_output, \@merge_clusters_expected,
+    'get_clusters returns the correct values' );
+
 ## get_sequences_from_clusters() ##
 
 my @get_sequences_from_clusters_expected1 = (

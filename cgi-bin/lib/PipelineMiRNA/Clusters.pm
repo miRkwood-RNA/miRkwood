@@ -32,6 +32,29 @@ sub get_sequences_from_clusters {
     return @result;
 }
 
+=method get_clusters
+
+Retrieve the clusters from the given BAM, genome
+and clustering options.
+
+Serves essentially as a wrapper around
+- get_faidx_file
+- get_islands
+- merge_clusters
+
+ Usage : my @clusters = get_clusters( $bamfile, $genome_file, $mindepth, $pad)
+
+=cut
+
+sub get_clusters {
+    my ( $self, @args ) = @_;
+    my ( $bamfile, $genome, $mindepth, $pad ) = @args;
+    my $expected_faidx = $self->get_faidx_file($genome);
+    my @islands = $self->get_islands( $bamfile, $mindepth, $expected_faidx );
+    my @clusters = $self->merge_clusters( \@islands, $pad,  $genome );
+    return @clusters;
+}
+
 =method get_faidx_file
 
 
