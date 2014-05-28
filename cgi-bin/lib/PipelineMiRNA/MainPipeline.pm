@@ -99,7 +99,7 @@ sub compute_candidates_for_sequence {
     my $sequence_tuple = shift @args;
     my ($name, $sequence) = @{$sequence_tuple};
     my $cfg = PipelineMiRNA->CONFIG();
-    my $candidates = process_sequence( $sequence_dir, $name, $sequence, '+' );
+    my $candidates = get_raw_candidates_from_sequence( $sequence_dir, $name, $sequence, '+' );
     my @candidates_hash1 = @{$candidates};
     my @candidates_hash;
 
@@ -108,7 +108,7 @@ sub compute_candidates_for_sequence {
         my $reversed_sequence =
           PipelineMiRNA::Utils::reverse_complement($sequence);
         my $candidates2 =
-          process_sequence( $sequence_dir, $name, $reversed_sequence, '-' );
+          get_raw_candidates_from_sequence( $sequence_dir, $name, $reversed_sequence, '-' );
         my @candidates_hash2 = @{$candidates2};
         @candidates_hash = sort { $a->{start} <=> $b->{start} } ( @candidates_hash1, @candidates_hash2 );
     }
@@ -183,16 +183,17 @@ sub mfei_below_threshold {
     return $mfei < $threshold;
 }
 
-=method process_sequence
+=method get_raw_candidates_from_sequence
 
-Process a single sequence
+Process a single sequence record (as a couple <name, sequence>)
+and return the raw candidates per RNALfold/RNAstemloop.
 
  Usage : process_sequence( $sequence_dir, $name, $sequence );
- Return: -
+ Return: a list of candidates (as hashes)
 
 =cut
 
-sub process_sequence {
+sub get_raw_candidates_from_sequence {
 	my @args         = @_;
 	my $sequence_dir = shift @args;
 	my $name         = shift @args;
