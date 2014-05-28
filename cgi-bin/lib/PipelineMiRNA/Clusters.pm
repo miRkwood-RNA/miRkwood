@@ -65,7 +65,7 @@ sub get_clusters {
     my ( $bamfile, $genome, $mindepth, $pad ) = @args;
     my $expected_faidx = $self->get_faidx_file($genome);
     my @islands = $self->get_islands( $bamfile, $mindepth, $expected_faidx );
-    my @clusters = $self->merge_clusters( \@islands, $pad,  $genome );
+    my @clusters = $self->merge_clusters( \@islands, $pad, $genome );
     return @clusters;
 }
 
@@ -161,7 +161,7 @@ sub process_samtools_depth {
             }
             else {
                 ## close the previous island, open a new one
-                my @island = ($chr, $last_start, $last_ok);
+                my @island = ( $chr, $last_start, $last_ok );
                 push( @islands, \@island );
                 $last_start = $fields[1];
                 $last_ok    = $fields[1];
@@ -170,7 +170,7 @@ sub process_samtools_depth {
     }
     ## close the last one, if there is one
     if ( $last_ok != -1 ) {
-        my @island = ($chr, $last_start, $last_ok);
+        my @island = ( $chr, $last_start, $last_ok );
         push( @islands, \@island );
     }
     return @islands;
@@ -202,7 +202,7 @@ sub merge_clusters {
     my $fai_file = "$genome" . '.fai';
     if ( !-e $fai_file ) {
         warn(
-"\nFatal in sub-routine get_folding_regions : expected fai file $fai_file does not exist\n"
+"\nFatal in sub-routine merge_clusters : expected fai file $fai_file does not exist\n"
         );
         exit;
     }
@@ -218,7 +218,7 @@ sub merge_clusters {
     my $this_chr;
 
     foreach my $in_clus ( @{$input} ) {
-        ($this_chr, $this_start, $this_stop) = @{$in_clus};
+        ( $this_chr, $this_start, $this_stop ) = @{$in_clus};
 
         $this_padded_start = $this_start - $pad;
         if ( $this_padded_start < 1 ) {
@@ -238,7 +238,7 @@ sub merge_clusters {
             $last_stop         = $this_stop;
         }
         elsif ( $this_chr ne $last_chr ) {
-            my @entry = ($last_chr, $last_start, $last_stop);
+            my @entry = ( $last_chr, $last_start, $last_stop );
             push( @output, \@entry );
             $last_padded_start = $this_padded_start;
             $last_padded_stop  = $this_padded_stop;
@@ -249,7 +249,7 @@ sub merge_clusters {
             if ( $this_padded_start > $last_padded_stop ) {
                 ## no overlap between these padded clusters.
                 ## Report the last one, trimming off its dangling pads
-                my @entry = ($this_chr, $last_start, $last_stop);
+                my @entry = ( $this_chr, $last_start, $last_stop );
                 push( @output, \@entry );
                 $last_padded_start = $this_padded_start;
                 $last_padded_stop  = $this_padded_stop;
@@ -275,9 +275,9 @@ sub merge_clusters {
         }
         $last_chr = $this_chr;
 
-    } # foreach locus
+    }    # foreach locus
     ## last one
-    my @entry = ($last_chr, $last_start, $last_stop);
+    my @entry = ( $last_chr, $last_start, $last_stop );
     push( @output, \@entry );
     return @output;
 }
