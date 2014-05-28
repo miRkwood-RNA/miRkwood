@@ -14,6 +14,9 @@ BEGIN {
 }
 require_ok('PipelineMiRNA::Clusters');
 
+my $DEFAULT_mindepth = 20;
+my $DEFAULT_pad      = 100;
+
 my $bamfile = input_file('Clusters.reads-Athaliana_167-ChrC.bam');
 file_exists_ok($bamfile);
 
@@ -45,7 +48,7 @@ unlink ($dummy_faidx_file, $dummy_genome_file);
 
 ok(
     my @get_islands_output =
-      PipelineMiRNA::Clusters->get_islands( $bamfile, 20, $faidx_file ),
+      PipelineMiRNA::Clusters->get_islands( $bamfile, $DEFAULT_mindepth, $faidx_file ),
     'Can call get_islands()'
 );
 my @get_islands_expected =
@@ -57,7 +60,7 @@ is_deeply( \@get_islands_output, \@get_islands_expected,
 
 ok(
     my @merge_clusters_output = PipelineMiRNA::Clusters->merge_clusters(
-        \@get_islands_output, 100, $genome_file
+        \@get_islands_output, $DEFAULT_pad, $genome_file
     ),
     'Can call merge_clusters()'
 );
