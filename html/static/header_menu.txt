@@ -4,6 +4,6 @@
      <a href="/mirkwood/">home</a>
      <a href="/cgi-bin/mirkwood/web_scripts/interface.pl">web server</a>
      <a href="/mirkwood/help.php">help</a>
-     <a href="/cgi-bin/mirkwood/web_scripts/id.pl">retrieve result with an ID</a>
+     <a href="/mirkwood/id.php">retrieve result with an ID</a>
    </div>
 </div>
