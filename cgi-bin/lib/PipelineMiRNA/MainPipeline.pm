@@ -58,7 +58,6 @@ sub main_entry {
 
     my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
     PipelineMiRNA->CONFIG_FILE($run_options_file);
-    my $cfg = PipelineMiRNA->CONFIG();
 
     PipelineMiRNA::Programs::init_programs();
 
@@ -66,53 +65,73 @@ sub main_entry {
 
     my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
     mkdir $workspace_dir;
-	my $sequence_dir_name = 0;
+
+    my $sequence_dir_name = 0;
     foreach my $item (@sequences_array){
         my ($name, $sequence) = @{$item};
-		debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
-		$sequence_dir_name++;
-		my $sequence_dir = File::Spec->catdir( $workspace_dir, $sequence_dir_name );
-		mkdir $sequence_dir;
-
-		my $res = process_sequence( $sequence_dir, $name, $sequence, '+' );
-		my @hash1 = @{$res};
-		my @hash;
-
-		if ( $cfg->param('options.strands') ) {
-			debug( "Processing the other strand", PipelineMiRNA->DEBUG() );
-			my $reversed_sequence =
-			  PipelineMiRNA::Utils::reverse_complement($sequence);
-			my $res2 =
-			  process_sequence( $sequence_dir, $name, $reversed_sequence, '-' );
-			my @hash2 = @{$res2};
-			@hash = sort { $a->{start} <=> $b->{start} } ( @hash1, @hash2 );
-		}
-		else {
-			@hash = sort { $a->{start} <=> $b->{start} } ( @hash1 );
-		}
-
-        if ( $cfg->param('options.mfe') ) {
-            debug('Select only sequences with MFEI < -0.6', PipelineMiRNA->DEBUG() );
-            @hash = grep { mfei_below_threshold($_, -0.6) } @hash;
-        }
-
-		my %candidates_hash;
-		if (@hash) {
-            debug("Merging candidates for sequence $name", PipelineMiRNA->DEBUG() );
-			%candidates_hash = merge_candidates( \@hash );
-		}
-		else {
-		    %candidates_hash = ();
-		}
-
-		create_directories( \%candidates_hash, $sequence_dir );
-	}
+        debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
+        $sequence_dir_name++;
+        my $sequence_dir = File::Spec->catdir( $workspace_dir, $sequence_dir_name );
+        mkdir $sequence_dir;
+        my %candidates_hash = compute_candidates_for_sequence($sequence_dir, $item);
+        create_directories( \%candidates_hash, $sequence_dir );
+    }
 	process_tests($job_dir);
 	debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
     mark_job_as_finished($job_dir);
     debug("Writing finish file", PipelineMiRNA->DEBUG() );
 	return;
 }
+
+=method compute_candidates_for_sequence
+
+Computes the candidates of the given sequence (as a couple <name, sequence>)
+using the given workspace.
+
+ Usage : my %candidates_hash = compute_candidates_for_sequence($sequence_dir, $seq_record);
+ Return: A hash of candidates
+
+=cut
+
+sub compute_candidates_for_sequence {
+    my @args = @_;
+    my $sequence_dir = shift @args;
+    my $sequence_tuple = shift @args;
+    my ($name, $sequence) = @{$sequence_tuple};
+    my $cfg = PipelineMiRNA->CONFIG();
+    my $candidates = process_sequence( $sequence_dir, $name, $sequence, '+' );
+    my @candidates_hash1 = @{$candidates};
+    my @candidates_hash;
+
+    if ( $cfg->param('options.strands') ) {
+        debug( "Processing the other strand", PipelineMiRNA->DEBUG() );
+        my $reversed_sequence =
+          PipelineMiRNA::Utils::reverse_complement($sequence);
+        my $candidates2 =
+          process_sequence( $sequence_dir, $name, $reversed_sequence, '-' );
+        my @candidates_hash2 = @{$candidates2};
+        @candidates_hash = sort { $a->{start} <=> $b->{start} } ( @candidates_hash1, @candidates_hash2 );
+    }
+    else {
+        @candidates_hash = sort { $a->{start} <=> $b->{start} } ( @candidates_hash1 );
+    }
+
+    if ( $cfg->param('options.mfe') ) {
+        debug('Select only sequences with MFEI < -0.6', PipelineMiRNA->DEBUG() );
+        @candidates_hash = grep { mfei_below_threshold($_, -0.6) } @candidates_hash;
+    }
+
+    my %candidates_hash;
+    if (@candidates_hash) {
+        debug("Merging candidates for sequence $name", PipelineMiRNA->DEBUG() );
+        %candidates_hash = merge_candidates( \@candidates_hash );
+    }
+    else {
+        %candidates_hash = ();
+    }
+    return %candidates_hash;
+}
+
 
 =method get_sequences
 
