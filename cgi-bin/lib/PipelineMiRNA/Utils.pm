@@ -108,6 +108,31 @@ sub parse_multi_fasta {
     return @array;
 }
 
+=method multifasta_to_hash
+
+Parse a multifasta and returns it as an hash
+
+ Usage : my %sequences_hash = $self->multifasta_to_hash($sequence_file);
+ Input : A multi-fasta sequence file name
+ Return: An hash <name->sequence>
+
+=cut
+
+sub multifasta_to_hash {
+    my (@args) = @_;
+    my $genome = shift @args;
+    open my $INPUT_FH, '<', $genome
+      or die "Error when opening sequences -$genome-: $!";
+    my @sequences_array = parse_multi_fasta($INPUT_FH);
+    close $INPUT_FH;
+    my %sequence_hash;
+    foreach my $item (@sequences_array) {
+        my ( $name, $sequence ) = @{$item};
+        $sequence_hash{$name} = $sequence;
+    }
+    return %sequence_hash;
+}
+
 =method sanitize_sequence_name
 
 =cut
