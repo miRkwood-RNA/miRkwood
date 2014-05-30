@@ -1,0 +1,16 @@
+#!/bin/sh
+# Deploy miRkwood from local to BioInfo
+
+SERVER=root@bioinfo.lifl.fr
+
+HTML_BASE_DIR=/bio1/www/html
+CGI_BASE_DIR=/bio1/www/cgi-bin
+
+HTML_DIR=$HTML_BASE_DIR/mirkwood
+CGI_DIR=/CGI_BASE_DIR/mirkwood
+
+EXCLUDE="--exclude=results/*"
+
+rsync -aEzv --cvs-exclude $EXCLUDE $HTML_DIR $SERVER:$HTML_BASE_DIR
+rsync -aEzv --cvs-exclude $CGI_DIR $SERVER:$CGI_BASE_DIR
+
