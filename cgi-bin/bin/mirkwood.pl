@@ -77,7 +77,7 @@ PipelineMiRNA->CONFIG_FILE($run_options_file);
 PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $mfei, $shuffles,
     $align, "", $species_mask, $varna );
 
-PipelineMiRNA::MainPipeline::main_entry($abs_output_folder);
+PipelineMiRNA::MainPipeline::fasta_pipeline($abs_output_folder);
 
 unless ($no_process) {
 	my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );

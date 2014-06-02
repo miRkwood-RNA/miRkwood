@@ -41,17 +41,17 @@ sub setup_logging {
     return;
 }
 
-=method main_entry
+=method fasta_pipeline
 
-Run the pipeline.
+Run the pipeline in FASTA mode
 
- Usage : PipelineMiRNA::MainPipeline::main_entry( $idirJob );
- Input : The job directory.
+ Usage : PipelineMiRNA::MainPipeline::fasta_pipeline( $idirJob );
+ Input : The job directory
  Return: -
 
 =cut
 
-sub main_entry {
+sub fasta_pipeline {
     my ( $job_dir  ) = @_;
     setup_logging($job_dir);
     my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
