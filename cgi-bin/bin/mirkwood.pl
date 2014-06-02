@@ -75,7 +75,7 @@ my $run_options_file =
   PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
 PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $mfei, $shuffles,
-    $align, "", $species_mask, $varna );
+    $align, "", $species_mask, $varna, 'fasta' );
 
 PipelineMiRNA::MainPipeline::fasta_pipeline($abs_output_folder);
 
