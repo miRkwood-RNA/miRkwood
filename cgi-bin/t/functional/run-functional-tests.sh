@@ -27,7 +27,7 @@ plan 3
 EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg"
 
 rm -rf $BASEDIR/output/filtercds/ && mkdir -p $BASEDIR/output/filtercds/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/filtercds/input_sequences.fas
-perl -I$ROOTDIR/lib $ROOTDIR/scripts/filterCDS.pl $ROOTDIR/data/ $BASEDIR/output/filtercds/ ATpepTAIR10
+perl -I$ROOTDIR/lib $ROOTDIR/scripts/filterCDS.pl $ROOTDIR/data/ $BASEDIR/output/filtercds/ Arabidopsis_thaliana
 ok 'FilterCDS' [ `diff $EXCLUDES -qr $BASEDIR/expected/filtercds/ $BASEDIR/output/filtercds/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline1/
@@ -36,7 +36,7 @@ DIFF=$(diff $EXCLUDES -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullp
 ok 'Full pipeline' [ $DIFF -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline2/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --no-process --species-mask ATpepTAIR10
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --no-process --species-mask Arabidopsis_thaliana
 DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l)
 ok 'Full pipeline with FilteringCDS' [ $DIFF -eq 0 ]
 
