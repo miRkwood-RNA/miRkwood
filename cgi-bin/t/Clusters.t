@@ -121,3 +121,14 @@ is_deeply(
     \@get_sequences_from_clusters_expected,
     'get_clustered_sequences_from_bam returns the correct values'
 );
+
+## extend_cluster() ##
+my @extend_cluster_input1 = ( 'Chr1', 200, 250 );
+ok(
+    my @extend_cluster_output1 =
+      PipelineMiRNA::Clusters->extend_cluster( \@extend_cluster_input1 ),
+    'Can call extend_cluster()'
+);
+my @extend_cluster_expected1 = ( 'Chr1', 75, 375 );
+is_deeply( \@extend_cluster_output1, \@extend_cluster_expected1,
+    'extend_cluster returns the correct values' );

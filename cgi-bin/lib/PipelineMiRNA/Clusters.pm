@@ -31,12 +31,12 @@ based on the given clusters.
 sub get_sequences_from_clusters {
     my ( $self,   @args )     = @_;
     my ( $genome, $clusters ) = @args;
-    my $regions = $self->extend_clusters($clusters);
-    my @regions = @{$regions};
+    my @clusters = @{$clusters};
     my %sequences_hash = PipelineMiRNA::Utils::multifasta_to_hash($genome);
     my @result;
-    foreach my $cluster (@regions) {
+    foreach my $cluster (@clusters) {
         my ( $chr, $start, $stop ) = @{$cluster};
+        #$self->extend_cluster($cluster);
         my $original_seq = $sequences_hash{$chr};
         my $sequence     = substr $original_seq, $start, $stop;
         my $new_name     = $chr . "__$start-$stop";
@@ -67,19 +67,6 @@ sub get_clusters {
     my @islands = $self->get_islands( $bamfile, $mindepth, $expected_faidx );
     my @clusters = $self->merge_clusters( \@islands, $pad, $genome );
     return @clusters;
-}
-
-=method extend_clusters
-
-Extend the clusters to appropriate regions
-
-=cut
-
-sub extend_clusters {
-    my ( $self, @args ) = @_;
-    my $clusters = shift @args;
-    my @clusters = @{$clusters};
-    return \@clusters;
 }
 
 =method get_faidx_file
@@ -293,6 +280,30 @@ sub merge_clusters {
     my @entry = ( $last_chr, $last_start, $last_stop );
     push( @output, \@entry );
     return @output;
+}
+
+=method extend_cluster
+
+Extend the cluster into an appropriate region
+
+=cut
+
+sub extend_cluster {
+    my ( $self, @args ) = @_;
+    my $cluster = shift @args;
+    my ( $chr, $start, $stop ) = @{$cluster};
+    my $locus_size = $stop - $start + 1;
+    my $get_size = 300;
+    # get the coordinates .. centered on the middle of the cluster
+    # first get the middle of the cluster
+    my $middle = int(($locus_size / 2) + $start);
+    my $get_start = int ($middle - ($get_size / 2));
+    my $get_stop = int ($middle + ($get_size / 2));
+    # ensure that the get_start is not less than 1
+    if($get_start < 1) {
+        $get_start = 1;
+    }
+    return ( $chr, $get_start, $get_stop );
 }
 
 1;
