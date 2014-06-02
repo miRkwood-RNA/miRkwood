@@ -1,0 +1,22 @@
+
+--------
+#ID	contig15916__19-38
+#WE	ID1,20,-17.40,0,10,50,3,18,false,-1,true,0,true,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,14,false,0,6.29,4.44,2.67,false,false,false,false,false,true,true,true,false,false,false,true,false,false,false,false,2,1,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0,0,N,N,N,N,N,N,true
+#PR	Prediction	true
+#SC	Score	0.9964767186596731
+#PM	uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
+#SS	(((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
+#MM	                   cgcuuggugcaggucggga
+
+
+
+--------
+#ID	contig15916__102-122
+#WE	
+#PR	Prediction	true
+#SC	Score	0.9999991228463323
+#PM	uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
+#SS	(((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
+#MM	                                                                                                      cugccuugcaucaacugaau
+
+

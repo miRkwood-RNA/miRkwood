@@ -1,0 +1,11 @@
+
+--------
+#ID	contig15750__40-59
+#WE	
+#PR	Prediction	false
+#SC	Score	0.9996836620971082
+#PM	gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
+#SS	((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
+#MM	                                        agccaaggaugaauugccu
+
+
