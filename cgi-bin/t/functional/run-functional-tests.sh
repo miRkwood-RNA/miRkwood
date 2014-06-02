@@ -21,7 +21,7 @@ fi
 
 
 # Testing
-plan 3
+plan 4
 
 ### Testing script of the PipelineMiRNA
 EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg"
@@ -40,6 +40,7 @@ perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeli
 DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l)
 ok 'Full pipeline with FilteringCDS' [ $DIFF -eq 0 ]
 
-#rm -rf $BASEDIR/output/fullpipeline3/ && mkdir -p $BASEDIR/output/fullpipeline3/ && cp $BASEDIR/data/sequenceSomething.fas $BASEDIR/output/fullpipeline3/sequenceUpload.fas
-#perl -I$ROOTDIR/lib $ROOTDIR/scripts/execute_scripts.pl UNchecked  mfeiChecked randfoldChecked alignChecked $BASEDIR/output/fullpipeline3/ ATpepTAIR10
-#ok 'Full pipeline with alignment' [ `diff $EXCLUDES -qr $BASEDIR/output/fullpipeline3/ $BASEDIR/expected/fullpipeline3/ | wc -l` -eq 0 ]
+rm -rf $BASEDIR/output/fullpipeline-bam/
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa  --no-process
+DIFF=$(diff $EXCLUDES -I 'fullpipeline-bam' -qr $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
+ok 'Full BAM pipeline' [ $DIFF -eq 0 ]
