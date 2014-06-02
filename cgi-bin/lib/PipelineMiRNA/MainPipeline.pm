@@ -41,6 +41,26 @@ sub setup_logging {
     return;
 }
 
+=method init_pipeline
+
+Initialise the pipeline setup
+
+ Usage : init_pipeline($job_dir)
+ Input : The job directory
+ Return: -
+
+=cut
+
+sub init_pipeline {
+    my @args = @_;
+    my $job_dir = shift @args;
+    setup_logging($job_dir);
+    my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
+    PipelineMiRNA->CONFIG_FILE($run_options_file);
+    PipelineMiRNA::Programs::init_programs();
+    return;
+}
+
 =method fasta_pipeline
 
 Run the pipeline in FASTA mode
@@ -53,10 +73,7 @@ Run the pipeline in FASTA mode
 
 sub fasta_pipeline {
     my ( $job_dir  ) = @_;
-    setup_logging($job_dir);
-    my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
-    PipelineMiRNA->CONFIG_FILE($run_options_file);
-    PipelineMiRNA::Programs::init_programs();
+    init_pipeline($job_dir);
     my @sequences_array = get_sequences($job_dir);
     run_pipeline_on_sequences($job_dir, \@sequences_array);
     return;
