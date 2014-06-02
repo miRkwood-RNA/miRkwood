@@ -45,27 +45,36 @@ sub setup_logging {
 
 Run the pipeline.
 
- Usage : PipelineMiRNA::MainPipeline::main_entry( $ifilterCDS, $imfei, $irandfold, $ialign, $idirJob, $iplant );
- Input : Booleans for pipeline options, job directory, plant identifier
+ Usage : PipelineMiRNA::MainPipeline::main_entry( $idirJob );
+ Input : The job directory.
  Return: -
 
 =cut
 
 sub main_entry {
-	my ( $job_dir  ) = @_;
-
-	setup_logging($job_dir);
-
+    my ( $job_dir  ) = @_;
+    setup_logging($job_dir);
     my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
     PipelineMiRNA->CONFIG_FILE($run_options_file);
-
     PipelineMiRNA::Programs::init_programs();
-
     my @sequences_array = get_sequences($job_dir);
+    run_pipeline_on_sequences($job_dir, \@sequences_array);
+    return;
+}
 
+=method run_pipeline_on_sequences
+
+Run the pipeline on the given sequences
+
+=cut
+
+sub run_pipeline_on_sequences {
+    my @args = @_;
+    my $job_dir = shift @args;
+    my $sequences_array = shift @args;
+    my @sequences_array = @{$sequences_array};
     my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
     mkdir $workspace_dir;
-
     my $sequence_dir_name = 0;
     foreach my $item (@sequences_array){
         my ($name, $sequence) = @{$item};
@@ -76,11 +85,11 @@ sub main_entry {
         my %candidates_hash = compute_candidates_for_sequence($sequence_dir, $item);
         create_directories( \%candidates_hash, $sequence_dir );
     }
-	process_tests($job_dir);
-	debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
+    process_tests($job_dir);
+    debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
     mark_job_as_finished($job_dir);
     debug("Writing finish file", PipelineMiRNA->DEBUG() );
-	return;
+    return;
 }
 
 =method compute_candidates_for_sequence
