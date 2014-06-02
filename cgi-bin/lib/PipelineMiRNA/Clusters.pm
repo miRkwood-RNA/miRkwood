@@ -9,7 +9,14 @@ use PipelineMiRNA::Utils;
 
 =method get_clustered_sequences_from_bam
 
-Given a BAM file
+Given a BAM file, return clustered sequences
+
+ Usage : my @get_clustered_sequences_from_bam_output =
+            PipelineMiRNA::Clusters->get_clustered_sequences_from_bam(
+                $bamfile, $genome_file, $mindepth, $pad
+            );
+ Input : The BAM file, the genome file, options for minimum SAM depth and sequence padding
+ Return: An array of sequences
 
 =cut
 
