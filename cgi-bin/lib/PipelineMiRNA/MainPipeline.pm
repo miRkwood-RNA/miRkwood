@@ -79,6 +79,29 @@ sub fasta_pipeline {
     return;
 }
 
+=method bam_pipeline
+
+Run the pipeline in BAM mode
+
+ Usage : PipelineMiRNA::MainPipeline::bam_pipeline( $idirJob, $bam_file, $genome_file );
+ Input : The job directory
+ Return: -
+
+=cut
+
+sub bam_pipeline {
+    my @args = @_;
+    my ( $job_dir, $bam_file, $genome_file ) = @args;
+    init_pipeline($job_dir);
+    my $mindepth = 20;
+    my $pad = 100;
+    my @sequences_array = PipelineMiRNA::Clusters->get_clustered_sequences_from_bam(
+                $bam_file, $genome_file, $mindepth, $pad
+            );
+    run_pipeline_on_sequences($job_dir, \@sequences_array);
+    return;
+}
+
 =method run_pipeline_on_sequences
 
 Run the pipeline on the given sequences
