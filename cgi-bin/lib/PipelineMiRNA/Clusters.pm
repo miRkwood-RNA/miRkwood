@@ -31,11 +31,11 @@ based on the given clusters.
 sub get_sequences_from_clusters {
     my ( $self,   @args )     = @_;
     my ( $genome, $clusters ) = @args;
-    my @clusters = @{$clusters};
-
+    my $regions = $self->extend_clusters($clusters);
+    my @regions = @{$regions};
     my %sequences_hash = PipelineMiRNA::Utils::multifasta_to_hash($genome);
     my @result;
-    foreach my $cluster (@clusters) {
+    foreach my $cluster (@regions) {
         my ( $chr, $start, $stop ) = @{$cluster};
         my $original_seq = $sequences_hash{$chr};
         my $sequence     = substr $original_seq, $start, $stop;
@@ -67,6 +67,19 @@ sub get_clusters {
     my @islands = $self->get_islands( $bamfile, $mindepth, $expected_faidx );
     my @clusters = $self->merge_clusters( \@islands, $pad, $genome );
     return @clusters;
+}
+
+=method extend_clusters
+
+Extend the clusters to appropriate regions
+
+=cut
+
+sub extend_clusters {
+    my ( $self, @args ) = @_;
+    my $clusters = shift @args;
+    my @clusters = @{$clusters};
+    return \@clusters;
 }
 
 =method get_faidx_file
