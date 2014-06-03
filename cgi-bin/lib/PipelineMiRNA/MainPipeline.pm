@@ -93,11 +93,8 @@ sub bam_pipeline {
     my @args = @_;
     my ( $job_dir, $bam_file, $genome_file ) = @args;
     init_pipeline($job_dir);
-    my $mindepth = 20;
-    my $pad = 100;
-    my @sequences_array = PipelineMiRNA::Clusters->get_clustered_sequences_from_bam(
-                $bam_file, $genome_file, $mindepth, $pad
-            );
+    my $clustering = PipelineMiRNA::Clusters->new($bam_file, $genome_file);
+    my @sequences_array = $clustering->get_clustered_sequences_from_bam();
     run_pipeline_on_sequences($job_dir, \@sequences_array);
     return;
 }

@@ -42,9 +42,7 @@ sub new {
 Given a BAM file, return clustered sequences
 
  Usage : my @get_clustered_sequences_from_bam_output =
-            PipelineMiRNA::Clusters->get_clustered_sequences_from_bam(
-                $bamfile, $genome_file, $mindepth, $pad
-            );
+            $obj->get_clustered_sequences_from_bam();
  Input : The BAM file, the genome file, options for minimum SAM depth and sequence padding
  Return: An array of sequences
 
@@ -52,9 +50,8 @@ Given a BAM file, return clustered sequences
 
 sub get_clustered_sequences_from_bam {
     my ( $self, @args ) = @_;
-    my ( $bamfile, $genome, $mindepth, $pad ) = @args;
-    my @clusters = $self->get_clusters( $bamfile, $genome, $mindepth, $pad );
-    my @sequences = $self->get_sequences_from_clusters( $genome, \@clusters );
+    my @clusters = $self->get_clusters();
+    my @sequences = $self->get_sequences_from_clusters(\@clusters );
     return @sequences;
 }
 
@@ -67,9 +64,9 @@ based on the given clusters.
 
 sub get_sequences_from_clusters {
     my ( $self,   @args )     = @_;
-    my ( $genome, $clusters ) = @args;
+    my ( $clusters ) = @args;
     my @clusters = @{$clusters};
-    my %sequences_hash = PipelineMiRNA::Utils::multifasta_to_hash($genome);
+    my %sequences_hash = PipelineMiRNA::Utils::multifasta_to_hash($self->{genome_file});
     my @result;
     foreach my $cluster (@clusters) {
         my ( $chr, $start, $stop ) = $self->extend_cluster($cluster);
@@ -92,15 +89,14 @@ Serves essentially as a wrapper around
 - get_islands
 - merge_clusters
 
- Usage : my @clusters = get_clusters( $bamfile, $genome_file, $mindepth, $pad)
+ Usage : my @clusters = get_clusters()
 
 =cut
 
 sub get_clusters {
     my ( $self, @args ) = @_;
-    my ( $bamfile, $genome, $mindepth, $pad ) = @args;
-    my @islands = $self->get_islands( $bamfile, $mindepth, $genome );
-    my @clusters = $self->merge_clusters( \@islands, $pad, $genome );
+    my @islands = $self->get_islands();
+    my @clusters = $self->merge_clusters( \@islands );
     return @clusters;
 }
 
@@ -111,10 +107,9 @@ sub get_clusters {
 
 sub get_faidx_file {
     my ( $self, @args ) = @_;
-    my $genome_file    = shift @args;
-    my $expected_faidx = $genome_file . '.fai';
+    my $expected_faidx = $self->{genome_file} . '.fai';
     if ( !-e $expected_faidx ) {
-        my $samtools_cmd = "samtools faidx $genome_file";
+        my $samtools_cmd = "samtools faidx $self->{genome_file}";
         system $samtools_cmd;
     }
     return $expected_faidx;
@@ -126,18 +121,17 @@ sub get_faidx_file {
 =method get_islands
 
 
-my @islands = get_islands($bamfile,$mindepth,$expected_faidx,$read_group);
+my @islands = get_islands($read_group);
 
 =cut
 
 sub get_islands {
     my ( $self, @args ) = @_;
-    my ( $bamfile, $mindepth, $genome, $read_group ) = @args;
-
+    my ( $read_group ) = @args;
     # go chr by chr, using the .fai index file to get the chr names
     my @fields     = ();
 
-    my %chromosomes_info = $self->get_chromosomes_info_from_genome_file($genome);
+    my %chromosomes_info = $self->get_chromosomes_info_from_genome_file();
     my @chrs = keys %chromosomes_info;
 
     my @islands = ();
@@ -145,15 +139,15 @@ sub get_islands {
         my $samtools_cmd = '';
         if ($read_group) {
             $samtools_cmd =
-"samtools view -F 0x4 -r $read_group -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |";
+"samtools view -F 0x4 -r $read_group -b -u $self->{bam_file} $chr | samtools depth /dev/stdin 2> /dev/null |";
         }
         else {
             $samtools_cmd =
-"samtools view -F 0x4 -b -u $bamfile $chr | samtools depth /dev/stdin 2> /dev/null |";
+"samtools view -F 0x4 -b -u $self->{bam_file} $chr | samtools depth /dev/stdin 2> /dev/null |";
         }
         open( my $DEPTH, $samtools_cmd );
         my @chr_islands =
-          $self->process_samtools_depth( $DEPTH, $chr, $mindepth );
+          $self->process_samtools_depth( $DEPTH, $chr);
         push @islands, @chr_islands;
         close $DEPTH;
     }
@@ -167,7 +161,7 @@ sub get_islands {
 
 sub process_samtools_depth {
     my ( $self, @args ) = @_;
-    my ( $DEPTH, $chr, $mindepth ) = @args;
+    my ( $DEPTH, $chr ) = @args;
     my @fields;
     my $last_start = -1;
     my $last_ok    = -1;
@@ -175,7 +169,7 @@ sub process_samtools_depth {
     while (<$DEPTH>) {
         chomp;
         @fields = split( "\t", $_ );
-        if ( $fields[2] >= $mindepth ) {
+        if ( $fields[2] >= $self->{mindepth} ) {
             if ( $last_ok == -1 ) {
                 ## first start on the chr
                 $last_start = $fields[1];
@@ -204,15 +198,14 @@ sub process_samtools_depth {
 
 =method merge_clusters
 
-my @clusters = merge_clusters(\@islands,\$pad,\$genome);
+my @clusters = merge_clusters(\@islands);
 
 =cut
 
 sub merge_clusters {
     my ( $self, @args ) = @_;
-    my ( $input, $pad, $genome ) = @args;
+    my ( $input ) = @args;
     my @output = ();
-
     my $this_start;
     my $this_stop;
     my $last_start;
@@ -222,36 +215,20 @@ sub merge_clusters {
     my $this_padded_start;
     my $this_padded_stop;
     my $last_chr  = 'null';
-    my %chr_sizes = ();
+    my %chr_sizes = $self->get_chromosomes_info_from_genome_file();
     ## grab the chrom sizes, which you need to ensure that you don't pad off the end of the chroms
     # chrom sizes in column 1 from the fai file
-    my $fai_file = "$genome" . '.fai';
-    if ( !-e $fai_file ) {
-        warn(
-"\nFatal in sub-routine merge_clusters : expected fai file $fai_file does not exist\n"
-        );
-        exit;
-    }
-    my @fai_fields = ();
-    open( my $FAI, '<', "$fai_file" )
-      or die "Error when opening $fai_file: $!";
-    while (<$FAI>) {
-        @fai_fields = split( "\t", $_ );
-        $chr_sizes{ $fai_fields[0] } = $fai_fields[1];
-    }
-    close $FAI
-      or die "Error when closing $fai_file: $!";
+
     my $this_chr;
 
     foreach my $in_clus ( @{$input} ) {
         ( $this_chr, $this_start, $this_stop ) = @{$in_clus};
-
-        $this_padded_start = $this_start - $pad;
+        $this_padded_start = $this_start - $self->{pad};
         if ( $this_padded_start < 1 ) {
             $this_padded_start = 1;
         }
 
-        $this_padded_stop = $this_stop + $pad;
+        $this_padded_stop = $this_stop + $self->{pad};
         if ( $this_padded_stop > $chr_sizes{$this_chr} ) {
             $this_padded_stop = $chr_sizes{$this_chr};
         }
@@ -336,7 +313,7 @@ sub extend_cluster {
 
 Retrieve chromosomes name and length and from FAI file.
 
- Usage : my %chr_info_output = $self->get_chromosomes_info_from_genome_file($genome_file),
+ Usage : my %chr_info_output = $self->get_chromosomes_info_from_genome_file(),
  Input : The genome file
  Return: A hash {name => length}
 
@@ -344,8 +321,8 @@ Retrieve chromosomes name and length and from FAI file.
 
 sub get_chromosomes_info_from_genome_file {
     my ($self, @args) = @_;
-    my $genome_file = shift @args;
-    my $fai_file = $self->get_faidx_file($genome_file);
+    my $genome_file = $self->{genome_file};
+    my $fai_file = $self->get_faidx_file();
     my %chr_lengths;
     open( my $FAI, '<', "$fai_file" )
       or die "Error when opening $fai_file: $!";

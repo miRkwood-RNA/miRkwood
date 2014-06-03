@@ -27,7 +27,9 @@ file_exists_ok($genome_file);
 my @args = ($bamfile, $genome_file);
 my $clustering_obj = new_ok('PipelineMiRNA::Clusters' => \@args );
 
-ok( my $faidx_file = PipelineMiRNA::Clusters->get_faidx_file($genome_file),
+## get_faidx_file() ##
+can_ok( $clustering_obj, 'get_faidx_file' );
+ok( my $faidx_file = $clustering_obj->get_faidx_file(),
     'Can get existing FAIDX file' );
 file_exists_ok($faidx_file);
 
@@ -35,9 +37,11 @@ my $dummy_genome_file = input_file('dummy_genome.fa');
 link( $genome_file, $dummy_genome_file );
 file_exists_ok($dummy_genome_file);
 
+my @dummy_args = ($bamfile, $dummy_genome_file);
+my $dummy_clustering_obj = new_ok('PipelineMiRNA::Clusters' => \@dummy_args );
 ok(
     my $dummy_faidx_file =
-      PipelineMiRNA::Clusters->get_faidx_file($dummy_genome_file),
+      $dummy_clustering_obj->get_faidx_file($dummy_genome_file),
     'Can get unexisting FAIDX file'
 );
 file_exists_ok($dummy_faidx_file);
@@ -47,10 +51,10 @@ is( $contents1, $contents2, 'get_faidx_file created the correct index file' );
 unlink ($dummy_faidx_file, $dummy_genome_file);
 
 ## get_islands() ##
-
+can_ok( $clustering_obj, 'get_islands' );
 ok(
     my @get_islands_output =
-      PipelineMiRNA::Clusters->get_islands( $bamfile, $DEFAULT_mindepth, $genome_file ),
+      $clustering_obj->get_islands(),
     'Can call get_islands()'
 );
 my @get_islands_expected =
@@ -59,10 +63,10 @@ is_deeply( \@get_islands_output, \@get_islands_expected,
     'get_islands returns the correct values' );
 
 ## merge_clusters() ##
-
+can_ok( $clustering_obj, 'merge_clusters' );
 ok(
-    my @merge_clusters_output = PipelineMiRNA::Clusters->merge_clusters(
-        \@get_islands_output, $DEFAULT_pad, $genome_file
+    my @merge_clusters_output = $clustering_obj->merge_clusters(
+        \@get_islands_output
     ),
     'Can call merge_clusters()'
 );
@@ -71,19 +75,17 @@ is_deeply( \@merge_clusters_output, \@merge_clusters_expected,
     'merge_clusters returns the correct values' );
 
 ## get_clusters() ##
-
+can_ok( $clustering_obj, 'get_clusters' );
 ok(
     my @get_clusters_output =
-      PipelineMiRNA::Clusters->get_clusters(
-        $bamfile, $genome_file, $DEFAULT_mindepth, $DEFAULT_pad
-      ),
+      $clustering_obj->get_clusters(),
     'Can call get_clusters()'
 );
 is_deeply(\@get_clusters_output, \@merge_clusters_expected,
     'get_clusters returns the correct values' );
 
 ## get_sequences_from_clusters() ##
-
+can_ok( $clustering_obj, 'get_sequences_from_clusters' );
 my @get_sequences_from_clusters_expected1 = (
     'ChrC__1-192',
 'TGGGCGAACGACGGGAATTGAACCCGCGATGGTGAATTCACAATCCACTGCCTTAATCCACTTGGCTACATCCGCCCCTACGCTACTATCTATTCTTTTTTGTATTGTCTAAAAAAAAAAAAAAATACAAATTTCAATAAAAAATAAAAAAAGGTAGCAAATTCCACCTTATTTTTTTTCTAATAAAAAATA'
@@ -98,9 +100,7 @@ my @get_sequences_from_clusters_expected = (
 );
 ok(
     my @get_sequences_from_clusters_output =
-      PipelineMiRNA::Clusters->get_sequences_from_clusters(
-        $genome_file, \@merge_clusters_output
-      ),
+      $clustering_obj->get_sequences_from_clusters( \@merge_clusters_output ),
     'Can call get_sequences_from_clusters()'
 );
 is_deeply(
@@ -110,10 +110,10 @@ is_deeply(
 );
 
 ## get_clustered_sequences_from_bam() ##
-
+can_ok( $clustering_obj, 'get_clustered_sequences_from_bam' );
 ok(
     my @get_clustered_sequences_from_bam_output =
-      PipelineMiRNA::Clusters->get_clustered_sequences_from_bam(
+      $clustering_obj->get_clustered_sequences_from_bam(
         $bamfile, $genome_file, $DEFAULT_mindepth, $DEFAULT_pad
       ),
     'Can call get_clustered_sequences_from_bam()'
@@ -125,10 +125,11 @@ is_deeply(
 );
 
 ## extend_cluster() ##
+can_ok( $clustering_obj, 'extend_cluster' );
 my @extend_cluster_input1 = ( 'Chr1', 200, 250 );
 ok(
     my @extend_cluster_output1 =
-      PipelineMiRNA::Clusters->extend_cluster( \@extend_cluster_input1 ),
+      $clustering_obj->extend_cluster( \@extend_cluster_input1 ),
     'Can call extend_cluster()'
 );
 my @extend_cluster_expected1 = ( 'Chr1', 75, 375 );
@@ -136,9 +137,10 @@ is_deeply( \@extend_cluster_output1, \@extend_cluster_expected1,
     'extend_cluster returns the correct values' );
 
 ## get_chromosomes_info_from_genome_file() ##
+can_ok( $clustering_obj, 'get_chromosomes_info_from_genome_file' );
 ok(
     my %chr_info_output =
-      PipelineMiRNA::Clusters->get_chromosomes_info_from_genome_file(
+      $clustering_obj->get_chromosomes_info_from_genome_file(
         $genome_file),
     'Can call get_chromosomes_info_from_genome_file()'
 );
