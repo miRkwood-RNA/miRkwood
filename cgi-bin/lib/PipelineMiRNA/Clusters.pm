@@ -7,6 +7,36 @@ use warnings;
 
 use PipelineMiRNA::Utils;
 
+
+=method new
+
+Constructor
+
+=cut
+
+sub new {
+    my ( $class, @args ) = @_;
+    my $bam_file    = shift @args;
+    my $genome_file = shift @args;
+    my $mindepth    = shift @args;
+    my $pad         = shift @args;
+    if (! $mindepth){
+        $mindepth = 20;
+    }
+    if (! $pad){
+        $pad = 100;
+    }
+    my $self = bless {
+        bam_file => $bam_file,
+        genome_file => $genome_file,
+        mindepth => $mindepth,
+        pad => $pad
+    }, $class;
+    my %chr_info = $self->get_chromosomes_info_from_genome_file();
+    $self->{chr_info} = %chr_info;
+    return $self;
+}
+
 =method get_clustered_sequences_from_bam
 
 Given a BAM file, return clustered sequences

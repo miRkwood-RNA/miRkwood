@@ -23,7 +23,9 @@ file_exists_ok($bamfile);
 my $genome_file = input_file('Clusters.Athaliana_167-ChrC.fa');
 file_exists_ok($genome_file);
 
-## get_faidx_file() ##
+## Constructor ##
+my @args = ($bamfile, $genome_file);
+my $clustering_obj = new_ok('PipelineMiRNA::Clusters' => \@args );
 
 ok( my $faidx_file = PipelineMiRNA::Clusters->get_faidx_file($genome_file),
     'Can get existing FAIDX file' );
