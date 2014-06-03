@@ -214,8 +214,6 @@ sub merge_clusters {
     my $this_padded_stop;
     my $last_chr  = 'null';
     my %chr_sizes = %{ $self->{chr_info} };
-    ## grab the chrom sizes, which you need to ensure that you don't pad off the end of the chroms
-    # chrom sizes in column 1 from the fai file
 
     my $this_chr;
 
@@ -293,6 +291,8 @@ sub extend_cluster {
     my ( $self, @args ) = @_;
     my $cluster = shift @args;
     my ( $chr, $start, $stop ) = @{$cluster};
+    my %chr_info = %{ $self->{chr_info} };
+    my $chr_length = $chr_info{$chr};
     my $locus_size = $stop - $start + 1;
     my $get_size = 300;
     # get the coordinates .. centered on the middle of the cluster
@@ -303,6 +303,10 @@ sub extend_cluster {
     # ensure that the get_start is not less than 1
     if($get_start < 1) {
         $get_start = 1;
+    }
+    # ensure that the get_stop does not exceed the chromosome length
+    if($get_stop > $chr_length) {
+        $get_stop = $chr_length;
     }
     return ( $chr, $get_start, $get_stop );
 }

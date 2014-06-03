@@ -126,13 +126,13 @@ is_deeply(
 
 ## extend_cluster() ##
 can_ok( $clustering_obj, 'extend_cluster' );
-my @extend_cluster_input1 = ( 'Chr1', 200, 250 );
+my @extend_cluster_input1 = ( 'ChrC', 200, 250 );
 ok(
     my @extend_cluster_output1 =
       $clustering_obj->extend_cluster( \@extend_cluster_input1 ),
     'Can call extend_cluster()'
 );
-my @extend_cluster_expected1 = ( 'Chr1', 75, 375 );
+my @extend_cluster_expected1 = ( 'ChrC', 75, 375 );
 is_deeply( \@extend_cluster_output1, \@extend_cluster_expected1,
     'extend_cluster returns the correct values' );
 
