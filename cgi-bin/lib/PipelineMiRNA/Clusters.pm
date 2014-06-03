@@ -66,12 +66,11 @@ sub get_sequences_from_clusters {
     my ( $self,   @args )     = @_;
     my ( $clusters ) = @args;
     my @clusters = @{$clusters};
-    my %sequences_hash = PipelineMiRNA::Utils::multifasta_to_hash($self->{genome_file});
     my @result;
     foreach my $cluster (@clusters) {
         my ( $chr, $start, $stop ) = $self->extend_cluster($cluster);
-        my $original_seq = $sequences_hash{$chr};
-        my $sequence     = substr $original_seq, $start, $stop;
+        my $query = "$chr" . ":" . "$start" . "-" . "$stop";
+        my $sequence     = $self->extract_sequence_from_genome($query);
         my $new_name     = $chr . "__$start-$stop";
         my @res          = ( $new_name, $sequence );
         push @result, \@res;

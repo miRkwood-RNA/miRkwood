@@ -13,7 +13,7 @@
 [DEBUG] Running RNAeval in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnaeval_optimal.out
 [DEBUG] Processing RNAstemloop output for stemloop /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnastemloop_stemloop.out
 [DEBUG] Running RNAeval in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnaeval_stemloop.out
-[DEBUG] Processing RNAstemloop ( /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2, +, 554, /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnastemloop_stemloop.out, /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnaeval_optimal.out, /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnaeval_stemloop.out )
+[DEBUG] Processing RNAstemloop ( /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2, +, 301, /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnastemloop_stemloop.out, /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnaeval_optimal.out, /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/rnaeval_stemloop.out )
 [DEBUG] Merging candidates for sequence ChrC__254-554
 [DEBUG] Generating image using VARNA in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/1/image.png
 [DEBUG] A posteriori tests in /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam
