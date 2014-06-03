@@ -48,7 +48,7 @@ unlink ($dummy_faidx_file, $dummy_genome_file);
 
 ok(
     my @get_islands_output =
-      PipelineMiRNA::Clusters->get_islands( $bamfile, $DEFAULT_mindepth, $faidx_file ),
+      PipelineMiRNA::Clusters->get_islands( $bamfile, $DEFAULT_mindepth, $genome_file ),
     'Can call get_islands()'
 );
 my @get_islands_expected =

@@ -69,8 +69,7 @@ Serves essentially as a wrapper around
 sub get_clusters {
     my ( $self, @args ) = @_;
     my ( $bamfile, $genome, $mindepth, $pad ) = @args;
-    my $expected_faidx = $self->get_faidx_file($genome);
-    my @islands = $self->get_islands( $bamfile, $mindepth, $expected_faidx );
+    my @islands = $self->get_islands( $bamfile, $mindepth, $genome );
     my @clusters = $self->merge_clusters( \@islands, $pad, $genome );
     return @clusters;
 }
@@ -103,22 +102,13 @@ my @islands = get_islands($bamfile,$mindepth,$expected_faidx,$read_group);
 
 sub get_islands {
     my ( $self, @args ) = @_;
-    my ( $bamfile, $mindepth, $expected_faidx, $read_group ) = @args;
+    my ( $bamfile, $mindepth, $genome, $read_group ) = @args;
 
     # go chr by chr, using the .fai index file to get the chr names
-    my @chrs       = ();
     my @fields     = ();
-    my $genome_sum = 0;
-    my %fai_hash   = ();
 
-    open( my $FAI, '<', "$expected_faidx" )
-      or die "Error when opening $expected_faidx: $!";
-    while (<$FAI>) {
-        chomp;
-        @fields = split( "\t", $_ );
-        push( @chrs, $fields[0] );
-    }
-    close $FAI;
+    my %chromosomes_info = $self->get_chromosomes_info_from_genome_file($genome);
+    my @chrs = keys %chromosomes_info;
 
     my @islands = ();
     foreach my $chr (@chrs) {
