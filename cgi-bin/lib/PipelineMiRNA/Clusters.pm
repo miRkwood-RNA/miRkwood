@@ -33,7 +33,7 @@ sub new {
         pad => $pad
     }, $class;
     my %chr_info = $self->get_chromosomes_info_from_genome_file();
-    $self->{chr_info} = %chr_info;
+    $self->{chr_info} = \%chr_info;
     return $self;
 }
 
@@ -131,9 +131,7 @@ sub get_islands {
     # go chr by chr, using the .fai index file to get the chr names
     my @fields     = ();
 
-    my %chromosomes_info = $self->get_chromosomes_info_from_genome_file();
-    my @chrs = keys %chromosomes_info;
-
+    my @chrs = keys %{ $self->{chr_info} };
     my @islands = ();
     foreach my $chr (@chrs) {
         my $samtools_cmd = '';
@@ -215,7 +213,7 @@ sub merge_clusters {
     my $this_padded_start;
     my $this_padded_stop;
     my $last_chr  = 'null';
-    my %chr_sizes = $self->get_chromosomes_info_from_genome_file();
+    my %chr_sizes = %{ $self->{chr_info} };
     ## grab the chrom sizes, which you need to ensure that you don't pad off the end of the chroms
     # chrom sizes in column 1 from the fai file
 
