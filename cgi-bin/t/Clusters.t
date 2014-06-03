@@ -132,3 +132,14 @@ ok(
 my @extend_cluster_expected1 = ( 'Chr1', 75, 375 );
 is_deeply( \@extend_cluster_output1, \@extend_cluster_expected1,
     'extend_cluster returns the correct values' );
+
+## get_chromosomes_info_from_genome_file() ##
+ok(
+    my %chr_info_output =
+      PipelineMiRNA::Clusters->get_chromosomes_info_from_genome_file(
+        $genome_file),
+    'Can call get_chromosomes_info_from_genome_file()'
+);
+my %chr_info_expected = ( 'ChrC' => 153091 );
+is_deeply( \%chr_info_output, \%chr_info_expected,
+    'get_chromosomes_info_from_genome_file returns the correct values' );

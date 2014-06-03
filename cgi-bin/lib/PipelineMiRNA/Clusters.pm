@@ -312,4 +312,31 @@ sub extend_cluster {
     return ( $chr, $get_start, $get_stop );
 }
 
+=method get_chromosomes_info_from_genome_file
+
+Retrieve chromosomes name and length and from FAI file.
+
+ Usage : my %chr_info_output = $self->get_chromosomes_info_from_genome_file($genome_file),
+ Input : The genome file
+ Return: A hash {name => length}
+
+=cut
+
+sub get_chromosomes_info_from_genome_file {
+    my ($self, @args) = @_;
+    my $genome_file = shift @args;
+    my $fai_file = $self->get_faidx_file($genome_file);
+    my %chr_lengths;
+    open( my $FAI, '<', "$fai_file" )
+      or die "Error when opening $fai_file: $!";
+    while (<$FAI>) {
+        chomp;
+        my @fields = split( "\t", $_ );
+        my $chr_name = $fields[0];
+        my $chr_length = $fields[1];
+        $chr_lengths{$chr_name} = $chr_length;
+    }
+    return %chr_lengths;
+}
+
 1;
