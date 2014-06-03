@@ -94,6 +94,7 @@ sub bam_pipeline {
     my ( $job_dir, $bam_file, $genome_file ) = @args;
     init_pipeline($job_dir);
     my $clustering = PipelineMiRNA::Clusters->new($bam_file, $genome_file);
+    debug( "Extracting sequences from genome using BAM clusters", PipelineMiRNA->DEBUG() );
     my @sequences_array = $clustering->get_clustered_sequences_from_bam();
     run_pipeline_on_sequences($job_dir, \@sequences_array);
     return;
@@ -110,6 +111,8 @@ sub run_pipeline_on_sequences {
     my $job_dir = shift @args;
     my $sequences_array = shift @args;
     my @sequences_array = @{$sequences_array};
+    my $sequences_count = scalar @sequences_array;
+    debug( "$sequences_count sequences to process", PipelineMiRNA->DEBUG() );
     my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
     mkdir $workspace_dir;
     my $sequence_dir_name = 0;
