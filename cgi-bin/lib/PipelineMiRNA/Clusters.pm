@@ -338,4 +338,34 @@ sub get_chromosomes_info_from_genome_file {
     return %chr_lengths;
 }
 
+=method extract_sequence_from_genome
+
+Extract a sequence from the genome using the samtools
+
+ Usage : my $sequence = $self->extract_sequence_from_genome($query);
+ Input : The samtools query
+ Return: The sequence as a string
+
+=cut
+
+sub extract_sequence_from_genome {
+    my ($self, @args) = @_;
+    my $query = shift @args;
+    my $subseq = '';
+    my $samtools_cmd = "samtools faidx $self->{genome_file} $query |";
+    open(my $FAIDX, $samtools_cmd);
+    while (<$FAIDX>) {
+        chomp;
+        if($_ =~ /^>/) {
+            next;
+        }
+        $_ =~ s/\s//g;
+        # ensure upper case
+        my $fa_line = uc ($_);
+        $subseq .= $fa_line;
+    }
+    close $FAIDX;
+    return $subseq;
+}
+
 1;

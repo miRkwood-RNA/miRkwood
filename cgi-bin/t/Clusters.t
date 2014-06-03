@@ -147,3 +147,17 @@ ok(
 my %chr_info_expected = ( 'ChrC' => 153091 );
 is_deeply( \%chr_info_output, \%chr_info_expected,
     'get_chromosomes_info_from_genome_file returns the correct values' );
+
+## extract_sequence_from_genome() ##
+can_ok( $clustering_obj, 'extract_sequence_from_genome' );
+ok(
+    my $extract_sequence_from_genome_output =
+      $clustering_obj->extract_sequence_from_genome('ChrC:5-10'),
+    'Can call extract_sequence_from_genome()'
+);
+my $extract_sequence_from_genome_expected = 'GCGAAC';
+is(
+    $extract_sequence_from_genome_output,
+    $extract_sequence_from_genome_expected,
+    'extract_sequence_from_genome returns the correct values'
+);
