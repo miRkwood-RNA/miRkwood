@@ -32,7 +32,7 @@ ok 'FilterCDS' [ `diff $EXCLUDES -qr $BASEDIR/expected/filtercds/ $BASEDIR/outpu
 
 rm -rf $BASEDIR/output/fullpipeline1/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline1/ $BASEDIR/data/sequenceSomething.fas --align --no-process
-DIFF=$(diff $EXCLUDES -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l)
+DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l)
 ok 'Full pipeline' [ $DIFF -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline2/
@@ -42,5 +42,5 @@ ok 'Full pipeline with FilteringCDS' [ $DIFF -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline-bam/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa  --no-process
-DIFF=$(diff $EXCLUDES -I 'fullpipeline-bam' -qr $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
+DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
 ok 'Full BAM pipeline' [ $DIFF -eq 0 ]
