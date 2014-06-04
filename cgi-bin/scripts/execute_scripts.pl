@@ -15,4 +15,4 @@ BEGIN {
 ## Code ##
 my ( $idirJob ) = @ARGV;
 
-PipelineMiRNA::MainPipeline::main_entry( $idirJob );
+PipelineMiRNA::MainPipeline::fasta_pipeline( $idirJob );
