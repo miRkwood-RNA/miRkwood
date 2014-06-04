@@ -34,7 +34,6 @@ GetOptions(
     'both-strands'   => \$both_strands,
     'no-varna'       => \$no_varna,
     'no-process'     => \$no_process,
-    'species-mask=s' => \$species_mask,
     'output=s'       => \$output_folder,
     'genome=s'       => \$genome_file,
     'help|?'         => \$help,
@@ -45,10 +44,6 @@ pod2usage( -verbose => 2 ) if ($man);
 
 pod2usage("$0: No BAM file given.") if ( @ARGV == 0 );
 pod2usage("$0: No genome file given.") if ( ! $genome_file );
-
-if ($species_mask) {
-    $mask = 1;
-}
 
 my $varna = 1;
 if ($no_varna) {
@@ -76,7 +71,7 @@ my $run_options_file =
   PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
 PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $mfei, $shuffles,
-    $align, "", $species_mask, $varna, 'bam' );
+    $align, "", '', $varna, 'bam' );
 
 PipelineMiRNA::MainPipeline::bam_pipeline($abs_output_folder, $bam_file, $genome_file);
 
@@ -105,10 +100,6 @@ The genome file to use
 =item B<--both-strands>
 
 Process both strands
-
-=item B<--species-mask>
-
-Mask coding regions against the given organism
 
 =item B<--shuffles>
 
