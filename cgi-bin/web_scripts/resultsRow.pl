@@ -40,9 +40,11 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
     my $size = length $candidate{'DNASequence'};
 
-    my $linkFasta = "./getCandidateFasta.pl?jobId=$jobId&id=$candidate_id";
-    my $linkVienna = "./exportVienna.pl?jobId=$jobId&id=$candidate_id";
-    my $linkAlternatives = "./exportAlternativesVienna.pl?jobId=$jobId&id=$candidate_id";
+    my $export_link = "./getCandidate.pl?jobId=$jobId&id=$candidate_id";
+
+    my $linkFasta = "$export_link&type=fas";
+    my $linkVienna = "$export_link&type=dot";
+    my $linkAlternatives = "$export_link&type=alt";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
