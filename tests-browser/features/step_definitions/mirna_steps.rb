@@ -36,7 +36,7 @@ Then(/^I get the waiting page$/) do
 end
 
 Then(/^I get the results page$/) do
-  on(ResultsPage).wait_until do
+  on(ResultsPage).wait_until(60) do
      on(ResultsPage).results?
   end
 end
