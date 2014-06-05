@@ -224,4 +224,31 @@ sub index_blast_output {
     return \%blast_seqs;
 }
 
+sub parse_tRNAscanSE_output {
+    my @args         = @_;
+    my ($file)  = shift @args;
+    my @results;
+    open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
+    while ( my $line = <$INPUT_FH> ) {
+        my @values = split( /[\t]/, $line );
+        my @trna = ( trim($values[0]), int(trim($values[2])), int(trim($values[3])) );
+        push @results, \@trna;
+    }
+    close $INPUT_FH or die "Error when closing file $file: $!";
+    return @results;
+}
+
+=method trim
+
+Trim a string
+
+=cut
+
+sub trim {
+    my $string = shift;
+    $string =~ s/^\s+//;
+    $string =~ s/\s+$//;
+    return $string;
+}
+
 1;
