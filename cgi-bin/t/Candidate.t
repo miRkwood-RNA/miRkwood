@@ -72,7 +72,7 @@ ok( my $result2 = PipelineMiRNA::Candidate->get_absolute_image( \%candidate ),
     'can call get_absolute_image()' );
 is(
     $result2,
-    '/mirkwood/html/results/jobDec181721032013/1/1/image.png',
+    '/bio1/www/html/mirkwood/results/jobDec181721032013/1/1/image.png',
     'get_absolute_image returns the expected value'
 );
 
