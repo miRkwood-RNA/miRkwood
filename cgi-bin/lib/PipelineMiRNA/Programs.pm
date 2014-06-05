@@ -27,6 +27,7 @@ our $varna_bin;
 our $rnastemploop_bin;
 our $blastx_bin;
 our $miRdup_jar;
+our $tRNAscanSE_bin;
 
 sub init_programs{
     my @args = @_;
@@ -40,6 +41,7 @@ sub init_programs{
     $exonerate_bin = 'exonerate';
     $varna_bin        = $programs_config{'varna'};
     $rnastemploop_bin = $programs_config{'rnastemloop'};
+    $tRNAscanSE_bin   = $programs_config{'tRNAscanSE'};
 
     $miRdup_jar = $programs_config{'mirdup'};
 
@@ -419,6 +421,30 @@ sub run_mirdup_validation_on_file {
     my $output_file =
         $validation_source_file . '.' . $miRdup_model_name . '.' . 'miRdup.tab.txt';
     return $output_file;
+}
+
+
+=method run_tRNAscanSE
+
+Run run_tRNAscanSE on the given file
+Return whether the output file exists.
+
+=cut
+
+sub run_tRNAscanSE_on_file {
+    my ( $input, $output ) = @_;
+    my $tRNAscanSE_cmd = qw{};
+    my $pre_cmd = "export PERL5LIB=\$PERL5LIB:$tRNAscanSE_bin";
+    $tRNAscanSE_cmd =
+        "$pre_cmd && "
+      . "$tRNAscanSE_bin/tRNAscan-SE "
+      . "$input "
+      . '--quiet '
+      . '--brief '
+      . '--forceow '
+      . "--output $output";
+    system("$pre_cmd && $tRNAscanSE_cmd");
+    return ( -e $output );
 }
 
 1;
