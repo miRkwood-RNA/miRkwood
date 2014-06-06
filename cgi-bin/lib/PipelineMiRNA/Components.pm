@@ -45,19 +45,8 @@ sub filter_CDS {
     ) or die('Problem when running Blastx');
     chmod 777, $blast_output;
 
-    my %blast_seqs = %{PipelineMiRNA::Parsers::index_blast_output($blast_output)};
-
-    # Looping in uploaded_sequences, copying only the files not found in Blast
-    open( my $FSeq, '<', $uploaded_sequences )
-      or die "Problème à l\'ouverture : $!";
-    open( my $RES_FH, '>>', $input_sequences )
-      or die "Problème à l\'ouverture : $!";
-    PipelineMiRNA::Utils::filter_fasta( $FSeq, $RES_FH, \%blast_seqs );
-    close $FSeq   or die "Problème à la fermeture : $!";
-    close $RES_FH or die "Problème à la fermeture : $!";
-    chmod 0777, $input_sequences;
-    chmod 0777, $blast_output;
-    return $input_sequences;
+    my %blast_seqs = PipelineMiRNA::Parsers::parse_blast_output($blast_output);
+    return %blast_seqs;
 }
 
 =method mask_CT_file

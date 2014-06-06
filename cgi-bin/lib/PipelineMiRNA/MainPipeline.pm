@@ -198,23 +198,59 @@ sub get_sequences {
     my $job_dir = shift @args;
     my $cfg = PipelineMiRNA->CONFIG();
     my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
+    my %filter;
     if ($cfg->param('options.filter')) {
         debug( 'FilteringCDS', PipelineMiRNA->DEBUG() );
-        PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
+        my %blast_mask = PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
+        @filter{keys %blast_mask} = values %blast_mask;
     }
-    else {
-        my $sequence_uploaded =
+    my $sequence_uploaded =
           File::Spec->catfile( $job_dir, 'input_sequences.fas' );
-        debug( "Moving file $sequence_uploaded to $sequences_input", PipelineMiRNA->DEBUG() );
-        File::Copy::move( $sequence_uploaded, $sequences_input );
-    }
 
-    open my $ENTREE_FH, '<', $sequences_input
-      or die "Error when opening sequences -$sequences_input-: $!";
-    debug( "Calling parse_multi_fasta() on $sequences_input", PipelineMiRNA->DEBUG() );
+    open my $ENTREE_FH, '<', $sequence_uploaded
+      or die "Error when opening sequences -$sequence_uploaded-: $!";
+    debug( "Calling parse_multi_fasta() on $sequence_uploaded", PipelineMiRNA->DEBUG() );
     my @sequences_array = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
     close $ENTREE_FH;
-    return @sequences_array;
+    my @sequences;
+    if (%filter){
+        @sequences = mask_sequences(\%filter, @sequences_array);
+    } else {
+        @sequences = @sequences_array;
+    }
+    return @sequences;
+}
+
+=method mask_sequences
+
+
+ Usage : @sequences = mask_sequences(\%filter, @sequences_array);
+
+=cut
+
+sub mask_sequences {
+    my @args = @_;
+    my $filter = shift @args;
+    my %filter = %{$filter};
+    my @sequences_array = @args;
+    my @sequences_results;
+    foreach my $item (@sequences_array){
+        my ($name, $sequence) = @{$item};
+        my @split = split(/_/, $name);
+        my $id = $split[0];
+        if (exists $filter{$id}){
+            foreach my $positions(@{$filter{$id}}){
+                my %pos = %{$positions};
+                $sequence = PipelineMiRNA::Components::mask_sequence($sequence,
+                                                                     $pos{'start'},
+                                                                     $pos{'end'},
+                                                                     );
+            }
+            my @res = ( $name, $sequence );
+            push @sequences_results, \@res;
+        }
+    }
+    return @sequences_results;
 }
 
 =method mfei_below_threshold
