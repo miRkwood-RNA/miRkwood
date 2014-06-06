@@ -372,4 +372,22 @@ sub merge_alignments {
     return %merged_alignments;
 }
 
+=method mask_sequence
+
+ Usage: my $masked = mask_sequence($seq, 3, 6);
+
+=cut
+
+sub mask_sequence {
+    my @args = @_;
+    my ( $sequence, $start, $end ) = @args;
+    if ($end < $start){
+       ( $start, $end ) = ( $end, $start );
+    }
+    my $length = $end - $start + 1;
+    my $mask = ( 'N' x $length );
+    substr($sequence, $start, $length) = $mask;
+    return $sequence;
+}
+
 1;
