@@ -108,6 +108,16 @@ my $index_blast_output_expected = { 'arabidopsis_filtered' => 1 };
 is_deeply( $index_blast_output_result, $index_blast_output_expected,
     'BLAST output file correctly parsed' );
 
+ok(
+    my @parse_blast_output_result =
+      PipelineMiRNA::Parsers::parse_blast_output($blastout_file),
+    'Can call index_blast_output'
+);
+my @parse_blast_output_expected_1 = ('arabidopsis_filtered', 1, 1308);
+my @parse_blast_output_expected = (\@parse_blast_output_expected_1);
+is_deeply( \@parse_blast_output_result, \@parse_blast_output_expected,
+    'BLAST output file correctly parsed' );
+
 
 my $tRNAscanSE_file = input_file('Parsers.tRNAscanSE.out');
 ok(

@@ -224,6 +224,36 @@ sub index_blast_output {
     return \%blast_seqs;
 }
 
+=method parse_blast_output
+
+Looping in blast_output, indexing (sequences, positions) found
+
+=cut
+
+sub parse_blast_output {
+    my @args = @_;
+    my $file = shift @args;
+    my @results;
+    open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
+    while ( my $line = <$INPUT_FH> ) {
+        my @values = split( /\t/, $line );
+        print join(':', @values);
+        my $name  = $values[0];
+        my $start = $values[6];
+        my $end = $values[7];
+        my @result = ( $name, $start, $end);
+        push @results, \@result;
+    }
+    close $INPUT_FH or die "Error when closing file $file: $!";
+    return @results;
+}
+
+=method parse_tRNAscanSE_output
+
+Parse the contents of a tRNAscanSE output file
+
+=cut
+
 sub parse_tRNAscanSE_output {
     my @args         = @_;
     my ($file)  = shift @args;
