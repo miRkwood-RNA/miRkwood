@@ -109,25 +109,32 @@ is_deeply( $index_blast_output_result, $index_blast_output_expected,
     'BLAST output file correctly parsed' );
 
 ok(
-    my @parse_blast_output_result =
+    my %parse_blast_output_result =
       PipelineMiRNA::Parsers::parse_blast_output($blastout_file),
     'Can call index_blast_output'
 );
-my @parse_blast_output_expected_1 = ('arabidopsis_filtered', 1, 1308);
-my @parse_blast_output_expected = (\@parse_blast_output_expected_1);
-is_deeply( \@parse_blast_output_result, \@parse_blast_output_expected,
+my %parse_blast_output_expected_11 = ('start' => 1, 'end' => 1308);
+my @parse_blast_output_expected_1 = (\%parse_blast_output_expected_11);
+my %parse_blast_output_expected = ('arabidopsis_filtered' => \@parse_blast_output_expected_1);
+is_deeply( \%parse_blast_output_result, \%parse_blast_output_expected,
     'BLAST output file correctly parsed' );
 
 
 my $tRNAscanSE_file = input_file('Parsers.tRNAscanSE.out');
 ok(
-    my @parse_tRNAscanSE_output =
+    my %parse_tRNAscanSE_output =
       PipelineMiRNA::Parsers::parse_tRNAscanSE_output($tRNAscanSE_file),
     'Can call parse_tRNAscanSE_output'
 );
-my @parse_tRNAscanSE_expected_1 = ('C28G1', 9738, 9809);
-my @parse_tRNAscanSE_expected_2 = ('C28G1', 20346, 20417);
-my @parse_tRNAscanSE_expected_3 = ('CELF22B7', 12619, 12738);
-my @parse_tRNAscanSE_expected = (\@parse_tRNAscanSE_expected_1, \@parse_tRNAscanSE_expected_2, \@parse_tRNAscanSE_expected_3);
-is_deeply( \@parse_tRNAscanSE_output, \@parse_tRNAscanSE_expected,
+my %parse_tRNAscanSE_expected_11 = ('start' => 9738, 'end' => 9809);
+my %parse_tRNAscanSE_expected_12 = ('start' => 20346, 'end' => 20417);
+
+my @parse_tRNAscanSE_expected_1 = (\%parse_tRNAscanSE_expected_11, \%parse_tRNAscanSE_expected_12);
+
+my %parse_tRNAscanSE_expected_21 = ('start' => 12619, 'end' => 12738);
+my @parse_tRNAscanSE_expected_2 = (\%parse_tRNAscanSE_expected_21);
+my %parse_tRNAscanSE_expected = ('C28G1' => \@parse_tRNAscanSE_expected_1,
+                                 'CELF22B7' => \@parse_tRNAscanSE_expected_2);
+
+is_deeply( \%parse_tRNAscanSE_output, \%parse_tRNAscanSE_expected,
     'tRNAscanSE output file correctly parsed' );

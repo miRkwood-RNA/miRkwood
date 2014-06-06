@@ -233,19 +233,19 @@ Looping in blast_output, indexing (sequences, positions) found
 sub parse_blast_output {
     my @args = @_;
     my $file = shift @args;
-    my @results;
+    my %results;
     open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
     while ( my $line = <$INPUT_FH> ) {
         my @values = split( /\t/, $line );
-        print join(':', @values);
         my $name  = $values[0];
-        my $start = $values[6];
-        my $end = $values[7];
-        my @result = ( $name, $start, $end);
-        push @results, \@result;
+        my $struct = {
+            'start' => $values[6],
+            'end'   => $values[7]
+        };
+        %results = push_to_array_in_hash(\%results, $name, $struct);
     }
     close $INPUT_FH or die "Error when closing file $file: $!";
-    return @results;
+    return %results;
 }
 
 =method parse_tRNAscanSE_output
@@ -257,15 +257,18 @@ Parse the contents of a tRNAscanSE output file
 sub parse_tRNAscanSE_output {
     my @args         = @_;
     my ($file)  = shift @args;
-    my @results;
+    my %results;
     open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
     while ( my $line = <$INPUT_FH> ) {
         my @values = split( /[\t]/, $line );
-        my @trna = ( trim($values[0]), int(trim($values[2])), int(trim($values[3])) );
-        push @results, \@trna;
+        my $struct = {
+            'start' => int(trim($values[2])),
+            'end'   => int(trim($values[3]))
+        };
+        %results = push_to_array_in_hash(\%results, trim($values[0]), $struct);
     }
     close $INPUT_FH or die "Error when closing file $file: $!";
-    return @results;
+    return %results;
 }
 
 =method trim
@@ -279,6 +282,21 @@ sub trim {
     $string =~ s/^\s+//;
     $string =~ s/\s+$//;
     return $string;
+}
+
+sub push_to_array_in_hash {
+    my @args = @_;
+    my ($hash, $key, $value) = @args;
+    my %hash = %{$hash};
+    if (! $hash{$key}) {
+        my @tab = ($value);
+        $hash{$key} = \@tab;
+    } else {
+        my @values = @{$hash{$key}};
+        push @values, $value;
+        $hash{$key} = \@values;
+    }
+    return %hash;
 }
 
 1;
