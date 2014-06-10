@@ -23,8 +23,11 @@ my $species_mask = '';
 my $genome_file  = '';
 my $no_varna     = 0;
 my $no_process   = 0;
-my $mask          = 0;
 my $output_folder = 'results_directory';
+
+# Pipeline options which do not make sense in BAM mode
+my $mask          = 0;
+my $trna          = 0;
 
 ## Parse options
 GetOptions(

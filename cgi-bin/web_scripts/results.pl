@@ -20,6 +20,7 @@ use PipelineMiRNA::WebTemplate;
 my $cgi = new CGI;
 my $mail = $cgi->param('mail');
 my $filter   = $cgi->param('CDS');
+my $trna     = $cgi->param('tRNA');
 my $mfei     = $cgi->param('mfei');
 my $randfold = $cgi->param('randfold');
 my $align    = $cgi->param('align');
@@ -118,14 +119,15 @@ if ( $strand   ) { $strand   = 1 } else { $strand   = 0 }
 if ( $mfei     ) { $mfei     = 1 } else { $mfei     = 0 }
 if ( $randfold ) { $randfold = 1 } else { $randfold = 0 }
 if ( $align    ) { $align    = 1 } else { $align    = 0 }
-if ( $filter   ) { $filter   = 1 } else { $filter  = 0 }
+if ( $filter   ) { $filter   = 1 } else { $filter   = 0 }
+if ( $trna     ) { $trna     = 1 } else { $trna     = 0 }
 if ( !$job_title ) {
     $job_title = 0;
 }
 my $varna = 1;
 my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($absolute_job_dir);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $strand, $filter, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
+PipelineMiRNA::write_config( $run_options_file, $strand, $filter, $trna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
 
 # execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );

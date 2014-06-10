@@ -22,7 +22,8 @@ my $align        = 0;
 my $species_mask = '';
 my $no_varna     = 0;
 my $no_process   = 0;
-my $mask          = 0;
+my $mask         = 0;
+my $trna         = 0;
 my $output_folder = 'results_directory';
 
 ## Parse options
@@ -34,6 +35,7 @@ GetOptions(
     'no-varna'       => \$no_varna,
     'no-process'     => \$no_process,
     'species-mask=s' => \$species_mask,
+    'mask-trna     ' => \$trna,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
     man              => \$man
@@ -74,7 +76,7 @@ File::Copy::copy( $fasta_file, $seq_path );
 my $run_options_file =
   PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $mfei, $shuffles,
+PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $trna, $mfei, $shuffles,
     $align, "", $species_mask, $varna, 'fasta' );
 
 PipelineMiRNA::MainPipeline::fasta_pipeline($abs_output_folder);

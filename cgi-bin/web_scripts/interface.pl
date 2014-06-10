@@ -44,6 +44,8 @@ my $page = <<"END_TXT";
             <option class="db">Medicago_truncatula</option> 
           </select>
         </div>
+        <p><input class="checkbox" type="checkbox" name='tRNA' id ="tRNA"/>
+            &#160;<label for='tRNA'>Mask tRNAs <i>(tRNAscan-SE)</i></label>  [<a href="$help_page#TODO">?</a>]</p>
         <p id='exempleClear'>
         <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();">run with an example</a>
       </p>
