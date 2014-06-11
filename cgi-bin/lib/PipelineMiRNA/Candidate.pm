@@ -23,7 +23,7 @@ my $candidate_base_filename = 'candidate.yml';
 Check correctness and get the result for a given candidate
 
 Arguments:
-- $job - the job identifier
+- $job - the job directory
 - $id - the candidate identifier
 =cut
 
@@ -31,13 +31,26 @@ sub retrieve_candidate_information {
     my ( $self, @args ) = @_;
     my $job = shift @args;
     my $id = shift @args;
-    my $candidate_file = File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
+    my $candidate_file = $self->get_candidate_filename($job, $id);
     if ( ! -e $candidate_file ){
         die("Unvalid candidate information");
 
     }else{
         return $self->deserialize_candidate($candidate_file);
     }
+}
+
+=method get_candidate_filename
+
+Get the candidate filename given its identifier and the job directory
+
+=cut
+
+sub get_candidate_filename {
+    my ( $self, @args ) = @_;
+    my $job = shift @args;
+    my $id = shift @args;
+    return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
 }
 
 =method make_candidate_filename
