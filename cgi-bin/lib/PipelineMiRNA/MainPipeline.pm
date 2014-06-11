@@ -420,7 +420,7 @@ sub process_RNAstemloop {
 		if ( PipelineMiRNA::Utils::is_fasta_header( $stem_line )) {
 			$nameSeq = substr ($stem_line, 1, -1);
 		}
-		elsif ( PipelineMiRNA::Utils::is_fasta_line($stem_line ) ) {
+		elsif ( PipelineMiRNA::Utils::is_fasta_line_relaxed($stem_line ) ) {
 			$dna = substr $stem_line, 0, -1;
 			$line_eval_opt = substr( <$EVAL_OPT_FH>, 0, -1 );    # the sequence as well
 			if ( PipelineMiRNA::Utils::is_fasta_header( $line_eval_opt ) ) {

@@ -293,6 +293,29 @@ sub is_fasta_line {
     }
 }
 
+=method is_fasta_line_relaxed
+
+Checks whether the given string is an accepted FASTA sequence
+(ie constituted of A, T, G, C, U or masked character N)
+
+Input:
+ - a sequence string
+Output:
+ - True or False
+
+=cut
+
+sub is_fasta_line_relaxed {
+    my (@args) = @_;
+    my $line = shift @args;
+    if ( $line =~ m{^\s*[ATGCUNatcgun]+\s*$}xms ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
 =method is_fasta
 
 Checks whether the given string is a FASTA sequence

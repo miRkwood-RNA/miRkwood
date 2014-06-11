@@ -5,6 +5,7 @@ package PipelineMiRNA::Parsers;
 use strict;
 use warnings;
 
+use PipelineMiRNA::Utils;
 
 =method parse_pvalue
 
@@ -161,13 +162,10 @@ sub parse_RNAfold_output {
         }xms ){
             $nameSeq = $1;
         }
-        elsif ( $line =~ m{
-           ^\s*?            # Begin of line and possibly some whitespace
-           ([aAcCgGtTuU]*)  # A sequence of nucleotides, captured
-           \s*?$            # Possibly some whitespace, until the end
-        }xms ){
-            # récupération de la sequence adn
-            $dna = $1;
+        elsif ( PipelineMiRNA::Utils::is_fasta_line_relaxed($line) ){
+            $dna = $line;
+            $dna =~ s/^\s+//;
+            $dna =~ s/\s+$//;
         }
         else{
             ( $structure, $energy ) = parse_Vienna_line($line);
