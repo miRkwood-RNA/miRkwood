@@ -434,16 +434,16 @@ Return whether the output file exists.
 sub run_tRNAscanSE_on_file {
     my ( $input, $output ) = @_;
     my $tRNAscanSE_cmd = qw{};
-    my $pre_cmd = "export PERL5LIB=\$PERL5LIB:$tRNAscanSE_bin";
     $tRNAscanSE_cmd =
-        "$pre_cmd && "
+        "PERL5LIB=$tRNAscanSE_bin: "
       . "$tRNAscanSE_bin/tRNAscan-SE "
       . "$input "
       . '--quiet '
       . '--brief '
       . '--forceow '
       . "--output $output";
-    system("$pre_cmd && $tRNAscanSE_cmd");
+    debug("$tRNAscanSE_cmd", PipelineMiRNA->DEBUG());
+    system($tRNAscanSE_cmd);
     return ( -e $output );
 }
 
