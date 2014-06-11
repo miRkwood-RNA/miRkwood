@@ -627,6 +627,7 @@ sub populate_candidate_directory {
 	my %candidate          = %{ shift @args };
 	my @alternatives_array = @{ shift @args };
 
+    debug( "Writing candidate information in $candidate_dir", PipelineMiRNA->DEBUG() );
 	#Writing seq.txt
 	my $candidate_sequence = File::Spec->catfile( $candidate_dir, 'seq.txt' );
 	open( my $SEQ_FH, '>', $candidate_sequence )
@@ -770,7 +771,7 @@ sub process_tests {
 			  )
 			{
 				# Catching
-				carp( "Serialization failed" );
+				carp( "Serialization of $subDir failed" );
 			}
 			else {
 				debug( "Done with serializing $subDir", PipelineMiRNA->DEBUG() );
