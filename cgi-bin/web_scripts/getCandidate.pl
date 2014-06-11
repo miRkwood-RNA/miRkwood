@@ -51,6 +51,10 @@ else {
             ( $filename, $contents, $disposition ) =
               exportAlternatives( \%candidate )
         }
+        when (/yml/) {
+            ( $filename, $contents, $disposition ) =
+              exportAsYAML( \%candidate )
+        }
         default {
             die("Error: the export type '$export_type' is not supported");
         }
@@ -96,4 +100,13 @@ sub exportAlternatives {
     my $alternatives =
       PipelineMiRNA::Candidate->alternativeCandidatesAsVienna($candidate);
     return ( "$filename.txt", $alternatives, 'attachment' );
+}
+
+sub exportAsYAML {
+    my @args      = @_;
+    my $candidate = shift @args;
+    my $filename  = PipelineMiRNA::Candidate->get_shortened_name($candidate);
+    use YAML::XS;
+    my $yaml = YAML::XS::Dump($candidate);
+    return ( "$filename.yml", $yaml, 'attachment' );
 }
