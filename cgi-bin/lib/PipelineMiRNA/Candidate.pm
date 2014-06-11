@@ -161,9 +161,6 @@ sub parse_candidate_information {
         my @res = PipelineMiRNA::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
         my $devnull;
         ($result{'name'}, $devnull, $result{'DNASequence'}, $result{'Vienna'}) = @res;
-
-        my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_stemloop_out);
-
     }
 
     #Récupération séquence et format Vienna
