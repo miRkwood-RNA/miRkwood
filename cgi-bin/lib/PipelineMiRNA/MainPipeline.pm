@@ -200,14 +200,14 @@ sub get_sequences {
     my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
     my %filter;
     if ($cfg->param('options.filter')) {
-        debug( 'FilteringCDS', PipelineMiRNA->DEBUG() );
+        debug( 'Masking species', PipelineMiRNA->DEBUG() );
         my %blast_mask = PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
-        @filter{keys %blast_mask} = values %blast_mask;
+        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
     }
     if ($cfg->param('options.mask-trna')) {
         debug( 'Masking tRNAs', PipelineMiRNA->DEBUG() );
         my %trna_mask = PipelineMiRNA::Components::get_trna_masking_information( $job_dir );
-        @filter{keys %trna_mask} = values %trna_mask;
+        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
     }
     my $sequence_uploaded =
           File::Spec->catfile( $job_dir, 'input_sequences.fas' );

@@ -800,3 +800,26 @@ sub slurp_file {
     close $fh or die $!;
     return $contents;
 }
+
+=method merge_hashes_of_arrays
+
+Return the contents of a file
+
+=cut
+
+sub merge_hashes_of_arrays {
+    my @args = @_;
+    my ($hash1, $hash2) = (@args);
+    my %hash1 = %{$hash1};
+    my %hash2 = %{$hash2};
+    foreach my $key2 ( keys %hash2 ) {
+        if( exists $hash1{$key2} ) {
+            my @merged = (@{$hash1{$key2}}, @{$hash2{$key2}});
+            $hash1{$key2} = \@merged;
+        }
+        else {
+            $hash1{$key2} = $hash2{$key2};
+        }
+    }
+    return %hash1;
+}
