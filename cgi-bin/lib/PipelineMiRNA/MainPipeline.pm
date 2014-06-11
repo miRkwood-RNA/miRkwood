@@ -204,6 +204,11 @@ sub get_sequences {
         my %blast_mask = PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
         @filter{keys %blast_mask} = values %blast_mask;
     }
+    if ($cfg->param('options.mask-trna')) {
+        debug( 'Masking tRNAs', PipelineMiRNA->DEBUG() );
+        my %trna_mask = PipelineMiRNA::Components::get_trna_masking_information( $job_dir );
+        @filter{keys %trna_mask} = values %trna_mask;
+    }
     my $sequence_uploaded =
           File::Spec->catfile( $job_dir, 'input_sequences.fas' );
 

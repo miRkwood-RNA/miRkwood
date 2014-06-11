@@ -49,6 +49,26 @@ sub filter_CDS {
     return %blast_seqs;
 }
 
+=method get_trna_masking_information
+
+Retrieve tRNA masking information by running tRNAscan-SE and parsing the output
+
+=cut
+
+sub get_trna_masking_information {
+    my ( $dirJob ) = @_;
+
+    my $uploaded_sequences =
+      File::Spec->catfile( $dirJob, 'input_sequences.fas' );
+    my $output = File::Spec->catfile( $dirJob, 'trnascanse.out' );
+
+    PipelineMiRNA::Programs::run_tRNAscanSE_on_file($uploaded_sequences, $output
+    ) or die('Problem when running tRNAscanSE');
+
+    my %trna_seqs = PipelineMiRNA::Parsers::parse_tRNAscanSE_output($output);
+    return %trna_seqs;
+}
+
 =method mask_CT_file
 
 Mask the CT file and outputting to boucleTermWithN_out file
