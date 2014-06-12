@@ -3,18 +3,9 @@
 - hosts: all
   sudo: True
   roles:
-    - mirkwood-software
-#    - browser-tests
-    - apache
+    - bioinfo
+    - mirkwood
   tasks:
-    - name: Install Perl packages
-      apt: pkg={{ item }} state=installed
-      with_items:
-        - libconfig-simple-perl
-        - libyaml-perl
-        - libfile-which-perl
-        - libmime-lite-perl
-
     - name: Create results directory
       file:
         path=/home/vagrant/results
