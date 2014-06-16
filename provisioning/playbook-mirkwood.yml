@@ -31,10 +31,16 @@
         dest=/bio1/www/html/mirkwood/results
         state=link
 
-    - name: Install RNAstemloop
+    - name: Install local RNAstemloop
       file:
         src=/bio1/www/cgi-bin/mirkwood/programs/RNAstemloop-x86_64
         dest=/usr/bin/RNAstemloop
+        state=link
+
+    - name: Install local Exonerate
+      file:
+        src=/bio1/www/cgi-bin/mirkwood/programs/exonerate-2.2.0-x86_64
+        dest=/bio1/www/cgi-bin/mirkwood/programs/exonerate
         state=link
 
     - name: Make links for programs
