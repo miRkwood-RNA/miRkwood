@@ -43,5 +43,5 @@
         dest=/bio1/www/cgi-bin/mirkwood/programs/{{ item.dest }}
         state=link
       with_items:
-        - { path: 'VARNAv3-91.jar', dest: 'VARNAv3-91.jar' }
+        - { path: 'VARNAv3-91.jar', dest: 'VARNA.jar' }
         - { path: 'miRdup', dest: 'miRdup-1.2' }

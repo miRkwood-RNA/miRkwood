@@ -11,13 +11,14 @@ fi
 ROOT_PATH=$(readlink -f $1)
 cd $ROOT_PATH
 
-if [ ! -f $ROOT_PATH/VARNAv3-9.jar ]
+VARNA=$ROOT_PATH/VARNA.jar
+if [ ! -f $VARNA ]
 then
-    echo "Installing VARNA 3.9"
-    wget http://varna.lri.fr/bin/VARNAv3-9.jar
+    echo "Installing VARNA"
+    wget http://varna.lri.fr/bin/VARNAv3-9.jar -O $VARNA
     cd $ROOT_PATH
 else
-    echo "VARNA 3.9 already installed"
+    echo "VARNA already installed"
 fi
 
 MIRDUP=$ROOT_PATH/miRdup-1.2
