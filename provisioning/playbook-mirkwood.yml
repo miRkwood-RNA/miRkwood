@@ -1,5 +1,5 @@
 ---
-# This playbook deploys miRkwood
+# This playbook deploys miRkwood in a Vagrant environment
 - hosts: all
   sudo: True
   roles:
@@ -10,18 +10,29 @@
       file:
         path=/home/vagrant/results
         state=directory
-        owner=www-data  
+        owner=www-data
         group=www-data
 
     - name: Prepare results directory
       file:
         src=/home/vagrant/results
-        dest=/mirkwood-results
+        dest=/bio1/www/html/mirkwood/results
         state=link
 
-    - name: Making appropriate links
+    - name: Making appropriate links for CGI directory
       file:
-        src=/vagrant/
-        dest=/mirkwood
+        src=/vagrant/cgi-bin/
+        dest=/bio1/www/cgi-bin/mirkwood
         state=link
 
+    - name: Making appropriate links for HTML directory
+      file:
+        src=/vagrant/html/
+        dest=/bio1/www/html/mirkwood
+        state=link
+
+    - name: Install RNAstemloop
+      file:
+        src=/bio1/www/cgi-bin/mirkwood/programs/RNAstemloop-x86_64
+        dest=/usr/bin/RNAstemloop
+        state=link
