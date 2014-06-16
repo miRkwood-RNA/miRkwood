@@ -13,22 +13,22 @@
         owner=www-data
         group=www-data
 
-    - name: Prepare results directory
-      file:
-        src=/home/vagrant/results
-        dest=/bio1/www/html/mirkwood/results
-        state=link
-
-    - name: Making appropriate links for CGI directory
+    - name: Make appropriate links for CGI directory
       file:
         src=/vagrant/cgi-bin/
         dest=/bio1/www/cgi-bin/mirkwood
         state=link
 
-    - name: Making appropriate links for HTML directory
+    - name: Make appropriate links for HTML directory
       file:
         src=/vagrant/html/
         dest=/bio1/www/html/mirkwood
+        state=link
+
+    - name: Prepare results directory
+      file:
+        src=/home/vagrant/results
+        dest=/bio1/www/html/mirkwood/results
         state=link
 
     - name: Install RNAstemloop
@@ -36,3 +36,12 @@
         src=/bio1/www/cgi-bin/mirkwood/programs/RNAstemloop-x86_64
         dest=/usr/bin/RNAstemloop
         state=link
+
+    - name: Make links for programs
+      file:
+        src=/opt/{{ item.path }}
+        dest=/bio1/www/cgi-bin/mirkwood/programs/{{ item.dest }}
+        state=link
+      with_items:
+        - { path: 'VARNAv3-91.jar', dest: 'VARNAv3-9.jar' }
+        - { path: 'miRdup-1.2', dest: 'miRdup-1.2' }

@@ -20,17 +20,15 @@ else
     echo "VARNA 3.9 already installed"
 fi
 
-MIRDUP=$ROOT_PATH/miRdup.jar
+MIRDUP=$ROOT_PATH/miRdup-1.2
 if [ ! -e $MIRDUP ]
 then
     echo "Installing MiRdup 1.2"
-    MIRDUP_ROOT=$ROOT_PATH/miRdup-1.2
-    mkdir $MIRDUP_ROOT
-    cd $MIRDUP_ROOT
+    mkdir $MIRDUP
+    cd $MIRDUP
     wget http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.2.zip
     unzip miRdup_1.2.zip
     cd $ROOT_PATH
-    mv $MIRDUP_ROOT/miRdup.jar .
 else
     echo "MiRdup 1.2 already installed"
 fi
