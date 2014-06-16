@@ -38,7 +38,7 @@ sub init_programs{
     $b2ct_bin     = $programs_config{'b2ct'};
     $blastx_bin   = $programs_config{'blastx'};
     $randfold_bin = $programs_config{'rnashuffles'};
-    $exonerate_bin = 'exonerate';
+    $exonerate_bin = $programs_config{'exonerate'};
     $varna_bin        = $programs_config{'varna'};
     $rnastemploop_bin = $programs_config{'rnastemloop'};
     $tRNAscanSE_bin   = $programs_config{'tRNAscanSE'};
