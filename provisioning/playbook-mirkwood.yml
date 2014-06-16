@@ -51,3 +51,7 @@
       with_items:
         - { path: 'VARNAv3-91.jar', dest: 'VARNA.jar' }
         - { path: 'miRdup', dest: 'miRdup-1.2' }
+
+    - name: Deploy miRkwood data
+      command: /bio1/www/cgi-bin/mirkwood/install-data.sh /bio1/www/cgi-bin/mirkwood/data
+
