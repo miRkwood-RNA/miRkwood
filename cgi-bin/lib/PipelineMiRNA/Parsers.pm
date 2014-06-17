@@ -269,6 +269,33 @@ sub parse_tRNAscanSE_output {
     return %results;
 }
 
+=method parse_rnammer_output
+
+Parse the contents of a RNAmmer output file in GFF
+
+=cut
+
+sub parse_rnammer_output {
+    my @args = @_;
+    my ($file) = shift @args;
+    my %results;
+    open( my $INPUT_FH, '<', $file ) or die "Error when opening file $file: $!";
+    while ( my $line = <$INPUT_FH> ) {
+        if ( $line =~ /^#/ ) {
+            next;
+        }
+        my @values = split( /[\t]/, $line );
+        my $struct = {
+            'start' => int( trim( $values[3] ) ),
+            'end'   => int( trim( $values[4] ) )
+        };
+        %results =
+          push_to_array_in_hash( \%results, trim( $values[0] ), $struct );
+    }
+    close $INPUT_FH or die "Error when closing file $file: $!";
+    return %results;
+}
+
 =method trim
 
 Trim a string

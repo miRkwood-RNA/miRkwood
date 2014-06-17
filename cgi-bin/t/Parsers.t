@@ -138,3 +138,24 @@ my %parse_tRNAscanSE_expected = ('C28G1' => \@parse_tRNAscanSE_expected_1,
 
 is_deeply( \%parse_tRNAscanSE_output, \%parse_tRNAscanSE_expected,
     'tRNAscanSE output file correctly parsed' );
+
+
+## RNAmmer ##
+
+my $rnammer_file = input_file('Parsers.RNAmmer.gff.out');
+ok(
+    my %parse_rnammer_output =
+      PipelineMiRNA::Parsers::parse_rnammer_output($rnammer_file),
+    'Can call parse_rnammer_output'
+);
+my %parse_rnammer_expected_11 = ( 'start' => 18079, 'end' => 23426 );
+my %parse_rnammer_expected_12 = ( 'start' => 21069, 'end' => 21181 );
+my %parse_rnammer_expected_13 = ( 'start' => 16176, 'end' => 17706 );
+my @parse_rnammer_expected_1  = (
+    \%parse_rnammer_expected_11, \%parse_rnammer_expected_12,
+    \%parse_rnammer_expected_13
+);
+my %parse_rnammer_expected = ( 'ecoli_section' => \@parse_rnammer_expected_1 );
+
+is_deeply( \%parse_rnammer_output, \%parse_rnammer_expected,
+    'RNAmmer output file correctly parsed' );

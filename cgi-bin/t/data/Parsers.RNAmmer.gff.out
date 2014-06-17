@@ -1,0 +1,10 @@
+##gff-version2
+##source-version RNAmmer-1.2
+##date 2014-06-17
+##Type DNA
+# seqname           source                      feature     start      end   score   +/-  frame  attribute
+# ---------------------------------------------------------------------------------------------------------
+ecoli_section	RNAmmer-1.2	rRNA	18079	23426	315.0	+	.	28s_rRNA	
+ecoli_section	RNAmmer-1.2	rRNA	21069	21181	46.9	+	.	8s_rRNA	
+ecoli_section	RNAmmer-1.2	rRNA	16176	17706	169.8	+	.	18s_rRNA	
+# ---------------------------------------------------------------------------------------------------------
