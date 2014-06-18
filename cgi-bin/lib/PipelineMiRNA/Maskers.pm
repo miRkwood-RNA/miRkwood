@@ -30,7 +30,6 @@ sub get_coding_region_masking_information {
                                         $uploaded_sequences, $blast_database,
                                         $blastx_options,     $blast_output
     ) or die('Problem when running Blastx');
-    chmod 777, $blast_output;
 
     my %blast_seqs = PipelineMiRNA::Parsers::parse_blast_output($blast_output);
     return %blast_seqs;
