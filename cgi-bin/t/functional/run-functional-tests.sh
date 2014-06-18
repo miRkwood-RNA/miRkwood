@@ -21,14 +21,10 @@ fi
 
 
 # Testing
-plan 4
+plan 3
 
 ### Testing script of the PipelineMiRNA
 EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg"
-
-rm -rf $BASEDIR/output/filtercds/ && mkdir -p $BASEDIR/output/filtercds/ && cp $BASEDIR/data/filtercds_in.fas $BASEDIR/output/filtercds/input_sequences.fas
-perl -I$ROOTDIR/lib $ROOTDIR/scripts/filterCDS.pl $ROOTDIR/data/ $BASEDIR/output/filtercds/ Arabidopsis_thaliana
-ok 'FilterCDS' [ `diff $EXCLUDES -qr $BASEDIR/expected/filtercds/ $BASEDIR/output/filtercds/ | wc -l` -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline1/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline1/ $BASEDIR/data/sequenceSomething.fas --align --no-process
