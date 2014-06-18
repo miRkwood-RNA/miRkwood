@@ -35,7 +35,7 @@ GetOptions(
     'no-varna'       => \$no_varna,
     'no-process'     => \$no_process,
     'species-mask=s' => \$species_mask,
-    'mask-trna     ' => \$trna,
+    'mask-trna'      => \$trna,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
     man              => \$man
