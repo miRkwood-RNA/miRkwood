@@ -1,7 +1,7 @@
-use PipelineMiRNA::Components;
+use PipelineMiRNA::Maskers;
 use PipelineMiRNA::Programs;
 
 my ( $idirData, $idirJob, $iplant ) = @ARGV;
 
 PipelineMiRNA::Programs::init_programs();
-PipelineMiRNA::Components::filter_CDS( $idirData, $idirJob, $iplant );
+PipelineMiRNA::Maskers::get_coding_region_masking_information( $idirData, $idirJob, $iplant );
