@@ -28,6 +28,7 @@ our $rnastemploop_bin;
 our $blastx_bin;
 our $miRdup_jar;
 our $tRNAscanSE_bin;
+our $rnammer_bin;
 
 sub init_programs{
     my @args = @_;
@@ -42,6 +43,7 @@ sub init_programs{
     $varna_bin        = $programs_config{'varna'};
     $rnastemploop_bin = $programs_config{'rnastemloop'};
     $tRNAscanSE_bin   = $programs_config{'tRNAscanSE'};
+    $rnammer_bin      = $programs_config{'rnammer'};
 
     $miRdup_jar = $programs_config{'mirdup'};
 
@@ -424,7 +426,7 @@ sub run_mirdup_validation_on_file {
 }
 
 
-=method run_tRNAscanSE
+=method run_tRNAscanSE_on_file
 
 Run run_tRNAscanSE on the given file
 Return whether the output file exists.
@@ -446,5 +448,26 @@ sub run_tRNAscanSE_on_file {
     system($tRNAscanSE_cmd);
     return ( -e $output );
 }
+
+=method run_rnammer_on_file
+
+Run RNAmmer on the given file
+Return whether the output file exists.
+
+=cut
+
+sub run_rnammer_on_file {
+    my ( $input, $kingdom, $output ) = @_;
+    my $rnammer_cmd = qw{};
+    $rnammer_cmd =
+      "$rnammer_bin "
+      . "-S $kingdom"           # Kingdom
+      . "-m lsu,ssu,tsu "       # Molecule types
+      . '--gff $output';        # GFF output
+    debug( "$rnammer_cmd", PipelineMiRNA->DEBUG() );
+    system($rnammer_cmd);
+    return ( -e $output );
+}
+
 
 1;
