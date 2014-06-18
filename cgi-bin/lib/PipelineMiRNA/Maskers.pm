@@ -80,9 +80,9 @@ sub mask_sequences {
                 my %pos = %{$positions};
                 $sequence = mask_sequence($sequence, $pos{'start'}, $pos{'end'});
             }
-            my @res = ( $name, $sequence );
-            push @sequences_results, \@res;
         }
+        my @res = ( $name, $sequence );
+        push @sequences_results, \@res;
     }
     return @sequences_results;
 }

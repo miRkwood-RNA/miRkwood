@@ -24,3 +24,26 @@ ok(
 my $mask_sequence_expected = '123NNNN89';
 is ($mask_sequence_output, $mask_sequence_expected,
     'mask_sequence returs the correct value' );
+
+## mask_sequences #
+
+my %masker_11 = ( 'start' => 5, 'end' => 10 );
+my %masker_12 = ( 'start' => 17, 'end' => 19 );
+my @masker_1  = ( \%masker_11, \%masker_12 );
+my %masker = ( 'A' => \@masker_1 );
+
+my @input_sequence1 = ('A', '12345678901234567890');
+my @input_sequence2 = ('B', '12345678901234567890');
+my @input_sequences = ( \@input_sequence1, \@input_sequence2 );
+ok (
+    my @result_sequences =
+      PipelineMiRNA::Maskers::mask_sequences(\%masker, @input_sequences),
+      'Can call mask_sequences'
+);
+
+my @expected_sequence1 = ('A', '12345NNNNNN234567NNN');
+my @expected_sequence2 = ('B', '12345678901234567890');
+my @expected_sequences = ( \@expected_sequence1, \@expected_sequence2 );
+
+is_deeply (\@result_sequences, \@expected_sequences,
+    'mask_sequence returs the correct value' );
