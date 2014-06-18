@@ -116,14 +116,31 @@ sub get_error_page {
     my $error_message = shift @args;
     my @css = (get_server_css_file(), get_css_file());
     my @js  = (get_js_file());
-
-    my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content("<br/>$error_message", \@css, \@js);
+    my $header = "Sorry, something went wrong with miRkwood";
+    my $footer = "Please contact your system administrator or the miRkwood team.";
+    my $explanation = "The error which occured is:";
+    my $contents = "<br/><br/>$header<br/><br/>$footer<br/><br/><br/>$explanation<br/><br/>$error_message";
+    my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($contents, \@css, \@js);
     my $res = <<"HTML";
 Content-type: text/html
 
 $html
 HTML
     return $res;
+}
+
+=method web_die
+
+Die in a web context
+
+=cut
+
+sub web_die {
+    my @args = @_;
+    my $error_message = shift @args;
+    print get_error_page($error_message);
+    die($error_message);
+    return;
 }
 
 

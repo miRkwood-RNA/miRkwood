@@ -27,7 +27,7 @@ END_TXT
 
 my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
 
-print <<"DATA" or die("Error when displaying HTML: $!");
+print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when displaying HTML: $!");
 Content-type: text/html
 
 $html

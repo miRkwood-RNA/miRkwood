@@ -3,13 +3,13 @@ use strict;
 use warnings;
 
 use CGI;
-use CGI::Carp qw(fatalsToBrowser);
 use File::Spec;
 use feature 'switch';
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use PipelineMiRNA::Results;
+use PipelineMiRNA::WebTemplate;
 
 my $cgi = CGI->new;
 
@@ -28,18 +28,18 @@ if ($valid) {
         when (/csv/) { exportAsCSV($id_job) }
         when (/fas/) { exportAsFasta($id_job) }
         when (/dot/) { exportAsDotBracket($id_job) }
-        default { die("Error: the export type '$export_type' is not supported"); }
+        default { PipelineMiRNA::WebTemplate::web_die("The export type '$export_type' is not supported"); }
     }
 }
 else {
-    die('Error: the job ID provided is not valid');
+    PipelineMiRNA::WebTemplate::web_die('The job ID provided is not valid');
 }
 
 sub exportAsGFF {
     my $id_job = shift @_;
     my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
     my $gff = PipelineMiRNA::Results->export('gff', \%myResults , \@sequences_to_export);
-    print <<"DATA" or die "Error when printing content: $!";
+    print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when printing content: $!");
 Content-type: text/gff
 Content-disposition: attachment;filename=Results-$id_job.gff
 
@@ -59,7 +59,7 @@ sub exportAsCSV {
     my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
     my $csv = PipelineMiRNA::Results->resultstruct2csv( \%myResults , \@sequences_to_export);
 
-    print <<"DATA" or die "Error when printing content: $!";
+    print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when printing content: $!");
 Content-type: text/csv
 Content-disposition: attachment;filename=Results-$id_job.csv
 
@@ -71,7 +71,7 @@ sub exportAsFasta {
     my $id_job = shift @_;
     my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
     my $fasta = PipelineMiRNA::Results->export('fas', \%myResults , \@sequences_to_export);
-    print <<"DATA" or die "Error when printing content: $!";
+    print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when printing content: $!");
 Content-type: text/txt
 Content-disposition: attachment;filename=Results-$id_job.fa
 
@@ -83,7 +83,7 @@ sub exportAsDotBracket {
     my $id_job = shift @_;
     my %myResults =  PipelineMiRNA::Results->get_structure_for_jobID($id_job);
     my $dotbracket = PipelineMiRNA::Results->export('dot', \%myResults , \@sequences_to_export);
-    print <<"DATA" or die "Error when printing content: $!";
+    print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when printing content: $!");
 Content-type: text/txt
 Content-disposition: attachment;filename=Results-$id_job.txt
 

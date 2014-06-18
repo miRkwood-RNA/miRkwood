@@ -56,10 +56,10 @@ else {
               exportAsYAML( \%candidate )
         }
         default {
-            die("Error: the export type '$export_type' is not supported");
+            PipelineMiRNA::WebTemplate::web_die("Error: the export type '$export_type' is not supported");
         }
     }
-    print <<"DATA" or die "Error when printing content: $!";
+    print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when printing content: $!");
 Content-type: text/plain
 Content-disposition: $disposition;filename=$filename
 

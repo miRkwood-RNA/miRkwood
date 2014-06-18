@@ -41,21 +41,18 @@ my $root = PipelineMiRNA::Paths->get_results_filesystem_path();
 
 if (! -e $root) {
     my $error = "Designated directory ($root) for results does not exist. Please contact the system administrator";
-    print PipelineMiRNA::WebTemplate::get_error_page($error);
-    die($error);
+    PipelineMiRNA::WebTemplate::web_die($error);
 }
 
 if (! -W $root) {
     my $error = "Cannot write results in designated directory $root. Please contact the system administrator";
-    print PipelineMiRNA::WebTemplate::get_error_page($error);
-    die($error);
+    PipelineMiRNA::WebTemplate::web_die($error);
 }
 
 my @unavailable = PipelineMiRNA::Programs::list_unavailable_programs();
 if (@unavailable){
     my $error = "Cannot find required third-party software: @unavailable. Please contact the system administrator";
-    print PipelineMiRNA::WebTemplate::get_error_page($error);
-    die($error);
+    PipelineMiRNA::WebTemplate::web_die($error);
 }
 
 my $jobId = PipelineMiRNA::Results->make_job_id();
@@ -74,7 +71,7 @@ if ( $seqArea eq q{} )    # cas upload fichier
 {
     debug("Sequences are a FASTA file uploaded", 1);
     my $upload = $cgi->upload('seqFile')
-      || die "Error when getting seqFile: $!";
+      or PipelineMiRNA::WebTemplate::web_die("Error when getting seqFile: $!");
     while ( my $ligne = <$upload> ) {
         $seq .= $ligne;
     }
@@ -92,7 +89,7 @@ if ( ! PipelineMiRNA::Utils::is_fasta($seq) )
 }
 
 open( my $OUTPUT, '>>', $sequence_upload )
-  or die "Error when opening -$sequence_upload-: $!";
+  or PipelineMiRNA::WebTemplate::web_die("Error when opening -$sequence_upload-: $!");
 my $name;
 my @lines = split /\n/, $seq;
 foreach my $line (@lines) {
