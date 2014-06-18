@@ -323,12 +323,3 @@ foreach my $couple (@get_name_and_position_from_header_values) {
 "get_name_and_position_from_header (@{$couple}[0]) --> (@{@{$couple}[1]}) ok"
     );
 }
-
-ok(
-    my $mask_sequence_output =
-      PipelineMiRNA::Components::mask_sequence( '123456789', 3, 6),
-    'Can call mask_sequence'
-);
-my $mask_sequence_expected = '123NNNN89';
-is ($mask_sequence_output, $mask_sequence_expected,
-    'mask_sequence returs the correct value' );

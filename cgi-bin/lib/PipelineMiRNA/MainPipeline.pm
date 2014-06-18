@@ -18,6 +18,7 @@ use PipelineMiRNA::Parsers;
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Candidate;
 use PipelineMiRNA::Components;
+use PipelineMiRNA::Maskers;
 use PipelineMiRNA::PosterioriTests;
 use Log::Message::Simple qw[msg error debug];
 
@@ -201,12 +202,12 @@ sub get_sequences {
     my %filter;
     if ($cfg->param('options.filter')) {
         debug( 'Masking species', PipelineMiRNA->DEBUG() );
-        my %blast_mask = PipelineMiRNA::Components::filter_CDS( $dirData, $job_dir, $cfg->param('job.plant') );
+        my %blast_mask = PipelineMiRNA::Maskers::get_coding_region_masking_information( $dirData, $job_dir, $cfg->param('job.plant') );
         %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
     }
     if ($cfg->param('options.mask-trna')) {
         debug( 'Masking tRNAs', PipelineMiRNA->DEBUG() );
-        my %trna_mask = PipelineMiRNA::Components::get_trna_masking_information( $job_dir );
+        my %trna_mask = PipelineMiRNA::Maskers::get_trna_masking_information( $job_dir );
         %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
     }
     my $sequence_uploaded =
@@ -219,43 +220,11 @@ sub get_sequences {
     close $ENTREE_FH;
     my @sequences;
     if (%filter){
-        @sequences = mask_sequences(\%filter, @sequences_array);
+        @sequences = PipelineMiRNA::Maskers::mask_sequences(\%filter, @sequences_array);
     } else {
         @sequences = @sequences_array;
     }
     return @sequences;
-}
-
-=method mask_sequences
-
-
- Usage : @sequences = mask_sequences(\%filter, @sequences_array);
-
-=cut
-
-sub mask_sequences {
-    my @args = @_;
-    my $filter = shift @args;
-    my %filter = %{$filter};
-    my @sequences_array = @args;
-    my @sequences_results;
-    foreach my $item (@sequences_array){
-        my ($name, $sequence) = @{$item};
-        my @split = split(/_/, $name);
-        my $id = $split[0];
-        if (exists $filter{$id}){
-            foreach my $positions(@{$filter{$id}}){
-                my %pos = %{$positions};
-                $sequence = PipelineMiRNA::Components::mask_sequence($sequence,
-                                                                     $pos{'start'},
-                                                                     $pos{'end'},
-                                                                     );
-            }
-            my @res = ( $name, $sequence );
-            push @sequences_results, \@res;
-        }
-    }
-    return @sequences_results;
 }
 
 =method mfei_below_threshold
