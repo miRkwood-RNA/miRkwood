@@ -29,7 +29,7 @@ my $output_folder = 'results_directory';
 ## Parse options
 GetOptions(
     shuffles         => \$shuffles,
-    mfei             => \$mfei,
+    'filter-mfei'    => \$mfei,
     align            => \$align,
     'both-strands'   => \$both_strands,
     'no-varna'       => \$no_varna,
@@ -101,7 +101,7 @@ mirkwood [options] [FASTA files]
 
 =item B<--both-strands>
 
-Process both strands
+Scan both strands
 
 =item B<--species-mask>
 
@@ -109,19 +109,19 @@ Mask coding regions against the given organism
 
 =item B<--shuffles>
 
-Compute thermodynamic stability
+Compute thermodynamic stability (shuffled sequences)
 
-=item B<--mfei>
+=item B<--filter-mfei>
 
-Compute MFE/MFEI/AMFE (minimal folding energy)
+Select only sequences with MFEI < -0.6
 
 =item B<--align>
 
-Align against mature microRNAs miRBase
+Flag conserved mature miRNAs (alignment with miRBase + miRdup)
 
 =item B<--no-varna>
 
-Disable the structure genration using Varna
+Disable the structure generation using Varna
 
 =item B<-help>
 
