@@ -49,7 +49,8 @@ DATA
 
 sub exportAsODF {
     my $id_job = shift @_;
-    use PipelineMiRNA::OpenDocument;
+    require PipelineMiRNA::OpenDocument
+        or PipelineMiRNA::WebTemplate::web_die("Fail to import OpenDocument. Perl module ODF::lpOD is likely missing.");
     my $odt = PipelineMiRNA::OpenDocument->get_report($id_job, \@sequences_to_export);
     print $cgi->redirect( -uri => $odt );
 }
