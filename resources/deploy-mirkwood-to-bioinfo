@@ -7,7 +7,7 @@ HTML_BASE_DIR=/bio1/www/html
 CGI_BASE_DIR=/bio1/www/cgi-bin
 
 HTML_DIR=$HTML_BASE_DIR/mirkwood
-CGI_DIR=/CGI_BASE_DIR/mirkwood
+CGI_DIR=$CGI_BASE_DIR/mirkwood
 
 EXCLUDE="--exclude=results/*"
 
