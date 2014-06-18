@@ -201,12 +201,12 @@ sub get_sequences {
     my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
     my %filter;
     if ($cfg->param('options.filter')) {
-        debug( 'Masking species', PipelineMiRNA->DEBUG() );
+        debug( 'Get masking information for coding regions', PipelineMiRNA->DEBUG() );
         my %blast_mask = PipelineMiRNA::Maskers::get_coding_region_masking_information( $dirData, $job_dir, $cfg->param('job.plant') );
         %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
     }
     if ($cfg->param('options.mask-trna')) {
-        debug( 'Masking tRNAs', PipelineMiRNA->DEBUG() );
+        debug( 'Get masking information for tRNAs', PipelineMiRNA->DEBUG() );
         my %trna_mask = PipelineMiRNA::Maskers::get_trna_masking_information( $job_dir );
         %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
     }
@@ -220,6 +220,7 @@ sub get_sequences {
     close $ENTREE_FH;
     my @sequences;
     if (%filter){
+        debug( 'Masking input sequences', PipelineMiRNA->DEBUG() );
         @sequences = PipelineMiRNA::Maskers::mask_sequences(\%filter, @sequences_array);
     } else {
         @sequences = @sequences_array;
