@@ -34,7 +34,7 @@ ok 'Full pipeline' [ $DIFF -eq 0 ]
 rm -rf $BASEDIR/output/fullpipeline2/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --no-process --species-mask Arabidopsis_thaliana
 DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l)
-ok 'Full pipeline with FilteringCDS' [ $DIFF -eq 0 ]
+ok 'Full pipeline with coding region masking (using BLAST)' [ $DIFF -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline-bam/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa  --no-process
