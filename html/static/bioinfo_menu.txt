@@ -136,17 +136,6 @@
       </li>
     </ul>
 
-    <!-- Cacolac -->
-    <ul class="menu_partie">
-      <li class ="case_titre cacolac_titre">
-	<a href="/cacolac/">Cacolac</a>
-      </li>
-      <li class ="case cacolac"> 
-	<a href="/cgi-bin/cacolac/cacolac.py">Cacolac</a>
-      </li>
-
-    </ul>
-
   </div>
      
 </div> <!-- bloc gauche-->
