@@ -55,7 +55,25 @@ sub get_trna_masking_information {
     return %trna_seqs;
 }
 
+=method get_rnammer_masking_information
 
+Retrieve ribosomal RNA masking information by running RNAmmer and parsing the output
+
+=cut
+
+sub get_rnammer_masking_information {
+    my ( $dirJob ) = @_;
+
+    my $uploaded_sequences =
+      File::Spec->catfile( $dirJob, 'input_sequences.fas' );
+    my $output = File::Spec->catfile( $dirJob, 'rnammer.out' );
+    my $kingdom = 'euk';
+    PipelineMiRNA::Programs::run_rnammer_on_file( $uploaded_sequences, $kingdom, $output )
+      or die('Problem when running RNAmmer');
+
+    my %rnammer_seqs = PipelineMiRNA::Parsers::parse_rnammer_output($output);
+    return %rnammer_seqs;
+}
 
 =method mask_sequences
 

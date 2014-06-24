@@ -461,9 +461,10 @@ sub run_rnammer_on_file {
     my $rnammer_cmd = qw{};
     $rnammer_cmd =
       "$rnammer_bin "
-      . "-S $kingdom"           # Kingdom
+      . "-S $kingdom "          # Kingdom
       . "-m lsu,ssu,tsu "       # Molecule types
-      . '--gff $output';        # GFF output
+      . "--gff $output "        # GFF output
+      . "< $input";
     debug( "$rnammer_cmd", PipelineMiRNA->DEBUG() );
     system($rnammer_cmd);
     return ( -e $output );
