@@ -309,6 +309,12 @@ sub trim {
     return $string;
 }
 
+=method push_to_array_in_hash
+
+Helper method to push a value in a hash of arrays
+
+=cut
+
 sub push_to_array_in_hash {
     my @args = @_;
     my ($hash, $key, $value) = @args;
