@@ -210,6 +210,12 @@ sub get_sequences {
         my %trna_mask = PipelineMiRNA::Maskers::get_trna_masking_information( $job_dir );
         %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
     }
+    if ($cfg->param('options.mask-rrna')) {
+        debug( 'Get masking information for ribosomal RNAs', PipelineMiRNA->DEBUG() );
+        my %rrna_mask = PipelineMiRNA::Maskers::get_rnammer_masking_information( $job_dir );
+        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
+    }
+
     my $sequence_uploaded =
           File::Spec->catfile( $job_dir, 'input_sequences.fas' );
 
