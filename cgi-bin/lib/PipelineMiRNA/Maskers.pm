@@ -6,6 +6,8 @@ use strict;
 use warnings;
 
 use File::Spec;
+use Log::Message::Simple qw[msg error debug];
+
 use PipelineMiRNA::Programs;
 use PipelineMiRNA::Parsers;
 
@@ -95,6 +97,7 @@ sub mask_sequences {
         if (exists $filter{$id}){
             foreach my $positions(@{$filter{$id}}){
                 my %pos = %{$positions};
+                debug( "Masking sequence $name between <$pos{'start'}> and <$pos{'end'}>", PipelineMiRNA->DEBUG() );
                 $sequence = mask_sequence($sequence, $pos{'start'}, $pos{'end'});
             }
         }
