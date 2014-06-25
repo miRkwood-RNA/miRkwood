@@ -19,16 +19,11 @@ by running Blastx and parsing the output
 =cut
 
 sub get_coding_region_masking_information {
-    my ( $dirData, $dirJob, $plant ) = @_;
-
-    my $uploaded_sequences =
-      File::Spec->catfile( $dirJob, 'input_sequences.fas' );
-
-    my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
-    my $blast_output   = File::Spec->catfile( $dirJob,  'outBlast.txt' );
+    my ( $sequences_file, $masking_folder, $blast_database ) = @_;
+    my $blast_output   = File::Spec->catfile( $masking_folder,  'outBlast.txt' );
     my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
     PipelineMiRNA::Programs::run_blast(
-                                        $uploaded_sequences, $blast_database,
+                                        $sequences_file, $blast_database,
                                         $blastx_options,     $blast_output
     ) or die('Problem when running Blastx');
 
@@ -43,13 +38,10 @@ Retrieve tRNA masking information by running tRNAscan-SE and parsing the output
 =cut
 
 sub get_trna_masking_information {
-    my ( $dirJob ) = @_;
+    my ( $sequences_file, $masking_folder ) = @_;
+    my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
 
-    my $uploaded_sequences =
-      File::Spec->catfile( $dirJob, 'input_sequences.fas' );
-    my $output = File::Spec->catfile( $dirJob, 'trnascanse.out' );
-
-    PipelineMiRNA::Programs::run_tRNAscanSE_on_file($uploaded_sequences, $output
+    PipelineMiRNA::Programs::run_tRNAscanSE_on_file($sequences_file, $output
     ) or die('Problem when running tRNAscanSE');
 
     my %trna_seqs = PipelineMiRNA::Parsers::parse_tRNAscanSE_output($output);
@@ -63,13 +55,10 @@ Retrieve ribosomal RNA masking information by running RNAmmer and parsing the ou
 =cut
 
 sub get_rnammer_masking_information {
-    my ( $dirJob ) = @_;
-
-    my $uploaded_sequences =
-      File::Spec->catfile( $dirJob, 'input_sequences.fas' );
-    my $output = File::Spec->catfile( $dirJob, 'rnammer.out' );
+    my ( $sequences_file, $masking_folder ) = @_;
+    my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
     my $kingdom = 'euk';
-    PipelineMiRNA::Programs::run_rnammer_on_file( $uploaded_sequences, $kingdom, $output )
+    PipelineMiRNA::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
       or die('Problem when running RNAmmer');
 
     my %rnammer_seqs = PipelineMiRNA::Parsers::parse_rnammer_output($output);
