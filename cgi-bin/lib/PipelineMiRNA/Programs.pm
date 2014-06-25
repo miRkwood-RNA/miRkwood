@@ -7,6 +7,7 @@ use warnings;
 
 use File::Spec;
 use File::Which;
+use File::Temp qw/ tempdir /;
 use FindBin qw($Bin);
 use Cwd qw(abs_path);
 use File::Basename qw(dirname);
@@ -458,9 +459,11 @@ Return whether the output file exists.
 
 sub run_rnammer_on_file {
     my ( $input, $kingdom, $output ) = @_;
+    my $tmp_dir = tempdir( CLEANUP => 1 );
     my $rnammer_cmd = qw{};
     $rnammer_cmd =
       "$rnammer_bin "
+      . "-T $tmp_dir "          # Temporary directory
       . "-S $kingdom "          # Kingdom
       . "-m lsu,ssu,tsu "       # Molecule types
       . "--gff $output "        # GFF output
