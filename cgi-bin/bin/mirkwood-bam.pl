@@ -26,8 +26,11 @@ my $no_process   = 0;
 my $output_folder = 'results_directory';
 
 # Pipeline options which do not make sense in BAM mode
-my $mask          = 0;
-my $trna          = 0;
+my $mask  = 0;
+my $trna  = 0;
+my $rrna  = 0;
+my $plant = 0;
+my $job_title = 0;
 
 ## Parse options
 GetOptions(
@@ -73,9 +76,7 @@ use PipelineMiRNA::Clusters;
 my $run_options_file =
   PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
 PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $mfei, $shuffles,
-    $align, "", '', $varna, 'bam' );
-
+PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles, $align, $job_title, $plant, $varna,  'bam' );
 PipelineMiRNA::MainPipeline::bam_pipeline($abs_output_folder, $bam_file, $genome_file);
 
 unless ($no_process) {
