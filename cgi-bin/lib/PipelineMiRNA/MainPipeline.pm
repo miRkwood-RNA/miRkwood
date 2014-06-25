@@ -197,25 +197,8 @@ This includes parsing, and masking if option selected.
 sub get_sequences {
     my @args = @_;
     my $job_dir = shift @args;
-    my $cfg = PipelineMiRNA->CONFIG();
-    my $sequences_input = File::Spec->catfile( $job_dir, 'Sequences.fas' );
-    my %filter;
-    if ($cfg->param('options.filter')) {
-        debug( 'Get masking information for coding regions', PipelineMiRNA->DEBUG() );
-        my %blast_mask = PipelineMiRNA::Maskers::get_coding_region_masking_information( $dirData, $job_dir, $cfg->param('job.plant') );
-        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
-    }
-    if ($cfg->param('options.mask-trna')) {
-        debug( 'Get masking information for tRNAs', PipelineMiRNA->DEBUG() );
-        my %trna_mask = PipelineMiRNA::Maskers::get_trna_masking_information( $job_dir );
-        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
-    }
-    if ($cfg->param('options.mask-rrna')) {
-        debug( 'Get masking information for ribosomal RNAs', PipelineMiRNA->DEBUG() );
-        my %rrna_mask = PipelineMiRNA::Maskers::get_rnammer_masking_information( $job_dir );
-        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
-    }
 
+    my %filter = get_masking_information($job_dir);
     my $sequence_uploaded =
           File::Spec->catfile( $job_dir, 'input_sequences.fas' );
 
@@ -232,6 +215,40 @@ sub get_sequences {
         @sequences = @sequences_array;
     }
     return @sequences;
+}
+
+=method get_masking_information
+
+Get the masking information based on the job configuration
+
+ Usage : my %filter = get_masking_information($job_dir);
+ Input : The job directory
+ Return: A hash (name => [ positions ])
+
+=cut
+
+sub get_masking_information {
+    my @args = @_;
+    my $job_dir = shift @args;
+    my %filter;
+    my $cfg = PipelineMiRNA->CONFIG();
+
+    if ($cfg->param('options.filter')) {
+        debug( 'Get masking information for coding regions', PipelineMiRNA->DEBUG() );
+        my %blast_mask = PipelineMiRNA::Maskers::get_coding_region_masking_information( $dirData, $job_dir, $cfg->param('job.plant') );
+        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
+    }
+    if ($cfg->param('options.mask-trna')) {
+        debug( 'Get masking information for tRNAs', PipelineMiRNA->DEBUG() );
+        my %trna_mask = PipelineMiRNA::Maskers::get_trna_masking_information( $job_dir );
+        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
+    }
+    if ($cfg->param('options.mask-rrna')) {
+        debug( 'Get masking information for ribosomal RNAs', PipelineMiRNA->DEBUG() );
+        my %rrna_mask = PipelineMiRNA::Maskers::get_rnammer_masking_information( $job_dir );
+        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
+    }
+    return %filter;
 }
 
 =method mfei_below_threshold
