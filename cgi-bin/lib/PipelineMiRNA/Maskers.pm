@@ -23,7 +23,6 @@ sub get_coding_region_masking_information {
 
     my $uploaded_sequences =
       File::Spec->catfile( $dirJob, 'input_sequences.fas' );
-    my $input_sequences = File::Spec->catfile( $dirJob, 'Sequences.fas' );
 
     my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
     my $blast_output   = File::Spec->catfile( $dirJob,  'outBlast.txt' );
