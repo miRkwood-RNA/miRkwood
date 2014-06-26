@@ -360,26 +360,6 @@ sub resultstruct2pseudoXML {
 	return $result;
 }
 
-=method select_sequences_by_mfei
-
-Select only sequences with MFEI < -0.6
-=cut
-
-sub select_sequences_by_mfei {
-	my ( $self, @args ) = @_;
-	my $results         = shift @args;
-	my %results         = %{$results};
-	my @keys            = keys %results;
-	foreach my $key (@keys) {
-		my $value  = $results{$key};
-		my $energy = ${$value}{'mfei'};
-		if ( $energy > -0.6 ) {
-			delete $results{$key};
-		}
-	}
-	return %results;
-}
-
 =method number_of_results
 
 return total number of candidates 
