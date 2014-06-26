@@ -17,39 +17,13 @@ use Log::Message::Simple qw[msg error debug];
 use PipelineMiRNA::Paths;
 use PipelineMiRNA::Data;
 
-our $vienna_progs_dir;
-our $rnafold_bin;
-our $rnalfold_bin;
-our $rnaeval_bin;
-our $b2ct_bin;
-our $randfold_bin;
-our $exonerate_bin;
-our $varna_bin;
-our $rnastemploop_bin;
-our $blastx_bin;
-our $miRdup_jar;
-our $tRNAscanSE_bin;
-our $rnammer_bin;
+our %programs_paths;
 
 sub init_programs{
     my @args = @_;
     my %programs_config = PipelineMiRNA::PROGRAMS_CONFIG();
-    $rnafold_bin  = $programs_config{'rnafold'};
-    $rnalfold_bin = $programs_config{'rnalfold'};
-    $rnaeval_bin  = $programs_config{'rnaeval'};
-    $b2ct_bin     = $programs_config{'b2ct'};
-    $blastx_bin   = $programs_config{'blastx'};
-    $randfold_bin = $programs_config{'rnashuffles'};
-    $exonerate_bin = $programs_config{'exonerate'};
-    $varna_bin        = $programs_config{'varna'};
-    $rnastemploop_bin = $programs_config{'rnastemloop'};
-    $tRNAscanSE_bin   = $programs_config{'tRNAscanSE'};
-    $rnammer_bin      = $programs_config{'rnammer'};
-
-    $miRdup_jar = $programs_config{'mirdup'};
-
-    $vienna_progs_dir = File::Basename::dirname(which($rnafold_bin));
-
+    %programs_paths = %programs_config;
+    $programs_paths{'vienna_progs'} = File::Basename::dirname(which($programs_config{'rnafold'}));
     return 1;
 }
 
@@ -62,12 +36,10 @@ List all the binaries needed in the pipeline.
 sub list_programs {
     my @args = @_;
     init_programs();
-    return (
-        $rnafold_bin,  $rnalfold_bin, $rnaeval_bin,
-        $randfold_bin, $rnastemploop_bin,
-	    $varna_bin,
-        $miRdup_jar
-    );
+    my %progs = %programs_paths;
+    delete $progs{'tRNAscanSE'};
+    delete $progs{'vienna_progs'};
+    return values %progs;
 }
 
 =method list_unavailable_programs
@@ -93,7 +65,7 @@ Return whether the output file exists.
 sub run_varna_on_ct_file {
     my ( $candidate_ct_file, $varna_image ) = @_;
     my $varna_cmd =
-"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
+"/usr/bin/java -cp $programs_paths{'varna'} fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -i $candidate_ct_file -o $varna_image > /dev/null 2>&1";
     system($varna_cmd);
     return ( -e $varna_image );
 }
@@ -108,7 +80,7 @@ Return whether the output file exists.
 sub run_varna_on_structure {
     my ( $sequence, $structure, $varna_image ) = @_;
     my $varna_cmd =
-"/usr/bin/java -cp $varna_bin fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -sequenceDBN '$sequence' -structureDBN '$structure' -o $varna_image > /dev/null 2>&1";
+"/usr/bin/java -cp $programs_paths{'varna'} fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -sequenceDBN '$sequence' -structureDBN '$structure' -o $varna_image > /dev/null 2>&1";
     system($varna_cmd);
     return ( -e $varna_image );
 }
@@ -122,7 +94,7 @@ Return whether the output file exists.
 
 sub convert_to_ct {
     my ( $rnafold_out, $ct_file ) = @_;
-    my $b2ct_cmd = "$b2ct_bin < $rnafold_out > $ct_file";
+    my $b2ct_cmd = "$programs_paths{'b2ct'} < $rnafold_out > $ct_file";
     system($b2ct_cmd);
     chmod 0777, $ct_file;
     return ( -e $ct_file );
@@ -138,7 +110,7 @@ Return whether the output file exists.
 sub run_rnalfold_on_file {
     my ( $input, $output ) = @_;
     my $options = '-L 400';
-    my $rnalfold_cmd = "$rnalfold_bin $options < $input > $output";
+    my $rnalfold_cmd = "$programs_paths{'rnalfold'} $options < $input > $output";
     system($rnalfold_cmd);
     return ( -e $output );
 }
@@ -176,7 +148,7 @@ Return whether the output file exists.
 
 sub run_rnaeval {
     my ( $input, $output ) = @_;
-    my $rnaeval_cmd = "$rnaeval_bin < $input > $output";
+    my $rnaeval_cmd = "$programs_paths{'rnaeval'} < $input > $output";
     system($rnaeval_cmd);
     return ( -e $output );
 }
@@ -191,7 +163,7 @@ Return whether the output file exists.
 sub run_slow_randfold {
     my ( $input, $output ) = @_;
     my $nb_iterations = 7;
-    my $randfold_cmd = "$randfold_bin -d $input $nb_iterations > $output";
+    my $randfold_cmd = "$programs_paths{'rnashuffles'} -d $input $nb_iterations > $output";
     system($randfold_cmd);
     return ( -e $output );
 }
@@ -208,7 +180,7 @@ sub run_randfold {
     my $input_file = shift @args;
     my $output_file = shift @args;
     my $iterations  = shift @args;
-    my $randfold_cmd = "$randfold_bin --iterations $iterations --fast --fasta $input_file > $output_file";
+    my $randfold_cmd = "$programs_paths{'rnashuffles'} --iterations $iterations --fast --fasta $input_file > $output_file";
     debug($randfold_cmd, PipelineMiRNA->DEBUG());
     system($randfold_cmd);
     return ( -e $output_file );
@@ -239,7 +211,7 @@ sub run_exonerate {
 
     my $exonerate_cmd = qw{};
     $exonerate_cmd =
-        "$exonerate_bin "
+        "$programs_paths{'exonerate'} "
       . '--exhaustive '             # Exhaustive alignment
       . '--model affine:bestfit '   # Best location alignment of the query onto the target
       . "$mirbase_file $input "
@@ -268,7 +240,7 @@ Return whether the output files exist.
 
 sub run_rnastemloop {
     my ( $input, $output_stemloop, $output_optimal ) = @_;
-    my $rnastemloop_cmd = "$rnastemploop_bin -i $input -s $output_stemloop -o $output_optimal";
+    my $rnastemloop_cmd = "$programs_paths{'rnastemloop'} -i $input -s $output_stemloop -o $output_optimal";
     system($rnastemloop_cmd);
     return ( -e $output_stemloop && -e $output_optimal);
 }
@@ -288,7 +260,7 @@ Return whether the output file exists.
 sub run_blast {
     my ( $query, $database, $blastx_options, $output ) = @_;
     my $blastx_cmd =
-        "$blastx_bin "
+        "$programs_paths{'blastx'} "
       . "-query $query "
       . "-db $database "
       . "$blastx_options "
@@ -314,7 +286,7 @@ sub train_mirdup {
     my $matures_miRNA       = shift @args;
     my $hairpins_precursors = shift @args;
     my $run_mirdup_cmd =
-"java -Xms500m -Xmx1500m -jar $miRdup_jar -r $vienna_progs_dir -m $matures_miRNA -h $hairpins_precursors";
+"java -Xms500m -Xmx1500m -jar $programs_paths{'mirdup'} -r $programs_paths{'vienna_progs'} -m $matures_miRNA -h $hairpins_precursors";
     system($run_mirdup_cmd);
     return;
 }
@@ -344,8 +316,8 @@ sub run_mirdup_prediction_on_sequence {
       . '.miRdupOutput.txt';
 
     my $run_mirdup_cmd = "cd $miRdup_model_path && "
-        . "java -jar $miRdup_jar"
-        . " -r $vienna_progs_dir/"
+        . "java -jar $programs_paths{'mirdup'}"
+        . " -r $programs_paths{'vienna_progs'}/"
         . " -d $miRdup_model_name"
         . ' -predict'
         . " -u $sequence"
@@ -381,8 +353,8 @@ sub run_mirdup_prediction_on_sequence_file {
     my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
 
     my $run_mirdup_cmd = "cd $miRdup_model_path && "
-        . "java -jar $miRdup_jar"
-        . " -r $vienna_progs_dir/"
+        . "java -jar $programs_paths{'mirdup'}"
+        . " -r $programs_paths{'vienna_progs'}/"
         . " -d $miRdup_model_name"
         . ' -predict'
         . " -i $prediction_source_file"
@@ -414,8 +386,8 @@ sub run_mirdup_validation_on_file {
     my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
 
     my $run_mirdup_cmd = "cd $miRdup_model_path && "
-        . "java -jar $miRdup_jar"
-        . " -r $vienna_progs_dir/"
+        . "java -jar $programs_paths{'mirdup'}"
+        . " -r $programs_paths{'vienna_progs'}/"
         . " -c $miRdup_model_name"
         . " -v $validation_source_file"
         . " > /dev/null 2>&1";
@@ -437,6 +409,7 @@ Return whether the output file exists.
 sub run_tRNAscanSE_on_file {
     my ( $input, $output ) = @_;
     my $tRNAscanSE_cmd = qw{};
+    my $tRNAscanSE_bin = $programs_paths{'tRNAscanSE'};
     $tRNAscanSE_cmd =
         "PERL5LIB=$tRNAscanSE_bin: "
       . "$tRNAscanSE_bin/tRNAscan-SE "
@@ -462,7 +435,7 @@ sub run_rnammer_on_file {
     my $tmp_dir = tempdir( CLEANUP => 1 );
     my $rnammer_cmd = qw{};
     $rnammer_cmd =
-      "$rnammer_bin "
+      "$programs_paths{'rnammer'}"
       . "-T $tmp_dir "          # Temporary directory
       . "-S $kingdom "          # Kingdom
       . "-m lsu,ssu,tsu "       # Molecule types
