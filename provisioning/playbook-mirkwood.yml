@@ -4,56 +4,31 @@
   sudo: True
   roles:
     - bioinfo
-    - mirkwood
-  tasks:
-    - name: Create results directory
-      file:
-        path=/home/vagrant/results
-        state=directory
-        owner=www-data
-        group=www-data
+    - mirkwood-software
+    - mirkwood {mirkwood_results_path: '/home/vagrant/results' }
 
-    - name: Make appropriate links for CGI directory
+  vars:
+    - mirkwood_cgi_path = '/bio1/www/cgi-bin/mirkwood'
+    - mirkwood_html_path = '/bio1/www/html/mirkwood'
+    - mirkwood_results_path = '/bio1/www/html/mirkwood/results/'
+
+  pre_tasks:
+    - name: Link CGI directory
       file:
         src=/vagrant/cgi-bin/
-        dest=/bio1/www/cgi-bin/mirkwood
+        dest={{ mirkwood_cgi_path }}
         state=link
 
-    - name: Make appropriate links for HTML directory
+    - name: Link HTML directory
       file:
         src=/vagrant/html/
-        dest=/bio1/www/html/mirkwood
+        dest={{ mirkwood_html_path }}
         state=link
 
-    - name: Prepare results directory
+  post_tasks:
+    - name: Link results directory
       file:
         src=/home/vagrant/results
-        dest=/bio1/www/html/mirkwood/results
+        dest={{ mirkwood_html_path }}/results
         state=link
-
-    - name: Install local RNAstemloop
-      file:
-        src=/bio1/www/cgi-bin/mirkwood/programs/RNAstemloop-x86_64
-        dest=/usr/bin/RNAstemloop
-        state=link
-
-    - name: Install local Exonerate
-      file:
-        src=/bio1/www/cgi-bin/mirkwood/programs/exonerate-2.2.0-x86_64
-        dest=/bio1/www/cgi-bin/mirkwood/programs/exonerate
-        state=link
-
-    - name: Make links for programs
-      file:
-        src=/opt/{{ item.path }}
-        dest=/bio1/www/cgi-bin/mirkwood/programs/{{ item.dest }}
-        state=link
-      with_items:
-        - { path: 'VARNAv3-91.jar', dest: 'VARNA.jar' }
-        - { path: 'miRdup', dest: 'miRdup-1.2' }
-        - { path: 'tRNAscan-SE', dest: 'tRNAscan-SE' }
-        - { path: 'RNAmmer', dest: 'rnammer' }
-
-    - name: Deploy miRkwood data
-      command: /bio1/www/cgi-bin/mirkwood/install-data.sh /bio1/www/cgi-bin/mirkwood/data
 
