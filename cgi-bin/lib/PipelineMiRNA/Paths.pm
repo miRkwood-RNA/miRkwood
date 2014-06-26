@@ -45,6 +45,17 @@ sub get_data_path {
     return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'data');
 }
 
+=method get_local_programs_path
+
+Return the project local programs directory
+
+=cut
+
+sub get_local_programs_path {
+    my ($self, @args) = @_;
+    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'programs');
+}
+
 =method get_scripts_path
 
 Return the project static directory
