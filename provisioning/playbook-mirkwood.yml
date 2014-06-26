@@ -5,25 +5,37 @@
   roles:
     - bioinfo
     - mirkwood-software
-    - mirkwood {mirkwood_results_path: '/home/vagrant/results' }
+    - { role: mirkwood, mirkwood_results_path: '/home/vagrant/results' }
 
   vars:
-    - mirkwood_cgi_path = '/bio1/www/cgi-bin/mirkwood'
-    - mirkwood_html_path = '/bio1/www/html/mirkwood'
-    - mirkwood_results_path = '/bio1/www/html/mirkwood/results/'
+    - mirkwood_cgi_path: '/bio1/www/cgi-bin/mirkwood'
+    - mirkwood_html_path: '/bio1/www/html/mirkwood'
+    - mirkwood_results_path: '/bio1/www/html/mirkwood/results/'
 
   pre_tasks:
+    - name: Create CGI directory
+      file:
+        dest: /bio1/www/cgi-bin/
+        state: directory
+
+    - name: Create HTML directory
+      file:
+        dest: /bio1/www/html/
+        state: directory
+
     - name: Link CGI directory
       file:
         src=/vagrant/cgi-bin/
         dest={{ mirkwood_cgi_path }}
         state=link
+        force=yes
 
     - name: Link HTML directory
       file:
         src=/vagrant/html/
         dest={{ mirkwood_html_path }}
         state=link
+        force=yes
 
   post_tasks:
     - name: Link results directory
