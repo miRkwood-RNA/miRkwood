@@ -52,6 +52,7 @@
         - { path: 'VARNAv3-91.jar', dest: 'VARNA.jar' }
         - { path: 'miRdup', dest: 'miRdup-1.2' }
         - { path: 'tRNAscan-SE', dest: 'tRNAscan-SE' }
+        - { path: 'RNAmmer', dest: 'rnammer' }
 
     - name: Deploy miRkwood data
       command: /bio1/www/cgi-bin/mirkwood/install-data.sh /bio1/www/cgi-bin/mirkwood/data
