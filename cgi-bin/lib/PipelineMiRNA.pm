@@ -9,7 +9,7 @@ use Cwd;
 use CGI::Carp qw(carpout);
 use YAML::XS;
 
-# ABSTRACT: A Pipeline for microRNAs
+# ABSTRACT: Computational pipeline for the identification of miRNAs and their hairpin precursors.
 
 our $LOG_FH;
 
