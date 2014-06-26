@@ -22,7 +22,11 @@ our %programs_paths;
 sub init_programs{
     my @args = @_;
     my %programs_config = PipelineMiRNA::PROGRAMS_CONFIG();
-    %programs_paths = %programs_config;
+    my $mirkwood_local_programs = PipelineMiRNA::Paths::get_local_programs_path();
+    while (my ($key, $value) = each %programs_config) {
+        $value =~ s/\${local_programs}/$mirkwood_local_programs/g;
+        $programs_paths{$key} = $value;
+    }
     $programs_paths{'vienna_progs'} = File::Basename::dirname(which($programs_config{'rnafold'}));
     return 1;
 }
