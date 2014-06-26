@@ -18,11 +18,13 @@ require_ok('PipelineMiRNA::Data');
 ok( my $mirbase_file = PipelineMiRNA::Data::get_mirbase_file(),
     'Can call get_mirbase_file()'
 );
+file_exists_ok($mirbase_file);
 
 ## get_matrix_file ##
 ok( my $matrix_file = PipelineMiRNA::Data::get_matrix_file(),
     'Can call get_matrix_file()'
 );
+file_exists_ok($matrix_file);
 
 ## get_mirdup_data_path ##
 ok( my $mirdup_data_path = PipelineMiRNA::Data::get_mirdup_data_path(),
