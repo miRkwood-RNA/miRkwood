@@ -50,6 +50,7 @@ if (! -W $root) {
     PipelineMiRNA::WebTemplate::web_die($error);
 }
 
+PipelineMiRNA::Programs::init_programs();
 my @unavailable = PipelineMiRNA::Programs::list_unavailable_programs();
 if (@unavailable){
     my $error = "Cannot find required third-party software: @unavailable. Please contact the system administrator";

@@ -35,7 +35,6 @@ List all the binaries needed in the pipeline.
 
 sub list_programs {
     my @args = @_;
-    init_programs();
     my %progs = %programs_paths;
     delete $progs{'tRNAscanSE'};
     delete $progs{'vienna_progs'};
