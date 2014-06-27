@@ -69,17 +69,17 @@
 </ol>
 <p>Results are displayed on a new page.</p>
 
-<h3>Enter query sequence</h3>
+<h3 id='query_sequence'>Enter query sequence</h3>
 
 <p>miRkwood input is (Multi) FASTA  format.  Lower-case and upper-case letters are both accepted, as well as T/U.  Other characters, such as N, R, Y,&#8230; are prohibited.</p>
 
 <p>You can either paste or upload a file. The maximum size for a submission is 100 000 nt.</p>
 
 <dl>
-<dt>Scan both strands</dt>
+<dt id='scan-both-strands'>Scan both strands</dt>
 <dd>miRkwood normally analyses data in forward direction only. Checking this option will cause the program to search both the forward and reverse complement strands.</dd>
 
-<dt>Mask coding regions</dt>
+<dt id='mask-coding-regions'>Mask coding regions</dt>
 <dd>This option allows selecting non-coding sequences in the input
   data by masking putative coding regions. It consists in a BlastX
   search against the protein sequences from the chosen species
@@ -91,7 +91,7 @@
   href='http://rice.plantbiology.msu.edu/'>Rice genome annotation
   project</a>, V7.0).</dd>
 
-<dt>Filter tRNA/rRNAs</dt>
+<dt id='filter_tRNA_rRNA'>Filter tRNA/rRNAs</dt>
 <dd>
 If this option is checked, tRNAs and rRNAs are filtered out from the
   input data.    The prediction of tRNA genes is done with <a href="http://lowelab.ucsc.edu/tRNAscan-SE/">tRNAscan-SE</a>.
@@ -108,7 +108,7 @@ If this option is checked, tRNAs and rRNAs are filtered out from the
 
 
 
-<h3>Parameters</h3>
+<h3 id='parameters'>Parameters</h3>
 
 <p>miRkwood folds the input sequence to identify miRNA precursor
 secondary structures with <a
@@ -176,7 +176,7 @@ SCREENSHOT
 
 <li><em>Existence of a conserved miRNA in miRBase (alignment):</em> add one star. We allow up to three errors in the alignment with mature miRBase, which corresponds to an estimated P-value of  3E-2 for each pre-miRNA. Alignments with 2 errors or less have an estimated P-value of 4E-3.</li>
 
-<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star</li>.
+<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star.</li>
 </ul>
 </dd>
 
