@@ -7,12 +7,16 @@ body {
 }
 
 h2 {
-    padding-top:   15pt;
+    color:  #FFFFFF; 
+    padding-top:   5pt;
     margin-right:  -50px;
     padding-bottom: 5pt;
+    padding-left: 15pt; 
     font-size:     16pt;
     font-weight:   bold;
     counter-reset:subsection;
+    background-color:#f4ba31; 
+    width:40%; 
 }
 
 h2:before {
