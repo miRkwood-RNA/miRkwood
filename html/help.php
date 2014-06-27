@@ -17,17 +17,16 @@
 
 <div class="main-full">
 
-
   
 <p><a href='/mirkwood/'>miRkwood</a> is a computational pipeline for
   the identification of plant miRNAs and their hairpin precursors.</p>
   <p>
   This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
-For the full detail of the method implemented in miRkwood, see <a href="method.php">miRkwood method</a>.</p>
+<!-- For the full detail of the method implemented in miRkwood, see <a
+  href="method.php">miRkwood method</a>.-->
+</p>
 
 <br> 
-
-<hr class='section'/>
 
 <div class="table-of-contents">
   <ol>
@@ -58,8 +57,6 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 </ol>
 </div>
 
-<hr class='section'/>
-
 
 <h2 id='input_form'>Input form</h2>
 
@@ -72,26 +69,51 @@ For the full detail of the method implemented in miRkwood, see <a href="method.p
 </ol>
 <p>Results are displayed on a new page.</p>
 
-<h3 id='query_sequence'>Enter query sequence</h3>
+<h3>Enter query sequence</h3>
 
 <p>miRkwood input is (Multi) FASTA  format.  Lower-case and upper-case letters are both accepted, as well as T/U.  Other characters, such as N, R, Y,&#8230; are prohibited.</p>
 
 <p>You can either paste or upload a file. The maximum size for a submission is 100 000 nt.</p>
 
 <dl>
-<dt id='scan-both-strands'>Scan both strands</dt>
+<dt>Scan both strands</dt>
 <dd>miRkwood normally analyses data in forward direction only. Checking this option will cause the program to search both the forward and reverse complement strands.</dd>
 
-<dt id='mask-coding-regions'>Mask coding regions</dt>
+<dt>Mask coding regions</dt>
 <dd>This option allows selecting non-coding sequences in the input
   data by masking putative coding regions. It consists in a BlastX
   search against the protein sequences from the chosen species
   (E-value=1E-5).  Currently available species are: <i>Arabidopsis
-  thaliana</i> (<a href="http://www.arabidopsis.org/">TAIR</a>, V10), <i>Medicago truncatula</i> (<a href='http://www.jcvi.org/medicago/'>Medicago truncatula genome project</a>, Mt4.0) and <i>Oriza sativa</i> (<a href='http://rice.plantbiology.msu.edu/'>Rice genome annotation project</a>, V7.0).</dd>
-</dl>
-<h3 id='parameters'>Parameters</h3>
+  thaliana</i> (<a href="http://www.arabidopsis.org/">TAIR</a>, V10),
+  <i>Medicago truncatula</i> (<a
+  href='http://www.jcvi.org/medicago/'>Medicago truncatula genome
+  project</a>, Mt4.0) and <i>Oriza sativa</i> (<a
+  href='http://rice.plantbiology.msu.edu/'>Rice genome annotation
+  project</a>, V7.0).</dd>
 
-<p>miRkwood folds the input sequence to identify miRNA precursor secondary structures (for more explanation on this step, see <a href="method.php">miRkwood method</a>). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins.</p>
+<dt>Filter tRNA/rRNAs</dt>
+<dd>
+If this option is checked, tRNAs and rRNAs are filtered out from the
+  input data.    The prediction of tRNA genes is done with <a href="http://lowelab.ucsc.edu/tRNAscan-SE/">tRNAscan-SE</a>.
+  The prediction od rRNA genes is done with <a href="http://www.cbs.dtu.dk/services/RNAmmer/">RNAmmer</a>, with option <tt>-S euk -m tsu, lsu, ssu</tt>. 
+</dd>
+
+<dt>Run with an example</dt>
+
+<dd>We provide the user with a sample sequence. This is a 268 nt
+  expressed sequence from <i>Salvia sclarea</i> (Legrand et al.,
+  2010) that lacks any annotation and is not present in miRBase. 
+  </dd>
+</dl>
+
+
+
+<h3>Parameters</h3>
+
+<p>miRkwood folds the input sequence to identify miRNA precursor
+secondary structures with <a
+href="http://www.tbi.univie.ac.at/RNA/RNALfold.html">RNALfold</a>. The
+maximal size is 400nt and the minmal size is 70nt.  This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins.</p>
 
 
 <p>When all options are unchecked, no criteria is applied,
@@ -109,7 +131,10 @@ where MFE (minimal free energy) denotes the negative folding free
   Matthews-Turner nearest neighbor model implemented in <a
   href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>. When
   checked, this option removes all candidate pre-miRNAs with an MFEI
-  greater than or equal to -0.6. Indeed, more than 96% of plant miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI (for more details, see <a href='method.php'>miRkwood method</a>).</dd>
+  greater than or equal to -0.6. Indeed, more than 96% of plant
+  miRBase precursors have an MFEI smaller than -0.6, whereas
+  pseudo-hairpins show significantly larger values of MFEI
+  <!-- (for more details, see <a href='method.php'>miRkwood method</a>)-->.</dd>
 
 <dt id='compute-thermodynamic-stability'>Compute thermodynamic stability</dt>
 <dd>The significance of the stability of the sequence can also be measured by comparison with other equivalent sequences. <em><a href='http://www.ncbi.nlm.nih.gov/pubmed/15217813'>Bonnet et al</a></em> have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.  We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </dd>
@@ -128,7 +153,6 @@ where MFE (minimal free energy) denotes the negative folding free
 <dd>You can enter your email address to be notified when the job is finished. The email contains a link to access the results for 2 weeks.</dd>
 </dl>
 
-<hr class='section'/>
 
 <h2 id='results_page'>Result page</h2>
 
@@ -152,7 +176,7 @@ SCREENSHOT
 
 <li><em>Existence of a conserved miRNA in miRBase (alignment):</em> add one star. We allow up to three errors in the alignment with mature miRBase, which corresponds to an estimated P-value of  3E-2 for each pre-miRNA. Alignments with 2 errors or less have an estimated P-value of 4E-3.</li>
 
-<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star.</li>
+<li><em>The location of the mature miRNA obtained by alignment is validated by miRdup:</em> add one star</li>.
 </ul>
 </dd>
 
@@ -172,7 +196,6 @@ SCREENSHOT
 <dd>You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href='http://varna.lri.fr/'>Varna</a>.</dd>
 </dl>
 
-<hr class='section' />
 <h2 id='export'>Export</h2>
 
 <p>Results, or a selection of them, can also be exported to a variety of formats, and saved to a local folder for further analyses.</p>
@@ -238,7 +261,6 @@ are shorter than the primary transcript.
 </p> 
 
 
-<hr class='section' />
 <h2 id='html_report'>HTML Report</h2>
 
 <p>The HTML report contains all information related to a given predicted pre-miRNA.</p>
@@ -308,6 +330,7 @@ miRBase           1 ucgcuuggugcagaucgggac 21
 <p><tt>query</tt> is the user sequence, and <tt>miRBase</tt>
 designates the mature miRNA  (or the miRNA*) found in miRBase. It is possible to access the corresponding miRBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
 
+
 <pre class='example'>
      g      ucu   <span class="mature">   c          u     </span>acg-     -  --   c          u-  u
 uuacg cgguuu   gau<span class="mature">ucg uuggugcagg cggga</span>    gcuug gc  cga gguuucauau  ug c
@@ -315,8 +338,7 @@ uuacg cgguuu   gau<span class="mature">ucg uuggugcagg cggga</span>    gcuug gc  
 aaugu gccaag   cuaagu aacuacguuc guccu    ugagu cg  gcu ccaaagugug  ac u
      a      u--      c          c     guca     u  au   -          uc  c
 </pre>
-</pre>
-  
+ 
 </div> <!-- main full -->
 
 </div><!-- bloc droit-->
