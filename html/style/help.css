@@ -7,16 +7,17 @@ body {
 }
 
 h2 {
-    color:  #FFFFFF; 
-    padding-top:   5pt;
+   
+    padding-top:   3pt;
     margin-right:  -50px;
-    padding-bottom: 5pt;
+    padding-bottom: 3pt;
     padding-left: 15pt; 
     font-size:     16pt;
-    font-weight:   bold;
+    font-weight: normal; 
     counter-reset:subsection;
-    background-color:#f4ba31; 
+    background-color:#FFF0BC; 
     width:40%; 
+    border-left: 7px solid #f4ba31; 
 }
 
 h2:before {
@@ -32,7 +33,7 @@ hr.section{
     margin-top:10px;
     height:4px;
     background-color:#f4ba31;
-    border:0;
+    
 }
 
 /* Overriding bioinfo.css */
