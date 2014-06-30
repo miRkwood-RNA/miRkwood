@@ -23,7 +23,7 @@ fi
 # Testing
 plan 3
 
-if [ -d "$BASEDIR/output/" ]; then
+if [ ! -d "$BASEDIR/output/" ]; then
     mkdir "$BASEDIR/output/"
 fi
 
