@@ -1,6 +1,5 @@
 - name: Configure the local machine
   hosts: 
     - locals
-  sudo: True
   roles: 
-    - { role: mirkwood, mirkwood_path: '../cgi-bin/' }
+    - { role: mirkwood, mirkwood_path: '{{inventory_dir}}/../cgi-bin/' }
