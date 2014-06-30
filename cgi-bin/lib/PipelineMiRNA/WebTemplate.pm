@@ -117,9 +117,9 @@ sub get_error_page {
     my @css = (get_server_css_file(), get_css_file());
     my @js  = (get_js_file());
     my $header = "Sorry, something went wrong with miRkwood";
-    my $footer = "Please contact your system administrator or the miRkwood team.";
     my $explanation = "The error which occured is:";
-    my $contents = "<br/><br/>$header<br/><br/>$footer<br/><br/><br/>$explanation<br/><br/>$error_message";
+    my $footer = "Please send this to the miRkwood team, at the address in the footer.";
+    my $contents = "<br/><br/>$header<br/><br/>$explanation<br/><br/>$error_message<br/><br/><br/>$footer";
     my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($contents, \@css, \@js);
     my $res = <<"HTML";
 Content-type: text/html
