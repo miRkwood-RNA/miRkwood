@@ -1,4 +1,4 @@
-package PipelineMiRNA::Maskers;
+package miRkwood::Maskers;
 
 # ABSTRACT: Masking sequences
 
@@ -8,8 +8,8 @@ use warnings;
 use File::Spec;
 use Log::Message::Simple qw[msg error debug];
 
-use PipelineMiRNA::Programs;
-use PipelineMiRNA::Parsers;
+use miRkwood::Programs;
+use miRkwood::Parsers;
 
 =method get_coding_region_masking_information
 
@@ -22,12 +22,12 @@ sub get_coding_region_masking_information {
     my ( $sequences_file, $masking_folder, $blast_database ) = @_;
     my $blast_output   = File::Spec->catfile( $masking_folder,  'outBlast.txt' );
     my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
-    PipelineMiRNA::Programs::run_blast(
+    miRkwood::Programs::run_blast(
                                         $sequences_file, $blast_database,
                                         $blastx_options,     $blast_output
     ) or die('Problem when running Blastx');
 
-    my %blast_seqs = PipelineMiRNA::Parsers::parse_blast_output($blast_output);
+    my %blast_seqs = miRkwood::Parsers::parse_blast_output($blast_output);
     return %blast_seqs;
 }
 
@@ -41,10 +41,10 @@ sub get_trna_masking_information {
     my ( $sequences_file, $masking_folder ) = @_;
     my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
 
-    PipelineMiRNA::Programs::run_tRNAscanSE_on_file($sequences_file, $output
+    miRkwood::Programs::run_tRNAscanSE_on_file($sequences_file, $output
     ) or die('Problem when running tRNAscanSE');
 
-    my %trna_seqs = PipelineMiRNA::Parsers::parse_tRNAscanSE_output($output);
+    my %trna_seqs = miRkwood::Parsers::parse_tRNAscanSE_output($output);
     return %trna_seqs;
 }
 
@@ -58,10 +58,10 @@ sub get_rnammer_masking_information {
     my ( $sequences_file, $masking_folder ) = @_;
     my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
     my $kingdom = 'euk';
-    PipelineMiRNA::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
+    miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
       or die('Problem when running RNAmmer');
 
-    my %rnammer_seqs = PipelineMiRNA::Parsers::parse_rnammer_output($output);
+    my %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
     return %rnammer_seqs;
 }
 
@@ -85,7 +85,7 @@ sub mask_sequences {
         if (exists $filter{$id}){
             foreach my $positions(@{$filter{$id}}){
                 my %pos = %{$positions};
-                debug( "Masking sequence $name between <$pos{'start'}> and <$pos{'end'}>", PipelineMiRNA->DEBUG() );
+                debug( "Masking sequence $name between <$pos{'start'}> and <$pos{'end'}>", miRkwood->DEBUG() );
                 $sequence = mask_sequence($sequence, $pos{'start'}, $pos{'end'});
             }
         }

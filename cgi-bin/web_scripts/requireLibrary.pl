@@ -4,6 +4,6 @@ use warnings;
 
 use FindBin;
 use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
-use PipelineMiRNA;
+use miRkwood;
 
 1;

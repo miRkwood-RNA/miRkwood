@@ -1,11 +1,11 @@
-package PipelineMiRNA::Data;
+package miRkwood::Data;
 
 # ABSTRACT: Managing external data
 
 use strict;
 use warnings;
 
-use PipelineMiRNA::Paths;
+use miRkwood::Paths;
 
 =method get_mirbase_file
 
@@ -15,7 +15,7 @@ Return the path to the Mirbase file
 
 sub get_mirbase_file {
     my @args = @_;
-    return File::Spec->catfile( PipelineMiRNA::Paths->get_data_path(), 'MirbaseFile.txt' );
+    return File::Spec->catfile( miRkwood::Paths->get_data_path(), 'MirbaseFile.txt' );
 }
 
 
@@ -27,7 +27,7 @@ Return the path to the matrix file
 
 sub get_matrix_file {
     my @args = @_;
-    return File::Spec->catfile( PipelineMiRNA::Paths->get_data_path(), 'matrix' );
+    return File::Spec->catfile( miRkwood::Paths->get_data_path(), 'matrix' );
 }
 
 =method get_mirdup_data_path
@@ -38,7 +38,7 @@ Return the path to the mirdup data directory
 
 sub get_mirdup_data_path {
     my @args = @_;
-    return File::Spec->catdir( PipelineMiRNA::Paths->get_data_path(), 'mirdup');
+    return File::Spec->catdir( miRkwood::Paths->get_data_path(), 'mirdup');
 }
 
 =method get_mirdup_model_name

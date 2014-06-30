@@ -7,12 +7,12 @@ use FindBin;
 
 BEGIN {
     use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
-    use PipelineMiRNA;
-    use PipelineMiRNA::MainPipeline;
+    use miRkwood;
+    use miRkwood::MainPipeline;
 }
 
 
 ## Code ##
 my ( $idirJob ) = @ARGV;
 
-PipelineMiRNA::MainPipeline::fasta_pipeline( $idirJob );
+miRkwood::MainPipeline::fasta_pipeline( $idirJob );

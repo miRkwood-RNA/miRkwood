@@ -12,17 +12,17 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::MainPipeline');
+    use_ok('miRkwood::MainPipeline');
 }
-require_ok('PipelineMiRNA::MainPipeline');
+require_ok('miRkwood::MainPipeline');
 
 ## is_included ##
 
 my @fail_value = ( 1, 7, 2, 9 );
-dies_ok { PipelineMiRNA::MainPipeline::is_included(@fail_value); }
+dies_ok { miRkwood::MainPipeline::is_included(@fail_value); }
 'is_included dies if positions are not ordered';
 
-dies_ok { PipelineMiRNA::MainPipeline::is_included( 2, 7, 1 ); }
+dies_ok { miRkwood::MainPipeline::is_included( 2, 7, 1 ); }
 'is_included dies if not enough values are provided';
 
 my @is_included_values = (
@@ -33,16 +33,16 @@ my @is_included_values = (
 foreach my $couple (@is_included_values) {
     my @input           = @{ @{$couple}[0] };
     my $expected        = @{$couple}[1];
-    my $is_to_merge_res = PipelineMiRNA::MainPipeline::is_included(@input);
+    my $is_to_merge_res = miRkwood::MainPipeline::is_included(@input);
     is( $is_to_merge_res, $expected, "is_included (@input) --> $expected ok" );
 }
 
 ## is_overlapping ##
 
-dies_ok { PipelineMiRNA::MainPipeline::is_overlapping(@fail_value); }
+dies_ok { miRkwood::MainPipeline::is_overlapping(@fail_value); }
 'is_overlapping dies if positions are not ordered';
 
-dies_ok { PipelineMiRNA::MainPipeline::is_overlapping( 2, 7, 1 ); }
+dies_ok { miRkwood::MainPipeline::is_overlapping( 2, 7, 1 ); }
 'is_overlapping dies if not enough values are provided';
 
 my @is_overlapping_values = (
@@ -55,7 +55,7 @@ my @is_overlapping_values = (
 foreach my $couple (@is_overlapping_values) {
     my @input           = @{ @{$couple}[0] };
     my $expected        = @{$couple}[1];
-    my $is_to_merge_res = PipelineMiRNA::MainPipeline::is_overlapping(@input);
+    my $is_to_merge_res = miRkwood::MainPipeline::is_overlapping(@input);
     is( $is_to_merge_res, $expected,
         "is_overlapping (@input) --> $expected ok" );
 }

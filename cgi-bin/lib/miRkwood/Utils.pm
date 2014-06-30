@@ -1,4 +1,4 @@
-package PipelineMiRNA::Utils;
+package miRkwood::Utils;
 
 # ABSTRACT: Useful, reusable methods.
 
@@ -642,7 +642,7 @@ sub filter_mirbase_hairpins {
 	open my $ENTREE_FH, '<', $sequences_to_filter_file
 	  or die "Error when opening sequences -$sequences_to_filter_file-: $!";
 	my %sequences_to_filter =
-	  PipelineMiRNA::Utils::parse_multi_fasta( $ENTREE_FH, 1 );
+	  miRkwood::Utils::parse_multi_fasta( $ENTREE_FH, 1 );
 	close $ENTREE_FH or die "Unable to close: $!";
 
 	open( my $FSeq, '<', $sequences_to_be_filtered_file )
@@ -688,7 +688,7 @@ sub get_element_of_split {
 restrict the number of digits after the decimal point
 
 Usage:
-    my $num = PipelineMiRNA::Utils::restrict_num_decimal_digits($number, 3);
+    my $num = miRkwood::Utils::restrict_num_decimal_digits($number, 3);
 
 =cut
 

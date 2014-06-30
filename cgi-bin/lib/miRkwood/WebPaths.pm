@@ -1,4 +1,4 @@
-package PipelineMiRNA::WebPaths;
+package miRkwood::WebPaths;
 
 # ABSTRACT: Managing Web paths and path construction
 
@@ -6,8 +6,8 @@ use strict;
 use warnings;
 use File::Spec;
 
-use PipelineMiRNA;
-use PipelineMiRNA::Paths;
+use miRkwood;
+use miRkwood::Paths;
 
 =method get_web_config
 
@@ -17,7 +17,7 @@ Get the configuration file contents.
 
 sub get_web_config {
     my ($self, @args) = @_;
-    return PipelineMiRNA->WEB_CONFIG();
+    return miRkwood->WEB_CONFIG();
 }
 
 =method get_static_path
@@ -102,7 +102,7 @@ Convert a filesystem path to a web path
 sub filesystem_to_relative_path {
     my ($self, @args) = @_;
     my $path = shift @args;
-    my $filesystem_path = PipelineMiRNA::Paths->get_results_filesystem_path();
+    my $filesystem_path = miRkwood::Paths->get_results_filesystem_path();
     my $web_path        = $self->get_results_web_path();
     $path =~ s/$filesystem_path/$web_path/g;
     return $path;

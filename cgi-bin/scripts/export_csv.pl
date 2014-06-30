@@ -11,19 +11,19 @@ use FindBin;
 
 BEGIN {
     use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
-    use PipelineMiRNA;
-    use PipelineMiRNA::Results;
+    use miRkwood;
+    use miRkwood::Results;
 }
 
 pod2usage("$0: No job identifier given.") if ( @ARGV == 0 );
 
 my ($jobId) = @ARGV;
 
-my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
+my %results = miRkwood::Results->get_structure_for_jobID($jobId);
 my $csv_file = "$jobId.csv";
 open( my $CSV_FILE, '>', $csv_file )
   or die("Cannot open file $csv_file: $!");
-print {$CSV_FILE} PipelineMiRNA::Results->resultstruct2csv(\%results)
+print {$CSV_FILE} miRkwood::Results->resultstruct2csv(\%results)
   or die("Cannot write in file $csv_file: $!");
 close($CSV_FILE)
   or die("Cannot close file $csv_file: $!");

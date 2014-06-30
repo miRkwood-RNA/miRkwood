@@ -1,4 +1,4 @@
-package PipelineMiRNA::WebTemplate;
+package miRkwood::WebTemplate;
 
 # ABSTRACT: The HTML templates (or bits of) used by the web interface
 
@@ -6,8 +6,8 @@ use strict;
 use warnings;
 
 use File::Spec;
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::WebPaths;
+use miRkwood::Paths;
+use miRkwood::WebPaths;
 
 =method get_static_file
 
@@ -18,7 +18,7 @@ Return the contents of a given file in the stati directory
 sub get_static_file {
     my @args = @_;
     my $file_name = shift @args;
-    my $file = File::Spec->catfile(PipelineMiRNA::WebPaths->get_static_path(),
+    my $file = File::Spec->catfile(miRkwood::WebPaths->get_static_path(),
                                    $file_name);
     open my $FILE, '<', $file;
     my $contents = do { local $/; <$FILE> };
@@ -79,7 +79,7 @@ Return the project CSS file
 
 sub get_css_file {
     my @args = @_;
-    return File::Spec->catfile(PipelineMiRNA::WebPaths->get_css_path(), 'script.css');
+    return File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'script.css');
 }
 
 =method get_server_css_file
@@ -90,7 +90,7 @@ Return the server CSS file
 
 sub get_server_css_file {
     my @args = @_;
-    return File::Spec->catfile(PipelineMiRNA::WebPaths->get_server_css_path, 'bioinfo.css');
+    return File::Spec->catfile(miRkwood::WebPaths->get_server_css_path, 'bioinfo.css');
 }
 
 
@@ -102,7 +102,7 @@ Return the main JavaScript file
 
 sub get_js_file {
     my @args = @_;
-    return File::Spec->catfile(PipelineMiRNA::WebPaths->get_js_path(), 'miARN.js');
+    return File::Spec->catfile(miRkwood::WebPaths->get_js_path(), 'miARN.js');
 }
 
 =method get_error_page
@@ -120,7 +120,7 @@ sub get_error_page {
     my $explanation = "The error which occured is:";
     my $footer = "Please send this to the miRkwood team, at the address in the footer.";
     my $contents = "<br/><br/>$header<br/><br/>$explanation<br/><br/>$error_message<br/><br/><br/>$footer";
-    my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($contents, \@css, \@js);
+    my $html = miRkwood::WebTemplate::get_HTML_page_for_content($contents, \@css, \@js);
     my $res = <<"HTML";
 Content-type: text/html
 
@@ -154,7 +154,7 @@ sub get_cgi_url {
     my @args = @_;
     my $page = shift @args;
     # dirname( $ENV{HTTP_REFERER} );
-    my $path = File::Spec->catfile($ENV{SERVER_NAME}, PipelineMiRNA::WebPaths->get_web_scripts(), $page);
+    my $path = File::Spec->catfile($ENV{SERVER_NAME}, miRkwood::WebPaths->get_web_scripts(), $page);
     my $url  = 'http://'. $path;
     return $url;
 }
@@ -169,11 +169,11 @@ sub get_HTML_page_for_content {
 
     my $bioinfo_menu = '';
     if (! $no_menu){
-        $bioinfo_menu = PipelineMiRNA::WebTemplate::get_bioinfo_menu();
+        $bioinfo_menu = miRkwood::WebTemplate::get_bioinfo_menu();
     }
 
-    my $header_menu  = PipelineMiRNA::WebTemplate::get_header_menu();
-    my $footer       = PipelineMiRNA::WebTemplate::get_footer();
+    my $header_menu  = miRkwood::WebTemplate::get_header_menu();
+    my $footer       = miRkwood::WebTemplate::get_footer();
 
     my $body = <<"END_TXT";
     <body>

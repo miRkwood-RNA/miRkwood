@@ -1,11 +1,11 @@
-package PipelineMiRNA::Clusters;
+package miRkwood::Clusters;
 
 # ABSTRACT: Handling the cluster making from a BAM file.
 
 use strict;
 use warnings;
 
-use PipelineMiRNA::Utils;
+use miRkwood::Utils;
 
 
 =method new

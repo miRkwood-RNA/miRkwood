@@ -1,11 +1,11 @@
-package PipelineMiRNA::Parsers;
+package miRkwood::Parsers;
 
 # ABSTRACT: Parsing methods
 
 use strict;
 use warnings;
 
-use PipelineMiRNA::Utils;
+use miRkwood::Utils;
 
 =method parse_pvalue
 
@@ -162,7 +162,7 @@ sub parse_RNAfold_output {
         }xms ){
             $nameSeq = $1;
         }
-        elsif ( PipelineMiRNA::Utils::is_fasta_line_relaxed($line) ){
+        elsif ( miRkwood::Utils::is_fasta_line_relaxed($line) ){
             $dna = $line;
             $dna =~ s/^\s+//;
             $dna =~ s/\s+$//;

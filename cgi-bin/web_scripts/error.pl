@@ -5,10 +5,10 @@ use warnings;
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
-use PipelineMiRNA::WebTemplate;
+use miRkwood::WebTemplate;
 
-my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
-my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
+my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
+my @js  = (miRkwood::WebTemplate->get_js_file());
 
 my $page = <<"END_TXT";
 <div class="main">
@@ -25,9 +25,9 @@ my $page = <<"END_TXT";
 </div>
 END_TXT
 
-my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+my $html = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
 
-print <<"DATA" or PipelineMiRNA::WebTemplate::web_die("Error when displaying HTML: $!");
+print <<"DATA" or miRkwood::WebTemplate::web_die("Error when displaying HTML: $!");
 Content-type: text/html
 
 $html

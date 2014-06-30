@@ -66,9 +66,9 @@ if ( !-e $abs_output_folder ) {
 
 # Importing modules after directory creation
 use PipelineMiRNA;
-use PipelineMiRNA::CLI;
-use PipelineMiRNA::MainPipeline;
-use PipelineMiRNA::Paths;
+use miRkwood::CLI;
+use miRkwood::MainPipeline;
+use miRkwood::Paths;
 
 my $seq_name = 'input_sequences.fas';
 my $seq_path = File::Spec->catfile( $abs_output_folder, $seq_name );
@@ -76,19 +76,19 @@ my $seq_path = File::Spec->catfile( $abs_output_folder, $seq_name );
 File::Copy::copy( $fasta_file, $seq_path );
 
 my $run_options_file =
-  PipelineMiRNA::Paths->get_job_config_path($abs_output_folder);
-PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles,
+  miRkwood::Paths->get_job_config_path($abs_output_folder);
+miRkwood->CONFIG_FILE($run_options_file);
+miRkwood::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles,
     $align, "", $species_mask, $varna, 'fasta' );
 
-PipelineMiRNA::MainPipeline::fasta_pipeline($abs_output_folder);
+miRkwood::MainPipeline::fasta_pipeline($abs_output_folder);
 
 unless ($no_process) {
 	my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );
 	if ( !-e $tmp_pieces_folder ) {
         mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
     }
-	PipelineMiRNA::CLI::process_results_dir_for_offline($abs_output_folder) unless $no_process;
+	miRkwood::CLI::process_results_dir_for_offline($abs_output_folder) unless $no_process;
 }
 
 __END__

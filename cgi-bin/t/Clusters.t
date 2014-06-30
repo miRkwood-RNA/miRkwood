@@ -10,9 +10,9 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::Clusters');
+    use_ok('miRkwood::Clusters');
 }
-require_ok('PipelineMiRNA::Clusters');
+require_ok('miRkwood::Clusters');
 
 my $DEFAULT_mindepth = 20;
 my $DEFAULT_pad      = 100;
@@ -25,7 +25,7 @@ file_exists_ok($genome_file);
 
 ## Constructor ##
 my @args = ($bamfile, $genome_file);
-my $clustering_obj = new_ok('PipelineMiRNA::Clusters' => \@args );
+my $clustering_obj = new_ok('miRkwood::Clusters' => \@args );
 
 ## get_faidx_file() ##
 can_ok( $clustering_obj, 'get_faidx_file' );
@@ -38,7 +38,7 @@ link( $genome_file, $dummy_genome_file );
 file_exists_ok($dummy_genome_file);
 
 my @dummy_args = ($bamfile, $dummy_genome_file);
-my $dummy_clustering_obj = new_ok('PipelineMiRNA::Clusters' => \@dummy_args );
+my $dummy_clustering_obj = new_ok('miRkwood::Clusters' => \@dummy_args );
 ok(
     my $dummy_faidx_file =
       $dummy_clustering_obj->get_faidx_file($dummy_genome_file),

@@ -8,37 +8,37 @@ use File::Spec;
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::Results;
-use PipelineMiRNA::WebPaths;
-use PipelineMiRNA::WebTemplate;
+use miRkwood::Paths;
+use miRkwood::Results;
+use miRkwood::WebPaths;
+use miRkwood::WebTemplate;
 
 my $cgi = CGI->new;
 
-my $header_menu = PipelineMiRNA::WebTemplate::get_header_menu();
-my $footer      = PipelineMiRNA::WebTemplate::get_footer();
-my $web_scripts = PipelineMiRNA::WebPaths->get_web_scripts();
+my $header_menu = miRkwood::WebTemplate::get_header_menu();
+my $footer      = miRkwood::WebTemplate::get_footer();
+my $web_scripts = miRkwood::WebPaths->get_web_scripts();
 
 my @css = (
-	PipelineMiRNA::WebTemplate->get_server_css_file(),
-	PipelineMiRNA::WebTemplate->get_css_file()
+	miRkwood::WebTemplate->get_server_css_file(),
+	miRkwood::WebTemplate->get_css_file()
 );
 my @js = (
-	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'results.js' ),
-	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'graphics.js' ),
-	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'miARN.js' ),
-	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(), 'jquery.min.js' ),
-	File::Spec->catfile( PipelineMiRNA::WebPaths->get_js_path(),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'graphics.js' ),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'miARN.js' ),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(),
 		'imgpreview.full.jquery.js' )
 
 );
 
 my $id_job = $cgi->param('run_id');    # récupération id job
-my $job_path = PipelineMiRNA::Results->jobId_to_jobPath($id_job);
+my $job_path = miRkwood::Results->jobId_to_jobPath($id_job);
 
-my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_path);
-PipelineMiRNA->CONFIG_FILE($run_options_file);
-my $cfg = PipelineMiRNA->CONFIG();
+my $run_options_file = miRkwood::Paths->get_job_config_path($job_path);
+miRkwood->CONFIG_FILE($run_options_file);
+my $cfg = miRkwood->CONFIG();
 
 my $html = '';
 
@@ -50,20 +50,20 @@ if ( $cfg->param('job.title') ) {
 	  "<p class='header-results'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
 }
 
-my $valid = PipelineMiRNA::Results->is_valid_jobID($id_job);
+my $valid = miRkwood::Results->is_valid_jobID($id_job);
 
 if ($valid) {
-	my %myResults = PipelineMiRNA::Results->get_structure_for_jobID($id_job);
+	my %myResults = miRkwood::Results->get_structure_for_jobID($id_job);
 
-	my $nb_results   = PipelineMiRNA::Results->number_of_results( \%myResults );
+	my $nb_results   = miRkwood::Results->number_of_results( \%myResults );
 	my $HTML_results =
-	  PipelineMiRNA::Results->resultstruct2pseudoXML( \%myResults );
+	  miRkwood::Results->resultstruct2pseudoXML( \%myResults );
 
 	$HTML_additional .=
 	    "<p class='header-results'><b>"
 	  . $nb_results
 	  . "  miRNA precursor(s) found</b></p>";
-	unless ( PipelineMiRNA::Results->is_job_finished($id_job) ) {
+	unless ( miRkwood::Results->is_job_finished($id_job) ) {
         if ($nb_results > 0){
             $HTML_additional .=
 		    "<p class='warning'>Still processing...<br/>Below we show some preliminary results</p>";
@@ -131,7 +131,7 @@ $footer
 END_TXT
 	}
 	$html =
-	  PipelineMiRNA::WebTemplate::get_HTML_page_for_body( $body, \@css, \@js );
+	  miRkwood::WebTemplate::get_HTML_page_for_body( $body, \@css, \@js );
 
 }
 else {
@@ -143,7 +143,7 @@ else {
 END_TXT
 
 	$html =
-	  PipelineMiRNA::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js,
+	  miRkwood::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js,
 		1 );
 }
 print <<"DATA" or die("Error when displaying HTML: $!");

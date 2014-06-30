@@ -7,36 +7,36 @@ use CGI::Carp qw(fatalsToBrowser);
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
-use PipelineMiRNA;
-use PipelineMiRNA::WebPaths;
-use PipelineMiRNA::Utils;
-use PipelineMiRNA::Results;
-use PipelineMiRNA::Candidate;
-use PipelineMiRNA::WebTemplate;
+use miRkwood;
+use miRkwood::WebPaths;
+use miRkwood::Utils;
+use miRkwood::Results;
+use miRkwood::Candidate;
+use miRkwood::WebTemplate;
 
 my $cgi            = CGI->new();
 my $jobId          = $cgi->param('jobID');
 my $candidate_id   = $cgi->param('id');
 
-my @css = (File::Spec->catfile(PipelineMiRNA::WebPaths->get_css_path(), 'results.css'));
-my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
+my @css = (File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'results.css'));
+my @js  = (miRkwood::WebTemplate->get_js_file());
 
-my $job = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
-my $returnlink = PipelineMiRNA::WebTemplate::get_link_back_to_results($jobId);
+my $job = miRkwood::Results->jobId_to_jobPath($jobId);
+my $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
 my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
 my %candidate;
 my $html_contents;
 
-my $cfg_path = PipelineMiRNA::Paths->get_job_config_path($job);
-PipelineMiRNA->CONFIG_FILE($cfg_path);
+my $cfg_path = miRkwood::Paths->get_job_config_path($job);
+miRkwood->CONFIG_FILE($cfg_path);
 
-if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_information($job, $candidate_id);}) {
+if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
     $html_contents = "No results for the given identifiers";
 }else{
 
-    my $image_url = PipelineMiRNA::Candidate->get_relative_image(\%candidate);
+    my $image_url = miRkwood::Candidate->get_relative_image(\%candidate);
 
     my $size = length $candidate{'DNASequence'};
 
@@ -60,7 +60,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
     } else {
         $alternatives_HTML .= "<i>None</i>"
     }
-    my $cfg = PipelineMiRNA->CONFIG();
+    my $cfg = miRkwood->CONFIG();
 
     my $alignmentHTML;
 
@@ -72,7 +72,7 @@ if (! eval {%candidate = PipelineMiRNA::Candidate->retrieve_candidate_informatio
 
         if ( $candidate{'alignment'} ) {
             $alignmentHTML .=
-              PipelineMiRNA::Candidate->make_alignments_HTML( \%candidate );
+              miRkwood::Candidate->make_alignments_HTML( \%candidate );
         }
         else {
             $alignmentHTML .= "No alignment has been found.";
@@ -143,7 +143,7 @@ my $body  = <<"END_TXT";
     </body>
 END_TXT
 
-my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
+my $html = miRkwood::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

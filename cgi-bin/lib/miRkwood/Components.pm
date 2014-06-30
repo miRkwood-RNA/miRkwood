@@ -1,4 +1,4 @@
-package PipelineMiRNA::Components;
+package miRkwood::Components;
 
 # ABSTRACT: Components directly needed for the execution of the pipeline
 
@@ -7,10 +7,10 @@ use warnings;
 
 use File::Spec;
 use Class::Struct;
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::Programs;
-use PipelineMiRNA::Utils;
-use PipelineMiRNA::Parsers;
+use miRkwood::Paths;
+use miRkwood::Programs;
+use miRkwood::Utils;
+use miRkwood::Parsers;
 
 struct Sequence => {   # déclaration de la structure de données (Sequence)
     colonne1        => '@',
@@ -155,7 +155,7 @@ sub parse_custom_exonerate_output{
     my @args = @_;
     my $yaml_file = shift @args;
 
-    my $yaml = PipelineMiRNA::get_yaml_file($yaml_file) or die("Error when parsing YAML file $yaml_file");
+    my $yaml = miRkwood::get_yaml_file($yaml_file) or die("Error when parsing YAML file $yaml_file");
     my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
 
     my %results;
@@ -256,7 +256,7 @@ a RNAfold output.
 sub get_data_from_rnafold_out {
     my @args                            = @_;
     my $candidate_rnafold_stemploop_out = shift @args;
-    my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output(
+    my @vienna_res = miRkwood::Parsers::parse_RNAfold_output(
         $candidate_rnafold_stemploop_out);
     my ($name, $left, $right) = get_name_and_position_from_header($vienna_res[0]);
     my $DNASequence = $vienna_res[1];
@@ -271,7 +271,7 @@ sub get_data_from_rnafold_out {
 sub get_sequence_information {
     my @args          = @_;
     my $seq_info_file = shift @args;
-    my $contents = PipelineMiRNA::Utils::slurp_file($seq_info_file);
+    my $contents = miRkwood::Utils::slurp_file($seq_info_file);
     chomp $contents;
     my ($strand, $left, $right) = split(/\t/xms, $contents);
     return ($strand, $left, $right);
@@ -293,10 +293,10 @@ sub merge_alignments {
     my ( $stocked_left, $stocked_right ) = ( -10, -10 );
 
     my @keys = sort {
-        ( PipelineMiRNA::Utils::get_element_of_split( $a, '-', 0 )
-              <=> PipelineMiRNA::Utils::get_element_of_split( $b, '-', 0 ) )
-          || ( PipelineMiRNA::Utils::get_element_of_split( $a, '-', 1 )
-            <=> PipelineMiRNA::Utils::get_element_of_split( $b, '-', 1 ) )
+        ( miRkwood::Utils::get_element_of_split( $a, '-', 0 )
+              <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 ) )
+          || ( miRkwood::Utils::get_element_of_split( $a, '-', 1 )
+            <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 ) )
     } keys %alignments;
     my @stocked_hits;
     my $final_key;

@@ -1,4 +1,4 @@
-package PipelineMiRNA::Candidate;
+package miRkwood::Candidate;
 
 # ABSTRACT: Code directly tied to the candidate data structure
 
@@ -8,12 +8,12 @@ use warnings;
 use File::Spec;
 use YAML::XS;
 
-use PipelineMiRNA;
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::Parsers;
-use PipelineMiRNA::Utils;
-use PipelineMiRNA::Components;
-use PipelineMiRNA::WebPaths;
+use miRkwood;
+use miRkwood::Paths;
+use miRkwood::Parsers;
+use miRkwood::Utils;
+use miRkwood::Components;
+use miRkwood::WebPaths;
 
 my $candidate_base_filename = 'candidate.yml';
 
@@ -77,9 +77,9 @@ sub serialize_candidate_information {
     my $can_dir = shift @args;
     my $serialization_dir = shift @args;
 
-    my $cfg    = PipelineMiRNA->CONFIG();
+    my $cfg    = miRkwood->CONFIG();
 
-    my $full_candidate_dir = PipelineMiRNA::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
+    my $full_candidate_dir = miRkwood::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
     my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
     my %candidate = $self->parse_candidate_information($full_candidate_dir);
     $candidate{'identifier'} = "$seq_dir-$can_dir";
@@ -93,22 +93,22 @@ sub serialize_candidate_information {
 
     $candidate{'position'} = "$candidate{'start_position'}-$candidate{'end_position'}";
     $candidate{'length'} = $candidate{'end_position'} - $candidate{'start_position'} +1;
-    $candidate{'%GC'} = PipelineMiRNA::Utils::restrict_num_decimal_digits(
-                            PipelineMiRNA::Utils::compute_gc_content($candidate{'DNASequence'}),
+    $candidate{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
+                            miRkwood::Utils::compute_gc_content($candidate{'DNASequence'}),
                             3);
 
     my $alternative_candidates_file = File::Spec->catfile($full_candidate_dir, 'alternativeCandidates.txt');
     if (-e $alternative_candidates_file){
-        my %alternatives = PipelineMiRNA::Parsers::parse_alternative_candidates_file($alternative_candidates_file);
+        my %alternatives = miRkwood::Parsers::parse_alternative_candidates_file($alternative_candidates_file);
         $candidate{'alternatives'} = \%alternatives;
     }
 
-    my $hairpin = PipelineMiRNA::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
+    my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
     $candidate{'hairpin'} = $hairpin;
     my %sequence;
 #    $sequence{$candidate{'name'}} = $candidate{'DNASequence'};
 #    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_prediction.txt");
-#    $candidate{'mirdup_prediction'} = \%{PipelineMiRNA::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
+#    $candidate{'mirdup_prediction'} = \%{miRkwood::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
 
     return $self->serialize_candidate( \%candidate, $serialization_dir );
 }
@@ -131,7 +131,7 @@ sub parse_candidate_information {
       File::Spec->catfile( $full_candidate_dir, 'sequence_information.txt' );
     if ( -e $seq_info_file )    # si fichier existe
     {
-        my @res = PipelineMiRNA::Components::get_sequence_information($seq_info_file);
+        my @res = miRkwood::Components::get_sequence_information($seq_info_file);
         ($result{'strand'}, $result{'start_position'}, $result{'end_position'}) = @res;
     }
 
@@ -139,7 +139,7 @@ sub parse_candidate_information {
       File::Spec->catfile( $full_candidate_dir, 'randfold.out' );
     if ( -e $randfold_output )    # si fichier existe
     {
-        $result{'shuffles'} = PipelineMiRNA::Parsers::parse_pvalue($randfold_output);
+        $result{'shuffles'} = miRkwood::Parsers::parse_pvalue($randfold_output);
     }
 
     #Récupération valeur MFEI
@@ -147,7 +147,7 @@ sub parse_candidate_information {
       File::Spec->catfile( $full_candidate_dir, 'outMFEI.txt' );
     if ( -e $mfei_out )                 # si fichier existe
     {
-        my @mfeis = PipelineMiRNA::Parsers::parse_mfei($mfei_out);
+        my @mfeis = miRkwood::Parsers::parse_mfei($mfei_out);
         $result{'mfei'} = $mfeis[0];
         $result{'mfe'} = $mfeis[1];
         $result{'amfe'} = $mfeis[2];
@@ -158,7 +158,7 @@ sub parse_candidate_information {
                                        'outRNAFold_stemloop.txt' );
     if ( -e $rnafold_stemloop_out )                  # si fichier existe
     {
-        my @res = PipelineMiRNA::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
+        my @res = miRkwood::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
         my $devnull;
         ($result{'name'}, $devnull, $result{'DNASequence'}, $result{'Vienna'}) = @res;
     }
@@ -168,7 +168,7 @@ sub parse_candidate_information {
                                                    'outRNAFold_optimal.txt' );
     if ( -e $rnafold_optimal_out )                  # si fichier existe
     {
-        my @vienna_res = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_optimal_out);
+        my @vienna_res = miRkwood::Parsers::parse_RNAfold_output($rnafold_optimal_out);
 
         $result{'Vienna_optimal'} = $vienna_res[2];
     }
@@ -307,7 +307,7 @@ sub get_relative_image {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
     my $image = $candidate{'image'};
-    return PipelineMiRNA::WebPaths->filesystem_to_relative_path($image);
+    return miRkwood::WebPaths->filesystem_to_relative_path($image);
 }
 
 =method get_name
@@ -333,7 +333,7 @@ shortened and sanitized
 sub get_shortened_sequence_name {
     my ( $self, @args ) = @_;
     my %candidate = %{shift @args};
-    return PipelineMiRNA::Utils::sanitize_sequence_name($candidate{'name'});
+    return miRkwood::Utils::sanitize_sequence_name($candidate{'name'});
 }
 
 =method get_shortened_name
@@ -395,7 +395,7 @@ sub candidateAsFasta {
 Convert a given candidate to a GFF line.
 
 Usage:
-my $gff_line = PipelineMiRNA::Candidate->candidate_as_gff($value);
+my $gff_line = miRkwood::Candidate->candidate_as_gff($value);
 
 =cut
 
@@ -495,11 +495,11 @@ sub make_alignments_HTML {
     my $predictionCounter = 0;
 
     # Sorting by position
-    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 0)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 0)
+    my @keys = sort { ( miRkwood::Utils::get_element_of_split($a, '-', 0)  <=>
+                        miRkwood::Utils::get_element_of_split($b, '-', 0)
                       ) ||
-                      ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 1)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 1))
+                      ( miRkwood::Utils::get_element_of_split($a, '-', 1)  <=>
+                        miRkwood::Utils::get_element_of_split($b, '-', 1))
                     } keys %alignments;
 
     foreach my $position (@keys) {
@@ -516,7 +516,7 @@ sub make_alignments_HTML {
 
         # Hairpin
         my $hairpin_with_mature =
-            PipelineMiRNA::Utils::make_hairpin_with_mature($candidate{'hairpin'},
+            miRkwood::Utils::make_hairpin_with_mature($candidate{'hairpin'},
                                                            $left, $right,
                                                            length $candidate{'DNASequence'},
                                                            'html');
@@ -563,7 +563,7 @@ sub make_alignments_HTML {
                     my @splitted_one = split(/ /, $seq);
                     my $name = $splitted_one[0];
                     my $mirbase_id = $splitted_one[1];
-                    my $mirbase_link = PipelineMiRNA::Utils::make_mirbase_link($mirbase_id);
+                    my $mirbase_link = miRkwood::Utils::make_mirbase_link($mirbase_id);
                     my $html_name = "<a href='$mirbase_link'>$name</a>";
                     push @sequences, $html_name;
                 }
@@ -601,7 +601,7 @@ Return the optional fields based on the current configuration
 sub get_optional_candidate_fields {
     my ( $self, @args ) = @_;
     my @fields = ();
-    my $cfg    = PipelineMiRNA->CONFIG();
+    my $cfg    = miRkwood->CONFIG();
     push @fields, ( 'mfe', 'mfei', 'amfe' );
     if ( $cfg->param('options.randfold') ) {
         push @fields, ('shuffles');
@@ -617,7 +617,7 @@ sub get_optional_candidate_fields {
 Convert a given candidate to a pseudo XML
 
 Usage:
-my $xml_element = PipelineMiRNA::Candidate->candidate_as_pseudoXML($value);
+my $xml_element = miRkwood::Candidate->candidate_as_pseudoXML($value);
 
 =cut
 
@@ -640,7 +640,7 @@ sub candidate_as_pseudoXML {
     for my $header (@headers1) {
         my $contents = $candidate{$header};
         if ( $header ~~ @fields_to_truncate){
-            $contents = PipelineMiRNA::Utils::restrict_num_decimal_digits($contents, 3);
+            $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
         }
         if ( !defined $contents ) {
             $contents = q{};

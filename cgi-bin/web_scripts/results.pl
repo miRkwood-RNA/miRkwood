@@ -10,12 +10,12 @@ use Log::Message::Simple qw[msg error debug];
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
-use PipelineMiRNA;
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::Programs;
-use PipelineMiRNA::Results;
-use PipelineMiRNA::Utils;
-use PipelineMiRNA::WebTemplate;
+use miRkwood;
+use miRkwood::Paths;
+use miRkwood::Programs;
+use miRkwood::Results;
+use miRkwood::Utils;
+use miRkwood::WebTemplate;
 
 my $cgi = new CGI;
 my $mail = $cgi->param('mail');
@@ -33,35 +33,35 @@ if ( !$plant ) {
 
 my $local_dir = dirname( abs_path($0) );
 
-my $dirScript = PipelineMiRNA::Paths->get_scripts_path();
-my $dirLib    = PipelineMiRNA::Paths->get_lib_path();
+my $dirScript = miRkwood::Paths->get_scripts_path();
+my $dirLib    = miRkwood::Paths->get_lib_path();
 
-my $error_url = PipelineMiRNA::WebTemplate::get_cgi_url('error.pl');
-my $root = PipelineMiRNA::Paths->get_results_filesystem_path();
+my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
+my $root = miRkwood::Paths->get_results_filesystem_path();
 
 if (! -e $root) {
     my $error = "Designated directory ($root) for results does not exist. Please contact the system administrator";
-    PipelineMiRNA::WebTemplate::web_die($error);
+    miRkwood::WebTemplate::web_die($error);
 }
 
 if (! -W $root) {
     my $error = "Cannot write results in designated directory $root. Please contact the system administrator";
-    PipelineMiRNA::WebTemplate::web_die($error);
+    miRkwood::WebTemplate::web_die($error);
 }
 
-PipelineMiRNA::Programs::init_programs();
-my @unavailable = PipelineMiRNA::Programs::list_unavailable_programs();
+miRkwood::Programs::init_programs();
+my @unavailable = miRkwood::Programs::list_unavailable_programs();
 if (@unavailable){
     my $error = "Cannot find required third-party software: @unavailable. Please contact the system administrator";
-    PipelineMiRNA::WebTemplate::web_die($error);
+    miRkwood::WebTemplate::web_die($error);
 }
 
-my $jobId = PipelineMiRNA::Results->make_job_id();
-my $absolute_job_dir = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
+my $jobId = miRkwood::Results->make_job_id();
+my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobId);
 mkdir $absolute_job_dir;
 
 my $log_file = File::Spec->catfile( $absolute_job_dir, 'log.log' );
-local $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
+local $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
 
 my $sequence_origin_file = File::Spec->catfile( $absolute_job_dir, 'sequence.fas' );
 my $sequence_upload = File::Spec->catfile( $absolute_job_dir, 'input_sequences.fas' );
@@ -72,7 +72,7 @@ if ( $seqArea eq q{} )    # cas upload fichier
 {
     debug("Sequences are a FASTA file uploaded", 1);
     my $upload = $cgi->upload('seqFile')
-      or PipelineMiRNA::WebTemplate::web_die("Error when getting seqFile: $!");
+      or miRkwood::WebTemplate::web_die("Error when getting seqFile: $!");
     while ( my $ligne = <$upload> ) {
         $seq .= $ligne;
     }
@@ -81,16 +81,16 @@ if ( $seqArea eq q{} )    # cas upload fichier
     $seq = $seqArea;
 }
 
-$seq = PipelineMiRNA::Utils::cleanup_fasta_sequence($seq);
+$seq = miRkwood::Utils::cleanup_fasta_sequence($seq);
 
-if ( ! PipelineMiRNA::Utils::is_fasta($seq) )
+if ( ! miRkwood::Utils::is_fasta($seq) )
 {
     print $cgi->redirect($error_url);
     exit;
 }
 
 open( my $OUTPUT, '>>', $sequence_upload )
-  or PipelineMiRNA::WebTemplate::web_die("Error when opening -$sequence_upload-: $!");
+  or miRkwood::WebTemplate::web_die("Error when opening -$sequence_upload-: $!");
 my $name;
 my @lines = split /\n/, $seq;
 foreach my $line (@lines) {
@@ -98,7 +98,7 @@ foreach my $line (@lines) {
         $name = $line;
     }
     else {
-        my $cleaned_line = PipelineMiRNA::Utils::mask_sequence_nucleotide($line);
+        my $cleaned_line = miRkwood::Utils::mask_sequence_nucleotide($line);
         print $OUTPUT $name . "\n" . $cleaned_line . "\n";
         $name = "";
     }
@@ -107,7 +107,7 @@ close $OUTPUT or die("Error when closing $sequence_upload: $!");
 
 # redirection vers la page wait en attendant le calcul
 my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail;
-my $waiting_url = PipelineMiRNA::WebTemplate::get_cgi_url('wait.pl') . $arguments;
+my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 
 print $cgi->redirect( -uri => $waiting_url  );
@@ -129,9 +129,9 @@ if ( !$job_title ) {
     $job_title = 0;
 }
 my $varna = 1;
-my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($absolute_job_dir);
-PipelineMiRNA->CONFIG_FILE($run_options_file);
-PipelineMiRNA::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
+my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
+miRkwood->CONFIG_FILE($run_options_file);
+miRkwood::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
 
 # execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );

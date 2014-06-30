@@ -1,4 +1,4 @@
-package PipelineMiRNA;
+package miRkwood;
 
 use strict;
 use warnings;
@@ -201,7 +201,7 @@ Write the run options to the job configuration file.
 
 sub write_config {
     my ( $run_options_file, $strands, $filter, $trna, $rrna, $mfe, $randfold, $align, $job_title, $plant, $varna, $mode ) = @_;
-    my $run_options = PipelineMiRNA->CONFIG();
+    my $run_options = miRkwood->CONFIG();
     $run_options->param( "job.title",        $job_title );
     $run_options->param( "job.plant",        $plant );
     $run_options->param( "job.mode",         $mode );
@@ -213,7 +213,7 @@ sub write_config {
     $run_options->param( "options.randfold", $randfold );
     $run_options->param( "options.align",    $align );
     $run_options->param( 'options.varna',    $varna );
-    PipelineMiRNA->CONFIG($run_options);
+    miRkwood->CONFIG($run_options);
 }
 
 our $mirkwood_path = Cwd::fast_abs_path( File::Spec->catdir(File::Basename::dirname(__FILE__), '..'));

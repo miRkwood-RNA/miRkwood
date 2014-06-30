@@ -7,12 +7,12 @@ use FindBin;
 use File::Spec;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
-use PipelineMiRNA::WebTemplate;
+use miRkwood::WebTemplate;
 
-my @css = (PipelineMiRNA::WebTemplate->get_server_css_file(), PipelineMiRNA::WebTemplate->get_css_file());
-my @js  = (PipelineMiRNA::WebTemplate->get_js_file());
+my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
+my @js  = (miRkwood::WebTemplate->get_js_file());
 
-my $help_page = File::Spec->catfile( PipelineMiRNA::WebPaths->get_css_path(), '..', 'help.php');
+my $help_page = File::Spec->catfile( miRkwood::WebPaths->get_css_path(), '..', 'help.php');
 
 my $page = <<"END_TXT";
 <div class="main">
@@ -71,7 +71,7 @@ my $page = <<"END_TXT";
 </div><!-- main -->
 END_TXT
 
-my $html = PipelineMiRNA::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+my $html = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 

@@ -11,9 +11,9 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::MiRdup');
+    use_ok('miRkwood::MiRdup');
 }
-require_ok('PipelineMiRNA::MiRdup');
+require_ok('miRkwood::MiRdup');
 
 my $name_base = "dummy_seq";
 my $mature_seq = "ATGCTAGCTGATGCTGATCGTAGTCGATGCTAGCTG";
@@ -27,7 +27,7 @@ ${name_base}__$alignments[0]\tATGCTGATC\t$mature_seq\t$structure
 ${name_base}__$alignments[1]\tTAGTCGAT\t$mature_seq\t$structure
 END
 
-ok( my $validation_source = PipelineMiRNA::MiRdup->make_validation_source_file($name_base, $mature_seq, $structure, @alignments),
+ok( my $validation_source = miRkwood::MiRdup->make_validation_source_file($name_base, $mature_seq, $structure, @alignments),
     'Can call make_validation_source_file' );
 
 is( $validation_source . "\n", $validation_source_expected,
@@ -36,7 +36,7 @@ is( $validation_source . "\n", $validation_source_expected,
 
 my $validation_file = input_file('MiRdup.sequencesToValidate.txt.plant.model.miRdup.tab.txt');
 file_exists_ok($validation_file);
-ok( my %result = PipelineMiRNA::MiRdup->parse_validation_output($validation_file),
+ok( my %result = miRkwood::MiRdup->parse_validation_output($validation_file),
     'Can call parse_validation_output');
 my %expected = ('chr9_14772_c' => 1,
                 'chr22_8102_c' => 1,

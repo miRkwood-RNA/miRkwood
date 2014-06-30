@@ -10,15 +10,15 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::Maskers');
+    use_ok('miRkwood::Maskers');
 }
-require_ok('PipelineMiRNA::Maskers');
+require_ok('miRkwood::Maskers');
 
 ## mask_sequence #
 
 ok(
     my $mask_sequence_output =
-      PipelineMiRNA::Maskers::mask_sequence( '123456789', 3, 6),
+      miRkwood::Maskers::mask_sequence( '123456789', 3, 6),
     'Can call mask_sequence'
 );
 my $mask_sequence_expected = '123NNNN89';
@@ -37,7 +37,7 @@ my @input_sequence2 = ('B', '12345678901234567890');
 my @input_sequences = ( \@input_sequence1, \@input_sequence2 );
 ok (
     my @result_sequences =
-      PipelineMiRNA::Maskers::mask_sequences(\%masker, @input_sequences),
+      miRkwood::Maskers::mask_sequences(\%masker, @input_sequences),
       'Can call mask_sequences'
 );
 

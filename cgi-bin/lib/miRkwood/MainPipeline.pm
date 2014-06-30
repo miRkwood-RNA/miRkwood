@@ -1,4 +1,4 @@
-package PipelineMiRNA::MainPipeline;
+package miRkwood::MainPipeline;
 
 # ABSTRACT: The actual pipeline
 
@@ -10,20 +10,20 @@ use File::Basename;
 use Cwd qw( abs_path );
 use Carp;
 use File::Copy;
-use PipelineMiRNA;
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::Utils;
-use PipelineMiRNA::MiRdup;
-use PipelineMiRNA::Parsers;
-use PipelineMiRNA::Programs;
-use PipelineMiRNA::Candidate;
-use PipelineMiRNA::Components;
-use PipelineMiRNA::Maskers;
-use PipelineMiRNA::PosterioriTests;
+use miRkwood;
+use miRkwood::Paths;
+use miRkwood::Utils;
+use miRkwood::MiRdup;
+use miRkwood::Parsers;
+use miRkwood::Programs;
+use miRkwood::Candidate;
+use miRkwood::Components;
+use miRkwood::Maskers;
+use miRkwood::PosterioriTests;
 use Log::Message::Simple qw[msg error debug];
 
 ### Data ##
-my $dirData = PipelineMiRNA::Paths->get_data_path();
+my $dirData = miRkwood::Paths->get_data_path();
 
 =method setup_logging
 
@@ -37,8 +37,8 @@ sub setup_logging {
     my @args = @_;
     my $job_dir = shift @args;
     my $log_file = File::Spec->catfile( $job_dir, 'log.log' );
-    $Log::Message::Simple::DEBUG_FH = PipelineMiRNA->LOGFH($log_file);
-    PipelineMiRNA->DEBUG(1);
+    $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
+    miRkwood->DEBUG(1);
     return;
 }
 
@@ -56,9 +56,9 @@ sub init_pipeline {
     my @args = @_;
     my $job_dir = shift @args;
     setup_logging($job_dir);
-    my $run_options_file = PipelineMiRNA::Paths->get_job_config_path($job_dir);
-    PipelineMiRNA->CONFIG_FILE($run_options_file);
-    PipelineMiRNA::Programs::init_programs();
+    my $run_options_file = miRkwood::Paths->get_job_config_path($job_dir);
+    miRkwood->CONFIG_FILE($run_options_file);
+    miRkwood::Programs::init_programs();
     return;
 }
 
@@ -66,7 +66,7 @@ sub init_pipeline {
 
 Run the pipeline in FASTA mode
 
- Usage : PipelineMiRNA::MainPipeline::fasta_pipeline( $idirJob );
+ Usage : miRkwood::MainPipeline::fasta_pipeline( $idirJob );
  Input : The job directory
  Return: -
 
@@ -84,7 +84,7 @@ sub fasta_pipeline {
 
 Run the pipeline in BAM mode
 
- Usage : PipelineMiRNA::MainPipeline::bam_pipeline( $idirJob, $bam_file, $genome_file );
+ Usage : miRkwood::MainPipeline::bam_pipeline( $idirJob, $bam_file, $genome_file );
  Input : The job directory
  Return: -
 
@@ -94,8 +94,8 @@ sub bam_pipeline {
     my @args = @_;
     my ( $job_dir, $bam_file, $genome_file ) = @args;
     init_pipeline($job_dir);
-    my $clustering = PipelineMiRNA::Clusters->new($bam_file, $genome_file);
-    debug( "Extracting sequences from genome using BAM clusters", PipelineMiRNA->DEBUG() );
+    my $clustering = miRkwood::Clusters->new($bam_file, $genome_file);
+    debug( "Extracting sequences from genome using BAM clusters", miRkwood->DEBUG() );
     my @sequences_array = $clustering->get_clustered_sequences_from_bam();
     run_pipeline_on_sequences($job_dir, \@sequences_array);
     return;
@@ -113,13 +113,13 @@ sub run_pipeline_on_sequences {
     my $sequences_array = shift @args;
     my @sequences_array = @{$sequences_array};
     my $sequences_count = scalar @sequences_array;
-    debug( "$sequences_count sequences to process", PipelineMiRNA->DEBUG() );
-    my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
+    debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
+    my $workspace_dir = miRkwood::Paths->get_workspace_path($job_dir);
     mkdir $workspace_dir;
     my $sequence_dir_name = 0;
     foreach my $item (@sequences_array){
         my ($name, $sequence) = @{$item};
-        debug( "Considering sequence $sequence_dir_name: $name", PipelineMiRNA->DEBUG() );
+        debug( "Considering sequence $sequence_dir_name: $name", miRkwood->DEBUG() );
         $sequence_dir_name++;
         my $sequence_dir = File::Spec->catdir( $workspace_dir, $sequence_dir_name );
         mkdir $sequence_dir;
@@ -127,9 +127,9 @@ sub run_pipeline_on_sequences {
         create_directories( \%candidates_hash, $sequence_dir );
     }
     process_tests($job_dir);
-    debug('miRkwood processing done', PipelineMiRNA->DEBUG() );
+    debug('miRkwood processing done', miRkwood->DEBUG() );
     mark_job_as_finished($job_dir);
-    debug("Writing finish file", PipelineMiRNA->DEBUG() );
+    debug("Writing finish file", miRkwood->DEBUG() );
     return;
 }
 
@@ -148,15 +148,15 @@ sub compute_candidates_for_sequence {
     my $sequence_dir = shift @args;
     my $sequence_tuple = shift @args;
     my ($name, $sequence) = @{$sequence_tuple};
-    my $cfg = PipelineMiRNA->CONFIG();
+    my $cfg = miRkwood->CONFIG();
     my $candidates = get_raw_candidates_from_sequence( $sequence_dir, $name, $sequence, '+' );
     my @candidates_hash1 = @{$candidates};
     my @candidates_hash;
 
     if ( $cfg->param('options.strands') ) {
-        debug( "Processing the other strand", PipelineMiRNA->DEBUG() );
+        debug( "Processing the other strand", miRkwood->DEBUG() );
         my $reversed_sequence =
-          PipelineMiRNA::Utils::reverse_complement($sequence);
+          miRkwood::Utils::reverse_complement($sequence);
         my $candidates2 =
           get_raw_candidates_from_sequence( $sequence_dir, $name, $reversed_sequence, '-' );
         my @candidates_hash2 = @{$candidates2};
@@ -167,13 +167,13 @@ sub compute_candidates_for_sequence {
     }
 
     if ( $cfg->param('options.mfe') ) {
-        debug('Select only sequences with MFEI < -0.6', PipelineMiRNA->DEBUG() );
+        debug('Select only sequences with MFEI < -0.6', miRkwood->DEBUG() );
         @candidates_hash = grep { mfei_below_threshold($_, -0.6) } @candidates_hash;
     }
 
     my %candidates_hash;
     if (@candidates_hash) {
-        debug("Merging candidates for sequence $name", PipelineMiRNA->DEBUG() );
+        debug("Merging candidates for sequence $name", miRkwood->DEBUG() );
         %candidates_hash = merge_candidates( \@candidates_hash );
     }
     else {
@@ -204,13 +204,13 @@ sub get_sequences {
 
     open my $ENTREE_FH, '<', $sequence_uploaded
       or die "Error when opening sequences -$sequence_uploaded-: $!";
-    debug( "Calling parse_multi_fasta() on $sequence_uploaded", PipelineMiRNA->DEBUG() );
-    my @sequences_array = PipelineMiRNA::Utils::parse_multi_fasta($ENTREE_FH);
+    debug( "Calling parse_multi_fasta() on $sequence_uploaded", miRkwood->DEBUG() );
+    my @sequences_array = miRkwood::Utils::parse_multi_fasta($ENTREE_FH);
     close $ENTREE_FH;
     my @sequences;
     if (%filter){
-        debug( 'Masking input sequences', PipelineMiRNA->DEBUG() );
-        @sequences = PipelineMiRNA::Maskers::mask_sequences(\%filter, @sequences_array);
+        debug( 'Masking input sequences', miRkwood->DEBUG() );
+        @sequences = miRkwood::Maskers::mask_sequences(\%filter, @sequences_array);
     } else {
         @sequences = @sequences_array;
     }
@@ -231,27 +231,27 @@ sub get_masking_information {
     my @args = @_;
     my $job_dir = shift @args;
     my %filter;
-    my $cfg = PipelineMiRNA->CONFIG();
+    my $cfg = miRkwood->CONFIG();
     my $masking_folder = File::Spec->catdir($job_dir, 'masks');
     mkdir $masking_folder;
     my $sequences = File::Spec->catfile( $job_dir, 'input_sequences.fas' );
 
     if ($cfg->param('options.filter')) {
-        debug( 'Get masking information for coding regions', PipelineMiRNA->DEBUG() );
+        debug( 'Get masking information for coding regions', miRkwood->DEBUG() );
         my $plant = $cfg->param('job.plant');
         my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
-        my %blast_mask = PipelineMiRNA::Maskers::get_coding_region_masking_information( $sequences, $masking_folder, $blast_database );
-        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
+        my %blast_mask = miRkwood::Maskers::get_coding_region_masking_information( $sequences, $masking_folder, $blast_database );
+        %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
     }
     if ($cfg->param('options.mask-trna')) {
-        debug( 'Get masking information for tRNAs', PipelineMiRNA->DEBUG() );
-        my %trna_mask = PipelineMiRNA::Maskers::get_trna_masking_information( $sequences, $masking_folder );
-        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
+        debug( 'Get masking information for tRNAs', miRkwood->DEBUG() );
+        my %trna_mask = miRkwood::Maskers::get_trna_masking_information( $sequences, $masking_folder );
+        %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
     }
     if ($cfg->param('options.mask-rrna')) {
-        debug( 'Get masking information for ribosomal RNAs', PipelineMiRNA->DEBUG() );
-        my %rrna_mask = PipelineMiRNA::Maskers::get_rnammer_masking_information( $sequences, $masking_folder );
-        %filter = PipelineMiRNA::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
+        debug( 'Get masking information for ribosomal RNAs', miRkwood->DEBUG() );
+        my %rrna_mask = miRkwood::Maskers::get_rnammer_masking_information( $sequences, $masking_folder );
+        %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
     }
     return %filter;
 }
@@ -317,11 +317,11 @@ sub run_rnalfold_on_sequence {
     my $name     = shift @args;
     my $sequence = shift @args;
     my $sequence_dir = shift @args;
-    debug( 'Running RNALfold', PipelineMiRNA->DEBUG() );
+    debug( 'Running RNALfold', miRkwood->DEBUG() );
     my $rnalfold_output = File::Spec->catfile( $sequence_dir, 'RNALfold.out' );
 
     my $temp_file = File::Spec->catfile( $sequence_dir, 'tempFile.txt' );
-    PipelineMiRNA::Programs::run_rnalfold( $name, $sequence, $temp_file,
+    miRkwood::Programs::run_rnalfold( $name, $sequence, $temp_file,
         $rnalfold_output )
       or die("Problem when running RNALfold: $!");
     return $rnalfold_output;
@@ -342,8 +342,8 @@ sub run_RNAstemloop_on_rnalfold_output {
     my $rnastemloop_out_optimal = File::Spec->catfile( $sequence_dir, 'rnastemloop_optimal.out' );
     my $rnastemloop_out_stemloop =
       File::Spec->catfile( $sequence_dir, 'rnastemloop_stemloop.out' );
-    debug( "Running RNAstemloop on $rnalfold_output", PipelineMiRNA->DEBUG() );
-    PipelineMiRNA::Programs::run_rnastemloop( $rnalfold_output,
+    debug( "Running RNAstemloop on $rnalfold_output", miRkwood->DEBUG() );
+    miRkwood::Programs::run_rnastemloop( $rnalfold_output,
         $rnastemloop_out_stemloop, $rnastemloop_out_optimal )
       or die("Problem when running RNAstemloop");
     return ($rnastemloop_out_stemloop, $rnastemloop_out_optimal);
@@ -357,12 +357,12 @@ sub run_RNAstemloop_on_rnalfold_output {
 sub run_RNAeval_on_RNAstemloop_output {
 	my ( $rnastemloop_out, $suffix ) = @_;
 	my $current_sequence_dir = dirname($rnastemloop_out);
-	debug( "Processing RNAstemloop output for $suffix $rnastemloop_out", PipelineMiRNA->DEBUG() );
+	debug( "Processing RNAstemloop output for $suffix $rnastemloop_out", miRkwood->DEBUG() );
 	my $rnaeval_out =
 	  File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
-	debug( "Running RNAeval in $rnaeval_out", PipelineMiRNA->DEBUG() );
-	PipelineMiRNA::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
+	debug( "Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
+	miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
 	  or die("Problem when running RNAeval");
 
 	return $rnaeval_out;
@@ -387,7 +387,7 @@ sub process_RNAstemloop_on_filenames {
     open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
     open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
     my $msg = "Processing RNAstemloop ( $sequence_dir, $strand, $seq_length, $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
-    debug( $msg, PipelineMiRNA->DEBUG() );
+    debug( $msg, miRkwood->DEBUG() );
     my $res =
       process_RNAstemloop( $sequence_dir, $strand, $seq_length, $STEM_FH,
         $EVAL_OPT_FH, $EVAL_STEM_FH );
@@ -420,17 +420,17 @@ sub process_RNAstemloop {
 
 	while ( my $stem_line = <$STEM_FH> ) {
 
-		if ( PipelineMiRNA::Utils::is_fasta_header( $stem_line )) {
+		if ( miRkwood::Utils::is_fasta_header( $stem_line )) {
 			$nameSeq = substr ($stem_line, 1, -1);
 		}
-		elsif ( PipelineMiRNA::Utils::is_fasta_line_relaxed($stem_line ) ) {
+		elsif ( miRkwood::Utils::is_fasta_line_relaxed($stem_line ) ) {
 			$dna = substr $stem_line, 0, -1;
 			$line_eval_opt = substr( <$EVAL_OPT_FH>, 0, -1 );    # the sequence as well
-			if ( PipelineMiRNA::Utils::is_fasta_header( $line_eval_opt ) ) {
+			if ( miRkwood::Utils::is_fasta_header( $line_eval_opt ) ) {
 			    $line_eval_opt = substr( <$EVAL_OPT_FH>, 0, -1 );
 			}
 			$line_eval_stem = substr( <$EVAL_STEM_FH>, 0, -1 );    # the sequence as well
-	         if ( PipelineMiRNA::Utils::is_fasta_header( $line_eval_stem )) {
+	         if ( miRkwood::Utils::is_fasta_header( $line_eval_stem )) {
                 $line_eval_stem = substr( <$EVAL_STEM_FH>, 0, -1 );
             }
 			if ( $dna ne $line_eval_opt || $dna ne $line_eval_stem ) {
@@ -443,19 +443,19 @@ sub process_RNAstemloop {
 			$line_eval_stem = <$EVAL_STEM_FH>;
 			
 			my ( $structure_optimal, $energy_optimal ) =
-                PipelineMiRNA::Parsers::parse_Vienna_line($line_eval_opt);
+                miRkwood::Parsers::parse_Vienna_line($line_eval_opt);
 			my ( $structure_stemloop, $energy_stemloop ) =
-                PipelineMiRNA::Parsers::parse_Vienna_line($line_eval_stem);
+                miRkwood::Parsers::parse_Vienna_line($line_eval_stem);
 			if ($structure_optimal)
 			{                        # We have a structure
 
 				if ( $nameSeq =~ /.*__(\d*)-(\d*)$/ ) {
 					my ($mfei, $amfe) =
-					  PipelineMiRNA::Utils::compute_mfei_and_amfe( $dna, $energy_optimal );
+					  miRkwood::Utils::compute_mfei_and_amfe( $dna, $energy_optimal );
 					my ( $start, $end );
 					if ( $strand eq '-' ) {
 						my $res =
-						  PipelineMiRNA::Utils::get_position_from_opposite_strand
+						  miRkwood::Utils::get_position_from_opposite_strand
 						  ( $1, $2, $seq_length );
 						( $start, $end ) = @{$res};
 					}
@@ -625,7 +625,7 @@ sub populate_candidate_directory {
 	my %candidate          = %{ shift @args };
 	my @alternatives_array = @{ shift @args };
 
-    debug( "Writing candidate information in $candidate_dir", PipelineMiRNA->DEBUG() );
+    debug( "Writing candidate information in $candidate_dir", miRkwood->DEBUG() );
 	#Writing seq.txt
 	my $candidate_sequence = File::Spec->catfile( $candidate_dir, 'seq.txt' );
 	open( my $SEQ_FH, '>', $candidate_sequence )
@@ -667,12 +667,12 @@ sub populate_candidate_directory {
     }
 
     # Writing VARNA image
-    my $cfg = PipelineMiRNA->CONFIG();
+    my $cfg = miRkwood->CONFIG();
 
     if ( $cfg->param('options.varna') ) {
         my $varna_image = File::Spec->catfile( $candidate_dir, 'image.png' );
-        debug( "Generating image using VARNA in $varna_image", PipelineMiRNA->DEBUG() );
-        PipelineMiRNA::Programs::run_varna_on_structure( $candidate{'dna'}, $candidate{'structure_stemloop'}, $varna_image )
+        debug( "Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
+        miRkwood::Programs::run_varna_on_structure( $candidate{'dna'}, $candidate{'structure_stemloop'}, $varna_image )
           or carp('Problem during image generation using VARNA');
     }
 
@@ -739,9 +739,9 @@ Perform the a posteriori tests for a given job
 
 sub process_tests {
 	my ($job_dir) = @_;
-	debug( "A posteriori tests in $job_dir", PipelineMiRNA->DEBUG() );
+	debug( "A posteriori tests in $job_dir", miRkwood->DEBUG() );
     my $candidates_dir = File::Spec->catdir( $job_dir, 'candidates' );
-    my $workspace_dir = PipelineMiRNA::Paths->get_workspace_path($job_dir);
+    my $workspace_dir = miRkwood::Paths->get_workspace_path($job_dir);
 
 	my @sequence_dirs = get_dirs_from_directory($workspace_dir);
 
@@ -749,20 +749,20 @@ sub process_tests {
 	foreach my $dir (@sequence_dirs)
 	{
 		my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
-		debug( "Entering sequence $sequence_dir", PipelineMiRNA->DEBUG() );
+		debug( "Entering sequence $sequence_dir", miRkwood->DEBUG() );
 
 		my @candidate_dirs = get_dirs_from_directory($sequence_dir);
 		foreach my $subDir (@candidate_dirs) {
 			my $candidate_dir =
 			  File::Spec->catdir( $sequence_dir, $subDir );
 
-			debug( "Entering candidate $subDir", PipelineMiRNA->DEBUG() );
+			debug( "Entering candidate $subDir", miRkwood->DEBUG() );
 			process_tests_for_candidate( $candidate_dir, $subDir );
-			debug( "Done with candidate $subDir", PipelineMiRNA->DEBUG() );
+			debug( "Done with candidate $subDir", miRkwood->DEBUG() );
 
 			if (
 				!eval {
-					PipelineMiRNA::Candidate
+					miRkwood::Candidate
 					  ->serialize_candidate_information( $job_dir, $dir,
 						$subDir, $candidates_dir );
 				}
@@ -772,13 +772,13 @@ sub process_tests {
 				carp( "Serialization of $subDir failed" );
 			}
 			else {
-				debug( "Done with serializing $subDir", PipelineMiRNA->DEBUG() );
+				debug( "Done with serializing $subDir", miRkwood->DEBUG() );
 				# All is well
 			}
 		} # foreach my $file (@files)
-		debug( "Done with initial sequence $dir", PipelineMiRNA->DEBUG() );
+		debug( "Done with initial sequence $dir", miRkwood->DEBUG() );
 	} # foreach my $dir (@dirs)
-	debug( "Done with all the tests", PipelineMiRNA->DEBUG() );
+	debug( "Done with all the tests", miRkwood->DEBUG() );
 	return 0;
 }
 
@@ -802,19 +802,19 @@ sub process_tests_for_candidate {
 	my $candidate_rnafold_stemploop_out =
 	  File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
 
-    my $cfg = PipelineMiRNA->CONFIG();
+    my $cfg = miRkwood->CONFIG();
 
 	####calcul p-value randfold
 	if ( $cfg->param('options.randfold') ) {
-		debug( "Running test_randfold on $seq_file", PipelineMiRNA->DEBUG() );
-		PipelineMiRNA::PosterioriTests::test_randfold( $candidate_dir,
+		debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
+		miRkwood::PosterioriTests::test_randfold( $candidate_dir,
 			$seq_file );
 	}
 
 	if ( $cfg->param('options.align') ) {
-		debug( "Running test_alignment on $candidate_rnafold_stemploop_out", PipelineMiRNA->DEBUG() );
+		debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
 		my $file_alignement =
-		  PipelineMiRNA::PosterioriTests::test_alignment( $candidate_dir,
+		  miRkwood::PosterioriTests::test_alignment( $candidate_dir,
 			$candidate_rnafold_stemploop_out );
 		post_process_alignments( $candidate_dir,
 			$candidate_rnafold_stemploop_out,
@@ -836,7 +836,7 @@ sub post_process_alignments {
 	my $file_alignement                 = shift @args;
 
 	my @res =
-	  PipelineMiRNA::Components::get_data_from_rnafold_out(
+	  miRkwood::Components::get_data_from_rnafold_out(
 		$candidate_rnafold_stemploop_out);
 	my ( $name, $position, $DNASequence, $Vienna ) = @res;
 	my %alignments;
@@ -847,7 +847,7 @@ sub post_process_alignments {
 	if (
 		!eval {
 			%alignments =
-			  PipelineMiRNA::Components::parse_custom_exonerate_output(
+			  miRkwood::Components::parse_custom_exonerate_output(
 				$file_alignement);
 		}
 	  )
@@ -858,11 +858,11 @@ sub post_process_alignments {
 	}
 	else {
 		%alignments =
-		  PipelineMiRNA::Components::merge_alignments( \%alignments );
+		  miRkwood::Components::merge_alignments( \%alignments );
 		my $tmp_file =
 		  File::Spec->catfile( $candidate_dir, "mirdup_validation.txt" );
 		my %mirdup_results =
-		  PipelineMiRNA::MiRdup->validate_with_mirdup( $tmp_file, $name,
+		  miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $name,
 			$DNASequence, $Vienna, keys %alignments );
 		my $mirdup_results_file =
 		  File::Spec->catfile( $candidate_dir, 'mirdup_results.yml' );

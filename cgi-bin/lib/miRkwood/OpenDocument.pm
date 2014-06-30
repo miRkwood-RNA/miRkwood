@@ -1,4 +1,4 @@
-package PipelineMiRNA::OpenDocument;
+package miRkwood::OpenDocument;
 
 # ABSTRACT: Exporting pipeline results as OpenDocument
 
@@ -7,10 +7,10 @@ use warnings;
 
 use File::Spec;
 use File::Copy;
-use PipelineMiRNA::Utils;
-use PipelineMiRNA::WebPaths;
-use PipelineMiRNA::Results;
-use PipelineMiRNA::Candidate;
+use miRkwood::Utils;
+use miRkwood::WebPaths;
+use miRkwood::Results;
+use miRkwood::Candidate;
 use ODF::lpOD;
 
 =method new
@@ -245,12 +245,12 @@ sub generate_report {
     my $jobId = $self->{jobId};
     my @sequences_to_export = @{$self->{sequences}};
 
-    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
+    my $jobPath = miRkwood::Results->jobId_to_jobPath($jobId);
 
     my $images_dir = $self->get_images_dir();
     mkdir $images_dir;
 
-    my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
+    my %results = miRkwood::Results->get_structure_for_jobID($jobId);
 
     my $doc = $self->{doc};
 
@@ -260,8 +260,8 @@ sub generate_report {
     # Metadata access
     my $meta = $doc->meta;
 
-    $meta->set_generator('PipelineMiRNA');
-    $meta->set_title('PipelineMiRNA results');
+    $meta->set_generator('miRkwood');
+    $meta->set_title('miRkwood results');
 
     # make sure that the document body is empty
     $context->clear;
@@ -321,7 +321,7 @@ sub add_candidate {
 
     my $size = length ${$candidate}{'DNASequence'};
     my $vienna_seq =
-      PipelineMiRNA::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
+      miRkwood::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
         ${$candidate}{'DNASequence'} );
 
     $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');
@@ -443,11 +443,11 @@ sub add_ODF_alignments {
     my $predictionCounter = 0;
 
     # Sorting by position
-    my @keys = sort { ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 0)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 0)
+    my @keys = sort { ( miRkwood::Utils::get_element_of_split($a, '-', 0)  <=>
+                        miRkwood::Utils::get_element_of_split($b, '-', 0)
                       ) ||
-                      ( PipelineMiRNA::Utils::get_element_of_split($a, '-', 1)  <=>
-                        PipelineMiRNA::Utils::get_element_of_split($b, '-', 1))
+                      ( miRkwood::Utils::get_element_of_split($a, '-', 1)  <=>
+                        miRkwood::Utils::get_element_of_split($b, '-', 1))
                     } keys %alignments;
     foreach my $position (@keys) {
         my ( $left, $right ) = split( /-/, $position );
@@ -464,7 +464,7 @@ sub add_ODF_alignments {
 
         # Hairpin
         my $hairpin_with_mature =
-            PipelineMiRNA::Utils::make_hairpin_with_mature($candidate{'hairpin'},
+            miRkwood::Utils::make_hairpin_with_mature($candidate{'hairpin'},
                                                            $left, $right,
                                                            length $candidate{'DNASequence'},
                                                            'ascii');
@@ -536,7 +536,7 @@ sub add_ODF_alignments {
                     my @splitted_one = split(/ /, $seq);
                     my $local_name = $splitted_one[0];
                     my $mirbase_id = $splitted_one[1];
-                    my $mirbase_link = PipelineMiRNA::Utils::make_mirbase_link($mirbase_id);
+                    my $mirbase_link = miRkwood::Utils::make_mirbase_link($mirbase_id);
                     push @mirbase_links, $mirbase_link;
                     push @mirbase_ids, $local_name;
                 }
@@ -578,7 +578,7 @@ Return the server path to the ODF document
 sub get_ODF_server_path{
     my ( $self, @args ) = @_;
     my $ODT_abspath = $self->get_ODF_absolute_path();
-    return PipelineMiRNA::WebPaths->filesystem_to_relative_path($ODT_abspath);
+    return miRkwood::WebPaths->filesystem_to_relative_path($ODT_abspath);
 }
 
 =method get_ODF_absolute_path
@@ -589,7 +589,7 @@ Return the absolute path to the ODF document
 
 sub get_ODF_absolute_path {
     my ( $self, @args ) = @_;
-    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($self->{jobId});
+    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->{jobId});
     my $ODT_filename = $self->get_ODF_filename();
     return File::Spec->catfile( $jobPath, $ODT_filename );
 }
@@ -607,7 +607,7 @@ sub get_ODF_filename {
 
 sub get_images_dir {
     my ( $self, @args ) = @_;
-    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($self->{jobId});
+    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->{jobId});
     return File::Spec->catdir($jobPath, 'images');
 }
 

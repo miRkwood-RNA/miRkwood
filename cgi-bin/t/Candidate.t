@@ -11,15 +11,15 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::Candidate');
+    use_ok('miRkwood::Candidate');
 }
-require_ok('PipelineMiRNA::Candidate');
+require_ok('miRkwood::Candidate');
 
 my $candidate_dir = input_file('candidate1');
 
 ok(
     my %pseudo_candidate =
-      PipelineMiRNA::Candidate->parse_candidate_information($candidate_dir),
+      miRkwood::Candidate->parse_candidate_information($candidate_dir),
     'Can call parse_candidate_information()'
 );
 
@@ -48,27 +48,27 @@ is_deeply( \%pseudo_candidate, \%expected, 'parse candidate information ok' );
 
 dies_ok {
     my %candidate =
-      PipelineMiRNA::Candidate->retrieve_candidate_information( 'a', 'b', 'c' );
+      miRkwood::Candidate->retrieve_candidate_information( 'a', 'b', 'c' );
 } 'retrieve_candidate_information with wrong parameters dies as expected';
 
 my $candidate_input = input_file('');
 
 ok(
-    my %candidate = PipelineMiRNA::Candidate->retrieve_candidate_information(
+    my %candidate = miRkwood::Candidate->retrieve_candidate_information(
         $candidate_input, '1-1'
     ),
     'Can call retrieve_candidate_information'
 );
 
-ok( my $result1 = PipelineMiRNA::Candidate->compute_quality( \%candidate ),
+ok( my $result1 = miRkwood::Candidate->compute_quality( \%candidate ),
     'can call compute_quality()' );
 is( $result1, 3, 'compute_quality returns the expected value' );
 
-ok( my $has_mirdup_validation_result = PipelineMiRNA::Candidate->has_mirdup_validation( \%candidate ),
+ok( my $has_mirdup_validation_result = miRkwood::Candidate->has_mirdup_validation( \%candidate ),
     'can call has_mirdup_validation()' );
 is( $has_mirdup_validation_result, 1, '$has_mirdup_validation returns the expected value' );
 
-ok( my $result2 = PipelineMiRNA::Candidate->get_absolute_image( \%candidate ),
+ok( my $result2 = miRkwood::Candidate->get_absolute_image( \%candidate ),
     'can call get_absolute_image()' );
 is(
     $result2,
@@ -76,7 +76,7 @@ is(
     'get_absolute_image returns the expected value'
 );
 
-ok( my $result3 = PipelineMiRNA::Candidate->get_relative_image( \%candidate ),
+ok( my $result3 = miRkwood::Candidate->get_relative_image( \%candidate ),
     'can call get_relative_image()' );
 is(
     $result3,
@@ -84,21 +84,21 @@ is(
     'get_relative_image returns the expected value'
 );
 
-ok( my $result4 = PipelineMiRNA::Candidate->candidateAsVienna( \%candidate ),
+ok( my $result4 = miRkwood::Candidate->candidateAsVienna( \%candidate ),
     'can call candidateAsVienna()' );
 my $expected_file4 = input_file('Candidate.candidateAsVienna.out');
 file_exists_ok($expected_file4);
 my $expected4 = slurp_file($expected_file4);
 is( $result4, $expected4, 'candidateAsVienna returns the expected value' );
 
-ok( my $result5 = PipelineMiRNA::Candidate->candidateAsFasta( \%candidate ),
+ok( my $result5 = miRkwood::Candidate->candidateAsFasta( \%candidate ),
     'can call candidateAsFasta()' );
 my $expected_file5 = input_file('Candidate.candidateAsFasta.out');
 file_exists_ok($expected_file5);
 my $expected5 = slurp_file($expected_file5);
 is( $result5, $expected5, 'candidateAsFasta returns the expected value' );
 
-ok( my $result_gff = PipelineMiRNA::Candidate->candidate_as_gff( \%candidate ),
+ok( my $result_gff = miRkwood::Candidate->candidate_as_gff( \%candidate ),
     'can call candidate_as_gff()' );
 my $expected_file_gff = input_file('Candidate.candidate_as_gff.out');
 file_exists_ok($expected_file_gff);
@@ -108,7 +108,7 @@ is( $result_gff, $expected_gff, 'candidate_as_gff returns the expected value' );
 
 ok(
     my $result6 =
-      PipelineMiRNA::Candidate->alternativeCandidatesAsVienna( \%candidate ),
+      miRkwood::Candidate->alternativeCandidatesAsVienna( \%candidate ),
     'can call alternativeCandidatesAsVienna()'
 );
 my $expected_file6 = input_file('Candidate.alternativeCandidatesAsVienna.out');
@@ -118,7 +118,7 @@ is( $result6, $expected6,
     'alternativeCandidatesAsVienna returns the expected value' );
 
 ok(
-    my $result7 = PipelineMiRNA::Candidate->make_alignments_HTML(
+    my $result7 = miRkwood::Candidate->make_alignments_HTML(
         \%candidate, 'a', 'b', 'c'
     ),
     'can call make_alignments_HTML()'

@@ -13,9 +13,9 @@ use FindBin;
 
 BEGIN {
     use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
-    use PipelineMiRNA;
-    use PipelineMiRNA::Components;
+    use miRkwood;
+    use miRkwood::Components;
 }
 
 my ( $CT, $boucleTermWithN_out ) = @ARGV;
-PipelineMiRNA::Components::mask_CT_file( $CT, $boucleTermWithN_out );
+miRkwood::Components::mask_CT_file( $CT, $boucleTermWithN_out );

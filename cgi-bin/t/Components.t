@@ -10,9 +10,9 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::Components');
+    use_ok('miRkwood::Components');
 }
-require_ok('PipelineMiRNA::Components');
+require_ok('miRkwood::Components');
 
 my @alignment_values = (
 ['- - none
@@ -161,7 +161,7 @@ ug-agccaaggaugacuugccg
 
 foreach (@alignment_values){
     my ($input, $expected) = @{$_};
-    my $output = PipelineMiRNA::Components::parse_exonerate_alignment($input);
+    my $output = miRkwood::Components::parse_exonerate_alignment($input);
     is( $output, $expected, 'Parsing Exonerate alignment ok' );
 }
 
@@ -222,14 +222,14 @@ cagccaaggaugacuugccga
     ]
 );
 
-    my %output = PipelineMiRNA::Components::parse_custom_exonerate_output(
+    my %output = miRkwood::Components::parse_custom_exonerate_output(
         $exonerate_output_file);
 
 is_deeply( \%output, \%exonerate_expected, 'Parsing Exonerate output ok' );
 
 my $CT_file_input = input_file('candidate1', 'outB2ct_stemloop.ct' );
 my $output_file = 'output_file.txt';
-ok (PipelineMiRNA::Components::mask_CT_file($CT_file_input, $output_file),
+ok (miRkwood::Components::mask_CT_file($CT_file_input, $output_file),
     'can call mask_CT_file()' );
 my $mask_CT_file_output = slurp_file($output_file);
 my $mask_CT_file_expected = slurp_file(input_file('candidate1', 'seqWithN.txt' ));
@@ -249,7 +249,7 @@ push @{ $dummy_alignments{'10-40'} }, ('I');
 
 ok(
     my %merged_alignments =
-      PipelineMiRNA::Components::merge_alignments( \%dummy_alignments ),
+      miRkwood::Components::merge_alignments( \%dummy_alignments ),
     'Can call merge_alignments'
 );
 
@@ -268,7 +268,7 @@ push @{ $dummy_alignments2{'39-60'} }, ('I');
 push @{ $dummy_alignments2{'40-58'} }, ( 'J', 'K' );
 ok(
     my %merged_alignments2 =
-      PipelineMiRNA::Components::merge_alignments( \%dummy_alignments2 ),
+      miRkwood::Components::merge_alignments( \%dummy_alignments2 ),
     'Can call merge_alignments'
 );
 
@@ -288,7 +288,7 @@ push @{ $dummy_alignments3{'3-24'} }, ( 'L', 'M' );
 
 ok(
     my %merged_alignments3 =
-      PipelineMiRNA::Components::merge_alignments( \%dummy_alignments3 ),
+      miRkwood::Components::merge_alignments( \%dummy_alignments3 ),
     'Can call merge_alignments'
 );
 my %expected_merged3 = ();
@@ -314,7 +314,7 @@ foreach my $couple (@get_name_and_position_from_header_values) {
     my @array = @{$couple};
     ok(
         my @get_name_and_position_from_header_res =
-          PipelineMiRNA::Components::get_name_and_position_from_header(
+          miRkwood::Components::get_name_and_position_from_header(
             @{$couple}[0]
           ),
         'Can call get_name_and_position_from_header'

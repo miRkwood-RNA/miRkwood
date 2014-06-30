@@ -1,4 +1,4 @@
-package PipelineMiRNA::Results;
+package miRkwood::Results;
 
 # ABSTRACT: Code directly tied to the results data structure
 
@@ -8,8 +8,8 @@ use warnings;
 use feature 'switch';
 use Time::gmtime;
 
-use PipelineMiRNA::Candidate;
-use PipelineMiRNA::Utils;
+use miRkwood::Candidate;
+use miRkwood::Utils;
 
 =method make_job_id
 
@@ -35,7 +35,7 @@ sub jobId_to_jobPath {
 	my ( $self, @args ) = @_;
 	my $id_job      = shift @args;
 	my $dirJob_name = 'job' . $id_job;
-	my $results_dir = PipelineMiRNA::Paths->get_results_filesystem_path();
+	my $results_dir = miRkwood::Paths->get_results_filesystem_path();
 	my $jobPath     = File::Spec->catdir( $results_dir, $dirJob_name );
 	return $jobPath;
 }
@@ -86,7 +86,7 @@ sub is_valid_jobID {
 Get the results structure of a given job identifier
 
 Usage:
-my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
+my %results = miRkwood::Results->get_structure_for_jobID($jobId);
 
 =cut
 
@@ -94,8 +94,8 @@ sub get_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
 	my $job_dir = $self->jobId_to_jobPath($jobId);
-	PipelineMiRNA->CONFIG_FILE(
-		PipelineMiRNA::Paths->get_job_config_path($job_dir) );
+	miRkwood->CONFIG_FILE(
+		miRkwood::Paths->get_job_config_path($job_dir) );
 	my $candidates_dir = $self->get_candidates_dir($jobId);
 	return $self->deserialize_results($candidates_dir);
 }
@@ -105,7 +105,7 @@ sub get_structure_for_jobID {
 Parse and serialize the results structure of $job_dir
 
 Usage:
-PipelineMiRNA::Results->has_candidates( \%myResults );
+miRkwood::Results->has_candidates( \%myResults );
 
 =cut
 
@@ -121,7 +121,7 @@ sub has_candidates {
 Retrieve the results in the given directory
 
 Usage:
-my %results = PipelineMiRNA::Results->deserialize_results( $candidates_dir );
+my %results = miRkwood::Results->deserialize_results( $candidates_dir );
 
 =cut
 
@@ -141,11 +141,11 @@ sub deserialize_results {
 		{
 			my %candidate;
 			%candidate =
-			  PipelineMiRNA::Candidate->deserialize_candidate($full_file);
+			  miRkwood::Candidate->deserialize_candidate($full_file);
 			if (
 				!eval {
 					%candidate =
-					  PipelineMiRNA::Candidate->deserialize_candidate(
+					  miRkwood::Candidate->deserialize_candidate(
 						$full_file);
 				}
 			  )
@@ -167,14 +167,14 @@ sub deserialize_results {
 Parse and serialize the results structure of $job_dir
 
 Usage:
-PipelineMiRNA::Results->serialize_results($job_dir);
+miRkwood::Results->serialize_results($job_dir);
 
 =cut
 
 sub serialize_results {
 	my ( $self, @args ) = @_;
 	my $relative_job_dir = shift @args;
-	my $job_dir = PipelineMiRNA::Paths->get_absolute_path($relative_job_dir);
+	my $job_dir = miRkwood::Paths->get_absolute_path($relative_job_dir);
 	opendir DIR, $job_dir;    #ouverture répertoire job
 	my @dirs;
 	@dirs = readdir DIR;
@@ -198,7 +198,7 @@ sub serialize_results {
 				{
 					if (
 						!eval {
-							PipelineMiRNA::Candidate
+							miRkwood::Candidate
 							  ->serialize_candidate_information(
 								$relative_job_dir, $dir, $subDir );
 						}
@@ -261,15 +261,15 @@ sub export {
 			given ($export_type) {
 				when (/fas/) {
 					$output .=
-					  PipelineMiRNA::Candidate->candidateAsFasta($value);
+					  miRkwood::Candidate->candidateAsFasta($value);
 				}
 				when (/dot/) {
 					$output .=
-					  PipelineMiRNA::Candidate->candidateAsVienna($value);
+					  miRkwood::Candidate->candidateAsVienna($value);
 				}
 				when (/gff/) {
 					$output .=
-					  PipelineMiRNA::Candidate->candidate_as_gff($value);
+					  miRkwood::Candidate->candidate_as_gff($value);
 				}
 			}
 		}
@@ -294,7 +294,7 @@ sub resultstruct2csv {
 	}
 	my $no_seq_selected = !( scalar @sequences_to_export );
 	my %results         = %{$results_ref};
-	my @optional_fields = PipelineMiRNA::Candidate->get_optional_candidate_fields();
+	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
 	my @csv_headers     = (
 		'name', 'start_position', 'end_position', 'quality', '%GC',
 		@optional_fields, 'Vienna', 'DNASequence'
@@ -342,7 +342,7 @@ sub resultstruct2pseudoXML {
 
 	foreach my $key (@keys) {
 		my $value = $results{$key};
-        $result .= PipelineMiRNA::Candidate->candidate_as_pseudoXML($value) . "\n";
+        $result .= miRkwood::Candidate->candidate_as_pseudoXML($value) . "\n";
 	}
 	$result .= "</results>\n";
 	$result .= "<results id='all2'>\n";
@@ -354,7 +354,7 @@ sub resultstruct2pseudoXML {
 	} keys %results;
 	foreach my $key (@keys) {
 		my $value = $results{$key};
-		$result .= PipelineMiRNA::Candidate->candidate_as_pseudoXML($value) . "\n";
+		$result .= miRkwood::Candidate->candidate_as_pseudoXML($value) . "\n";
 	}
 	$result .= "</results>";
 	return $result;
@@ -385,7 +385,7 @@ sub resultstruct2table {
 	my $results = shift @args;
 	my %results = %{$results};
 
-	my @optional_fields = PipelineMiRNA::Candidate->get_optional_candidate_fields();
+	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
 	my @headers         =
 	  ( 'position', 'length', 'strand', 'quality', @optional_fields );
 

@@ -1,4 +1,4 @@
-package PipelineMiRNA::Programs;
+package miRkwood::Programs;
 
 # ABSTRACT: Executing external programs
 
@@ -14,15 +14,15 @@ use File::Basename qw(dirname);
 use File::Copy;
 use Log::Message::Simple qw[msg error debug];
 
-use PipelineMiRNA::Paths;
-use PipelineMiRNA::Data;
+use miRkwood::Paths;
+use miRkwood::Data;
 
 our %programs_paths;
 
 sub init_programs{
     my @args = @_;
-    my %programs_config = PipelineMiRNA::PROGRAMS_CONFIG();
-    my $mirkwood_local_programs = PipelineMiRNA::Paths::get_local_programs_path();
+    my %programs_config = miRkwood::PROGRAMS_CONFIG();
+    my $mirkwood_local_programs = miRkwood::Paths::get_local_programs_path();
     while (my ($key, $value) = each %programs_config) {
         $value =~ s/\${local_programs}/$mirkwood_local_programs/g;
         $programs_paths{$key} = $value;
@@ -202,7 +202,7 @@ sub run_randfold {
     my $output_file = shift @args;
     my $iterations  = shift @args;
     my $randfold_cmd = "$programs_paths{'rnashuffles'} --iterations $iterations --fast --fasta $input_file > $output_file";
-    debug($randfold_cmd, PipelineMiRNA->DEBUG());
+    debug($randfold_cmd, miRkwood->DEBUG());
     system($randfold_cmd);
     return ( -e $output_file );
 }
@@ -216,8 +216,8 @@ Return whether the output file exists.
 
 sub run_exonerate {
     my ( $input, $output ) = @_;
-    my $matrix_file = PipelineMiRNA::Data::get_matrix_file();
-    my $mirbase_file = PipelineMiRNA::Data::get_mirbase_file();
+    my $matrix_file = miRkwood::Data::get_matrix_file();
+    my $mirbase_file = miRkwood::Data::get_mirbase_file();
     my $output_fmt = '- name : %qi\n'
                     .'  begin_target  : %tab\n'
                     .'  end_target    : %tae\n'
@@ -247,7 +247,7 @@ sub run_exonerate {
       . "--ryo '$output_fmt'"       # Using custom output format
       . "> $output  2> /dev/null";  # Stdout to file, stderr to /dev/null
 
-    debug($exonerate_cmd, PipelineMiRNA->DEBUG());
+    debug($exonerate_cmd, miRkwood->DEBUG());
     system($exonerate_cmd);
     return ( -e $output );
 }
@@ -271,7 +271,7 @@ sub run_rnastemloop {
 Run BLAST.
 
 Usage:
-PipelineMiRNA::Programs::run_blast($query_file, $blast_database_file,
+miRkwood::Programs::run_blast($query_file, $blast_database_file,
                                    $blastx_options, $blast_output_file)
 
 Return whether the output file exists.
@@ -286,7 +286,7 @@ sub run_blast {
       . "-db $database "
       . "$blastx_options "
       . "-out $output";
-    debug($blastx_cmd, PipelineMiRNA->DEBUG());
+    debug($blastx_cmd, miRkwood->DEBUG());
     system($blastx_cmd);
     return ( -e $output );
 }
@@ -295,7 +295,7 @@ sub run_blast {
 
 Train a MiRdup model using the given data
 
- Usage : PipelineMiRNA::Programs::train_mirdup($matures_miRNA, $hairpins_precursors);
+ Usage : miRkwood::Programs::train_mirdup($matures_miRNA, $hairpins_precursors);
  Input : Matures miRNAs file, in FASTA format
          Hairpins precursors file, in FASTA format
  Return: -
@@ -316,7 +316,7 @@ sub train_mirdup {
 
 Predict a miRNA given a pre-miRNA using MiRdup model.
 
- Usage : PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence($sequence, $result_dir);
+ Usage : miRkwood::Programs::run_mirdup_prediction_on_sequence($sequence, $result_dir);
  Input : 
  Return: -
 
@@ -327,8 +327,8 @@ sub run_mirdup_prediction_on_sequence {
     my $sequence    = shift @args;
     my $output_dir  = shift @args;
 
-    my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
-    my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
+    my $miRdup_model_name = miRkwood::Data::get_mirdup_model_name();
+    my $miRdup_model_path = miRkwood::Data::get_mirdup_data_path();
     my $output_root = 'out';
     my $output =
         $output_root
@@ -360,7 +360,7 @@ sub run_mirdup_prediction_on_sequence {
 
 Predict a miRNA given a pre-miRNA using MiRdup model.
 
- Usage : PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence_file($prediction_source_file);
+ Usage : miRkwood::Programs::run_mirdup_prediction_on_sequence_file($prediction_source_file);
  Input : A prediction source file
  Return: Name of the output file
 
@@ -370,8 +370,8 @@ sub run_mirdup_prediction_on_sequence_file {
     my @args                   = @_;
     my $prediction_source_file = shift @args;
 
-    my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
-    my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
+    my $miRdup_model_name = miRkwood::Data::get_mirdup_model_name();
+    my $miRdup_model_path = miRkwood::Data::get_mirdup_data_path();
 
     my $run_mirdup_cmd = "cd $miRdup_model_path && "
         . "java -jar $programs_paths{'mirdup'}"
@@ -393,7 +393,7 @@ sub run_mirdup_prediction_on_sequence_file {
 
 Validates a file with miRNA mature candidates using MiRdup.
 
- Usage : PipelineMiRNA::Programs::run_mirdup_validation_on_file($input_file);
+ Usage : miRkwood::Programs::run_mirdup_validation_on_file($input_file);
  Input : File correctly formatted
  Return: the output file to parse
 
@@ -403,8 +403,8 @@ sub run_mirdup_validation_on_file {
     my @args                   = @_;
     my $validation_source_file = shift @args;
 
-    my $miRdup_model_name = PipelineMiRNA::Data::get_mirdup_model_name();
-    my $miRdup_model_path = PipelineMiRNA::Data::get_mirdup_data_path();
+    my $miRdup_model_name = miRkwood::Data::get_mirdup_model_name();
+    my $miRdup_model_path = miRkwood::Data::get_mirdup_data_path();
 
     my $run_mirdup_cmd = "cd $miRdup_model_path && "
         . "java -jar $programs_paths{'mirdup'}"
@@ -439,7 +439,7 @@ sub run_tRNAscanSE_on_file {
       . '--brief '
       . '--forceow '
       . "--output $output";
-    debug("$tRNAscanSE_cmd", PipelineMiRNA->DEBUG());
+    debug("$tRNAscanSE_cmd", miRkwood->DEBUG());
     system($tRNAscanSE_cmd);
     return ( -e $output );
 }
@@ -462,7 +462,7 @@ sub run_rnammer_on_file {
       . "-m lsu,ssu,tsu "       # Molecule types
       . "--gff $output "        # GFF output
       . "< $input";
-    debug( "$rnammer_cmd", PipelineMiRNA->DEBUG() );
+    debug( "$rnammer_cmd", miRkwood->DEBUG() );
     system($rnammer_cmd);
     return ( -e $output );
 }

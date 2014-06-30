@@ -10,20 +10,20 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('PipelineMiRNA::Parsers');
+    use_ok('miRkwood::Parsers');
 }
-require_ok('PipelineMiRNA::Parsers');
+require_ok('miRkwood::Parsers');
 
 # Vienna line
 
 my $input1    = '(((((.(((.(((((.))....))).)))...))))) (-16.93)';
 my @expected1 = [ '(((((.(((.(((((.))....))).)))...)))))', '-16.93' ];
-my @result1   = PipelineMiRNA::Parsers::parse_Vienna_line($input1);
+my @result1   = miRkwood::Parsers::parse_Vienna_line($input1);
 is_deeply( \@result1, @expected1, 'Standard line correctly parsed' );
 
 my $input2    = '(((((.(((.(((((.))....))).)))...))))) ( -8.58)';
 my @expected2 = [ '(((((.(((.(((((.))....))).)))...)))))', '-8.58' ];
-my @result2   = PipelineMiRNA::Parsers::parse_Vienna_line($input2);
+my @result2   = miRkwood::Parsers::parse_Vienna_line($input2);
 is_deeply( \@result2, @expected2,
     'Line with whitespace in energy correctly parsed' );
 
@@ -32,7 +32,7 @@ is_deeply( \@result2, @expected2,
 my $p_value_file = input_file('Parsers.pvalue.txt');
 file_exists_ok($p_value_file);
 my $expected3 = '0.125000';
-my $result3   = PipelineMiRNA::Parsers::parse_pvalue($p_value_file);
+my $result3   = miRkwood::Parsers::parse_pvalue($p_value_file);
 is( $result3, $expected3, 'p_value file is correctly parsed' );
 
 # MFEI
@@ -40,7 +40,7 @@ is( $result3, $expected3, 'p_value file is correctly parsed' );
 my $mfei_file = input_file('Parsers.outMFEI.txt');
 file_exists_ok($mfei_file);
 my @expected4 = [ '-1.00166666666667', '-60.1', '-37.0987654320988' ];
-my @result4 = PipelineMiRNA::Parsers::parse_mfei($mfei_file);
+my @result4 = miRkwood::Parsers::parse_mfei($mfei_file);
 is_deeply( \@result4, @expected4, 'MFEI file is correctly parsed' );
 
 # Vienna
@@ -51,10 +51,10 @@ file_exists_ok($vienna_file1);
 file_exists_ok($vienna_file2);
 my @expected5 = ['gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc',
                  '((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))' ];
-my @result5   = PipelineMiRNA::Parsers::parse_vienna($vienna_file1);
+my @result5   = miRkwood::Parsers::parse_vienna($vienna_file1);
 is_deeply( \@result5, @expected5, 'Vienna file "all in line" is correctly parsed' );
 
-my @result6   = PipelineMiRNA::Parsers::parse_vienna($vienna_file2);
+my @result6   = miRkwood::Parsers::parse_vienna($vienna_file2);
 is_deeply( \@result6, @expected5, 'Vienna file "with breakspace" is correctly parsed' );
 
 # Selfcontain
@@ -62,7 +62,7 @@ is_deeply( \@result6, @expected5, 'Vienna file "with breakspace" is correctly pa
 my $selfcontain_file = input_file('Parsers.selfContain.txt');
 file_exists_ok($selfcontain_file);
 my $expected7 = '0';
-my $result7   = PipelineMiRNA::Parsers::parse_selfcontain($selfcontain_file);
+my $result7   = miRkwood::Parsers::parse_selfcontain($selfcontain_file);
 is( $result7, $expected7, 'Selfcontain file is correctly parsed' );
 
 # RNAFold
@@ -74,13 +74,13 @@ my @expected8 = ('contig15750__34-195',
                );
 
 my $rnafold_file = input_file('candidate1', 'outRNAFold_stemloop.txt');
-ok( my @result8 = PipelineMiRNA::Parsers::parse_RNAfold_output($rnafold_file),
+ok( my @result8 = miRkwood::Parsers::parse_RNAfold_output($rnafold_file),
     'Can call parse_RNAfold_output()' );
 is_deeply (\@result8 , \@expected8, 'Converting RNAfold output in ViennaTraited ok');
 
 my $alternative_candidates_file = input_file('Parsers.alternativeCandidates.txt');
 file_exists_ok($alternative_candidates_file);
-ok( my %alternatives = PipelineMiRNA::Parsers::parse_alternative_candidates_file($alternative_candidates_file),
+ok( my %alternatives = miRkwood::Parsers::parse_alternative_candidates_file($alternative_candidates_file),
     'Can callparse_alternative_candidates_file');
 
 my %expected6;
@@ -101,7 +101,7 @@ my $blastout_file = input_file('Parsers.blastx.out');
 file_exists_ok($blastout_file);
 ok(
     my $index_blast_output_result =
-      PipelineMiRNA::Parsers::index_blast_output($blastout_file),
+      miRkwood::Parsers::index_blast_output($blastout_file),
     'Can call index_blast_output'
 );
 my $index_blast_output_expected = { 'arabidopsis_filtered' => 1 };
@@ -110,7 +110,7 @@ is_deeply( $index_blast_output_result, $index_blast_output_expected,
 
 ok(
     my %parse_blast_output_result =
-      PipelineMiRNA::Parsers::parse_blast_output($blastout_file),
+      miRkwood::Parsers::parse_blast_output($blastout_file),
     'Can call index_blast_output'
 );
 my %parse_blast_output_expected_11 = ('start' => 1, 'end' => 1308);
@@ -123,7 +123,7 @@ is_deeply( \%parse_blast_output_result, \%parse_blast_output_expected,
 my $tRNAscanSE_file = input_file('Parsers.tRNAscanSE.out');
 ok(
     my %parse_tRNAscanSE_output =
-      PipelineMiRNA::Parsers::parse_tRNAscanSE_output($tRNAscanSE_file),
+      miRkwood::Parsers::parse_tRNAscanSE_output($tRNAscanSE_file),
     'Can call parse_tRNAscanSE_output'
 );
 my %parse_tRNAscanSE_expected_11 = ('start' => 9738, 'end' => 9809);
@@ -145,7 +145,7 @@ is_deeply( \%parse_tRNAscanSE_output, \%parse_tRNAscanSE_expected,
 my $rnammer_file = input_file('Parsers.RNAmmer.gff.out');
 ok(
     my %parse_rnammer_output =
-      PipelineMiRNA::Parsers::parse_rnammer_output($rnammer_file),
+      miRkwood::Parsers::parse_rnammer_output($rnammer_file),
     'Can call parse_rnammer_output'
 );
 my %parse_rnammer_expected_11 = ( 'start' => 18079, 'end' => 23426 );

@@ -1,4 +1,4 @@
-package PipelineMiRNA::Paths;
+package miRkwood::Paths;
 
 # ABSTRACT: Managing paths and path construction
 
@@ -8,7 +8,7 @@ use Cwd;
 use File::Spec;
 use File::Basename;
 
-use PipelineMiRNA;
+use miRkwood;
 
 =method get_config
 
@@ -18,7 +18,7 @@ Get the configuration file contents.
 
 sub get_config {
     my ($self, @args) = @_;
-    return PipelineMiRNA->PIPELINE_CONFIG();
+    return miRkwood->PIPELINE_CONFIG();
 }
 
 =method get_job_config_path
@@ -42,7 +42,7 @@ Return the project data directory
 
 sub get_data_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'data');
+    return File::Spec->catdir(miRkwood->MIRKWOOD_PATH(), 'data');
 }
 
 =method get_local_programs_path
@@ -53,7 +53,7 @@ Return the project local programs directory
 
 sub get_local_programs_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'programs');
+    return File::Spec->catdir(miRkwood->MIRKWOOD_PATH(), 'programs');
 }
 
 =method get_scripts_path
@@ -64,7 +64,7 @@ Return the project static directory
 
 sub get_scripts_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'scripts');
+    return File::Spec->catdir(miRkwood->MIRKWOOD_PATH(), 'scripts');
 }
 
 =method get_lib_path
@@ -75,7 +75,7 @@ Return the project static directory
 
 sub get_lib_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir(PipelineMiRNA->MIRKWOOD_PATH(), 'lib');
+    return File::Spec->catdir(miRkwood->MIRKWOOD_PATH(), 'lib');
 }
 
 =method get_results_filesystem_path

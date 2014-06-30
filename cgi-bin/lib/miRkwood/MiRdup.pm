@@ -1,4 +1,4 @@
-package PipelineMiRNA::MiRdup;
+package miRkwood::MiRdup;
 
 # ABSTRACT: Using MiRdup prediction program
 
@@ -7,7 +7,7 @@ use warnings;
 
 use File::Spec;
 use File::Basename;
-use PipelineMiRNA::Programs;
+use miRkwood::Programs;
 
 =method make_prediction_source_file
 
@@ -66,7 +66,7 @@ Parse a miRdup prediction result file and return the
 predictions as an hash <name> => <prediction>
 
 Usage: 
-    my %results = PipelineMiRNA::MiRdup->parse_predictions_file($res_file);
+    my %results = miRkwood::MiRdup->parse_predictions_file($res_file);
 
 =cut
 
@@ -95,7 +95,7 @@ Given a set of sequences, predict their miRNAs
 using miRdup in the given path.
 
 Usage:
-    my $res_file = PipelineMiRNA::MiRdup->predict_with_mirdup('prediction_results.txt', \%sequences);
+    my $res_file = miRkwood::MiRdup->predict_with_mirdup('prediction_results.txt', \%sequences);
 
 =cut
 
@@ -108,7 +108,7 @@ sub predict_with_mirdup {
     $self->make_prediction_source_file( $prediction_file, \%sequences )
       or die "Error when making prediction_source_file: $!";
     my $result_file =
-      PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence_file(
+      miRkwood::Programs::run_mirdup_prediction_on_sequence_file(
         $prediction_file);
     return $self->parse_predictions_file($result_file);
 }
@@ -119,7 +119,7 @@ Given a sequence, predict its miRNAs
 using miRdup in the given path.
 
 Usage:
-    my $res_file = PipelineMiRNA::MiRdup->predict_sequence_with_mirdup('prediction_results.txt', $sequence);
+    my $res_file = miRkwood::MiRdup->predict_sequence_with_mirdup('prediction_results.txt', $sequence);
 
 =cut
 
@@ -128,7 +128,7 @@ sub predict_sequence_with_mirdup {
     my $prediction_path = shift @args;
     my $sequence        = shift @args;
     my $result_file =
-      PipelineMiRNA::Programs::run_mirdup_prediction_on_sequence(
+      miRkwood::Programs::run_mirdup_prediction_on_sequence(
         $prediction_path, $sequence );
     return $self->parse_predictions_file($result_file);
 }
@@ -138,7 +138,7 @@ sub predict_sequence_with_mirdup {
 Validate using miRdup
 
 Usage:
-my %mirdup_results = PipelineMiRNA::MiRdup->validate_with_mirdup($tmp_file, $name,
+my %mirdup_results = miRkwood::MiRdup->validate_with_mirdup($tmp_file, $name,
                                                                  $DNASequence, $Vienna,
                                                                  @alignments);
 
@@ -160,7 +160,7 @@ sub validate_with_mirdup {
       or die("Cannot write in file $output_file: $!");
     close $FOut or die "Error when closing $output_file: $!";
     my $result_file =
-      PipelineMiRNA::Programs::run_mirdup_validation_on_file($output_file);
+      miRkwood::Programs::run_mirdup_validation_on_file($output_file);
     return $self->parse_validation_output($result_file);
 }
 
@@ -170,7 +170,7 @@ Parse a miRdup validation result file and return the
 validation
 
 Usage:
-    my %results = PipelineMiRNA::MiRdup->parse_validation_output($res_file);
+    my %results = miRkwood::MiRdup->parse_validation_output($res_file);
 
 =cut
 

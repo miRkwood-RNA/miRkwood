@@ -1,19 +1,19 @@
-package PipelineMiRNA::CLI;
+package miRkwood::CLI;
 
 # ABSTRACT: Code for the command line interface
 
 use strict;
 use warnings;
 
-use PipelineMiRNA::MainPipeline;
-use PipelineMiRNA::Results;
+use miRkwood::MainPipeline;
+use miRkwood::Results;
 
 =method process_results_dir_for_offline
 
 Process the results in the given directory for offline use.
 
 Usage:
-  PipelineMiRNA::CLI::process_results_dir_for_offline($folder);
+  miRkwood::CLI::process_results_dir_for_offline($folder);
 
 =cut
 
@@ -24,9 +24,9 @@ sub process_results_dir_for_offline {
     my $candidates_dir = File::Spec->catdir( $output_folder, 'candidates' );
 
 # In debug mode (without executing the pipeline), we need to set the config file
-#PipelineMiRNA->CONFIG_FILE(PipelineMiRNA::Paths->get_job_config_path( $output_folder ));
+#miRkwood->CONFIG_FILE(miRkwood::Paths->get_job_config_path( $output_folder ));
 
-    my %results = PipelineMiRNA::Results->deserialize_results($candidates_dir);
+    my %results = miRkwood::Results->deserialize_results($candidates_dir);
 
     my $html = make_html_from_results( \%results, $output_folder );
 
@@ -70,7 +70,7 @@ span.mature {
 }
 END_TXT
     my $page = '<h2>Overview of results</h2>';
-    $page .= PipelineMiRNA::Results->resultstruct2table( \%results );
+    $page .= miRkwood::Results->resultstruct2table( \%results );
 
     $page .= make_all_exports( \%results, $output_folder );
     while ( my ( $key, $value ) = each %results ) {
@@ -103,7 +103,7 @@ sub make_all_exports {
     open( my $FASTA_FILE,
         '>', File::Spec->catfile( $output_folder, $fasta_file ) )
       or die("Cannot open $fasta_file: $!");
-    print {$FASTA_FILE} PipelineMiRNA::Results->export( 'fas', $results_ref )
+    print {$FASTA_FILE} miRkwood::Results->export( 'fas', $results_ref )
       or die("Cannot write in $fasta_file: $!");
     close($FASTA_FILE)
       or die("Cannot close file $fasta_file: $!");
@@ -112,7 +112,7 @@ sub make_all_exports {
     open( my $VIENNA_FILE,
         '>', File::Spec->catfile( $output_folder, $vienna_file ) )
       or die("Cannot open $vienna_file: $!");
-    print {$VIENNA_FILE} PipelineMiRNA::Results->export( 'dot', $results_ref )
+    print {$VIENNA_FILE} miRkwood::Results->export( 'dot', $results_ref )
       or die("Cannot write in file $vienna_file: $!");
     close($VIENNA_FILE)
       or die("Cannot close file $vienna_file: $!");
@@ -120,7 +120,7 @@ sub make_all_exports {
     my $gff_file = File::Spec->catfile( $pieces_folder, 'candidates.gff' );
     open( my $GFF_FILE, '>', File::Spec->catfile( $output_folder, $gff_file ) )
       or die("Cannot open $gff_file: $!");
-    print {$GFF_FILE} PipelineMiRNA::Results->export( 'gff', $results_ref )
+    print {$GFF_FILE} miRkwood::Results->export( 'gff', $results_ref )
       or die("Cannot write in file $gff_file: $!");
     close($GFF_FILE)
       or die("Cannot close file $gff_file: $!");
@@ -128,7 +128,7 @@ sub make_all_exports {
     my $csv_file = File::Spec->catfile( $pieces_folder, 'candidates.csv' );
     open( my $CSV_FILE, '>', File::Spec->catfile( $output_folder, $csv_file ) )
       or die("Cannot open file $csv_file: $!");
-    print {$CSV_FILE} PipelineMiRNA::Results->resultstruct2csv($results_ref)
+    print {$CSV_FILE} miRkwood::Results->resultstruct2csv($results_ref)
       or die("Cannot write in file $csv_file: $!");
     close($CSV_FILE)
       or die("Cannot close file $csv_file: $!");
@@ -160,7 +160,7 @@ sub make_candidate_page {
 
     my $size = length $candidate{'DNASequence'};
 
-    my $candidate_name = PipelineMiRNA::Candidate->get_shortened_name( \%candidate );
+    my $candidate_name = miRkwood::Candidate->get_shortened_name( \%candidate );
 
     my $candidate_fasta_file =
       File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );
@@ -168,7 +168,7 @@ sub make_candidate_page {
         '>', File::Spec->catfile( $output_folder, $candidate_fasta_file ) )
       or die("Cannot open file $candidate_fasta_file: $!");
     print {$FASTA_FILE}
-      PipelineMiRNA::Candidate->candidateAsFasta( \%candidate )
+      miRkwood::Candidate->candidateAsFasta( \%candidate )
       or die("Cannot write in file $candidate_fasta_file: $!");
     close($FASTA_FILE)
       or die("Cannot close file $candidate_fasta_file: $!");
@@ -179,7 +179,7 @@ sub make_candidate_page {
         '>', File::Spec->catfile( $output_folder, $vienna_file ) )
       or die("Cannot open $vienna_file: $!");
     print {$VIENNA_FILE}
-      PipelineMiRNA::Candidate->candidateAsVienna( \%candidate, 0 )
+      miRkwood::Candidate->candidateAsVienna( \%candidate, 0 )
       or die("Cannot write in file $vienna_file: $!");
     close($VIENNA_FILE)
       or die("Cannot close file $vienna_file: $!");
@@ -190,7 +190,7 @@ sub make_candidate_page {
         '>', File::Spec->catfile( $output_folder, $vienna_file_optimal ) )
       or die("Cannot open $vienna_file_optimal: $!");
     print {$VIENNA_FILE_OPT}
-      PipelineMiRNA::Candidate->candidateAsVienna( \%candidate, 1 )
+      miRkwood::Candidate->candidateAsVienna( \%candidate, 1 )
       or die("Cannot write in file $vienna_file_optimal: $!");
     close($VIENNA_FILE_OPT)
       or die("Cannot close file $vienna_file_optimal: $!");
@@ -201,7 +201,7 @@ sub make_candidate_page {
         File::Spec->catfile( $output_folder, $alternatives_file ) )
       or die("Cannot open $alternatives_file: $!");
     print {$ALT_FILE}
-      PipelineMiRNA::Candidate->alternativeCandidatesAsVienna( \%candidate )
+      miRkwood::Candidate->alternativeCandidatesAsVienna( \%candidate )
       or die("Cannot write in file $alternatives_file: $!");
     close($ALT_FILE)
       or die("Cannot close file $alternatives_file: $!");
@@ -233,7 +233,7 @@ sub make_candidate_page {
     my $alignmentHTML = q{};
     if ( $candidate{'alignment'} ) {
         $alignmentHTML =
-          PipelineMiRNA::Candidate->make_alignments_HTML( \%candidate );
+          miRkwood::Candidate->make_alignments_HTML( \%candidate );
     }
     else {
         $alignmentHTML = 'No alignment has been found.';
