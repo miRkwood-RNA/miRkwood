@@ -79,14 +79,10 @@ p.equation {
     text-align: justify;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 2px 30px 2px 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 2px 30px 2px 40px;
     background-color: #EEE;
-}
-
-.small {
-    font-size: 9pt;
 }
 
 div.table-of-contents{

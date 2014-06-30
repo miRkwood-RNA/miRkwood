@@ -156,10 +156,10 @@ where MFE (minimal free energy) denotes the negative folding free
 
 <h2 id='results_page'>Result page</h2>
 
+<p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>). You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
+
 <img style='width:750px; display: block; margin: 0 auto;' src='style/screenshot-results-report.png'' alt='The two-way table summarizing the results' />
 
-
-<p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>). You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
 <dl>
 <dt>Name</dt>
 <dd>Name of the original sequence, as specified in the heading of the FASTA format.</dd>
@@ -231,10 +231,10 @@ given as a set of matching brackets.  A base pair between bases
 represented by dots (see more explanation on <a
 href='http://www.tbi.univie.ac.at/RNA/bracket.html'>Vienna
 website</a>).</p>
-<pre class='example small'>
->sample__3-112, stemloop structure
-gugccagguuggauuacugggcgaauacuccuauggcagaucgcauuggcuagauaugcaaguaaaaugcuucucugccaaaggagauuugccccgcaauucauccggac
-((.((.((.((((((.(.((((((((.(((((.(((((((..(((((.(((.(.....).)))..)))))...))))))).))))))))))))).).)))))).))))))
+<pre class='example'>
+>sample__5-93, stemloop structure
+gucgugccuggcucccuguaugccacaagaaaacaucgauuuaguuucaaaaucgaucacuaguggcguacagaguagucaagcaugac
+(((((((.((((((.(((((((((((.((.....((((((((.......))))))))..)).))))))))))).).))))).)))))))
 </pre>
 
 
@@ -255,7 +255,7 @@ document format is compatible with OpenOffice. See more information on
 # Note, these sequences do not represent the full primary transcript,
 # rather a predicted stem-loop portion that includes the precursor.
 
-sample   miRkwood   miRNA_primary_transcript   3   112   .   +   .   Name=preMir_sample__3-112
+sample  miRkwood  miRNA_primary_transcript  5  93  .  +  .  Name=preMir_sample__5-93
 </pre>
 
 
@@ -325,22 +325,22 @@ are shorter than the primary transcript.
 <p>All alignments with miRBase are reported and gathered according to their positions.</p>
 <div class='example'>
 <pre class='alignment'>
-query            19 gggcgaauacuccuauggcaga 40
-                    |||| ||||||||  ||||||| 
-miRBase           1 gggcaaauacuccauuggcaga 22
+query             5 ugccuggcucccuguaugcca 25
+                     |||||||||| ||||||||| 
+miRBase           1 cgccuggcuccuuguaugcca 21
 </pre>
-<span class='others'>miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017669'>aly-miR399g-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017673'>aly-miR399i-5p</a></span>
+<span class='others'>miRBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005037'>ppt-miR160h</a></span>
 </div>
 
 <p><tt>query</tt> is the user sequence, and <tt>miRBase</tt>
 designates the mature miRNA  (or the miRNA*) found in miRBase. It is possible to access the corresponding miRBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
 
 <pre class='example'>
-  g  a  u      a u<span class="mature">        a     a       </span>uc-     g-   a a
-gu cc gg uggauu c <span class="mature">gggcgaau cuccu uggcaga</span>   gcauu  gcu g u
-|| || || |||||| | |||||||| ||||| |||||||   |||||  ||| | a
-ca gg cc acuuaa g cccguuua gagga accgucu   cguaa  uga c u
-  -  -  u      c c        -     a       cuu     aa   a g
+    <span class="mature">   c     - c          </span> a  aaaac        ag
+gucg<span class="mature">ugc uggcu c cuguaugcca</span>c ag     aucgauuu  u
+||||||| ||||| | ||||||||||| ||     ||||||||  u
+caguacg acuga g gacaugcggug uc     uagcuaaa  u
+       a     u a           a  ac---        ac
 </pre>
  
 </div> <!-- main full -->
