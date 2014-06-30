@@ -156,7 +156,8 @@ where MFE (minimal free energy) denotes the negative folding free
 
 <h2 id='results_page'>Result page</h2>
 
-SCREENSHOT
+<img style='width:750px; display: block; margin: 0 auto;' src='style/screenshot-results-report.png'' alt='The two-way table summarizing the results' />
+
 
 <p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>). You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
 <dl>
