@@ -44,10 +44,8 @@ my $page = <<"END_TXT";
             <option class="db">Medicago_truncatula</option> 
           </select>
         </div>
-        <p><input class="checkbox" type="checkbox" name='tRNA' id ="tRNA"/>
-            &#160;<label for='tRNA'>Mask tRNAs <i>(tRNAscan-SE)</i></label>  [<a href="$help_page#TODO">?</a>]</p>
-        <p><input class="checkbox" type="checkbox" name='rRNA' id ="rRNA"/>
-            &#160;<label for='rRNA'>Mask 5s/8s, 16s/18s, and 23s/28s ribosomal RNA <i>(RNAmmer)</i></label>  [<a href="$help_page#TODO">?</a>]</p>
+        <p><input class="checkbox" type="checkbox" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
+            &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNAs <i>(tRNAscan-SE / RNAmmer)</i></label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]</p>
         <p id='exempleClear'>
         <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();">run with an example</a>
       </p>

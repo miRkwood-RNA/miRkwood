@@ -20,8 +20,7 @@ use PipelineMiRNA::WebTemplate;
 my $cgi = new CGI;
 my $mail = $cgi->param('mail');
 my $filter   = $cgi->param('CDS');
-my $trna     = $cgi->param('tRNA');
-my $rrna     = $cgi->param('rRNA');
+my $filter_tRNA_rRNA = $cgi->param('filter-tRNA-rRNA');
 my $mfei     = $cgi->param('mfei');
 my $randfold = $cgi->param('randfold');
 my $align    = $cgi->param('align');
@@ -114,13 +113,18 @@ my $waiting_url = PipelineMiRNA::WebTemplate::get_cgi_url('wait.pl') . $argument
 print $cgi->redirect( -uri => $waiting_url  );
 print "Location: $waiting_url \n\n";
 
+my $trna = 0;
+my $rrna = 0;
+
 if ( $strand   ) { $strand   = 1 } else { $strand   = 0 }
 if ( $mfei     ) { $mfei     = 1 } else { $mfei     = 0 }
 if ( $randfold ) { $randfold = 1 } else { $randfold = 0 }
 if ( $align    ) { $align    = 1 } else { $align    = 0 }
 if ( $filter   ) { $filter   = 1 } else { $filter   = 0 }
-if ( $trna     ) { $trna     = 1 } else { $trna     = 0 }
-if ( $rrna     ) { $rrna     = 1 } else { $rrna     = 0 }
+if ( $filter_tRNA_rRNA ) {
+    $trna = 1;
+    $rrna = 1;
+}
 if ( !$job_title ) {
     $job_title = 0;
 }
