@@ -24,7 +24,7 @@ my $page = <<"END_TXT";
       </div>
       <div class="forms">
         <p>
-          <label for='seqArea'><b>Enter query sequence</b>: Paste your RNA sequence(s) in FASTA format &nbsp;[<a href="$help_page#query_sequence">?</a>]</label>
+          <label for='seqArea'><b>Enter query sequence</b>: Paste your sequence(s) in FASTA format &nbsp;[<a href="$help_page#query_sequence">?</a>]</label>
         </p>
         <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
 
