@@ -23,7 +23,11 @@ fi
 # Testing
 plan 3
 
-### Testing script of the PipelineMiRNA
+if [ -d "$BASEDIR/output/" ]; then
+    mkdir "$BASEDIR/output/"
+fi
+
+### Testing script of miRkwood
 EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg"
 
 rm -rf $BASEDIR/output/fullpipeline1/
