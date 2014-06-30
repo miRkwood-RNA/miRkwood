@@ -569,38 +569,59 @@ sub add_ODF_alignments {
 }
 
 
-=method get_ODF_path
+=method get_ODF_server_path
 
-Return the paths to the ODT document
+Return the server path to the ODF document
 
 =cut
 
-sub get_ODF_path{
+sub get_ODF_server_path{
     my ( $self, @args ) = @_;
-    my $jobId = shift @args;
-    my $ODT_filename = "Prediction_report_$jobId.odt";
-    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
-    my $ODT_abspath = File::Spec->catfile( $jobPath, $ODT_filename );
-    my $ODT_serverpath = PipelineMiRNA::WebPaths->filesystem_to_relative_path($ODT_abspath);
-    return ($ODT_abspath, $ODT_serverpath);
+    my $ODT_abspath = $self->get_ODF_absolute_path();
+    return PipelineMiRNA::WebPaths->filesystem_to_relative_path($ODT_abspath);
+}
+
+=method get_ODF_absolute_path
+
+Return the absolute path to the ODF document
+
+=cut
+
+sub get_ODF_absolute_path {
+    my ( $self, @args ) = @_;
+    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($self->{jobId});
+    my $ODT_filename = $self->get_ODF_filename();
+    return File::Spec->catfile( $jobPath, $ODT_filename );
+}
+
+=method get_ODF_filename
+
+Return the document filename
+
+=cut
+
+sub get_ODF_filename {
+    my ( $self, @args ) = @_;
+    return "Prediction_report_$self->{jobId}.odt";
+}
+
+sub get_images_dir {
+    my ( $self, @args ) = @_;
+    my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($self->{jobId});
+    return File::Spec->catdir($jobPath, 'images');
 }
 
 =method get_report
 
-Gererates the report if it does not exist already,
+Gererates the report
 and return the server path to it.
 
 =cut
 
 sub get_report {
     my ( $self, @args ) = @_;
-    my $jobId = shift @args;
-    my @sequences_to_export = shift @args;
-    my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
-#    if (! -e $ODT_abspath){
-#    }
-    my $path = $self->generate_report($jobId, \@sequences_to_export);
-    return $ODT_serverpath;
+    $self->generate_report();
+    return $self->get_ODF_server_path();;
 }
 
 1;
