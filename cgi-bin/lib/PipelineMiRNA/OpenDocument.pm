@@ -286,93 +286,105 @@ sub generate_report {
         if ( $key ~~ \@sequences_to_export )
         {
             my $candidate = $results{$key};
-            my ( $start, $end ) = (${$candidate}{'start_position'}, ${$candidate}{'end_position'} );
-            $context->append_element(
-                odf_create_heading(
-                    level => 1,
-                    style => 'Level 1 Heading',
-                    text  => "Sequence: ${$candidate}{'name'}, ${$candidate}{'position'}",
-                )
-            );
-
-
-            my $para =
-              $context->append_element( odf_create_paragraph() );
-
-            my $list = $para->insert_element(
-                    odf_create_list, position => NEXT_SIBLING
-                    );
-
-            my $size = length ${$candidate}{'DNASequence'};
-            my $vienna_seq =
-              PipelineMiRNA::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
-                ${$candidate}{'DNASequence'} );
-
-            $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');
-            $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => 'Basic');
-            $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => 'Basic');
-            $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
-
-            my $subtext = qw{};
-            if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
-                $subtext .= qw{}
-            } else {
-                $subtext.= 'This stem-loop structure is the MFE structure'
-            }
-            my $para1 = $context->append_element(
-            odf_create_paragraph(
-                text    => $vienna_seq,
-                style   =>'Vienna'
-                )
-            );
-            my $para2 = $context->append_element(
-            odf_create_paragraph(
-                text    => $subtext,
-                style   =>'Basic'
-                )
-            );
-            $para2->set_span(filter  => 'structure', style   => 'StandardBold');
-
-
-            # Copying the image
-            my $img_path      = ${$candidate}{'image'};
-            my $img_full_path = $img_path;
-            my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
-            copy($img_full_path, $new_img_path)
-                or die "Copy of $img_full_path to $images_dir failed: $!";
-
-            my ( $lien_image, $taille_image ) =
-              $doc->add_image_file($new_img_path);
-
-            my $factor = 0.5;
-            my @width = split( 'pt', shift $taille_image);
-            my $width = ($width[0] * $factor) . 'pt';
-            my @height = split( 'pt', shift $taille_image);
-            my $height = ($height[0] * $factor) . 'pt';
-            my $new_size = [$width, $height];
-
-            $para->append_element(
-                odf_frame->create(
-                    image => $lien_image,
-                    name  => "Structure_${$candidate}{'name'}_${$candidate}{'position'}",
-                    title => 'Structure',
-                    description => 'Structure',
-                    size => $new_size,
-                )
-            );
-
-           # Section Thermodynamics structure
-            $self->add_thermodynamics_section($context, $candidate);
-
-            # Section Mirbase alignments
-            $self->add_ODF_alignments($context, $candidate);
+            $self->add_candidate($context, $candidate, $key);
         }   # if key in tab
     }    #  while each %results
 
     # save the generated document and quit
-    $doc->save( target => $ODT_abspath, pretty => TRUE );
-    return $ODT_abspath;
+    $doc->save( target => $self->get_ODF_absolute_path(), pretty => TRUE );
+    return;
 }
+
+=method add_candidate
+
+=cut
+
+sub add_candidate {
+    my ( $self, @args ) = @_;
+    my $context   = shift @args;
+    my $candidate = shift @args;
+    my $key = shift @args;
+    my $images_dir = $self->get_images_dir();
+    my ( $start, $end ) = (${$candidate}{'start_position'}, ${$candidate}{'end_position'} );
+    $context->append_element(
+        odf_create_heading(
+            level => 1,
+            style => 'Level 1 Heading',
+            text  => "Sequence: ${$candidate}{'name'}, ${$candidate}{'position'}",
+        )
+    );
+
+    my $para =
+      $context->append_element( odf_create_paragraph() );
+
+    my $list = $para->insert_element(odf_create_list, position => NEXT_SIBLING);
+
+    my $size = length ${$candidate}{'DNASequence'};
+    my $vienna_seq =
+      PipelineMiRNA::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
+        ${$candidate}{'DNASequence'} );
+
+    $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');
+    $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => 'Basic');
+    $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => 'Basic');
+    $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
+
+    my $subtext = qw{};
+    if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
+        $subtext .= qw{}
+    } else {
+        $subtext.= 'This stem-loop structure is the MFE structure'
+    }
+    my $para1 = $context->append_element(
+    odf_create_paragraph(
+        text    => $vienna_seq,
+        style   =>'Vienna'
+        )
+    );
+    my $para2 = $context->append_element(
+    odf_create_paragraph(
+        text    => $subtext,
+        style   =>'Basic'
+        )
+    );
+    $para2->set_span(filter  => 'structure', style   => 'StandardBold');
+
+
+    # Copying the image
+    my $img_path      = ${$candidate}{'image'};
+    my $img_full_path = $img_path;
+    my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
+    copy($img_full_path, $new_img_path)
+        or die "Copy of $img_full_path to $images_dir failed: $!";
+
+    my ( $lien_image, $taille_image ) =
+      $self->{doc}->add_image_file($new_img_path);
+
+    my $factor = 0.5;
+    my @width = split( 'pt', shift $taille_image);
+    my $width = ($width[0] * $factor) . 'pt';
+    my @height = split( 'pt', shift $taille_image);
+    my $height = ($height[0] * $factor) . 'pt';
+    my $new_size = [$width, $height];
+
+    $para->append_element(
+        odf_frame->create(
+            image => $lien_image,
+            name  => "Structure_${$candidate}{'name'}_${$candidate}{'position'}",
+            title => 'Structure',
+            description => 'Structure',
+            size => $new_size,
+        )
+    );
+
+   # Section Thermodynamics structure
+    $self->add_thermodynamics_section($context, $candidate);
+
+    # Section Mirbase alignments
+    $self->add_ODF_alignments($context, $candidate);
+    return;
+}
+
 
 =method add_thermodynamics_section
 
