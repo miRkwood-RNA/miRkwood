@@ -515,7 +515,7 @@ sub add_ODF_alignments {
             my $spacing = 15;
             my ($top, $middle, $bottom) = split(/\n/, $alignment);
             $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
-            $middle = sprintf "%-${spacing}s %3s %s %s", qw{},    qw{},                   $middle, qw{};
+            $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
 
             my $mirbase_title = qw{};
             if( (scalar @splitted) > 1 ) {
