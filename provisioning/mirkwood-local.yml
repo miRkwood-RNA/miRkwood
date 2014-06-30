@@ -1,0 +1,6 @@
+- name: Configure the local machine
+  hosts: 
+    - locals
+  sudo: True
+  roles: 
+    - mirkwood
