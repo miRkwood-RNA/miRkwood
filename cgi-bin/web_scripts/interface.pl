@@ -45,7 +45,7 @@ my $page = <<"END_TXT";
           </select>
         </div>
         <p><input class="checkbox" type="checkbox" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
-            &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNAs <i>(tRNAscan-SE / RNAmmer)</i></label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]</p>
+            &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA <i>(tRNAscan-SE / RNAmmer)</i></label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]</p>
         <p id='exempleClear'>
         <a id="area_clear" onclick="ResetForm();">clear</a> | <a id="seq_button"  onclick="generateExample();">run with an example</a>
       </p>
