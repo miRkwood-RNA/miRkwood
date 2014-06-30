@@ -355,27 +355,8 @@ sub generate_report {
                 )
             );
 
-           # Section secondary structure
-            $context->append_element(
-                odf_create_heading(
-                    level => 3,
-                    style => 'Level 3 Heading',
-                    text  => 'Thermodynamics stability',
-                )
-            );
-
-            $para =
-              $context->append_element( odf_create_paragraph(style =>'None') );
-
-            $list = $para->insert_element(
-                    odf_create_list, position => NEXT_SIBLING
-                    );
-
-            # TODO: maybe we do not have those ; infer that from  run_options config file
-            $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => 'Basic');
-            $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => 'Basic');
-            $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => 'Basic');
-
+           # Section Thermodynamics structure
+            $self->add_thermodynamics_section($context, $candidate);
 
             # Section Mirbase alignments
             $self->add_ODF_alignments($context, $candidate);
@@ -385,6 +366,32 @@ sub generate_report {
     # save the generated document and quit
     $doc->save( target => $ODT_abspath, pretty => TRUE );
     return $ODT_abspath;
+}
+
+=method add_thermodynamics_section
+
+=cut
+
+sub add_thermodynamics_section {
+    my ( $self, @args ) = @_;
+    my $context   = shift @args;
+    my $candidate = shift @args;
+    $context->append_element(
+        odf_create_heading(
+            level => 3,
+            style => 'Level 3 Heading',
+            text  => 'Thermodynamics stability',
+        )
+    );
+
+    my $para = $context->append_element( odf_create_paragraph(style =>'None') );
+    my $list = $para->insert_element(odf_create_list, position => NEXT_SIBLING);
+
+    # TODO: maybe we do not have those ; infer that from  run_options config file
+    $list->add_item(text => "MFE: ${$candidate}{'mfe'} kcal/mol", style => 'Basic');
+    $list->add_item(text => "AMFE: ${$candidate}{'amfe'}", style => 'Basic');
+    $list->add_item(text => "MFEI: ${$candidate}{'mfei'}", style => 'Basic');
+    return;
 }
 
 =method add_ODF_alignments
