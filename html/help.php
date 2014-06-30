@@ -42,7 +42,7 @@
    <ol>
      <li> Tabular format (CSV) </li>
      <li> FASTA</li>
-     <li> dot-bracket format (plain sequence + secondary structure) </li>
+     <li> dot-bracket format<br/>(plain sequence + secondary structure) </li>
      <li> Full report in document format (ODF)</li>
      <li> GFF format</li>
    </ol>
