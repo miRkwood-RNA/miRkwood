@@ -36,8 +36,8 @@ GetOptions(
     'no-varna'       => \$no_varna,
     'no-process'     => \$no_process,
     'species-mask=s' => \$species_mask,
-    'mask-trna'      => \$trna,
-    'mask-rrna'      => \$rrna,
+    'filter-trna'    => \$trna,
+    'filter-rrna'    => \$rrna,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
     man              => \$man
@@ -116,6 +116,14 @@ Compute thermodynamic stability (shuffled sequences)
 =item B<--filter-mfei>
 
 Select only sequences with MFEI < -0.6
+
+=item B<--filter-rrna>
+
+Filter out ribosomal RNAs (using RNAmmer)
+
+=item B<--filter-trna>
+
+Filter out tRNAs (using tRNAscan-SE)
 
 =item B<--align>
 
