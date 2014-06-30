@@ -3,4 +3,4 @@
     - locals
   sudo: True
   roles: 
-    - mirkwood
+    - { role: mirkwood, mirkwood_path: '../cgi-bin/' }
