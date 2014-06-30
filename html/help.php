@@ -310,7 +310,7 @@ are shorter than the primary transcript.
 <dd>Value of the Minimum Free Energy (computed by <a href='http://www.tbi.univie.ac.at/~ronny/RNA/RNAeval.html'>RNAeval</a>).</dd>
 
 <dt>AMFE</dt>
-<dd>Value of the adjusted MFE : MFE &divide; (sequence length) &times; 100</dd>
+<dd>Value of the adjusted MFE: MFE &divide; (sequence length) &times; 100</dd>
 
 <dt>MFEI</dt>
 <dd>Value of the minimum folding energy index (<a href='#mfei_definition'>see definition</a>).</dd>
