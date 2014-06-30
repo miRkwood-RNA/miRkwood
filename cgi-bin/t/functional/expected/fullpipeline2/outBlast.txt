@@ -1,1 +1,0 @@
-arabidopsis_filtered	AT1G51370.1	100.00	436	0	0	1	1308	1	436	0.0	 893
