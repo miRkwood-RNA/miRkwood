@@ -13,6 +13,26 @@ use PipelineMiRNA::Results;
 use PipelineMiRNA::Candidate;
 use ODF::lpOD;
 
+=method new
+
+Constructor
+
+=cut
+
+sub new {
+    my ( $class, @args ) = @_;
+    my $jobId = shift @args;
+    my $sequences_to_export = shift @args;
+    my $self = bless {
+        jobId => $jobId,
+        sequences => $sequences_to_export
+    }, $class;
+    $self->{doc} = odf_document->create('text')
+      or die 'Error when initialising ODF document';
+    $self->prepare_document();
+    return $self;
+}
+
 =method prepare_document
 
 Return a prepared ODF document object
@@ -22,13 +42,10 @@ with styles already set.
 
 sub prepare_document {
     my ( $self, @args ) = @_;
-    my $doc = odf_document->create('text')
-      or die 'Error when initialising ODF document';
-
     my $elt;
 
     # Default paragraph style creation
-    $elt = $doc->insert_style(
+    $elt = $self->{doc}->insert_style(
         odf_create_style(
             'paragraph',
             margin_top    => '2mm',
@@ -52,7 +69,7 @@ sub prepare_document {
         margin_left => '0mm',
         area   => 'text',
         size   => '10pt',
-    )->register($doc);
+    )->register($self->{doc});
 
     # None paragraph style creation
     odf_style->create(
@@ -61,7 +78,7 @@ sub prepare_document {
         parent => 'Basic',
         area   => 'text',
         size   => '0pt',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Other MiRBase sequences
     my $s0 = odf_style->create(
@@ -78,10 +95,10 @@ sub prepare_document {
         area   => 'text',
         size   => '9pt',
     );
-    $doc->register_style($s0);
+    $self->{doc}->register_style($s0);
 
     # Monospace
-    $doc->set_font_declaration('Monospace');
+    $self->{doc}->set_font_declaration('Monospace');
     my $s = odf_style->create('paragraph', name => 'Monospace');
     $s->set_properties(
         area=>'paragraph',
@@ -95,7 +112,7 @@ sub prepare_document {
         color  => 'black',
         font   => 'Monospace',
         );
-    $doc->register_style($s);
+    $self->{doc}->register_style($s);
 
     # Vienna (Monospace style)
     odf_style->create(
@@ -104,7 +121,7 @@ sub prepare_document {
         parent => 'Monospace',
         area   => 'text',
         size   => '8pt',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Hairpin (Monospace style)
     odf_style->create(
@@ -113,7 +130,7 @@ sub prepare_document {
         parent => 'Monospace',
         area   => 'text',
         size   => '8pt',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Alignment (Monospace style)
     odf_style->create(
@@ -122,7 +139,7 @@ sub prepare_document {
         parent => 'Monospace',
         area   => 'text',
         size   => '9pt',
-    )->register($doc);
+    )->register($self->{doc});
 
     # StandardBold (Monospace style)
     odf_style->create(
@@ -131,7 +148,7 @@ sub prepare_document {
         parent => 'Standard',
         area   => 'text',
         weight => 'bold',
-    )->register($doc);
+    )->register($self->{doc});
 
    # Level 1 Heading style creation
     odf_style->create(
@@ -143,7 +160,7 @@ sub prepare_document {
         area   => 'text',
         size   => '14pt',
         weight => 'bold',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Level 2 Heading style creation
     odf_style->create(
@@ -154,7 +171,7 @@ sub prepare_document {
         size   => '12pt',
         weight => 'bold',
         style  => 'italic',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Level 3 Heading style creation
     odf_style->create(
@@ -166,7 +183,7 @@ sub prepare_document {
         area   => 'text',
         size   => '11pt',
         weight => 'bold',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Level 4 Heading style creation
     odf_style->create(
@@ -175,7 +192,7 @@ sub prepare_document {
         parent => 'Level 3 Heading',
         area   => 'text',
         size   => '10pt',
-    )->register($doc);
+    )->register($self->{doc});
 
     # Level 5 Heading style creation
     odf_style->create(
@@ -183,45 +200,36 @@ sub prepare_document {
         name  => 'Level 5 Heading',
         parent => 'Level 4 Heading',
         area   => 'text',
-    )->register($doc);
+    )->register($self->{doc});
 
     # top title style
-    $doc->insert_style(
-        odf_create_style(
-            'paragraph',
-            name          => 'Top title',
-            align         => 'center',
-            margin_top    => '0cm',
-            margin_bottom => '1cm'
-        )
-      )->set_properties(
+    odf_style->create(
+        'paragraph',
+        name          => 'Top title',
+        align         => 'center',
+        margin_top    => '0cm',
+        margin_bottom => '1cm',
         area   => 'text',
         size   => '20pt',
         weight => 'bold',
         color  => 'navy blue'
-      );
+      )->register($self->{doc});
 
     # Graphic style
-    $doc->insert_style(
-        odf_create_style(
-                'graphic',
-                name        => 'Classic',
-                align       => 'center',
-                margin_top  => '5mm'
-                ),
-        automatic       => TRUE
-        );
-
-    $doc->insert_style(
-        odf_create_style(
-            'paragraph',
-            name        => 'Centré',
+    odf_style->create(
+            'graphic',
+            name        => 'Classic',
             align       => 'center',
             margin_top  => '5mm'
-        )
-    );
+    )->register($self->{doc});
 
-    return $doc;
+    odf_style->create(
+        'paragraph',
+        name        => 'Centré',
+        align       => 'center',
+        margin_top  => '5mm'
+    )->register($self->{doc});
+    return;
 }
 
 =method generate_report
@@ -234,19 +242,17 @@ Write it on disk and return the server path to it.
 
 sub generate_report {
     my ( $self, @args ) = @_;
-    my $jobId = shift @args;
-    my @sequences_to_export = shift @args;
+    my $jobId = $self->{jobId};
+    my @sequences_to_export = @{$self->{sequences}};
 
     my $jobPath = PipelineMiRNA::Results->jobId_to_jobPath($jobId);
 
-    my $images_dir = File::Spec->catdir($jobPath, 'images');
+    my $images_dir = $self->get_images_dir();
     mkdir $images_dir;
-
-    my ($ODT_abspath, $ODT_serverpath) = $self->get_ODF_path($jobId);
 
     my %results = PipelineMiRNA::Results->get_structure_for_jobID($jobId);
 
-    my $doc = $self->prepare_document();
+    my $doc = $self->{doc};
 
     # Main context access
     my $context = $doc->body;
