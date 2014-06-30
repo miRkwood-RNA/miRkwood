@@ -8,10 +8,11 @@ body {
 
 h2 {
    
-    padding-top:   3pt;
+    padding-top:   5pt;
+    padding-bottom: 5pt;
+    padding-left: 15pt;
     margin-right:  -50px;
-    padding-bottom: 3pt;
-    padding-left: 15pt; 
+    margin-top:  16pt;
     font-size:     16pt;
     font-weight: normal; 
     counter-reset:subsection;
