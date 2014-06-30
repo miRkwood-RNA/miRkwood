@@ -27,8 +27,26 @@ sub init_programs{
         $value =~ s/\${local_programs}/$mirkwood_local_programs/g;
         $programs_paths{$key} = $value;
     }
-    $programs_paths{'vienna_progs'} = File::Basename::dirname(which($programs_config{'rnafold'}));
+    $programs_paths{'vienna_progs'} = get_Vienna_program_path($programs_config{'rnafold'});
     return 1;
+}
+
+=method get_Vienna_program_path
+
+Infers the Vienna programs path based on the configuration value
+
+=cut
+
+sub get_Vienna_program_path {
+    my @args = @_;
+    my $rnafold_exe = shift @args;
+    my $folder;
+    if (-f $rnafold_exe){
+        $folder = $rnafold_exe;
+    } else {
+        $folder = which($rnafold_exe);
+    }
+    return File::Basename::dirname($folder);
 }
 
 =method list_programs
