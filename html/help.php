@@ -232,9 +232,9 @@ represented by dots (see more explanation on <a
 href='http://www.tbi.univie.ac.at/RNA/bracket.html'>Vienna
 website</a>).</p>
 <pre class='example'>
->sample__3-127, stemloop structure
-gcguugacggugguuggauuacugggcgaauacuccuauggcagaucgcauuggcuagauaugcaaguaaaaugcuucucugccaaaggagauuugccccgcaauucauccggacgugcaggagc
-((.((((((.(((.((((((.(.((((((((.(((((.(((((((..(((((.(((.(.....).)))..)))))...))))))).))))))))))))).).)))))).)))..))).)))..))
+>sample__3-112, stemloop structure
+gugccagguuggauuacugggcgaauacuccuauggcagaucgcauuggcuagauaugcaaguaaaaugcuucucugccaaaggagauuugccccgcaauucauccggac
+((.((.((.((((((.(.((((((((.(((((.(((((((..(((((.(((.(.....).)))..)))))...))))))).))))))))))))).).)))))).))))))
 </pre>
 
 
@@ -255,7 +255,7 @@ document format is compatible with OpenOffice. See more information on
 # Note, these sequences do not represent the full primary transcript,
 # rather a predicted stem-loop portion that includes the precursor.
 
-sample   miRkwood   miRNA_primary_transcript   3   127   .   +   .   Name=preMir_sample__3-127	
+sample   miRkwood   miRNA_primary_transcript   3   112   .   +   .   Name=preMir_sample__3-112
 </pre>
 
 
@@ -325,22 +325,22 @@ are shorter than the primary transcript.
 <p>All alignments with miRBase are reported and gathered according to their positions.</p>
 <div class='example'>
 <pre class='alignment'>
-query            79 ucugccaaaggagauuugccc 99
-                    |||||||||||||| |||||| 
-miRBase           1 ucugccaaaggagaauugccc 21</pre>
+query            19 gggcgaauacuccuauggcaga 40
+                    |||| ||||||||  ||||||| 
+miRBase           1 gggcaaauacuccauuggcaga 22
 </pre>
-<span class='others'>miRBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031498'>ppe-miR399b</a></span>
+<span class='others'>miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017669'>aly-miR399g-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017673'>aly-miR399i-5p</a></span>
 </div>
 
 <p><tt>query</tt> is the user sequence, and <tt>miRBase</tt>
 designates the mature miRNA  (or the miRNA*) found in miRBase. It is possible to access the corresponding miRBAse entry by clicking on the link under the alignment. The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
 
 <pre class='example'>
-  g-   -   g-   u      a u<span class="mature">        a     a       </span>uc-     g-   a a
-gc  uug acg  ugg uggauu c <span class="mature">gggcgaau cuccu uggcaga</span>   gcauu  gcu g u
-||  ||| |||  ||| |||||| | |||||||| ||||| |||||||   |||||  ||| | a
-cg  gac ugc  gcc acuuaa g cccguuua gagga accgucu   cguaa  uga c u
-  ag   g   ag   u      c c        -     a       cuu     aa   a g
+  g  a  u      a u<span class="mature">        a     a       </span>uc-     g-   a a
+gu cc gg uggauu c <span class="mature">gggcgaau cuccu uggcaga</span>   gcauu  gcu g u
+|| || || |||||| | |||||||| ||||| |||||||   |||||  ||| | a
+ca gg cc acuuaa g cccguuua gagga accgucu   cguaa  uga c u
+  -  -  u      c c        -     a       cuu     aa   a g
 </pre>
  
 </div> <!-- main full -->
