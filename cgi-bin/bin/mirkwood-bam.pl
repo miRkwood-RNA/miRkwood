@@ -67,7 +67,7 @@ if ( !-e $abs_output_folder ) {
 }
 
 # Importing modules after directory creation
-use PipelineMiRNA;
+use miRkwood;
 use miRkwood::CLI;
 use miRkwood::MainPipeline;
 use miRkwood::Paths;
