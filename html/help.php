@@ -231,7 +231,7 @@ given as a set of matching brackets.  A base pair between bases
 represented by dots (see more explanation on <a
 href='http://www.tbi.univie.ac.at/RNA/bracket.html'>Vienna
 website</a>).</p>
-<pre class='example'>
+<pre class='example small'>
 >sample__3-112, stemloop structure
 gugccagguuggauuacugggcgaauacuccuauggcagaucgcauuggcuagauaugcaaguaaaaugcuucucugccaaaggagauuugccccgcaauucauccggac
 ((.((.((.((((((.(.((((((((.(((((.(((((((..(((((.(((.(.....).)))..)))))...))))))).))))))))))))).).)))))).))))))
