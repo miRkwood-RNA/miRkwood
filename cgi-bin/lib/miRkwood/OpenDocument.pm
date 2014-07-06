@@ -129,7 +129,7 @@ sub prepare_document {
         name  => 'Hairpin',
         parent => 'Monospace',
         area   => 'text',
-        size   => '8pt',
+        size   => '6pt',
     )->register($self->{doc});
 
     # Alignment (Monospace style)
