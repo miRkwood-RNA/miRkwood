@@ -41,8 +41,8 @@ Constructor and deserializer
 sub new_from_serialized {
     my ( $class, @args ) = @_;
     my $serialization_file = shift @args;
-    (-e $serialization_file)
-        or die("File $serialization_file does not exists");
+    (-e $serialization_file && -f $serialization_file)
+        or die("File $serialization_file does not exist");
     my %attributes = YAML::XS::LoadFile($serialization_file);
     my $self = bless \%attributes, $class;
     return $self;
