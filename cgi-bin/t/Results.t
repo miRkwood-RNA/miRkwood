@@ -58,7 +58,7 @@ ok(
       miRkwood::Results->export( 'fas', \%results, ['1-1'] ),
     'can call export for FASTA'
 );
-my $expected_export_fasta = slurp_file( input_file( 'candidate1', 'seq.txt' ) );
+my $expected_export_fasta = slurp_file( input_file( 'workspace', '1', '1', 'seq.txt' ) );
 
 is( $output_export_fasta, $expected_export_fasta,
     'export for FASTA return the correct value' );

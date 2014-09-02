@@ -19,7 +19,7 @@ require_ok('miRkwood::CandidateHandler');
 
 use miRkwood;
 
-my $candidate_dir = input_file('candidate1');
+my $candidate_dir = input_file('workspace', '1', '1');
 
 ok(
     my $candidate_object_from_dir =
