@@ -44,6 +44,7 @@ sub new_from_serialized {
     (-e $serialization_file && -f $serialization_file)
         or die("File $serialization_file does not exist");
     my %attributes = YAML::XS::LoadFile($serialization_file);
+    (%attributes) or die("Desarialization of $serialization_file failed");
     my $self = bless \%attributes, $class;
     return $self;
 }
