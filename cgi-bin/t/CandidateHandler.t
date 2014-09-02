@@ -17,6 +17,7 @@ BEGIN {
 }
 require_ok('miRkwood::CandidateHandler');
 
+use miRkwood;
 
 my $candidate_dir = input_file('candidate1');
 
@@ -86,3 +87,11 @@ ok(  miRkwood::CandidateHandler->serialize_candidate_information($tmp_dir, $cand
 my $tmp_file = File::Spec->catfile($tmp_dir, '1-1.yml');
 file_exists_ok($tmp_file,
                "Serialized file exists (in $tmp_file)");
+
+my $cfg_file = input_file('run_options.cfg');
+miRkwood->CONFIG_FILE($cfg_file);
+
+my $dummy_dir = input_file();
+ok( my $result3 = miRkwood::CandidateHandler->get_candidate_information_from_run($dummy_dir, '1', '1'),
+    'can call get_candidate_information_from_run()');
+isa_ok($result3, 'miRkwood::Candidate');
