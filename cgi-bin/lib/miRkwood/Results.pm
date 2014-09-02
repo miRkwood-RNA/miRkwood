@@ -141,8 +141,6 @@ sub deserialize_results {
 			&& $file ne ".." )
 		{
 			my $candidate;
-			$candidate =
-			  miRkwood::Candidate->new_from_serialized($full_file);
 			if (
 				!eval {
 					$candidate =
