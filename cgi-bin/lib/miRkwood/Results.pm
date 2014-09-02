@@ -161,64 +161,6 @@ sub deserialize_results {
 	return %myResults;
 }
 
-=method serialize_results
-
-Parse and serialize the results structure of $job_dir
-
-Usage:
-miRkwood::Results->serialize_results($job_dir);
-
-=cut
-
-sub serialize_results {
-	my ( $self, @args ) = @_;
-	my $relative_job_dir = shift @args;
-	my $job_dir = miRkwood::Paths->get_absolute_path($relative_job_dir);
-	opendir DIR, $job_dir;    #ouverture répertoire job
-	my @dirs;
-	@dirs = readdir DIR;
-	closedir DIR;
-	foreach my $dir (@dirs)    # parcours du contenu
-	{
-		my $full_dir = File::Spec->catdir( $job_dir, $dir );
-		if (   $dir ne "."
-			&& $dir ne ".."
-			&& -d $full_dir )    #si fichier est un répertoire
-		{
-			opendir DIR, $full_dir;    # ouverture du sous répertoire
-			my @files;
-			@files = readdir DIR;
-			closedir DIR;
-			foreach my $subDir (@files) {
-				my $subDir_full = File::Spec->catdir( $job_dir, $dir, $subDir );
-				if (   ( $subDir ne "." )
-					&& ( $subDir ne ".." )
-					&& -d $subDir_full )  # si le fichier est de type repertoire
-				{
-					if (
-						!eval {
-						    my %candidate_information = 
-							 miRkwood::CandidateHandler->get_candidate_information_from_run(
-								$relative_job_dir, $dir, $subDir );
-							my $candidate = miRkwood::Candidate->new(%candidate_information);
-							$candidate->serialize_candidate()
-						}
-					  )
-					{
-
-						# Catching
-					}
-					else {
-
-						# All is well
-					}
-				}
-			}
-		}
-	}
-	return;
-}
-
 =method export
 
 Convert the results
