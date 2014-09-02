@@ -25,20 +25,21 @@ my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 my $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
 my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
-my %candidate;
+my $candidate;
 my $html_contents;
 
 my $cfg_path = miRkwood::Paths->get_job_config_path($job);
 miRkwood->CONFIG_FILE($cfg_path);
+$candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);
 
-if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($job, $candidate_id);}) {
+if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
     $html_contents = "No results for the given identifiers";
 }else{
 
-    my $image_url = miRkwood::Candidate->get_relative_image(\%candidate);
+    my $image_url = $candidate->get_relative_image();
 
-    my $size = length $candidate{'DNASequence'};
+    my $size = length $candidate->{'DNASequence'};
 
     my $export_link = "./getCandidate.pl?jobId=$jobId&id=$candidate_id";
 
@@ -48,14 +49,14 @@ if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($jo
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    if($candidate{'Vienna'} ne $candidate{'Vienna_optimal'}){
+    if($candidate->{'Vienna'} ne $candidate->{'Vienna_optimal'}){
         $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li>"
     } else {
         $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li>"
     }
 
     my $alternatives_HTML = '<b>Alternative candidates (dot-bracket format):</b> ';
-    if($candidate{'alternatives'}){
+    if($candidate->{'alternatives'}){
         $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>"
     } else {
         $alternatives_HTML .= "<i>None</i>"
@@ -70,9 +71,9 @@ if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($jo
     else {
         $alignmentHTML = '<h2>Conserved mature miRNA</h2>';
 
-        if ( $candidate{'alignment'} ) {
+        if ( $candidate->{'alignment'} ) {
             $alignmentHTML .=
-              miRkwood::Candidate->make_alignments_HTML( \%candidate );
+              $candidate->make_alignments_HTML();
         }
         else {
             $alignmentHTML .= "No alignment has been found.";
@@ -81,13 +82,13 @@ if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($jo
 
     my $imgHTML = '';
     if ( $cfg->param('options.varna') ) {
-        $imgHTML = "<img class='structure' id='structure' src='$image_url' height='300px' alt='$candidate{'name'} secondary structure'>"
+        $imgHTML = "<img class='structure' id='structure' src='$image_url' height='300px' alt='$candidate->{'name'} secondary structure'>"
     }
 
     my $shufflesHTML = '';
     if ( $cfg->param('options.randfold') ) {
         $shufflesHTML = "<li>
-          <b>Shuffles:</b> $candidate{'shuffles'}
+          <b>Shuffles:</b> $candidate->{'shuffles'}
         </li>"
     }
 
@@ -95,16 +96,16 @@ if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($jo
             <div id = 'showInfo'>
         <ul>
         <li>
-          <b>Name: </b>$candidate{'name'}
+          <b>Name: </b>$candidate->{'name'}
         </li>
         <li>
-          <b>Position:</b> $candidate{'position'} ($size nt)
+          <b>Position:</b> $candidate->{'position'} ($size nt)
         </li>
         <li>
-          <b>Strand:</b> $candidate{'strand'}
+          <b>Strand:</b> $candidate->{'strand'}
         </li>
         <li>
-          <b>G+C content:</b> $candidate{'%GC'}%
+          <b>G+C content:</b> $candidate->{'%GC'}%
         </li>
         <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
@@ -118,13 +119,13 @@ if (! eval {%candidate = miRkwood::Candidate->retrieve_candidate_information($jo
         <h2>Thermodynamics stability</h2>
         <ul>
         <li>
-          <b>MFE:</b> $candidate{'mfe'} kcal/mol
+          <b>MFE:</b> $candidate->{'mfe'} kcal/mol
         </li>
         <li>
-          <b>AMFE:</b> $candidate{'amfe'}
+          <b>AMFE:</b> $candidate->{'amfe'}
         </li>
         <li>
-          <b>MFEI:</b> $candidate{'mfei'}
+          <b>MFEI:</b> $candidate->{'mfei'}
         </li>
         $shufflesHTML
         </ul>
@@ -136,7 +137,7 @@ END_TXT
 
 my $body  = <<"END_TXT";
     <body>
-       <h1>Results for $candidate{'name'}, $candidate{'position'}</h1>
+       <h1>Results for $candidate->{'name'}, $candidate->{'position'}</h1>
         $return_html
         $html_contents
         $return_html

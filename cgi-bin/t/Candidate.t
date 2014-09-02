@@ -14,91 +14,59 @@ BEGIN {
     use_ok('miRkwood::Candidate');
 }
 require_ok('miRkwood::Candidate');
+#new_from_serialized
+my $candidate_file = input_file('candidates', '1-1.yml');
+file_exists_ok($candidate_file);
 
-my $candidate_dir = input_file('candidate1');
+my $candidate = miRkwood::Candidate->new_from_serialized($candidate_file);
 
-ok(
-    my %pseudo_candidate =
-      miRkwood::Candidate->parse_candidate_information($candidate_dir),
-    'Can call parse_candidate_information()'
-);
+isa_ok($candidate, 'miRkwood::Candidate');
 
-my $seq    = 'gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc';
-my $struct = '((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))';
-my %expected = ('name' => 'contig15750',
-#                'position' => '34-195',
-                'start_position' => '34',
-                'end_position' => '195',
-                'shuffles' => '0.125000',
-                'amfe'    => '-37.10',
-                'mfei' => '-1.00',
-                'mfe' => '-60.1',
-                'DNASequence' => $seq,
-                'Vienna' => $struct,
-                'Vienna_optimal' => $struct,
-                'alignment' => 2,
-                'alignment_existence' => 1,
-                'quality' => '3',
-                'strand'  => '+',
-);
-delete $pseudo_candidate{'alignments'};
-delete $pseudo_candidate{'mirdup_validation'};
-is_deeply( \%pseudo_candidate, \%expected, 'parse candidate information ok' );
+can_ok($candidate, qw[get_identifier has_mirdup_validation get_absolute_image
+                      get_relative_image get_name get_shortened_sequence_name
+                      get_shortened_name candidateAsVienna candidateAsFasta
+                      candidate_as_gff alternativeCandidatesAsVienna
+                      make_alignments_HTML candidate_as_pseudoXML]);
 
+is($candidate->get_identifier(), '1-1',
+   'get_identifier returns the expected value');
 
-dies_ok {
-    my %candidate =
-      miRkwood::Candidate->retrieve_candidate_information( 'a', 'b', 'c' );
-} 'retrieve_candidate_information with wrong parameters dies as expected';
+is($candidate->has_mirdup_validation(), 1,
+   'has_mirdup_validation returns the expected value');
 
-my $candidate_input = input_file('');
+is($candidate->get_absolute_image(),
+   '/bio1/www/html/mirkwood/results/jobDec181721032013/1/1/image.png',
+   'get_absolute_image returns the expected value');
 
-ok(
-    my %candidate = miRkwood::Candidate->retrieve_candidate_information(
-        $candidate_input, '1-1'
-    ),
-    'Can call retrieve_candidate_information'
-);
-
-ok( my $result1 = miRkwood::Candidate->compute_quality( \%candidate ),
-    'can call compute_quality()' );
-is( $result1, 3, 'compute_quality returns the expected value' );
-
-ok( my $has_mirdup_validation_result = miRkwood::Candidate->has_mirdup_validation( \%candidate ),
-    'can call has_mirdup_validation()' );
-is( $has_mirdup_validation_result, 1, '$has_mirdup_validation returns the expected value' );
-
-ok( my $result2 = miRkwood::Candidate->get_absolute_image( \%candidate ),
-    'can call get_absolute_image()' );
-is(
-    $result2,
-    '/bio1/www/html/mirkwood/results/jobDec181721032013/1/1/image.png',
-    'get_absolute_image returns the expected value'
-);
-
-ok( my $result3 = miRkwood::Candidate->get_relative_image( \%candidate ),
-    'can call get_relative_image()' );
-is(
-    $result3,
+is($candidate->get_relative_image(),
     '/mirkwood/results/jobDec181721032013/1/1/image.png',
     'get_relative_image returns the expected value'
 );
 
-ok( my $result4 = miRkwood::Candidate->candidateAsVienna( \%candidate ),
+is($candidate->get_name(), 'contig15750__34-195',
+   'get_name returns the expected value');
+
+is($candidate->get_shortened_sequence_name(), 'contig15750',
+   'get_shortened_sequence_name returns the expected value');
+
+is($candidate->get_shortened_name(), 'contig15750__34-195',
+   'get_shortened_name returns the expected value');
+
+ok( my $result4 = $candidate->candidateAsVienna(),
     'can call candidateAsVienna()' );
 my $expected_file4 = input_file('Candidate.candidateAsVienna.out');
 file_exists_ok($expected_file4);
 my $expected4 = slurp_file($expected_file4);
 is( $result4, $expected4, 'candidateAsVienna returns the expected value' );
 
-ok( my $result5 = miRkwood::Candidate->candidateAsFasta( \%candidate ),
+ok( my $result5 = $candidate->candidateAsFasta(),
     'can call candidateAsFasta()' );
 my $expected_file5 = input_file('Candidate.candidateAsFasta.out');
 file_exists_ok($expected_file5);
 my $expected5 = slurp_file($expected_file5);
 is( $result5, $expected5, 'candidateAsFasta returns the expected value' );
 
-ok( my $result_gff = miRkwood::Candidate->candidate_as_gff( \%candidate ),
+ok( my $result_gff = $candidate->candidate_as_gff(),
     'can call candidate_as_gff()' );
 my $expected_file_gff = input_file('Candidate.candidate_as_gff.out');
 file_exists_ok($expected_file_gff);
@@ -108,7 +76,7 @@ is( $result_gff, $expected_gff, 'candidate_as_gff returns the expected value' );
 
 ok(
     my $result6 =
-      miRkwood::Candidate->alternativeCandidatesAsVienna( \%candidate ),
+      $candidate->alternativeCandidatesAsVienna(),
     'can call alternativeCandidatesAsVienna()'
 );
 my $expected_file6 = input_file('Candidate.alternativeCandidatesAsVienna.out');
@@ -118,9 +86,7 @@ is( $result6, $expected6,
     'alternativeCandidatesAsVienna returns the expected value' );
 
 ok(
-    my $result7 = miRkwood::Candidate->make_alignments_HTML(
-        \%candidate, 'a', 'b', 'c'
-    ),
+    my $result7 = $candidate->make_alignments_HTML(),
     'can call make_alignments_HTML()'
 );
 my $expected_file7 = input_file('Candidate.make_alignments_HTML.out');

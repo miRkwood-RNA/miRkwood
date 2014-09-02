@@ -15,215 +15,48 @@ use miRkwood::Utils;
 use miRkwood::Components;
 use miRkwood::WebPaths;
 
-my $candidate_base_filename = 'candidate.yml';
+=method new
 
-
-=method retrieve_candidate_information
-
-Check correctness and get the result for a given candidate
-
-Arguments:
-- $job - the job directory
-- $id - the candidate identifier
+Constructor
+    my $attributes = @args;
 =cut
 
-sub retrieve_candidate_information {
-    my ( $self, @args ) = @_;
-    my $job = shift @args;
-    my $id = shift @args;
-    my $candidate_file = $self->get_candidate_filename($job, $id);
-    if ( ! -e $candidate_file ){
-        die("Unvalid candidate information");
-
-    }else{
-        return $self->deserialize_candidate($candidate_file);
+sub new {
+    my ( $class, @args ) = @_;
+    my %attributes = ();
+    if(@args){
+    my $attributes = shift @args;
+        %attributes = %{$attributes};
     }
+    my $self = bless \%attributes, $class;
+    return $self;
 }
 
-=method get_candidate_filename
+=method new_from_serialized
 
-Get the candidate filename given its identifier and the job directory
-
-=cut
-
-sub get_candidate_filename {
-    my ( $self, @args ) = @_;
-    my $job = shift @args;
-    my $id = shift @args;
-    return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
-}
-
-=method make_candidate_filename
-
-Return the candidate filename based on the identifier.
+Constructor and deserializer
 
 =cut
 
-sub make_candidate_filename {
-    my ( $self, @args ) = @_;
-    my $identifier = shift @args;
-    return $identifier . '.yml';
-}
-
-=method serialize_candidate_information
-
-
-=cut
-
-sub serialize_candidate_information {
-    my ( $self, @args ) = @_;
-    my $job_dir = shift @args;
-    my $seq_dir = shift @args;
-    my $can_dir = shift @args;
-    my $serialization_dir = shift @args;
-
-    my $cfg    = miRkwood->CONFIG();
-
-    my $full_candidate_dir = miRkwood::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
-    my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
-    my %candidate = $self->parse_candidate_information($full_candidate_dir);
-    $candidate{'identifier'} = "$seq_dir-$can_dir";
-#    $candidate{'name'} = $seq_dir;    #récupération nom séquence
-
-    if ( $cfg->param('options.varna') ) {
-        $candidate{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
-    } else {
-        $candidate{'image'} = '';
-    }
-
-    $candidate{'position'} = "$candidate{'start_position'}-$candidate{'end_position'}";
-    $candidate{'length'} = $candidate{'end_position'} - $candidate{'start_position'} +1;
-    $candidate{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
-                            miRkwood::Utils::compute_gc_content($candidate{'DNASequence'}),
-                            3);
-
-    my $alternative_candidates_file = File::Spec->catfile($full_candidate_dir, 'alternativeCandidates.txt');
-    if (-e $alternative_candidates_file){
-        my %alternatives = miRkwood::Parsers::parse_alternative_candidates_file($alternative_candidates_file);
-        $candidate{'alternatives'} = \%alternatives;
-    }
-
-    my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate{'DNASequence'}, $candidate{'Vienna'});
-    $candidate{'hairpin'} = $hairpin;
-    my %sequence;
-#    $sequence{$candidate{'name'}} = $candidate{'DNASequence'};
-#    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_prediction.txt");
-#    $candidate{'mirdup_prediction'} = \%{miRkwood::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
-
-    return $self->serialize_candidate( \%candidate, $serialization_dir );
-}
-
-=method parse_candidate_information
-
-Get the results for a given candidate
-
-Arguments:
-- $full_candidate_dir - the prefixed path to the candidate results
-
-=cut
-
-sub parse_candidate_information {
-    my ( $self, @args ) = @_;
-    my $full_candidate_dir = shift @args;
-    my %result = ();
-
-    my $seq_info_file =
-      File::Spec->catfile( $full_candidate_dir, 'sequence_information.txt' );
-    if ( -e $seq_info_file )    # si fichier existe
-    {
-        my @res = miRkwood::Components::get_sequence_information($seq_info_file);
-        ($result{'strand'}, $result{'start_position'}, $result{'end_position'}) = @res;
-    }
-
-    my $randfold_output =
-      File::Spec->catfile( $full_candidate_dir, 'randfold.out' );
-    if ( -e $randfold_output )    # si fichier existe
-    {
-        $result{'shuffles'} = miRkwood::Parsers::parse_pvalue($randfold_output);
-    }
-
-    #Récupération valeur MFEI
-    my $mfei_out =
-      File::Spec->catfile( $full_candidate_dir, 'outMFEI.txt' );
-    if ( -e $mfei_out )                 # si fichier existe
-    {
-        my @mfeis = miRkwood::Parsers::parse_mfei($mfei_out);
-        $result{'mfei'} = $mfeis[0];
-        $result{'mfe'} = $mfeis[1];
-        $result{'amfe'} = $mfeis[2];
-    }
-
-    #Récupération séquence et format Vienna
-    my $rnafold_stemloop_out = File::Spec->catfile( $full_candidate_dir,
-                                       'outRNAFold_stemloop.txt' );
-    if ( -e $rnafold_stemloop_out )                  # si fichier existe
-    {
-        my @res = miRkwood::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
-        my $devnull;
-        ($result{'name'}, $devnull, $result{'DNASequence'}, $result{'Vienna'}) = @res;
-    }
-
-    #Récupération séquence et format Vienna
-    my $rnafold_optimal_out = File::Spec->catfile( $full_candidate_dir,
-                                                   'outRNAFold_optimal.txt' );
-    if ( -e $rnafold_optimal_out )                  # si fichier existe
-    {
-        my @vienna_res = miRkwood::Parsers::parse_RNAfold_output($rnafold_optimal_out);
-
-        $result{'Vienna_optimal'} = $vienna_res[2];
-    }
-
-    #Récupération alignement avec mirBase
-    my $alignments_results_file = File::Spec->catfile($full_candidate_dir, 'merged_alignments.yml');
-    my $mirdup_results_file = File::Spec->catfile($full_candidate_dir, 'mirdup_results.yml');
-    $result{'alignment_existence'} = ( -e $alignments_results_file && ! -z $alignments_results_file );
-    if ($result{'alignment_existence'}){
-        my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
-        my %alignments = YAML::XS::LoadFile($alignments_results_file);
-        $result{'alignments'} = \%alignments;
-        $result{'mirdup_validation'} = \%mirdup_results;
-    }
-    # Computing general quality
-    $result{'alignment'} = $self->compute_alignment_quality(\%result);
-    $result{'quality'} = $self->compute_quality(\%result);
-
-    return %result;
-}
-
-=method serialize_candidate
-
-Serialize the given candidate on disk
-
-Arguments:
-- $serialization_path - the filepath to serialize to
-- %candidate - the candidate
-
-=cut
-
-sub serialize_candidate{
-    my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my $serialization_path = shift @args;
-    my $candidate_base_filename = $self->make_candidate_filename($candidate{'identifier'});
-    my $serialization_file = File::Spec->catfile($serialization_path, $candidate_base_filename);
-    return YAML::XS::DumpFile($serialization_file, %candidate);
-}
-
-=method deserialize_candidate
-
-Deerialize the given candidate on disk
-
-Arguments:
-- $serialization_file - the filepath to serialize to
-
-=cut
-
-sub deserialize_candidate{
-    my ( $self, @args ) = @_;
+sub new_from_serialized {
+    my ( $class, @args ) = @_;
     my $serialization_file = shift @args;
     (-e $serialization_file)
         or die("File $serialization_file does not exists");
-    return YAML::XS::LoadFile($serialization_file);
+    my %attributes = YAML::XS::LoadFile($serialization_file);
+    my $self = bless \%attributes, $class;
+    return $self;
+}
+
+=method get_identifier
+
+Accessor for the identifier
+
+=cut
+
+sub get_identifier{
+    my ( $self, @args ) = @_;
+    return $self->{'identifier'};
 }
 
 =method has_mirdup_validation
@@ -235,9 +68,8 @@ one alignment which has been validated by MirDup.
 
 sub has_mirdup_validation{
     my ($self, @args) = @_;
-    my %candidate = %{shift @args};
-    if ($candidate{'mirdup_validation'}){
-        my %mirdup_results = %{$candidate{'mirdup_validation'}};
+    if ($self->{'mirdup_validation'}){
+        my %mirdup_results = %{$self->{'mirdup_validation'}};
         if (scalar (grep { /^1$/ } values %mirdup_results ) >= 1){
             return 1;
         }
@@ -254,15 +86,15 @@ Compute a general quality score
 
 sub compute_quality {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
     my $quality = 0;
-    if ( $candidate{'mfei'} ) {
-        if ( $candidate{'mfei'} < -0.8 ){
+    if ( $self->{'mfei'} ) {
+        if ( $self->{'mfei'} < -0.8 ){
             $quality += 1;
         }
     }
-    $quality += $self->compute_alignment_quality(\%candidate);
-    return $quality;
+    $quality += $self->{'alignment'};
+    $self->{'quality'} =  $quality;
+    return;
 }
 
 =method compute_alignment_quality
@@ -273,15 +105,15 @@ Compute the alignment quality score
 
 sub compute_alignment_quality {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
     my $alignment_existence = 0;
-    if ($candidate{'alignment_existence'}){
-        $alignment_existence = $candidate{'alignment_existence'};
+    if ($self->{'alignment_existence'}){
+        $alignment_existence = $self->{'alignment_existence'};
     }else{
         $alignment_existence = 0;
     }
-    my $has_mirdup_validation = $self->has_mirdup_validation(\%candidate);
-    return $alignment_existence + $has_mirdup_validation;
+    my $has_mirdup_validation = $self->has_mirdup_validation();
+    $self->{'alignment'} = $alignment_existence + $has_mirdup_validation;
+    return;
 }
 
 =method get_absolute_image
@@ -292,8 +124,7 @@ Return the path to the image
 
 sub get_absolute_image {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my $image = $candidate{'image'};
+    my $image = $self->{'image'};
     return $image;
 }
 
@@ -305,8 +136,7 @@ Return the path to the image
 
 sub get_relative_image {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my $image = $candidate{'image'};
+    my $image = $self->get_absolute_image();
     return miRkwood::WebPaths->filesystem_to_relative_path($image);
 }
 
@@ -319,8 +149,7 @@ constructed by concatenating sequence name and position.
 
 sub get_name {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    return $candidate{'name'}.'__'.$candidate{'position'};
+    return $self->{'name'}.'__'.$self->{'position'};
 }
 
 =method get_shortened_sequence_name
@@ -332,8 +161,8 @@ shortened and sanitized
 
 sub get_shortened_sequence_name {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    return miRkwood::Utils::sanitize_sequence_name($candidate{'name'});
+    my $name = $self->{'name'};
+    return miRkwood::Utils::sanitize_sequence_name($name);
 }
 
 =method get_shortened_name
@@ -344,9 +173,8 @@ Return the shortened name of the candidate
 
 sub get_shortened_name {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my $name = $self->get_shortened_sequence_name(\%candidate);
-    return $name . '__' . $candidate{'position'};
+    my $name = $self->get_shortened_sequence_name();
+    return $name . '__' . $self->{'position'};
 }
 
 
@@ -358,20 +186,19 @@ Convert a given candidate to Vienna dot-bracket format
 
 sub candidateAsVienna {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
     my $optimal = shift @args;
     my $output = "";
-    my $candidate_name = $self->get_name(\%candidate);
+    my $candidate_name = $self->get_name();
     my $header = ">$candidate_name";
     my $structure;
     if ($optimal){
         $header .= ", MFE structure";
-        $structure = $candidate{'Vienna_optimal'};
+        $structure = $self->{'Vienna_optimal'};
     }else{
-        $structure = $candidate{'Vienna'};
+        $structure = $self->{'Vienna'};
         $header .= ", stemloop structure";
     }
-    $output .= $header . "\n" . $candidate{'DNASequence'} . "\n" . "$structure" . "\n";
+    $output .= $header . "\n" . $self->{'DNASequence'} . "\n" . "$structure" . "\n";
     return $output;
 }
 
@@ -383,10 +210,9 @@ Convert a given candidate to FASTA format
 
 sub candidateAsFasta {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
     my $output = "";
-    my $candidate_name = $self->get_name(\%candidate);
-    $output .= '>'.$candidate_name . "\n" . $candidate{'DNASequence'} . "\n";
+    my $candidate_name = $self->get_name();
+    $output .= '>'.$candidate_name . "\n" . $self->{'DNASequence'} . "\n";
     return $output;
 }
 
@@ -395,22 +221,21 @@ sub candidateAsFasta {
 Convert a given candidate to a GFF line.
 
 Usage:
-my $gff_line = miRkwood::Candidate->candidate_as_gff($value);
+my $gff_line = $candidate->candidate_as_gff();
 
 =cut
 
 sub candidate_as_gff {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my $candidate_name = 'preMir_' . $self->get_shortened_name(\%candidate);
+    my $candidate_name = 'preMir_' . $self->get_shortened_name();
     my $text .= q{} .                       # BEGIN
-      $candidate{'name'} . "\t" .           # seqid
+      $self->{'name'} . "\t" .              # seqid
       'miRkwood' . "\t" .                   # source
       'miRNA_primary_transcript' . "\t" .   # type
-      $candidate{'start_position'} . "\t" . # start
-      $candidate{'end_position'} . "\t" .   # end
+      $self->{'start_position'} . "\t" .    # start
+      $self->{'end_position'} . "\t" .      # end
       '.' . "\t" .                          # score
-      $candidate{'strand'} . "\t" .         # strand
+      $self->{'strand'} . "\t" .            # strand
       '.' . "\t" .                          # phase
       "Name=$candidate_name" . "\t" .       # attributes
       "\n";
@@ -426,8 +251,7 @@ Return alternative candidates as Vienna dot-bracket
 
 sub alternativeCandidatesAsVienna {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
-    my $alternatives = $candidate{'alternatives'};
+    my $alternatives = $self->{'alternatives'};
     my $output = "";
     if ($alternatives) {
         my %alternatives = %{$alternatives};
@@ -441,41 +265,6 @@ sub alternativeCandidatesAsVienna {
     return $output;
 }
 
-=method make_Vienna_viz
-
-Make a nicer Vienna display by cutting too long lines.
-
-Usage:
-my $string = make_Vienna_viz($Vienna, $DNASequence)
-
-=cut
-
-sub make_Vienna_viz {
-    my ($self, @args) = @_;
-    my $Vienna = shift @args;
-    my $DNASequence = shift @args;
-
-    my $viennaString   = q{};
-    my $sequenceString = q{};
-    my $string         = q{};
-    for ( 1 .. length($Vienna) ) {
-
-        $viennaString   .= substr $Vienna,      $_ - 1, 1;
-        $sequenceString .= substr $DNASequence, $_ - 1, 1;
-        if ( $_ % 60 == 0 ) {
-
-            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
-            $viennaString   = q{};
-            $sequenceString = q{};
-        }
-        if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
-            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
-        }
-    }
-    return $string
-}
-
-
 =method make_alignments_HTML
 
 
@@ -483,12 +272,11 @@ sub make_Vienna_viz {
 
 sub make_alignments_HTML {
     my ($self, @args) = @_;
-    my %candidate = %{shift @args};
 
     # Alignments
 
-    my %alignments = %{$candidate{'alignments'}};
-    my %mirdup_results = %{$candidate{'mirdup_validation'}};
+    my %alignments = %{$self->{'alignments'}};
+    my %mirdup_results = %{$self->{'mirdup_validation'}};
 
     my $contents = "";
     my @TOC;
@@ -506,7 +294,7 @@ sub make_alignments_HTML {
         my ($left, $right) = split(/-/, $position);
 
         # MiRdup
-        my $mirdup_key = $candidate{'name'} . '__' . $position;
+        my $mirdup_key = $self->{'name'} . '__' . $position;
         my $mirdup_prediction;
         if ( $mirdup_results{$mirdup_key} ){
             $mirdup_prediction = 'This prediction is validated by miRdup.';
@@ -516,9 +304,9 @@ sub make_alignments_HTML {
 
         # Hairpin
         my $hairpin_with_mature =
-            miRkwood::Utils::make_hairpin_with_mature($candidate{'hairpin'},
+            miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
                                                            $left, $right,
-                                                           length $candidate{'DNASequence'},
+                                                           length $self->{'DNASequence'},
                                                            'html');
         $predictionCounter += 1;
 
@@ -617,15 +405,14 @@ sub get_optional_candidate_fields {
 Convert a given candidate to a pseudo XML
 
 Usage:
-my $xml_element = miRkwood::Candidate->candidate_as_pseudoXML($value);
+my $xml_element = $candidate->candidate_as_pseudoXML();
 
 =cut
 
 sub candidate_as_pseudoXML {
     my ( $self, @args ) = @_;
-    my %candidate = %{shift @args};
 
-    my $name = $self->get_shortened_sequence_name(\%candidate);
+    my $name = $self->get_shortened_sequence_name();
 
     my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
 
@@ -638,7 +425,7 @@ sub candidate_as_pseudoXML {
 
     $result .= " name='$name'";
     for my $header (@headers1) {
-        my $contents = $candidate{$header};
+        my $contents = $self->{$header};
         if ( $header ~~ @fields_to_truncate){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
         }
@@ -650,10 +437,10 @@ sub candidate_as_pseudoXML {
         }
         $result .= " $header='$contents'";
     }
-    my $img = $self->get_relative_image(\%candidate);
+    my $img = $self->get_relative_image();
     $result .= " image='$img'";
     for my $header (@headers2) {
-        $result .= " $header='$candidate{$header}'";
+        $result .= " $header='$self->{$header}'";
     }
     $result .= "></Sequence>";
 

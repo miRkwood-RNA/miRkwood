@@ -8,7 +8,7 @@ use FindBin;
 use feature 'switch';
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
-use miRkwood::Candidate;
+use miRkwood::CandidateHandler;
 use miRkwood::Results;
 use miRkwood::WebTemplate;
 
@@ -21,12 +21,12 @@ my $optimal      = $cgi->param('optimal');
 
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 
-my %candidate;
+my $candidate;
 
 if (
     !eval {
-        %candidate =
-          miRkwood::Candidate->retrieve_candidate_information( $job,
+        $candidate =
+          miRkwood::CandidateHandler->retrieve_candidate_information( $job,
             $candidate_id );
     }
   )
@@ -41,19 +41,19 @@ else {
     given ($export_type) {
         when (/fas/) {
             ( $filename, $contents, $disposition ) =
-              exportAsFasta( \%candidate )
+              exportAsFasta( $candidate )
         }
         when (/dot/) {
             ( $filename, $contents, $disposition ) =
-              exportAsDotBracket( \%candidate, $optimal )
+              exportAsDotBracket( $candidate, $optimal )
         }
         when (/alt/) {
             ( $filename, $contents, $disposition ) =
-              exportAlternatives( \%candidate )
+              exportAlternatives( $candidate )
         }
         when (/yml/) {
             ( $filename, $contents, $disposition ) =
-              exportAsYAML( \%candidate )
+              exportAsYAML( $candidate )
         }
         default {
             miRkwood::WebTemplate::web_die("Error: the export type '$export_type' is not supported");
@@ -71,8 +71,8 @@ sub exportAsFasta {
     my @args      = @_;
     my $candidate = shift @args;
     my $candidate_name =
-      miRkwood::Candidate->get_shortened_name($candidate);
-    my $fasta = miRkwood::Candidate->candidateAsFasta($candidate);
+      $candidate->get_shortened_name();
+    my $fasta = $candidate->candidateAsFasta();
     return ( "$candidate_name.fa", $fasta, 'inline' );
 }
 
@@ -81,11 +81,11 @@ sub exportAsDotBracket {
     my $candidate = shift @args;
     my $optimal   = shift @args;
     my $candidate_name =
-      miRkwood::Candidate->get_shortened_name($candidate);
+      $candidate->get_shortened_name();
     my $filename = $candidate_name;
     my $header   = ">$candidate_name";
     my $vienna =
-      miRkwood::Candidate->candidateAsVienna( $candidate, $optimal );
+      $candidate->candidateAsVienna( $optimal );
     if ($optimal) {
         $filename .= "_optimal";
     }
@@ -95,17 +95,15 @@ sub exportAsDotBracket {
 sub exportAlternatives {
     my @args      = @_;
     my $candidate = shift @args;
-    my $filename  = miRkwood::Candidate->get_shortened_name($candidate)
-      . '_alternatives';
-    my $alternatives =
-      miRkwood::Candidate->alternativeCandidatesAsVienna($candidate);
+    my $filename  = $candidate->get_shortened_name() . '_alternatives';
+    my $alternatives = $candidate->alternativeCandidatesAsVienna();
     return ( "$filename.txt", $alternatives, 'attachment' );
 }
 
 sub exportAsYAML {
     my @args      = @_;
     my $candidate = shift @args;
-    my $filename  = miRkwood::Candidate->get_shortened_name($candidate);
+    my $filename  = $candidate->get_shortened_name();
     use YAML::XS;
     my $yaml = YAML::XS::Dump($candidate);
     return ( "$filename.yml", $yaml, 'attachment' );

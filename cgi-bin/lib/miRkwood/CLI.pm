@@ -154,13 +154,13 @@ Usage:
 
 sub make_candidate_page {
     my (@args)        = @_;
-    my %candidate     = %{ shift @args };
+    my $candidate     = shift @args;
     my $pieces_folder = shift @args;
     my $output_folder = shift @args;
 
-    my $size = length $candidate{'DNASequence'};
+    my $size = length $candidate->{'DNASequence'};
 
-    my $candidate_name = miRkwood::Candidate->get_shortened_name( \%candidate );
+    my $candidate_name = $candidate->get_shortened_name();
 
     my $candidate_fasta_file =
       File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );
@@ -168,7 +168,7 @@ sub make_candidate_page {
         '>', File::Spec->catfile( $output_folder, $candidate_fasta_file ) )
       or die("Cannot open file $candidate_fasta_file: $!");
     print {$FASTA_FILE}
-      miRkwood::Candidate->candidateAsFasta( \%candidate )
+      $candidate->candidateAsFasta()
       or die("Cannot write in file $candidate_fasta_file: $!");
     close($FASTA_FILE)
       or die("Cannot close file $candidate_fasta_file: $!");
@@ -179,7 +179,7 @@ sub make_candidate_page {
         '>', File::Spec->catfile( $output_folder, $vienna_file ) )
       or die("Cannot open $vienna_file: $!");
     print {$VIENNA_FILE}
-      miRkwood::Candidate->candidateAsVienna( \%candidate, 0 )
+      $candidate->candidateAsVienna(0)
       or die("Cannot write in file $vienna_file: $!");
     close($VIENNA_FILE)
       or die("Cannot close file $vienna_file: $!");
@@ -190,7 +190,7 @@ sub make_candidate_page {
         '>', File::Spec->catfile( $output_folder, $vienna_file_optimal ) )
       or die("Cannot open $vienna_file_optimal: $!");
     print {$VIENNA_FILE_OPT}
-      miRkwood::Candidate->candidateAsVienna( \%candidate, 1 )
+      $candidate->candidateAsVienna(1)
       or die("Cannot write in file $vienna_file_optimal: $!");
     close($VIENNA_FILE_OPT)
       or die("Cannot close file $vienna_file_optimal: $!");
@@ -201,7 +201,7 @@ sub make_candidate_page {
         File::Spec->catfile( $output_folder, $alternatives_file ) )
       or die("Cannot open $alternatives_file: $!");
     print {$ALT_FILE}
-      miRkwood::Candidate->alternativeCandidatesAsVienna( \%candidate )
+      $candidate->alternativeCandidatesAsVienna()
       or die("Cannot write in file $alternatives_file: $!");
     close($ALT_FILE)
       or die("Cannot close file $alternatives_file: $!");
@@ -213,7 +213,7 @@ sub make_candidate_page {
 
     my $Vienna_HTML =
 "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    if ( $candidate{'Vienna'} ne $candidate{'Vienna_optimal'} ) {
+    if ( $candidate->{'Vienna'} ne $candidate->{'Vienna_optimal'} ) {
         $Vienna_HTML .=
 "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
     }
@@ -223,7 +223,7 @@ sub make_candidate_page {
     }
     my $alternatives_HTML =
       '<b>Alternative candidates (dot-bracket format):</b> ';
-    if ( $candidate{'alternatives'} ) {
+    if ( $candidate->{'alternatives'} ) {
         $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>";
     }
     else {
@@ -231,21 +231,21 @@ sub make_candidate_page {
     }
 
     my $alignmentHTML = q{};
-    if ( $candidate{'alignment'} ) {
+    if ( $candidate->{'alignment'} ) {
         $alignmentHTML =
-          miRkwood::Candidate->make_alignments_HTML( \%candidate );
+          $candidate->make_alignments_HTML();
     }
     else {
         $alignmentHTML = 'No alignment has been found.';
     }
     my $html = <<"END_TXT";
-<h2 id='$candidate{'name'}-$candidate{'position'}'>Results for $candidate{'name'}, $candidate{'position'}</h2>
+<h2 id='$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'}</h2>
     <ul>
     <li>
-      <b>Name: </b>$candidate{'name'}
+      <b>Name: </b>$candidate->{'name'}
     </li>
     <li>
-      <b>Position:</b> $candidate{'position'} ($size nt)
+      <b>Position:</b> $candidate->{'position'} ($size nt)
     </li>
     <li>
       <b>Strand:</b>
@@ -262,13 +262,13 @@ sub make_candidate_page {
 <h3>Thermodynamics stability</h3>
     <ul>
     <li>
-      <b>MFE:</b> $candidate{'mfe'} kcal/mol
+      <b>MFE:</b> $candidate->{'mfe'} kcal/mol
     </li>
     <li>
-      <b>AMFE:</b> $candidate{'amfe'}
+      <b>AMFE:</b> $candidate->{'amfe'}
     </li>
     <li>
-      <b>MFEI:</b> $candidate{'mfei'}
+      <b>MFEI:</b> $candidate->{'mfei'}
     </li>
     </ul>
 <h3>miRBase alignments</h3>

@@ -321,7 +321,7 @@ sub add_candidate {
 
     my $size = length ${$candidate}{'DNASequence'};
     my $vienna_seq =
-      miRkwood::Candidate->make_Vienna_viz( ${$candidate}{'Vienna'},
+      miRkwood::CandidateHandler->make_Vienna_viz( ${$candidate}{'Vienna'},
         ${$candidate}{'DNASequence'} );
 
     $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');

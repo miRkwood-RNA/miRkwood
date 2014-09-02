@@ -16,7 +16,7 @@ use miRkwood::Utils;
 use miRkwood::MiRdup;
 use miRkwood::Parsers;
 use miRkwood::Programs;
-use miRkwood::Candidate;
+use miRkwood::CandidateHandler;
 use miRkwood::Components;
 use miRkwood::Maskers;
 use miRkwood::PosterioriTests;
@@ -759,11 +759,10 @@ sub process_tests {
 			debug( "Entering candidate $subDir", miRkwood->DEBUG() );
 			process_tests_for_candidate( $candidate_dir, $subDir );
 			debug( "Done with candidate $subDir", miRkwood->DEBUG() );
-
 			if (
 				!eval {
-					miRkwood::Candidate
-					  ->serialize_candidate_information( $job_dir, $dir,
+					miRkwood::CandidateHandler
+					  ->serialize_candidate_from_run( $job_dir, $dir,
 						$subDir, $candidates_dir );
 				}
 			  )

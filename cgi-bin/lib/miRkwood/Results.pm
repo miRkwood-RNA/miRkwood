@@ -9,6 +9,7 @@ use feature 'switch';
 use Time::gmtime;
 
 use miRkwood::Candidate;
+use miRkwood::CandidateHandler;;
 use miRkwood::Utils;
 
 =method make_job_id
@@ -139,13 +140,13 @@ sub deserialize_results {
 		if (   $file ne "."
 			&& $file ne ".." )
 		{
-			my %candidate;
-			%candidate =
-			  miRkwood::Candidate->deserialize_candidate($full_file);
+			my $candidate;
+			$candidate =
+			  miRkwood::Candidate->new_from_serialized($full_file);
 			if (
 				!eval {
-					%candidate =
-					  miRkwood::Candidate->deserialize_candidate(
+					$candidate =
+					  miRkwood::Candidate->new_from_serialized(
 						$full_file);
 				}
 			  )
@@ -154,8 +155,8 @@ sub deserialize_results {
 				# Catching, do nothing
 			}
 			else {
-				my $identifier = $candidate{'identifier'};
-				$myResults{$identifier} = \%candidate;
+				my $identifier = $candidate->get_identifier();
+				$myResults{$identifier} = $candidate;
 			}
 		}
 	}
@@ -198,9 +199,11 @@ sub serialize_results {
 				{
 					if (
 						!eval {
-							miRkwood::Candidate
-							  ->serialize_candidate_information(
+						    my %candidate_information = 
+							 miRkwood::CandidateHandler->get_candidate_information_from_run(
 								$relative_job_dir, $dir, $subDir );
+							my $candidate = miRkwood::Candidate->new(%candidate_information);
+							$candidate->serialize_candidate()
 						}
 					  )
 					{
@@ -257,19 +260,19 @@ sub export {
 	my @keys = sort keys %results;
 	foreach my $key (@keys) {
 		if ( ( $key ~~@sequences_to_export ) || ($no_seq_selected) ) {
-			my $value = $results{$key};
+			my $candidate = $results{$key};
 			given ($export_type) {
 				when (/fas/) {
 					$output .=
-					  miRkwood::Candidate->candidateAsFasta($value);
+					  $candidate->candidateAsFasta();
 				}
 				when (/dot/) {
 					$output .=
-					  miRkwood::Candidate->candidateAsVienna($value);
+					  $candidate->candidateAsVienna();
 				}
 				when (/gff/) {
 					$output .=
-					  miRkwood::Candidate->candidate_as_gff($value);
+					  $candidate->candidate_as_gff();
 				}
 			}
 		}
@@ -302,9 +305,9 @@ sub resultstruct2csv {
 	my $result = join( ',', @csv_headers ) . "\n";
 
 	my @keys = sort {
-		( $results{$a}{'name'} cmp $results{$b}{'name'} )
+		( $results{$a}->{'name'} cmp $results{$b}->{'name'} )
 		  || (
-			$results{$a}{'start_position'} <=> $results{$b}{'start_position'} )
+			$results{$a}->{'start_position'} <=> $results{$b}->{'start_position'} )
 	} keys %results;
 	foreach my $key (@keys) {
 		if ( ( $key ~~@sequences_to_export ) || ($no_seq_selected) ) {
@@ -335,26 +338,26 @@ sub resultstruct2pseudoXML {
 
 	my $result = "<results id='all'>\n";
 	my @keys = sort {
-		( $results{$b}{'name'} cmp $results{$a}{'name'} )
+		( $results{$b}->{'name'} cmp $results{$a}->{'name'} )
 		  || (
-			$results{$a}{'start_position'} <=> $results{$b}{'start_position'} )
+			$results{$a}->{'start_position'} <=> $results{$b}->{'start_position'} )
 	} keys %results;
 
 	foreach my $key (@keys) {
-		my $value = $results{$key};
-        $result .= miRkwood::Candidate->candidate_as_pseudoXML($value) . "\n";
+		my $candidate = $results{$key};
+        $result .= $candidate->candidate_as_pseudoXML() . "\n";
 	}
 	$result .= "</results>\n";
 	$result .= "<results id='all2'>\n";
 	@keys = sort keys %results;
 	@keys = sort {
-		( $results{$b}{'quality'} cmp $results{$a}{'quality'} )
+		( $results{$b}->{'quality'} cmp $results{$a}->{'quality'} )
 		  || (
-			$results{$a}{'start_position'} <=> $results{$b}{'start_position'} )
+			$results{$a}->{'start_position'} <=> $results{$b}->{'start_position'} )
 	} keys %results;
 	foreach my $key (@keys) {
-		my $value = $results{$key};
-		$result .= miRkwood::Candidate->candidate_as_pseudoXML($value) . "\n";
+		my $candidate = $results{$key};
+		$result .= $candidate->candidate_as_pseudoXML() . "\n";
 	}
 	$result .= "</results>";
 	return $result;
