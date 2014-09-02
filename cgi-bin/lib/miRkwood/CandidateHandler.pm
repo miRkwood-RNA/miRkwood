@@ -116,10 +116,8 @@ sub get_candidate_information_from_run {
     my $can_dir = shift @args;
 
     my $cfg    = miRkwood->CONFIG();
-    my $candidate_base_filename = 'candidate.yml';
-
     my $full_candidate_dir = miRkwood::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
-    my $candidate_file = File::Spec->catfile($full_candidate_dir, $candidate_base_filename);
+
     my $candidate = $self->make_candidate_from_directory($full_candidate_dir);
     $candidate->{'identifier'} = "$seq_dir-$can_dir";
 #    $candidate{'name'} = $seq_dir;    #récupération nom séquence
