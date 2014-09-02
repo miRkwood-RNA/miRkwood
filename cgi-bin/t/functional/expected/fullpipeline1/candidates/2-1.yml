@@ -263,10 +263,10 @@
   \  |||||| |||||||||| |||||    ||||| ||  ||| ||||||||||  || \naaugu gccaag   cuaagu
   aacuacguuc guccu    ugagu cg  gcu ccaaagugug  ac u\n     a      u--      c          c
   \    guca     u  au   -          uc  c\n"
---- alignment
---- 2
 --- strand
 --- +
+--- alignment
+--- 2
 --- quality
 --- 3
 --- alternatives
@@ -298,7 +298,7 @@ contig15916__198-313:
 --- length
 --- 136
 --- mfei
---- '-0.842647058823529'
+--- -0.842647058823529
 --- mfe
 --- '-57.30'
 --- DNASequence

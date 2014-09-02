@@ -668,10 +668,10 @@
   \   uuuc        \n"
 --- '%GC'
 --- '37.04'
---- alignment
---- 1
 --- strand
 --- +
+--- alignment
+--- 1
 --- quality
 --- 2
 --- alternatives
@@ -703,7 +703,7 @@ contig15750__80-150:
 --- length
 --- 162
 --- mfei
---- '-1.00166666666667'
+--- -1.00166666666667
 --- mfe
 --- '-60.10'
 --- DNASequence

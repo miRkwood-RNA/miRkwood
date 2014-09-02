@@ -13,10 +13,10 @@
   |||||  A\nAUC UUUUUUGCUCGUUAUAUUCGG AGAAA  U\n   A                     A     UU\n"
 --- '%GC'
 --- '27.54'
---- alignment
---- 0
 --- strand
 --- +
+--- alignment
+--- 0
 --- quality
 --- 1
 --- Vienna_optimal
@@ -30,7 +30,7 @@
 --- amfe
 --- '-48.2608695652174'
 --- mfei
---- '-1.75263157894737'
+--- -1.75263157894737
 --- mfe
 --- '-33.30'
 --- DNASequence
