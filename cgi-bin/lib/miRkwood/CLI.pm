@@ -56,19 +56,7 @@ sub make_html_from_results {
     my $pieces_folder = File::Spec->catdir('pieces');
 
     my $output_folder = shift @args;
-    my $css           = <<"END_TXT";
-table{
-border:1px solid black;
-border-collapse:collapse;
-width:80%;
-}
-th, td {
-border:1px solid black;
-}
-span.mature {
-    color: blue;
-}
-END_TXT
+    my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
     $page .= miRkwood::Results->resultstruct2table( \%results );
 
@@ -304,6 +292,31 @@ sub get_simple_results_page {
 </html>
 END_TXT
     return $HTML;
+}
+
+
+=method get_page_css
+
+Returns the CSS needed for the webpage
+
+=cut
+
+sub get_page_css {
+    my @args = @_;
+    my $css = <<"END_TXT";
+table{
+border:1px solid black;
+border-collapse:collapse;
+width:80%;
+}
+th, td {
+border:1px solid black;
+}
+span.mature {
+    color: blue;
+}
+END_TXT
+    return ($css);
 }
 
 1;
