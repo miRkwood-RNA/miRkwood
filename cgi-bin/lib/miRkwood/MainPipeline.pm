@@ -20,6 +20,7 @@ use miRkwood::CandidateHandler;
 use miRkwood::Components;
 use miRkwood::Maskers;
 use miRkwood::PosterioriTests;
+use miRkwood::FileUtils;
 use Log::Message::Simple qw[msg error debug];
 
 ### Data ##
@@ -698,38 +699,6 @@ sub process_outRNAFold {
 
 }
 
-=method is_directory
-
-Return whether the given file object (name and parent)
-is a directory or not.
-
-=cut
-
-sub is_directory{
-    my @args = @_;
-    my ($directory_name, $parent_directory) = @args;
-    my $directory = File::Spec->catdir( $parent_directory, $directory_name );
-    return ( $directory_name ne '.'
-             && $directory_name ne '..'
-             && -d $directory );
-}
-
-=method get_dirs_from_directory
-
-Get the sub-directories from the given directory,
-avoiding self and parent.
-
-=cut
-
-sub get_dirs_from_directory {
-    my @args = @_;
-    my $parent_directory = shift @args;
-    opendir DIR, $parent_directory;
-    my @dirs = grep { is_directory($_, $parent_directory) }  readdir DIR;;
-    closedir DIR;
-    return sort {$a <=> $b} @dirs;
-}
-
 
 =method process_tests
 
@@ -743,7 +712,7 @@ sub process_tests {
     my $candidates_dir = File::Spec->catdir( $job_dir, 'candidates' );
     my $workspace_dir = miRkwood::Paths->get_workspace_path($job_dir);
 
-	my @sequence_dirs = get_dirs_from_directory($workspace_dir);
+	my @sequence_dirs = miRkwood::FileUtils::get_dirs_from_directory($workspace_dir);
 
 	mkdir $candidates_dir;
 	foreach my $dir (@sequence_dirs)
@@ -751,7 +720,7 @@ sub process_tests {
 		my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
 		debug( "Entering sequence $sequence_dir", miRkwood->DEBUG() );
 
-		my @candidate_dirs = get_dirs_from_directory($sequence_dir);
+		my @candidate_dirs = miRkwood::FileUtils::get_dirs_from_directory($sequence_dir);
 		foreach my $subDir (@candidate_dirs) {
 			my $candidate_dir =
 			  File::Spec->catdir( $sequence_dir, $subDir );
