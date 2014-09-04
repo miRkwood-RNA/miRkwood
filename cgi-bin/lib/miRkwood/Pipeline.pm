@@ -193,26 +193,35 @@ sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
     my @sequences_array = $self->get_sequences();
     my $sequences_count = scalar @sequences_array;
-
     debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
+    $self->compute_candidates();
+    $self->process_tests();
+    debug('miRkwood processing done', miRkwood->DEBUG() );
+    $self->mark_job_as_finished();
+    debug("Writing finish file", miRkwood->DEBUG() );
+    return;
+}
+
+sub compute_candidates {
+    my ($self, @args) = @_;
+    my @sequences_array = $self->get_sequences();
     my $sequence_dir_name = 0;
-    foreach my $item (@sequences_array){
-        my ($name, $sequence) = @{$item};
-        debug( "Considering sequence $sequence_dir_name: $name", miRkwood->DEBUG() );
+    foreach my $item (@sequences_array) {
+        my ( $name, $sequence ) = @{$item};
+        debug( "Considering sequence $sequence_dir_name: $name",
+               miRkwood->DEBUG() );
         $sequence_dir_name++;
-        my $sequence_dir = File::Spec->catdir( $self->get_workspace_path(), $sequence_dir_name );
+        my $sequence_dir =
+          File::Spec->catdir( $self->get_workspace_path(), $sequence_dir_name );
         mkdir $sequence_dir;
 
-        my $candidates_array = $self->get_raw_candidates($sequence_dir, $name, $sequence);
+        my $candidates_array =
+          $self->get_raw_candidates( $sequence_dir, $name, $sequence );
 
         my %candidates_hash = $self->process_raw_candidates($candidates_array);
 
         create_directories( \%candidates_hash, $sequence_dir );
     }
-    $self->process_tests();
-    debug('miRkwood processing done', miRkwood->DEBUG() );
-    $self->mark_job_as_finished();
-    debug("Writing finish file", miRkwood->DEBUG() );
     return;
 }
 
@@ -718,6 +727,5 @@ sub post_process_alignments {
         YAML::XS::DumpFile( $alignments_results_file, %alignments );
     }
 }
-
 
 1;
