@@ -66,8 +66,8 @@ if ( !-e $abs_output_folder ) {
 
 # Importing modules after directory creation
 use miRkwood;
+use miRkwood::Pipeline;
 use miRkwood::CLI;
-use miRkwood::MainPipeline;
 use miRkwood::Paths;
 
 my $seq_name = 'input_sequences.fas';
@@ -81,7 +81,9 @@ miRkwood->CONFIG_FILE($run_options_file);
 miRkwood::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles,
     $align, "", $species_mask, $varna, 'fasta' );
 
-miRkwood::MainPipeline::fasta_pipeline($abs_output_folder);
+my $pipeline = miRkwood::Pipeline->new($abs_output_folder);
+$pipeline->run_pipeline();
+
 
 unless ($no_process) {
 	my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );

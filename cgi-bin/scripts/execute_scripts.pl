@@ -8,11 +8,12 @@ use FindBin;
 BEGIN {
     use lib File::Spec->catdir( $FindBin::Bin, '..', 'lib' );
     use miRkwood;
-    use miRkwood::MainPipeline;
+    use miRkwood::Pipeline;
 }
 
 
 ## Code ##
-my ( $idirJob ) = @ARGV;
+my ( $job_dir ) = @ARGV;
 
-miRkwood::MainPipeline::fasta_pipeline( $idirJob );
+my $pipeline = miRkwood::Pipeline->new($job_dir);
+$pipeline->run_pipeline();

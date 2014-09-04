@@ -69,7 +69,7 @@ if ( !-e $abs_output_folder ) {
 # Importing modules after directory creation
 use miRkwood;
 use miRkwood::CLI;
-use miRkwood::MainPipeline;
+use miRkwood::BamPipeline;
 use miRkwood::Paths;
 use miRkwood::Clusters;
 
@@ -77,7 +77,10 @@ my $run_options_file =
   miRkwood::Paths->get_job_config_path($abs_output_folder);
 miRkwood->CONFIG_FILE($run_options_file);
 miRkwood::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles, $align, $job_title, $plant, $varna,  'bam' );
-miRkwood::MainPipeline::bam_pipeline($abs_output_folder, $bam_file, $genome_file);
+
+my $pipeline = miRkwood::BamPipeline->new($abs_output_folder, $bam_file, $genome_file);
+$pipeline->run_pipeline();
+
 
 unless ($no_process) {
 	my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );

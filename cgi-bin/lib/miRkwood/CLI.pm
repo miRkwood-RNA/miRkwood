@@ -5,7 +5,6 @@ package miRkwood::CLI;
 use strict;
 use warnings;
 
-use miRkwood::MainPipeline;
 use miRkwood::Results;
 
 =method process_results_dir_for_offline
