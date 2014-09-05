@@ -73,7 +73,7 @@ sub get_raw_candidates_for_sequence {
     my $rnalfold_output = $self->run_rnalfold_on_sequence();
 
     my ($rnastemloop_out_stemloop, $rnastemloop_out_optimal) =
-       $self->run_RNAstemloop_on_rnalfold_output($rnalfold_output, $self->{'directory'});
+      $self->run_RNAstemloop_on_rnalfold_output( $rnalfold_output );
 
     my $rnaeval_out_optimal =
       $self->run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal, 'optimal' );
