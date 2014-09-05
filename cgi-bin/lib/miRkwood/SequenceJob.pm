@@ -45,6 +45,11 @@ sub get_strand {
     return $self->{'strand'};
 }
 
+sub is_opposite_strand {
+    my $self = shift;
+    return ($self->get_strand() eq '-');
+}
+
 =method get_sequence_length
 
 Return the length of the sequence
@@ -223,7 +228,7 @@ sub process_RNAstemloop {
                     my ($mfei, $amfe) =
                       miRkwood::Utils::compute_mfei_and_amfe( $dna, $energy_optimal );
                     my ( $start, $end );
-                    if ( $self->get_strand() eq '-' ) {
+                    if ( $self->is_opposite_strand() ) {
                         my $res =
                           miRkwood::Utils::get_position_from_opposite_strand
                           ( $1, $2, $self->get_sequence_length() );
