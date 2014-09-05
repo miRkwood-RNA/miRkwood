@@ -173,9 +173,8 @@ sub process_RNAstemloop_on_filenames {
 
 =method process_RNAstemloop
 
-Process the outputs of RNAstemloop + RNAeval
-Writes the sequence on disk (seq.txt) and outRNAFold.txt
-(for a given suffix)
+Process the outputs of RNAstemloop + RNAeval (both optimal and stemloop)
+Returns a list of candidates.
 
 =cut
 
