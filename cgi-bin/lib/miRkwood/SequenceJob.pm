@@ -84,6 +84,25 @@ sub get_raw_candidates_for_sequence {
     return $res;
 }
 
+=method run_rnalfold_on_sequence
+
+ Usage : run_rnalfold_on_sequence($sequence);
+ Return: $rnalfold_output
+
+=cut
+
+sub run_rnalfold_on_sequence {
+    my ( $self, @args ) = @_;
+    debug( 'Running RNALfold', miRkwood->DEBUG() );
+    my $rnalfold_output = File::Spec->catfile( $self->{'directory'}, 'RNALfold.out' );
+    my $temp_file = File::Spec->catfile( $self->{'directory'}, 'tempFile.txt' );
+    miRkwood::Programs::run_rnalfold( $self->{'name'}, $self->{'sequence'}, $temp_file,
+        $rnalfold_output )
+      or die("Problem when running RNALfold: $!");
+    return $rnalfold_output;
+}
+
+
 =method run_RNAstemloop_on_rnalfold_output
 
  Usage : run_RNAstemloop_on_rnalfold_output( $rnalfold_output, $sequence_dir );
@@ -103,25 +122,6 @@ sub run_RNAstemloop_on_rnalfold_output {
         $rnastemloop_out_stemloop, $rnastemloop_out_optimal )
       or die("Problem when running RNAstemloop");
     return ($rnastemloop_out_stemloop, $rnastemloop_out_optimal);
-}
-
-
-=method run_rnalfold_on_sequence
-
- Usage : run_rnalfold_on_sequence($sequence);
- Return: $rnalfold_output
-
-=cut
-
-sub run_rnalfold_on_sequence {
-    my ( $self, @args ) = @_;
-    debug( 'Running RNALfold', miRkwood->DEBUG() );
-    my $rnalfold_output = File::Spec->catfile( $self->{'directory'}, 'RNALfold.out' );
-    my $temp_file = File::Spec->catfile( $self->{'directory'}, 'tempFile.txt' );
-    miRkwood::Programs::run_rnalfold( $self->{'name'}, $self->{'sequence'}, $temp_file,
-        $rnalfold_output )
-      or die("Problem when running RNALfold: $!");
-    return $rnalfold_output;
 }
 
 
