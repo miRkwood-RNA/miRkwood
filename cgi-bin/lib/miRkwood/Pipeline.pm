@@ -591,12 +591,8 @@ Perform the a posteriori tests for a given job
 
 sub process_tests {
     my ($self, @args) = @_;
-    debug( "A posteriori tests in $self->get_job_dir()", miRkwood->DEBUG() );
-    
     my $workspace_dir = $self->get_workspace_path();
-
     my @sequence_dirs = miRkwood::FileUtils::get_dirs_from_directory($workspace_dir);
-    
     foreach my $dir (@sequence_dirs)
     {
         my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
