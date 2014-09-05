@@ -82,11 +82,11 @@ sub get_raw_candidates_for_sequence {
       $self->run_RNAeval_on_RNAstemloop_stemloop_output( $rnastemloop_out_stemloop );
 
     my $seq_length = length $self->{'sequence'};
-    my $res = $self->process_RNAstemloop_on_filenames(
+    my $candidates = $self->process_RNAstemloop_on_filenames(
                                                 $rnastemloop_out_stemloop,
                                                 $rnaeval_out_optimal,
                                                 $rnaeval_out_stemloop );
-    return $res;
+    return $candidates;
 }
 
 =method run_rnalfold_on_sequence
@@ -185,13 +185,13 @@ sub process_RNAstemloop_on_filenames {
     open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
     my $msg = "Processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
     debug( $msg, miRkwood->DEBUG() );
-    my $res =
+    my $candidates =
       $self->process_RNAstemloop($STEM_FH,
         $EVAL_OPT_FH, $EVAL_STEM_FH );
     close($STEM_FH);
     close($EVAL_OPT_FH);
     close($EVAL_STEM_FH);
-    return $res;
+    return $candidates;
 }
 
 =method process_RNAstemloop
