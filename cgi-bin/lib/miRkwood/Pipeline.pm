@@ -13,10 +13,8 @@ use miRkwood::Components;
 use miRkwood::FileUtils;
 use miRkwood::Maskers;
 use miRkwood::MiRdup;
-use miRkwood::Parsers;
 use miRkwood::Paths;
 use miRkwood::PosterioriTests;
-use miRkwood::Programs;
 use miRkwood::SequenceJob;
 use miRkwood::Utils;
 
