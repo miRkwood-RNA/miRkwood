@@ -244,7 +244,7 @@ sub get_raw_candidates{
         my $reversed_sequence =
           miRkwood::Utils::reverse_complement($self->{'sequence'});
         my $sequence_job2 = miRkwood::SequenceJob->new($sequence_dir, $name, $reversed_sequence, '-');
-        my $candidates2 = $sequence_job->compute_candidates_for_sequence();
+        my $candidates2 = $sequence_job->get_raw_candidates_for_sequence();
         my @candidates_array2 = @{$candidates2};
         @candidates_array = sort { $a->{start} <=> $b->{start} } ( @candidates_array1, @candidates_array2 );
     }
