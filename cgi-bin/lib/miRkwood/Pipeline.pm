@@ -9,12 +9,10 @@ use Log::Message::Simple qw[msg error debug];
 
 use miRkwood;
 use miRkwood::CandidateHandler;
-use miRkwood::Components;
 use miRkwood::FileUtils;
 use miRkwood::Maskers;
-use miRkwood::MiRdup;
 use miRkwood::Paths;
-use miRkwood::PosterioriTests;
+use miRkwood::CandidateJob;
 use miRkwood::SequenceJob;
 use miRkwood::Utils;
 
@@ -610,7 +608,8 @@ sub process_tests {
               File::Spec->catdir( $sequence_dir, $subDir );
 
             debug( "Entering candidate $subDir", miRkwood->DEBUG() );
-            process_tests_for_candidate( $candidate_dir );
+            my $candidatejob = miRkwood::CandidateJob->new($candidate_dir);
+            $candidatejob->process_tests_for_candidate();
             debug( "Done with candidate $subDir", miRkwood->DEBUG() );
             if (
                 !eval {
@@ -632,98 +631,6 @@ sub process_tests {
     } # foreach my $dir (@dirs)
     debug( "Done with all the tests", miRkwood->DEBUG() );
     return 0;
-}
-
-=method process_tests_for_candidate
-
-Perform the a posteriori tests for a given candidate
-
-=cut
-
-sub process_tests_for_candidate {
-
-    my @args = @_;
-    my ( $candidate_dir, $file ) = @args;
-
-    ####Traitement fichier de sortie outStemloop
-    chmod 0777, $candidate_dir;
-
-    my $seq_file = File::Spec->catfile( $candidate_dir, 'seq.txt' );
-    my $candidate_rnafold_optimal_out =
-      File::Spec->catfile( $candidate_dir, 'outRNAFold_optimal.txt' );
-    my $candidate_rnafold_stemploop_out =
-      File::Spec->catfile( $candidate_dir, 'outRNAFold_stemloop.txt' );
-
-    my $cfg = miRkwood->CONFIG();
-
-    ####calcul p-value randfold
-    if ( $cfg->param('options.randfold') ) {
-        debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
-        miRkwood::PosterioriTests::test_randfold( $candidate_dir,
-            $seq_file );
-    }
-
-    if ( $cfg->param('options.align') ) {
-        debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
-        my $file_alignement =
-          miRkwood::PosterioriTests::test_alignment( $candidate_dir,
-            $candidate_rnafold_stemploop_out );
-        post_process_alignments( $candidate_dir,
-            $candidate_rnafold_stemploop_out,
-            $file_alignement );
-    }
-
-    return;
-}
-
-=method post_process_alignments
-
-
-=cut
-
-sub post_process_alignments {
-    my @args                            = @_;
-    my $candidate_dir                   = shift @args;
-    my $candidate_rnafold_stemploop_out = shift @args;
-    my $file_alignement                 = shift @args;
-
-    my @res =
-      miRkwood::Components::get_data_from_rnafold_out(
-        $candidate_rnafold_stemploop_out);
-    my ( $name, $position, $DNASequence, $Vienna ) = @res;
-    my %alignments;
-
-    if (-z $file_alignement){
-        return;
-    }
-    if (
-        !eval {
-            %alignments =
-              miRkwood::Components::parse_custom_exonerate_output(
-                $file_alignement);
-        }
-      )
-    {
-        # Catching exception
-        carp("Exception when parsing exonerate output $file_alignement");
-        return;
-    }
-    else {
-        %alignments =
-          miRkwood::Components::merge_alignments( \%alignments );
-        my $tmp_file =
-          File::Spec->catfile( $candidate_dir, "mirdup_validation.txt" );
-        my %mirdup_results =
-          miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $name,
-            $DNASequence, $Vienna, keys %alignments );
-        my $mirdup_results_file =
-          File::Spec->catfile( $candidate_dir, 'mirdup_results.yml' );
-        YAML::XS::DumpFile( $mirdup_results_file, %mirdup_results );
-
-        my $alignments_results_file =
-          File::Spec->catfile( $candidate_dir, 'merged_alignments.yml' );
-        YAML::XS::DumpFile( $alignments_results_file, %alignments );
-    }
 }
 
 1;
