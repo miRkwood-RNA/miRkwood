@@ -45,7 +45,6 @@ Perform the a posteriori tests for a given candidate
 sub process_tests_for_candidate {
     my ( $self, @args ) = @_;
     my $dir = $self->get_directory();
-    debug( "== Running process_tests_for_candidate in $dir ==", miRkwood->DEBUG() );
     my $seq_file = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
     my $candidate_rnafold_optimal_out =
       File::Spec->catfile( $self->get_directory(), 'outRNAFold_optimal.txt' );
