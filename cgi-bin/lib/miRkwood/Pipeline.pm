@@ -610,7 +610,7 @@ sub process_tests {
               File::Spec->catdir( $sequence_dir, $subDir );
 
             debug( "Entering candidate $subDir", miRkwood->DEBUG() );
-            process_tests_for_candidate( $candidate_dir, $subDir );
+            process_tests_for_candidate( $candidate_dir );
             debug( "Done with candidate $subDir", miRkwood->DEBUG() );
             if (
                 !eval {
