@@ -76,10 +76,10 @@ sub get_raw_candidates_for_sequence {
       $self->run_RNAstemloop_on_rnalfold_output( $rnalfold_output );
 
     my $rnaeval_out_optimal =
-      $self->run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal, 'optimal' );
+      $self->run_RNAeval_on_RNAstemloop_optimal_output( $rnastemloop_out_optimal );
 
     my $rnaeval_out_stemloop =
-    $self->run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop,  'stemloop' );
+      $self->run_RNAeval_on_RNAstemloop_stemloop_output( $rnastemloop_out_stemloop );
 
     my $seq_length = length $self->{'sequence'};
     my $res = $self->process_RNAstemloop_on_filenames(
@@ -107,7 +107,6 @@ sub run_rnalfold_on_sequence {
     return $rnalfold_output;
 }
 
-
 =method run_RNAstemloop_on_rnalfold_output
 
  Usage : run_RNAstemloop_on_rnalfold_output( $rnalfold_output, $sequence_dir );
@@ -129,6 +128,25 @@ sub run_RNAstemloop_on_rnalfold_output {
     return ($rnastemloop_out_stemloop, $rnastemloop_out_optimal);
 }
 
+=method run_RNAeval_on_RNAstemloop_optimal_output
+
+=cut
+
+sub run_RNAeval_on_RNAstemloop_optimal_output {
+    my ($self, @args)  = @_;
+    my $rnastemloop_out_optimal = shift @args;
+    return $self->run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_optimal, 'optimal' );
+}
+
+=method run_RNAeval_on_RNAstemloop_stemloop_output
+
+=cut
+
+sub run_RNAeval_on_RNAstemloop_stemloop_output {
+    my ($self, @args)  = @_;
+    my $rnastemloop_out_stemloop = shift @args;
+    return $self->run_RNAeval_on_RNAstemloop_output( $rnastemloop_out_stemloop, 'stemloop' );
+}
 
 =method run_RNAeval_on_RNAstemloop_output
 
