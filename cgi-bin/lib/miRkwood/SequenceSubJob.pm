@@ -17,7 +17,7 @@ use Log::Message::Simple qw[msg error debug];
 
 Constructor
 
-my $sequence_job = miRkwood::SequenceSubJob->new($sequence_dir, $name, $sequence, '+');
+my $sequence_subjob = miRkwood::SequenceSubJob->new($sequence_dir, $name, $sequence, '+');
 
 =cut
 
