@@ -315,10 +315,6 @@ sub process_tests {
             my $candidate_dir =
               File::Spec->catdir( $sequence_dir, $subDir );
 
-            debug( "Entering candidate $subDir", miRkwood->DEBUG() );
-            my $candidatejob = miRkwood::CandidateJob->new($candidate_dir);
-            $candidatejob->process_tests_for_candidate();
-            debug( "Done with candidate $subDir", miRkwood->DEBUG() );
             if (
                 !eval {
                     miRkwood::CandidateHandler
