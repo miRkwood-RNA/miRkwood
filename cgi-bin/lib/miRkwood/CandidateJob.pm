@@ -5,6 +5,8 @@ package miRkwood::CandidateJob;
 use strict;
 use warnings;
 
+use miRkwood;
+use miRkwood::CandidateHandler;
 use miRkwood::Components;
 use miRkwood::MiRdup;
 use miRkwood::PosterioriTests;
@@ -22,9 +24,10 @@ Usage:
 
 sub new {
     my ( $class, @args ) = @_;
-    my ($directory) = @args;
+    my ($directory, $identifier) = @args;
     my $self = {
         directory => $directory,
+        identifier => $identifier,
     };
     bless $self, $class;
     return $self;
