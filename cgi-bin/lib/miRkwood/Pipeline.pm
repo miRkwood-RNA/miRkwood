@@ -190,12 +190,15 @@ sub run_pipeline_on_sequences {
     my $sequences_count = scalar @sequences_array;
     debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
     $self->compute_candidates();
-    $self->process_tests();
     debug('miRkwood processing done', miRkwood->DEBUG() );
     $self->mark_job_as_finished();
     debug("Writing finish file", miRkwood->DEBUG() );
     return;
 }
+
+=method compute_candidates
+
+=cut
 
 sub compute_candidates {
     my ($self, @args) = @_;
@@ -211,8 +214,18 @@ sub compute_candidates {
         mkdir $sequence_dir;
         my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
         my $sequence_candidates = $sequence_job->run();
+        $self->serialize_candidates($sequence_candidates);
     }
     return;
+}
+
+sub serialize_candidates {
+    my ($self, @args) = @_;
+    my $candidates = shift @args;
+    my @candidates_array = @{$candidates};
+    foreach my $candidate (@candidates_array ) {
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+    }
 }
 
 =method get_masking_information
@@ -253,9 +266,6 @@ sub get_masking_information {
     return %filter;
 }
 
-
-
-
 =method get_job_config_path
 
 Given a job directory, return the path to the job configuration file
@@ -292,49 +302,6 @@ sub mark_job_as_finished {
         or die "Error when opening $is_finished_file: $!";
     close $finish;
     return (-e $is_finished_file);
-}
-
-
-=method process_tests
-
-Perform the a posteriori tests for a given job
-
-=cut
-
-sub process_tests {
-    my ($self, @args) = @_;
-    my $workspace_dir = $self->get_workspace_path();
-    my @sequence_dirs = miRkwood::FileUtils::get_dirs_from_directory($workspace_dir);
-    foreach my $dir (@sequence_dirs)
-    {
-        my $sequence_dir = File::Spec->catdir( $workspace_dir, $dir );
-        debug( "Entering sequence $sequence_dir", miRkwood->DEBUG() );
-
-        my @candidate_dirs = miRkwood::FileUtils::get_dirs_from_directory($sequence_dir);
-        foreach my $subDir (@candidate_dirs) {
-            my $candidate_dir =
-              File::Spec->catdir( $sequence_dir, $subDir );
-
-            if (
-                !eval {
-                    miRkwood::CandidateHandler
-                      ->serialize_candidate_from_run( $self->get_job_dir(), $dir,
-                        $subDir, $self->get_candidates_dir() );
-                }
-              )
-            {
-                # Catching
-                carp( "Serialization of $subDir failed" );
-            }
-            else {
-                debug( "Done with serializing $subDir", miRkwood->DEBUG() );
-                # All is well
-            }
-        } # foreach my $file (@files)
-        debug( "Done with initial sequence $dir", miRkwood->DEBUG() );
-    } # foreach my $dir (@dirs)
-    debug( "Done with all the tests", miRkwood->DEBUG() );
-    return 0;
 }
 
 1;

@@ -44,7 +44,8 @@ sub run{
     my ( $self, @args ) = @_;
     $self->populate_candidate_directory();
     $self->process_tests_for_candidate();
-    my $candidate_object = undef;
+    my $candidate_object = miRkwood::CandidateHandler->get_candidate_information_from_run($self->get_directory());
+    $candidate_object->{'identifier'} = $self->{'identifier'};
     return $candidate_object;
 }
 

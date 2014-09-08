@@ -92,13 +92,6 @@ my $cfg_file = input_file('run_options.cfg');
 miRkwood->CONFIG_FILE($cfg_file);
 
 my $dummy_dir = input_file();
-ok( my $result3 = miRkwood::CandidateHandler->get_candidate_information_from_run($dummy_dir, '1', '1'),
+ok( my $result3 = miRkwood::CandidateHandler->get_candidate_information_from_run($candidate_dir),
     'can call get_candidate_information_from_run()');
 isa_ok($result3, 'miRkwood::Candidate');
-
-my $tmp_dir2 = File::Temp::tempdir();
-ok( my $result4 = miRkwood::CandidateHandler->serialize_candidate_from_run($dummy_dir, '1', '1', $tmp_dir2),
-    'can call serialize_candidate_from_run()');
-my $tmp_file2 = File::Spec->catfile($tmp_dir2, '1-1.yml');
-file_exists_ok($tmp_file,
-               "Serialized file exists (in $tmp_file2)");

@@ -57,7 +57,7 @@ sub make_candidate_filename {
     return $identifier . '.yml';
 }
 
-=method serialize_candidate
+=method serialize_candidate_information
 
 Serialize the given candidate on disk
 
@@ -77,29 +77,6 @@ sub serialize_candidate_information {
     return YAML::XS::DumpFile($serialization_file, %converted_hash);
 }
 
-
-=method serialize_candidate_from_run
-
-Retrieve the information from a run and serialize a candidate on disk
-
-Arguments:
-- $job_dir - the job directory
-- $seq_dir - the sequence directory
-- $can_dir - the candidate directory
-- $serialization_dir - The directory in which to serialize
-
-=cut
-
-sub serialize_candidate_from_run{
-    my ( $self, @args ) = @_;
-    my $job_dir = shift @args;
-    my $seq_dir = shift @args;
-    my $can_dir = shift @args;
-    my $serialization_dir = shift @args;
-    my $candidate_object = $self->get_candidate_information_from_run( $job_dir, $seq_dir, $can_dir );
-    return $self->serialize_candidate_information($serialization_dir, $candidate_object);
-}
-
 =method get_candidate_information_from_run
 
 Arguments:
@@ -111,16 +88,10 @@ Arguments:
 
 sub get_candidate_information_from_run {
     my ( $self, @args ) = @_;
-    my $job_dir = shift @args;
-    my $seq_dir = shift @args;
-    my $can_dir = shift @args;
+    my $full_candidate_dir = shift @args;
 
     my $cfg    = miRkwood->CONFIG();
-    my $full_candidate_dir = miRkwood::Paths->get_candidate_paths($job_dir,  $seq_dir, $can_dir);
-
     my $candidate = $self->make_candidate_from_directory($full_candidate_dir);
-    $candidate->{'identifier'} = "$seq_dir-$can_dir";
-#    $candidate{'name'} = $seq_dir;    #récupération nom séquence
 
     if ( $cfg->param('options.varna') ) {
         $candidate->{'image'} = File::Spec->catfile($full_candidate_dir, 'image.png');
