@@ -9,4 +9,4 @@ if [ -z "$1" ]
 	exit 1
 fi
 EXECUTION_PATH=$(readlink -f $1)
-jshint --reporter=jslint $EXECUTION_PATH | tee jslint.txt
+jshint --reporter=jslint $EXECUTION_PATH > jslint.txt
