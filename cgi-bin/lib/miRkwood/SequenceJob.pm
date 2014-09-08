@@ -55,6 +55,11 @@ sub get_sequence {
     return $self->{'sequence'};
 }
 
+sub get_directory {
+    my ($self, @args)  = @_;
+    return $self->{'directory'};
+}
+
 =method get_sequence_length
 
 Return the length of the sequence
@@ -104,8 +109,8 @@ sub get_raw_candidates_for_sequence {
 sub run_rnalfold_on_sequence {
     my ( $self, @args ) = @_;
     debug( 'Running RNALfold', miRkwood->DEBUG() );
-    my $rnalfold_output = File::Spec->catfile( $self->{'directory'}, 'RNALfold.out' );
-    my $temp_file = File::Spec->catfile( $self->{'directory'}, 'tempFile.txt' );
+    my $rnalfold_output = File::Spec->catfile( $self->get_directory(), 'RNALfold.out' );
+    my $temp_file = File::Spec->catfile( $self->get_directory(), 'tempFile.txt' );
     miRkwood::Programs::run_rnalfold( $self->{'name'}, $self->get_sequence(), $temp_file,
         $rnalfold_output )
       or die("Problem when running RNALfold: $!");
@@ -123,9 +128,9 @@ sub run_RNAstemloop_on_rnalfold_output {
     my ( $self, @args ) = @_;
     my $rnalfold_output = shift @args;
 
-    my $rnastemloop_out_optimal = File::Spec->catfile( $self->{'directory'}, 'rnastemloop_optimal.out' );
+    my $rnastemloop_out_optimal = File::Spec->catfile( $self->get_directory(), 'rnastemloop_optimal.out' );
     my $rnastemloop_out_stemloop =
-      File::Spec->catfile( $self->{'directory'}, 'rnastemloop_stemloop.out' );
+      File::Spec->catfile( $self->get_directory(), 'rnastemloop_stemloop.out' );
     debug( "Running RNAstemloop on $rnalfold_output", miRkwood->DEBUG() );
     miRkwood::Programs::run_rnastemloop( $rnalfold_output,
         $rnastemloop_out_stemloop, $rnastemloop_out_optimal )
