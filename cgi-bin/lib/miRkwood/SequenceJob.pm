@@ -231,13 +231,13 @@ Create the necessary directories.
 
 sub create_directories {
     my ($self, @args) = @_;
-    my (%candidates_hash)    = %{ shift @args };
+    my (%candidates_hash) = %{ shift @args };
 
-    my $candidate_counter    = 0;
+    my $candidate_identifier = 0;
     foreach my $key ( sort keys %candidates_hash ) {
-        $candidate_counter++;
+        $candidate_identifier++;
         my $candidate_dir =
-          File::Spec->catdir( $self->get_directory(), $candidate_counter );
+          File::Spec->catdir( $self->get_directory(), $candidate_identifier );
         mkdir $candidate_dir;
         my $candidate_ref = $candidates_hash{$key}{'max'};
         populate_candidate_directory( $candidate_dir, $candidate_ref,
