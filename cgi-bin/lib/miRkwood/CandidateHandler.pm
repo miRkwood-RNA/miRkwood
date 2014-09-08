@@ -243,38 +243,4 @@ sub make_candidate_from_directory {
     return $candidate;
 }
 
-=method make_Vienna_viz
-
-Make a nicer Vienna display by cutting too long lines.
-
-Usage:
-my $string = make_Vienna_viz($Vienna, $DNASequence)
-
-=cut
-
-sub make_Vienna_viz {
-    my ($self, @args) = @_;
-    my $Vienna = shift @args;
-    my $DNASequence = shift @args;
-
-    my $viennaString   = q{};
-    my $sequenceString = q{};
-    my $string         = q{};
-    my $wrap_length = 60;
-    for ( 1 .. length($Vienna) ) {
-        $viennaString   .= substr $Vienna,      $_ - 1, 1;
-        $sequenceString .= substr $DNASequence, $_ - 1, 1;
-        if ( $_ % $wrap_length == 0 ) {
-
-            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
-            $viennaString   = q{};
-            $sequenceString = q{};
-        }
-        if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
-            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
-        }
-    }
-    return $string
-}
-
 1;
