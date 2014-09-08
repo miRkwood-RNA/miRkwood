@@ -1,4 +1,4 @@
-package miRkwood::SequenceJob;
+package miRkwood::SequenceSubJob;
 
 # ABSTRACT: Job processing a given sequence
 
@@ -17,7 +17,7 @@ use Log::Message::Simple qw[msg error debug];
 
 Constructor
 
-my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $name, $sequence, '+');
+my $sequence_job = miRkwood::SequenceSubJob->new($sequence_dir, $name, $sequence, '+');
 
 =cut
 

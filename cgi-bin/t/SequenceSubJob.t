@@ -13,14 +13,14 @@ use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
 
 BEGIN {
-    use_ok('miRkwood::SequenceJob');
+    use_ok('miRkwood::SequenceSubJob');
 }
-require_ok('miRkwood::SequenceJob');
+require_ok('miRkwood::SequenceSubJob');
 
 my $tmp_dir = File::Temp::tempdir();
 my $sequence = 'ACGATGCTGAGCTAGCGTAGCTAAT';
 my @args = ($tmp_dir, 'sample', $sequence , '-');
-my $sequence_job = new_ok( 'miRkwood::SequenceJob' => \@args );
+my $sequence_job = new_ok( 'miRkwood::SequenceSubJob' => \@args );
 
 my @funcs = qw(get_strand get_sequence get_directory
                is_opposite_strand get_sequence_length);

@@ -13,7 +13,7 @@ use miRkwood::FileUtils;
 use miRkwood::Maskers;
 use miRkwood::Paths;
 use miRkwood::CandidateJob;
-use miRkwood::SequenceJob;
+use miRkwood::SequenceSubJob;
 use miRkwood::Utils;
 
 use Data::Dumper;
@@ -232,7 +232,7 @@ Get the candidates for the given
 sub get_raw_candidates{
     my ($self, @args) = @_;
     my ($sequence_dir, $name, $sequence) = @args;
-    my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $name, $sequence, '+');
+    my $sequence_job = miRkwood::SequenceSubJob->new($sequence_dir, $name, $sequence, '+');
     my $candidates = $sequence_job->get_raw_candidates_for_sequence();
 
     my @candidates_array1 = @{$candidates};
@@ -243,7 +243,7 @@ sub get_raw_candidates{
         debug( "Processing the other strand", miRkwood->DEBUG() );
         my $reversed_sequence =
           miRkwood::Utils::reverse_complement($self->{'sequence'});
-        my $sequence_job2 = miRkwood::SequenceJob->new($sequence_dir, $name, $reversed_sequence, '-');
+        my $sequence_job2 = miRkwood::SequenceSubJob->new($sequence_dir, $name, $reversed_sequence, '-');
         my $candidates2 = $sequence_job->get_raw_candidates_for_sequence();
         my @candidates_array2 = @{$candidates2};
         @candidates_array = sort { $a->{start} <=> $b->{start} } ( @candidates_array1, @candidates_array2 );
