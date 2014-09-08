@@ -200,16 +200,16 @@ sub run_pipeline_on_sequences {
 sub compute_candidates {
     my ($self, @args) = @_;
     my @sequences_array = $self->get_sequences();
-    my $sequence_dir_name = 0;
+    my $sequence_identifier = 0;
     foreach my $item (@sequences_array) {
         my ( $name, $sequence ) = @{$item};
-        debug( "Considering sequence $sequence_dir_name: $name",
+        debug( "Considering sequence $sequence_identifier: $name",
                miRkwood->DEBUG() );
-        $sequence_dir_name++;
+        $sequence_identifier++;
         my $sequence_dir =
-          File::Spec->catdir( $self->get_workspace_path(), $sequence_dir_name );
+          File::Spec->catdir( $self->get_workspace_path(), $sequence_identifier );
         mkdir $sequence_dir;
-        my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $name, $sequence);
+        my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
         $sequence_job->run();
     }
     return;

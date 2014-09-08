@@ -22,9 +22,10 @@ my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $name, $sequence);
 
 sub new {
     my ( $class, @args ) = @_;
-    my ($directory, $name, $sequence) = @args;
+    my ($directory, $identifier, $name, $sequence) = @args;
     my $self = {
         directory => $directory,
+        identifier => $identifier,
         name => $name,
         sequence => $sequence,
     };
