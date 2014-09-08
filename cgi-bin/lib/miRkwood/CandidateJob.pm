@@ -45,22 +45,20 @@ Perform the a posteriori tests for a given candidate
 sub process_tests_for_candidate {
     my ( $self, @args ) = @_;
     my $dir = $self->get_directory();
-    my $seq_file = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
-    my $candidate_rnafold_optimal_out =
-      File::Spec->catfile( $self->get_directory(), 'outRNAFold_optimal.txt' );
-    my $candidate_rnafold_stemploop_out =
-      File::Spec->catfile( $self->get_directory(), 'outRNAFold_stemloop.txt' );
 
     my $cfg = miRkwood->CONFIG();
 
     ####calcul p-value randfold
     if ( $cfg->param('options.randfold') ) {
+        my $seq_file = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
         debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
         miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
             $seq_file );
     }
 
     if ( $cfg->param('options.align') ) {
+        my $candidate_rnafold_stemploop_out =
+            File::Spec->catfile( $self->get_directory(), 'outRNAFold_stemloop.txt' );
         debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
         my $file_alignement =
           miRkwood::PosterioriTests::test_alignment( $self->get_directory(),
