@@ -50,6 +50,11 @@ sub is_opposite_strand {
     return ($self->get_strand() eq '-');
 }
 
+sub get_sequence {
+    my ($self, @args)  = @_;
+    return $self->{'sequence'};
+}
+
 =method get_sequence_length
 
 Return the length of the sequence
@@ -58,7 +63,7 @@ Return the length of the sequence
 
 sub get_sequence_length{
     my ( $self, @args ) = @_;
-    return length $self->{'sequence'};
+    return length $self->get_sequence();
 }
 
 =method get_raw_candidates_for_sequence
