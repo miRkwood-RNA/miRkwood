@@ -45,8 +45,7 @@ sub run {
 
     my %candidates_hash = $self->process_raw_candidates($candidates_array);
 
-    $self->process_candidates( \%candidates_hash );
-    return;
+    return $self->process_candidates( \%candidates_hash );
 }
 
 =method get_raw_candidates
@@ -232,7 +231,7 @@ sub is_included {
 sub process_candidates {
     my ($self, @args) = @_;
     my (%candidates_hash) = %{ shift @args };
-
+    my @candidates_result;
     my $candidate_identifier = 0;
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
@@ -244,9 +243,9 @@ sub process_candidates {
         my $candidate_ref = $candidates_hash{$key}{'max'};
         my $alternatives = $candidates_hash{$key}{'alternatives'};
         my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $candidate_full_identifier, $candidate_ref, $alternatives);
-        $candidatejob->run();
+        push @candidates_result, $candidatejob->run();
     }
-    return;
+    return \@candidates_result;
 }
 
 1;

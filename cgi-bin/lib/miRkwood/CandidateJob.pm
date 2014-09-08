@@ -44,6 +44,8 @@ sub run{
     my ( $self, @args ) = @_;
     $self->populate_candidate_directory();
     $self->process_tests_for_candidate();
+    my $candidate_object = undef;
+    return $candidate_object;
 }
 
 =method populate_candidate_directory

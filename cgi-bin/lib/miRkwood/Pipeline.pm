@@ -210,7 +210,7 @@ sub compute_candidates {
           File::Spec->catdir( $self->get_workspace_path(), $sequence_identifier );
         mkdir $sequence_dir;
         my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
-        $sequence_job->run();
+        my $sequence_candidates = $sequence_job->run();
     }
     return;
 }
