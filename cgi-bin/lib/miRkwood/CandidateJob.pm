@@ -24,10 +24,12 @@ Usage:
 
 sub new {
     my ( $class, @args ) = @_;
-    my ($directory, $identifier) = @args;
+    my ($directory, $identifier, $candidate_ref, $alternatives) = @args;
     my $self = {
         directory => $directory,
         identifier => $identifier,
+        candidate => $candidate_ref,
+        alternatives => $alternatives,
     };
     bless $self, $class;
     return $self;
@@ -38,6 +40,12 @@ sub get_directory {
     return $self->{'directory'};
 }
 
+sub run{
+    my ( $self, @args ) = @_;
+    $self->populate_candidate_directory();
+    $self->process_tests_for_candidate();
+}
+
 =method populate_candidate_directory
 
 Populate a candidate directory with the sequence, strand & so on.
@@ -46,8 +54,8 @@ Populate a candidate directory with the sequence, strand & so on.
 
 sub populate_candidate_directory {
     my ( $self, @args ) = @_;
-    my %candidate          = %{ shift @args };
-    my @alternatives_array = @{ shift @args };
+    my %candidate          = %{ $self->{'candidate'} };
+    my @alternatives_array = @{ $self->{'alternatives'} };
 
     #Writing seq.txt
     my $candidate_sequence = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
@@ -205,6 +213,5 @@ sub post_process_alignments {
         YAML::XS::DumpFile( $alignments_results_file, %alignments );
     }
 }
-
 
 1;

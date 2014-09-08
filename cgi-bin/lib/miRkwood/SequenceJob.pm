@@ -239,12 +239,10 @@ sub process_candidates {
         my $candidate_dir =
           File::Spec->catdir( $self->get_directory(), $candidate_identifier );
         mkdir $candidate_dir;
-
-        my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $candidate_identifier);
         my $candidate_ref = $candidates_hash{$key}{'max'};
-        $candidatejob->populate_candidate_directory( $candidate_ref,
-            $candidates_hash{$key}{'alternatives'} );
-        $candidatejob->process_tests_for_candidate();
+        my $alternatives = $candidates_hash{$key}{'alternatives'};
+        my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $candidate_identifier, $candidate_ref, $alternatives);
+        $candidatejob->run();
     }
     return;
 }
