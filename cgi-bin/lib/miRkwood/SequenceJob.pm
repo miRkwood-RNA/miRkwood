@@ -86,7 +86,7 @@ sub get_raw_candidates_for_sequence {
     my $rnaeval_out_stemloop =
       $self->run_RNAeval_on_RNAstemloop_stemloop_output( $rnastemloop_out_stemloop );
 
-    my $seq_length = length $self->{'sequence'};
+    my $seq_length = $self->get_sequence_length();
     my $candidates = $self->process_RNAstemloop_on_filenames(
                                                 $rnastemloop_out_stemloop,
                                                 $rnaeval_out_optimal,
@@ -106,7 +106,7 @@ sub run_rnalfold_on_sequence {
     debug( 'Running RNALfold', miRkwood->DEBUG() );
     my $rnalfold_output = File::Spec->catfile( $self->{'directory'}, 'RNALfold.out' );
     my $temp_file = File::Spec->catfile( $self->{'directory'}, 'tempFile.txt' );
-    miRkwood::Programs::run_rnalfold( $self->{'name'}, $self->{'sequence'}, $temp_file,
+    miRkwood::Programs::run_rnalfold( $self->{'name'}, $self->get_sequence(), $temp_file,
         $rnalfold_output )
       or die("Problem when running RNALfold: $!");
     return $rnalfold_output;
