@@ -45,6 +45,16 @@ sub run{
     my ( $self, @args ) = @_;
     $self->populate_candidate_directory();
     $self->process_tests_for_candidate();
+    return $self->make_candidate();
+}
+
+=method make_candidate
+
+
+=cut
+
+sub make_candidate {
+    my ( $self, @args ) = @_;
     my $candidate_object = $self->get_candidate_information_from_run();
     $candidate_object->{'identifier'} = $self->{'identifier'};
     return $candidate_object;
