@@ -278,7 +278,7 @@ Arguments:
 
 sub make_candidate_from_directory {
     my ( $self, @args ) = @_;
-    my $candidate_information = $self->parse_candidate_information($self->get_directory());
+    my $candidate_information = $self->parse_candidate_information();
     my $candidate = miRkwood::Candidate->new($candidate_information);
     $candidate->compute_alignment_quality();
     $candidate->compute_quality();
