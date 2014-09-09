@@ -81,20 +81,20 @@ sub populate_candidate_directory {
     my $candidate_sequence = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
     open( my $SEQ_FH, '>', $candidate_sequence )
       or die "Error when opening $candidate_sequence: $!";
-    print {$SEQ_FH} ">$candidate{'name'}\n$candidate{'dna'}\n";
+    print {$SEQ_FH} ">$candidate{'name'}\n$candidate{'sequence'}\n";
     close $SEQ_FH;
 
     #Writing sequence information
     my $seq_info_file = File::Spec->catfile( $self->get_directory(), 'sequence_information.txt' );
     open( my $SEQ_INFO_FH, '>', $seq_info_file )
       or die "Error when opening $seq_info_file: $!";
-    print {$SEQ_INFO_FH} $candidate{'strand'} . "\t" .  $candidate{'start'} . "\t" . $candidate{'end'};
+    print {$SEQ_INFO_FH} $candidate{'strand'} . "\t" .  $candidate{'start_position'} . "\t" . $candidate{'end_position'};
     close $SEQ_INFO_FH;
 
     $self->process_outRNAFold( 'optimal', $candidate{'name'},
-        $candidate{'dna'}, $candidate{'structure_optimal'}, $candidate{'energy_optimal'} );
+        $candidate{'sequence'}, $candidate{'structure_optimal'}, $candidate{'energy_optimal'} );
     $self->process_outRNAFold( 'stemloop', $candidate{'name'},
-        $candidate{'dna'}, $candidate{'structure_stemloop'}, $candidate{'energy_stemloop'} );
+        $candidate{'sequence'}, $candidate{'structure_stemloop'}, $candidate{'energy_stemloop'} );
 
     # Writing energy file
     my $energy_file = File::Spec->catfile( $self->get_directory(), 'outMFEI.txt' );
@@ -112,7 +112,7 @@ sub populate_candidate_directory {
           or die "Error when opening $alternative_candidates: $!";
         foreach my $alternative (@alternatives_array) {
             print $OUT2
-">$alternative->{'name'}\t$alternative->{'dna'}\t$alternative->{'structure_optimal'}\t$alternative->{'mfei'}\n";
+">$alternative->{'name'}\t$alternative->{'sequence'}\t$alternative->{'structure_optimal'}\t$alternative->{'mfei'}\n";
         }
         close $OUT2;
     }
@@ -123,7 +123,7 @@ sub populate_candidate_directory {
     if ( $cfg->param('options.varna') ) {
         my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
         debug( "Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
-        miRkwood::Programs::run_varna_on_structure( $candidate{'dna'}, $candidate{'structure_stemloop'}, $varna_image )
+        miRkwood::Programs::run_varna_on_structure( $candidate{'sequence'}, $candidate{'structure_stemloop'}, $varna_image )
           or carp('Problem during image generation using VARNA');
     }
 

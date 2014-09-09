@@ -72,10 +72,10 @@ sub get_raw_candidates{
         my $sequence_subjob2 = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $reversed_sequence, '-');
         my $candidates2 = $sequence_subjob2->get_raw_candidates_for_sequence();
         my @candidates_array2 = @{$candidates2};
-        @candidates_array = sort { $a->{start} <=> $b->{start} } ( @candidates_array1, @candidates_array2 );
+        @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @candidates_array1, @candidates_array2 );
     }
     else {
-        @candidates_array = sort { $a->{start} <=> $b->{start} } ( @candidates_array1 );
+        @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @candidates_array1 );
     }
     return \@candidates_array;
 }
@@ -137,10 +137,10 @@ sub merge_candidates {
     my %current_candidate;
     for my $candidate_index ( 1 .. $#candidates_array ) {
         %current_candidate = %{ $candidates_array[$candidate_index] };
-        my $start = $current_candidate{'start'};
-        my $end   = $current_candidate{'end'};
+        my $start = $current_candidate{'start_position'};
+        my $end   = $current_candidate{'end_position'};
         my ( $ref_start, $ref_end ) =
-          ( $reference_candidate{'start'}, $reference_candidate{'end'} );
+          ( $reference_candidate{'start_position'}, $reference_candidate{'end_position'} );
         if ( is_included( $start, $end, $ref_start, $ref_end ) ) {
             if ( $best_candidate{'mfei'} <= -0.8 ) {
                 push @merged_candidates, {%current_candidate};

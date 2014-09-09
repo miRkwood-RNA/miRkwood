@@ -266,16 +266,16 @@ sub process_RNAstemloop {
                         ( $start, $end ) = ( $1, $2 );
                     }
                     my $res = {
-                        "name"      => $nameSeq,
-                        "start"     => $start,
-                        "end"       => $end,
-                        "mfei"      => $mfei,
-                        "amfe"      => $amfe,
-                        "dna"       => $dna,
+                        "name" => $nameSeq,
+                        "strand" => $self->get_strand(),
+                        "sequence" => $dna,
+                        "start_position" => $start,
+                        "end_position" => $end,
+                        "mfei" => $mfei,
+                        "amfe" => $amfe,
                         "structure_optimal" => $structure_optimal,
-                        "structure_stemloop" => $structure_stemloop,
-                        "strand"    => $self->get_strand(),
                         "energy_optimal" => $energy_optimal,
+                        "structure_stemloop" => $structure_stemloop,
                         "energy_stemloop" => $energy_stemloop
                     };
                     push @candidates_array, $res;
