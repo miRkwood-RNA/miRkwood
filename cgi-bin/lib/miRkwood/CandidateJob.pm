@@ -56,6 +56,12 @@ sub run{
 sub make_candidate {
     my ( $self, @args ) = @_;
     my $candidate_object = $self->get_candidate_information_from_run();
+    return $self->update_candidate_information_from_self($candidate_object);
+}
+
+sub update_candidate_information_from_self {
+    my ( $self, @args ) = @_;
+    my $candidate_object = shift @args;
     $candidate_object->{'identifier'} = $self->{'identifier'};
     return $candidate_object;
 }
