@@ -194,12 +194,12 @@ sub candidateAsVienna {
     my $structure;
     if ($optimal){
         $header .= ", MFE structure";
-        $structure = $self->{'Vienna_optimal'};
+        $structure = $self->{'structure_optimal'};
     }else{
-        $structure = $self->{'Vienna'};
+        $structure = $self->{'structure_stemloop'};
         $header .= ", stemloop structure";
     }
-    $output .= $header . "\n" . $self->{'DNASequence'} . "\n" . "$structure" . "\n";
+    $output .= $header . "\n" . $self->{'sequence'} . "\n" . "$structure" . "\n";
     return $output;
 }
 
@@ -213,7 +213,7 @@ sub candidateAsFasta {
     my ( $self, @args ) = @_;
     my $output = "";
     my $candidate_name = $self->get_name();
-    $output .= '>'.$candidate_name . "\n" . $self->{'DNASequence'} . "\n";
+    $output .= '>'.$candidate_name . "\n" . $self->{'sequence'} . "\n";
     return $output;
 }
 
@@ -307,7 +307,7 @@ sub make_alignments_HTML {
         my $hairpin_with_mature =
             miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
                                                            $left, $right,
-                                                           length $self->{'DNASequence'},
+                                                           length $self->{'sequence'},
                                                            'html');
         $predictionCounter += 1;
 
@@ -420,7 +420,7 @@ sub candidate_as_pseudoXML {
     my @optional_fields = $self->get_optional_candidate_fields();
     my @headers1        =
       ( 'position', 'length', 'strand', 'quality', @optional_fields );
-    my @headers2 = ( 'Vienna', 'DNASequence', 'identifier' );
+    my @headers2 = ( 'structure_stemloop', 'sequence', 'identifier' );
 
     my $result = "<Sequence";
 

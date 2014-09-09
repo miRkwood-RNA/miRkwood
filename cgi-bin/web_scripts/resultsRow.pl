@@ -39,7 +39,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
 
     my $image_url = $candidate->get_relative_image();
 
-    my $size = length $candidate->{'DNASequence'};
+    my $size = length $candidate->{'sequence'};
 
     my $export_link = "./getCandidate.pl?jobId=$jobId&id=$candidate_id";
 
@@ -49,7 +49,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    if($candidate->{'Vienna'} ne $candidate->{'Vienna_optimal'}){
+    if($candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'}){
         $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li>"
     } else {
         $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li>"

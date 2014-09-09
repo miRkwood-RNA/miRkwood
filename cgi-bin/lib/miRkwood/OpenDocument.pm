@@ -319,10 +319,10 @@ sub add_candidate {
 
     my $list = $para->insert_element(odf_create_list, position => NEXT_SIBLING);
 
-    my $size = length ${$candidate}{'DNASequence'};
+    my $size = length ${$candidate}{'sequence'};
     my $vienna_seq =
-      miRkwood::Utils->make_Vienna_viz( ${$candidate}{'Vienna'},
-        ${$candidate}{'DNASequence'} );
+      miRkwood::Utils->make_Vienna_viz( ${$candidate}{'structure_stemloop'},
+        ${$candidate}{'sequence'} );
 
     $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');
     $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => 'Basic');
@@ -330,7 +330,7 @@ sub add_candidate {
     $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
 
     my $subtext = qw{};
-    if(${$candidate}{'Vienna'} ne ${$candidate}{'Vienna_optimal'}){
+    if(${$candidate}{'structure_stemloop'} ne ${$candidate}{'structure_optimal'}){
         $subtext .= qw{}
     } else {
         $subtext.= 'This stem-loop structure is the MFE structure'
@@ -466,7 +466,7 @@ sub add_ODF_alignments {
         my $hairpin_with_mature =
             miRkwood::Utils::make_hairpin_with_mature($candidate{'hairpin'},
                                                            $left, $right,
-                                                           length $candidate{'DNASequence'},
+                                                           length $candidate{'sequence'},
                                                            'ascii');
 
         $predictionCounter += 1;

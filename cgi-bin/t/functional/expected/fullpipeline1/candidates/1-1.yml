@@ -1,5 +1,7 @@
 --- end_position
 --- 195
+--- sequence
+--- gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
 --- start_position
 --- 34
 --- alignments
@@ -653,12 +655,18 @@
   score: -3
   seq: AGCCAAGGATGACTTGCCGG
   strand_target: +
+--- structure_stemloop
+--- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
 --- position
 --- 34-195
 --- alignment_existence
 --- 1
+--- structure_optimal
+--- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
 --- identifier
 --- 1-1
+--- '%GC'
+--- '37.04'
 --- hairpin
 --- "      u  au      a        u   cuu    u  -  c      -     u         --    uca-
   \       \ngagagg uc  acauga gagaagag gcu   auua gu ag caagga ugaau gccuaauga  cagc
@@ -666,8 +674,6 @@
   \ ||||    |||||||| a\ncucuuc ag  uguacu cuuuuuuu cgg   uaau ca uc guucuu acuug cggauuauu
   \ guug    ucagcaaaa\n      u  au      a        -   c--    u  g  a      u     -         ug
   \   uuuc        \n"
---- '%GC'
---- '37.04'
 --- strand
 --- +
 --- alignment
@@ -692,8 +698,6 @@ contig15750__80-150:
   mfei: '-1.05769230769231'
   sequence: ggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuu
   structure: ((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))))))
---- Vienna_optimal
---- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
 --- name
 --- contig15750
 --- image
@@ -706,10 +710,6 @@ contig15750__80-150:
 --- -1.00166666666667
 --- mfe
 --- '-60.10'
---- DNASequence
---- gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
---- Vienna
---- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
 --- mirdup_validation
 ---
 contig15750__40-59: 0

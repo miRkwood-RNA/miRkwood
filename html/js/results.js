@@ -47,9 +47,9 @@ results.prototype.getSequenceByNameFactors = function(name,pos)
 	
 	factors.mfe = seq.getAttribute("mfe");
 	factors.shuffles = seq.getAttribute("shuffles");
-	factors.Vienna = seq.getAttribute("Vienna");
+	factors.Vienna = seq.getAttribute("structure_stemloop");
 	factors.identifier = seq.getAttribute("identifier");
-	factors.DNASequence = seq.getAttribute("DNASequence");	
+	factors.DNASequence = seq.getAttribute("sequence");	
 	factors.image = seq.getAttribute("image");	
 	return factors;
 }

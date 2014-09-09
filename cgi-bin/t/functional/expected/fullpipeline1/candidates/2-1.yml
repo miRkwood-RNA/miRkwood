@@ -1,5 +1,7 @@
 --- end_position
 --- 322
+--- sequence
+--- uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
 --- start_position
 --- 187
 --- alignments
@@ -249,8 +251,12 @@
   score: -3
   seq: AGGCTTGGTGCAGCTCGGGAA
   strand_target: +
+--- structure_stemloop
+--- (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
 --- position
 --- 187-322
+--- structure_optimal
+--- (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
 --- alignment_existence
 --- 1
 --- identifier
@@ -287,8 +293,6 @@ contig15916__198-313:
   mfei: '-0.841379310344827'
   sequence: uucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaa
   structure: (((.((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))
---- Vienna_optimal
---- (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
 --- name
 --- contig15916
 --- image
@@ -301,10 +305,6 @@ contig15916__198-313:
 --- -0.842647058823529
 --- mfe
 --- '-57.30'
---- DNASequence
---- uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
---- Vienna
---- (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
 --- mirdup_validation
 ---
 contig15916__102-122: 1

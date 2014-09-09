@@ -145,7 +145,7 @@ sub make_candidate_page {
     my $pieces_folder = shift @args;
     my $output_folder = shift @args;
 
-    my $size = length $candidate->{'DNASequence'};
+    my $size = length $candidate->{'sequence'};
 
     my $candidate_name = $candidate->get_shortened_name();
 
@@ -200,7 +200,7 @@ sub make_candidate_page {
 
     my $Vienna_HTML =
 "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    if ( $candidate->{'Vienna'} ne $candidate->{'Vienna_optimal'} ) {
+    if ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'} ) {
         $Vienna_HTML .=
 "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
     }

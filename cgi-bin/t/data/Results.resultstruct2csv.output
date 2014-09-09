@@ -1,2 +1,2 @@
-name,start_position,end_position,quality,%GC,mfe,mfei,amfe,shuffles,alignment,Vienna,DNASequence
+name,start_position,end_position,quality,%GC,mfe,mfei,amfe,shuffles,alignment,structure_stemloop,sequence
 contig15750,34,195,3,37.04,-60.1,-1.00,-37.10,0.125000,2,((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).)))))),gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc,

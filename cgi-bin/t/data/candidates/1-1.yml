@@ -523,7 +523,7 @@ contig15750__73-158:
   mfei: '-0.98'
   sequence: uagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacug
   structure: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
---- Vienna_optimal
+--- structure_optimal
 --- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
 --- name
 --- contig15750
@@ -539,9 +539,9 @@ contig15750__73-158:
 --- '-1.00'
 --- mfe
 --- '-60.1'
---- DNASequence
+--- sequence
 --- gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
---- Vienna
+--- structure_stemloop
 --- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
 --- mirdup_validation
 ---

@@ -175,7 +175,7 @@ sub get_candidate_information_from_run {
     $candidate->{'position'} = "$candidate->{'start_position'}-$candidate->{'end_position'}";
     $candidate->{'length'} = $candidate->{'end_position'} - $candidate->{'start_position'} +1;
     $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
-                            miRkwood::Utils::compute_gc_content($candidate->{'DNASequence'}),
+                            miRkwood::Utils::compute_gc_content($candidate->{'sequence'}),
                             3);
 
     my $alternative_candidates_file = File::Spec->catfile($self->get_directory(), 'alternativeCandidates.txt');
@@ -184,10 +184,10 @@ sub get_candidate_information_from_run {
         $candidate->{'alternatives'} = \%alternatives;
     }
 
-    my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate->{'DNASequence'}, $candidate->{'Vienna'});
+    my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate->{'sequence'}, $candidate->{'structure_stemloop'});
     $candidate->{'hairpin'} = $hairpin;
 #    my %sequence;
-#    $sequence{$candidate{'name'}} = $candidate{'DNASequence'};
+#    $sequence{$candidate{'name'}} = $candidate{'sequence'};
 #    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_prediction.txt");
 #    $candidate{'mirdup_prediction'} = \%{miRkwood::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
 
@@ -241,7 +241,7 @@ sub parse_candidate_information {
     {
         my @res = miRkwood::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
         my $devnull;
-        ($result{'name'}, $devnull, $result{'DNASequence'}, $result{'Vienna'}) = @res;
+        ($result{'name'}, $devnull, $result{'sequence'}, $result{'structure_stemloop'}) = @res;
     }
 
     #Récupération séquence et format Vienna
@@ -251,7 +251,7 @@ sub parse_candidate_information {
     {
         my @vienna_res = miRkwood::Parsers::parse_RNAfold_output($rnafold_optimal_out);
 
-        $result{'Vienna_optimal'} = $vienna_res[2];
+        $result{'structure_optimal'} = $vienna_res[2];
     }
 
     #Récupération alignement avec mirBase
