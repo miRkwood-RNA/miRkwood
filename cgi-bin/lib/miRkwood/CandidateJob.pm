@@ -25,8 +25,9 @@ Usage:
 
 sub new {
     my ( $class, @args ) = @_;
-    my ($directory, $identifier, $candidate_ref, $alternatives) = @args;
+    my ($directory, $sequence_name, $identifier, $candidate_ref, $alternatives) = @args;
     my $self = {
+        sequence_name => $sequence_name,
         directory => $directory,
         identifier => $identifier,
         candidate => $candidate_ref,

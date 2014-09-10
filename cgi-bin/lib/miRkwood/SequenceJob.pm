@@ -242,7 +242,8 @@ sub process_candidates {
         my $candidate_full_identifier = "$sequence_identifier-$candidate_identifier";
         my $candidate_ref = $candidates_hash{$key}{'max'};
         my $alternatives = $candidates_hash{$key}{'alternatives'};
-        my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $candidate_full_identifier, $candidate_ref, $alternatives);
+        my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $self->{'name'},
+                                                       $candidate_full_identifier, $candidate_ref, $alternatives);
         push @candidates_result, $candidatejob->run();
     }
     return \@candidates_result;
