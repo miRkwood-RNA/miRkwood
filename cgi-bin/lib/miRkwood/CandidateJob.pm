@@ -136,9 +136,8 @@ sub process_tests_for_candidate {
         close $SEQ_FH;
         my $seq_file = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
         debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
-        my $randfold_output = miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
+        $result->{'shuffles'} = miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
             $seq_file );
-            $result->{'shuffles'} = miRkwood::Parsers::parse_pvalue($randfold_output);
     }
 
     if ( $cfg->param('options.align') ) {

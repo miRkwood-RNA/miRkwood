@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use File::Spec;
+use miRkwood::Parsers;
 use miRkwood::Programs;
 use miRkwood::Components;
 
@@ -20,7 +21,8 @@ sub test_randfold {
     my $randfold_out = File::Spec->catfile( $candidate_dir, 'randfold.out' );
     miRkwood::Programs::run_randfold( $seq_file, $randfold_out, 200)
       or die('Problem when running Randfold');
-    return $randfold_out;
+    my $res = miRkwood::Parsers::parse_pvalue($randfold_out);
+    return $res;
 }
 
 
