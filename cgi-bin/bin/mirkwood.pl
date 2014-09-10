@@ -66,7 +66,7 @@ if ( !-e $abs_output_folder ) {
 
 # Importing modules after directory creation
 use miRkwood;
-use miRkwood::Pipeline;
+use miRkwood::FastaPipeline;
 use miRkwood::CLI;
 use miRkwood::Paths;
 
@@ -81,7 +81,7 @@ miRkwood->CONFIG_FILE($run_options_file);
 miRkwood::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles,
     $align, "", $species_mask, $varna, 'fasta' );
 
-my $pipeline = miRkwood::Pipeline->new($abs_output_folder);
+my $pipeline = miRkwood::FastaPipeline->new($abs_output_folder);
 $pipeline->run_pipeline();
 
 
