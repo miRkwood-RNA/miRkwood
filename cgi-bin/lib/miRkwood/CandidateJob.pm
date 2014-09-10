@@ -129,12 +129,7 @@ sub process_tests_for_candidate {
     my $result = {};
 
     if ( $cfg->param('options.randfold') ) {
-        my $candidate_sequence = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
-        open( my $SEQ_FH, '>', $candidate_sequence )
-            or die "Error when opening $candidate_sequence: $!";
-         print {$SEQ_FH} ">$self->{'candidate'}{'name'}\n$self->{'candidate'}{'sequence'}\n";
-        close $SEQ_FH;
-        my $seq_file = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
+        my $seq_file = $self->write_sequence_file();
         debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
         $result->{'shuffles'} = miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
             $seq_file );
@@ -176,6 +171,22 @@ sub write_RNAFold_stemloop_output {
     print {$OUT2} ">$self->{'candidate'}{'name'}\n$self->{'candidate'}{'sequence'}\n$self->{'candidate'}{'structure_stemloop'} ($self->{'candidate'}{'energy_stemloop'})\n";
     close $OUT2;
     return $candidate_rnafold_output;
+}
+
+=method write_sequence_file
+
+Writing the candidate as a FASTA sequence
+
+=cut
+
+sub write_sequence_file {
+    my ( $self, @args ) = @_;
+    my $candidate_sequence = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
+    open( my $SEQ_FH, '>', $candidate_sequence )
+        or die "Error when opening $candidate_sequence: $!";
+     print {$SEQ_FH} ">$self->{'candidate'}{'name'}\n$self->{'candidate'}{'sequence'}\n";
+    close $SEQ_FH;
+    return $candidate_sequence;
 }
 
 =method post_process_alignments
