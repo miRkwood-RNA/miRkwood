@@ -40,8 +40,6 @@ sub test_alignment {
       or die('Problem when converting to CT format');
 
     my $seqN = File::Spec->catfile( $candidate_dir, 'seqWithN.txt' );
-#    open( my $SEQN_FH, '>>', $seqN )
-#      or die "Impossible d'ouvrir le fichier d'entree  : $!";
     miRkwood::Components::mask_CT_file($candidate_ct_stemloop_file, $seqN);
     my $exonerate_out = File::Spec->catfile( $candidate_dir, 'alignement.txt' );
     miRkwood::Programs::run_exonerate( $seqN, $exonerate_out )
