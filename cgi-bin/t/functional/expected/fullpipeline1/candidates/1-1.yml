@@ -4,6 +4,10 @@
 --- gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
 --- start_position
 --- 34
+--- structure_stemloop
+--- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
+--- position
+--- 34-195
 --- alignments
 ---
 40-59:
@@ -655,14 +659,10 @@
   score: -3
   seq: AGCCAAGGATGACTTGCCGG
   strand_target: +
---- structure_stemloop
---- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
---- position
---- 34-195
---- alignment_existence
---- 1
 --- structure_optimal
 --- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
+--- alignment_existence
+--- 1
 --- identifier
 --- 1-1
 --- '%GC'
@@ -683,29 +683,59 @@
 --- alternatives
 ---
 contig15750__54-177:
-  mfei: '-0.858695652173913'
+  amfe: -31.8548387096774
+  end_position: '177'
+  energy_optimal: '-39.50'
+  energy_stemloop: '-39.50'
+  mfei: -0.858695652173913
   sequence: gaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuuc
-  structure: ((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))..))))))
+  start_position: 54
+  strand: +
+  structure_optimal: ((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))..))))))
+  structure_stemloop: ((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))..))))))
 contig15750__64-168:
-  mfei: '-0.879487179487179'
+  amfe: -32.6666666666667
+  end_position: '168'
+  energy_optimal: '-34.30'
+  energy_stemloop: '-34.30'
+  mfei: -0.879487179487179
   sequence: cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg
-  structure: ((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))
+  start_position: 64
+  strand: +
+  structure_optimal: ((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))
+  structure_stemloop: ((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))
 contig15750__73-158:
-  mfei: '-0.981818181818182'
+  amfe: -37.6744186046512
+  end_position: '158'
+  energy_optimal: '-32.40'
+  energy_stemloop: '-32.40'
+  mfei: -0.981818181818182
   sequence: uagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacug
-  structure: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
+  start_position: 73
+  strand: +
+  structure_optimal: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
+  structure_stemloop: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
 contig15750__80-150:
-  mfei: '-1.05769230769231'
+  amfe: -38.7323943661972
+  end_position: '150'
+  energy_optimal: '-27.50'
+  energy_stemloop: '-27.50'
+  mfei: -1.05769230769231
   sequence: ggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuu
-  structure: ((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))))))
+  start_position: 80
+  strand: +
+  structure_optimal: ((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))))))
+  structure_stemloop: ((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))))))
 --- name
 --- contig15750
+--- energy_optimal
+--- '-60.10'
 --- image
 --- /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline1/workspace/1/1/image.png
---- amfe
---- '-37.0987654320988'
 --- length
 --- 162
+--- amfe
+--- -37.0987654320988
 --- mfei
 --- -1.00166666666667
 --- mfe

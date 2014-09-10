@@ -10,6 +10,8 @@ use miRkwood::CandidateHandler;
 use miRkwood::Components;
 use miRkwood::MiRdup;
 use miRkwood::PosterioriTests;
+use miRkwood::Parsers;
+use Carp;
 
 use YAML::XS;
 use Log::Message::Simple qw[msg error debug];
@@ -44,249 +46,74 @@ sub get_directory {
 
 sub run{
     my ( $self, @args ) = @_;
-    $self->populate_candidate_directory();
-    $self->process_tests_for_candidate();
-    return $self->make_candidate();
-}
+    my $candidate_test_info = $self->process_tests_for_candidate();
+    my $candidate_information = $self->get_candidate_information();
 
-=method make_candidate
-
-
-=cut
-
-sub make_candidate {
-    my ( $self, @args ) = @_;
-    my $candidate_object = $self->get_candidate_information_from_run();
-    return $self->update_candidate_information_from_self($candidate_object);
-}
-
-sub update_candidate_information_from_self {
-    my ( $self, @args ) = @_;
-    my $candidate_object = shift @args;
-    $candidate_object->{'identifier'} = $self->{'identifier'};
-    return $candidate_object;
-}
-
-=method populate_candidate_directory
-
-Populate a candidate directory with the sequence, strand & so on.
-
-=cut
-
-sub populate_candidate_directory {
-    my ( $self, @args ) = @_;
-    my %candidate          = %{ $self->{'candidate'} };
-    my @alternatives_array = @{ $self->{'alternatives'} };
-
-    #Writing seq.txt
-    my $candidate_sequence = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
-    open( my $SEQ_FH, '>', $candidate_sequence )
-      or die "Error when opening $candidate_sequence: $!";
-    print {$SEQ_FH} ">$candidate{'name'}\n$candidate{'sequence'}\n";
-    close $SEQ_FH;
-
-    #Writing sequence information
-    my $seq_info_file = File::Spec->catfile( $self->get_directory(), 'sequence_information.txt' );
-    open( my $SEQ_INFO_FH, '>', $seq_info_file )
-      or die "Error when opening $seq_info_file: $!";
-    print {$SEQ_INFO_FH} $candidate{'strand'} . "\t" .  $candidate{'start_position'} . "\t" . $candidate{'end_position'};
-    close $SEQ_INFO_FH;
-
-    $self->process_outRNAFold( 'optimal', $candidate{'name'},
-        $candidate{'sequence'}, $candidate{'structure_optimal'}, $candidate{'energy_optimal'} );
-    $self->process_outRNAFold( 'stemloop', $candidate{'name'},
-        $candidate{'sequence'}, $candidate{'structure_stemloop'}, $candidate{'energy_stemloop'} );
-
-    # Writing energy file
-    my $energy_file = File::Spec->catfile( $self->get_directory(), 'outMFEI.txt' );
-    open( my $ENERGY_FH, '>', $energy_file )
-        or die "Unable to open $energy_file: $!";
-    my $content = $candidate{'name'} . "\t" . $candidate{'mfei'} . "\t" . $candidate{'energy_optimal'} . "\t" . $candidate{'amfe'};
-    print $ENERGY_FH $content;
-    close $ENERGY_FH or die "Unable to close: $!";
-
-    #Writing alternativeCandidates.txt
-    my $alternative_candidates =
-      File::Spec->catfile( $self->get_directory(), 'alternativeCandidates.txt' );
-    if (@alternatives_array){
-        open( my $OUT2, '>>', $alternative_candidates )
-          or die "Error when opening $alternative_candidates: $!";
-        foreach my $alternative (@alternatives_array) {
-            print $OUT2
-">$alternative->{'name'}\t$alternative->{'sequence'}\t$alternative->{'structure_optimal'}\t$alternative->{'mfei'}\n";
-        }
-        close $OUT2;
-    }
-
-    # Writing VARNA image
-    my $cfg = miRkwood->CONFIG();
-
-    if ( $cfg->param('options.varna') ) {
-        my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
-        debug( "Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
-        miRkwood::Programs::run_varna_on_structure( $candidate{'sequence'}, $candidate{'structure_stemloop'}, $varna_image )
-          or carp('Problem during image generation using VARNA');
-    }
-
-    return;
-}
-
-=method process_outRNAFold
-
-Writing (pseudo) rnafold output
-
-=cut
-
-sub process_outRNAFold {
-    my ( $self, @args ) = @_;
-    my ( $suffix, $nameSeq, $dna, $structure, $energy ) = @args;
-
-    my $candidate_rnafold_output =
-      File::Spec->catfile( $self->get_directory(), "outRNAFold_$suffix.txt" );
-
-    open( my $OUT2, '>', $candidate_rnafold_output )
-      or die "Error when opening $candidate_rnafold_output: $!";
-    print {$OUT2} ">$nameSeq\n$dna\n$structure ($energy)\n";
-    close $OUT2;
-    return;
-}
-
-
-=method get_candidate_information_from_run
-
-Arguments:
-- $job_dir - the job directory
-- $seq_dir - the sequence directory
-- $can_dir - the candidate directory
-
-=cut
-
-sub get_candidate_information_from_run {
-    my ( $self, @args ) = @_;
-
-    my $cfg    = miRkwood->CONFIG();
-    my $candidate = $self->make_candidate_from_directory();
-
-    if ( $cfg->param('options.varna') ) {
-        $candidate->{'image'} = File::Spec->catfile($self->get_directory(), 'image.png');
-    } else {
-        $candidate->{'image'} = '';
-    }
-
-    $candidate->{'position'} = "$candidate->{'start_position'}-$candidate->{'end_position'}";
-    $candidate->{'length'} = $candidate->{'end_position'} - $candidate->{'start_position'} +1;
-    $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
-                            miRkwood::Utils::compute_gc_content($candidate->{'sequence'}),
-                            3);
-
-    my $alternative_candidates_file = File::Spec->catfile($self->get_directory(), 'alternativeCandidates.txt');
-    if (-e $alternative_candidates_file){
-        my %alternatives = miRkwood::Parsers::parse_alternative_candidates_file($alternative_candidates_file);
-        $candidate->{'alternatives'} = \%alternatives;
-    }
-
-    my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate->{'sequence'}, $candidate->{'structure_stemloop'});
-    $candidate->{'hairpin'} = $hairpin;
-#    my %sequence;
-#    $sequence{$candidate{'name'}} = $candidate{'sequence'};
-#    my $tmp_file = File::Spec->catfile($full_candidate_dir, "mirdup_prediction.txt");
-#    $candidate{'mirdup_prediction'} = \%{miRkwood::MiRdup->predict_with_mirdup($tmp_file, \%sequence)};
-
-    return $candidate;
-}
-
-=method parse_candidate_information
-
-Get the results for a given candidate
-
-Arguments:
-- $full_candidate_dir - the prefixed path to the candidate results
-
-=cut
-
-sub parse_candidate_information {
-    my ( $self, @args ) = @_;
-
-    my %result = ();
-
-    my $seq_info_file =
-      File::Spec->catfile( $self->get_directory(), 'sequence_information.txt' );
-    if ( -e $seq_info_file )    # si fichier existe
-    {
-        my @res = miRkwood::Components::get_sequence_information($seq_info_file);
-        ($result{'strand'}, $result{'start_position'}, $result{'end_position'}) = @res;
-    }
-
-    my $randfold_output =
-      File::Spec->catfile( $self->get_directory(), 'randfold.out' );
-    if ( -e $randfold_output )    # si fichier existe
-    {
-        $result{'shuffles'} = miRkwood::Parsers::parse_pvalue($randfold_output);
-    }
-
-    #Récupération valeur MFEI
-    my $mfei_out =
-      File::Spec->catfile( $self->get_directory(), 'outMFEI.txt' );
-    if ( -e $mfei_out )                 # si fichier existe
-    {
-        my @mfeis = miRkwood::Parsers::parse_mfei($mfei_out);
-        $result{'mfei'} = $mfeis[0];
-        $result{'mfe'} = $mfeis[1];
-        $result{'amfe'} = $mfeis[2];
-    }
-
-    #Récupération séquence et format Vienna
-    my $rnafold_stemloop_out = File::Spec->catfile( $self->get_directory(),
-                                       'outRNAFold_stemloop.txt' );
-    if ( -e $rnafold_stemloop_out )                  # si fichier existe
-    {
-        my @res = miRkwood::Components::get_data_from_rnafold_out($rnafold_stemloop_out);
-        my $devnull;
-        ($result{'name'}, $devnull, $result{'sequence'}, $result{'structure_stemloop'}) = @res;
-    }
-
-    #Récupération séquence et format Vienna
-    my $rnafold_optimal_out = File::Spec->catfile( $self->get_directory(),
-                                                   'outRNAFold_optimal.txt' );
-    if ( -e $rnafold_optimal_out )                  # si fichier existe
-    {
-        my @vienna_res = miRkwood::Parsers::parse_RNAfold_output($rnafold_optimal_out);
-
-        $result{'structure_optimal'} = $vienna_res[2];
-    }
-
-    #Récupération alignement avec mirBase
-    my $alignments_results_file = File::Spec->catfile($self->get_directory(), 'merged_alignments.yml');
-    my $mirdup_results_file = File::Spec->catfile($self->get_directory(), 'mirdup_results.yml');
-    $result{'alignment_existence'} = ( -e $alignments_results_file && ! -z $alignments_results_file );
-    if ($result{'alignment_existence'}){
-        my %mirdup_results = YAML::XS::LoadFile($mirdup_results_file) or die("Error when parsing YAML file $mirdup_results_file");
-        my %alignments = YAML::XS::LoadFile($alignments_results_file);
-        $result{'alignments'} = \%alignments;
-        $result{'mirdup_validation'} = \%mirdup_results;
-    }
-
-    return \%result;
-}
-
-=method make_candidate_from_directory
-
-
-Arguments:
-- $full_candidate_dir - the prefixed path to the candidate results
-
-=cut
-
-sub make_candidate_from_directory {
-    my ( $self, @args ) = @_;
-    my $candidate_information = $self->parse_candidate_information();
-    my $candidate = miRkwood::Candidate->new($candidate_information);
+    my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
+    my $candidate = miRkwood::Candidate->new(\%complete_candidate);
     $candidate->compute_alignment_quality();
     $candidate->compute_quality();
     return $candidate;
 }
 
+=method get_candidate_information
 
+
+=cut
+
+sub get_candidate_information {
+    my ( $self, @args ) = @_;
+    my $candidate_structure = $self->{'candidate'};
+
+    $candidate_structure = $self->update_candidate_information_from_self($candidate_structure);
+    $candidate_structure = $self->update_candidate_information_from_run($candidate_structure);
+
+    return $candidate_structure;
+}
+
+sub update_candidate_information_from_self {
+    my ( $self, @args ) = @_;
+    my $candidate_structure = shift @args;
+    $candidate_structure->{'name'} = $self->{'sequence_name'};
+    $candidate_structure->{'identifier'} = $self->{'identifier'};
+    $candidate_structure->{'alternatives'} = $self->convert_alternative_candidates();
+    return $candidate_structure;
+}
+
+sub update_candidate_information_from_run{
+    my ( $self, @args ) = @_;
+    my $candidate_structure = shift @args;
+    $candidate_structure->{'mfe'} = delete $candidate_structure->{'energy_stemloop'};
+    $candidate_structure->{'image'} = $self->write_VARNA_if_needed();
+
+    $candidate_structure->{'position'} = "$candidate_structure->{'start_position'}-$candidate_structure->{'end_position'}";
+    $candidate_structure->{'length'} = $candidate_structure->{'end_position'} - $candidate_structure->{'start_position'} + 1;
+    $candidate_structure->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
+                            miRkwood::Utils::compute_gc_content($candidate_structure->{'sequence'}),
+                            3);
+
+    my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate_structure->{'sequence'}, $candidate_structure->{'structure_stemloop'});
+    $candidate_structure->{'hairpin'} = $hairpin;
+    return $candidate_structure;
+}
+
+=method write_VARNA_if_needed
+
+
+=cut
+
+sub write_VARNA_if_needed {
+    my ( $self, @args ) = @_;
+    my $cfg = miRkwood->CONFIG();
+    if ( $cfg->param('options.varna') ) {
+        my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
+        debug( "Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
+        miRkwood::Programs::run_varna_on_structure( $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, $varna_image )
+          or carp('Problem during image generation using VARNA');
+      return $varna_image
+    }
+    return '';
+}
 
 =method process_tests_for_candidate
 
@@ -299,26 +126,57 @@ sub process_tests_for_candidate {
     my $dir = $self->get_directory();
 
     my $cfg = miRkwood->CONFIG();
+    my $result = {};
 
-    ####calcul p-value randfold
     if ( $cfg->param('options.randfold') ) {
+        my $candidate_sequence = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
+        open( my $SEQ_FH, '>', $candidate_sequence )
+            or die "Error when opening $candidate_sequence: $!";
+         print {$SEQ_FH} ">$self->{'candidate'}{'name'}\n$self->{'candidate'}{'sequence'}\n";
+        close $SEQ_FH;
         my $seq_file = File::Spec->catfile( $self->get_directory(), 'seq.txt' );
         debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
-        miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
+        my $randfold_output = miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
             $seq_file );
+            $result->{'shuffles'} = miRkwood::Parsers::parse_pvalue($randfold_output);
     }
 
     if ( $cfg->param('options.align') ) {
-        my $candidate_rnafold_stemploop_out =
-            File::Spec->catfile( $self->get_directory(), 'outRNAFold_stemloop.txt' );
+        my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
         debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
         my $file_alignement =
           miRkwood::PosterioriTests::test_alignment( $self->get_directory(),
             $candidate_rnafold_stemploop_out );
-        $self->post_process_alignments($candidate_rnafold_stemploop_out, $file_alignement );
+        my ($mirdup_results, $alignments) = $self->post_process_alignments($file_alignement );
+        if ($alignments) {
+            $result->{'alignment_existence'} = 1;
+        }
+        if ($result->{'alignment_existence'}){
+            $result->{'alignments'} = $alignments;
+            $result->{'mirdup_validation'} = $mirdup_results;
+        }
+    } else {
+        $result->{'alignment_existence'} = 0;
     }
+    return $result;
+}
 
-    return;
+=method write_RNAFold_stemloop_output
+
+Writing (pseudo) rnafold output
+
+=cut
+
+sub write_RNAFold_stemloop_output {
+    my ( $self, @args ) = @_;
+    my ( $nameSeq, $dna, $structure, $energy ) = @args;
+    my $candidate_rnafold_output =
+      File::Spec->catfile( $self->get_directory(), "outRNAFold_stemloop.txt" );
+    open( my $OUT2, '>', $candidate_rnafold_output )
+      or die "Error when opening $candidate_rnafold_output: $!";
+    print {$OUT2} ">$self->{'candidate'}{'name'}\n$self->{'candidate'}{'sequence'}\n$self->{'candidate'}{'structure_stemloop'} ($self->{'candidate'}{'energy_stemloop'})\n";
+    close $OUT2;
+    return $candidate_rnafold_output;
 }
 
 =method post_process_alignments
@@ -328,13 +186,8 @@ sub process_tests_for_candidate {
 
 sub post_process_alignments {
     my ( $self, @args ) = @_;
-    my $candidate_rnafold_stemploop_out = shift @args;
-    my $file_alignement                 = shift @args;
+    my $file_alignement = shift @args;
 
-    my @res =
-      miRkwood::Components::get_data_from_rnafold_out(
-        $candidate_rnafold_stemploop_out);
-    my ( $name, $position, $DNASequence, $Vienna ) = @res;
     my %alignments;
 
     if (-z $file_alignement){
@@ -353,21 +206,29 @@ sub post_process_alignments {
         return;
     }
     else {
-        %alignments =
-          miRkwood::Components::merge_alignments( \%alignments );
+        %alignments = miRkwood::Components::merge_alignments( \%alignments );
         my $tmp_file =
           File::Spec->catfile( $self->get_directory(), "mirdup_validation.txt" );
         my %mirdup_results =
-          miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $name,
-            $DNASequence, $Vienna, keys %alignments );
-        my $mirdup_results_file =
-          File::Spec->catfile( $self->get_directory(), 'mirdup_results.yml' );
-        YAML::XS::DumpFile( $mirdup_results_file, %mirdup_results );
-
-        my $alignments_results_file =
-          File::Spec->catfile( $self->get_directory(), 'merged_alignments.yml' );
-        YAML::XS::DumpFile( $alignments_results_file, %alignments );
+          miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
+            $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
+        return (\%mirdup_results, \%alignments);
     }
+}
+
+=method convert_alternative_candidates
+
+=cut
+
+sub convert_alternative_candidates {
+    my ( $self, @args ) = @_;
+    my @alternatives = @{$self->{'alternatives'}};
+    my %results;
+    foreach my $alternative (@alternatives) {
+        my $name = delete $alternative->{'name'};
+        $results{$name} = $alternative;
+    }
+    return \%results;
 }
 
 1;

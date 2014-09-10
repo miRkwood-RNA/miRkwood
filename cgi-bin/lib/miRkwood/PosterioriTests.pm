@@ -20,8 +20,7 @@ sub test_randfold {
     my $randfold_out = File::Spec->catfile( $candidate_dir, 'randfold.out' );
     miRkwood::Programs::run_randfold( $seq_file, $randfold_out, 200)
       or die('Problem when running Randfold');
-    chmod 777, $randfold_out;
-    return -e $randfold_out;
+    return $randfold_out;
 }
 
 
