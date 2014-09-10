@@ -163,7 +163,6 @@ Writing (pseudo) rnafold output
 
 sub write_RNAFold_stemloop_output {
     my ( $self, @args ) = @_;
-    my ( $nameSeq, $dna, $structure, $energy ) = @args;
     my $candidate_rnafold_output =
       File::Spec->catfile( $self->get_directory(), "outRNAFold_stemloop.txt" );
     open( my $OUT2, '>', $candidate_rnafold_output )
