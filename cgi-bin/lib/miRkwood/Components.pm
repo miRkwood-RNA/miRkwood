@@ -265,19 +265,6 @@ sub get_data_from_rnafold_out {
     return ( $name, "$left-$right", $DNASequence, $Vienna );
 }
 
-=method get_sequence_information
-
-=cut
-
-sub get_sequence_information {
-    my @args          = @_;
-    my $seq_info_file = shift @args;
-    my $contents = miRkwood::FileUtils::slurp_file($seq_info_file);
-    chomp $contents;
-    my ($strand, $left, $right) = split(/\t/xms, $contents);
-    return ($strand, $left, $right);
-}
-
 =method merge_alignments
 
 Merge overlapping alignments.
