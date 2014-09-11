@@ -51,3 +51,15 @@ ok(
 my @expected = qw(  1 2 10);
 is_deeply(\@contents, \@expected,
           'get_dirs_from_directory returns the correct values');
+
+
+## slurp_file() ##
+
+my $test_string = "A\nBC\nD";
+my ($TEST_FH, $test_file) = File::Temp::tempfile( DIR => $tmp_dir );
+print {$TEST_FH} $test_string;
+close $TEST_FH or die('Error closing');
+ok( my $test_res = miRkwood::FileUtils::slurp_file($test_file),
+    "Can call slurp_file()" );
+is( $test_res, $test_string,
+    'slurp_file returns the correct value');
