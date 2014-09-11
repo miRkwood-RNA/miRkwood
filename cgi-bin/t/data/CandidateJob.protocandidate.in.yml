@@ -1,0 +1,12 @@
+---
+amfe: -37.0987654320988
+end_position: '195'
+energy_optimal: '-60.10'
+energy_stemloop: '-60.10'
+mfei: -1.00166666666667
+name: contig15750__34-195
+sequence: gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
+start_position: 34
+strand: +
+structure_optimal: ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
+structure_stemloop: ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
