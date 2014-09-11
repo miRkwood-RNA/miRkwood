@@ -247,24 +247,6 @@ sub get_name_and_position_from_header {
     return ($name, $left, $right)
 }
 
-=method get_data_from_rnafold_out
-
-Retrieve sequence name, position, sequence & structure from
-a RNAfold output.
-
-=cut
-
-sub get_data_from_rnafold_out {
-    my @args                            = @_;
-    my $candidate_rnafold_stemploop_out = shift @args;
-    my @vienna_res = miRkwood::Parsers::parse_RNAfold_output(
-        $candidate_rnafold_stemploop_out);
-    my ($name, $left, $right) = get_name_and_position_from_header($vienna_res[0]);
-    my $DNASequence = $vienna_res[1];
-    my $Vienna      = $vienna_res[2];
-    return ( $name, "$left-$right", $DNASequence, $Vienna );
-}
-
 =method merge_alignments
 
 Merge overlapping alignments.
