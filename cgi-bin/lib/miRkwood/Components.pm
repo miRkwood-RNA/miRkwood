@@ -10,6 +10,7 @@ use Class::Struct;
 use miRkwood::Paths;
 use miRkwood::Programs;
 use miRkwood::Utils;
+use miRkwood::FileUtils;
 use miRkwood::Parsers;
 
 struct Sequence => {   # déclaration de la structure de données (Sequence)
@@ -271,7 +272,7 @@ sub get_data_from_rnafold_out {
 sub get_sequence_information {
     my @args          = @_;
     my $seq_info_file = shift @args;
-    my $contents = miRkwood::Utils::slurp_file($seq_info_file);
+    my $contents = miRkwood::FileUtils::slurp_file($seq_info_file);
     chomp $contents;
     my ($strand, $left, $right) = split(/\t/xms, $contents);
     return ($strand, $left, $right);

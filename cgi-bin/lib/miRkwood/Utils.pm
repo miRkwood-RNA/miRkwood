@@ -786,21 +786,6 @@ sub make_mirbase_link {
     return $url . $id;
 }
 
-=method slurp_file
-
-Return the contents of a file
-
-=cut
-
-sub slurp_file {
-    my @args = @_;
-    my $file = shift @args;
-    open my $fh, '<', $file or die $!;
-    my $contents = do { local $/; <$fh> };
-    close $fh or die $!;
-    return $contents;
-}
-
 =method merge_hashes_of_arrays
 
 Return the contents of a file
