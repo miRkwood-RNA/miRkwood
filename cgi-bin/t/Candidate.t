@@ -18,6 +18,9 @@ require_ok('miRkwood::Candidate');
 my $candidate_file = input_file('candidates', '1-1.yml');
 file_exists_ok($candidate_file);
 
+my $empty_candidate = miRkwood::Candidate->new();
+isa_ok($empty_candidate, 'miRkwood::Candidate');
+
 my $candidate = miRkwood::Candidate->new_from_serialized($candidate_file);
 
 isa_ok($candidate, 'miRkwood::Candidate');
