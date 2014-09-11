@@ -22,6 +22,14 @@ It takes as optional argument the number of the Subversion revision to deploy.
 
 This is done on the test and qualification servers.
 
+To deploy, just run:
+
+    ssh <server> < deploy-mirkwood
+
+For example, on BioinfoTest:
+
+    ssh bonsai@bioinfotest < deploy-mirkwood
+
 
 On BioInfo
 ----------
