@@ -39,11 +39,8 @@ sub get_directory {
 
 sub run {
     my ($self, @args) = @_;
-    my $candidates_array =
-      $self->get_raw_candidates();
-
+    my $candidates_array = $self->get_raw_candidates();
     my %candidates_hash = $self->process_raw_candidates($candidates_array);
-
     return $self->process_candidates( \%candidates_hash );
 }
 
@@ -69,20 +66,6 @@ sub get_forward_strand_candidates {
     my $candidates = $sequence_subjob->get_raw_candidates_for_sequence();
 }
 
-=method merge_and_sort_candidates_array
-
-Merge both given candidates list
-Works also if one of the list is empty
-
-=cut
-
-sub merge_and_sort_candidates_array {
-    my ($self, @args) = @_;
-    my ($candidates1, $candidates2) = @args;
-    my @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @{$candidates1}, @{$candidates2} );
-    return \@candidates_array;
-}
-
 =method get_other_strand_candidates
 
 Get the candidates for the sequence
@@ -103,6 +86,20 @@ sub get_other_strand_candidates {
         $candidates = $sequence_subjob2->get_raw_candidates_for_sequence();
     }
     return $candidates;
+}
+
+=method merge_and_sort_candidates_array
+
+Merge both given candidates list
+Works also if one of the list is empty
+
+=cut
+
+sub merge_and_sort_candidates_array {
+    my ($self, @args) = @_;
+    my ($candidates1, $candidates2) = @args;
+    my @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @{$candidates1}, @{$candidates2} );
+    return \@candidates_array;
 }
 
 sub process_raw_candidates{
