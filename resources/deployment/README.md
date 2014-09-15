@@ -42,3 +42,7 @@ BioInfo does not accept connections to the outside world, so we cannot check out
 The solution is to mirror the contents of the qualification server using rsync.
 
 The Shell script `mirror-local-mirkwood-to-bioinfo` can be used for that.
+
+You may use directly its wrapper, `mirror-mirkwood-from-bioinfotest-to-bioinfo`:
+
+    ./mirror-mirkwood-from-bioinfotest-to-bioinfo
