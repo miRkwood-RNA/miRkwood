@@ -243,10 +243,9 @@ sub is_included {
     return ( $end <= $ref_end );
 }
 
-
 =method process_candidates
 
-
+Run the rest of the pipeline on the candidates
 
 =cut
 
