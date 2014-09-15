@@ -258,15 +258,26 @@ sub process_candidates {
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
         my $candidate_dir = $self->create_candidate_directory($candidate_identifier);
-        my $sequence_identifier = $self->{'identifier'};
-        my $candidate_full_identifier = "$sequence_identifier-$candidate_identifier";
-        my $candidate_ref = $candidates_hash{$key}{'max'};
-        my $alternatives = $candidates_hash{$key}{'alternatives'};
-        my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $self->{'name'},
-                                                       $candidate_full_identifier, $candidate_ref, $alternatives);
-        push @candidates_result, $candidatejob->run();
+        my $candidate = $candidates_hash{$key};
+        push @candidates_result, $self->run_pipeline_on_candidate($candidate_identifier, $candidate);
     }
     return \@candidates_result;
+}
+
+sub run_pipeline_on_candidate {
+    my ($self, @args) = @_;
+    my $candidate_identifier = shift @args;
+    my $candidate_structure = shift @args;
+
+    my $candidate_dir = $self->create_candidate_directory($candidate_identifier);
+    my $sequence_identifier = $self->{'identifier'};
+    my $candidate_full_identifier = "$sequence_identifier-$candidate_identifier";
+    my $candidate_ref = $candidate_structure->{'max'};
+    my $alternatives = $candidate_structure->{'alternatives'};
+    my $candidatejob = miRkwood::CandidateJob->new($candidate_dir, $self->{'name'},
+                                                   $candidate_full_identifier,
+                                                   $candidate_ref, $alternatives);
+    return $candidatejob->run();
 }
 
 sub create_candidate_directory {
