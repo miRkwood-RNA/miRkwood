@@ -84,7 +84,7 @@ sub update_candidate_information_from_run{
     $candidate_structure->{'mfe'} = delete $candidate_structure->{'energy_stemloop'};
     $candidate_structure->{'image'} = $self->write_VARNA_if_needed();
 
-    $candidate_structure->{'position'} = "$candidate_structure->{'start_position'}-$candidate_structure->{'end_position'}";
+    $candidate_structure->{'position'} = $self->make_full_position($candidate_structure);
     $candidate_structure->{'length'} = $candidate_structure->{'end_position'} - $candidate_structure->{'start_position'} + 1;
     $candidate_structure->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
                             miRkwood::Utils::compute_gc_content($candidate_structure->{'sequence'}),
@@ -93,6 +93,12 @@ sub update_candidate_information_from_run{
     my $hairpin = miRkwood::Utils::make_ASCII_viz($candidate_structure->{'sequence'}, $candidate_structure->{'structure_stemloop'});
     $candidate_structure->{'hairpin'} = $hairpin;
     return $candidate_structure;
+}
+
+sub make_full_position {
+    my ( $self, @args ) = @_;
+    my $candidate_structure = shift @args;
+    return "$candidate_structure->{'start_position'}-$candidate_structure->{'end_position'}";
 }
 
 =method write_VARNA_if_needed
