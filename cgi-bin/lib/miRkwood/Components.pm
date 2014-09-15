@@ -234,19 +234,6 @@ END
     return $result;
 }
 
-=method get_name_and_position_from_header
-
-Get sequence name and position based on the FASTA header in RNAfold output.
-
-=cut
-
-sub get_name_and_position_from_header {
-    my @args = @_;
-    my $header = shift @args;
-    my ($name, $left, $right) = ($header =~ /^\s*(.*)__(\d+)-(\d+)$/xms);
-    return ($name, $left, $right)
-}
-
 =method merge_alignments
 
 Merge overlapping alignments.
