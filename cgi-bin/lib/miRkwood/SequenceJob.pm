@@ -59,19 +59,22 @@ sub get_raw_candidates{
     my ($self, @args) = @_;
     my $sequence_subjob = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $self->{'sequence'}, '+');
     my $candidates = $sequence_subjob->get_raw_candidates_for_sequence();
+    my $candidates2 = $self->get_other_strand_candidates();
+    my $candidates_array = $self->merge_and_sort_candidates_array($candidates, $candidates2);
+    return $candidates_array;
+}
 
-    my @candidates_array1 = @{$candidates};
-    my @candidates_array;
+=method merge_and_sort_candidates_array
 
-    my $cfg = miRkwood->CONFIG();
-    if ( $cfg->param('options.strands') ) {
-        my $candidates2 = $self->get_other_strand_candidates();
-        my @candidates_array2 = @{$candidates2};
-        @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @candidates_array1, @candidates_array2 );
-    }
-    else {
-        @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @candidates_array1 );
-    }
+Merge both given candidates list
+Works also if one of the list is empty
+
+=cut
+
+sub merge_and_sort_candidates_array {
+    my ($self, @args) = @_;
+    my ($candidates1, $candidates2) = @args;
+    my @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @{$candidates1}, @{$candidates2} );
     return \@candidates_array;
 }
 
@@ -86,10 +89,14 @@ Return an array of candidates.
 
 sub get_other_strand_candidates {
     my ($self, @args) = @_;
-    debug( 'Processing the other strand', miRkwood->DEBUG() );
-    my $reversed_sequence = miRkwood::Utils::reverse_complement($self->{'sequence'});
-    my $sequence_subjob2 = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $reversed_sequence, '-');
-    my $candidates = $sequence_subjob2->get_raw_candidates_for_sequence();
+    my $candidates = undef;
+    my $cfg = miRkwood->CONFIG();
+    if ( $cfg->param('options.strands') ) {
+        debug( 'Processing the other strand', miRkwood->DEBUG() );
+        my $reversed_sequence = miRkwood::Utils::reverse_complement($self->{'sequence'});
+        my $sequence_subjob2 = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $reversed_sequence, '-');
+        $candidates = $sequence_subjob2->get_raw_candidates_for_sequence();
+    }
     return $candidates;
 }
 
