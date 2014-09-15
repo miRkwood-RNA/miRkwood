@@ -12,7 +12,6 @@ use miRkwood;
 use miRkwood::Paths;
 use miRkwood::Parsers;
 use miRkwood::Utils;
-use miRkwood::Components;
 use miRkwood::WebPaths;
 
 =method new

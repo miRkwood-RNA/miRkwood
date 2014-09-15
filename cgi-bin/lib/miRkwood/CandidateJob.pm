@@ -6,14 +6,12 @@ use strict;
 use warnings;
 
 use miRkwood;
-use miRkwood::CandidateHandler;
-use miRkwood::Components;
-use miRkwood::MiRdup;
+use miRkwood::Candidate;
 use miRkwood::PosterioriTests;
-use miRkwood::Parsers;
+use miRkwood::Programs;
+use miRkwood::Utils;
 
 use Carp;
-use YAML::XS;
 use Log::Message::Simple qw[msg error debug];
 
 =method new

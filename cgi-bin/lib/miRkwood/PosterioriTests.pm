@@ -5,9 +5,10 @@ package miRkwood::PosterioriTests;
 use strict;
 use warnings;
 
+use miRkwood::MiRdup;
 use miRkwood::Parsers;
 use miRkwood::Programs;
-use miRkwood::Components;
+use miRkwood::Utils;
 
 use File::Spec;
 use Carp;
