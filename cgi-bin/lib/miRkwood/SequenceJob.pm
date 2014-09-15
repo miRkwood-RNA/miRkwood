@@ -7,7 +7,6 @@ use warnings;
 
 use Log::Message::Simple qw[msg error debug];
 
-use miRkwood::Programs;
 use miRkwood::CandidateJob;
 use miRkwood::SequenceSubJob;
 use miRkwood::Utils;
