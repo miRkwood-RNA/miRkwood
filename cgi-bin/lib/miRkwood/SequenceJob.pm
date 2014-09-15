@@ -257,7 +257,6 @@ sub process_candidates {
     my $candidate_identifier = 0;
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
-        my $candidate_dir = $self->create_candidate_directory($candidate_identifier);
         my $candidate = $candidates_hash{$key};
         push @candidates_result, $self->run_pipeline_on_candidate($candidate_identifier, $candidate);
     }
