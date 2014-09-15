@@ -11,8 +11,8 @@ use miRkwood::Components;
 use miRkwood::MiRdup;
 use miRkwood::PosterioriTests;
 use miRkwood::Parsers;
-use Carp;
 
+use Carp;
 use YAML::XS;
 use Log::Message::Simple qw[msg error debug];
 
@@ -123,25 +123,25 @@ Perform the a posteriori tests for a given candidate
 
 sub process_tests_for_candidate {
     my ( $self, @args ) = @_;
-    my $dir = $self->get_directory();
 
     my $cfg = miRkwood->CONFIG();
     my $result = {};
 
+    my $posteriori_tests = miRkwood::PosterioriTests->new($self->get_directory());
+
     if ( $cfg->param('options.randfold') ) {
         my $seq_file = $self->write_sequence_file();
         debug( "Running test_randfold on $seq_file", miRkwood->DEBUG() );
-        $result->{'shuffles'} = miRkwood::PosterioriTests::test_randfold( $self->get_directory(),
-            $seq_file );
+        $result->{'shuffles'} = $posteriori_tests->test_randfold( $seq_file );
     }
 
     if ( $cfg->param('options.align') ) {
+        $posteriori_tests->{'sequence_name'} = $self->{'sequence_name'};
+        $posteriori_tests->{'candidate'} = $self->{'candidate'};
         my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
         debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
-        my $file_alignement =
-          miRkwood::PosterioriTests::test_alignment( $self->get_directory(),
-            $candidate_rnafold_stemploop_out );
-        my ($mirdup_results, $alignments) = $self->post_process_alignments($file_alignement );
+        my ($mirdup_results, $alignments) =
+            $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
         if ($alignments) {
             $result->{'alignment_existence'} = 1;
         }
@@ -188,43 +188,6 @@ sub write_sequence_file {
     return $candidate_sequence;
 }
 
-=method post_process_alignments
-
-
-=cut
-
-sub post_process_alignments {
-    my ( $self, @args ) = @_;
-    my $file_alignement = shift @args;
-
-    my %alignments;
-
-    if (-z $file_alignement){
-        return;
-    }
-    if (
-        !eval {
-            %alignments =
-              miRkwood::Components::parse_custom_exonerate_output(
-                $file_alignement);
-        }
-      )
-    {
-        # Catching exception
-        carp("Exception when parsing exonerate output $file_alignement");
-        return;
-    }
-    else {
-        %alignments = $self->merge_alignments( \%alignments );
-        my $tmp_file =
-          File::Spec->catfile( $self->get_directory(), "mirdup_validation.txt" );
-        my %mirdup_results =
-          miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
-            $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
-        return (\%mirdup_results, \%alignments);
-    }
-}
-
 =method convert_alternative_candidates
 
 =cut
@@ -239,65 +202,5 @@ sub convert_alternative_candidates {
     }
     return \%results;
 }
-
-=method merge_alignments
-
-Merge overlapping alignments.
-Given ordered positions, merge in [a..b] all [c..d] if a<=c and d<=b+2
-
-=cut
-
-sub merge_alignments {
-    my ( $self, @args ) = @_;
-    my $alignments = shift @args;
-    my %alignments = %{$alignments};
-
-    my %merged_alignments;
-    my ( $stocked_left, $stocked_right ) = ( -10, -10 );
-
-    my @keys = sort {
-        ( miRkwood::Utils::get_element_of_split( $a, '-', 0 )
-              <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 ) )
-          || ( miRkwood::Utils::get_element_of_split( $a, '-', 1 )
-            <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 ) )
-    } keys %alignments;
-    my @stocked_hits;
-    my $final_key;
-    my $final_hit_count = -1;
-
-    foreach my $current_key (@keys) {
-        my ( $current_left, $current_right ) = split( /-/, $current_key );
-        my $current_hit_count = scalar @{ $alignments{$current_key} };
-
-        if ( $current_right > $stocked_right + 3 ) {
-
- # No merge ; drop the list of current hits in the hash (only if there are some)
-            if (@stocked_hits) {
-                push @{ $merged_alignments{$final_key} }, @stocked_hits;
-            }
-
-            # Reinitialise
-            $final_hit_count = -1;
-            @stocked_hits    = ();
-            ( $stocked_left, $stocked_right ) =
-              ( $current_left, $current_right );
-        }
-        if ( $current_hit_count > $final_hit_count ) {
-
-    # This position holds more hits than the previous, so it will be our new key
-            $final_hit_count = $current_hit_count;
-            $final_key       = $current_key;
-        }
-
-        # Stock the current hits
-        push @stocked_hits, @{ $alignments{$current_key} };
-    }
-
-    # Drop the remaining hits in the hash
-    push @{ $merged_alignments{$final_key} }, @stocked_hits;
-    return %merged_alignments;
-}
-
-
 
 1;
