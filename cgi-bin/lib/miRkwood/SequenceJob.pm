@@ -257,9 +257,7 @@ sub process_candidates {
     my $candidate_identifier = 0;
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
-        my $candidate_dir =
-          File::Spec->catdir( $self->get_directory(), $candidate_identifier );
-        mkdir $candidate_dir;
+        my $candidate_dir = $self->create_candidate_directory($candidate_identifier);
         my $sequence_identifier = $self->{'identifier'};
         my $candidate_full_identifier = "$sequence_identifier-$candidate_identifier";
         my $candidate_ref = $candidates_hash{$key}{'max'};
@@ -269,6 +267,15 @@ sub process_candidates {
         push @candidates_result, $candidatejob->run();
     }
     return \@candidates_result;
+}
+
+sub create_candidate_directory {
+    my ($self, @args) = @_;
+    my $candidate_identifier = shift @args;
+    my $candidate_dir =
+          File::Spec->catdir( $self->get_directory(), $candidate_identifier );
+    mkdir $candidate_dir;
+    return $candidate_dir;
 }
 
 1;
