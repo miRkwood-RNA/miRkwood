@@ -57,11 +57,16 @@ Get the candidates for the sequence
 
 sub get_raw_candidates{
     my ($self, @args) = @_;
+    my $candidates1 = $self->get_forward_strand_candidates();
+    my $candidates2 = $self->get_other_strand_candidates();
+    my $candidates_array = $self->merge_and_sort_candidates_array($candidates1, $candidates2);
+    return $candidates_array;
+}
+
+sub get_forward_strand_candidates {
+    my ($self, @args) = @_;
     my $sequence_subjob = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $self->{'sequence'}, '+');
     my $candidates = $sequence_subjob->get_raw_candidates_for_sequence();
-    my $candidates2 = $self->get_other_strand_candidates();
-    my $candidates_array = $self->merge_and_sort_candidates_array($candidates, $candidates2);
-    return $candidates_array;
 }
 
 =method merge_and_sort_candidates_array
