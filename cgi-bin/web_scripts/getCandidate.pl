@@ -83,7 +83,6 @@ sub exportAsDotBracket {
     my $candidate_name =
       $candidate->get_shortened_name();
     my $filename = $candidate_name;
-    my $header   = ">$candidate_name";
     my $vienna =
       $candidate->candidateAsVienna( $optimal );
     if ($optimal) {
