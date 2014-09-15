@@ -94,7 +94,7 @@ Return an array of candidates.
 
 sub get_other_strand_candidates {
     my ($self, @args) = @_;
-    my $candidates = undef;
+    my $candidates = [];
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.strands') ) {
         debug( 'Processing the other strand', miRkwood->DEBUG() );
