@@ -1,0 +1,12 @@
+#!/bin/sh
+# Script that deploys miRkwood from Subversion on BioInfoTest
+
+#ssh bonsai@bioinfotest < deploy-mirkwood-locally
+
+REVISION=$1
+
+SSH_USER=bonsai
+SERVER=bioinfotest
+LOCAL_SCRIPT=deploy-mirkwood-locally
+
+revision=$REVISION; (echo "script() {"; cat $LOCAL_SCRIPT; echo "}"; echo "script $revision" ) | ssh $SSH_USER@$SERVER "bash"

@@ -19,16 +19,19 @@ are checked-out from the Inria forge to the right place in the filesystem:
 The Shell script `deploy-mirkwood-locally` can be used for that.
 It takes as optional argument the number of the Subversion revision to deploy.
 
-
 This is done on the test and qualification servers.
 
-To deploy, just run:
+To deploy the latest versuib on a distant server, just run:
 
     ssh <server> < deploy-mirkwood-locally
 
-For example, on BioinfoTest:
+On BioInfoTest, you may use the wrapper script `deploy-mirkwood-to-bioinfotest`,
+which also takes as optional argument the number of the Subversion revision to deploy.
 
-    ssh bonsai@bioinfotest < deploy-mirkwood-locally
+    ./deploy-mirkwood-to-bioinfotest
+
+    ./deploy-mirkwood-to-bioinfotest 11460
+
 
 
 On BioInfo
