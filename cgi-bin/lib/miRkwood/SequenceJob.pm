@@ -65,7 +65,7 @@ sub get_raw_candidates{
 sub get_forward_strand_candidates {
     my ($self, @args) = @_;
     my $sequence_subjob = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $self->{'sequence'}, '+');
-    my $candidates = $sequence_subjob->get_raw_candidates_for_sequence();
+    return $sequence_subjob->get_raw_candidates_for_sequence();
 }
 
 =method get_other_strand_candidates
