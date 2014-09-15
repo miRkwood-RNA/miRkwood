@@ -93,7 +93,7 @@ Abstract method.
 
 sub init_sequences {
     my ($self, @args) = @_;
-    die ('Unimplemented method');
+    die ('Unimplemented method init_sequences');
 }
 
 =method get_sequences
