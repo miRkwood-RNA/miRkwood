@@ -86,7 +86,7 @@ sub post_process_alignments {
     if (
         !eval {
             %alignments =
-              miRkwood::Components::parse_custom_exonerate_output(
+              miRkwood::Parsers::parse_custom_exonerate_output(
                 $file_alignement);
         }
       )
