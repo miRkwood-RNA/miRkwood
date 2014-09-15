@@ -1,4 +1,11 @@
-package miRkwood::OpenDocument;
+package miRkwood::ResultsExporter::OpenDocumentExporter;
+
+# ABSTRACT: Class for exporting results in OpenDocument format
+
+use strict;
+use warnings;
+
+use parent 'miRkwood::ResultsExporter::ResultsExporter';
 
 # ABSTRACT: Exporting pipeline results as OpenDocument
 
@@ -21,16 +28,19 @@ Constructor
 
 sub new {
     my ( $class, @args ) = @_;
-    my $jobId = shift @args;
-    my $sequences_to_export = shift @args;
-    my $self = bless {
-        jobId => $jobId,
-        sequences => $sequences_to_export
-    }, $class;
+    my $cgi = shift @args;
+    my $self = $class->SUPER::new(@args);
+    $self->{cgi} = $cgi;
     $self->{doc} = odf_document->create('text')
       or die 'Error when initialising ODF document';
     $self->prepare_document();
     return $self;
+}
+
+sub export_for_web {
+    my ( $self, @args ) = @_;
+    my $odt = $self->get_report();
+    return $self->{cgi}->redirect(-url => $odt);
 }
 
 =method prepare_document
@@ -242,15 +252,10 @@ Write it on disk and return the server path to it.
 
 sub generate_report {
     my ( $self, @args ) = @_;
-    my $jobId = $self->{jobId};
-    my @sequences_to_export = @{$self->{sequences}};
-
-    my $jobPath = miRkwood::Results->jobId_to_jobPath($jobId);
+    my %results = %{$self->{'results'}};
 
     my $images_dir = $self->get_images_dir();
     mkdir $images_dir;
-
-    my %results = miRkwood::Results->get_structure_for_jobID($jobId);
 
     my $doc = $self->{doc};
 
@@ -274,21 +279,13 @@ sub generate_report {
             style => 'Top title'
         )
     );
-
-    my @keys = sort { ( $results{$a}{'name'} cmp
-                        $results{$b}{'name'} )
-                      ||
-                      ( $results{$a}{'start_position'} <=>
-                        $results{$b}{'start_position'} )
-                 } keys %results;
-
+    my @keys = $self->get_sorted_keys();
     foreach my $key (@keys) {
-        if ( $key ~~ \@sequences_to_export )
-        {
+        if ( $self->is_sequence_to_export($key)){
             my $candidate = $results{$key};
             $self->add_candidate($context, $candidate, $key);
-        }   # if key in tab
-    }    #  while each %results
+        }
+    }
 
     # save the generated document and quit
     $doc->save( target => $self->get_ODF_absolute_path(), pretty => TRUE );
@@ -304,7 +301,6 @@ sub add_candidate {
     my $context   = shift @args;
     my $candidate = shift @args;
     my $key = shift @args;
-    my $images_dir = $self->get_images_dir();
     my ( $start, $end ) = (${$candidate}{'start_position'}, ${$candidate}{'end_position'} );
     $context->append_element(
         odf_create_heading(
@@ -351,12 +347,8 @@ sub add_candidate {
 
 
     # Copying the image
-    my $img_path      = ${$candidate}{'image'};
-    my $img_full_path = $img_path;
-    my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
-    copy($img_full_path, $new_img_path)
-        or die "Copy of $img_full_path to $images_dir failed: $!";
-
+    
+    my $new_img_path = $self->copy_image($candidate, $key);
     my ( $lien_image, $taille_image ) =
       $self->{doc}->add_image_file($new_img_path);
 
@@ -385,6 +377,18 @@ sub add_candidate {
     return;
 }
 
+sub copy_image{
+    my ( $self, @args ) = @_;
+    my $candidate = shift @args;
+    my $key = shift @args;
+    my $images_dir = $self->get_images_dir();
+    my $img_path = ${$candidate}{'image'};
+    my $img_full_path = $img_path;
+    my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
+    copy($img_full_path, $new_img_path)
+        or die "Copy of $img_full_path to $images_dir failed: $!";
+    return $new_img_path;
+}
 
 =method add_thermodynamics_section
 
@@ -589,7 +593,7 @@ Return the absolute path to the ODF document
 
 sub get_ODF_absolute_path {
     my ( $self, @args ) = @_;
-    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->{jobId});
+    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->get_identifier());
     my $ODT_filename = $self->get_ODF_filename();
     return File::Spec->catfile( $jobPath, $ODT_filename );
 }
@@ -602,12 +606,12 @@ Return the document filename
 
 sub get_ODF_filename {
     my ( $self, @args ) = @_;
-    return "Prediction_report_$self->{jobId}.odt";
+    return 'Prediction_report_' . $self->get_identifier() . '.odt';
 }
 
 sub get_images_dir {
     my ( $self, @args ) = @_;
-    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->{jobId});
+    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->get_identifier());
     return File::Spec->catdir($jobPath, 'images');
 }
 
@@ -621,7 +625,7 @@ and return the server path to it.
 sub get_report {
     my ( $self, @args ) = @_;
     $self->generate_report();
-    return $self->get_ODF_server_path();;
+    return $self->get_ODF_server_path();
 }
 
 1;

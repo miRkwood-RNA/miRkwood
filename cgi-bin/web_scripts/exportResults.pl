@@ -10,6 +10,7 @@ use FindBin;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::Results;
 use miRkwood::WebTemplate;
+use miRkwood::ResultsExporterMaker;
 
 my $cgi = CGI->new;
 
@@ -20,75 +21,30 @@ my @sequences_to_export =  split( ',',$data  );
 
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
 
-if ($valid) {
-
-    given ($export_type) {
-        when (/gff/) { exportAsGFF($id_job) }
-        when (/odf/) { exportAsODF($id_job) }
-        when (/csv/) { exportAsCSV($id_job) }
-        when (/fas/) { exportAsFasta($id_job) }
-        when (/dot/) { exportAsDotBracket($id_job) }
-        default { miRkwood::WebTemplate::web_die("The export type '$export_type' is not supported"); }
-    }
-}
-else {
+if (! $valid) {
     miRkwood::WebTemplate::web_die('The job ID provided is not valid');
 }
 
-sub exportAsGFF {
-    my $id_job = shift @_;
-    my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job);
-    my $gff = miRkwood::Results->export('gff', \%myResults , \@sequences_to_export);
-    print <<"DATA" or miRkwood::WebTemplate::web_die("Error when printing content: $!");
-Content-type: text/gff
-Content-disposition: attachment;filename=Results-$id_job.gff
-
-$gff
-DATA
+my $exporter;
+my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job);
+given ($export_type) {
+    when (/gff/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter();
+    }
+    when (/odf/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_opendocument_results_exporter();
+        $exporter->{'cgi'} = $cgi;
+    }
+    when (/csv/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter();
+    }
+    when (/fas/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
+    }
+    when (/dot/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter();
+    }
+    default { miRkwood::WebTemplate::web_die("The export type '$export_type' is not supported"); }
 }
-
-sub exportAsODF {
-    my $id_job = shift @_;
-    require miRkwood::OpenDocument
-        or miRkwood::WebTemplate::web_die("Fail to import OpenDocument. Perl module ODF::lpOD is likely missing.");
-    my $odf_factory = miRkwood::OpenDocument->new($id_job, \@sequences_to_export);
-    my $odt = $odf_factory->get_report();
-    print $cgi->redirect( -uri => $odt );
-}
-
-sub exportAsCSV {
-    my $id_job = shift @_;
-    my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job);
-    my $csv = miRkwood::Results->resultstruct2csv( \%myResults , \@sequences_to_export);
-
-    print <<"DATA" or miRkwood::WebTemplate::web_die("Error when printing content: $!");
-Content-type: text/csv
-Content-disposition: attachment;filename=Results-$id_job.csv
-
-$csv
-DATA
-}
-
-sub exportAsFasta {
-    my $id_job = shift @_;
-    my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job);
-    my $fasta = miRkwood::Results->export('fas', \%myResults , \@sequences_to_export);
-    print <<"DATA" or miRkwood::WebTemplate::web_die("Error when printing content: $!");
-Content-type: text/txt
-Content-disposition: attachment;filename=Results-$id_job.fa
-
-$fasta
-DATA
-}
-
-sub exportAsDotBracket {
-    my $id_job = shift @_;
-    my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job);
-    my $dotbracket = miRkwood::Results->export('dot', \%myResults , \@sequences_to_export);
-    print <<"DATA" or miRkwood::WebTemplate::web_die("Error when printing content: $!");
-Content-type: text/txt
-Content-disposition: attachment;filename=Results-$id_job.txt
-
-$dotbracket
-DATA
-}
+$exporter->initialize($id_job, \%myResults, \@sequences_to_export);
+print $exporter->export_for_web();

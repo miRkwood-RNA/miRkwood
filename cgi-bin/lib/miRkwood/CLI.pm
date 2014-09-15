@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use miRkwood::Results;
+use miRkwood::ResultsExporterMaker;
 
 =method process_results_dir_for_offline
 
@@ -57,7 +58,9 @@ sub make_html_from_results {
     my $output_folder = shift @args;
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
-    $page .= miRkwood::Results->resultstruct2table( \%results );
+    my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter();
+    $exporter->initialiaze('', \%results);
+    $page .= $exporter->make_html_results_exporter();
 
     $page .= make_all_exports( \%results, $output_folder );
     while ( my ( $key, $value ) = each %results ) {
@@ -85,46 +88,33 @@ sub make_all_exports {
     my $results_ref   = shift @args;
     my $output_folder = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
+    my $id_job = '';
 
-    my $fasta_file = File::Spec->catfile( $pieces_folder, 'candidates.fa' );
-    open( my $FASTA_FILE,
-        '>', File::Spec->catfile( $output_folder, $fasta_file ) )
-      or die("Cannot open $fasta_file: $!");
-    print {$FASTA_FILE} miRkwood::Results->export( 'fas', $results_ref )
-      or die("Cannot write in $fasta_file: $!");
-    close($FASTA_FILE)
-      or die("Cannot close file $fasta_file: $!");
+    my $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $output_folder );
+    my $fasta_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
 
-    my $vienna_file = File::Spec->catfile( $pieces_folder, 'candidates.txt' );
-    open( my $VIENNA_FILE,
-        '>', File::Spec->catfile( $output_folder, $vienna_file ) )
-      or die("Cannot open $vienna_file: $!");
-    print {$VIENNA_FILE} miRkwood::Results->export( 'dot', $results_ref )
-      or die("Cannot write in file $vienna_file: $!");
-    close($VIENNA_FILE)
-      or die("Cannot close file $vienna_file: $!");
+    $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter();
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $output_folder );
+    my $dotbracket_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
 
-    my $gff_file = File::Spec->catfile( $pieces_folder, 'candidates.gff' );
-    open( my $GFF_FILE, '>', File::Spec->catfile( $output_folder, $gff_file ) )
-      or die("Cannot open $gff_file: $!");
-    print {$GFF_FILE} miRkwood::Results->export( 'gff', $results_ref )
-      or die("Cannot write in file $gff_file: $!");
-    close($GFF_FILE)
-      or die("Cannot close file $gff_file: $!");
+    $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter();
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $output_folder );
+    my $gff_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
 
-    my $csv_file = File::Spec->catfile( $pieces_folder, 'candidates.csv' );
-    open( my $CSV_FILE, '>', File::Spec->catfile( $output_folder, $csv_file ) )
-      or die("Cannot open file $csv_file: $!");
-    print {$CSV_FILE} miRkwood::Results->resultstruct2csv($results_ref)
-      or die("Cannot write in file $csv_file: $!");
-    close($CSV_FILE)
-      or die("Cannot close file $csv_file: $!");
+    $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter();
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $output_folder );
+    my $csv_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
 
     my $html = '<h3>Get results as</h3> <ul>';
     $html .= "<li><a href='$csv_file'>tab-delimited format (csv)</a></li>";
     $html .= "<li><a href='$fasta_file'>Fasta</a></li>";
     $html .=
-"<li><a href='$vienna_file'>dot-bracket format (plain sequence + secondary structure)</a></li>";
+"<li><a href='$dotbracket_file'>dot-bracket format (plain sequence + secondary structure)</a></li>";
     $html .= "<li><a href='$gff_file'>gff format</a></li>";
     $html .= '</ul>';
     return $html;

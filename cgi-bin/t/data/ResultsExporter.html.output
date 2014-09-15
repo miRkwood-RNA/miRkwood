@@ -1,0 +1,26 @@
+<table>
+<tbody><tr><th>name</th>
+<th>position</th>
+<th>length</th>
+<th>strand</th>
+<th>quality</th>
+<th>mfe</th>
+<th>mfei</th>
+<th>amfe</th>
+<th>shuffles</th>
+<th>alignment</th>
+</tr>
+<tr><td><a href='#contig15750-34-195'>contig15750</a></td>
+<td>34-195</td>
+<td>162</td>
+<td>+</td>
+<td>3</td>
+<td>-60.1</td>
+<td>-1.00</td>
+<td>-37.10</td>
+<td>0.125000</td>
+<td>2</td>
+
+</tr>
+</tbody>
+</table>

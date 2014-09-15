@@ -12,6 +12,7 @@ use miRkwood::Paths;
 use miRkwood::Results;
 use miRkwood::WebPaths;
 use miRkwood::WebTemplate;
+use miRkwood::ResultsExporterMaker;
 
 my $cgi = CGI->new;
 
@@ -56,8 +57,10 @@ if ($valid) {
 	my %myResults = miRkwood::Results->get_structure_for_jobID($id_job);
 
 	my $nb_results   = miRkwood::Results->number_of_results( \%myResults );
-	my $HTML_results =
-	  miRkwood::Results->resultstruct2pseudoXML( \%myResults );
+	my $exporter = miRkwood::ResultsExporterMaker->make_pseudoxml_results_exporter();
+	$exporter->initialize($id_job, \%myResults);
+
+	my $HTML_results = $exporter->perform_export();
 
 	$HTML_additional .=
 	    "<p class='header-results'><b>"
