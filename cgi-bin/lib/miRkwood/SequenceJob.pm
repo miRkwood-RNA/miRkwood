@@ -11,6 +11,8 @@ use miRkwood::CandidateJob;
 use miRkwood::SequenceSubJob;
 use miRkwood::Utils;
 
+use constant MFEI_THRESHOLD => -0.6;
+
 =method new
 
 Constructor
@@ -105,12 +107,11 @@ sub merge_and_sort_candidates_array {
 sub process_raw_candidates{
     my ($self, @args) = @_;
     my $candidates_array = shift @args;
-
     my @candidates_array = @{$candidates_array};
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.mfe') ) {
-        debug('Select only sequences with MFEI < -0.6', miRkwood->DEBUG() );
-        @candidates_array = grep { mfei_below_threshold($_, -0.6) } @candidates_array;
+        debug("Select only sequences with MFEI < " . MFEI_THRESHOLD, miRkwood->DEBUG() );
+        @candidates_array = grep { mfei_below_threshold($_, MFEI_THRESHOLD) } @candidates_array;
     }
 
     my %candidates_hash;
