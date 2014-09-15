@@ -16,7 +16,7 @@ are checked-out from the Inria forge to the right place in the filesystem:
 - /bio1/www/cgi-bin/mirkwood --> cgi-bin directory
 - /bio1/www/html/mirkwood --> html directory
 
-The Shell script `deploy-mirkwood` can be used for that.
+The Shell script `deploy-mirkwood-locally` can be used for that.
 It takes as optional argument the number of the Subversion revision to deploy.
 
 
@@ -24,11 +24,11 @@ This is done on the test and qualification servers.
 
 To deploy, just run:
 
-    ssh <server> < deploy-mirkwood
+    ssh <server> < deploy-mirkwood-locally
 
 For example, on BioinfoTest:
 
-    ssh bonsai@bioinfotest < deploy-mirkwood
+    ssh bonsai@bioinfotest < deploy-mirkwood-locally
 
 
 On BioInfo
@@ -38,4 +38,4 @@ BioInfo does not accept connections to the outside world, so we cannot check out
 
 The solution is to mirror the contents of the qualification server using rsync.
 
-The Shell script `deploy-mirkwood-to-bioinfo` can be used for that.
+The Shell script `mirror-local-mirkwood-to-bioinfo` can be used for that.
