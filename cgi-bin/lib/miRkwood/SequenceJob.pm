@@ -65,11 +65,7 @@ sub get_raw_candidates{
 
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.strands') ) {
-        debug( 'Processing the other strand', miRkwood->DEBUG() );
-        my $reversed_sequence =
-          miRkwood::Utils::reverse_complement($self->{'sequence'});
-        my $sequence_subjob2 = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $reversed_sequence, '-');
-        my $candidates2 = $sequence_subjob2->get_raw_candidates_for_sequence();
+        my $candidates2 = $self->get_other_strand_candidates();
         my @candidates_array2 = @{$candidates2};
         @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @candidates_array1, @candidates_array2 );
     }
@@ -77,6 +73,24 @@ sub get_raw_candidates{
         @candidates_array = sort { $a->{start_position} <=> $b->{start_position} } ( @candidates_array1 );
     }
     return \@candidates_array;
+}
+
+=method get_other_strand_candidates
+
+Get the candidates for the sequence
+Return an array of candidates.
+
+ Usage : my $candidates = $self->get_other_strand_candidates();
+
+=cut
+
+sub get_other_strand_candidates {
+    my ($self, @args) = @_;
+    debug( 'Processing the other strand', miRkwood->DEBUG() );
+    my $reversed_sequence = miRkwood::Utils::reverse_complement($self->{'sequence'});
+    my $sequence_subjob2 = miRkwood::SequenceSubJob->new($self->get_directory(), $self->{'name'}, $reversed_sequence, '-');
+    my $candidates = $sequence_subjob2->get_raw_candidates_for_sequence();
+    return $candidates;
 }
 
 sub process_raw_candidates{
