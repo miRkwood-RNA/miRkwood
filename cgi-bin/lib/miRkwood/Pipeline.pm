@@ -50,21 +50,6 @@ sub run_pipeline {
     return;
 }
 
-=method setup_logging
-
- Usage : $self->setup_logging();
- Return: -
-
-=cut
-
-sub setup_logging {
-    my ($self, @args) = @_;
-    my $log_file = File::Spec->catfile( $self->{'job_dir'}, 'log.log' );
-    $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
-    miRkwood->DEBUG(1);
-    return;
-}
-
 =method init_pipeline
 
 Initialise the pipeline setup
@@ -85,6 +70,20 @@ sub init_pipeline {
     return;
 }
 
+=method setup_logging
+
+ Usage : $self->setup_logging();
+ Return: -
+
+=cut
+
+sub setup_logging {
+    my ($self, @args) = @_;
+    my $log_file = File::Spec->catfile( $self->{'job_dir'}, 'log.log' );
+    $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
+    miRkwood->DEBUG(1);
+    return;
+}
 
 =method init_sequences
 
