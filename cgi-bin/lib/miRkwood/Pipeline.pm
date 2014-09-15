@@ -179,17 +179,31 @@ sub compute_candidates {
     my $sequence_identifier = 0;
     foreach my $item (@sequences_array) {
         my ( $name, $sequence ) = @{$item};
-        debug( "Considering sequence $sequence_identifier: $name",
-               miRkwood->DEBUG() );
+        debug( "Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
         $sequence_identifier++;
-        my $sequence_dir =
-          File::Spec->catdir( $self->get_workspace_path(), $sequence_identifier );
-        mkdir $sequence_dir;
+        my $sequence_dir = $self->make_sequence_workspace_directory($sequence_identifier);
         my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
         my $sequence_candidates = $sequence_job->run();
         $self->serialize_candidates($sequence_candidates);
     }
     return;
+}
+
+=method make_sequence_workspace_directory
+
+Create the directory for the sequence (in the job workspace)
+based on its identifier and returns the name
+
+ Usage : my $dir = $self->make_sequence_workspace_directory();
+
+=cut
+
+sub make_sequence_workspace_directory {
+    my ($self, @args) = @_;
+    my $sequence_identifier = shift @args;
+    my $sequence_dir = File::Spec->catdir( $self->get_workspace_path(), $sequence_identifier );
+    mkdir $sequence_dir;
+    return $sequence_dir;
 }
 
 sub serialize_candidates {
