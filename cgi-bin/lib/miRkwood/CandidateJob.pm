@@ -148,8 +148,6 @@ sub process_tests_for_candidate {
             $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
         if ($alignments) {
             $result->{'alignment_existence'} = 1;
-        }
-        if ($result->{'alignment_existence'}){
             $result->{'alignments'} = $alignments;
             $result->{'mirdup_validation'} = $mirdup_results;
         }
