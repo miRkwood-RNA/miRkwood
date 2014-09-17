@@ -48,7 +48,7 @@ function showCellInfo(i,j)
 	var id_job = document.getElementById('id_job').innerHTML;
 	if ((i!=0))
 	{var identifier = myResults.getIdentifierByIndex(i-1);
-		window.open("./resultsRow.pl?jobID="+id_job+"&id="+identifier);
+		window.open("./displayCandidate.pl?jobID="+id_job+"&id="+identifier);
 		var factor = myResults.getFactorsNamesList()[j-1];
 	}
 }

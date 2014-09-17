@@ -16,7 +16,7 @@ my $help_page = File::Spec->catfile( miRkwood::WebPaths->get_css_path(), '..', '
 
 my $page = <<"END_TXT";
 <div class="main">
-  <form id='form' onsubmit="return verifySequence();" method="post" action="./results.pl" enctype="multipart/form-data">
+  <form id='form' onsubmit="return verifySequence();" method="post" action="./pipeline.pl" enctype="multipart/form-data">
     <fieldset id="fieldset">
       <div class="forms">
           <label for='job'>&nbsp;<b>Job title</b> (optional)</label>
