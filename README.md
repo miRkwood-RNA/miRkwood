@@ -1,56 +1,51 @@
-PipelineMiRNA
-=============
+miRkwood
+========
 
-Installation
-------------
+miRkwood is a computational pipeline for the identification of miRNAs and their hairpin precursors.
 
-You may either check out the code from version control, or use the archives provided.
-
-### Installing Perl dependencies
-
-If you are using the archives:
-```
-perl Build.PL
-./Build installdeps
-```
-
-If you are using cpanminus:
-```
-cat requirements.txt | sudo cpanm
-```
-
-If you are using Aptitude:
-```
-apt-get -s install $(cat apt-requirements.txt)
-```
-(Note it does not install ODF::lpOD − this one must be installed by hand).
+It is constituted of:
+- a back-end in Perl, running many third-party programs, stored in `cgi-bin`
+- a front-end in Perl/JavaScript, stored in `html`
 
 
-### Installing programs
+Installation for usage
+----------------------
 
-- The Shell script `install-programs.sh` should install pretty much all dependencies.
-```
-sh install-programs.sh programs/
-```
-- `RNAstemloop` has to be installed differently. If you have access to the sequoia forge, run:
-```
-sh install-rnastemloop.sh programs/
-```
+The easiest way to deploy miRkwood is to use the configuration management software Ansible.
 
 
-### Installing data
+Installation for developers
+---------------------------
 
-The Pipeline relies on a few data files, most of which are under version control.
+The easiest way to deploy a miRkwood development environment is to use Vagrant,
+in conjunction with Ansible.
 
-The remaining data is to be deployed using The Shell script `install-data.sh`
-```
-sh install-data.sh data/
-```
+Vagrant is a tool to create and configure virtual development environments.
+It can be considered a wrapper around virtualization software such as VirtualBox
+and configuration management software such as Chef, Salt and Puppet − or Ansible in our case.
 
-Installation troubleshooting
-----------------------------
+Steps are:
 
-- Make sure you have a `results` directory created
-- Make sure the owner is www-data
+- Install VirtualBox <https://www.virtualbox.org/wiki/Downloads>
 
+- Install Vagrant in its most recent version : <http://www.vagrantup.com/downloads.html>
+  (tested on Vagrant 1.4.3 and Vagrant 1.6.5)
 
+- Install Ansible in its most recent version (at least 1.6) <http://docs.ansible.com/intro_installation.html>
+  (tested with Ansible 1.6 and 1.7)
+
+- Clone the miRkwood repository on the Inria Sequoia forge
+    `svn checkout svn+ssh://scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/ mirkwood`
+
+(Note that miRkwood uses SVN externals to fetch some provisionning dependencies)
+
+- Run Vagrant at the miRkwood repository root
+    `vagrant up`
+
+- Vagrant will
+    - download an Ubuntu ISO
+    - mount the local development directory in the virtual machine
+    - provision it using Ansible
+    - set up network forwarding
+
+- Congratulations! A miRkwood instance is now running at <http://192.168.33.20/mirkwood>
