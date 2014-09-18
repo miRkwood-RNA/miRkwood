@@ -14,14 +14,14 @@ if [ -n "$REVISION" ]; then
 fi
 
 if [ -d "$HTML_DIR" ]; then
-    svn update $UP_REVISION $HTML_DIR
+    svn update --username $SVN_USER $UP_REVISION $HTML_DIR
 else
     echo "HTML directory does not exist, checking it out from SVN"
     svn checkout svn+ssh://"$SVN_USER"@scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/html@$REVISION $HTML_DIR
 fi
 
 if [ -d "$CGI_DIR" ]; then
-    svn update $UP_REVISION $CGI_DIR
+    svn update --username $SVN_USER $UP_REVISION $CGI_DIR
 else
     echo "CGI directory does not exist, checking it out from SVN"
     svn checkout svn+ssh://"$SVN_USER"@scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/cgi-bin@$REVISION $CGI_DIR
