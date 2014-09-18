@@ -1,7 +1,7 @@
 #!/bin/sh
 # Script that deploys miRkwood from BioInfoTest to BioInfoTest
 
-USER=bonsai
+USER=bonsai-bot
 SERVER=bioinfotest
 
 ssh -A $USER@$SERVER < mirror-local-mirkwood-to-bioinfo

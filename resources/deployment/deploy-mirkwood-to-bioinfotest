@@ -5,7 +5,7 @@
 
 REVISION=$1
 
-SSH_USER=bonsai
+SSH_USER=bonsai-bot
 SERVER=bioinfotest
 LOCAL_SCRIPT=deploy-mirkwood-locally
 
