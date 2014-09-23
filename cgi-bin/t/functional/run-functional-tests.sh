@@ -32,15 +32,15 @@ EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*
 
 rm -rf $BASEDIR/output/fullpipeline1/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline1/ $BASEDIR/data/sequenceSomething.fas --align --no-process
-DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l)
+DIFF=$(diff $EXCLUDES -I 'fullpipeline' -r $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | grep -v 'Binary' | wc -l)
 ok 'Full pipeline' [ $DIFF -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline2/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --no-process --species-mask Arabidopsis_thaliana
-DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l)
+DIFF=$(diff $EXCLUDES -I 'fullpipeline' -r $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | grep -v 'Binary' | wc -l)
 ok 'Full pipeline with coding region masking (using BLAST)' [ $DIFF -eq 0 ]
 
 rm -rf $BASEDIR/output/fullpipeline-bam/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa  --no-process
-DIFF=$(diff $EXCLUDES -I 'fullpipeline' -qr $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
+DIFF=$(diff $EXCLUDES -I 'fullpipeline' -r $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | grep -v 'Binary' | wc -l)
 ok 'Full BAM pipeline' [ $DIFF -eq 0 ]
