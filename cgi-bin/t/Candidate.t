@@ -14,6 +14,14 @@ BEGIN {
     use_ok('miRkwood::Candidate');
 }
 require_ok('miRkwood::Candidate');
+
+## Set up ##
+
+# Necessary as the headers are fetched in the config
+use miRkwood;
+my $config_file = input_file('run_options.cfg');
+miRkwood->CONFIG_FILE($config_file);
+
 #new_from_serialized
 my $candidate_file = input_file('candidates', '1-1.yml');
 file_exists_ok($candidate_file);
@@ -76,6 +84,12 @@ file_exists_ok($expected_file_gff);
 my $expected_gff = slurp_file($expected_file_gff);
 is( $result_gff, $expected_gff, 'candidate_as_gff returns the expected value' );
 
+ok( my $result_pseudoXML = $candidate->candidate_as_pseudoXML() . "\n",
+    'can call candidate_as_pseudoXML()' );
+my $expected_file_pseudoXML = input_file('Candidate.candidate_as_pseudoXML.out');
+file_exists_ok($expected_file_pseudoXML);
+my $expected_pseudoXML = slurp_file($expected_file_pseudoXML);
+is( $result_pseudoXML, $expected_pseudoXML, 'candidate_as_pseudoXML returns the expected value' );
 
 ok(
     my $result6 =
