@@ -34,7 +34,7 @@ ok( my $faidx_file = $clustering_obj->get_faidx_file(),
 file_exists_ok($faidx_file);
 
 my $dummy_genome_file = input_file('dummy_genome.fa');
-link( $genome_file, $dummy_genome_file );
+symlink( $genome_file, $dummy_genome_file );
 file_exists_ok($dummy_genome_file);
 
 my @dummy_args = ($bamfile, $dummy_genome_file);
