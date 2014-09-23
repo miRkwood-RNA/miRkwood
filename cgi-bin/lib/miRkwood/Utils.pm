@@ -582,16 +582,14 @@ sub make_hairpin_with_mature {
 		  compute_mature_boundaries( $converted_left, $pseudo_size, $bottom );
 		my $bottom_mature = substr( $bottom, $true_left, $size );
 		my $lower_mature = substr( $lower, $true_left, $size );
-        given ($mode) {
-                when (/html/) {
-                    $bottom_mature = '<span class="mature">' . $bottom_mature . '</span>';
-                    $lower_mature  = '<span class="mature">' . $lower_mature . '</span>';
-                }
-                when (/ascii/) {
-                    $bottom_mature = uc $bottom_mature;
-                    $lower_mature  = uc $lower_mature;
-                }
-        }
+        if ($mode eq "html"){
+			$bottom_mature = '<span class="mature">' . $bottom_mature . '</span>';
+			$lower_mature  = '<span class="mature">' . $lower_mature . '</span>';
+		}
+        elsif ($mode eq "ascii"){
+			$bottom_mature = uc $bottom_mature;
+			$lower_mature  = uc $lower_mature;
+		}
 		substr( $bottom, $true_left, $size ) = $bottom_mature;
 		substr( $lower, $true_left, $size )  = $lower_mature;
 	}
@@ -600,16 +598,14 @@ sub make_hairpin_with_mature {
 		  compute_mature_boundaries( $left, $pseudo_size, $top );
 	    my $top_mature = substr( $top, $true_left, $size );
 		my $upper_mature = substr( $upper, $true_left, $size );
-        given ($mode) {
-                when (/html/) {
-                    $top_mature   = '<span class="mature">' . $top_mature . '</span>';
-                    $upper_mature = '<span class="mature">' . $upper_mature . '</span>';
-                }
-                when (/ascii/) {
-                    $top_mature   = uc $top_mature;
-                    $upper_mature = uc $upper_mature;
-                }
-        }
+        if ($mode eq "html"){
+			$top_mature   = '<span class="mature">' . $top_mature . '</span>';
+			$upper_mature = '<span class="mature">' . $upper_mature . '</span>';
+		}
+        elsif ($mode eq "ascii"){
+			$top_mature   = uc $top_mature;
+			$upper_mature = uc $upper_mature;
+		}
 		substr( $top, $true_left, $size) = $top_mature;
 		substr( $upper, $true_left, $size ) = $upper_mature;
 
