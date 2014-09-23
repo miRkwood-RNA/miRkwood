@@ -5,6 +5,7 @@
   roles:
     - bioinfo
     - mirkwood-software
+    - mirkwood-testing
     - { role: mirkwood, mirkwood_results_path: '/home/vagrant/results' }
 
   vars:

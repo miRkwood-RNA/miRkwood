@@ -1,0 +1,9 @@
+--- 
+# Install the testing dependencies
+
+- name: Install Perl dependencies
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - libtest-file-perl
+    - libtest-exception-perl
+    - libtap-formatter-junit-perl
