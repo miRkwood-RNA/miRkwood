@@ -232,7 +232,7 @@ sub send_email {
     if (@args) {
         $title = shift @args;
     }
-    use MIME::Lite;
+    require MIME::Lite;
 
     my $results_page  = 'resultsWithID.pl';
     my $results_baseurl = get_cgi_url($results_page);
