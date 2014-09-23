@@ -7,7 +7,7 @@ use Test::More qw/no_plan/;
 use Test::File;
 use Test::Exception;
 
-use YAML;
+use YAML::XS;
 use File::Temp;
 use FindBin;
 require File::Spec->catfile( $FindBin::Bin, 'Funcs.pl' );
@@ -30,7 +30,7 @@ is( $real_candidate_job->get_directory(), $candidate_dir,
 
 my $tmp_dir = File::Temp::tempdir();
 my $proto_candidate_file = input_file('CandidateJob.protocandidate.in.yml');
-my $proto_candidate = YAML::LoadFile($proto_candidate_file);
+my $proto_candidate = YAML::XS::LoadFile($proto_candidate_file);
 
 my @args2 = ($tmp_dir, 'my_seq', 'my_id', $proto_candidate, undef);
 my $dummy_candidate_job = new_ok( 'miRkwood::CandidateJob' => \@args2 );
