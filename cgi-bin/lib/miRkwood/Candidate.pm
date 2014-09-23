@@ -254,7 +254,7 @@ sub alternativeCandidatesAsVienna {
     my $output = "";
     if ($alternatives) {
         my %alternatives = %{$alternatives};
-        foreach my $name (keys %alternatives) {
+        foreach my $name (sort keys %alternatives) {
             my %alternative = %{$alternatives{$name}};
             $output .= '>'.$name . ' (MFEI: ' . $alternative{'mfei'} . ')'. "\n" .
                        $alternative{'sequence'} . "\n" .
