@@ -7,4 +7,13 @@ module URL
     end
     bioinfo_url
   end
+
+  def self.home_url()
+    if ENV["MIRKWOOD_HOME_URL"]
+      mirkwood_home_url = ENV["MIRKWOOD_HOME_URL"]
+    else
+      mirkwood_home_url = 'http://bioinfotest.lifl.fr/mirkwood/'
+    end
+    mirkwood_home_url
+  end
 end
