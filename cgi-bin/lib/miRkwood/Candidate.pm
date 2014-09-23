@@ -425,7 +425,7 @@ sub candidate_as_pseudoXML {
     $result .= " name='$name'";
     for my $header (@headers1) {
         my $contents = $self->{$header};
-        if ( $header ~~ @fields_to_truncate){
+        if (grep { $header eq $_ } @fields_to_truncate){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
         }
         if ( !defined $contents ) {
