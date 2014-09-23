@@ -2,4 +2,6 @@
   hosts: 
     - locals
   roles: 
+    - mirkwood-software
+    - mirkwood-testing
     - { role: mirkwood, mirkwood_path: '{{inventory_dir}}/../cgi-bin/' }
