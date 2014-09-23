@@ -28,6 +28,6 @@ fi
 
 echo "Running browser tests from $ROOT_URL"
 MIRKWOOD_URL="$ROOT_URL/cgi-bin/mirkwood/web_scripts/"
-HOME_URL="$ROOT_URL/mirkwood/"
+MIRKWOOD_HOME_URL="$ROOT_URL/mirkwood/"
 
 bundle exec cucumber $ADDITIONAL MIRKWOOD_URL=$MIRKWOOD_URL
