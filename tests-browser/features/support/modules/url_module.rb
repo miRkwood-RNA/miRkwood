@@ -5,7 +5,7 @@ module URL
     else
       mirkwood_url = 'http://bioinfo.lifl.fr/cgi-bin/mirkwood/web_scripts/'
     end
-    bioinfo_url
+    mirkwood_url
   end
 
   def self.home_url()
