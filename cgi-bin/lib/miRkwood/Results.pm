@@ -142,17 +142,12 @@ sub deserialize_results {
 		{
 			my $candidate;
 			if (
-				!eval {
+				eval {
 					$candidate =
-					  miRkwood::Candidate->new_from_serialized(
-						$full_file);
+					  miRkwood::Candidate->new_from_serialized($full_file);
 				}
 			  )
 			{
-
-				# Catching, do nothing
-			}
-			else {
 				my $identifier = $candidate->get_identifier();
 				$myResults{$identifier} = $candidate;
 			}
