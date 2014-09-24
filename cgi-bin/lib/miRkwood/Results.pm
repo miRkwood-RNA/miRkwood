@@ -101,6 +101,79 @@ sub get_structure_for_jobID {
 	return $self->deserialize_results($candidates_dir);
 }
 
+=method get_basic_structure_for_jobID
+
+=cut
+
+sub get_basic_structure_for_jobID {
+	my ( $self, @args ) = @_;
+	my $jobId   = shift @args;
+	my $job_dir = $self->jobId_to_jobPath($jobId);
+	miRkwood->CONFIG_FILE(
+		miRkwood::Paths->get_job_config_path($job_dir) );
+	my $candidates_file = File::Spec->catfile( $job_dir, 'basic_candidates.yml');
+	return YAML::XS::LoadFile( $candidates_file );
+}
+
+sub get_basic_pseudoXML_for_jobID {
+	my ( $self, @args ) = @_;
+	my $jobId   = shift @args;
+	my $results = $self->get_basic_structure_for_jobID($jobId);
+
+	my $output = "";
+
+    $output .= "<results id='all'>\n";
+    my @candidates = sort {
+        ( $a->{'name'} cmp  $b->{'name'} )
+          || (
+            $a->{'start_position'} <=> $b->{'start_position'} )
+    } @{$results};
+    
+    foreach my $candidate (@candidates) {
+        $output .= $self->convert_basic_to_pseudoXML($candidate);
+    }
+    $output .= "</results>\n";
+    
+    $output .= "<results id='all2'>\n";
+    @candidates = sort {
+        ( $b->{'quality'} cmp $a->{'quality'} )
+          || (
+            $a->{'start_position'} <=> $b->{'start_position'} )
+    } @candidates;
+    foreach my $candidate (@candidates) {
+        $output .= $self->convert_basic_to_pseudoXML($candidate) . "\n";
+    }
+    $output .= "</results>";
+
+    return $output;
+}
+
+sub convert_basic_to_pseudoXML {
+	my ( $self, @args ) = @_;
+	my $candidate = shift @args;
+	my %candidate = %{$candidate};
+	
+	my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
+    my $result = "<Sequence";
+	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
+    my @headers = ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
+
+    for my $header (@headers) {
+        my $contents = $candidate->{$header};
+        if (grep { $header eq $_ } @fields_to_truncate){
+            $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
+        }
+        if ( !defined $contents ) {
+            $contents = q{};
+        }
+        if ( $header eq 'shuffles' && $contents == 1){
+            $contents = q{};
+        }
+        $result .= " $header='$contents'";
+    }
+    $result .= "></Sequence>";
+}
+
 =method has_candidates
 
 Parse and serialize the results structure of $job_dir
@@ -167,6 +240,14 @@ sub number_of_results {
 	my $results = shift @args;
 	my %results = %{$results};
 	my $size    = scalar keys %results;
+	return $size;
+}
+
+sub number_of_results_bis {
+	my ( $self, @args ) = @_;
+	my $jobId   = shift @args;
+	my $results = $self->get_basic_structure_for_jobID($jobId);
+	my $size    = scalar @{$results};
 	return $size;
 }
 

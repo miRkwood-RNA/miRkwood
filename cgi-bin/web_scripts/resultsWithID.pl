@@ -6,7 +6,7 @@ use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use File::Spec;
 use FindBin;
-
+use Data::Dumper;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::Paths;
 use miRkwood::Results;
@@ -54,12 +54,13 @@ if ( $cfg->param('job.title') ) {
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
 
 if ($valid) {
+	#my $HTML_results = miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
+	#my $nb_results   = miRkwood::Results->number_of_results_bis( $id_job );
+	
 	my %myResults = miRkwood::Results->get_structure_for_jobID($id_job);
-
 	my $nb_results   = miRkwood::Results->number_of_results( \%myResults );
 	my $exporter = miRkwood::ResultsExporterMaker->make_pseudoxml_results_exporter();
 	$exporter->initialize($id_job, \%myResults);
-
 	my $HTML_results = $exporter->perform_export();
 
 	$HTML_additional .=

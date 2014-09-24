@@ -160,10 +160,12 @@ Run the pipeline on the given sequences
 sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
     my @sequences_array = $self->get_sequences();
+    $self->{'basic_candidates'} = [];
     my $sequences_count = scalar @sequences_array;
     debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
     $self->compute_candidates();
     debug('miRkwood processing done', miRkwood->DEBUG() );
+    $self->serialize_basic_candidates();
     $self->mark_job_as_finished();
     debug("Writing finish file", miRkwood->DEBUG() );
     return;
@@ -212,6 +214,7 @@ sub serialize_candidates {
     my @candidates_array = @{$candidates};
     foreach my $candidate (@candidates_array ) {
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+        push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
 }
 
@@ -251,6 +254,14 @@ sub mark_job_as_finished {
         or die "Error when opening $is_finished_file: $!";
     close $finish;
     return (-e $is_finished_file);
+}
+
+sub serialize_basic_candidates {
+	
+    my ($self, @args) = @_;
+    my $serialization_file = File::Spec->catfile($self->get_job_dir(), "basic_candidates.yml");
+    	
+    return YAML::XS::DumpFile($serialization_file, $self->{'basic_candidates'});
 }
 
 1;
