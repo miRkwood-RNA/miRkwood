@@ -1,0 +1,12 @@
+---
+- amfe: -48.2608695652174
+  identifier: 2-1
+  image: /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/1/image.png
+  length: 69
+  mfe: '-33.30'
+  mfei: -1.75263157894737
+  name: ChrC__254-554
+  position: 34-102
+  quality: 1
+  start_position: 34
+  strand: +

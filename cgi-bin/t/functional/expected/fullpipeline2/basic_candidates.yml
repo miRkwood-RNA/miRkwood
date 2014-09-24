@@ -1,0 +1,25 @@
+---
+- alignment: 1
+  amfe: -37.0987654320988
+  identifier: 1-1
+  image: /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/workspace/1/1/image.png
+  length: 162
+  mfe: '-60.10'
+  mfei: -1.00166666666667
+  name: contig15750
+  position: 34-195
+  quality: 2
+  start_position: 34
+  strand: +
+- alignment: 2
+  amfe: -42.1323529411765
+  identifier: 2-1
+  image: /home/jeanfred/Tuile/pipelineMiRNA-web/cgi-bin/t/functional/output/fullpipeline2/workspace/2/1/image.png
+  length: 136
+  mfe: '-57.30'
+  mfei: -0.842647058823529
+  name: contig15916
+  position: 187-322
+  quality: 3
+  start_position: 187
+  strand: +
