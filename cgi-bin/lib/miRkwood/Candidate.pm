@@ -446,4 +446,22 @@ sub candidate_as_pseudoXML {
     return $result;
 }
 
+sub get_basic_informations {
+	
+	my ( $self, @args ) = @_;
+	
+	my @optional_fields = $self->get_optional_candidate_fields();
+    my @headers =
+      ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', @optional_fields );
+	my $result = {};
+	
+	foreach (@headers){
+		$result->{$_} = $self->{$_};
+	}
+	$result->{'name'} = $self->get_shortened_sequence_name();
+	$result->{'image'} = $self->get_relative_image();
+	return $result;
+	
+}
+
 1;
