@@ -338,6 +338,9 @@ function exportTo(id, webroot)
 	   alert("You must select at least one element to export!! ");
 	   return;
 	}
+	else if(tab.length == rowsNumber ){
+		tab = [];
+	}
 	window.location = "/"+webroot+"/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
 }
 
