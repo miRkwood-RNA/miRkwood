@@ -54,28 +54,17 @@ if ( $cfg->param('job.title') ) {
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
 
 if ($valid) {
-	#my $HTML_results = miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
-	#my $nb_results   = miRkwood::Results->number_of_results_bis( $id_job );
-	
-	my %myResults = miRkwood::Results->get_structure_for_jobID($id_job);
-	my $nb_results   = miRkwood::Results->number_of_results( \%myResults );
-	my $exporter = miRkwood::ResultsExporterMaker->make_pseudoxml_results_exporter();
-	$exporter->initialize($id_job, \%myResults);
-	my $HTML_results = $exporter->perform_export();
-
-	$HTML_additional .=
+	my $HTML_results = '';
+	my $nb_results = 0;
+	unless ( miRkwood::Results->is_job_finished($id_job) ) {
+		$HTML_additional .= "<p class='warning'>Still processing...</p>";
+	} else {
+		$HTML_results = miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
+		$nb_results = miRkwood::Results->number_of_results_bis( $id_job );
+			$HTML_additional .=
 	    "<p class='header-results'><b>"
 	  . $nb_results
 	  . "  miRNA precursor(s) found</b></p>";
-	unless ( miRkwood::Results->is_job_finished($id_job) ) {
-        if ($nb_results > 0){
-            $HTML_additional .=
-		    "<p class='warning'>Still processing...<br/>Below we show some preliminary results</p>";
-		}
-		else {
-            $HTML_additional .=
-            "<p class='warning'>Still processing...</p>";
-        }
 	}
 	my $body = "";
 	if ( $nb_results != 0 ) {
