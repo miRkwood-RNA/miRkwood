@@ -87,7 +87,7 @@
   thaliana</i> (<a href="http://www.arabidopsis.org/">TAIR</a>, V10),
   <i>Medicago truncatula</i> (<a
   href='http://www.jcvi.org/medicago/'>Medicago truncatula genome
-  project</a>, Mt4.0) and <i>Oriza sativa</i> (<a
+  project</a>, Mt4.0) and <i>Oryza sativa</i> (<a
   href='http://rice.plantbiology.msu.edu/'>Rice genome annotation
   project</a>, V7.0).</dd>
 
