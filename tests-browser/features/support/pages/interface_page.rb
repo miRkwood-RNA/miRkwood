@@ -9,9 +9,8 @@ class InterfacePage
   button('run_button', :id => "upload")
   textarea('sequence_area', :id => "seqArea")
 
-  def loaded?
-    run_button?
-  end
+  expected_element(:run_button)
+
 end
 
 

@@ -3,8 +3,6 @@ class WaitingPage
 
   div('waiting', :class => "waitMessage")
 
-  def loaded?
-    waiting?
-   end
+  expected_element(:waiting)
 end
 
