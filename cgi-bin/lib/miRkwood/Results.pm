@@ -8,6 +8,7 @@ use warnings;
 use feature 'switch';
 use Time::gmtime;
 
+use miRkwood;
 use miRkwood::Candidate;
 use miRkwood::CandidateHandler;;
 use miRkwood::Utils;
@@ -112,7 +113,7 @@ sub get_basic_structure_for_jobID {
 	miRkwood->CONFIG_FILE(
 		miRkwood::Paths->get_job_config_path($job_dir) );
 	my $candidates_file = File::Spec->catfile( $job_dir, 'basic_candidates.yml');
-	return YAML::XS::LoadFile( $candidates_file );
+	return miRkwood::get_yaml_file( $candidates_file );
 }
 
 sub get_basic_pseudoXML_for_jobID {
