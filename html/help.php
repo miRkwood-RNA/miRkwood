@@ -200,7 +200,7 @@ where MFE (minimal free energy) denotes the negative folding free
 <h2 id='export'>Export</h2>
 
 <p>Results, or a selection of them, can also be exported to a variety of formats, and saved to a local folder for further analyses.</p>
-
+<p>Export is limited to 200 candidates at a time. You may either export all candidates ("Select all" button), or perform several successive exports.</p>
 
 <h3>Tabular format (CSV)</h3>
 <p>

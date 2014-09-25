@@ -341,6 +341,10 @@ function exportTo(id, webroot)
 	else if(tab.length == rowsNumber ){
 		tab = [];
 	}
+	else if(tab.length > 200 ){
+		alert("Please select either all candidates, or less than 200 candidates.");
+		return;
+	}
 	window.location = "/"+webroot+"/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked;
 }
 
