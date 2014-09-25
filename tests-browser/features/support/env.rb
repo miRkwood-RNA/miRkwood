@@ -2,6 +2,7 @@ require "watir-webdriver"
 require "rspec/expectations"
 require 'page-object'
 require 'page-object/page_factory'
+require 'fileutils'
 
 browser = nil
 Browser = Watir::Browser
@@ -33,7 +34,7 @@ Before do
 end
 
 After do |scenario|
-  Dir::mkdir('html-report/screenshots') if not File.directory?('html-report/screenshots')
+  FileUtils.mkpath('html-report/screenshots') if not File.directory?('html-report/screenshots')
   filename = "screenshots/Screenshot_#{scenario.name.gsub(' ','_').gsub(/[^0-9A-Za-z_]/, '')}.png"
   browser.screenshot.save "./html-report/#{filename}"
   embed "./#{filename}", 'image/png'
