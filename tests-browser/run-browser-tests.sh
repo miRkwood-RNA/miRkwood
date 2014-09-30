@@ -26,6 +26,10 @@ else
     ADDITIONAL='--format pretty'
 fi
 
+if [ "$NO_EXECUTION" ]; then
+    ADDITIONAL="$ADDITIONAL --tags ~@execution"
+fi
+
 echo "Running browser tests from $ROOT_URL"
 MIRKWOOD_URL="$ROOT_URL/cgi-bin/mirkwood/web_scripts/"
 MIRKWOOD_HOME_URL="$ROOT_URL/mirkwood/"
