@@ -7,7 +7,7 @@ When(/^I launch the pipeline$/) do
 end
 
 Then(/^a sequence gets filled$/) do
-  on(InterfacePage).sequence_area.should include("sample")
+  expect(on(InterfacePage).sequence_area).to include("sample")
 end
 
 When(/^I use the Clear feature$/) do
@@ -15,7 +15,7 @@ When(/^I use the Clear feature$/) do
 end
 
 Then(/^the sequence area is clear$/) do
-  on(InterfacePage).sequence_area.should eq('')
+  expect(on(InterfacePage).sequence_area).to eq('')
 end
 
 Then(/^a no sequence warning is provided when I launch the pipeline$/) do
@@ -23,7 +23,7 @@ Then(/^a no sequence warning is provided when I launch the pipeline$/) do
     message = page.alert do
       page.run_button
     end
-  message.should == "You must provide sequences"
+  expect(message).to eq("You must provide sequences")
   end
 end
 
