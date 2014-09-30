@@ -59,8 +59,8 @@ sub make_html_from_results {
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter();
-    $exporter->initialiaze('', \%results);
-    $page .= $exporter->make_html_results_exporter();
+    $exporter->initialize('', \%results);
+    $page .= $exporter->perform_export();
 
     $page .= make_all_exports( \%results, $output_folder );
     while ( my ( $key, $value ) = each %results ) {
@@ -192,7 +192,7 @@ sub make_candidate_page {
 "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'} ) {
         $Vienna_HTML .=
-"</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
+"</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
     }
     else {
         $Vienna_HTML .=
@@ -225,7 +225,7 @@ sub make_candidate_page {
       <b>Position:</b> $candidate->{'position'} ($size nt)
     </li>
     <li>
-      <b>Strand:</b>
+      <b>Strand:</b> $candidate->{'strand'} 
     </li>
     <li>
       <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>

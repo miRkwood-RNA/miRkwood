@@ -258,7 +258,7 @@ sub alternativeCandidatesAsVienna {
             my %alternative = %{$alternatives{$name}};
             $output .= '>'.$name . ' (MFEI: ' . $alternative{'mfei'} . ')'. "\n" .
                        $alternative{'sequence'} . "\n" .
-                       $alternative{'structure'} . "\n";
+                       $alternative{'structure_stemloop'} . "\n";
         }
     }
     return $output;
