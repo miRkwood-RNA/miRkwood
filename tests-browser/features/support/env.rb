@@ -33,11 +33,19 @@ Before do
   @browser = browser
 end
 
+After('@screenshot') do |scenario|
+  embed_screenshot()
+end
+
 After do |scenario|
-  FileUtils.mkpath('html-report/screenshots') if not File.directory?('html-report/screenshots')
-  filename = "screenshots/Screenshot_#{scenario.name.gsub(' ','_').gsub(/[^0-9A-Za-z_]/, '')}.png"
-  browser.screenshot.save "./html-report/#{filename}"
-  embed "./#{filename}", 'image/png'
+  if(scenario.failed?)
+    embed_screenshot()
+  end
+end
+
+def embed_screenshot
+  encoded_img = @browser.driver.screenshot_as(:base64)
+  embed("data:image/png;base64,#{encoded_img}", 'image/png')
 end
 
 at_exit do

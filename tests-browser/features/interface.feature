@@ -2,6 +2,7 @@ Feature: miRkwood interface page
     Background:
         Given I am on miRkwood interface page
 
+    @screenshot
     Scenario: Example sequence filling
         When I use the Example feature
         Then a sequence gets filled
