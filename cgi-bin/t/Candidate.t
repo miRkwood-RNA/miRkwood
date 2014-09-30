@@ -46,11 +46,11 @@ is($candidate->has_mirdup_validation(), 1,
    'has_mirdup_validation returns the expected value');
 
 is($candidate->get_absolute_image(),
-   '/bio1/www/html/mirkwood/results/jobDec181721032013/1/1/image.png',
+   '/bio1/www/html/mirkwood/results/jobSep301132162014/workspace/1/1/image.png',
    'get_absolute_image returns the expected value');
 
 is($candidate->get_relative_image(),
-    '/mirkwood/results/jobDec181721032013/1/1/image.png',
+    '/mirkwood/results/jobSep301132162014/workspace/1/1/image.png',
     'get_relative_image returns the expected value'
 );
 
