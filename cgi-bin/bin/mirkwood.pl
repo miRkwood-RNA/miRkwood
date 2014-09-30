@@ -25,7 +25,7 @@ my $no_process   = 0;
 my $mask         = 0;
 my $trna         = 0;
 my $rrna         = 0;
-my $output_folder = 'results_directory';
+my $output_folder = '';
 
 ## Parse options
 GetOptions(
@@ -46,6 +46,18 @@ pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
 
 pod2usage("$0: No FASTA files given.") if ( @ARGV == 0 );
+
+if ($output_folder eq ''){
+    die("You must indicate an empty directory with the --output option.");
+}
+
+if (! -d $output_folder){
+	mkdir $output_folder, 0777;
+}
+
+if( my @files = glob("$output_folder/*") ) {
+     die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
+}   
 
 if ($species_mask) {
     $mask = 1;
