@@ -45,10 +45,10 @@ my $html = '';
 
 my $HTML_additional = "";
 $HTML_additional .=
-  "<p class='header-results'><b>Job ID:</b> " . $id_job . '</p>';
+  "<p class='header-results' id='job_id'><b>Job ID:</b> " . $id_job . '</p>';
 if ( $cfg->param('job.title') ) {
 	$HTML_additional .=
-	  "<p class='header-results'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
+	  "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
 }
 
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
@@ -62,7 +62,7 @@ if ($valid) {
 		$HTML_results = miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
 		$nb_results = miRkwood::Results->number_of_results_bis( $id_job );
 			$HTML_additional .=
-	    "<p class='header-results'><b>"
+	    "<p class='header-results' id='precursors_count'><b>"
 	  . $nb_results
 	  . "  miRNA precursor(s) found</b></p>";
 	}
@@ -78,7 +78,7 @@ if ($valid) {
     $HTML_additional
     <div id="select" >
     	<div style="width: 510px"  class="forms">
-    		<p class='text-results'>Export selected entries \(<a onclick='selectAll()' >select all<\/a>/<a  onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p> 
+            <p class='text-results'>Export selected entries \(<a id='select-all' onclick='selectAll()' >select all<\/a>/<a id='deselect-all' onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p>
     		<form id= 'exportForm'>
                 <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (CSV)</label><br/>
                 <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
