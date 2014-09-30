@@ -21,7 +21,7 @@ else
 fi
 
 if [ "$CI_MODE" ]; then
-    ADDITIONAL='--format pretty --format junit --out . --format html --out html-report/browsertests-report.html HEADLESS=True'
+    ADDITIONAL='--format pretty --format junit --out . --format html --out browsertests-report.html HEADLESS=True'
 else
     ADDITIONAL='--format pretty'
 fi
