@@ -36,6 +36,6 @@ MIRKWOOD_HOME_URL="$ROOT_URL/mirkwood/"
 
 # These tests are not ready yet to be run,
 # because test data needs to be setup somehow.
-SKIP='-- tags ~@dummy-results-setup'
+SKIP='--tags ~@dummy-results-setup'
 
 bundle exec cucumber $ADDITIONAL $SKIP MIRKWOOD_URL=$MIRKWOOD_URL MIRKWOOD_HOME_URL=$MIRKWOOD_HOME_URL
