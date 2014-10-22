@@ -115,6 +115,10 @@ mirkwood [options] [FASTA files]
 
 =over 8
 
+=item B<--output>
+
+Output directory. If non existing it will be created. The directory must be empty.
+
 =item B<--both-strands>
 
 Scan both strands
