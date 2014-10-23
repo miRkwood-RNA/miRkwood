@@ -464,4 +464,37 @@ sub get_basic_informations {
 	
 }
 
+=method get_reads
+Method to get all reads corresponding to a candidate sequence
+Parameter : bam file full path
+Modifies the object candidate to add a variable (hash) containing
+all reads with name, sequence and start.
+=cut
+sub get_reads {
+    
+    my ( $self, @args ) = @_;
+    my $bam_file = shift @args;
+    
+    my $candidate_position = $self->{'name'};
+    $candidate_position =~ s/__/:/;
+    
+    my $reads = {};
+    
+    my $samtools_cmd = "samtools view $bam_file $candidate_position |";
+    
+    open(my $SAMVIEW, $samtools_cmd);
+    while ( <$SAMVIEW> ){
+        my @line = split('\t');
+        $reads->{$line[0]}{'sequence'} = $line[9];
+        $reads->{$line[0]}{'start'} = $line[3];
+        
+    }
+    close $SAMVIEW;
+
+    $self->{'reads'} = $reads;
+
+    return $self;
+    
+}
+
 1;

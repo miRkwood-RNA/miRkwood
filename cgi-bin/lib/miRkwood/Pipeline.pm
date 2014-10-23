@@ -213,6 +213,7 @@ sub serialize_candidates {
     my $candidates = shift @args;
     my @candidates_array = @{$candidates};
     foreach my $candidate (@candidates_array ) {
+        $candidate = $candidate->get_reads($self->{'bam_file'});
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
