@@ -138,15 +138,15 @@ Align against mature microRNAs miRBase
 
 =item B<--no-varna>
 
-Disable the structure genration using Varna
+Disable the structure generation using Varna
 
 =item B<-help>
 
-Print a brief help message and exits.
+Print a brief help message and exit.
 
 =item B<-man>
 
-Prints the manual page and exits.
+Print the manual page and exit.
 
 =back
 
