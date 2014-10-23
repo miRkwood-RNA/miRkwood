@@ -23,7 +23,7 @@ my $species_mask = '';
 my $genome_file  = '';
 my $no_varna     = 0;
 my $no_process   = 0;
-my $output_folder = 'results_directory';
+my $output_folder = '';
 
 # Pipeline options which do not make sense in BAM mode
 my $mask  = 0;
@@ -50,6 +50,18 @@ pod2usage( -verbose => 2 ) if ($man);
 
 pod2usage("$0: No BAM file given.") if ( @ARGV == 0 );
 pod2usage("$0: No genome file given.") if ( ! $genome_file );
+
+if ($output_folder eq ''){
+    die("You must indicate an empty directory with the --output option.");
+}
+
+if (! -d $output_folder){
+	mkdir $output_folder, 0777;
+}
+
+if( my @files = glob("$output_folder/*") ) {
+     die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
+}  
 
 my $varna = 1;
 if ($no_varna) {
@@ -99,6 +111,10 @@ mirkwood [options] --genome GENOME [BAM file]
 =head1 OPTIONS
 
 =over 8
+
+=item B<--output>
+
+Output directory. If non existing it will be created. The directory must be empty.
 
 =item B<--genome>
 
