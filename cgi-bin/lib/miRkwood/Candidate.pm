@@ -485,15 +485,23 @@ sub get_reads {
     open(my $SAMVIEW, $samtools_cmd);
     while ( <$SAMVIEW> ){
         my @line = split('\t');
+        # $line[1] : flag
         # $line[3] : start position       
         # $line[9] : sequence
         
-        # count the depth of each read
-        if (! exists($reads->{$line[3]}{$line[9]}) ){
-            $reads->{$line[3]}{$line[9]} = 0;
-        }
-        $reads->{$line[3]}{$line[9]}++;
+        $line[9] =~ s/T/U/g;
         
+        $reads->{$line[3]}{$line[9]}{'strand'} = "+";
+        
+        # count the depth of each read
+        if (! exists($reads->{$line[3]}{$line[9]}{'count'}) ){
+            $reads->{$line[3]}{$line[9]}{'count'} = 0;
+        }
+        $reads->{$line[3]}{$line[9]}{'count'}++;
+        if ( $line[1] == "16" ){
+            $reads->{$line[3]}{$line[9]}{'strand'} = "-";
+        }
+  
     }
     close $SAMVIEW;
 
