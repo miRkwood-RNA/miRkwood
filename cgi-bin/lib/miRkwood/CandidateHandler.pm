@@ -109,6 +109,8 @@ sub print_reads_cloud {
         $start_structure = $1;
     }
     
+    print OUT "Genome:$genome_file\n";
+    print OUT "Locus: $chromosome:$start_cluster-$end_cluster\n\n";
     print OUT "$reference\n";
     
     for ($i = 0; $i < $start_structure -1; $i++){
