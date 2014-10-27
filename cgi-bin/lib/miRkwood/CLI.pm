@@ -182,11 +182,15 @@ sub make_candidate_page {
       or die("Cannot write in file $alternatives_file: $!");
     close($ALT_FILE)
       or die("Cannot close file $alternatives_file: $!");
+      
+    my $reads_file = File::Spec->catfile( 
+        $output_folder ."/clusters/", $candidate->{'identifier'} . '.txt' );
 
     my $linkFasta         = "$candidate_fasta_file";
     my $linkVienna        = "$vienna_file";
     my $linkAlternatives  = "$alternatives_file";
     my $linkViennaOptimal = "$vienna_file_optimal";
+    my $linkReads         = "$reads_file";  
 
     my $Vienna_HTML =
 "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -232,6 +236,9 @@ sub make_candidate_page {
     </li>
     <li>
       $alternatives_HTML
+    </li>
+    <li>
+      <b>Reads:</b> <a href='$linkReads'>download<a/>
     </li>
     </ul>
 <h3>Secondary structure</h3>
