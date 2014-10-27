@@ -77,6 +77,92 @@ sub serialize_candidate_information {
     return YAML::XS::DumpFile($serialization_file, %converted_hash);
 }
 
+sub print_reads_cloud {
+    my ( $self, @args ) = @_;
+    my $path = shift @args;
+    my $genome_file = shift @args;
+    my $candidate = shift @args;
+    
+    my $cloud_file = File::Spec->catfile($path, $candidate->{'identifier'} . ".txt");
+    open(OUT, ">$cloud_file") or die "ERROR while creating file $cloud_file.\n";
+    
+    my $chromosome = "";
+    my $start_cluster = -1;
+    my $end_cluster = -1;
+    my $locus = $candidate->{'name'};
+    
+    if ( $locus =~ /([^:]+)__(\d+)-(\d+)/ ){
+        $chromosome = $1;
+        $start_cluster = $2;
+        $end_cluster = $3;
+    }
+
+    my $reference = miRkwood::Utils->get_sequence_from_positions( $genome_file, 
+        $chromosome, $start_cluster, $end_cluster );
+
+    ### Print the header
+    
+    my $i;
+    my $len_reference = length($reference);
+    my $start_structure = -1;
+    if ( $candidate->{'position'} =~ /(\d+)-\d+/ ){
+        $start_structure = $1;
+    }
+    
+    print OUT "$reference\n";
+    
+    for ($i = 0; $i < $start_structure -1; $i++){
+        print OUT " ";
+    }
+    print OUT "$candidate->{'sequence'}";
+    for ($i = 0; $i < $len_reference - length($candidate->{'sequence'}) - $start_structure +1; $i++ ){
+        print OUT " ";
+    }
+    print OUT " optimal stemloop predicted by RNAstemloop\n";    
+    
+    for ($i = 0; $i < $start_structure -1; $i++){
+        print OUT " ";
+    }
+    print OUT "$candidate->{'structure_stemloop'}\n";    
+    
+    
+    ### Print the reads
+    my $symbol = ".";
+    
+    my $reads = $candidate->{'reads'};
+    my @sorted_positions = sort {$reads->{$a} <=> $reads->{$b}} (keys %$reads);
+    @sorted_positions = sort(@sorted_positions);
+    
+    foreach my $position (@sorted_positions){
+        
+        my @sorted_sequences = sort {$reads->{$position}{$a} <=> $reads->{$position}{$b}} (keys %{$reads->{$position}});
+        
+        foreach my $sequence (@sorted_sequences) {
+            
+            my $relative_position = $position - $start_cluster;
+            
+            if ( $reads->{$position}{$sequence}{'strand'} eq "-" ){
+                $symbol = "<";
+            }
+            else{
+                $symbol = ".";
+            }
+            for ($i = 0; $i < $relative_position; $i++){
+                print OUT $symbol;
+            }
+            print OUT $sequence;
+            for ($i = 0; $i < $len_reference - length($sequence) - $relative_position; $i++){
+                print OUT $symbol;
+            }
+            print OUT " length=" . length($sequence) . " depth=$reads->{$position}{$sequence}{'count'}\n";
+        }
+        
+    } 
+    
+    close OUT;   
+    
+}
+
 
 
 1;

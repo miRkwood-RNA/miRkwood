@@ -133,6 +133,29 @@ sub multifasta_to_hash {
     return %sequence_hash;
 }
 
+=method get_sequence_from_positions
+Method to get the sequence in a genome file
+corresponding to the chromosome and positions
+given in parameter.
+=cut
+sub get_sequence_from_positions {
+    my ($class, $fasta, $chrom, $start, $end) = @_;
+                
+    my %sequences_with_long_header = multifasta_to_hash( $fasta );
+    my %sequences;
+    
+    foreach my $key (keys%sequences_with_long_header){
+        if ( $key =~ /([^_]+)_.*/ ){
+            $sequences{$1} = $sequences_with_long_header{$key};
+        }
+    }
+
+    my $subSeq = substr $sequences{$chrom}, $start-1, ($end - $start);
+        
+    return $subSeq;   
+}
+
+
 =method sanitize_sequence_name
 
 =cut

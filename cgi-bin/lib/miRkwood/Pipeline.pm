@@ -67,6 +67,7 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
+    mkdir $self->get_clusters_dir();
     return;
 }
 
@@ -134,6 +135,19 @@ Return the path to the candidates directory
 sub get_candidates_dir {
     my ($self, @args) = @_;
     my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
+}
+
+=method get_clusters_dir
+
+Return the path to the clusters directory
+
+ Usage : $self->get_clusters_dir();
+
+=cut
+
+sub get_clusters_dir {
+    my ($self, @args) = @_;
+    my $clusters_dir = File::Spec->catdir( $self->get_job_dir(), 'clusters' );
 }
 
 =method get_uploaded_sequences_file
@@ -215,6 +229,7 @@ sub serialize_candidates {
     foreach my $candidate (@candidates_array ) {
         $candidate = $candidate->get_reads($self->{'bam_file'});
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler->print_reads_cloud( $self->get_clusters_dir(), $self->{'genome_file'}, $candidate );
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
 }
