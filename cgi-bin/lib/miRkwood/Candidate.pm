@@ -396,6 +396,9 @@ sub get_optional_candidate_fields {
     if ( $cfg->param('options.align') ) {
         push @fields, ('alignment');
     }
+    if ( $cfg->param('job.mode') eq "bam" ){
+        push @fields, ('reads');
+    }
     return @fields;
 }
 

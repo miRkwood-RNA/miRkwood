@@ -38,6 +38,12 @@ sub export_candidate {
     for my $header ($self->get_headers()) {
         my $td_content = "";
         my $contents   = ${$candidate}{$header};
+        if ($header eq "reads"){
+            $contents = 0;
+            foreach my $key (keys( %{$candidate->{'reads'}} )){
+                $contents += keys( %{$candidate->{'reads'}{$key}} );
+            }
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
