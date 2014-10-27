@@ -67,7 +67,7 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
-    mkdir $self->get_clusters_dir();
+    mkdir $self->get_clusters_dir() if ( exists($self->{'bam_file'}) );
     return;
 }
 
@@ -227,9 +227,12 @@ sub serialize_candidates {
     my $candidates = shift @args;
     my @candidates_array = @{$candidates};
     foreach my $candidate (@candidates_array ) {
-        $candidate = $candidate->get_reads($self->{'bam_file'});
+        if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
+            $candidate = $candidate->get_reads($self->{'bam_file'});
+            miRkwood::CandidateHandler->print_reads_cloud( $self->get_clusters_dir(), $self->{'genome_file'}, $candidate );
+        }
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
-        miRkwood::CandidateHandler->print_reads_cloud( $self->get_clusters_dir(), $self->{'genome_file'}, $candidate );
+        
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
 }
