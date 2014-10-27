@@ -106,7 +106,7 @@ __END__
 
 =head1 SYNOPSIS
 
-mirkwood [options] --genome GENOME [BAM file]
+mirkwood [options] --output OUTDIR --genome GENOME [BAM file]
 
 =head1 OPTIONS
 
