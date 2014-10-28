@@ -138,6 +138,7 @@ sub print_reads_cloud {
     foreach my $position (@sorted_positions){
         
         my @sorted_sequences = sort {$reads->{$position}{$a} <=> $reads->{$position}{$b}} (keys %{$reads->{$position}});
+        @sorted_sequences = sort(@sorted_sequences);
         
         foreach my $sequence (@sorted_sequences) {
             
