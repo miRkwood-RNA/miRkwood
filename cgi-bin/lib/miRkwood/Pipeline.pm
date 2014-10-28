@@ -67,7 +67,7 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
-    mkdir $self->get_clusters_dir() if ( exists($self->{'bam_file'}) );
+    mkdir $self->get_reads_dir() if ( exists($self->{'bam_file'}) );
     return;
 }
 
@@ -137,17 +137,17 @@ sub get_candidates_dir {
     my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
 }
 
-=method get_clusters_dir
+=method get_reads_dir
 
 Return the path to the clusters directory
 
- Usage : $self->get_clusters_dir();
+ Usage : $self->get_reads_dir();
 
 =cut
 
-sub get_clusters_dir {
+sub get_reads_dir {
     my ($self, @args) = @_;
-    my $clusters_dir = File::Spec->catdir( $self->get_job_dir(), 'clusters' );
+    my $clusters_dir = File::Spec->catdir( $self->get_job_dir(), 'reads' );
 }
 
 =method get_uploaded_sequences_file
@@ -229,7 +229,7 @@ sub serialize_candidates {
     foreach my $candidate (@candidates_array ) {
         if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
             $candidate = $candidate->get_reads($self->{'bam_file'});
-            miRkwood::CandidateHandler->print_reads_cloud( $self->get_clusters_dir(), $self->{'genome_file'}, $candidate );
+            miRkwood::CandidateHandler->print_reads_cloud( $self->get_reads_dir(), $self->{'genome_file'}, $candidate );
         }
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
         
