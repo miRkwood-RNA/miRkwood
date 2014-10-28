@@ -141,12 +141,11 @@ given in parameter.
 sub get_sequence_from_positions {
     my ($class, $fasta, $chrom, $start, $end) = @_;
                 
-    my %sequences_with_long_header = multifasta_to_hash( $fasta );
-    my %sequences;
+    my %sequences = multifasta_to_hash( $fasta );
     
-    foreach my $key (keys%sequences_with_long_header){
+    foreach my $key (keys%sequences){
         if ( $key =~ /([^_]+)_.*/ ){
-            $sequences{$1} = $sequences_with_long_header{$key};
+            $sequences{$1} = $sequences{$key};
         }
     }
 
