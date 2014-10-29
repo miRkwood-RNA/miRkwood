@@ -125,31 +125,23 @@ sub print_reads_cloud {
     for ($i = 0; $i < $start_structure -1; $i++){
         print OUT " ";
     }
-    print OUT "$candidate->{'structure_stemloop'}\n";    
+    print OUT "$candidate->{'structure_stemloop'}\n";
     
     
     ### Print the reads
     my $symbol = ".";
     
     my $reads = $candidate->{'reads'};
-    my @sorted_positions = sort {$reads->{$a} <=> $reads->{$b}} (keys %$reads);
-    @sorted_positions = sort(@sorted_positions);
+    my @sorted_positions = sort { $a <=> $b } (keys %$reads);
     
     foreach my $position (@sorted_positions){
         
-        my @sorted_sequences = sort {$reads->{$position}{$a} <=> $reads->{$position}{$b}} (keys %{$reads->{$position}});
-        @sorted_sequences = sort(@sorted_sequences);
+        my @sorted_sequences = sort (keys %{$reads->{$position}});
         
         foreach my $sequence (@sorted_sequences) {
             
             my $relative_position = $position - $start_cluster;
             
-            if ( $reads->{$position}{$sequence}{'strand'} eq "-" ){
-                $symbol = "<";
-            }
-            else{
-                $symbol = ".";
-            }
             for ($i = 0; $i < $relative_position; $i++){
                 print OUT $symbol;
             }
@@ -157,7 +149,8 @@ sub print_reads_cloud {
             for ($i = 0; $i < $len_reference - length($sequence) - $relative_position; $i++){
                 print OUT $symbol;
             }
-            print OUT " length=" . length($sequence) . " depth=$reads->{$position}{$sequence}{'count'}\n";
+            print OUT " length=" . length($sequence) . " depth=$reads->{$position}{$sequence}{'count'}"
+               . " strand=(" . $reads->{$position}{$sequence}{'strand'} . ")\n";
         }
         
     } 
