@@ -21,7 +21,7 @@ sub get_csv_headers {
     my ( $self, @args ) = @_;
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @csv_headers     = (
-        'name', 'start_position', 'end_position', 'quality', '%GC',
+        'name', 'identifier', 'start_position', 'end_position', 'quality', '%GC',
         @optional_fields, 'structure_stemloop', 'sequence'
     );
     return @csv_headers;
@@ -38,6 +38,12 @@ sub export_candidate {
     my $result;
     for my $header ($self->get_csv_headers()) {
         my $contents = ${$candidate}{$header};
+        if ($header eq "reads"){
+            $contents = 0;
+            foreach my $key (keys( %{$candidate->{'reads'}} )){
+                $contents += keys( %{$candidate->{'reads'}{$key}} );
+            }
+        }        
         if ( !defined $contents ) {
             $contents = q{};
         }
