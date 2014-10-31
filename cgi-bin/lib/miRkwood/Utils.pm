@@ -862,4 +862,54 @@ sub make_Vienna_viz {
     return $string
 }
 
+sub create_mirbase_tag {
+ 
+    my ( $alignment ) = @_;
+
+    my $i;
+    my $msg = "";    
+    my $start_a = $alignment->{'begin_target'};
+    my $end_a = $alignment->{'end_target'};
+    
+    my $length = $end_a - $start_a - 9;
+    my ($space_left, $space_right);
+    
+    if ($length % 2 == 0 ){
+        $space_left = $length / 2;
+    }
+    else{
+        $space_left = int ( $length / 2 ) +1;
+    }
+    $space_right = $length - $space_left;
+    
+    $msg .= "<";
+    for (my $i = 0; $i < $space_left ; $i++){
+        $msg .= "-";
+    }
+    $msg .= "miRBase";
+    for (my $i = 0; $i < $space_right +1 ; $i++){
+        $msg .= "-";
+    }
+    $msg .= ">";
+    
+    return $msg;    
+    
+}
+
+sub mirbase_tags_overlapping {
+
+    my ($first_alignment, $second_alignment) = @_;
+    
+    my $end_first_tag    = get_element_of_split( $first_alignment, '-', 1);
+    my $start_second_tag = get_element_of_split( $second_alignment, '-', 0);   
+    
+    if ( $end_first_tag < $start_second_tag ){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+
+}
+
 1;

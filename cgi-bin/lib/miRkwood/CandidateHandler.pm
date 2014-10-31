@@ -127,6 +127,64 @@ sub print_reads_cloud {
     }
     print OUT "$candidate->{'structure_stemloop'}\n";
     
+    # If there are alignments with miRBase, print mirbase tags
+    if ( $candidate->{'alignment'} > 0 ){
+    
+        my @positions = sort {
+            ( miRkwood::Utils::get_element_of_split( $a, '-', 0 )
+                  <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 ) )
+              || ( miRkwood::Utils::get_element_of_split( $a, '-', 1 )
+                <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 ) )
+        } keys %{$candidate->{'alignments'}};
+        
+        
+        my $placed = [];
+        my $is_placed;
+        
+        foreach my $position ( @positions ){
+            
+            if ( scalar(@{$placed}) == 0 ){
+                push @{$placed->[0]}, $position;    
+                next;    
+            }
+            
+            $is_placed = 0;
+            $i = 0;
+            while ( $is_placed == 0 && $i < scalar(@$placed) ){
+                if ( ! miRkwood::Utils::mirbase_tags_overlapping( $placed->[$i][-1], $position ) ){
+                    push @{$placed->[$i]}, $position;
+                    $is_placed = 1;
+                }
+                $i++;
+            }
+            if ( $i == scalar(@$placed) && $is_placed == 0){
+                push @{$placed->[$i]}, $position;
+            }
+            
+        } 
+        
+        my $tag = "";
+        
+        foreach my $line ( @$placed ){
+            
+            $tag = "";
+            for ($i = 0; $i < miRkwood::Utils::get_element_of_split( $line->[0], '-', 0) + $candidate->{'start_position'} -2; $i++){
+                $tag .= " ";
+            }
+            $tag .= miRkwood::Utils::create_mirbase_tag( $candidate->{'alignments'}{$line->[0]}[0] );
+            
+            for ($i = 1; $i < scalar(@$line); $i++){
+                for (my $j = 0; $j < miRkwood::Utils::get_element_of_split( $line->[$i], '-', 0) - miRkwood::Utils::get_element_of_split( $line->[$i-1], '-', 1) -1; $j++){
+                    $tag .= " ";
+                }
+                $tag .= miRkwood::Utils::create_mirbase_tag( $candidate->{'alignments'}{$line->[$i]}[0] );            
+            }
+            print OUT "$tag\n";
+            
+        }       
+        
+    }
+    
     
     ### Print the reads
     my $symbol = ".";
