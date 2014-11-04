@@ -44,6 +44,13 @@ sub export_candidate {
                 $contents += keys( %{$candidate->{'reads'}{$key}} );
             }
         }
+        elsif ($header eq "quality"){
+            $contents = '<center><font color="#FF8000">';
+            for (my $i = 0; $i < ${$candidate}{"quality"}; $i++){
+                $contents .= "*";
+            }
+            $contents .= '</font></center>';
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
