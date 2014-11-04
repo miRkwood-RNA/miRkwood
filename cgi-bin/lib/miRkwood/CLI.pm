@@ -5,6 +5,7 @@ package miRkwood::CLI;
 use strict;
 use warnings;
 
+use miRkwood;
 use miRkwood::Results;
 use miRkwood::ResultsExporterMaker;
 
@@ -136,7 +137,7 @@ sub make_candidate_page {
     my $output_folder = shift @args;
 
     my $size = length $candidate->{'sequence'};
-
+    my $cfg    = miRkwood->CONFIG();
     my $candidate_name = $candidate->get_shortened_name();
 
     my $candidate_fasta_file =
@@ -219,6 +220,7 @@ sub make_candidate_page {
     else {
         $alignmentHTML = 'No alignment has been found.';
     }
+
     my $html = <<"END_TXT";
 <h2 id='$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'}</h2>
     <ul>
@@ -255,10 +257,18 @@ sub make_candidate_page {
       <b>MFEI:</b> $candidate->{'mfei'}
     </li>
     </ul>
+END_TXT
+
+    if ( $cfg->param('options.align') ){   
+        
+        $html .=  <<"END_TXT";
 <h3>miRBase alignments</h3>
 
 $alignmentHTML
 END_TXT
+
+    }
+
     return $html;
 }
 
