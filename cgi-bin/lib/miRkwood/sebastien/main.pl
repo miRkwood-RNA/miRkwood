@@ -65,14 +65,14 @@ my @runs = ({bam => "../data/shortstack_miRNA.bam", fa => "../data/Athaliana_167
 
 	# print "$chr\t$params->[0]\t$params->[1]\\n";
 
-	my @thresholds = (2);
+	my @thresholds = (7);
 
 	foreach my $threshold (@thresholds) {
 		$clustering->{threshold} = $threshold;
 		print "Computing windows (threshold=$threshold)...";
 		my $end_params = Time::HiRes::gettimeofday();
-		my $windows = $clustering->get_windows_from_train_analysis_with_read_distribution($read_loci);
-		my $miRnaPos = $clustering->process_window_spikes($windows, 12, 2);
+		my $windows = $clustering->get_windows_from_train_analysis_with_read_distribution($read_loci, 2);
+		my $miRnaPos = $clustering->process_window_spikes($windows, $threshold);
 		my $window_dists = $clustering->compute_window_length_distribution($windows);
 		mkdir $current_run->{out};
 		$clustering->plot_window_distribution($window_dists, $current_run->{out});

@@ -579,10 +579,11 @@ sub get_windows_from_train_analysis {
 sub get_windows_from_train_analysis_with_read_distribution {
 	my $this = shift;
 	my $read_loci_per_chr = shift;
+	my $train_detection_threshold = shift;
 	my %windows_per_chr = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 # 		print $chr, "\n";
-		$windows_per_chr{$chr} = $this->__get_windows_from_trains_with_read_distrib_for_chr($read_loci_per_chr->{$chr});
+		$windows_per_chr{$chr} = $this->__get_windows_from_trains_with_read_distrib_for_chr($read_loci_per_chr->{$chr}, $train_detection_threshold);
 	}
 	return \%windows_per_chr;
 }
@@ -597,6 +598,7 @@ sub get_strand {
 sub __get_windows_from_trains_with_read_distrib_for_chr {
 	my $this = shift;
 	my $read_distribution = shift;
+	my $train_detection_threshold = shift;
 
 	my @positions = sort {$a <=> $b} keys %$read_distribution;
 
@@ -614,7 +616,7 @@ sub __get_windows_from_trains_with_read_distrib_for_chr {
 	my @end_reads = ();
 
 	#DEGUB
-	my $seeking_pos = 234017;
+	my $seeking_pos = 79030;
 	# END DEBUG
 
 	foreach my $position (@positions) {
@@ -627,21 +629,22 @@ sub __get_windows_from_trains_with_read_distrib_for_chr {
 			$current_train{read_count} += $read_locus->{read_count};
 			$current_train{forward_read_count} += $read_locus->{forward_read_count};
 			$current_train{last_read_begin} = $position;
-			__get_windows_process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, $last_read_count, $spike_detection, $seeking_pos);
+			__get_windows_process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, \$last_read_count, $spike_detection, $seeking_pos);
 		}
 		else { # the read train ended
-# 			__get_windows_maintain_read_count(\%current_train, $position, \$total_read_count, \@end_reads, $spike_detection);
+			__get_windows_maintain_read_count(\%current_train, $position, \$total_read_count, \$last_read_count, \@end_reads, $spike_detection);
 			__get_windows_finish_train_spikes(\%current_train);
-			$this->__get_windows_process_train_from_distribution(\@windows, \%current_train, \%window);
+			$this->__get_windows_process_train_from_distribution(\@windows, \%current_train, \%window, $train_detection_threshold);
 			%current_train = (begin => $position, end => $read_locus->{end}, read_count => $read_locus->{read_count}, forward_read_count => $read_locus->{forward_read_count}, spikes => []);
 			$total_read_count = 0;
 			@end_reads = ();
-			__get_windows_process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, 0, $spike_detection, $seeking_pos);
+			$last_read_count = 0;
+			__get_windows_process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, \$last_read_count, $spike_detection, $seeking_pos);
 		}
 		$last_read_count = $total_read_count;
 	}
 	__get_windows_finish_train_spikes(\%current_train);
-	$this->__get_windows_process_train_from_distribution(\@windows, \%current_train, \%window);
+	$this->__get_windows_process_train_from_distribution(\@windows, \%current_train, \%window, $train_detection_threshold);
 	if ($window{begin} != $window{end}) {
 		$this->__add_candidate_window_from_train(\@windows, \%window);
 	}
@@ -649,24 +652,26 @@ sub __get_windows_from_trains_with_read_distrib_for_chr {
 }
 
 sub __get_windows_maintain_read_count {
-	my ($current_train, $position, $total_read_count, $end_reads, $spike_detection) = @_;
+	my ($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection) = @_;
 	my $spikes = $current_train->{spikes};
 
 	# Maintaining read count
 	if (scalar @$spikes && $spikes->[-1]{end} == -1) {
 		my $last_spike = $spikes->[-1];
 		while (scalar @$end_reads && $end_reads->[0]{end} <= $position) {
-			my $last_read_count = $$total_read_count;
+			$$last_read_count = $$total_read_count;
 			$$total_read_count -= $end_reads->[0]{read_count};
+			my $trigger = $end_reads->[0]{end};
 			shift @$end_reads;
-			if ($$total_read_count - $last_read_count <= -$spike_detection) {
-				$last_spike->{end} = $position;
+			if ($$total_read_count - $$last_read_count <= -$spike_detection) {
+				$last_spike->{end} = $trigger;
 				$last_spike->{strand} = get_strand $last_spike->{forward_read_count}, $last_spike->{read_count};
 				last;
 			}
 		}
 	}
 	while (scalar @$end_reads && $end_reads->[0]{end} <= $position) {
+		$$last_read_count = $$total_read_count;
 		$$total_read_count -= $end_reads->[0]{read_count};
 		shift @$end_reads;
 	}
@@ -693,23 +698,23 @@ sub __get_windows_process_train_spikes {
 	my $spikes = $current_train->{spikes};
 
 	# Maintaining read count
-	__get_windows_maintain_read_count($current_train, $position, $total_read_count, $end_reads, $spike_detection);
+	__get_windows_maintain_read_count($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection);
 	$$total_read_count += $read_locus->{read_count};
 	push @$end_reads, {end => $read_locus->{end}, read_count => $read_locus->{read_count}};
 	# Looking for spikes
 # 	print __LINE__, "\n" if $position == $seeking_pos;
-# 	print '$total_read_count=', $$total_read_count, ' $last_read_count=', $last_read_count, "\n" if $position == $seeking_pos;
-	if ($$total_read_count - $last_read_count >= $spike_detection) {
-# 		print __LINE__, "\n" if $position == $seeking_pos;
+# 	print '$total_read_count=', $$total_read_count, ' $last_read_count=', $$last_read_count, "\n" if $position == $seeking_pos;
+	if ($$total_read_count - $$last_read_count >= $spike_detection) {
+		print __LINE__, "\n" if $position == $seeking_pos;
 		if (scalar @$spikes) {
-# 			print __LINE__, "\n" if $position == $seeking_pos;
+			print __LINE__, "\n" if $position == $seeking_pos;
 			my $last_spike = $spikes->[-1];
 			if (($position - $last_spike->{begin} < 20 && $last_spike->{trigger} < $$total_read_count)) {
-# 				print __LINE__, "\n" if $position == $seeking_pos;
+				print __LINE__, "\n" if $position == $seeking_pos;
 				pop @$spikes;
 			}
 			elsif ($last_spike->{end} == -1) {
-# 				print __LINE__, "\n" if $position == $seeking_pos;
+				print __LINE__, "\n" if $position == $seeking_pos;
 				return;
 			}
 		}
@@ -717,7 +722,7 @@ sub __get_windows_process_train_spikes {
 		push @$spikes, {begin => $position, end => -1, trigger => $read_locus->{read_count}, read_count => $read_locus->{read_count},
 		forward_read_count => $read_locus->{forward_read_count}};
 	}
-	elsif ($$total_read_count - $last_read_count <= -$spike_detection && scalar @$spikes) {
+	elsif ($$total_read_count - $$last_read_count <= -$spike_detection && scalar @$spikes) {
 # 		print __LINE__, "\n" if $position == $seeking_pos;
 		my $last_spike = $spikes->[-1];
 		if ($last_spike->{end} == -1) {
@@ -748,13 +753,117 @@ sub process_window_spikes {
 }
 
 
+sub __enlarge_spike {
+	my ($spike, $min_length, $chr_length) = @_;
+	my $spike_length = $spike->{end} - $spike->{begin};
+	if ($spike_length < $min_length) {
+		my $length_by2 = int(($min_length - $spike_length)/2);
+		$spike->{begin} = max (1, ($spike->{begin} - $length_by2));
+		$spike->{end} = min ($chr_length, ($spike->{end} + $min_length - $spike_length - $length_by2));
+	}
+}
+
+sub __enlarged_spike {
+	my ($spike, $min_length, $chr_length) = @_;
+	my $spike_length = $spike->{end} - $spike->{begin};
+	if ($spike_length < $min_length) {
+		my $new_spike = {begin => $spike->{begin}, end => $spike->{end}};
+		my $length_by2 = int(($min_length - $spike_length)/2);
+		$new_spike->{begin} = max (1, ($new_spike->{begin} - $length_by2));
+		$new_spike->{end} = min ($chr_length, ($new_spike->{end} + $min_length - $spike_length - $length_by2));
+		return $new_spike;
+	}
+	return $spike;
+}
+
+
+sub __look_backward_only {
+	my ($miRnaPos, $genome, $chr, $chr_length, $current_spike, $min_length, $window_length, $mismatches) = @_; # min_length = 40, window_length = 300
+	my $enlarged_spike = __enlarged_spike($current_spike, $min_length, $chr_length);
+	__look_backward($miRnaPos, $genome, $chr, $chr_length, $current_spike, $enlarged_spike, $genome->seq($chr, $enlarged_spike->{begin}, $enlarged_spike->{end}), $window_length, $mismatches);
+}
+
+sub __look_forward {
+	my ($miRnaPos, $genome, $chr, $chr_length, $current_spike, $enlarged_spike, $spike_seq, $window_length, $mismatches) = @_;
+	my @candidate_region = (min ($current_spike->{begin}+15, $chr_length), min ($current_spike->{begin}+$window_length-1, $chr_length));
+	if ($candidate_region[1] - $candidate_region[0] < $enlarged_spike->{end} - $enlarged_spike->{begin}) {
+		return;
+	}
+	my $results = MiRnaDuplexDetector::edit_distance_on_strand($current_spike->{strand}, $spike_seq, $genome->seq($chr, $candidate_region[0], $candidate_region[1]), $mismatches);
+	# $results = [ [[begin_read, end_read], [begin_sequence, end_sequence]], [[begin_read, end_read], [begin_sequence, end_sequence]], ...]
+	if (scalar @$results) {
+		my @farthest = @{$results->[0]};
+		foreach my $r (@$results) {
+			@farthest = @$r if $r->[1][0] > $farthest[1][0]; # if begin_sequence of 'r' > begin_sequence of 'farthest'
+		}
+		push @$miRnaPos, [$current_spike, {begin => $candidate_region[0]+$farthest[1][0], end => $candidate_region[0]+$farthest[1][1], strand => $current_spike->{strand}}];
+	}
+}
+
+sub __look_backward {
+	my ($miRnaPos, $genome, $chr, $chr_length, $current_spike, $enlarged_spike, $spike_seq, $window_length, $mismatches) = @_;
+	my @candidate_region = (max ($current_spike->{begin}-$window_length-15, 1), max ($current_spike->{begin}-16, 1));
+	if ($candidate_region[1] - $candidate_region[0] < $enlarged_spike->{end} - $enlarged_spike->{begin}) {
+		return;
+	}
+	my $results = MiRnaDuplexDetector::edit_distance_on_strand($current_spike->{strand}, $spike_seq, $genome->seq($chr, $candidate_region[0], $candidate_region[1]), $mismatches);
+	return if scalar @$results == 0;
+	my @farthest = @{$results->[0]};
+	foreach my $r (@$results) {
+		@farthest = @$r if $r->[1][0] < $farthest[1][0]; # if begin_sequence of 'r' < begin_sequence of 'farthest'
+	}
+	push @$miRnaPos, [{begin => $candidate_region[0]+$farthest[1][0], end => $candidate_region[0]+$farthest[1][1], strand => $current_spike->{strand}}, $current_spike];
+}
+
+sub __look_both_ways {
+	my ($miRnaPos, $genome, $chr, $chr_length, $current_spike, $min_length, $window_length, $mismatches) = @_;
+	my $enlarged_spike = __enlarged_spike($current_spike, 40, $chr_length);
+	my $spike_seq = $genome->seq($chr, $enlarged_spike->{begin}, $enlarged_spike->{end});
+	__look_backward($miRnaPos, $genome, $chr, $chr_length, $current_spike, $enlarged_spike, $genome->seq($chr, $enlarged_spike->{begin}, $enlarged_spike->{end}), $window_length, $mismatches);
+	__look_forward($miRnaPos, $genome, $chr, $chr_length, $current_spike, $enlarged_spike, $genome->seq($chr, $enlarged_spike->{begin}, $enlarged_spike->{end}), $window_length, $mismatches);
+}
+
+sub __match_with_neighbor {
+	my ($miRnaPos, $genome, $chr, $chr_length, $current_spike, $current_spike_seq, $neighbor, $min_length, $mismatches) = @_;
+	$neighbor->{visited} = 1;
+	my $enlarged_neighbor = __enlarged_spike($neighbor, $min_length, $chr_length);
+	my $neighbor_seq = $genome->seq($chr, $enlarged_neighbor->{begin}, $enlarged_neighbor->{end}-1);
+# 	print "Current spike: Chr1:", $current_spike->{begin}, "-", $current_spike->{end}-1, ":", $current_spike_seq, "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
+# 	print "Neighbor spike: Chr1:", $neighbor->{begin}, "-", $neighbor->{end}-1, ":", $genome->seq($chr, $neighbor->{begin}, $neighbor->{end}-1), "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
+	my $spike_len = $current_spike->{end} - $current_spike->{begin};
+	my $neighbor_len = $enlarged_neighbor->{end} - $enlarged_neighbor->{begin};
+	my $results;
+	if ($spike_len < $neighbor_len) {
+		$results = MiRnaDuplexDetector::edit_distance_on_strand($current_spike->{strand}, $current_spike_seq, $neighbor_seq, int($mismatches*$spike_len/$min_length));
+	# 	print scalar @$results, "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
+		if (scalar @$results) {
+			push @$miRnaPos, [$current_spike, $neighbor];
+			return 1;
+		}
+	}
+	else {
+		$results = MiRnaDuplexDetector::edit_distance_on_strand($current_spike->{strand}, $neighbor_seq, $current_spike_seq, int($mismatches*$neighbor_len/$min_length));
+	# 	print scalar @$results, "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
+		if (scalar @$results) {
+			push @$miRnaPos, [$current_spike, $neighbor];
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
 sub process_window_spikes_for_chr {
-	my ($this, $chr, $windows, $w_len, $mismatches) = @_;
+	my ($this, $chr, $windows, $mismatches) = @_;
 	
 	my $accepting_time = 400;
 	my @miRnaPos = (); # Array of [5p, 3p]
 	my $genome = $this->{genome_db};
-	my $min_length = 40;
+	my $min_length = 24;
+	my $chr_length = $this->{chr_info}{$chr};
+	my $min_length_on_isolated_spike = 40;
+	my $window_length = 300;
+	my $mismatches_on_isolated_spike = int($mismatches*$min_length_on_isolated_spike/$min_length);
 	foreach my $window (@$windows) {
 		my @spikes = ();
 		foreach my $train (@{$window->{trains}}) {
@@ -765,11 +874,7 @@ sub process_window_spikes_for_chr {
 			if ($current_spike->{strand} eq '?') {
 				next;
 			}
-			my $spike_length = $current_spike->{end} - $current_spike->{begin};
-			if ($spike_length < $min_length) {
-				$current_spike->{begin} = max (1, ($current_spike->{begin} - int(($min_length - $spike_length)/2)));
-				$current_spike->{end} = min ($this->{chr_info}{$chr}, ($current_spike->{end} + $min_length - $spike_length - int(($min_length - $spike_length)/2)));
-			}
+			__enlarge_spike($current_spike, $min_length, $chr_length);
 			my $current_spike_seq = $genome->seq($chr, $current_spike->{begin}, $current_spike->{end}-1);
 			my $has_neighbor = 0; # 0 == no neighbor, -1 = neighbor of other strand, 1 : neighbor on same strand
 			my $has_results = 0;
@@ -789,56 +894,16 @@ sub process_window_spikes_for_chr {
 				}
 				print $has_neighbor, "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
 				if ($has_neighbor == 1) {
-					$spike_length = $neighbor->{end} - $neighbor->{begin};
-					if ($neighbor < $min_length) {
-						$neighbor->{begin} = max (1, ($neighbor->{begin} - int(($min_length - $spike_length)/2)));
-						$neighbor->{end} = min ($this->{chr_info}{$chr}, ($neighbor->{end} + $min_length - $spike_length - int(($min_length - $spike_length)/2)));
-					}
-					$neighbor->{visited} = 1;
-					print "Current spike: Chr1:", $current_spike->{begin}, "-", $current_spike->{end}-1, ":", $current_spike_seq, "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
-					print "Neighbor spike: Chr1:", $neighbor->{begin}, "-", $neighbor->{end}-1, ":", $genome->seq($chr, $neighbor->{begin}, $neighbor->{end}-1), "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
-					my $results = MiRnaDuplexDetector::find_match($current_spike->{strand}, $current_spike_seq, $genome->seq($chr, $neighbor->{begin}, $neighbor->{end}-1), $w_len, $mismatches);
-					print scalar @$results, "\n" if $current_spike->{begin} == 234017 && $chr eq 'Chr1';
-					if (scalar @$results) {
-						push @miRnaPos, [$current_spike, $neighbor];
-						$has_results = 1;
-						last;
-					}
+					$has_results = __match_with_neighbor(\@miRnaPos, $genome, $chr, $chr_length, $current_spike, $current_spike_seq, $neighbor, $min_length, $mismatches);
 				}
 			}
 			next if $has_results;
 			if ($has_neighbor == 1) {
 				next if $current_spike->{visited};
-				my @candidate_region = (max ($current_spike->{begin}-315, 1), max ($current_spike->{begin}-16, 1));
-				my $results = MiRnaDuplexDetector::find_match($current_spike->{strand}, $current_spike_seq, $genome->seq($chr, $candidate_region[0], $candidate_region[1]), $w_len, $mismatches);
-				next if scalar @$results == 0;
-				my @farthest = ($results->[0][0], $results->[0][1]);
-				foreach my $r (@$results) {
-					@farthest = ($r->[0], $r->[1]) if $r->[1] < $farthest[1];
-				}
-				push @miRnaPos, [{begin => $candidate_region[0]+$farthest[1], end => $candidate_region[0]+$farthest[1] + $w_len, strand => $current_spike->{strand}}, $current_spike];
+				__look_backward_only(\@miRnaPos, $genome, $chr, $chr_length, $current_spike, $min_length_on_isolated_spike, $window_length, $mismatches_on_isolated_spike);
 			}
 			else {
-				# Look backward
-				my @candidate_region = (max ($current_spike->{begin}-315, 1), max ($current_spike->{begin}-16, 1));
-				my $results = MiRnaDuplexDetector::find_match($current_spike->{strand}, $current_spike_seq, $genome->seq($chr, $candidate_region[0], $candidate_region[1]), $w_len, $mismatches);
-				if (scalar @$results) {
-					my @farthest = ($results->[0][0], $results->[0][1]);
-					foreach my $r (@$results) {
-						@farthest = ($r->[0], $r->[1]) if $r->[1] < $farthest[1];
-					}
-					push @miRnaPos, [{begin => $candidate_region[0]+$farthest[1], end => $candidate_region[0]+$farthest[1] + $w_len, strand => $current_spike->{strand}}, $current_spike];
-				}
-				# Look forward
-				@candidate_region = (min ($current_spike->{begin}+15, $this->{chr_info}{$chr}), min ($current_spike->{begin}+314, $this->{chr_info}{$chr}));
-				$results = MiRnaDuplexDetector::find_match($current_spike->{strand}, $current_spike_seq, $genome->seq($chr, $candidate_region[0], $candidate_region[1]), $w_len, $mismatches);
-				if (scalar @$results) {
-					my @farthest = ($results->[0][0], $results->[0][1]);
-					foreach my $r (@$results) {
-						@farthest = ($r->[0], $r->[1]) if $r->[1] > $farthest[1];
-					}
-					push @miRnaPos, [$current_spike, {begin => $candidate_region[0]+$farthest[1], end => $candidate_region[0]+$farthest[1] + $w_len, strand => $current_spike->{strand}}];
-				}
+				__look_both_ways(\@miRnaPos, $genome, $chr, $chr_length, $current_spike, $min_length_on_isolated_spike, $window_length, $mismatches_on_isolated_spike);
 			}
 		}
 	}
@@ -896,9 +961,9 @@ sub __add_candidate_window_from_train {
 }
 
 sub __get_windows_process_train_from_distribution {
-	my ($this, $windows, $current_train, $window) = @_;
+	my ($this, $windows, $current_train, $window, $train_detection_threshold) = @_;
 	my $accepting_time = 300;
-	if ($current_train->{read_count} >= $this->{threshold}) { # This train should be in a window
+	if ($current_train->{read_count} >= $train_detection_threshold) { # This train should be in a window
 		if ($window->{begin} == $window->{end}) { # There were no current window
 			$window->{begin} = $current_train->{begin};
 			$window->{end} = $current_train->{end};
