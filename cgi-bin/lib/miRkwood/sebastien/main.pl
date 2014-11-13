@@ -65,7 +65,7 @@ my @runs = ({bam => "../data/shortstack_miRNA.bam", fa => "../data/Athaliana_167
 
 	# print "$chr\t$params->[0]\t$params->[1]\\n";
 
-	my @thresholds = (7);
+	my @thresholds = (6);
 
 	foreach my $threshold (@thresholds) {
 		$clustering->{threshold} = $threshold;
@@ -77,7 +77,7 @@ my @runs = ({bam => "../data/shortstack_miRNA.bam", fa => "../data/Athaliana_167
 		mkdir $current_run->{out};
 		$clustering->plot_window_distribution($window_dists, $current_run->{out});
 		$clustering->export_windows_to_gff($windows, $current_run->{out});
-		$clustering->export_miRnaPos_to_gff($miRnaPos, $current_run->{out}, '../data/TAIR10_miRNA_only.gff3');
+		$clustering->export_miRnaPos_to_gff($miRnaPos, $current_run->{out}, '../data/TAIR10_miRNA_only_covered_by_reads.gff3');
 		my $end_windows = Time::HiRes::gettimeofday();
 		print " Done. (in ", $end_windows-$end_params,"s)\n";
 	}

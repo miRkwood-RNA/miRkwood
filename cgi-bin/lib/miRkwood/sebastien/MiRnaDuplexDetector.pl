@@ -27,32 +27,32 @@ use Time::HiRes ();
 # 	}
 # }
 # 
-# my %hairpins = %{retrieve('../data/mirbase/hairpins.dat')};
-# my %miRNAs = %{retrieve('../data/mirbase/miRNAs.dat')};
-# my $total = keys %miRNAs;
+my %hairpins = %{retrieve('../data/mirbase/hairpins.dat')};
+my %miRNAs = %{retrieve('../data/mirbase/miRNAs.dat')};
+my $total = keys %miRNAs;
 # # 
 # # my @w_lens = (15..24);
-# my @mismatches = (1..7);
-# # 
-# # my %final_result = ();
-# # 
-# # foreach my $w_len (@w_lens) {
-# # # 	$final_result{$w_len} = {};
-# 	foreach my $mismatch (@mismatches) {
-# 		my $found = 0;
-# 		foreach my $miRNA (keys %miRNAs) {
-# 			my $results = MiRnaDuplexDetector::local_align_forward_strand($miRNAs{$miRNA}[0], $hairpins{$miRNAs{$miRNA}[1]}, $mismatch); #$final_result{$miRNA};
-# 			if (scalar(@$results)) {
-# 				$found++;
+my @mismatches = (1..7);
+# 
+# my %final_result = ();
+#
+# foreach my $w_len (@w_lens) {
+# # 	$final_result{$w_len} = {};
+	foreach my $mismatch (@mismatches) {
+		my $found = 0;
+		foreach my $miRNA (keys %miRNAs) {
+			my $results = MiRnaDuplexDetector::edit_distance_forward_strand($miRNAs{$miRNA}[0], $hairpins{$miRNAs{$miRNA}[1]}, $mismatch); #$final_result{$miRNA};
+			if (scalar(@$results)) {
+				$found++;
+			}
+# 			elsif ($mismatch == 6) {
+# 				print $miRNA, "\n";
 # 			}
-# # 			elsif ($mismatch == 6) {
-# # 				print $miRNA, "\n";
-# # 			}
-# 		}
-# 		print "For allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
-# # 		print "For window size = $w_len, allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
-# 	}
-# # }
+		}
+		print "For allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
+# 		print "For window size = $w_len, allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
+	}
+# }
 
 
 # 		$final_result{$w_len}{$mismatch} = {};
@@ -75,6 +75,7 @@ use Time::HiRes ();
 # store \%final_result, '../data/mirbase/matching_results.dat';
 
 # my %miRNAs = ();
+# my %hairpins = ();
 # my $id, my $miRNA_id;
 # my @fields;
 # open (my $fh, '<', '../data/mirbase/hairpin.fa');
@@ -89,7 +90,7 @@ use Time::HiRes ();
 # 	$hairpins{$id} .= $line;
 # }
 # 
-# open (my $fh2, '<', '../data/mirbase/mature.fa');
+# open (my $fh2, '<', '../data/mirbase/mature_plant.fa');
 # while (my $line = <$fh2>) {
 # 	chomp $line;
 # 	if ($line =~ /^>/) {
@@ -112,27 +113,27 @@ use Time::HiRes ();
 # store \%hairpins, '../data/mirbase/hairpins.dat';
 # store \%miRNAs, '../data/mirbase/miRNAs.dat';
 
-my $total_gen = 0, my $total_run = 0, my $total_run_optimized = 0, my $total_results = 0, my $total_mismatches = 0;
-for (my $i = 0; $i < 10000; $i++) {
-	my $start = Time::HiRes::gettimeofday();
-	my ($read, $seq) = MiRnaDuplexDetector::generate_candidates(22, 300);
-
-	my $end_reads = Time::HiRes::gettimeofday();
-	my $results = MiRnaDuplexDetector::local_align_forward_strand($read, $seq, 5);
-
-	my $end_run = Time::HiRes::gettimeofday();
-# 	my $results_opt = MiRnaDuplexDetector::run_optimized_cpp($read, $seq, $w_len, $mismatch);
-#
-# 	my $end_run_optimized = Time::HiRes::gettimeofday();
-	$total_gen += $end_reads - $start;
-	$total_run += $end_run - $end_reads;
-# 	$total_run_optimized += $end_run_optimized - $end_run;
-	if (scalar @$results) {
-		$total_results++;
-	}
-}
-
-print "Total gen time: $total_gen", 's', " Total run time: $total_run", "s Average match success: ", $total_results*100/10000, "\n";#, " Total run optimized: $total_run_optimized", "s.\n";
+# my $total_gen = 0, my $total_run = 0, my $total_run_optimized = 0, my $total_results = 0, my $total_mismatches = 0;
+# for (my $i = 0; $i < 10000; $i++) {
+# 	my $start = Time::HiRes::gettimeofday();
+# 	my ($read, $seq) = MiRnaDuplexDetector::generate_candidates(22, 300);
+# 
+# 	my $end_reads = Time::HiRes::gettimeofday();
+# 	my $results = MiRnaDuplexDetector::local_align_forward_strand($read, $seq, 5);
+# 
+# 	my $end_run = Time::HiRes::gettimeofday();
+# # 	my $results_opt = MiRnaDuplexDetector::run_optimized_cpp($read, $seq, $w_len, $mismatch);
+# #
+# # 	my $end_run_optimized = Time::HiRes::gettimeofday();
+# 	$total_gen += $end_reads - $start;
+# 	$total_run += $end_run - $end_reads;
+# # 	$total_run_optimized += $end_run_optimized - $end_run;
+# 	if (scalar @$results) {
+# 		$total_results++;
+# 	}
+# }
+# 
+# print "Total gen time: $total_gen", 's', " Total run time: $total_run", "s Average match success: ", $total_results*100/10000, "\n";#, " Total run optimized: $total_run_optimized", "s.\n";
 
 # my ($read, $seq) = MiRnaDuplexDetector::generate_candidates(24, 300);
 # my $results = MiRnaDuplexDetector::run_reverse_strand($read, $seq, $w_len, $mismatch);

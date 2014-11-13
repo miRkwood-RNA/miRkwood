@@ -31,7 +31,7 @@ bool equiv_forward_strand(char a, char b) {
 // You may call this function from Perl. Simply write '$result = equiv_reverse_strand("C", "T");' and it will work.
 bool equiv_reverse_strand(char a, char b) {
 	if (a == 'A')
-		return b == 'U' || b == 'C';
+		return b == 'U' || b == 'T' || b == 'C';
 	else if (a == 'C')
 		return b == 'G' || b == 'A';
 	else if (a == 'G')
