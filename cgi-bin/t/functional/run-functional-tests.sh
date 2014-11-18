@@ -28,19 +28,24 @@ if [ ! -d "$BASEDIR/output/" ]; then
 fi
 
 ### Testing script of miRkwood
-EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg"
+EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg --exclude=*.png --exclude=*.yml --exclude=*.html"
 
 rm -rf $BASEDIR/output/fullpipeline1/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline1/ $BASEDIR/data/sequenceSomething.fas --align --no-process
-DIFF=$(diff $EXCLUDES -I 'fullpipeline' -r $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | grep -v 'Binary' | wc -l)
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline1/ $BASEDIR/data/sequenceSomething.fas --align
+perl compare_results.pl $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ > $BASEDIR/output/diff_fullpipeline1
+DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l)
 ok 'Full pipeline' [ $DIFF -eq 0 ]
 
+
 rm -rf $BASEDIR/output/fullpipeline2/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --no-process --species-mask Arabidopsis_thaliana
-DIFF=$(diff $EXCLUDES -I 'fullpipeline' -r $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | grep -v 'Binary' | wc -l)
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --species-mask Arabidopsis_thaliana
+perl compare_results.pl $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ > $BASEDIR/output/diff_fullpipeline2
+DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l)
 ok 'Full pipeline with coding region masking (using BLAST)' [ $DIFF -eq 0 ]
 
+
 rm -rf $BASEDIR/output/fullpipeline-bam/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa  --no-process
-DIFF=$(diff $EXCLUDES -I 'fullpipeline' -r $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | grep -v 'Binary' | wc -l)
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa
+perl compare_results.pl $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ > $BASEDIR/output/diff_fullpipeline-bam
+DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
 ok 'Full BAM pipeline' [ $DIFF -eq 0 ]
