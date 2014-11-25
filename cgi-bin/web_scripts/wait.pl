@@ -18,16 +18,23 @@ my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
 my $mail   = $html->param('mail');
 my $nameJob = $html->param('nameJob');
+my $mode = $html->param('mode');
 $nameJob =~ s/ /_/g;#replace spaces with '_' in name job
 my $name    = $nameJob;
 
 my $res_arguments = '?run_id=' . $jobId;
-my $results_page  = 'resultsWithID.pl';
+my $results_page  = "nonImplemented.pl";
+if ( $mode eq "genomic" ){
+    $results_page  = 'resultsWithID.pl';
+}
+elsif ( $mode eq "BAM"){
+    $results_page  = 'nonImplemented.pl';
+}
 my $results_link  = $results_page . $res_arguments;
 my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);
 my $results_url   = $results_baseurl . $res_arguments;
 
-my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
+my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail . '&mode=' . $mode;
 my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $wait_arguments;
 
 if ( miRkwood::Results->is_job_finished($jobId) ) {
