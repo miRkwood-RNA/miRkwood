@@ -18,10 +18,6 @@ function showHideBlock()
 /**
  * 
  */
-
-/**
- * 
- */
 function ResetForm() 
 { 
 	document.forms.form.reset();
@@ -59,3 +55,26 @@ function generateExample() {
     ].join('\n');
     document.getElementById('seqArea').value = exampleSeqs;
 }
+
+/**
+ * Check if the user provides a BED file and either choose a model organism or provide a reference sequence.
+ */
+function verifyBEDForm()
+{	
+    var a = document.getElementById('seqArea').value && document.getElementById('species').value;
+    var s = !(document.getElementById('seqArea').value || document.getElementById('species').value);
+    var b = !document.getElementById('bedFile').value;
+    if (a) alert ("Choose between a model organism in the list and a sequence");
+    if (s) alert ("You must either provide a reference sequence or choose an organism in the list");
+    if (b) alert ("You must provide a BED file.");
+    return !(a||s||b);
+}
+
+/**
+ * 
+ */
+function resetTextarea(id)
+{	
+    document.getElementById(id).value = "";
+}
+
