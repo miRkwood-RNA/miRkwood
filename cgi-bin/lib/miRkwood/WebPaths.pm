@@ -57,6 +57,18 @@ sub get_css_path {
     return File::Spec->catdir($config{'html_root'}, 'style');
 }
 
+=method get_html_path
+
+Return the html directory
+
+=cut
+
+sub get_html_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_web_config();
+    return $config{'html_root'};
+}
+
 =method get_server_css_path
 
 Return the Server CSS directory
