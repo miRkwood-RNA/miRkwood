@@ -85,7 +85,7 @@ $seq = miRkwood::Utils::cleanup_fasta_sequence($seq);
 
 if ( ! miRkwood::Utils::is_fasta($seq) )
 {
-    print $cgi->redirect($error_url);
+    print $cgi->redirect($error_url . "?type=noFasta");
     exit;
 }
 

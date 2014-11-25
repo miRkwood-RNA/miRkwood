@@ -1,25 +1,38 @@
 #!/usr/bin/perl -w
 use strict;
 use warnings;
-
+use CGI;
 use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::WebTemplate;
+use miRkwood::WebPaths;
 
 my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
 my @js  = (miRkwood::WebTemplate->get_js_file());
 
+my $index_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'index.php');
+
+my $cgi    = CGI->new();
+my $errorType   = $cgi->param('type');
+
+my $errorMessage = "Unknown error";
+if ( $errorType eq "noFasta" ){
+    $errorMessage = <<"END_MSG";
+    <p>An error occured when processing your data: miRkwood could not recognize the format of one or more sequences.</p>
+    <p> Sequences should be in <b>FASTA</b> format. Lower-case and upper-case letters are both accepted.
+    The full  standard I UPAC nucleic acid code is not supported : only <tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt> and <tt>U</tt> symbols are recognized.</p>
+    <br /><br />
+END_MSG
+}
+    
 my $page = <<"END_TXT";
 <div class="main">
   <div id="page">
     <h2>Error</h2>
-      <p>An error occured when processing your data: miRkwood could not recognize the format of one or more sequences.</p>
-      <p> Sequences should be in <b>FASTA</b> format. Lower-case and upper-case letters are both accepted.
-      The full  standard I UPAC nucleic acid code is not supported : only <tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt> and <tt>U</tt> symbols are recognized.</p>
-    <br /><br />
+      $errorMessage
     <div class="center">
-      <input type="button" name="nom" value="Submit a new job" onclick="window.location.href='./interface.pl'" />
+      <input type="button" name="nom" value="Submit a new job" onclick="window.location.href='$index_page'" />
     </div>
   </div>
 </div>
