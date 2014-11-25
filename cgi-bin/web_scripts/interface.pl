@@ -12,7 +12,7 @@ use miRkwood::WebTemplate;
 my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
 my @js  = (miRkwood::WebTemplate->get_js_file());
 
-my $help_page = File::Spec->catfile( miRkwood::WebPaths->get_css_path(), '..', 'help.php');
+my $help_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'help.php');
 
 my $page = <<"END_TXT";
 <div class="main">
