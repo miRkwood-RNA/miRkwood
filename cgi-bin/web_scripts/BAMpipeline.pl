@@ -44,6 +44,7 @@ my $bedFile = "";
 
 my $seqArea = $cgi->param('seqArea');
 my $genome = "";
+my $max_length = 100000;
 if ( $seqArea eq q{} )    # case model organism
 {
     debug("Reference species is a model organism", 1);
@@ -52,19 +53,30 @@ if ( $seqArea eq q{} )    # case model organism
 else{
     debug("Reference sequence is provided by the user", 1);
     
-    $genome = $absolute_job_dir . "/genome.fa";
-    open (GENOME, ">$genome") or miRkwood::WebTemplate::web_die("Error when creating genome file: $!");
-    print GENOME $seqArea;
-    close GENOME;
-    
     # Check if genome is a valid fasta   
     $seqArea = miRkwood::Utils::cleanup_fasta_sequence($seqArea);
     
-    if ( ! miRkwood::Utils::check_reference_sequence($seqArea) )
+    if ( ! miRkwood::Utils::is_fasta($seqArea) )
     {
-        print $cgi->redirect($error_url . "?type=noValidInput");
+        print $cgi->redirect($error_url . "?type=noFasta");
         exit;
     }    
+    if ( ! miRkwood::Utils::check_nb_sequences($seqArea) )
+    {
+        print $cgi->redirect($error_url . "?type=severalSequences");
+        exit;
+    }    
+    if ( ! miRkwood::Utils::check_sequence_length($seqArea, $max_length) )
+    {
+        print $cgi->redirect($error_url . "?type=tooLongSequence");
+        exit;
+    }
+
+    $genome = $absolute_job_dir . "/genome.fa";
+    open (GENOME, ">$genome") or miRkwood::WebTemplate::web_die("Error when creating genome file: $!");
+    print GENOME $seqArea;
+    close GENOME;    
+       
 }
 
 
