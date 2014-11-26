@@ -25,6 +25,18 @@ if ( $errorType eq "noFasta" ){
     <br /><br />
 END_MSG
 }
+elsif ( $errorType eq "noValidInput" ){
+    $errorMessage = <<"END_MSG";
+    <p>An error occured when processing your data: miRkwood could not recognize the format of your sequence.</p>
+    <p> You must type only one sequence, in <b>FASTA</b> format. 
+    Sequence must be less than 100.000 nucleotides long.
+    Lower-case and upper-case letters are both accepted.
+    The full  standard I UPAC nucleic acid code is not supported : only <tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt> and <tt>U</tt> symbols are recognized.</p>
+    <br /><br />    
+    
+    
+END_MSG
+}
     
 my $page = <<"END_TXT";
 <div class="main">

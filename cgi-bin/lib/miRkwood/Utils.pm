@@ -362,6 +362,43 @@ sub is_fasta {
     return 1;
 }
 
+=method check_reference_sequence
+
+Check if the sequence given by the user is a valid fasta sequence
+(one unique fasta sequence) and is shorter than XX nt
+
+=cut
+
+sub check_reference_sequence {
+    my (@args) = @_;
+    my $reference = shift @args;
+    my @lines = split /\n/smx, $reference;
+    my $max_length = 100000;
+    
+    # Return 0 if 0 sequence or more than 1 sequence.
+    my @nb_sequences = $reference =~ />/g;
+    if (scalar(@nb_sequences) == 0 or scalar(@nb_sequences) > 1 ){
+        return 0;
+    }
+
+    # Check the sequence length
+    my $sequence = "";
+    foreach (@lines) {
+        chomp;
+        if ( ! /^>/ ){
+            if ( !is_fasta_line($_) ){
+                warn "Problem with line $_";
+                return 0;
+            }
+            $sequence .= $_;
+        }
+    } 
+    if (length($sequence) > $max_length){
+        return 0;
+    }   
+    return 1;
+}
+
 =method mask_sequence_nucleotide
 
 Mask a typical FASTA line with 'N' symbol

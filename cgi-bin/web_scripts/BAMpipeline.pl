@@ -37,16 +37,8 @@ my $strand    = $cgi->param('strand');
 my $filter_tRNA_rRNA = $cgi->param('filter-tRNA-rRNA');
 
 if ( $strand   ) { $strand   = 1 } else { $strand   = 0 }
-my $trna = 0;
-my $rrna = 0;
-if ( $filter_tRNA_rRNA ) {
-    $filter_tRNA_rRNA = 1;
-    $trna = 1;
-    $rrna = 1;
-}
-if ( !$job_title ) {
-    $job_title = 0;
-}
+if ( $filter_tRNA_rRNA ) { $filter_tRNA_rRNA = 1 } else { $filter_tRNA_rRNA = 0 }
+if ( !$job_title ) { $job_title = 0 }
 
 my $bedFile = "";
 
@@ -55,7 +47,7 @@ my $genome = "";
 if ( $seqArea eq q{} )    # case model organism
 {
     debug("Reference species is a model organism", 1);
-
+    $genome = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/", $species . ".fa");
 }
 else{
     debug("Reference sequence is provided by the user", 1);
@@ -68,9 +60,9 @@ else{
     # Check if genome is a valid fasta   
     $seqArea = miRkwood::Utils::cleanup_fasta_sequence($seqArea);
     
-    if ( ! miRkwood::Utils::is_fasta($seqArea) )
+    if ( ! miRkwood::Utils::check_reference_sequence($seqArea) )
     {
-        print $cgi->redirect($error_url . "?type=noFasta");
+        print $cgi->redirect($error_url . "?type=noValidInput");
         exit;
     }    
 }
