@@ -6,8 +6,10 @@ use warnings;
 use Inline CPP => <<'END_OF_C_CODE';
 // Here starts C++ code
 
-#include <cstring>
-#include <deque>
+#include <vector>
+#include <utility>
+#include <cmath>
+
 
 // This function returns true iff the nucleotide 'a' can bind with 'b'
 // If either nucleotide is 'N', it returns false
@@ -52,142 +54,18 @@ SV* __get_pos(int r, int s) {
 	return newRV_noinc((SV*)array); // rv stands for Reference value
 }
 
-// This function tries to map the reversed 'read' dna sequence to the 'sequence' dna sequence.
-// A match is found if the sequences can bind on a window of length 'w_len', allowing up to 'allowedMismatches' mismatches. (Insertions and deletions are not considered, only substitutions are).
-// 'read' is automatically reversed by this function, so you must not do it manually.
-// Returns an array reference of array references:
-//		Returns [] if there are no results
-//		If there is a single match found, returns [[$read_id, $sequence_id]]; This means that '$reversed_read = reverse substr($read, $read_id, $w_len)' can bind to 'substr($sequence, $sequence_id, $w_len)'
-//		If N matches are found, returns [[$read_id_1, $sequence_id_1], ..., [$read_id_N, $sequence_id_N]]
-//		
-// Best value for w_len = 12
-// Best value for allowedMismatches = 2
-// You may call this function from Perl. Simply write '$result = find_match_forward_strand($read, $sequence, $w_len, $allowedMismatches);' and it will work.
-SV* find_match_forward_strand(char* read, char* sequence, int w_len, int allowedMismatches) {
-	int read_length, seq_length, i, e_seq, seq_id, read_id, reversed_read_id, counter, counter_end;
-	AV* results;
-	read_length = std::strlen(read);
-	seq_length = std::strlen(sequence);
-	results = newAV();
-	for (i = -read_length+w_len, e_seq = seq_length - w_len + 1; i < e_seq; i++) {
-		std::deque<int> substitution;
-		seq_id = std::max(i, 0);
-		read_id = std::max(-i, 0);
-		reversed_read_id = read_length-1-read_id;
-		int returned_seq_id = seq_id+1-w_len;
-		counter = 0;
-		counter_end = std::min(seq_length-seq_id, read_length-read_id);
-		for (; counter < w_len; counter++) {
-			if (!equiv_forward_strand(read[reversed_read_id-counter], sequence[seq_id+counter]))
-				substitution.push_back(counter);
-		}
-		if (substitution.size() <= allowedMismatches)
-			av_push(results, __get_pos(reversed_read_id-w_len+1, seq_id));
-		for (; counter < counter_end - w_len; counter++) {
-			if (substitution.size() && substitution.front() == counter - w_len)
-				substitution.pop_front();
-			if (!equiv_forward_strand(read[reversed_read_id-counter], sequence[seq_id+counter]))
-				substitution.push_back(counter);
-			if (substitution.size() <= allowedMismatches)
-				av_push(results, __get_pos(reversed_read_id-counter, returned_seq_id+counter));
-		}
-		int errors_to_remove = substitution.size();
-		for (; counter < counter_end; counter++) {
-			if (substitution.size() && substitution.front() == counter - w_len) {
-				substitution.pop_front();
-				errors_to_remove--;
-			}
-			if (!equiv_forward_strand(read[reversed_read_id-counter], sequence[seq_id+counter]))
-				substitution.push_back(counter);
-			if (substitution.size() <= allowedMismatches)
-				av_push(results, __get_pos(reversed_read_id-counter, returned_seq_id+counter));
-			else if (substitution.size() - errors_to_remove > allowedMismatches)
-				break;
-		}
-	}
-	return newRV_noinc((SV*)results);
-}
-
-// This function tries to map the complement of 'read' dna sequence to the reverse complement of 'sequence' dna sequence. Both sequences are complemented by the function so you mustn't complement them.
-// 'sequence' is also reversed by the function so mustn't reverse it beforehand as well.
-// A match is found if the sequences can bind on a window of length 'w_len', allowing up to 'allowedMismatches' mismatches. (Insertions and deletions are not considered, only substitutions are).
-// Returns an array reference of array references:
-//		Returns [] if there are no results
-//		If there is a single match found, returns [[$read_id, $sequence_id]]; This means that 'complement substr($read, $read_id, $w_len)' can
-//			bind to 'reverse_complement substr($sequence, $sequence_id, $w_len)'
-//		If N matches are found, returns [[$read_id_1, $sequence_id_1], ..., [$read_id_N, $sequence_id_N]]
-//
-// Best value for w_len = 12
-// Best value for allowedMismatches = 2
-// You may call this function from Perl. Simply write '$result = find_match_reverse_strand($read, $sequence, $w_len, $allowedMismatches);' and it will work.
-SV* find_match_reverse_strand(char* read, char* sequence, int w_len, int allowedMismatches) {
-	int read_length, seq_length, i, e_seq, seq_id, read_id, reversed_seq_id, counter, counter_end;
-	AV* results;
-	read_length = std::strlen(read);
-	seq_length = std::strlen(sequence);
-	results = newAV();
-	for (i = -read_length+w_len, e_seq = seq_length - w_len + 1; i < e_seq; i++) {
-		std::deque<int> substitution;
-		seq_id = std::max(i, 0);
-		read_id = std::max(-i, 0);
-		reversed_seq_id = seq_length-1-seq_id;
-		int returned_read_id = read_id+1-w_len;
-		counter = 0;
-		counter_end = std::min(seq_length-seq_id, read_length-read_id);
-		for (; counter < w_len; counter++) {
-			if (!equiv_reverse_strand(read[read_id+counter], sequence[reversed_seq_id-counter]))
-				substitution.push_back(counter);
-		}
-		if (substitution.size() <= allowedMismatches)
-			av_push(results, __get_pos(read_id, reversed_seq_id-w_len+1));
-		for (; counter < counter_end - w_len; counter++) {
-			if (substitution.size() && substitution.front() == counter - w_len)
-				substitution.pop_front();
-			if (!equiv_reverse_strand(read[read_id+counter], sequence[reversed_seq_id-counter]))
-				substitution.push_back(counter);
-			if (substitution.size() <= allowedMismatches)
-				av_push(results, __get_pos(returned_read_id+counter, reversed_seq_id-counter));
-		}
-		int errors_to_remove = substitution.size();
-		for (; counter < counter_end; counter++) {
-			if (substitution.size() && substitution.front() == counter - w_len) {
-				substitution.pop_front();
-				errors_to_remove--;
-			}
-			if (!equiv_reverse_strand(read[read_id+counter], sequence[reversed_seq_id-counter]))
-				substitution.push_back(counter);
-			if (substitution.size() <= allowedMismatches)
-				av_push(results, __get_pos(returned_read_id+counter, reversed_seq_id-counter));
-			else if (substitution.size() - errors_to_remove > allowedMismatches)
-				break;
-		}
-	}
-	return newRV_noinc((SV*)results);
-}
-
-// This function calls find_match_forward_strand or find_match_reverse_strand depending on the strand parameter
-// If strand is '+', calls find_match_forward_strand
-// Otherwise calls find_match_reverse_strand
-SV* find_match(char strand, char* read, char* sequence, int w_len, int allowedMismatches) {
-	return strand == '+' ? find_match_forward_strand(read, sequence, w_len, allowedMismatches) : find_match_reverse_strand(read, sequence, w_len, allowedMismatches);
-}
-
-// EDIT DISTANCE
-#include <vector>
-#include <utility>
-
 struct EditDistanceScore {
-		unsigned int value, from_i, from_j;
+		int value, from_j;
 
-		EditDistanceScore(unsigned int v = 0, unsigned int i = 0, unsigned int j = 0) : value(v), from_i(i), from_j(j) {}
+		EditDistanceScore(int v = 0, int j = 0) : value(v), from_j(j) {}
 
 		EditDistanceScore& increased() { value++; return *this; }
-		EditDistanceScore& increasedBy(int amount) { value+=amount; return *this; }
+		EditDistanceScore increasedBy(int val) const { EditDistanceScore score(*this); score.value+= val; return score; }
 };
 
 class matrix {
 	public:
-		//typedef EditDistanceScore T;
+		//typedef EditDistanceScore value_type;
 
 	private:
 		std::size_t myRows, myColumns;
@@ -204,8 +82,34 @@ class matrix {
 
 		//EditDistanceScore* data() { return myData.data(); }
 
-		EditDistanceScore& operator()(std::size_t i_row, std::size_t j_column) { return myData[myRows*j_column+i_row]; }
-		EditDistanceScore const& operator()(std::size_t i_row, std::size_t j_column) const { return myData[myRows*j_column+i_row]; }
+		EditDistanceScore* scanRow(std::size_t row) { return myData.data() + myColumns*row; }
+		EditDistanceScore const* scanRow(std::size_t row) const { return myData.data() + myColumns*row; }
+
+		EditDistanceScore& operator()(std::size_t i_row, std::size_t j_column) { return myData[myColumns*i_row+j_column]; }
+		EditDistanceScore const& operator()(std::size_t i_row, std::size_t j_column) const { return myData[myColumns*i_row+j_column]; }
+};
+
+class matrix_int {
+	public:
+		//typedef unsigned int value_type;
+
+	private:
+		std::size_t myRows, myColumns;
+		std::vector<unsigned int> myData;
+
+	public:
+		matrix_int(std::size_t rows, std::size_t columns) : myRows(rows), myColumns(columns), myData(rows*columns) {}
+		matrix_int(std::size_t rows, std::size_t columns, unsigned int value) : myRows(rows), myColumns(columns), myData(rows*columns, value) {}
+
+		std::size_t rows() const { return myRows; }
+		std::size_t columns() const { return myColumns; }
+
+		std::size_t size() const { return myData.size(); }
+
+		//EditDistanceScore* data() { return myData.data(); }
+
+		unsigned int& operator()(std::size_t i_row, std::size_t j_column) { return myData[myColumns*i_row+j_column]; }
+		unsigned int const& operator()(std::size_t i_row, std::size_t j_column) const { return myData[myColumns*i_row+j_column]; }
 };
 
 // This function just create a perl array reference. It returns: [r, s] (a reference on (r, s)).
@@ -225,15 +129,34 @@ EditDistanceScore process_score(matrix& score_matrix, std::size_t i, std::size_t
 	if (_equiv_function(read, sequence))
 		s = (score_matrix(i, j) = score_matrix(i-1, j-1));
 	else {
-		EditDistanceScore subs = score_matrix(i-1,j-1);
-		EditDistanceScore insertion = score_matrix(i-1,j);
-		EditDistanceScore deletion = score_matrix(i,j-1);
-		if (subs.value+1 <= insertion.value+2 and subs.value+1 <= deletion.value+2)
-			s = (score_matrix(i, j) = subs.increased());
-		else if (insertion.value+2 <= subs.value+1 and insertion.value+2 <= deletion.value+2)
-			s = (score_matrix(i, j) = insertion.increasedBy(2));
+		EditDistanceScore subs = score_matrix(i-1,j-1).increasedBy(1);
+		EditDistanceScore insertion = score_matrix(i-1,j).increasedBy(2);
+		EditDistanceScore deletion = score_matrix(i,j-1).increasedBy(2);
+		if (subs.value <= insertion.value and subs.value <= deletion.value)
+			s = (score_matrix(i, j) = subs);
+		else if (insertion.value <= subs.value and insertion.value <= deletion.value)
+			s = (score_matrix(i, j) = insertion);
 		else
-			s = (score_matrix(i, j) = deletion.increasedBy(2));
+			s = (score_matrix(i, j) = deletion);
+	}
+	return s;
+}
+
+template <bool (*_equiv_function)(char, char)>
+unsigned int process_score(matrix_int& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
+	unsigned int s;
+	if (_equiv_function(read, sequence))
+		s = (score_matrix(i, j) = score_matrix(i-1, j-1));
+	else {
+		unsigned int subs = score_matrix(i-1,j-1)+1;
+		unsigned int insertion = score_matrix(i-1,j)+2;
+		unsigned int deletion = score_matrix(i,j-1)+2;
+		if (subs <= insertion and subs <= deletion)
+			s = (score_matrix(i, j) = subs);
+		else if (insertion <= subs and insertion <= deletion)
+			s = (score_matrix(i, j) = insertion);
+		else
+			s = (score_matrix(i, j) = deletion);
 	}
 	return s;
 }
@@ -241,55 +164,247 @@ EditDistanceScore process_score(matrix& score_matrix, std::size_t i, std::size_t
 EditDistanceScore process_score_forward_strand(matrix& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
 	return process_score<equiv_forward_strand>(score_matrix, i, j, read, sequence);
 }
-
 EditDistanceScore process_score_reverse_strand(matrix& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
 	return process_score<equiv_reverse_strand>(score_matrix, i, j, read, sequence);
 }
 
-typedef matrix dummy;
+unsigned int process_score_forward_strand(matrix_int& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
+	return process_score<equiv_forward_strand>(score_matrix, i, j, read, sequence);
+}
+unsigned int process_score_reverse_strand(matrix_int& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
+	return process_score<equiv_reverse_strand>(score_matrix, i, j, read, sequence);
+}
 
-// The extra dummy* parameter is to prevent Inline CPP from binding this function to Perl
-// This is because Inline CPP ignores the template parameter and hence fails to bind to Perl, resulting in compiling errors.
-template <EditDistanceScore (*process_score_func)(matrix&, std::size_t, std::size_t, char, char)>
-SV* __edit_distance_on_strand(char* read, char* sequence, unsigned int max_distance, dummy*) {
-	unsigned int read_length = std::strlen(read);
-	unsigned int sequence_length = std::strlen(sequence);
-	matrix score_matrix(read_length+1, sequence_length+1, EditDistanceScore(0, 0, 0));
+// EDIT DISTANCE EXTENDED
 
-	for (std::size_t i = 1; i <= read_length; i++)
-		score_matrix(i, 0) = EditDistanceScore(i, read_length-i, 0);
-	for (std::size_t j = 1; j <= sequence_length; j++)
-		score_matrix(0, j) = EditDistanceScore(0, read_length-1, j-1);
+#include <limits>
 
-	unsigned int min_score = ~0u;
-	AV* result = newAV();
-	std::size_t i = 1;
-	for (; i < read_length; i++) for (std::size_t j = 1; j <= sequence_length; j++)
-		process_score_func(score_matrix, i, j, read[read_length-i], sequence[j-1]);
-	EditDistanceScore current_score;
-	for (std::size_t j = 1; j <= sequence_length; j++) {
-		current_score = process_score_func(score_matrix, i, j, read[read_length-i], sequence[j-1]);
-		if (current_score.value < min_score and current_score.value <= max_distance) {
-			min_score = current_score.value;
-			av_clear(result);
-			av_push(result, __get_region(read_length-i, current_score.from_i+1, current_score.from_j, j));
-		}
-		else if (current_score.value == min_score)
-			av_push(result, __get_region(read_length-i, current_score.from_i+1, current_score.from_j, j));
+struct Locus {
+		unsigned int begin, end;
+		Locus(unsigned int b, unsigned int e) : begin(b), end(e) {}
+
+		SV* toPerl() const { return __get_pos(begin, end); }
+};
+
+#include <deque>
+
+SV* dequeToPerl(std::deque<Locus> const& loci) {
+	AV* results = newAV();
+	for (std::deque<Locus>::const_iterator it = loci.begin(), e = loci.end(); it != e; ++it) {
+		av_push(results, it->toPerl());
 	}
-	return newRV_noinc((SV*)result);
+	return newRV_noinc((SV*)results);
 }
 
-SV* edit_distance_forward_strand(char* read, char* sequence, unsigned int max_distance) {
-	return __edit_distance_on_strand<process_score_forward_strand>(read, sequence, max_distance, 0);
+class MiRnaDetector;
+
+template <bool (*_equiv_function)(char, char)>
+void computeDistance(char* text, int from_i, int to_i, int from_j, int to_j, MiRnaDetector& self);
+template <bool (*_equiv_function)(char, char)>
+bool checkInwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self);
+template <bool (*_equiv_function)(char, char)>
+bool checkOutwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self);
+template <bool (*_equiv_function)(char, char)>
+std::deque<Locus> tp_detect_on_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end, MiRnaDetector& self);
+
+class MiRnaDetector {
+
+	public:
+
+		matrix m_matrix;
+		int m_miRnaMinErrorsThreshold, m_miRnaMaxErrorsThreshold;
+		int m_miRnaMinLengthToExtend;
+		int m_increaseMiRnaEachNt;
+		double m_miRnaExtendedRatioErrorThreshold;
+
+		void initRegion(int from_i, int to_i, int from_j, int to_j, bool realDistance) {
+			for (int i = 0, e = to_i-from_i; i <= e; i++) {
+				EditDistanceScore* data = m_matrix.scanRow(i+from_i) + from_j;
+				*data = EditDistanceScore(i, 0);
+			}
+			if (realDistance) {
+				EditDistanceScore* data = m_matrix.scanRow(from_i) + from_j+1;
+				for (int j = 1, e = to_j-from_j; j <= e; j++, data++)
+					*data = EditDistanceScore(j, j);
+			}
+			else {
+				EditDistanceScore* data = m_matrix.scanRow(from_i) + from_j+1;
+				for (int j = 1, e = to_j-from_j; j <= e; j++, data++)
+					*data = EditDistanceScore(0, j);
+			}
+		}
+
+		std::deque<Locus> lookForMiRnaResult(int to_i, int from_j, int to_j, bool& meetMinThreshold) {
+			meetMinThreshold = false;
+			EditDistanceScore* data = m_matrix.scanRow(to_i) + from_j+1;
+			std::deque<Locus> result;
+			for (int j = 1, e = to_j-from_j; j <= e; j++, data++) {
+				if (data->value <= m_miRnaMinErrorsThreshold) {
+					result.push_back(Locus(e-j, e-data->from_j));
+					meetMinThreshold = true;
+					return result;
+				}
+				else if (data->value <= m_miRnaMaxErrorsThreshold)
+					result.push_back(Locus(e-j, e-data->from_j));
+			}
+			return result;
+		}
+		bool lookForResult(int to_i, int from_j, int to_j, int threshold) const {
+			EditDistanceScore const* data = m_matrix.scanRow(to_i) + from_j+1;
+			for (int j = 1, e = to_j-from_j; j <= e; j++, data++) {
+				if (data->value <= threshold)
+					return true;
+			}
+			return false;
+		}
+
+	public:
+		MiRnaDetector(int textSize) : m_matrix(textSize+1, textSize+1, EditDistanceScore(0, 0)) {}
+
+		SV* detect_forward_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
+			return dequeToPerl(tp_detect_on_strand<equiv_forward_strand>(text, read_beg, read_end, seq_beg, seq_end, *this));
+		}
+		SV* detect_reverse_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
+			return dequeToPerl(tp_detect_on_strand<equiv_reverse_strand>(text, read_beg, read_end, seq_beg, seq_end, *this));
+		}
+		SV* detect_on_strand(char strand, char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
+			return strand == '+' ? detect_forward_strand(text, read_beg, read_end, seq_beg, seq_end) :
+								   detect_reverse_strand(text, read_beg, read_end, seq_beg, seq_end);
+		}
+
+		int miRnaMinErrorsThreshold() const {
+			return m_miRnaMinErrorsThreshold;
+		}
+		void setMiRnaMinErrorsThreshold(int miRnaMinErrorsThreshold) {
+			m_miRnaMinErrorsThreshold = miRnaMinErrorsThreshold;
+		}
+
+		int miRnaMaxErrorsThreshold() const {
+			return m_miRnaMaxErrorsThreshold;
+		}
+		void setMiRnaMaxErrorsThreshold(int miRnaMaxErrorsThreshold) {
+			m_miRnaMaxErrorsThreshold = miRnaMaxErrorsThreshold;
+		}
+
+		int miRnaMinLengthToExtend() const {
+			return m_miRnaMinLengthToExtend;
+		}
+		void setMiRnaMinLengthToExtend(int miRnaMinLengthToExtend) {
+			m_miRnaMinLengthToExtend = miRnaMinLengthToExtend;
+		}
+
+		int increaseMiRnaEachNt() const {
+			return m_increaseMiRnaEachNt;
+		}
+		void setIncreaseMiRnaEachNt(int increaseMiRnaEachNt) {
+			m_increaseMiRnaEachNt = increaseMiRnaEachNt;
+		}
+
+		double miRnaExtendedRatioErrorThreshold() const {
+			return m_miRnaExtendedRatioErrorThreshold;
+		}
+		void setMiRnaExtendedRatioErrorThreshold(double miRnaExtendedRatioErrorThreshold) {
+			m_miRnaExtendedRatioErrorThreshold = miRnaExtendedRatioErrorThreshold;
+		}
+};
+
+
+template <bool (*_equiv_function)(char, char)>
+void computeDistance(char* text, int from_i, int to_i, int from_j, int to_j, MiRnaDetector& self) {
+	char* read = text + from_i;
+	for (int i = from_i+1; i <= to_i; i++, read++) {
+		char* sequence = text + to_j-1;
+		for (std::size_t j = from_j+1; j <= to_j; j++, sequence--)
+			process_score<_equiv_function>(self.m_matrix, i, j, *read, *sequence);
+	}
 }
 
-SV* edit_distance_reverse_strand(char* read, char* sequence, unsigned int max_distance) {
-	return __edit_distance_on_strand<process_score_reverse_strand>(read, sequence, max_distance, 0);
+template <bool (*_equiv_function)(char, char)>
+bool checkInwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self) {
+	Locus seq_locus(seq_beg + locus.begin, seq_beg + locus.end);
+	int length, new_seq_beg, new_read_beg;
+	if (seq_locus.end <= read_beg) { // Read is the 3p
+		length = std::ceil(static_cast<float>(read_beg - seq_locus.end)/self.m_increaseMiRnaEachNt);
+		if (read_beg < length)
+			length = read_beg;
+		if (seq_locus.end+length > self.m_matrix.rows()-1)
+			length = self.m_matrix.rows()-1 - seq_locus.end;
+		if (length < self.m_miRnaMinLengthToExtend)
+			return true;
+		new_read_beg = read_beg-length;
+		new_seq_beg = seq_locus.end;
+	}
+	else if (seq_locus.begin >= read_end) { // Read is the 5p
+		length = std::ceil(static_cast<float>(seq_locus.begin - read_end)/self.m_increaseMiRnaEachNt);
+		if (seq_locus.begin < length)
+			length = seq_locus.begin;
+		if (read_end+length > self.m_matrix.rows()-1)
+			length = self.m_matrix.rows()-1 - read_end;
+		if (length < self.m_miRnaMinLengthToExtend)
+			return true;
+		new_read_beg = read_end;
+		new_seq_beg = seq_locus.begin - length;
+	}
+	else
+		return false;
+
+	self.initRegion(new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, true);
+	computeDistance<_equiv_function>(text, new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, self);
+	return self.lookForResult(new_read_beg+length, new_seq_beg, new_seq_beg+length, length*self.m_miRnaExtendedRatioErrorThreshold);
 }
 
-SV* edit_distance_on_strand(char strand, char* read, char* sequence, unsigned int max_distance) {
-	return strand == '+' ? edit_distance_forward_strand(read, sequence, max_distance) : edit_distance_reverse_strand(read, sequence, max_distance);
+template <bool (*_equiv_function)(char, char)>
+bool checkOutwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self) {
+	Locus seq_locus(seq_beg + locus.begin, seq_beg + locus.end);
+	int length, new_seq_beg, new_read_beg;
+	if (seq_locus.end <= read_beg) { // Read is the 3p
+		length = std::ceil(static_cast<float>(seq_locus.begin - read_end)/self.m_increaseMiRnaEachNt);
+		if (seq_locus.begin < length)
+			length = seq_locus.begin;
+		if (read_end+length > self.m_matrix.rows()-1)
+			length = self.m_matrix.rows()-1 - read_end;
+		if (length < self.m_miRnaMinLengthToExtend)
+			return true;
+		new_read_beg = read_end;
+		new_seq_beg = seq_locus.begin - length;
+	}
+	else if (seq_locus.begin >= read_end) { // Read is the 5p
+		length = std::ceil(static_cast<float>(read_beg - seq_locus.end)/self.m_increaseMiRnaEachNt);
+		if (read_beg < length)
+			length = read_beg;
+		if (seq_locus.end+length > self.m_matrix.rows()-1)
+			length = self.m_matrix.rows()-1 - seq_locus.end;
+		if (length < self.m_miRnaMinLengthToExtend)
+			return true;
+		new_read_beg = read_beg-length;
+		new_seq_beg = seq_locus.end;
+	}
+	else
+		return false;
+
+	self.initRegion(new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, true);
+	computeDistance<_equiv_function>(text, new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, self);
+	return self.lookForResult(new_read_beg+length, new_seq_beg, new_seq_beg+length, length*self.m_miRnaExtendedRatioErrorThreshold);
+}
+
+template <bool (*_equiv_function)(char, char)>
+std::deque<Locus> tp_detect_on_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end, MiRnaDetector& self) {
+	self.initRegion(read_beg, read_end, seq_beg, seq_end, false);
+	computeDistance<_equiv_function>(text, read_beg, read_end, seq_beg, seq_end, self);
+	bool hasMinThreshold = false;
+	std::deque<Locus> candidates = self.lookForMiRnaResult(read_end, seq_beg, seq_end, hasMinThreshold);
+	if (hasMinThreshold)
+		return candidates;
+	std::deque<Locus> result;
+	for (std::deque<Locus>::const_iterator it = candidates.begin(), e = candidates.end(); it != e; ++it) {
+		if (checkInwardExtent<_equiv_function>(text, read_beg, read_end, seq_beg, seq_end, *it, self)) {
+			result.push_back(*it);
+		}
+		if (checkOutwardExtent<_equiv_function>(text, read_beg, read_end, seq_beg, seq_end, *it, self)) {
+			result.push_back(*it);
+		}
+	}
+	return result;
 }
 
 // Here ends C++ code
@@ -300,7 +415,7 @@ sub generate_string {
 	my $str = '';
 	my @alph = ('A', 'U', 'C', 'G');
 	for (my $i = 0; $i < $length; $i++) {
-		$str .= $alph[rand(4)];
+		$str .= $alph[int(rand(4))];
 	}
 	return $str;
 }
@@ -330,7 +445,7 @@ sub generate_string_with_mismatch {
 		$str .= $equiv{substr($ref, $i, 1)};
 	}
 	for (my $i = 0, my $e = $mismatch; $i < $e; $i++) {
-		substr($str, rand($length), 1) = $mis{substr($ref, $i, 1)};
+		substr($str, int(rand($length)), 1) = $mis{substr($ref, $i, 1)};
 	}
 	return $str;
 }

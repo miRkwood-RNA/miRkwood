@@ -187,6 +187,15 @@ sub add_point {
 	}
 }
 
+# value should be in the set
+sub class_of {
+	my ($this, $value) = @_;
+	if ($this->{class_1_count} > 0) {
+		return $value < $this->{points}[$this->{class_border}] ? ASSIGNED_FIRST_CLASS : ASSIGNED_SECOND_CLASS;
+	}
+	return ASSIGNED_ONLY_EXISTING_CLASS;
+}
+
 sub clear_points {
 	my $this = shift;
 	$this->{class_1_total} = 0;

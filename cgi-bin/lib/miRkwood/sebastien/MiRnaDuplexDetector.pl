@@ -32,27 +32,114 @@ my %miRNAs = %{retrieve('../data/mirbase/miRNAs.dat')};
 my $total = keys %miRNAs;
 # # 
 # # my @w_lens = (15..24);
-my @mismatches = (1..7);
+# my @mismatches = (1..7);
 # 
-# my %final_result = ();
-#
-# foreach my $w_len (@w_lens) {
-# # 	$final_result{$w_len} = {};
-	foreach my $mismatch (@mismatches) {
-		my $found = 0;
-		foreach my $miRNA (keys %miRNAs) {
-			my $results = MiRnaDuplexDetector::edit_distance_forward_strand($miRNAs{$miRNA}[0], $hairpins{$miRNAs{$miRNA}[1]}, $mismatch); #$final_result{$miRNA};
-			if (scalar(@$results)) {
-				$found++;
-			}
-# 			elsif ($mismatch == 6) {
-# 				print $miRNA, "\n";
-# 			}
-		}
-		print "For allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
-# 		print "For window size = $w_len, allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
+my %final_result = ();
+
+sub check_on_random_strings {
+	my $detector = shift;
+	my $str_len = 500;
+	my $attempts = 10000;
+	my $detected = 0;
+
+
+	for (my $i = 0; $i < $attempts; $i++) {
+		my $seq = MiRnaDuplexDetector::generate_string($str_len);
+		my $id = int(0 + rand(int(200)));
+# 		if ($id + 21 > $str_len) {
+# 			$id = $str_len-21;
+# 		}
+		my $result = $detector->detect_forward_strand($seq, $id, $id+21, 470, $str_len);
+# 		print scalar @$result, "\n";
+		$detected++ if scalar(@$result);
+# 		print $seq, "\t", substr($seq, $id, 21), "\t", $id, "\n" if $result;
 	}
-# }
+	return $detected*100/$attempts;
+}
+
+my $detector = MiRnaDuplexDetector::MiRnaDetector->new(10000);
+$detector->setMiRnaMinErrorsThreshold(0);	
+$detector->setMiRnaMaxErrorsThreshold(0);
+$detector->setMiRnaMinLengthToExtend(8);
+$detector->setIncreaseMiRnaEachNt(10);
+$detector->setMiRnaExtendedRatioErrorThreshold(0);
+
+
+
+# print 'hairpin id;miRNA id;Errors on miRNA;Error ratio on the extended part (%);Extended part length;', "\n";
+
+my @minErrorThreshold = (3..5);
+my @maxErrorThreshold = (7..7);
+my @minLengthToExtend = (10..15);
+my @increaseEach = (5, 10, 15, 20);
+my @errorRatio = (0.15, 0.3, 0.45, 0.5, 0.65);
+
+print 'Min error threshold;Max error threshold;Min length to extend;Extends every X nt;Error ratio threshold;Detection (%);Detection on random string (%);Non detected id;', "\n";
+
+foreach my $min_error (@minErrorThreshold) {
+	$detector->setMiRnaMinErrorsThreshold($min_error);
+	foreach my $max_error (@maxErrorThreshold) {
+		$detector->setMiRnaMaxErrorsThreshold($max_error);
+		foreach my $min_length (@minLengthToExtend) {
+			$detector->setMiRnaMinLengthToExtend($min_length);
+			foreach my $increase (@increaseEach) {
+				$detector->setIncreaseMiRnaEachNt($increase);
+				foreach my $ratio (@errorRatio) {
+					$detector->setMiRnaExtendedRatioErrorThreshold($ratio);
+
+					my $found = 0;
+					my $non_detected = '';
+					foreach my $miRNA (keys %miRNAs) {
+						my $id = index($hairpins{$miRNAs{$miRNA}[1]}, $miRNAs{$miRNA}[0]);
+						my $len = length($hairpins{$miRNAs{$miRNA}[1]});
+						my $results = $detector->detect_forward_strand($hairpins{$miRNAs{$miRNA}[1]}, $id, $id+length($miRNAs{$miRNA}[0]), 0, $len);
+						if (scalar @$results) {
+							$found++;
+						}
+						else {
+							$non_detected .= $miRNA . ';';
+						}
+					}
+					print "$min_error;$max_error;$min_length;$increase;$ratio;", $found*100/$total, ';', check_on_random_strings($detector, 400, 1000), ";$non_detected\n";
+				}
+			}
+		}
+	}
+}
+
+# #
+# # foreach my $w_len (@w_lens) {
+# # # 	$final_result{$w_len} = {};
+# # 	foreach my $mismatch (@mismatches) {
+# # 		my $found = 0;
+# 		foreach my $miRNA (keys %miRNAs) {
+# # 			my $results = MiRnaDuplexDetector::edit_distance_forward_strand($miRNAs{$miRNA}[0], $hairpins{$miRNAs{$miRNA}[1]}, $mismatch); #$final_result{$miRNA};
+# 			my $id = index($hairpins{$miRNAs{$miRNA}[1]}, $miRNAs{$miRNA}[0]);
+# 			my $len = length($hairpins{$miRNAs{$miRNA}[1]});
+# # 			print $len, "\n";
+# 			my $results = $detector->detect_forward_strand($hairpins{$miRNAs{$miRNA}[1]}, $id, $id+length($miRNAs{$miRNA}[0]), 0, $len);
+# 			if ($results) {
+# # 				print "Detected!\n";
+# 			}
+# 			else {
+# 				print "Non detected!\n";
+# 			}
+# # 			my $results = MiRnaDuplexDetector::detect_miRNA_forward_strand($hairpins{$miRNAs{$miRNA}[1]}, $len, $id, $id+length($miRNAs{$miRNA}[0]),
+# # 							20, 0, $len);
+# # 			print "Errors: ", $results->[1]	, ", Extended errors (ratio): ", $results->[2], ' over ', $results->[3], "nt\n";
+# # 			$final_result{$miRNA} = $results;
+# # 			print $miRNAs{$miRNA}[1], ';', $miRNA, ';', $results->[1], ';', $results->[2]*100, ';', $results->[3], ";\n";
+# # 			if (scalar($results-)) {
+# # 				$found++;
+# # 			}
+# # 			elsif ($mismatch == 6) {
+# # 				print $miRNA, "\n";
+# # 			}
+# 		}
+# # 		print "For allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
+# # 		print "For window size = $w_len, allowed mismatches = $mismatch, ", $found*100/$total, "% of miRNAs detected.\n";
+# # 	}
+# # }
 
 
 # 		$final_result{$w_len}{$mismatch} = {};
