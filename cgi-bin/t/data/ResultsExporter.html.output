@@ -1,5 +1,6 @@
 <table>
 <tbody><tr><th>name</th>
+<th>identifier</th>
 <th>position</th>
 <th>length</th>
 <th>strand</th>
@@ -11,10 +12,11 @@
 <th>alignment</th>
 </tr>
 <tr><td><a href='#contig15750-34-195'>contig15750</a></td>
+<td>1-1</td>
 <td>34-195</td>
 <td>162</td>
 <td>+</td>
-<td>2</td>
+<td><center><font color="#FF8000">**</font></center></td>
 <td>-60.10</td>
 <td>-1.00166666666667</td>
 <td>-37.0987654320988</td>
