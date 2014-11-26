@@ -16,7 +16,7 @@ my $help_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'help.
 
 my $page = <<"END_TXT";
 <div class="main">
-    <form id="form" onsubmit="return verifyBEDForm();" method="post" action="./BAMpipeline.pl">
+    <form id="form" onsubmit="return verifyBEDForm();" method="post" action="./BAMpipeline.pl" enctype="multipart/form-data">
         <fieldset id="fieldset">
             <div class="forms">
                 <label for='job'><b>Job title</b> (optional)</label>
