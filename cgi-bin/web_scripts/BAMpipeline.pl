@@ -41,6 +41,17 @@ if ( $filter_tRNA_rRNA ) { $filter_tRNA_rRNA = 1 } else { $filter_tRNA_rRNA = 0 
 if ( !$job_title ) { $job_title = 0 }
 
 my $bedFile = "";
+$bedFile   = $cgi->upload("bedFile") or miRkwood::WebTemplate::web_die("Error when getting BED file: $!");
+my $localBED = $absolute_job_dir . "/" . $cgi->param('bedFile');
+open (BED, ">$localBED") or miRkwood::WebTemplate::web_die("Error when creating BED file: $!");
+while ( <$bedFile> ){
+    print BED $_;
+    if ( ! miRkwood::Utils::is_correct_BED_line($_) ){
+        print $cgi->redirect($error_url . "?type=noBED");
+        exit;        
+    }
+}
+close BED;
 
 my $seqArea = $cgi->param('seqArea');
 my $genome = "";
@@ -103,6 +114,7 @@ my $page = <<"END_TXT";
     <p>BED file : $bedFile</p>
     <p>species : $species</p>
     <p>genome : $genome</p>
+    
     <p>Strand : $strand</p>
     <p>filter : $filter_tRNA_rRNA</p>    
     
