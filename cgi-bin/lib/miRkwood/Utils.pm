@@ -412,6 +412,17 @@ sub check_sequence_length {
     return 1;
 }
 
+sub is_correct_BED_line {
+    my (@args) = @_;
+    my $line = shift @args;
+    
+    if ( $line !~ /[^\t]+\t\d+\t\d+\t[^\t]+\t\d+\t[-+*]/ ){
+        warn "[BED file] Problem with line $line.\n";
+        return 0;
+    }
+    return 1;
+}
+
 =method mask_sequence_nucleotide
 
 Mask a typical FASTA line with 'N' symbol
