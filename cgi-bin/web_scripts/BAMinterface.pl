@@ -19,13 +19,15 @@ my $page = <<"END_TXT";
     <form id="form" onsubmit="return verifyBEDForm();" method="post" action="./BAMpipeline.pl">
         <fieldset id="fieldset">
             <div class="forms">
-                <label for='job'>&nbsp;<b>Job title</b> (optional)</label>
+                <label for='job'><b>Job title</b> (optional)</label>
                 <input type="text" id ='job' name="job" size="20"/>
             </div> 
+            
             <div class="forms">
                 <label for='bedFile'><b>Upload your BED file: </b>&nbsp;[<a href="$help_page">?</a>]</label>
                 <input type="file" name="bedFile" id="bedFile" />
             </div> 
+            
             <div class="forms">
                 <label for="species"><b>Model organism: </b>Choose an organism in the list below: </label><br />
                 <select name="species" id="species">
@@ -39,10 +41,24 @@ my $page = <<"END_TXT";
                 <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
                 <br /><a id="area_clear" onclick="resetTextarea('seqArea')">Clear</a> 
             </div>
+            
+            <div class="forms">
+                <b>Parameters:</b>
+                <p>
+                    <input class="checkbox" type="checkbox" name="strand" id="strand" value="strand"/>
+                    <label for='strand'>Scan both strands</label> [<a href="$help_page#scan-both-strands">?</a>]
+                </p>
+                <p>
+                    <input class="checkbox" type="checkbox" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
+                    <label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA <i>(tRNAscan-SE / RNAmmer)</i></label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
+                </p>
+            </div>
+            
             <div class="forms">
                 <label for='mail'><b>E-mail address</b> (optional)</label>
                 <input type="text" id='mail' name="mail" size="20"/>
             </div>
+            
             <div class="center">
                 <input type="reset" name="clear" id="clear" value="Clear form"/>
                 <input type="submit" name="upload" id="upload" value="Run miRkwood"/>
