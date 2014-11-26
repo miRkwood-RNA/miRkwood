@@ -43,7 +43,17 @@ elsif ( $errorType eq "tooLongSequence" ){
     
 END_MSG
 }
+elsif ( $errorType eq "noBED" ){
+    $errorMessage = <<"END_MSG";
+    <p>An error occured when processing your data:</p>
+    <p>Your BED file is not valid. Make sure you correctly used our provided script to convert BAM into BED file.</p>
+    <br /><br />    
     
+    
+END_MSG
+}
+
+   
 my $page = <<"END_TXT";
 <div class="main">
   <div id="page">
