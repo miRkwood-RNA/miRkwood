@@ -64,9 +64,9 @@ function verifyBEDForm()
     var a = document.getElementById('seqArea').value && document.getElementById('species').value;
     var s = !(document.getElementById('seqArea').value || document.getElementById('species').value);
     var b = !document.getElementById('bedFile').value;
+    if (b) alert ("You must provide a BED file.");
     if (a) alert ("Choose between a model organism in the list and a sequence");
     if (s) alert ("You must either provide a reference sequence or choose an organism in the list");
-    if (b) alert ("You must provide a BED file.");
     return !(a||s||b);
 }
 
