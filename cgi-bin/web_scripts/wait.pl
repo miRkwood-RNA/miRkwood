@@ -16,7 +16,7 @@ use miRkwood::Results;
 
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
-my $mail   = $html->param('mail');
+my $mail    = $html->param('mail');
 my $nameJob = $html->param('nameJob');
 my $mode = $html->param('mode');
 $nameJob =~ s/ /_/g;#replace spaces with '_' in name job
@@ -28,7 +28,7 @@ if ( $mode eq "genomic" ){
     $results_page  = 'resultsWithID.pl';
 }
 elsif ( $mode eq "BAM"){
-    $results_page  = 'nonImplemented.pl';
+    $results_page  = 'BAMresults.pl';
 }
 my $results_link  = $results_page . $res_arguments;
 my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);
