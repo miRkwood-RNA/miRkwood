@@ -30,16 +30,27 @@ local $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
 
 ##### Get parameters
 my $cgi = new CGI;
-my $job_title = $cgi->param('job');
-my $mail      = $cgi->param('mail');
-my $species   = $cgi->param('species');
-my $strand    = $cgi->param('strand');
-my $filter_tRNA_rRNA = $cgi->param('filter-tRNA-rRNA');
+my $job_title  = $cgi->param('job');
+my $mail       = $cgi->param('mail');
+my $species    = $cgi->param('species');
+my $filter_CDS = $cgi->param('CDS');
+my $filter_tRNA_rRNA   = $cgi->param('filter-tRNA-rRNA');
+my $filter_multimapped = $cgi->param('filter_multimapped');
+my $mfei       = $cgi->param('mfei');
+my $randfold   = $cgi->param('randfold');
+my $align      = $cgi->param('align');
+my $db         = $cgi->param('db');
 
-if ( $strand   ) { $strand   = 1 } else { $strand   = 0 }
-if ( $filter_tRNA_rRNA ) { $filter_tRNA_rRNA = 1 } else { $filter_tRNA_rRNA = 0 }
-if ( !$job_title ) { $job_title = 0 }
 
+if ( $filter_tRNA_rRNA   ) { $filter_tRNA_rRNA   = 1 } else { $filter_tRNA_rRNA   = 0 }
+if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }
+if ( $filter_CDS ) { $filter_CDS = 1 } else { $filter_CDS = 0 }
+if ( $mfei       ) { $mfei       = 1 } else { $mfei       = 0 }
+if ( $randfold   ) { $randfold   = 1 } else { $randfold   = 0 }
+if ( $align      ) { $align      = 1 } else { $align      = 0 }
+if ( !$job_title ) { $job_title  = 0 }
+
+# Download BED file, check it and write it in the results directory
 my $bedFile = "";
 $bedFile   = $cgi->upload("bedFile") or miRkwood::WebTemplate::web_die("Error when getting BED file: $!");
 my $localBED = $absolute_job_dir . "/" . $cgi->param('bedFile');
@@ -53,6 +64,7 @@ while ( <$bedFile> ){
 }
 close BED;
 
+# Get species or reference sequence
 my $seqArea = $cgi->param('seqArea');
 my $genome = "";
 my $max_length = 100000;
@@ -91,13 +103,13 @@ else{
 }
 
 
-
 ##### Redirect to the wait.pl page until the job is done
-#~ my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail . '&mode="BAM"';
+#~ my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail . '&mode=BAM';
 #~ my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 #~ 
-#~ print $cgi->redirect( -uri => $waiting_url  );
-#~ print "Location: $waiting_url \n\n";
+#~ print $cgi->redirect( $waiting_url );
+#~ #print $cgi->redirect( -uri => $waiting_url  );
+#~ #print "Location: $waiting_url \n\n";
 #~ 
 #~ sleep 10;
 #~ 
@@ -115,8 +127,15 @@ my $page = <<"END_TXT";
     <p>species : $species</p>
     <p>genome : $genome</p>
     
-    <p>Strand : $strand</p>
-    <p>filter : $filter_tRNA_rRNA</p>    
+    <p>filter_CDS : $filter_CDS</p>
+    <p>filter_tRNA_rRNA : $filter_tRNA_rRNA</p>
+    <p>filter_multimapped : $filter_multimapped</p>
+    
+    <p>mfei : $mfei</p>
+    <p>randfold : $randfold</p>
+    <p>align : $align</p>
+    <p>db : $db</p>
+        
     
 </div><!-- main -->
 END_TXT
