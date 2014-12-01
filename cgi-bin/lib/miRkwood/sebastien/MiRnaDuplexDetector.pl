@@ -38,7 +38,7 @@ my %final_result = ();
 
 sub check_on_random_strings {
 	my $detector = shift;
-	my $str_len = 500;
+	my $str_len = 600;
 	my $attempts = 10000;
 	my $detected = 0;
 
@@ -49,7 +49,7 @@ sub check_on_random_strings {
 # 		if ($id + 21 > $str_len) {
 # 			$id = $str_len-21;
 # 		}
-		my $result = $detector->detect_forward_strand($seq, $id, $id+21, 470, $str_len);
+		my $result = $detector->detect_forward_strand($seq, $id, $id+21, 200, $str_len);
 # 		print scalar @$result, "\n";
 		$detected++ if scalar(@$result);
 # 		print $seq, "\t", substr($seq, $id, 21), "\t", $id, "\n" if $result;
@@ -57,7 +57,7 @@ sub check_on_random_strings {
 	return $detected*100/$attempts;
 }
 
-my $detector = MiRnaDuplexDetector::MiRnaDetector->new(10000);
+my $detector = MiRnaDuplexDetector::MiRnaDetector->new(5000);
 $detector->setMiRnaMinErrorsThreshold(0);	
 $detector->setMiRnaMaxErrorsThreshold(0);
 $detector->setMiRnaMinLengthToExtend(8);
@@ -69,10 +69,10 @@ $detector->setMiRnaExtendedRatioErrorThreshold(0);
 # print 'hairpin id;miRNA id;Errors on miRNA;Error ratio on the extended part (%);Extended part length;', "\n";
 
 my @minErrorThreshold = (3..5);
-my @maxErrorThreshold = (7..7);
-my @minLengthToExtend = (10..15);
+my @maxErrorThreshold = (5..7);
+my @minLengthToExtend = (5, 8, 11, 14);
 my @increaseEach = (5, 10, 15, 20);
-my @errorRatio = (0.15, 0.3, 0.45, 0.5, 0.65);
+my @errorRatio = (0.17, 0.35, 0.45, 0.51, 0.67);
 
 print 'Min error threshold;Max error threshold;Min length to extend;Extends every X nt;Error ratio threshold;Detection (%);Detection on random string (%);Non detected id;', "\n";
 
@@ -100,7 +100,7 @@ foreach my $min_error (@minErrorThreshold) {
 							$non_detected .= $miRNA . ';';
 						}
 					}
-					print "$min_error;$max_error;$min_length;$increase;$ratio;", $found*100/$total, ';', check_on_random_strings($detector, 400, 1000), ";$non_detected\n";
+					print "$min_error;$max_error;$min_length;$increase;$ratio;", $found*100/$total, ';', check_on_random_strings($detector), ";$non_detected\n";
 				}
 			}
 		}

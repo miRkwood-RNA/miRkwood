@@ -73,11 +73,13 @@ my @runs = ({bam => "../data/shortstack_miRNA.bam", fa => "../data/Athaliana_167
 		my $end_params = Time::HiRes::gettimeofday();
 		my $windows = $clustering->get_windows_from_train_analysis_with_read_distribution($read_loci, 2);
 		my $miRnaPos = $clustering->process_window_spikes($windows, $threshold);
+		my $regions = $clustering->compute_candidate_precursors_from_miRnaPos($miRnaPos);
 		my $window_dists = $clustering->compute_window_length_distribution($windows);
 		mkdir $current_run->{out};
 		$clustering->plot_window_distribution($window_dists, $current_run->{out});
 		$clustering->export_windows_to_gff($windows, $current_run->{out});
 		$clustering->export_miRnaPos_to_gff($miRnaPos, $current_run->{out}, '../data/TAIR10_miRNA_only_covered_by_reads.gff3');
+		$clustering->export_precursors_to_gff($regions, $current_run->{out}, '../data/TAIR10_miRNA_only_covered_by_reads.gff3');
 		my $end_windows = Time::HiRes::gettimeofday();
 		print " Done. (in ", $end_windows-$end_params,"s)\n";
 	}

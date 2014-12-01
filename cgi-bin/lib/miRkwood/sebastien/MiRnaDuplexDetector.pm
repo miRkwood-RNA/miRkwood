@@ -240,11 +240,12 @@ class MiRnaDetector {
 			std::deque<Locus> result;
 			for (int j = 1, e = to_j-from_j; j <= e; j++, data++) {
 				if (data->value <= m_miRnaMinErrorsThreshold) {
-					result.push_back(Locus(e-j, e-data->from_j));
+					if (!meetMinThreshold)
+						result.clear();
 					meetMinThreshold = true;
-					return result;
+					result.push_back(Locus(e-j, e-data->from_j));
 				}
-				else if (data->value <= m_miRnaMaxErrorsThreshold)
+				else if (!meetMinThreshold && data->value <= m_miRnaMaxErrorsThreshold)
 					result.push_back(Locus(e-j, e-data->from_j));
 			}
 			return result;
@@ -259,7 +260,15 @@ class MiRnaDetector {
 		}
 
 	public:
-		MiRnaDetector(int textSize) : m_matrix(textSize+1, textSize+1, EditDistanceScore(0, 0)) {}
+		MiRnaDetector(int textSize) : m_matrix(textSize+1, textSize+1, EditDistanceScore(0, 0)) {
+			setMiRnaMinErrorsThreshold(4);
+			setMiRnaMaxErrorsThreshold(7);
+			setMiRnaMinLengthToExtend(15);
+			setIncreaseMiRnaEachNt(5);
+			setMiRnaExtendedRatioErrorThreshold(0.34);
+		}
+
+		int admissibleTextLength() const { return m_matrix.rows()-1; }
 
 		SV* detect_forward_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
 			return dequeToPerl(tp_detect_on_strand<equiv_forward_strand>(text, read_beg, read_end, seq_beg, seq_end, *this));
@@ -358,7 +367,7 @@ bool checkOutwardExtent(char* text, int read_beg, int read_end, int seq_beg, int
 	Locus seq_locus(seq_beg + locus.begin, seq_beg + locus.end);
 	int length, new_seq_beg, new_read_beg;
 	if (seq_locus.end <= read_beg) { // Read is the 3p
-		length = std::ceil(static_cast<float>(seq_locus.begin - read_end)/self.m_increaseMiRnaEachNt);
+		length = std::ceil(static_cast<float>(read_beg - seq_locus.end)/self.m_increaseMiRnaEachNt);
 		if (seq_locus.begin < length)
 			length = seq_locus.begin;
 		if (read_end+length > self.m_matrix.rows()-1)
@@ -369,7 +378,7 @@ bool checkOutwardExtent(char* text, int read_beg, int read_end, int seq_beg, int
 		new_seq_beg = seq_locus.begin - length;
 	}
 	else if (seq_locus.begin >= read_end) { // Read is the 5p
-		length = std::ceil(static_cast<float>(read_beg - seq_locus.end)/self.m_increaseMiRnaEachNt);
+		length = std::ceil(static_cast<float>(seq_locus.begin - read_end)/self.m_increaseMiRnaEachNt);
 		if (read_beg < length)
 			length = read_beg;
 		if (seq_locus.end+length > self.m_matrix.rows()-1)
