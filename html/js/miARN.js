@@ -73,7 +73,7 @@ function verifyBEDForm()
 /**
  * 
  */
-function resetTextarea(id)
+function resetElementByID(id)
 {	
     document.getElementById(id).value = "";
 }
