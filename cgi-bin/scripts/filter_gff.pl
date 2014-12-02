@@ -8,39 +8,49 @@ use Getopt::Long;
 # Author : Isabelle GUIGON
 # Date : 2014-11-27
 # This script filters a GFF file to keep only lines corresponding to the
-# allowed features, which are CDS, tRNA, rRNA and snoRNA.
+# features given in parameter.
 ################################################################################
 
 
 ########## Variables
 my $gff_file = "";
 my $output_file = "";
+my $features;
+my %allowed_features;
 my $help;
 my $help_message = "filter_gff.pl
 ----------
-Script to filter a GFF file according to the features.
-Only CDS, tRNA, rRNA and snoRNA will be kept.
+Script to filter a GFF file according to the features given in parameter.
+Only the features given in parameter will be kept.
 
-Usage : filter_gff.pl -gff <input GFF file> -out <output file>
+Usage : filter_gff.pl -gff <input GFF file> -out <output file> -features <CDS,tRNA,rRNA...>
+
+Features to keep must be separated by commas.
 ";
-
-my %allowed_features = ( "CDS"    => 1,
-                         "tRNA"   => 1,
-                         "rRNA"   => 1,
-                         "snoRNA" => 1 );
 
 
 ########## Get options
 GetOptions ('gff=s' => \$gff_file,
+            'features=s' => \$features,
             'out=s' => \$output_file,
 	        'help'  => \$help);
         
         
 ########## Validate options
-if ( $help or ! -r $gff_file or ! -r $output_file ){
+if ( $help or ! -r $gff_file or $output_file eq "" ){
     print $help_message;
     exit;
 }
+
+foreach (split(',', $features)) {
+    $allowed_features{$_} = 1;
+}
+
+print STDERR "Output file will contain only the following features:";
+foreach (keys %allowed_features){
+    print STDERR " $_";
+}
+print STDERR "\n";
 
 
 ########## Filter gff
