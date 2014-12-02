@@ -14,72 +14,128 @@ use miRkwood::Paths;
 =method filterBEDfile
 
 Method to filter a BED from the reads corresponding to known 
-miRNAS and from other features (CDS, rRNA, tRNA, snoRNA).
+miRNAS and from other features (CDS, rRNA, tRNA, snoRNA) for a 
+model organism.
 Filtered reads are written in auxiliary files.
 Input : - a BED file
         - a species name (to find the annotations files)
 
 =cut
-sub filterBEDfile {
+sub filterBEDfile_for_model_organism {
     my @args = @_;
-    my $class   = shift @args;
-    my $bed_file = shift @args;
-    my $species = shift @args;
+    my $class              = shift @args;
+    my $bed_file           = shift @args;
+    my $species            = shift @args;
+    my $filter_CDS         = shift @args;
+    my $filter_tRNA_rRNA   = shift @args;
+    my $filter_multimapped = shift @args;
     my $basename = "";
     
     my $data_path = miRkwood::Paths->get_data_path();
     my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
-    my $annotation_file = File::Spec->catfile( $data_path, "annotations/${species}_annotations.gff" );   
+    my $CDS_file = File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" );  
+    my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );   
     
     if ( $bed_file =~ /(.*)\.bed/ ){
         $basename = $1;
     }
     
     my $mirna_reads = "${basename}_miRNAs.bed";
-    my $features_reads = "${basename}_other.bed"; 
-    my $filtered_bed = "${basename}_filtered.bed";   
-    my $tmp_bed = "${basename}_tmp.bed";  
+    my $CDS_reads = "${basename}_CDS.bed";
+    my $otherRNA_reads = "${basename}_otherRNA.bed";
     
-    if ( -r $mirbase_file ) {
+    my $filtered_bed = "${basename}_filtered.bed";   
+    my $tmp_1 = "${basename}_tmp_1.bed"; 
+    my $tmp_2 = "${basename}_tmp_2.bed";
+    my $tmp_3 = "${basename}_tmp_3.bed";  
+      
+    ### Filter out known miRNAs
+    if ( -r $mirbase_file ) {        
         # Create a file with known miRNAs
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, "-f 1"); 
         
         # Delete reads corresponding to known miRNAs from the BED
-        store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_bed);
+        store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1);
         
-        if ( -r $annotation_file ){
-            # Create a file with other features
-            store_overlapping_reads( $tmp_bed, $annotation_file, $features_reads, "");
-              
-            # Delete reads corresponding to other featuress from the BED
-            store_non_overlapping_reads( $tmp_bed, $annotation_file, $filtered_bed); 
-        } 
-        else{
-            debug( "WARNING : no annotation file found.", miRkwood->DEBUG() );    
-        }  
-        
+        debug( "Known miRNAS have been filtered out from BED.", 1 );
     }
     else{
-        debug( "WARNING : no miRNA file found.", miRkwood->DEBUG() ); 
-        
-        if ( -r $annotation_file ){
-            # Create a file with other features
-            store_overlapping_reads( $bed_file, $annotation_file, $features_reads, "");
-              
-            # Delete reads corresponding to other featuress from the BED
-            store_non_overlapping_reads( $bed_file, $annotation_file, $filtered_bed); 
-        } 
-        else{
-            debug( "WARNING : no annotation file found.", miRkwood->DEBUG() );    
-        }
-                                      
+        debug( "WARNING : no miRNA file found for $species.", 1 ); 
+        $tmp_1 = $bed_file;
     }
     
-
+    ### Filter out CDS
+    if ( $filter_CDS ){
+        if ( -r $CDS_file ){
+            # Create a file with CDS
+            store_overlapping_reads( $tmp_1, $CDS_file, $CDS_reads, ""); 
+            
+            # Delete reads corresponding to CDS from the BED
+            store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2);
+            
+            debug( "CDS have been filtered out from BED.", 1 );            
+        }
+        else{
+            debug( "WARNING : no CDS file found for $species.", 1 ); 
+            $tmp_2 = $tmp_1;
+        }
+    }
+    else{
+        $tmp_2 = $tmp_1;
+    }
     
-    unlink $tmp_bed;
+    ### Filter out rRNA, tRNA, snoRNA
+    if ( $filter_tRNA_rRNA ){
+        if ( -r $otherRNA_file ){
+            # Create a file with CDS
+            store_overlapping_reads( $tmp_2, $otherRNA_file, $otherRNA_reads, ""); 
+            
+            # Delete reads corresponding to CDS from the BED
+            store_non_overlapping_reads( $tmp_2, $otherRNA_file, $tmp_3);
+            
+            debug( "Other RNA have been filtered out from BED.", 1 );            
+        }
+        else{
+            debug( "WARNING : no rRNA/rRNA file found for $species.", 1 ); 
+            $tmp_3 = $tmp_2;
+        }
+    }   
+    else{
+        $tmp_3 = $tmp_2;
+    } 
+    
+    ### Filter out multimapped reads
+    if ( $filter_multimapped ){
+        filter_multimapped_reads( $tmp_3, $filtered_bed );
+    }
+    else{
+        rename $tmp_3, $filtered_bed;
+    }
+    
+    unlink $tmp_1;
+    unlink $tmp_2;
+    unlink $tmp_3;
     
 }
+
+=method filterBEDfile_for_user_sequence
+
+Method to filter a BED from the reads corresponding to known 
+miRNAS and from other features (CDS, rRNA, tRNA, snoRNA) for a
+sequence given by the user.
+
+=cut
+sub filterBEDfile_for_user_sequence {
+    my @args = @_;
+    my $class              = shift @args;
+    my $bed_file           = shift @args;
+    my $filter_CDS         = shift @args;
+    my $filter_tRNA_rRNA   = shift @args;
+    my $filter_multimapped = shift @args;
+    
+    
+}
+
 
 =method store_overlapping_reads
 
@@ -99,7 +155,6 @@ sub store_overlapping_reads {
     
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -wa -wb $additionalArgs > $outputFile";
     system($job);
-    debug( "$outputFile created", miRkwood->DEBUG() );
     
 }
 
@@ -120,7 +175,15 @@ sub store_non_overlapping_reads {
     
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -v > $outputFile";
     system($job);    
-    debug( "$outputFile created", miRkwood->DEBUG() );
+    
+}
+
+=method filter_multimapped_reads
+
+Method to discard reads with more than 5 mapping positions
+
+=cut
+sub filter_multimapped_reads {
     
 }
 
