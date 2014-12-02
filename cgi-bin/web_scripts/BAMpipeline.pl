@@ -12,6 +12,7 @@ use miRkwood::WebPaths;
 use miRkwood::WebTemplate;
 use miRkwood::Results;
 use miRkwood::Utils;
+use miRkwood::FilterBED;
 
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
@@ -104,49 +105,52 @@ else{
 
 
 ##### Redirect to the wait.pl page until the job is done
-#~ my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail . '&mode=BAM';
-#~ my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
-#~ 
-#~ print $cgi->redirect( $waiting_url );
-#~ #print $cgi->redirect( -uri => $waiting_url  );
-#~ #print "Location: $waiting_url \n\n";
-#~ 
-#~ sleep 10;
-#~ 
-#~ my $is_finished_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
-#~ open( my $finish, '>', $is_finished_file )
-    #~ or die "Error when opening $is_finished_file: $!";
-#~ close $finish;
-#~ 
-#~ 
-my $page = <<"END_TXT";
-<div class="main">
-    <p>Job title : $job_title</p>
-    <p>mail : $mail</p>
-    <p>BED file : $bedFile</p>
-    <p>species : $species</p>
-    <p>genome : $genome</p>
-    
-    <p>filter_CDS : $filter_CDS</p>
-    <p>filter_tRNA_rRNA : $filter_tRNA_rRNA</p>
-    <p>filter_multimapped : $filter_multimapped</p>
-    
-    <p>mfei : $mfei</p>
-    <p>randfold : $randfold</p>
-    <p>align : $align</p>
-    <p>db : $db</p>
-        
-    
-</div><!-- main -->
-END_TXT
+my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail . '&mode=BAM';
+my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
-my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
-my @js  = (miRkwood::WebTemplate->get_js_file());
-my $html = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
-print <<"DATA" or die("Error when displaying HTML: $!");
-Content-type: text/html
+print $cgi->redirect( $waiting_url );
+#print $cgi->redirect( -uri => $waiting_url  );
+#print "Location: $waiting_url \n\n";
 
-$html
-DATA
+#sleep 10;
 
-close $log_file;
+miRkwood::FilterBED->filterBEDfile( $localBED, $species );
+
+my $is_finished_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
+open( my $finish, '>', $is_finished_file )
+    or die "Error when opening $is_finished_file: $!";
+close $finish;
+
+
+#~ 
+#~ my $page = <<"END_TXT";
+#~ <div class="main">
+    #~ <p>Job title : $job_title</p>
+    #~ <p>mail : $mail</p>
+    #~ <p>BED file : $bedFile</p>
+    #~ <p>species : $species</p>
+    #~ <p>genome : $genome</p>
+    #~ 
+    #~ <p>filter_CDS : $filter_CDS</p>
+    #~ <p>filter_tRNA_rRNA : $filter_tRNA_rRNA</p>
+    #~ <p>filter_multimapped : $filter_multimapped</p>
+    #~ 
+    #~ <p>mfei : $mfei</p>
+    #~ <p>randfold : $randfold</p>
+    #~ <p>align : $align</p>
+    #~ <p>db : $db</p>
+        #~ 
+    #~ 
+#~ </div><!-- main -->
+#~ END_TXT
+#~ 
+#~ my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
+#~ my @js  = (miRkwood::WebTemplate->get_js_file());
+#~ my $html = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+#~ print <<"DATA" or die("Error when displaying HTML: $!");
+#~ Content-type: text/html
+#~ 
+#~ $html
+#~ DATA
+#~ 
+#~ close $log_file;
