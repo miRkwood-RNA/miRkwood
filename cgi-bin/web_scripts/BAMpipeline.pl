@@ -34,6 +34,7 @@ my $cgi = new CGI;
 my $job_title  = $cgi->param('job');
 my $mail       = $cgi->param('mail');
 my $species    = $cgi->param('species');
+my $species_db = $cgi->param('db');
 my $filter_CDS = $cgi->param('CDS');
 my $filter_tRNA_rRNA   = $cgi->param('filter-tRNA-rRNA');
 my $filter_multimapped = $cgi->param('filter_multimapped');
@@ -71,11 +72,11 @@ my $genome = "";
 my $max_length = 100000;
 if ( $seqArea eq q{} )    # case model organism
 {
-    debug("Reference species is a model organism", 1);
+    debug("Reference species is a model organism.", 1);
     $genome = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/", $species . ".fa");
 }
 else{
-    debug("Reference sequence is provided by the user", 1);
+    debug("Reference sequence is provided by the user.", 1);
     
     # Check if genome is a valid fasta   
     $seqArea = miRkwood::Utils::cleanup_fasta_sequence($seqArea);
@@ -109,12 +110,17 @@ my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail
 my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 print $cgi->redirect( $waiting_url );
-#print $cgi->redirect( -uri => $waiting_url  );
-#print "Location: $waiting_url \n\n";
 
 #sleep 10;
 
-miRkwood::FilterBED->filterBEDfile( $localBED, $species );
+
+# Filter BED
+if ( $species ){
+    miRkwood::FilterBED->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+}
+else{
+    miRkwood::FilterBED->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+}
 
 my $is_finished_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
 open( my $finish, '>', $is_finished_file )

@@ -61,7 +61,7 @@ my $page = <<"END_TXT";
                 </div>
                 <p>
                     <input class="checkbox" type="checkbox" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
-                    &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA <i>(tRNAscan-SE / RNAmmer)</i></label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
+                    &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
                 </p>                
                 
             </div>
