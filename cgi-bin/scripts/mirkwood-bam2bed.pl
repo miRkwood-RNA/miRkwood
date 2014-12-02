@@ -18,13 +18,15 @@ use Getopt::Long;
 my $bam_file = "";
 my $sam_file;
 my $bed_file;
+my $output_directory;
+my $tmp_file;
 my $counts;
 my $help;
 my $help_message = "mirkwood-bam2bed.pl
 ----------
 Script to convert a BAM into a BED file for use by miRkwood.
 
-Usage : ./mirkwood-bam2bed.pl -bam <input BAM file> -bed <output BED file> 
+Usage : ./mirkwood-bam2bed.pl -bam <input BAM file> -out <output directory> 
 
 Dependancies : samtools
 Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.\n";
@@ -32,26 +34,29 @@ Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `su
 
 ########## Get options
 GetOptions ('bam=s' => \$bam_file,
-            'bed=s' => \$bed_file,
+            'out=s' => \$output_directory,
 	        'help'  => \$help);
         
         
 ########## Validate options
-if ( $help or ! -r $bam_file or ! $bed_file ){
+if ( $help or ! -r $bam_file or ! $output_directory ){
     print $help_message;
     exit;
 }
 
 
 ########## Convert BAM into SAM and filtering out unmapped reads
-if ( $bam_file =~ /(.*)\.bam/ ){
-    $sam_file = "$1.sam";
+if ( $bam_file =~ /([^\/\\]+)\.bam/ ){
+    $sam_file = "$output_directory/$1.sam";
+    $bed_file = "$output_directory/$1.bed";
+    $tmp_file = "$output_directory/$1_sorted";
 }
 else{
     die "Non correct input file.\n$help_message";
 }
 
-system("samtools view -h -F 4 $bam_file > $sam_file");
+system("samtools sort $bam_file $tmp_file");
+system("samtools view -h -F 4 $tmp_file.bam > $sam_file");
 
 
 ########## Read the SAM file to store counts into a hash
@@ -116,4 +121,7 @@ while ( <SAM> ){
 
 close SAM;
 close BED;
+
+unlink $tmp_file;
+unlink $sam_file;
 
