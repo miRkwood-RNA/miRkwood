@@ -126,7 +126,9 @@ pre
 #table
 {
 	width:750px;
-        margin-top:20px;
+    margin-top:20px;
+    height:400px;
+    overflow:auto;    
 }
 #seq
 {
