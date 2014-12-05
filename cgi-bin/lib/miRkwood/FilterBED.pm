@@ -107,6 +107,7 @@ sub filterBEDfile_for_model_organism {
     ### Filter out multimapped reads
     if ( $filter_multimapped ){
         filter_multimapped_reads( $tmp_3, $filtered_bed );
+        debug( "Multi_mapped reads have been filtered out from BED.", 1 ); 
     }
     else{
         rename $tmp_3, $filtered_bed;
@@ -184,6 +185,47 @@ Method to discard reads with more than 5 mapping positions
 
 =cut
 sub filter_multimapped_reads {
+    my @args = @_;
+    my $bed_file = shift @args;
+    my $output_file = shift @args;
+    
+    my $max_positions = 5;
+    my $counts;
+    my @line;
+    
+    open (BED, $bed_file) or die "ERROR while opening $bed_file : $!\n";
+    
+    ### Read the BED file a first time to count how many times
+    ### each id is present
+    while ( <BED> ){
+        
+        chomp;
+        @line = split('\t');
+        if ( ! exists($counts->{$line[3]}) ){
+            $counts->{$line[3]} = 0;
+        }
+        $counts->{$line[3]}++;
+        
+    }
+    
+    close BED;
+    
+    ### Read the BED file a second time to write on output only the 
+    ### non multi-mapped reads
+    open (BED, $bed_file) or die "ERROR while opening $bed_file : $!\n";
+    open (OUT, ">$output_file") or die "ERROR while creating $output_file : $!\n";
+    
+    while ( <BED> ){
+        
+        @line = split('\t');
+        if ( $counts->{$line[3]} < $max_positions ){
+            print OUT $_;
+        }
+        
+    }
+    
+    close OUT;
+    close BED;    
     
 }
 
