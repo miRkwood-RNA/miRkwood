@@ -21,6 +21,12 @@ my $bed_file;
 my $output_directory;
 my $tmp_file;
 my $counts;
+my $names;
+my $sequence;
+my $id;
+my $chromosome;
+my $start;
+my $end;
 my $help;
 my $help_message = "mirkwood-bam2bed.pl
 ----------
@@ -69,11 +75,24 @@ while ( <SAM> ){
         chomp;
         
         my @line = split ("\t");
-        if ( ! exists( $counts->{$line[9]} ) ){
-            $counts->{$line[9]}{"id"} = $line[0];
-            $counts->{$line[9]}{"count"} = 0;
+        
+        $id = $line[0];
+        $chromosome = $line[2];
+        $start = $line[3] - 1;
+        $sequence = $line[9];
+        
+        if ( ! exists( $counts->{$chromosome}{$start}{$sequence} ) ){
+            $counts->{$chromosome}{$start}{$sequence}{'count'} = 0;
         }
-        $counts->{$line[9]}{"count"}++;
+        $counts->{$chromosome}{$start}{$sequence}{'count'}++;
+        $counts->{$chromosome}{$start}{$sequence}{'strand'} = "+";
+        if ( $line[1] eq "16" or $line[1] eq "0x10" ){
+            $counts->{$chromosome}{$start}{$sequence}{'strand'} = "-";
+        }
+        
+        if ( ! exists( $names->{$sequence} ) ){
+            $names->{$sequence} = $id;
+        }
         
     }
     
@@ -82,46 +101,30 @@ while ( <SAM> ){
 close SAM;
 
 
-########## Read the SAM file to convert each line into BED
-open(SAM, $sam_file) or die "ERROR while reading $sam_file. Program will end prematurely.\n";
+########## Browse hash tables and print data in BED file
 open(BED, ">$bed_file") or die "ERROR while creating $bed_file. Program will end prematurely.\n";
 
-while ( <SAM> ){
+foreach $chromosome ( sort (keys%$counts) ){
     
-    if ( ! /^@/ ){
+    foreach $start ( sort {$a <=> $b} keys%{$counts->{$chromosome}} ){
         
-        chomp;   
-        
-        my @line = split ("\t");
-        
-        if ( $counts->{$line[9]}{"id"} eq $line[0] ){
+        foreach $sequence (sort (keys%{$counts->{$chromosome}{$start}}) ){
+            $end = $start + length($sequence);
             
-            my $chrom  = $line[2];
-            my $start  = $line[3] -1;
-            my $end    = $start + length($line[9]);
-            my $name   = $line[0];
-            my $score  = $counts->{$line[9]}{'count'};
-            my $strand = "+";
-            if ( $line[1] eq "16" or $line[1] eq "0x10" ){
-                $strand = "-";
-            }
-            
-            print BED "$chrom\t";
+            print BED "$chromosome\t";
             print BED "$start\t";
             print BED "$end\t";
-            print BED "$name\t";
-            print BED "$score\t";
-            print BED "$strand\n";
-            
+            print BED "$names->{$sequence}\t";
+            print BED "$counts->{$chromosome}{$start}{$sequence}{'count'}\t";
+            print BED "$counts->{$chromosome}{$start}{$sequence}{'strand'}\n";
         }
         
-    } 
+    }
     
 }
 
-close SAM;
 close BED;
 
-unlink $tmp_file;
-unlink $sam_file;
 
+unlink "$tmp_file.bam";
+unlink $sam_file;
