@@ -8,6 +8,8 @@ use File::Spec;
 use Log::Message::Simple qw[msg error debug];
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
+use miRkwood;
+use miRkwood::Paths;
 use miRkwood::WebPaths;
 use miRkwood::WebTemplate;
 use miRkwood::Results;
@@ -41,7 +43,6 @@ my $filter_multimapped = $cgi->param('filter_multimapped');
 my $mfei       = $cgi->param('mfei');
 my $randfold   = $cgi->param('randfold');
 my $align      = $cgi->param('align');
-my $db         = $cgi->param('db');
 
 
 if ( $filter_tRNA_rRNA   ) { $filter_tRNA_rRNA   = 1 } else { $filter_tRNA_rRNA   = 0 }
@@ -111,7 +112,12 @@ my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 print $cgi->redirect( $waiting_url );
 
-#sleep 10;
+
+##### Create config file
+my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
+miRkwood->CONFIG_FILE($run_options_file);
+#~ miRkwood::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
+miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species, 'BAM', $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold);
 
 
 # Filter BED
