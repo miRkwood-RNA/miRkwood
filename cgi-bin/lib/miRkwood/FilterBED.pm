@@ -40,11 +40,11 @@ sub filterBEDfile_for_model_organism {
         $basename = $1;
     }
     
-    my $mirna_reads = "${basename}_miRNAs.bed";
-    my $CDS_reads = "${basename}_CDS.bed";
-    my $otherRNA_reads = "${basename}_otherRNA.bed";
-    
-    my $filtered_bed = "${basename}_filtered.bed";   
+    my $mirna_reads      = "${basename}_miRNAs.bed";
+    my $CDS_reads        = "${basename}_CDS.bed";
+    my $otherRNA_reads   = "${basename}_otherRNA.bed";
+    my $multimapped_reads = "${basename}_multimapped.bed";
+    my $filtered_bed     = "${basename}_filtered.bed";   
     my $tmp_1 = "${basename}_tmp_1.bed"; 
     my $tmp_2 = "${basename}_tmp_2.bed";
     my $tmp_3 = "${basename}_tmp_3.bed";  
@@ -106,7 +106,7 @@ sub filterBEDfile_for_model_organism {
     
     ### Filter out multimapped reads
     if ( $filter_multimapped ){
-        filter_multimapped_reads( $tmp_3, $filtered_bed );
+        filter_multimapped_reads( $tmp_3, $filtered_bed, $multimapped_reads );
         debug( "Multi_mapped reads have been filtered out from BED.", 1 ); 
     }
     else{
@@ -188,6 +188,7 @@ sub filter_multimapped_reads {
     my @args = @_;
     my $bed_file = shift @args;
     my $output_file = shift @args;
+    my $discarded_file = shift @args;
     
     my $max_positions = 5;
     my $counts;
@@ -213,17 +214,22 @@ sub filter_multimapped_reads {
     ### Read the BED file a second time to write on output only the 
     ### non multi-mapped reads
     open (BED, $bed_file) or die "ERROR while opening $bed_file : $!\n";
-    open (OUT, ">$output_file") or die "ERROR while creating $output_file : $!\n";
+    open (KEEP, ">$output_file") or die "ERROR while creating $output_file : $!\n";
+    open (OUT, ">$discarded_file") or die "ERROR while creating $discarded_file : $!\n";
     
     while ( <BED> ){
         
         @line = split('\t');
         if ( $counts->{$line[3]} < $max_positions ){
+            print KEEP $_;
+        }
+        else{
             print OUT $_;
         }
         
     }
     
+    close KEEP;
     close OUT;
     close BED;    
     
