@@ -97,7 +97,7 @@ sub print_reads_cloud {
         $end_cluster = $3;
     }
 
-    my $reference = miRkwood::Utils->get_sequence_from_positions( $genome_file, 
+    my $reference = miRkwood::Utils::get_sequence_from_positions( $genome_file, 
         $chromosome, $start_cluster, $end_cluster );
 
     ### Print the header

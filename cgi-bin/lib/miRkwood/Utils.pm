@@ -139,7 +139,9 @@ corresponding to the chromosome and positions
 given in parameter.
 =cut
 sub get_sequence_from_positions {
-    my ($class, $fasta, $chrom, $start, $end) = @_;
+    my ($fasta, $chrom, $start, $end) = @_;
+    
+    die("end : $end", 1);
                 
     my %sequences = multifasta_to_hash( $fasta );
     
