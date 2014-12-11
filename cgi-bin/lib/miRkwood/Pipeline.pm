@@ -67,7 +67,11 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
-    mkdir $self->get_reads_dir() if ( exists($self->{'bam_file'}) );
+    if ( exists($self->{'bam_file'}) or exists($self->{'bed_file'})) {
+        mkdir $self->get_reads_dir();
+        mkdir $self->get_mirbase_reads_dir();
+        mkdir $self->get_new_reads_dir();
+    }
     return;
 }
 
@@ -139,7 +143,7 @@ sub get_candidates_dir {
 
 =method get_reads_dir
 
-Return the path to the clusters directory
+Return the path to the reads directory
 
  Usage : $self->get_reads_dir();
 
@@ -147,7 +151,35 @@ Return the path to the clusters directory
 
 sub get_reads_dir {
     my ($self, @args) = @_;
-    my $clusters_dir = File::Spec->catdir( $self->get_job_dir(), 'reads' );
+    my $reads_dir = File::Spec->catdir( $self->get_job_dir(), 'reads' );
+}
+
+=method get_mirbase_reads_dir
+
+Return the path to the directory
+with reads corresponding to known miRNAs.
+
+ Usage : $self->get_mirbase_reads_dir();
+
+=cut
+
+sub get_mirbase_reads_dir {
+    my ($self, @args) = @_;
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'mirbase' );
+}
+
+=method get_new_reads_dir
+
+Return the path to the directory
+with reads corresponding to new miRNAs.
+
+ Usage : $self->get_new_reads_dir();
+
+=cut
+
+sub get_new_reads_dir {
+    my ($self, @args) = @_;
+    my $new_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'denovo' );
 }
 
 =method get_uploaded_sequences_file
