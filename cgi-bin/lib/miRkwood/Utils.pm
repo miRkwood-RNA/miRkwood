@@ -140,8 +140,6 @@ given in parameter.
 =cut
 sub get_sequence_from_positions {
     my ($fasta, $chrom, $start, $end) = @_;
-    
-    die("end : $end", 1);
                 
     my %sequences = multifasta_to_hash( $fasta );
     
@@ -926,14 +924,13 @@ sub make_Vienna_viz {
 }
 
 sub create_mirbase_tag {
- 
-    my ( $alignment ) = @_;
+    my @args = @_;
+    my $start_a = shift @args;
+    my $end_a = shift @args;    
 
     my $i;
     my $msg = "";    
-    my $start_a = $alignment->{'begin_target'};
-    my $end_a = $alignment->{'end_target'};
-    
+
     my $length = $end_a - $start_a - 9;
     my ($space_left, $space_right);
     
@@ -946,16 +943,16 @@ sub create_mirbase_tag {
     $space_right = $length - $space_left;
     
     $msg .= "<";
-    for (my $i = 0; $i < $space_left ; $i++){
+    for ($i = 0; $i < $space_left ; $i++){
         $msg .= "-";
     }
     $msg .= "miRBase";
-    for (my $i = 0; $i < $space_right +1 ; $i++){
+    for ($i = 0; $i < $space_right +1 ; $i++){
         $msg .= "-";
     }
     $msg .= ">";
     
-    return $msg;    
+    return $msg;   
     
 }
 
@@ -973,6 +970,200 @@ sub mirbase_tags_overlapping {
         return 1;
     }
 
+}
+
+sub bed2bam {
+    
+    my ($bed_file, $bam_file, $genome) = @_;
+    my $sam_file;
+    my @field;
+    my ($chromosome, $start, $end, $name, $score, $strand);
+    my ($flag, $cigar, $sequence, $quality);    
+    
+    #~ die("bed file : $bed_file", 1);
+    #~ die("bam file : $bam_file", 1);
+    #~ die("genome   : $genome", 1);
+    
+    if ( $bam_file =~ /(.*)\.bam/ ){
+        $sam_file = "$1.sam";
+    }
+    else{
+        $sam_file = "$bam_file.sam";
+    }  
+    
+    ##### Converting BED into SAM
+    open(BED, $bed_file) or die "ERROR when opening $bed_file : $!";
+    open(SAM, ">$sam_file") or die "ERROR when creating $sam_file : $!";
+    
+    while ( <BED> ){
+        
+        chomp;
+        @field = split('\t');
+        
+        $chromosome = $field[0];
+        $start      = $field[1] +1;
+        $end        = $field[2] +1;
+        $name       = $field[3];
+        $score      = $field[4];
+        $strand     = $field[5];
+        
+        if ( $strand eq "+" ){
+            $flag = "0";
+        }
+        else{
+            $flag = "16";
+        }
+        
+        $sequence = get_sequence_from_positions( $genome, $chromosome, $start, $end);
+        $quality = "";
+        for (my $i = 0; $i < length($sequence); $i++){
+            $quality .= "I";
+        }
+        $cigar = length($sequence)."M";
+        
+        print SAM "$name\t";
+        print SAM "$flag\t";
+        print SAM "$chromosome\t";
+        print SAM "$start\t";
+        print SAM "255\t";
+        print SAM "$cigar\t";
+        print SAM "*\t0\t0\t";
+        print SAM "$sequence\t";
+        print SAM "$quality\t";
+        print SAM "XA:i:0\n";
+        
+    }
+    
+    close BED;
+    close SAM;  
+    
+    ##### Convert SAM into BAM
+
+    system("samtools view -bT $genome $sam_file > $bam_file");
+    
+}
+
+sub print_reads_clouds_for_known_miRNA {
+    
+    my @args = @_;
+    my $mirna = shift @args;
+    my $genome = shift @args;
+    my $output_dir = shift @args;
+    
+    my $i;
+    my $mature_id;
+    my @positions_tags = ();
+    my $genome_name = "";
+    if ( $genome =~ /.*\/([^\/]+)/ ){
+        $genome_name = $1;
+    }
+    
+    my $name            = $mirna->{'precursor_name'};
+    my $strand          = $mirna->{'strand'};
+    my $chromosome      = $mirna->{'chromosome'};
+    my $precursor_start = $mirna->{'precursor_start'};
+    my $precursor_end   = $mirna->{'precursor_end'};
+    my $reads           = $mirna->{'precursor_reads'};
+    
+    foreach $mature_id (keys %{$mirna->{'matures'}}){
+        @$reads{keys %{$mirna->{'matures'}{$mature_id}{'mature_reads'}}} = values %{$mirna->{'matures'}{$mature_id}->{'mature_reads'}};
+        my $mature_start = $mirna->{'matures'}{$mature_id}{'mature_start'};
+        my $mature_end = $mirna->{'matures'}{$mature_id}{'mature_end'};
+        my $relative_tag_start = $mature_start - $precursor_start;
+        my $relative_tag_end = $relative_tag_start + $mature_end - $mature_start;
+        push @positions_tags, "$relative_tag_start-$relative_tag_end";
+    }
+    
+    my $reference = get_sequence_from_positions ($genome, $chromosome, $precursor_start, $precursor_end);
+    
+    my $cloud_file = "$output_dir/$name";
+    open (OUT, ">$cloud_file") or die "ERROR while creating $cloud_file : $!";
+    
+    ### Print the header
+    print OUT "$name\n";
+    print OUT "Genome : $genome_name\n";
+    print OUT "Locus  : $chromosome:$precursor_start-$precursor_end\n";
+    print OUT "Strand : $strand\n";
+    print OUT "\n$reference\n";
+    
+    ### Print miRBase tags
+    @positions_tags = sort { get_element_of_split($a, '-', 0) <=> get_element_of_split($b, '-', 0)
+                            ||
+                             get_element_of_split($a, '-', 1) <=> get_element_of_split($b, '-', 1)
+                            } @positions_tags;
+    
+    my $placed = [];
+    my $is_placed;    
+    
+    foreach my $position (@positions_tags){
+        if ( scalar(@{$placed}) == 0 ){
+            push @{$placed->[0]}, $position;    
+            next;    
+        }
+        
+        $is_placed = 0;
+        $i = 0;
+        while ( $is_placed == 0 && $i < scalar(@$placed) ){
+            if ( ! mirbase_tags_overlapping( $placed->[$i][-1], $position ) ){
+                push @{$placed->[$i]}, $position;
+                $is_placed = 1;
+            }
+            $i++;
+        }
+        if ( $i == scalar(@$placed) && $is_placed == 0){
+            push @{$placed->[$i]}, $position;
+        }        
+    } 
+    
+    my $tag = "";
+    
+    foreach my $line ( @$placed ){
+        
+        $tag = "";
+        
+        for ($i = 0; $i < get_element_of_split( $line->[0], '-', 0); $i++){
+            $tag .= " ";
+        }
+        $tag .= create_mirbase_tag( get_element_of_split( $line->[0], '-', 0), get_element_of_split( $line->[0], '-', 1) );
+        
+        for ($i = 1; $i < scalar(@$line); $i++){
+            for (my $j = 0; $j < get_element_of_split( $line->[$i], '-', 0) - get_element_of_split( $line->[$i-1], '-', 1) -1; $j++){
+                $tag .= " ";
+            }
+            $tag .= create_mirbase_tag( get_element_of_split( $line->[$i], '-', 0), get_element_of_split( $line->[$i], '-', 1) );           
+        }
+        print OUT "$tag\n";
+        
+    }    
+    
+    ### Print the reads
+    my @sorted_positions = sort { get_element_of_split( $a, "-", 0 ) <=> get_element_of_split( $b, "-", 0 )
+                                    ||
+                                  get_element_of_split( $a, "-", 1 ) <=> get_element_of_split( $b, "-", 1 )  
+                              } (keys %$reads);
+                             
+    foreach my $position (@sorted_positions){
+        
+        my $read_start = get_element_of_split( $position, "-", 0 );
+        my $read_end = get_element_of_split( $position, "-", 1 );
+        my $read_length = $read_end - $read_start;
+        
+        my $relative_position = $read_start - $precursor_start + 1;
+        for ($i = 0; $i < $relative_position; $i++){
+            print OUT ".";
+        }
+        for ($i = 0; $i < $read_length; $i++){
+            print OUT "*";
+        }
+        for ($i = 0; $i < $precursor_end - $read_end - 1; $i++){
+            print OUT ".";
+        }
+        print OUT " length=$read_length depth=$reads->{$position}\n";     
+        
+    }
+    
+    close OUT;
+    
 }
 
 1;

@@ -7,6 +7,8 @@ use FindBin;
 use File::Spec;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
+use miRkwood;
+use miRkwood::Pipeline;
 use miRkwood::WebTemplate;
 use miRkwood::Results;
 
@@ -19,9 +21,14 @@ my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->
 my @js  = (miRkwood::WebTemplate->get_js_file());
 
 
-##### Get parameters
+##### Parameters
 my $cgi = new CGI;
 my $id_job = $cgi->param('run_id');    # get id job
+
+my $genome_file;
+my $mirbase_file;
+#~ my $cfg = miRkwood->CONFIG();
+
 
 
 ##### Create page
@@ -35,6 +42,19 @@ $HTML_additional .= "<p class='header-results' id='job_id'><b>Job ID:</b> " . $i
 if ( $valid ){
     
     my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($id_job);
+    #~ my $cfg = File::Spec->catfile( $absolute_job_dir, 'run_options.cfg' );
+    #~ my $cfg = miRkwood->CONFIG();
+    #~ 
+    #~ my $species = $cfg->param('job.plant');
+    my $species = "Arabidopsis_thaliana";
+    if ( $species ne "" ){
+        $genome_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/", $species . ".fa");
+        $mirbase_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/", $species . "_miRBase.gff3");
+    }
+    else{
+        $genome_file = $absolute_job_dir . "/genome.fa";
+    }    
+    
     my $known_mirnas = "";
     my $mirna_bed = "";
     my $other_bed = "";
@@ -56,7 +76,7 @@ if ( $valid ){
     
     if ( $mirna_bed ne "" ){
         $known_mirnas = "<div id='table'>";
-        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($mirna_bed);
+        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($mirna_bed, $mirbase_file, $genome_file, "$absolute_job_dir/reads/mirbase" );
         $known_mirnas .= "</div>";
     }
     

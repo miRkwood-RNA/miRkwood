@@ -176,154 +176,141 @@ sub convert_basic_to_pseudoXML {
     $result .= "></Sequence>";
 }
 
+=method known_mirnas_for_jobID
+
+Print an html table for known miRNAs, with IDs, locus, strand, and
+number of reads matching to the mature and the precursor.
+
+Input : a BED file
+Output : a string containing an HTML table
+
+=cut
 sub known_mirnas_for_jobID {
 	my ( $self, @args ) = @_;
-	my $mirna_bed   = shift @args;
+
+    my $bed_file = shift @args;
+    my $gff_file = shift @args;
+    my $genome_file = shift @args;
+    my $output_dir = shift @args;
     
-    my @fields;
-    my $precursor_data;
-    my $mature_data;
+    my $html = "";
+    my @field;
+    my ($id, $name, $chromosome, $strand);
+    my ($precursor_name, $precursor_start, $precursor_end, $precursor_reads);
+    my ($precursor_of_mature, $mature_of_precursor);
+    my ($mature_id, $precursor_id);
     my $data;
+    #~ my $link_mirbase = "http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=";
     
-    my $id;
-    my $primary_transcript;
-    my $link_mirbase;
+    ##### Read the GFF and links each precursor with its mature
+
+    open (GFF, $gff_file) or die "ERROR while opening $gff_file : $!";
     
-    my ($mature_id, $mature_chrom, $mature_start, $mature_end, $mature_strand, $mature_reads);
-    my ($precursor_id, $precursor_chrom, $precursor_start, $precursor_end, $precursor_strand, $precursor_reads);
-    
-    open(MIRNA, $mirna_bed) or die "ERROR : cannot open file $mirna_bed : $!";
-    
-    ### Read and store data in different ref hash according to mature or precursor
-    while ( <MIRNA> ){
-        
-        chomp;
-        $primary_transcript = "";
-        @fields = split('\t');
-        if ($fields[14] =~ /ID=([^;]+)/ ){
-            $id = $1;
-        }
-        if ($fields[14] =~ /Derives_from=([^;]+)/ ){
-            $primary_transcript = $1;
-        }
-        
-        if ($fields[8] eq "miRNA_primary_transcript" ){
-            $precursor_data->{$id}{'chromosome'} = $fields[6];
-            $precursor_data->{$id}{'start_position'} = $fields[9];
-            $precursor_data->{$id}{'end_position'} = $fields[10];
-            $precursor_data->{$id}{'reads'}{"$fields[0]:$fields[1]-$fields[2]"} = $fields[4];
-            $precursor_data->{$id}{'strand'} = $fields[12];
-        }
-        elsif ($fields[8] eq "miRNA"){
-            $mature_data->{$id}{'chromosome'} = $fields[6];
-            $mature_data->{$id}{'start_position'} = $fields[9];
-            $mature_data->{$id}{'end_position'} = $fields[10];
-            $mature_data->{$id}{'reads'}{"$fields[0]:$fields[1]-$fields[2]"} = $fields[4]; 
-            $mature_data->{$id}{'precursor'} = $primary_transcript;  
-            $mature_data->{$id}{'strand'} = $fields[12];     
-        }
-    }
-    
-    close MIRNA;
-    
-    ### Regroup all data in one ref array to bind each mature to its precursor (if known)
-    foreach $mature_id (sort ( keys %$mature_data )) {
-        
-        $mature_chrom  = $mature_data->{$mature_id}{'chromosome'};
-        $mature_start  = $mature_data->{$mature_id}{'start_position'};
-        $mature_end    = $mature_data->{$mature_id}{'end_position'};
-        $mature_strand = $mature_data->{$mature_id}{'strand'};
-        $mature_reads = 0;
-        foreach (keys %{$mature_data->{$mature_id}{'reads'}}) {
-            $mature_reads += $mature_data->{$mature_id}{'reads'}{$_};
-        }
-        
-        if ( exists( $precursor_data->{ $mature_data->{$mature_id}{'precursor'} } ) ){
-            $precursor_id    = $mature_data->{$mature_id}{'precursor'};
-            $precursor_chrom = $precursor_data->{ $precursor_id }{'chromosome'};
-            $precursor_start = $precursor_data->{ $precursor_id }{'start_position'};
-            $precursor_end   = $precursor_data->{ $precursor_id }{'end_position'};      
-            $precursor_reads = 0;
-            foreach (keys %{$precursor_data->{$precursor_id}{'reads'}}) {
-                $precursor_reads += $precursor_data->{$precursor_id}{'reads'}{$_};
-            }        
+    while ( <GFF> ){
+        if ( ! /^#/ ){
+            chomp;
             
-            push @$data, [ $mature_id, $mature_chrom, $mature_start, $mature_end, $mature_reads, $mature_strand,  
-                            $precursor_id, $precursor_start, $precursor_end, $precursor_reads ];
-                            
-            delete $precursor_data->{ $precursor_id };                
+            @field = split('\t');
+            
+            if ( $field[2] eq "miRNA" and $field[8] =~ /ID=([^;]+).*Derives_from=([^;]+)/ ){
+                $precursor_of_mature->{ $1 } = $2;
+            } 
         }
-        else{
-            push @$data, [$mature_id, $mature_chrom, $mature_start, $mature_end, $mature_reads, $mature_strand, 
-                            "", "", "", "" ];
+    }
+    
+    close GFF;
+    
+    #~ foreach $mature_id ( sort (keys%$precursor_of_mature)) {
+        #~ $precursor_id = $precursor_of_mature->{$mature_id};
+        #~ $mature_of_precursor->{ $precursor_id }{ $mature_id } = 1;
+    #~ }
+    
+    ##### Read the BED file
+    
+    open (BED, $bed_file) or die "ERROR while opening $bed_file : $!";
+    
+    while ( <BED> ){
+    
+        chomp;
+        
+        @field = split('\t');
+        
+        if ($field[14] =~ /ID=([^;]+).*Name=([^;]+)/ ){
+            $id = $1;
+            $name = $2;
         }
+        
+        if ( $field[8] eq "miRNA_primary_transcript" ){
+            $precursor_id = $id;
+            $data->{$precursor_id}{'precursor_name'}  = $name;
+            $data->{$precursor_id}{'precursor_start'} = $field[9];
+            $data->{$precursor_id}{'precursor_end'}   = $field[10];
+            $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
+        }
+        elsif ( $field[8] eq "miRNA" ){
+            $precursor_id = $precursor_of_mature->{$id};
+            $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
+            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
+            $data->{$precursor_id}{'matures'}{$id}{'mature_end'}   = $field[10];
+            $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$field[1]-$field[2]"} = $field[4];
+        }
+        
+        $data->{$precursor_id}{'chromosome'} = $field[0];
+        $data->{$precursor_id}{'strand'}     = $field[5];
         
     }
     
-    foreach $precursor_id ( sort (keys %$precursor_data) ) {
-        
-        $precursor_chrom  = $precursor_data->{ $precursor_id }{'chromosome'};
-        $precursor_start  = $precursor_data->{ $precursor_id }{'start_position'};
-        $precursor_end    = $precursor_data->{ $precursor_id }{'end_position'};      
-        $precursor_reads  = 0;
-        $precursor_strand = $precursor_data->{ $precursor_id }{'strand'};  
-        foreach (keys %{$precursor_data->{$precursor_id}{'reads'}}) {
-            $precursor_reads += $precursor_data->{$precursor_id}{'reads'}{$_};
-        }    
-        
-        push @$data, [ "", $precursor_chrom, "", "", "", $precursor_strand, $precursor_id, $precursor_start, $precursor_end, $precursor_reads ];
-        
-    }
+    close BED;
     
-    ### print
-    my $html = "<table><tbody id='cases'><tr>";
-    $html .= "<th>Mature / Precursor</th>";
+    ##### Print the HTML table
+    $html = "<table><tbody id='cases'><tr>";
+    $html .= "<th>Name</th>";
     $html .= "<th>Chromosome</th>";
-    $html .= "<th>Position Mature</th>";
-    $html .= "<th>Position Precursor</th>";
     $html .= "<th>Strand</th>";
-    $html .= "<th>Reads mapped to mature</th>";
-    $html .= "<th>Reads mapped to precursor</th>";
+    $html .= "<th>Position Precursor</th>";
+    $html .= "<th>Number of reads</th>";
+    $html .= "<th>Score</th>";
     
     $html .= "</tr>\n";
     
-    my @ids = sort { $a->[1] cmp $b->[1]
+    my @ids = sort { $data->{$a}{'chromosome'} <=> $data->{$b}{'chromosome'}
                         ||
-                     $a->[2] cmp $b->[2]
+                     $data->{$a}{'precursor_start'} <=> $data->{$b}{'precursor_start'}
                         ||
-                     $a->[7] cmp $b->[7]   
-                         } @$data;
-                     
-    foreach my $index ( @ids ){
+                     $data->{$a}{'precursor_end'} <=> $data->{$a}{'precursor_end'}   } keys%$data;
+              
+    foreach $precursor_id ( @ids ){
         
-        $mature_id       = $$index[0];
-        $mature_chrom    = $$index[1];
-        $mature_start    = $$index[2];
-        $mature_end      = $$index[3];
-        $mature_reads    = $$index[4];
-        $mature_strand   = $$index[5];
-        $precursor_id    = $$index[6];
-        $precursor_start = $$index[7];
-        $precursor_end   = $$index[8];
-        $precursor_reads = $$index[9];
+        $precursor_name  = $data->{$precursor_id}{'precursor_name'};
+        $chromosome      = $data->{$precursor_id}{'chromosome'};
+        $strand          = $data->{$precursor_id}{'strand'};
+        $precursor_start = $data->{$precursor_id}{'precursor_start'};
+        $precursor_end   = $data->{$precursor_id}{'precursor_end'};
+        $precursor_reads = 0;
         
-        $link_mirbase = "http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=";
+        foreach (keys %{$data->{$precursor_id}{'precursor_reads'}}){
+            $precursor_reads += $data->{$precursor_id}{'precursor_reads'}{$_};
+        }
         
         $html .= "<tr>";
-        $html .= "<td><a href=$link_mirbase$mature_id>$mature_id</a> / ";
-        $html .= "<a href=$link_mirbase$precursor_id>$precursor_id</a></td>";
-        $html .= "<td>$mature_chrom</td>";
-        $html .= "<td>$mature_start-$mature_end</td>";
-        $html .= "<td>$precursor_start-$precursor_end</td>";
-        $html .= "<td>$mature_strand</td>";
-        $html .= "<td>$mature_reads</td>";
+        $html .= "<td><a href=" . miRkwood::Utils::make_mirbase_link($precursor_id) . ">$precursor_name</a>";
+        #~ $html .= "<td><a href=$link_mirbase$precursor_id>$precursor_name</a>";
+        $html .= "<td>$chromosome</td>";
+        $html .= "<td>$strand</td>";
+        $html .= "<td>$precursor_start - $precursor_end</td>";
         $html .= "<td>$precursor_reads</td>";
-        $html .= "</tr>\n";    
+        $html .= "<td></td>";
+        $html .= "</tr>\n";
+        
+        
+        ### Create individual card with reads cloud
+        miRkwood::Utils::print_reads_clouds_for_known_miRNA( $data->{$precursor_id}, $genome_file, $output_dir );
+    
     }  
+          
+    $html .= "</tbody></table>";  
     
-    $html .= "</tbody></table>";
-    
-    return $html; 
+    return $html;  
     
 }
 

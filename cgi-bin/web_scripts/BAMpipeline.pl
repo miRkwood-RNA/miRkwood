@@ -15,7 +15,7 @@ use miRkwood::WebTemplate;
 use miRkwood::Results;
 use miRkwood::Utils;
 use miRkwood::FilterBED;
-
+use miRkwood::WebBamPipeline;
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
 
@@ -116,11 +116,10 @@ print $cgi->redirect( $waiting_url );
 ##### Create config file
 my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
 miRkwood->CONFIG_FILE($run_options_file);
-#~ miRkwood::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
 miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species, 'BAM', $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold);
 
 
-# Filter BED
+##### Filter BED
 if ( $species ){
     miRkwood::FilterBED->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
 }
@@ -128,6 +127,21 @@ else{
     miRkwood::FilterBED->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
 }
 
+
+my $pipeline = miRkwood::WebBamPipeline->new($absolute_job_dir);
+#~ $pipeline->run_pipeline();
+$pipeline->init_pipeline();
+
+#~ ##### (temp) Convert BED into BAM to connect on the existing BAMpipeline
+#~ my $localBAM = $absolute_job_dir . "/remaining_reads.bam";
+#~ miRkwood::Utils::bed2bam( $localBED, $localBAM, $genome);
+#~ 
+#~ ##### Create a Pipeline object
+#~ my $pipeline = miRkwood::BamPipeline->new($absolute_job_dir, $localBAM, $genome);
+#~ $pipeline->run_pipeline();
+#~ 
+#~ 
+#~ 
 my $is_finished_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
 open( my $finish, '>', $is_finished_file )
     or die "Error when opening $is_finished_file: $!";
