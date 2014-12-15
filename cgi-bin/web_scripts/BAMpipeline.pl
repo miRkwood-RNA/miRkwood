@@ -15,7 +15,7 @@ use miRkwood::WebTemplate;
 use miRkwood::Results;
 use miRkwood::Utils;
 use miRkwood::FilterBED;
-use miRkwood::WebBamPipeline;
+use miRkwood::BEDPipeline;
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
 
@@ -128,7 +128,7 @@ else{
 }
 
 
-my $pipeline = miRkwood::WebBamPipeline->new($absolute_job_dir);
+my $pipeline = miRkwood::BEDPipeline->new($absolute_job_dir);
 #~ $pipeline->run_pipeline();
 $pipeline->init_pipeline();
 
