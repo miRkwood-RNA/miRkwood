@@ -13,8 +13,8 @@ use Getopt::Long;
 
 
 ########## Variables
-my $gff_file = "";
-my $output_file = "";
+my $gff_file = '';
+my $output_file = '';
 my $features;
 my %allowed_features;
 my $help;
@@ -34,19 +34,19 @@ GetOptions ('gff=s' => \$gff_file,
             'features=s' => \$features,
             'out=s' => \$output_file,
 	        'help'  => \$help);
-        
-        
+
+
 ########## Validate options
-if ( $help or ! -r $gff_file or $output_file eq "" ){
+if ( $help or ( ! -r $gff_file ) or $output_file eq '' ){
     print $help_message;
     exit;
 }
 
-foreach (split(',', $features)) {
+foreach ( split( /,/xms, $features) ) {
     $allowed_features{$_} = 1;
 }
 
-print STDERR "Output file will contain only the following features:";
+print STDERR 'Output file will contain only the following features:';
 foreach (keys %allowed_features){
     print STDERR " $_";
 }
@@ -54,20 +54,20 @@ print STDERR "\n";
 
 
 ########## Filter gff
-open(GFF, $gff_file) or die "ERROR while reading $gff_file : $!";
-open(OUT, ">$output_file") or die "ERROR while creating $output_file : $!";
+open(my $GFF, '<', $gff_file) or die "ERROR while reading $gff_file : $!";
+open(my $OUT, '>', $output_file) or die "ERROR while creating $output_file : $!";
 
-while ( <GFF> ){
+while ( <$GFF> ){
     if ( /^#/ ){
-        print OUT $_;
+        print $OUT $_;
     }
     else{
-        my @fields = split("\t");
+        my @fields = split( /\t/xms );
         if ( exists($allowed_features{ $fields[2] }) ){
-            print OUT $_;
+            print $OUT $_;
         }
     }
 }
 
-close GFF;
-close OUT;
+close $GFF;
+close $OUT;
