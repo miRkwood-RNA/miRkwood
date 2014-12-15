@@ -67,6 +67,8 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
+    mkdir $self->get_mirbase_candidates_dir();
+    mkdir $self->get_new_candidates_dir();
     if ( exists($self->{'bam_file'}) or exists($self->{'bed_file'})) {
         mkdir $self->get_reads_dir();
         mkdir $self->get_mirbase_reads_dir();
@@ -139,6 +141,34 @@ Return the path to the candidates directory
 sub get_candidates_dir {
     my ($self, @args) = @_;
     my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
+}
+
+=method get_mirbase_candidates_dir
+
+Return the path to the directory
+with yaml corresponding to known miRNAs.
+
+ Usage : $self->get_mirbase_candidates_dir();
+
+=cut
+
+sub get_mirbase_candidates_dir {
+    my ($self, @args) = @_;
+    my $mirbase_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );
+}
+
+=method get_new_candidates_dir
+
+Return the path to the directory
+with yaml corresponding to new miRNAs.
+
+ Usage : $self->get_new_candidates_dir();
+
+=cut
+
+sub get_new_candidates_dir {
+    my ($self, @args) = @_;
+    my $new_candidatess_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );
 }
 
 =method get_reads_dir
