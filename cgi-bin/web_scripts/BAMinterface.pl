@@ -49,7 +49,7 @@ my $page = <<"END_TXT";
                 <b>Parameters:</b>
                 <p>
                     <input class="checkbox" type="checkbox" name='CDS' id ="CDS" onclick="showHideBlock()"/>
-                    &#160;<label for='CDS'>Mask coding regions <i>(BlastX)</i></label>  [<a href="$help_page#mask-coding-regions">?</a>]
+                    &#160;<label for='CDS'>Mask coding regions</label>  [<a href="$help_page#mask-coding-regions">?</a>]
                 </p>
                 <div id="menuDb">
                     <label class="choixDiv selectdb" for="db">Choose organism database:</label>
