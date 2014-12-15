@@ -171,15 +171,17 @@ sub print_reads_cloud {
             for ($i = 0; $i < miRkwood::Utils::get_element_of_split( $line->[0], '-', 0) + $candidate->{'start_position'} -2; $i++){
                 $tag .= " ";
             }
-            $tag .= create_mirbase_tag( get_element_of_split( $candidate->{'alignments'}{$line->[0]}, '-', 0), 
-                                        get_element_of_split( $candidate->{'alignments'}{$line->[0]}, '-', 1) );    # TO DO : check if this still works (BAM pipeline)
-            #~ $tag .= miRkwood::Utils::create_mirbase_tag( $candidate->{'alignments'}{$line->[0]}[0] );
+            
+            $tag .= miRkwood::Utils::create_mirbase_tag( miRkwood::Utils::get_element_of_split( $line->[0], '-', 0 ), 
+                                                         miRkwood::Utils::get_element_of_split( $line->[0], '-', 1 ) );            
             
             for ($i = 1; $i < scalar(@$line); $i++){
                 for (my $j = 0; $j < miRkwood::Utils::get_element_of_split( $line->[$i], '-', 0) - miRkwood::Utils::get_element_of_split( $line->[$i-1], '-', 1) -1; $j++){
                     $tag .= " ";
                 }
-                $tag .= miRkwood::Utils::create_mirbase_tag( $candidate->{'alignments'}{$line->[$i]}[0] );            
+                
+                $tag .= miRkwood::Utils::create_mirbase_tag( miRkwood::Utils::get_element_of_split( $line->[$i], '-', 0 ), 
+                                                             miRkwood::Utils::get_element_of_split( $line->[$i], '-', 1 ) );                           
             }
             print OUT "$tag\n";
             

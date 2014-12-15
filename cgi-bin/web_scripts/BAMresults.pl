@@ -76,7 +76,7 @@ if ( $valid ){
     
     if ( $mirna_bed ne "" ){
         $known_mirnas = "<div id='table'>";
-        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($mirna_bed, $mirbase_file, $genome_file, "$absolute_job_dir/reads/mirbase" );
+        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($mirna_bed, $mirbase_file, $genome_file, "$absolute_job_dir/reads/" );
         $known_mirnas .= "</div>";
     }
     
