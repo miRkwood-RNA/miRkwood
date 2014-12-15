@@ -165,7 +165,7 @@ with reads corresponding to known miRNAs.
 
 sub get_mirbase_reads_dir {
     my ($self, @args) = @_;
-    my $mirbase_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'mirbase' );
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'known' );
 }
 
 =method get_new_reads_dir
@@ -179,7 +179,7 @@ with reads corresponding to new miRNAs.
 
 sub get_new_reads_dir {
     my ($self, @args) = @_;
-    my $new_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'denovo' );
+    my $new_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'new' );
 }
 
 =method get_uploaded_sequences_file
