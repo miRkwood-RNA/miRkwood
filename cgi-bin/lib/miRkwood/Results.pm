@@ -242,6 +242,7 @@ sub known_mirnas_for_jobID {
         
         if ( $field[8] eq "miRNA_primary_transcript" ){
             $precursor_id = $id;
+            $data->{$precursor_id}{'identifier'}      = $id;
             $data->{$precursor_id}{'precursor_name'}  = $name;
             $data->{$precursor_id}{'precursor_start'} = $field[9];
             $data->{$precursor_id}{'precursor_end'}   = $field[10];
@@ -301,11 +302,14 @@ sub known_mirnas_for_jobID {
         $html .= "<td>$precursor_reads</td>";
         $html .= "<td></td>";
         $html .= "</tr>\n";
-        
-        
+
+        ### Create a Candidate object
+        my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
+        miRkwood::CandidateHandler->serialize_candidate_information("$output_dir/candidates/known", $candidate);
+
         ### Create individual card with reads cloud
-        miRkwood::Utils::print_reads_clouds_for_known_miRNA( $data->{$precursor_id}, $genome_file, $output_dir );
-    
+        miRkwood::Utils::print_reads_clouds_for_known_miRNA( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );
+
     }  
           
     $html .= "</tbody></table>";  
