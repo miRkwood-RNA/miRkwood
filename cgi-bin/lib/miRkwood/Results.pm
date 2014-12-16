@@ -200,6 +200,7 @@ sub known_mirnas_for_jobID {
     my ($precursor_of_mature, $mature_of_precursor);
     my $mature_reads;
     my $data;
+    my $star = "<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' />";
 
     ##### Read the GFF and links each precursor with its mature
 
@@ -303,11 +304,11 @@ sub known_mirnas_for_jobID {
         if ( $mature_reads >= ( $precursor_reads / 2 ) ){
             $data->{$precursor_id}{'score'}++;
         }
-        $score = '<center><font color="#FF8000">';
+        $score = '<center>';
         for (my $i = 0; $i < $data->{$precursor_id}{'score'}; $i++){
-            $score .= '*';
+            $score .= $star;
         }
-        $score .= '</font></center>';       
+        $score .= '</center>';    
 
         ##### Print the HTML table
         $html .= '<tr>';
