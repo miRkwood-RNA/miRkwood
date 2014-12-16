@@ -27,8 +27,6 @@ my $id_job = $cgi->param('run_id');    # get id job
 
 my $genome_file;
 my $mirbase_file;
-#~ my $cfg = miRkwood->CONFIG();
-
 
 
 ##### Create page
@@ -42,11 +40,13 @@ $HTML_additional .= '<p class="header-results" id="job_id"><b>Job ID:</b> ' . $i
 if ( $valid ){
 
     my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($id_job);
-    #~ my $cfg = File::Spec->catfile( $absolute_job_dir, 'run_options.cfg' );
-    #~ my $cfg = miRkwood->CONFIG();
-    #~ 
-    #~ my $species = $cfg->param('job.plant');
-    my $species = 'Arabidopsis_thaliana';
+    
+    my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
+    miRkwood->CONFIG_FILE($run_options_file);
+    my $cfg = miRkwood->CONFIG();    
+
+    my $species = $cfg->param('job.plant');
+
     if ( $species ne '' ){
         $genome_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/$species.fa");
         $mirbase_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
