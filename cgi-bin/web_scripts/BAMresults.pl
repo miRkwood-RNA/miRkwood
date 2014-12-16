@@ -22,7 +22,7 @@ my @js  = (miRkwood::WebTemplate->get_js_file());
 
 
 ##### Parameters
-my $cgi = CGI->new;
+my $cgi = CGI->new();
 my $id_job = $cgi->param('run_id');    # get id job
 
 my $genome_file;
@@ -76,7 +76,7 @@ if ( $valid ){
     
     if ( $mirna_bed ne '' ){
         $known_mirnas  = '<div id="table">';
-        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($mirna_bed, $mirbase_file, $genome_file, $absolute_job_dir );
+        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($id_job, $mirna_bed, $mirbase_file, $genome_file, $absolute_job_dir );
         $known_mirnas .= '</div>';
     }
 
