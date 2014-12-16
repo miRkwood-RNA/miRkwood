@@ -28,11 +28,9 @@ Constructor
 
 sub new {
     my ( $class, @args ) = @_;
-    my $bam_file    = shift @args;
     my $genome_file = shift @args;
     my $genome_db = Bio::DB::Fasta->new($genome_file);
     my $self = bless {
-        bam_file => $bam_file,
         genome_file => $genome_file,
         genome_db => $genome_db,
         accepting_time => 350
@@ -42,89 +40,29 @@ sub new {
     return $self;
 }
 
-
 # Returns a hash (chr_name => read positions)
-sub get_read_loci_per_chr {
-    my ( $self, @args ) = @_;
+sub get_read_distribution_from_bam {
+    my ( $this, $bam_file ) = @_;
     # go chr by chr, using the .fai index file to get the chr names
     my %reads = ();
-    my @chrs = keys %{ $self->{chr_info} };
+    my @chrs = keys %{ $this->{chr_info} };
 
     foreach my $chr (@chrs) {
-        my $samtools_cmd = "samtools view -F 0x4 $self->{bam_file} $chr";
+        my $samtools_cmd = "samtools view $bam_file $chr";
         open( my $DEPTH, '-|', $samtools_cmd ) or die "Can't open '$samtools_cmd': $!";
-        my $chr_reads = $self->process_samtools_view( $DEPTH, $chr);
-        $reads{$chr} = $chr_reads;
+        $reads{$chr} = __get_read_distribution_from_bam_for_chr($DEPTH);
         close $DEPTH;
     }
     return \%reads;
 }
 
 
-sub compute_read_distribution_per_chr_from_read_loci {
-	my ($this, $reads_per_chr) = @_;
-	my @chrs = keys %{ $this->{chr_info} };
-    my %read_distribution_per_chr = ();
-
-    foreach my $chr (@chrs) {
-    # Hash of $read_position -> (Amount of reads starting at that position, Max end pos of reads)
-		my %read_distribution = ();
-		my $reads = $reads_per_chr->{$chr};
-        foreach my $read (@$reads) {
-			my $read_beg = $read->[0];
-			my $read_end = $read->[1];
-			if (defined $read_distribution{$read_beg}) {
-				$read_distribution{$read_beg}->[0]++;
-				$read_distribution{$read_beg}->[1] = max $read_distribution{$read_beg}->[1], $read_end;
-			}
-			else {
-				$read_distribution{$read_beg} = [1, $read_end];
-			}
-        }
-        $read_distribution_per_chr{$chr} = \%read_distribution;
-    }
-    return \%read_distribution_per_chr;
-}
-
-# Returns a hash (chr_name => read positions)
-sub get_read_distribution_per_chr {
-    my ( $self, @args ) = @_;
-    # go chr by chr, using the .fai index file to get the chr names
-    my %reads = ();
-    my @chrs = keys %{ $self->{chr_info} };
-
-    foreach my $chr (@chrs) {
-        my $samtools_cmd = "samtools view -F 0x4 $self->{bam_file} $chr";
-        open( my $DEPTH, '-|', $samtools_cmd ) or die "Can't open '$samtools_cmd': $!";
-        my $chr_reads = $self->process_samtools_view_for_distribution( $DEPTH, $chr);
-        $reads{$chr} = $chr_reads;
-        close $DEPTH;
-    }
-    return \%reads;
-}
-
-
-sub process_samtools_view {
-    my ($self, $RESULT, $chr) = @_;
-    my @chr_reads = ();
-    while (<$RESULT>) {
-        chomp;
-        my @fields = split( "\t", $_ );
-        my $strand = '+';
-        $strand = '-' if $fields[1] & 0x10;
-        push @chr_reads, {begin => $fields[3], end => $fields[3] + length $fields[9], strand => $strand};
-    }
-    my @chr_reads_sorted = sort {$a->{begin} <=> $b->{begin}} @chr_reads;
-    return \@chr_reads_sorted;
-}
-
-
-sub process_samtools_view_for_distribution {
-    my ($self, $RESULT, $chr) = @_;
+sub __get_read_distribution_from_bam_for_chr {
+    my $HANDLE = shift;
     my %chr_reads = ();
-    while (<$RESULT>) {
+    while (<$HANDLE>) {
         chomp;
-        my @fields = split( "\t", $_ );
+        my @fields = split("\t");
         my $pos = $fields[3];
         my $strand = '+';
         $strand = '-' if $fields[1] & 0x10;
@@ -142,387 +80,41 @@ sub process_samtools_view_for_distribution {
 }
 
 
-sub compute_poisson_parameters {
-    my $this = shift;
-    my $reads = shift;
-    my $spaces = $this->compute_read_spaces($reads);
-    return $this->__estimate_poisson_parameters_per_chr($spaces);
-}
-
-
-sub compute_poisson_parameters_chr_free {
-    my $this = shift;
-    my $reads = shift;
-    my $spaces = $this->compute_read_spaces_chr_free($reads);
-    return $this->__estimate_poisson_parameters_chr_free($spaces);
-}
-
-
-sub compute_read_spaces {
-    my ($self, $reads_per_chr) = @_;
-    my %spaces_per_chr = ();
-    foreach my $chr (keys %{ $self->{chr_info} }) {
-        my $reads = $reads_per_chr->{$chr};
-        my @spaces = ();
-        for (my $i = 0, my $e = scalar(@$reads)-1; $i < $e; $i++) {
-            push @spaces, $reads->[$i+1] - $reads->[$i];
-        }
-        $spaces_per_chr{$chr} = \@spaces;
+# 0: numéro de chromosome,
+# 1: position de départ,
+# 2: position d'arrivée (dans le système 0-based, ie la numérotation commence à 0),
+# 3: nom,
+# 4: multiplicité,
+# 5: brin
+sub get_read_distribution_from_bed {
+    my ($this, $bed_file) = @_;
+    my %reads = ();
+    foreach my $chr (keys %{$this->{chr_info}}) {
+		$reads{$chr} = {};
     }
-    return \%spaces_per_chr;
-}
-
-
-sub compute_read_spaces_chr_free {
-    my ($self, $reads_per_chr) = @_;
-    my @spaces = ();
-    foreach my $chr (keys %{ $self->{chr_info} }) {
-        my $reads = $reads_per_chr->{$chr};
-        for (my $i = 0, my $e = scalar(@$reads)-1; $i < $e; $i++) {
-            push @spaces, $reads->[$i+1] - $reads->[$i];
+    open( my $HANDLE, '<', $bed_file) or die "Can't open '$bed_file': $!";
+    while (<$HANDLE>) {
+        chomp;
+        my @fields = split("\t");
+        if (scalar @fields != 6) {
+			next;
+        }
+        my $pos = $fields[1]+1;
+        my $strand = $fields[5];
+        my $end = $fields[2]+1;
+        my $chr = $fields[0];
+        if (defined $reads{$chr}{$pos}) {
+			$reads{$chr}{$pos}{read_count} += $fields[4];
+			$reads{$chr}{$pos}{end} = $end if $end > $reads{$chr}{$pos}{end};
+			$reads{$chr}{$pos}{forward_read_count}+= $fields[4] if $strand eq '+';
+        }
+        else {
+			$reads{$chr}{$pos} = {read_count => $fields[4], end => $end, forward_read_count => ($strand eq '+') ? $fields[4] : 0};
         }
     }
-    return \@spaces;
+    close $HANDLE;
+    return \%reads;
 }
-
-# args: reads_distrib_per_chr, sliding window size
-sub compute_read_density_distribution {
-	my ($this, $reads_distrib_per_chr, $sliding_window_size) = @_;
-	my %densities = ();
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-        my $reads = $reads_distrib_per_chr->{$chr};
-        for (my $i = 0, my $e = $this->{chr_info}->{$chr}-$sliding_window_size; $i < $e; $i++) {
-			my $read_count = 0;
-			for (my $j = $i, my $e2 = $i + $sliding_window_size; $j < $e2; $j++) {
-				if (defined $reads->{$j}) {
-					$read_count += $reads->{$j};
-				}
-			}
-# 			if ($read_count >= 1000000) {
-# 				print "Huge density detected on chr $chr, at $i\n";
-# 			}
-			if (defined $densities{$read_count}) {
-				$densities{$read_count}++;
-			}
-			else {
-				$densities{$read_count} = 1;
-			}
-        }
-    }
-    return \%densities;
-}
-
-
-sub compute_read_train_per_chr {
-	my ($this, $read_loci_per_chr) = @_;
-	my %trains_per_chr = ();
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $params = $this->compute_read_train_chr_free($read_loci_per_chr->{$chr}, $chr);
-		$trains_per_chr{$chr} = $params;
-	}
-	return \%trains_per_chr;
-}
-
-
-sub compute_read_train_chr_free {
-	my ($this, $read_loci, $chr_name) = @_;
-	my @trains = ();
-	my $__current_train_ref = $read_loci->[0];
-	my %current_train = %$__current_train_ref; # Start pos, end pos
-	$current_train{count} = 1;
-	foreach my $read_locus (@$read_loci) {
-		if ($current_train{begin} <= $read_locus->{begin} && $read_locus->{begin} < $current_train{end}) {
-			$current_train{end} = max $current_train{end}, $read_locus->{end};
-			$current_train{count}++;
-		}
-		else {
-			push @trains, [$current_train{begin}, $current_train{end}, $current_train{count}];
-			%current_train = %$read_locus;
-			$current_train{count} = 1;
-		}
-	}
-	if ($current_train{begin} < $current_train{end}) {
-		push @trains, [$current_train{begin}, $current_train{end}, $current_train{count}];
-	}
-	return \@trains;
-}
-
-sub compute_train_distributions_per_chr {
-	my ($this, $read_trains_per_chr) = @_;
-	my %length_distribution = ();
-	my %delay_distribution = ();
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $read_trains = $read_trains_per_chr->{$chr};
-		my $e = scalar(@$read_trains)-1;
-		for (my $i = 0; $i < $e; $i++) {
-			my $length = $read_trains->[$i]->[1] - $read_trains->[$i]->[0];
-			if (defined $length_distribution{$length}) {
-				$length_distribution{$length}->[0]++;
-				if ($length_distribution{$length}->[0] < 16) {
-					$length_distribution{$length}->[1] .= ",$chr:$read_trains->[$i]->[0]-". ($read_trains->[$i]->[1]-1);
-				}
-			}
-			else {
-				$length_distribution{$length} = [1, ",$chr:$read_trains->[$i]->[0]-". ($read_trains->[$i]->[1]-1)];
-			}
-			my $delay = $read_trains->[$i+1]->[0] - $read_trains->[$i]->[1];
-			if (defined $delay_distribution{$delay}) {
-				$delay_distribution{$delay}->[0]++;
-				if ($delay_distribution{$delay}->[0] < 16) {
-					$delay_distribution{$delay}->[1] .= ",$chr:$read_trains->[$i]->[1]-". ($read_trains->[$i+1]->[0]-1);
-				}
-			}
-			else {
-				$delay_distribution{$delay} = [1, ",$chr:$read_trains->[$i]->[1]-". ($read_trains->[$i+1]->[0]-1)];
-			}
-		}
-		# we add the last one
-		my $length = $read_trains->[$e]->[1] - $read_trains->[$e]->[0];
-		if (defined $length_distribution{$length}) {
-			$length_distribution{$length}->[0]++;
-			if ($length_distribution{$length}->[0] < 16) {
-				$length_distribution{$length}->[1] .= ",$chr:$read_trains->[$e]->[0]-". ($read_trains->[$e]->[1]-1);
-			}
-		}
-		else {
-			$length_distribution{$length} = [1, ",$chr:$read_trains->[$e]->[0]-". ($read_trains->[$e]->[1]-1)];
-		}
-	}
-	return [\%length_distribution, \%delay_distribution];
-}
-
-
-sub plot_read_train_distribution {
-	my ($this, $args, $output_folder) = @_;
-	my $length_distribution = $args->[0];
-	my $delay_distribution = $args->[1];
-	
-	my $filename = "$output_folder/train_length_distribution.csv";
-	open(my $fh, '>', $filename);
-	print $fh "Train length,Amount of trains\n";
-	foreach my $length (sort {$a <=> $b} keys %$length_distribution) {
-		print $fh "$length,$length_distribution->{$length}->[0]$length_distribution->{$length}->[1]\n";
-	}
-	close $fh;
-	
-	$filename = "$output_folder/train_delay_distribution.csv";
-	open($fh, '>', $filename);
-	print $fh "Train delay,Amount of trains\n";
-	foreach my $delay (sort {$a <=> $b} keys %$delay_distribution) {
-		print $fh "$delay,$delay_distribution->{$delay}\n";
-	}
-	close $fh;
-}
-
-sub plot_read_density_distribution {
-	my ($self, $density_distribution, $sliding_window_size) = @_;
-	my $filename = "density_distribution.csv";
-	open(my $fh, '>', $filename);
-	print $fh "Density,Amount of windows (window size: $sliding_window_size)\n";
-	foreach my $density (sort {$a <=> $b} keys %$density_distribution) {
-		print $fh $density/$sliding_window_size,",$density_distribution->{$density}->[0]$density_distribution->{$density}->[1]\n";
-	}
-	close $fh;
-}
-
-
-sub get_read_spaces_distribution {
-	my ($self, $spaces_per_chr) = @_;
-	my %distribution_per_chr = ();
-	foreach my $chr (keys %{ $self->{chr_info} }) {
-        my $spaces = $spaces_per_chr->{$chr};
-        my %space_distrib = ();
-        foreach my $space (@$spaces) {
-			if (defined $space_distrib{$space}) {
-				$space_distrib{$space}++;# = $space_distrib{$space}+1 if defined $space_distrib{$space};
-			}
-			else {
-				$space_distrib{$space} = 1;
-			}
-        }
-        $distribution_per_chr{$chr} = \%space_distrib;
-    }
-    return \%distribution_per_chr;
-}
-
-
-sub get_read_spaces_distribution_chr_free {
-	my ($self, $spaces_chr_free) = @_;
-	my %space_distrib = ();
-	foreach my $space (@$spaces_chr_free) {
-		if (defined $space_distrib{$space}) {
-			$space_distrib{$space}++;# = $space_distrib{$space}+1 if defined $space_distrib{$space};
-		}
-		else {
-			$space_distrib{$space} = 1;
-		}
-	}
-    return \%space_distrib;
-}
-
-
-sub plot_space_distribution {
-	my ($self, $distribution_per_chr) = @_;
-	foreach my $chr (keys %{ $self->{chr_info} }) {
-		my $cluster_count = 0;
-		my $cluster_total = 0;
-		my $noise_count = 0;
-		my $noise_total = 0;
-		my $filename = "delays_$chr.csv";
-		open(my $fh, '>', $filename);
-		my $distribution = $distribution_per_chr->{$chr};
-		print $fh "Delays,Number\n";
-		my @spaces = keys %$distribution;
-		@spaces = sort {$a <=> $b} @spaces;
-		for (my $i = 0, my $e = $spaces[-1]; $i <= $e; $i++) {
-			if (defined $distribution->{$i}) {
-				print $fh "$i,$distribution->{$i}\n";
-				if ($i > 21) {
-					$noise_count+=$i;
-					$noise_total+=$i*$distribution->{$i};
-				}
-				else {
-					$cluster_count+=$i;
-					$cluster_total+=$i*$distribution->{$i};
-				}
-			}
-			else {
-				print $fh "$i,0\n";
-				if ($i > 21) {
-					$noise_count+=$i;
-				}
-				else {
-					$cluster_count+=$i;
-				}
-			}
-		}
-		close $fh;
-	}
-}
-
-
-sub plot_space_distribution_chr_free {
-	my ($self, $distribution_chr_free) = @_;
-	my $cluster_count = 0;
-	my $cluster_total = 0;
-	my $noise_count = 0;
-	my $noise_total = 0;
-	my $filename = "delay_distribution.csv";
-	open(my $fh, '>', $filename);
-	my $distribution = $distribution_chr_free;
-	print $fh "Delay,Amount of reads\n";
-	my @spaces = keys %$distribution;
-	@spaces = sort {$a <=> $b} @spaces;
-	for (my $i = 0, my $e = $spaces[-1]; $i <= $e; $i++) {
-		if (defined $distribution->{$i}) {
-			print $fh "$i,$distribution->{$i}\n";
-			if ($i > 21) {
-				$noise_count+=$i;
-				$noise_total+=$i*$distribution->{$i};
-			}
-			else {
-				$cluster_count+=$i;
-				$cluster_total+=$i*$distribution->{$i};
-			}
-		}
-		else {
-			print $fh "$i,0\n";
-			if ($i > 21) {
-				$noise_count+=$i;
-			}
-			else {
-				$cluster_count+=$i;
-			}
-		}
-	}
-	close $fh;
-}
-
-
-sub __estimate_poisson_parameters_per_chr {
-    my ($self, $spaces_per_chr) = @_;
-    my %parameters_per_chr = ();
-    foreach my $chr (keys %{ $self->{chr_info} }) {
-        # [Lambda_cluster, Lambda_noise]
-        my $params = $self->__estimate_poisson_parameters_chr_free($spaces_per_chr->{$chr});
-        $parameters_per_chr{$chr} = $params;
-    }
-    return \%parameters_per_chr;
-}
-
-
-sub __estimate_poisson_parameters_chr_free {
-    my ( $this, $spaces_non_sorted ) = @_;
-    my @spaces = sort {$a <=> $b} @$spaces_non_sorted;
-    # Computes an estimate of the two clusters. Only look for the largest gap between two spaces, and consider it's the future margin
-    my $max_delta = $spaces[1]-$spaces[0];
-    my $max_delta_pos = 0;
-    for (my $i = 0, my $e = scalar(@spaces)-1; $i < $e; $i++) {
-        my $delta = $spaces[$i+1] - $spaces[$i];
-        if ($delta > $max_delta) {
-            $max_delta = $delta;
-            $max_delta_pos = $i;
-        }
-    }
-    # Compute the averages of the clusters
-    my $cluster_avg = 0, my $cluster_total = 0;
-    my $cluster_count = $max_delta_pos; #cluster_count defines the margin between the two clusters
-    my $noise_avg = 0, my $noise_total = 0;
-    my $noise_count = scalar(@spaces) - $cluster_count;
-    for (my $i = 0; $i < $cluster_count; $i++) {
-        $cluster_total += $spaces[$i];
-    }
-    for (my $i = $cluster_count, my $e = scalar(@spaces); $i < $e; $i++) {
-        $noise_total += $spaces[$i];
-    }
-    $cluster_avg = $cluster_total/$cluster_count;
-    $noise_avg = $noise_total/$noise_count;
-    while (1) {
-        # Assignment step
-        # In this step, for every point (i.e. blank nucleotides) we check wether it is closer to the cluster avg or the noise avg, and we reassign it if needed.
-        # We try to do it smartly. As we are trying to find two clusters in 1D, the two clusters are speratated by only one point/margin.
-        # This means that only the points near the margin are likely to be reassigned.
-        # We start to check the points near the margin upstream. If nothing gets changed, we check downstream. Note that it's impossible that we must reassign on both directions.
-        # That's because the margin will either move left or right.
-        
-        # Check near the border, in the noise cluster (i.e. try to move the margin right)
-        my $assigned_upstream = 0;
-        for (my $i = $cluster_count, my $e = scalar(@spaces); $i < $e; $i++) {
-            if (abs($spaces[$i] - $cluster_avg) < abs($spaces[$i] - $noise_avg)) {
-                $assigned_upstream++;
-                $cluster_total += $spaces[$i];
-                $noise_total -= $spaces[$i];
-            }
-            else {
-                last;
-            }
-        }
-        # If we couldn't move the margin right, we try to move it left
-        if ($assigned_upstream == 0) {
-            for (my $i = $cluster_count-1; $i >= 0; $i--) {
-                if (abs($spaces[$i] - $noise_avg) < abs($spaces[$i] - $cluster_avg)) {
-                    $assigned_upstream--;
-                    $cluster_total -= $spaces[$i];
-                    $noise_total += $spaces[$i];
-                }
-                else {
-					last;
-				}
-            }
-        }
-        # If nothing has changed (nothing was misclassified), the algorithm converged
-        if ($assigned_upstream == 0) {
-            last;
-        }
-        $cluster_count += $assigned_upstream;
-        $noise_count -= $assigned_upstream;
-        # Recompute the averages
-        $cluster_avg = $cluster_total/$cluster_count;
-        $noise_avg = $noise_total/$noise_count;
-    }
-    return [1/$cluster_avg, 1/$noise_avg];
-}
-
 
 sub get_faidx_file {
     my ( $self, @args ) = @_;
@@ -565,35 +157,12 @@ sub get_chromosomes_info_from_genome_file {
 
 sub get_windows {
 	my $this = shift;
-	my $params_per_chr = shift;
-	my $reads_per_chr = shift;
-	my %windows_per_chr = ();
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-# 		$windows_per_chr{$chr} = $this->__get_windows_for_chr($params_per_chr->{$chr}, $reads_per_chr->{$chr});
-# 		print 'Computing for ', $chr, "\n";
-		$windows_per_chr{$chr} = $this->__get_windows_for_chr2($reads_per_chr->{$chr});
-	}
-	return \%windows_per_chr;
-}
-
-sub get_windows_from_train_analysis {
-	my $this = shift;
-	my $read_loci_per_chr = shift;
-	my %windows_per_chr = ();
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		$windows_per_chr{$chr} = $this->__get_windows_from_trains_for_chr($read_loci_per_chr->{$chr});
-	}
-	return \%windows_per_chr;
-}
-
-sub get_windows_from_train_analysis_with_read_distribution {
-	my $this = shift;
-	my $read_loci_per_chr = shift;
+	my $read_distribution_per_chr = shift;
 	my $train_detection_threshold = shift;
 	my %windows_per_chr = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		print "\t", $chr, "\n";
-		$windows_per_chr{$chr} = $this->__get_windows_from_trains_with_read_distrib_for_chr($read_loci_per_chr->{$chr}, $train_detection_threshold);
+		$windows_per_chr{$chr} = $this->__get_windows_for_chr($read_distribution_per_chr->{$chr}, $train_detection_threshold);
 	}
 	return \%windows_per_chr;
 }
@@ -605,7 +174,7 @@ sub get_strand {
 }
 
 
-sub __get_windows_from_trains_with_read_distrib_for_chr {
+sub __get_windows_for_chr {
 	my $this = shift;
 	my $read_distribution = shift;
 	my $train_detection_threshold = shift;
@@ -778,48 +347,12 @@ sub __get_windows_process_train_spikes {
 	}
 }
 
-sub __get_windows_process_train_spikes_local_max {
-	my ($current_train, $position, $read_locus, $total_read_count, $end_reads, $last_read_count, $spike_detection, $seeking_pos) = @_;
-	my $spikes = $current_train->{spikes};
-
-	# Maintaining read count
-	__get_windows_maintain_read_count($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection);
-	$$total_read_count += $read_locus->{read_count};
-	push @$end_reads, {end => $read_locus->{end}, read_count => $read_locus->{read_count}};
-	@$end_reads = sort {$a->{end} <=> $b->{end}} @$end_reads;
-	# Looking for spikes
-	if ($$total_read_count - $$last_read_count >= $spike_detection) {
-		if (scalar @$spikes) {
-			my $last_spike = $spikes->[-1];
-			if (($position - $last_spike->{begin} < 20 && $last_spike->{trigger} < $$total_read_count)) {
-				pop @$spikes;
-			}
-			elsif ($last_spike->{end} == -1) {
-				return;
-			}
-		}
-		push @$spikes, {begin => $position, end => -1, trigger => $read_locus->{read_count}, read_count => $read_locus->{read_count},
-		forward_read_count => $read_locus->{forward_read_count}};
-	}
-	elsif ($$total_read_count - $$last_read_count <= -$spike_detection && scalar @$spikes) {
-		my $last_spike = $spikes->[-1];
-		if ($last_spike->{end} == -1) {
-			$last_spike->{end} = $position;
-			$last_spike->{strand} = get_strand $last_spike->{forward_read_count}, $last_spike->{read_count};
-		}
-	}
-	elsif (scalar @$spikes && $spikes->[-1]{end} == -1) {
-		my $last_spike = $spikes->[-1];
-		$last_spike->{read_count} += $read_locus->{read_count};
-		$last_spike->{forward_read_count} += $read_locus->{forward_read_count};
-	}
-}
-
 
 sub __get_windows_process_train_from_distribution {
 	my ($this, $windows, $current_train, $window, $train_detection_threshold) = @_;
-	my $accepting_time = 300;
-	if ($current_train->{read_count} >= $train_detection_threshold) { # This train should be in a window
+	my $accepting_time = $this->{accepting_time};
+	my $reverse_read_count = $current_train->{read_count} - $current_train->{forward_read_count};
+	if ($current_train->{forward_read_count} >= $train_detection_threshold || $reverse_read_count >= $train_detection_threshold) { # This train should be in a window
 		if ($window->{begin} == $window->{end}) { # There were no current window
 			$window->{begin} = $current_train->{begin};
 			$window->{end} = $current_train->{end};
@@ -1194,7 +727,7 @@ sub __add_candidate_window_from_train {
 
 sub __get_windows_process_train {
 	my ($this, $windows, $current_train, $window) = @_;
-	my $accepting_time = 300;
+	my $accepting_time = $this->{accepting_time};
 	if ($current_train->{read_count} >= $this->{threshold}) { # This train should be in a window
 		my $avg_begin = floor($current_train->{begin} + $current_train->{begin_offset_count}/$current_train->{read_count});
 		my $avg_end = $current_train->{begin} + ceil($current_train->{length_count}/$current_train->{read_count});
@@ -1369,63 +902,12 @@ sub __add_candidate_window {
 	}
 }
 
-sub compute_window_length_distribution {
-	my ($this, $windows_per_chr) = @_;
-	my %length_distribution = ();
-	my $max_chr = 15;
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $windows = $windows_per_chr->{$chr};
-		my $e = scalar(@$windows);
-		for (my $i = 0; $i < $e; $i++) {
-			my $length = $windows->[$i]->{end} - $windows->[$i]->{begin};
-			if (defined $length_distribution{$length}) {
-				$length_distribution{$length}->[0]++;
-				if ($length_distribution{$length}->[0] <= $max_chr) {
-					$length_distribution{$length}->[1] .= ','.$chr . ':' . $windows->[$i]->{begin} . '-' . ($windows->[$i]->{end}-1);
-				}
-			}
-			else {
-				$length_distribution{$length} = [1, ','.$chr . ':' . $windows->[$i]->{begin} . '-' . ($windows->[$i]->{end}-1)];
-			}
-		}
-	}
-	return \%length_distribution;
-}
-
-
-sub plot_window_distribution {
-	my ($this, $length_distribution, $output_folder) = @_;
-
-	my $filename = "$output_folder/window_length_distribution_" . $this->{threshold} . ".csv";
-	open(my $fh, '>', $filename);
-	print $fh "Window length,Amount of windows\n";
-	foreach my $length (sort {$a <=> $b} keys %$length_distribution) {
-		print $fh "$length,$length_distribution->{$length}->[0]$length_distribution->{$length}->[1]\n";
-	}
-	close $fh;
-}
-
-
-sub export_windows_to_csv {
-	my ($this, $windows_per_chr, $output_folder) = @_;
-
-	my $filename = "$output_folder/window_list_" . $this->{threshold} . ".csv";
-	open(my $fh, '>', $filename);
-	print $fh "Chromosome,Starting position,Ending position (included),Locus\n";
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $windows = $windows_per_chr->{$chr};
-		foreach my $window (@$windows) { # Already sorted
-			print $fh $chr,',',$window->{begin},',',$window->{end}-1,",$chr:$window->{begin}-", $window->{end}-1, "\n";
-		}
-	}
-	close $fh;
-}
 
 
 sub export_windows_to_gff {
 	my ($this, $windows_per_chr, $output_folder, $gff_annotation_file) = @_;
 
-	my $filename = "$output_folder/window_list_" . $this->{threshold} . ".gff3";
+	my $filename = "$output_folder/window_list.gff3";
 	open(my $fh, '>', $filename);
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		my $windows = $windows_per_chr->{$chr};
@@ -1454,7 +936,7 @@ sub export_windows_to_gff {
 sub export_miRnaPos_to_gff {
 	my ($this, $miRnaPosPerChr, $output_folder, $gff_annotation_file) = @_;
 
-	my $filename = "$output_folder/miRna_list_" . $this->{threshold} . ".gff3";
+	my $filename = "$output_folder/miRna_list.gff3";
 	open(my $fh, '>', $filename);
 	my $counter = 0, my $counter_single = 0;
 	foreach my $chr (keys %{ $this->{chr_info} }) {
@@ -1472,17 +954,17 @@ sub export_miRnaPos_to_gff {
 	}
 	close $fh;
 
-	print $counter_single/$counter, "% of miRna are detected from a single spike.";
+# 	print $counter_single/$counter, "% of miRna are detected from a single spike.";
 
 	if ($gff_annotation_file) {
-		system("intersectBed -a $gff_annotation_file -b $filename -v -s > $output_folder/non_detected_miRna_$this->{threshold}.csv");
-		system("intersectBed -a $gff_annotation_file -b $filename -wa -u -s > $output_folder/detected_miRna_$this->{threshold}.csv");
-		system("intersectBed -b $gff_annotation_file -a $filename -v -s > $output_folder/false_positive_miRna_$this->{threshold}.csv");
+		system("intersectBed -a $gff_annotation_file -b $filename -v -s > $output_folder/non_detected_miRna.csv");
+		system("intersectBed -a $gff_annotation_file -b $filename -wa -u -s > $output_folder/detected_miRna.csv");
+		system("intersectBed -b $gff_annotation_file -a $filename -v -s > $output_folder/false_positive_miRna.csv");
 	}
 }
 
 sub export_precursors_to_gff {
-	my ($this, $regionsPerChr, $output_folder, $output_file, $gff_annotation_file) = @_;
+	my ($this, $regionsPerChr, $output_folder, $output_file, $gff_annotation_file, $bed_file) = @_;
 
 	my $filename = "$output_folder/$output_file";
 	open(my $fh, '>', $filename.'.csv');
@@ -1507,38 +989,111 @@ sub export_precursors_to_gff {
 	}
 	close $fh;
 
-	my @files = ("$output_folder/non_detected_precursors__against__$output_file", "$output_folder/detected_precursors__against__$output_file",
-	"$output_folder/false_positive_precursor__against__$output_file");
+	my @files = ();
+	open (my $fh2, '<', $filename.".csv");
+	open (my $fh_out, '>', $filename."_.csv");
+	while (<$fh2>) {
+		chomp;
+		my @f = split("\t");
+		splice @f, 8, 1;
+		print $fh_out join("\t", @f), "\n";
+	}
+	close $fh2;
+	close $fh_out;
+	__intersectBed($filename.'_.csv', $bed_file, $filename.'_count.csv');
 	if ($gff_annotation_file) {
 		system("intersectBed -a $gff_annotation_file -b $filename.csv -v -s > $output_folder/non_detected_precursors__against__$output_file.csv");
 		system("intersectBed -a $gff_annotation_file -b $filename.csv -wa -u -s > $output_folder/detected_precursors__against__$output_file.csv");
-		system("intersectBed -b $gff_annotation_file -a $filename.csv -v -s > $output_folder/false_positive_precursor__against__$output_file.csv");
+		system("intersectBed -b $gff_annotation_file -a ".$filename."_.csv -v -s > $output_folder/false_positive_precursor__against__$output_file.csv");
+		@files = ("$output_folder/false_positive_precursor__against__$output_file",
+		"$output_folder/non_detected_precursors__against__$output_file", "$output_folder/detected_precursors__against__$output_file");
 	}
 
 	foreach my $file (@files) {
-		system("intersectBed -a ".$file.".csv -b ../data/shortstack_miRNA.bed -c -s  > ".$file."_count.csv");
+		__intersectBed($file.'.csv', $bed_file, $file.'_count.csv');
 	}
-	system("intersectBed -a ".$filename.".csv -b ../data/shortstack_miRNA.bed -c -s  > ".$filename."_count_.csv");
 }
 
+sub __intersectBed {
+# Same order of chromosomes
+	my $a = shift;
+	my $b = shift;
+	my $out = shift;
+	my $chunk_size = 30 << 20;
+	my $fileCount = 1;
 
-sub export_windows_to_bed {
-	my ($this, $windows_per_chr, $output_folder, $gff_annotation_file) = @_;
+	if (!-e $b. '_0.bed') {
+		open (my $fh_b, '<', $b);
+		open (my $fh_bout, '>', $b. '_0.bed');
+		my $size = 0;
 
-	my $filename = "$output_folder/window_list_" . $this->{threshold} . ".bed";
-	open(my $fh, '>', $filename);
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $windows = $windows_per_chr->{$chr};
-		foreach my $window (@$windows) { # Already sorted
-			print $fh $chr,"\t",$window->{begin},"\t",$window->{end},"\n";
+		while (<$fh_b>) {
+			$size += length $_;
+			if ($size > $chunk_size) {
+				close $fh_bout;
+				open ($fh_bout, '>', $b. '_' .$fileCount. '.bed');
+				$fileCount++;
+				$size = 0;
+			}
+			print $fh_bout $_;
+		}
+		close $fh_b;
+		close $fh_bout;
+	}
+	else {
+		while (-e $b. '_' .$fileCount. '.bed') {
+			$fileCount++;
 		}
 	}
-	close $fh;
 
-	if ($gff_annotation_file) {
-		system("intersectBed -a $gff_annotation_file -b $filename -v > $output_folder/non_detected_windows_$this->{threshold}.csv");
-		system("intersectBed -b $gff_annotation_file -a $filename -v > $output_folder/false_positive_windows_$this->{threshold}.csv");
+	for (my $i = 0; $i < $fileCount; $i++) {
+		system("intersectBed -a $a -b $b" . '_' .$i. '.bed -c -s > '.$a.'_bed_result_' . $i . '.bed');
 	}
+	my $cat_cmd = 'cat';
+	for (my $i = 0; $i < $fileCount; $i++) {
+		$cat_cmd .= ' '.$a . '_bed_result_' .$i. '.bed';
+	}
+	$cat_cmd .= ' | sort > ' .$out. '_';
+	system($cat_cmd);
+	
+	for (my $i = 0; $i < $fileCount; $i++) {
+		unlink $a . '_bed_result_' .$i. '.bed';
+	}
+
+	open (my $fh_out_, '<', $out. '_');
+	open (my $fh_out, '>', $out);
+	my @last_line = ();
+	while (<$fh_out_>) {
+		chomp;
+		my @fields = split("\t");
+		if (scalar(@fields) == 0) {
+			next;
+		}
+		if (scalar(@last_line) == 0) {
+			@last_line = @fields;
+			$last_line[-1] = 0;
+		}
+		my $all_equal = 1;
+		for (my $i = 0, my $e = scalar(@fields)-1; $i < $e; $i++) {
+			if ($fields[$i] ne $last_line[$i]) {
+				$all_equal = 0;
+				next;
+			}
+		}
+		if ($all_equal == 1) {
+			$last_line[-1] += $fields[-1];
+		}
+		else {
+			print $fh_out join("\t", @last_line), "\n";
+			@last_line = @fields;
+		}
+	}
+	if (scalar(@last_line) > 0) {
+		print $fh_out join("\t", @last_line), "\n";
+	}
+	close $fh_out_;
+	close $fh_out;
+	unlink $out. '_';
 }
 
 sub run_rnalfold {
@@ -1629,18 +1184,18 @@ sub eval_stemloop_output {
 }
 
 sub apply_structure_criterion {
-	my ($this, $regionsPerChr) = @_;
+	my ($this, $regionsPerChr, $cache_folder) = @_;
 	my %retained_regions_per_chr = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		print "\t", $chr, "\n";
 		my $regions = $regionsPerChr->{$chr};
-		$retained_regions_per_chr{$chr} = $this->apply_structure_criterion_per_chr($chr, $regions);
+		$retained_regions_per_chr{$chr} = $this->apply_structure_criterion_per_chr($chr, $regions, $cache_folder);
 	}
 	return \%retained_regions_per_chr;
 }
 
 sub apply_structure_criterion_per_chr {
-	my ($this, $chr, $regions) = @_;
+	my ($this, $chr, $regions, $cache_folder) = @_;
 	my $genome = $this->{genome_db};
 	my @retained_regions = ();
 	my $eliminated_by_stemloop = 0;
@@ -1648,13 +1203,13 @@ sub apply_structure_criterion_per_chr {
 		my $strand = $region->{strand} eq '+' ? 1 : -1;
 		my $seq_filename = $region->{strand}. '_' . $chr . '_' . $region->{begin} . '-' . ($region->{end}-1);
 		my $rnalfold_output_filename = "rnalfold_out_" . $seq_filename;
-		my $rnalfold_output_filepath = 'rnalfold_cache/'.$rnalfold_output_filename;
+		my $rnalfold_output_filepath = $cache_folder.'/rnalfold_cache/'.$rnalfold_output_filename;
 		if (!-e $rnalfold_output_filepath) {
 			$rnalfold_output_filepath = run_rnalfold('miRnaPrecursor', $genome->seq($chr, $region->{begin}, $region->{end}-1, $strand),
-			'rnalfold_cache', $rnalfold_output_filename);
+			$cache_folder.'/rnalfold_cache', $rnalfold_output_filename);
 		}
-		my $output_stemloop_opt = 'rnastemloop_cache/rnastemloop_' .$seq_filename. '_opt';
-		my $output_stemloop = 'rnastemloop_cache/rnastemloop_' .$seq_filename;
+		my $output_stemloop_opt = $cache_folder.'/rnastemloop_cache/rnastemloop_' .$seq_filename. '_opt';
+		my $output_stemloop = $cache_folder.'/rnastemloop_cache/rnastemloop_' .$seq_filename;
 
 		if (!-e $output_stemloop) {
 			run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt);
