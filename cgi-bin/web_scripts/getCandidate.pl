@@ -55,6 +55,10 @@ else {
             ( $filename, $contents, $disposition ) =
               exportAsYAML( $candidate )
         }
+        when (/reads/) {
+            ( $filename, $contents, $disposition ) =
+              exportAsReads( $candidate, $job )            
+        }
         default {
             miRkwood::WebTemplate::web_die("Error: the export type '$export_type' is not supported");
         }
@@ -106,4 +110,19 @@ sub exportAsYAML {
     use YAML::XS;
     my $yaml = YAML::XS::Dump($candidate);
     return ( "$filename.yml", $yaml, 'attachment' );
+}
+
+sub exportAsReads {
+    my @args      = @_;
+    my $candidate = shift @args;
+    my $jobPath   = shift @args;
+    my $filepath  = File::Spec->catdir( $jobPath, "reads/known/", $candidate->{'identifier'} );
+    my $contents = '';
+    open (my $IN, '<', $filepath) or warn "ERROR when opening $filepath : $!";
+    while ( <$IN> ){
+        $contents .= $_;
+    } 
+    
+    
+    return ( "$candidate->{'identifier'}.txt", $contents, 'attachment' );
 }
