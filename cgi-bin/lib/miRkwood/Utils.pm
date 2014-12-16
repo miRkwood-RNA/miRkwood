@@ -1057,7 +1057,7 @@ sub print_reads_clouds_for_known_miRNA {
     if ( $genome =~ /.*\/([^\/]+)/ ){
         $genome_name = $1;
     }
-    
+    my $precursor_id    = $mirna->{'identifier'};
     my $name            = $mirna->{'precursor_name'};
     my $strand          = $mirna->{'strand'};
     my $chromosome      = $mirna->{'chromosome'};
@@ -1076,7 +1076,7 @@ sub print_reads_clouds_for_known_miRNA {
     
     my $reference = get_sequence_from_positions ($genome, $chromosome, $precursor_start, $precursor_end);
     
-    my $cloud_file = "$output_dir/$name";
+    my $cloud_file = "$output_dir/$precursor_id";
     open (OUT, ">$cloud_file") or die "ERROR while creating $cloud_file : $!";
     
     ### Print the header
