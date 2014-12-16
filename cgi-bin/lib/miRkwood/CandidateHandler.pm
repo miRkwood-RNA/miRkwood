@@ -42,7 +42,18 @@ sub get_candidate_filepath {
     my ( $self, @args ) = @_;
     my $job = shift @args;
     my $id = shift @args;
-    return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
+    if ( -e File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id)) ) {
+        return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
+    }
+    elsif ( -e File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id)) ) {
+        return File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id));
+    }
+    elsif ( -e File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id)) ) {
+        return File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id));
+    }
+    else{
+        return;
+    }   
 }
 
 =method make_candidate_filename
