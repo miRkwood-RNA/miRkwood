@@ -41,19 +41,14 @@ Get the candidate filepath given its identifier and the job directory
 sub get_candidate_filepath {
     my ( $self, @args ) = @_;
     my $job = shift @args;
-    my $id = shift @args;
-    if ( -e File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id)) ) {
-        return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
-    }
-    elsif ( -e File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id)) ) {
+    my $id = shift @args; 
+    if ( -e File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id)) ) {
         return File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id));
     }
     elsif ( -e File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id)) ) {
         return File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id));
-    }
-    else{
-        return;
-    }   
+    } 
+    return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
 }
 
 =method make_candidate_filename
