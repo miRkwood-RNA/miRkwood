@@ -24,6 +24,10 @@ use miRkwood::Programs;
 
 Constructor
 
+ Usage : my $clustering = Clusters->new('genome.fa'),
+ Input : The genome file
+ Return: The cunstructed instance
+
 =cut
 
 sub new {
@@ -40,7 +44,22 @@ sub new {
     return $self;
 }
 
-# Returns a hash (chr_name => read positions)
+=method get_read_distribution_from_bam
+
+Retrieve the reads from a bam file.
+
+ Usage : my $reads = $self->get_read_distribution_from_bam('reads.bam'),
+ Input : The bam file
+ Return: A hash reference {chr => {
+					begin_pos => {
+						read_count => read depth,
+						end => maximum end coordinates of all reads starting at begin_pos,
+						forward_read_count => read depth of reads mapped onto forward strand
+						}
+					}
+				}
+
+=cut
 sub get_read_distribution_from_bam {
     my ( $this, $bam_file ) = @_;
     # go chr by chr, using the .fai index file to get the chr names
@@ -56,7 +75,20 @@ sub get_read_distribution_from_bam {
     return \%reads;
 }
 
+=method __get_read_distribution_from_bam_for_chr
 
+Static private helper function. You shouldnt use this function.
+
+ Usage : my $reads = __get_read_distribution_from_bam_for_chr($sam_file_handle),
+ Input : The bam file path
+ Return: A hash reference {begin_pos => {
+					read_count => read depth,
+					end => maximum end coordinates of all reads starting at begin_pos,
+					forward_read_count => read depth of reads mapped onto forward strand
+					}
+				}
+
+=cut
 sub __get_read_distribution_from_bam_for_chr {
     my $HANDLE = shift;
     my %chr_reads = ();
@@ -80,12 +112,28 @@ sub __get_read_distribution_from_bam_for_chr {
 }
 
 
-# 0: numéro de chromosome,
-# 1: position de départ,
-# 2: position d'arrivée (dans le système 0-based, ie la numérotation commence à 0),
-# 3: nom,
-# 4: multiplicité,
-# 5: brin
+=method get_read_distribution_from_bed
+
+Retrieve the reads from a miRkwood-normalized bed file. The bed file must have the following columns (tab-separated):
+# 0: chromosom name,
+# 1: starting position (0-based, starting at 0),
+# 2: end positing (excluded)
+# 3: sequence name
+# 4: depth (integer)
+# 5: strand ('+' or '-')
+
+ Usage : my $reads = $self->get_read_distribution_from_bed('reads.bed'),
+ Input : The bed file path
+ Return: A hash reference {chr => {
+					begin_pos => {
+						read_count => read depth,
+						end => maximum end coordinates of all reads starting at begin_pos,
+						forward_read_count => read depth of reads mapped onto forward strand
+						}
+					}
+				}
+
+=cut
 sub get_read_distribution_from_bed {
     my ($this, $bed_file) = @_;
     my %reads = ();
@@ -116,6 +164,10 @@ sub get_read_distribution_from_bed {
     return \%reads;
 }
 
+=method get_faidx_file
+
+
+=cut
 sub get_faidx_file {
     my ( $self, @args ) = @_;
     my $expected_faidx = $self->{genome_file} . '.fai';
@@ -155,6 +207,40 @@ sub get_chromosomes_info_from_genome_file {
 }
 
 
+=method get_windows
+
+Retrieve regions of interest by reading through the reads. The threshold defines the minimum read depth for the read to be caught in a window.
+A window is made of read trains (a read train is a region of overlapping reads). A window gather a cluster of read trains (no two consecutive read trains are separated by more than
+$self->{accepting_time} (= 350 nt by default)).
+
+ Usage : my $windows = $self->get_windows($read_distribution, $detection_threshold),
+ Input : The read distribution returned from get_read_distribution_from_bed or get_read_distribution_from_bam
+ Return: A hash reference {
+				chr => [array of hash refs {
+							begin => start position (1-based)
+							end => end position (excluded)
+							read_count => The number of reads contained in the window (considering the read depth)
+							forward_read_count => The number of reads contained in the window mapped onto the forward strand (considering the read depth)
+							trains => [array of hash refs {
+								begin => start position (1-based)
+								end => end position (excluded)
+								last_read_begin => start position of the last read of the train (1-based)
+								read_count => The number of reads contained in the window (considering the read depth)
+								forward_read_count => The number of reads contained in the window mapped onto the forward strand (considering the read depth)
+								spikes => [array of hash refs {
+									begin => start position (1-based)
+									end => end position (excluded)
+									read_count => The number of reads contained in the window (considering the read depth)
+									forward_read_count => The number of reads contained in the window mapped onto the forward strand (considering the read depth)
+									strand => '+' or '-' or '?'
+									trigger => the local read coverage that triggered the spike
+									}]
+								}]
+							}
+						]
+				}
+
+=cut
 sub get_windows {
 	my $this = shift;
 	my $read_distribution_per_chr = shift;
@@ -168,12 +254,26 @@ sub get_windows {
 }
 
 
+=method get_windows
+
+Static private helper function that returns the strand of a region based on read statistics.
+
+ Usage : my $strand = get_strand($forward_read_count, $read_count),
+ Input : The number of reads mapped onto the forward strand, and mapped on both strand
+ Return: '+' (if more than 70% of reads are on the forward strand) or '-' (if more than 70% of reads are on reverse strand) or '?' (otherwise)
+
+=cut
 sub get_strand {
 	my ($forward_read_count, $read_count) = @_;
 	return $forward_read_count >= $read_count*.7 ? '+' : $forward_read_count <= $read_count*.3 ? '-' : '?';
 }
 
 
+=method __get_windows_for_chr
+
+Private helper function that returns the windows for a given chr. You shouldnt use this function.
+
+=cut
 sub __get_windows_for_chr {
 	my $this = shift;
 	my $read_distribution = shift;
@@ -231,6 +331,12 @@ sub __get_windows_for_chr {
 	return \@windows;
 }
 
+
+=method __get_windows_maintain_read_count
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __get_windows_maintain_read_count {
 	my ($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection) = @_;
 	my $spikes = $current_train->{spikes};
@@ -260,32 +366,12 @@ sub __get_windows_maintain_read_count {
 	}
 }
 
-sub __get_windows_maintain_read_count_local_max {
-	my ($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection) = @_;
-	my $spikes = $current_train->{spikes};
 
-	# Maintaining read count
-	if (scalar @$spikes && $spikes->[-1]{end} == -1) {
-		my $last_spike = $spikes->[-1];
-		while (scalar @$end_reads && $end_reads->[0]{end} <= $position) {
-			$$last_read_count = $$total_read_count;
-			$$total_read_count -= $end_reads->[0]{read_count};
-			my $trigger = $end_reads->[0]{end};
-			shift @$end_reads;
-			if ($$total_read_count - $$last_read_count <= -$spike_detection) {
-				$last_spike->{end} = $trigger;
-				$last_spike->{strand} = get_strand $last_spike->{forward_read_count}, $last_spike->{read_count};
-				last;
-			}
-		}
-	}
-	while (scalar @$end_reads && $end_reads->[0]{end} <= $position) {
-		$$last_read_count = $$total_read_count;
-		$$total_read_count -= $end_reads->[0]{read_count};
-		shift @$end_reads;
-	}
-}
+=method __get_windows_finish_train_spikes
 
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __get_windows_finish_train_spikes {
 	my ($current_train) = @_;
 	my $spikes = $current_train->{spikes};
@@ -304,6 +390,11 @@ sub __get_windows_finish_train_spikes {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __get_windows_process_train_spikes {
 	my ($current_train, $position, $read_locus, $total_read_count, $end_reads, $last_read_count, $spike_detection, $seeking_pos) = @_;
 	my $spikes = $current_train->{spikes};
@@ -348,6 +439,11 @@ sub __get_windows_process_train_spikes {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Private helper function. You shouldnt use this function.
+
+=cut
 sub __get_windows_process_train_from_distribution {
 	my ($this, $windows, $current_train, $window, $train_detection_threshold) = @_;
 	my $accepting_time = $this->{accepting_time};
@@ -381,25 +477,53 @@ sub __get_windows_process_train_from_distribution {
 }
 
 
+=method process_window_spikes
+
+Retrieve candidates miRNA from windows spike analysis.
+
+ Usage : my $miRnaPos = $self->process_window_spikes($windows),
+ Input : The windows returned by get_windows
+ Return: A hash ref {
+				chr => [array of miRNA candidates (hash ref) {
+					strand => '+' or '-',
+					source => DUE_TO_SINGLE_SPIKE or DUE_TO_TWO_SPIKES,
+					first => First miRNA candidate (lower chr coordinates). Hash ref {
+						begin => start position (1-based)
+						end => end position (excluded)
+						strand => '+' or '-' #This parameter may be inaccurate, you should rely on the top-level strand key instead
+						}
+					second => Second miRNA candidate (duplex) (larger chr coordinates). Hash ref {
+						begin => start position (1-based)
+						end => end position (excluded)
+						strand => '+' or '-' #This parameter may be inaccurate, you should rely on the top-level strand key instead
+						}
+					from_read => miRNA candidate that was deduced from a read spike. Hash ref on 'first' or 'second'. This key exists only if 'source' is DUE_TO_SINGLE_SPIKE
+					detected => miRNA candidate that was deduced by folding the sequence. Hash ref on 'first' or 'second'. Doesnt point on the same miRNA than from_read.
+						This key exists only if 'source' is DUE_TO_SINGLE_SPIKE
+				}]
+			}
+
+=cut
 sub process_window_spikes {
 	my $this = shift;
 	my $windows_per_chr = shift;
-	my $w_len = shift;
-	my $mismatches = shift;
-	$w_len = 12 if !defined $w_len;
-	$mismatches = 2 if !defined $mismatches;
 	my %miRnaPos = ();
 
 	$this->{detector} = MiRnaDuplexDetector::MiRnaDetector->new(5000);
 	
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		print "\t", $chr, "\n";
-		$miRnaPos{$chr} = $this->process_window_spikes_for_chr($chr, $windows_per_chr->{$chr}, $w_len, $mismatches);
+		$miRnaPos{$chr} = $this->process_window_spikes_for_chr($chr, $windows_per_chr->{$chr});
 	}
 	return \%miRnaPos;
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __enlarged_spike {
 	my ($spike, $min_length, $chr_length) = @_;
 	my $spike_length = $spike->{end} - $spike->{begin};
@@ -414,6 +538,12 @@ sub __enlarged_spike {
 	return $spike;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __shrink_spike {
 	my ($spike, $max_length) = @_;
 	my $spike_length = $spike->{end} - $spike->{begin};
@@ -428,6 +558,12 @@ sub __shrink_spike {
 	return $spike;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __force_spike_size {
 	my ($spike, $length, $chr_length) = @_;
 	my $spike_length = $spike->{end} - $spike->{begin};
@@ -451,6 +587,11 @@ sub __force_spike_size {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __look_backward_only {
 	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $min_length, $window_length) = @_; # min_length = 40, window_length = 300
 # 	my $enlarged_spike = __force_spike_size($current_spike, $min_length, $chr_length);
@@ -458,6 +599,12 @@ sub __look_backward_only {
 	return __look_backward($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $window_length);
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __look_forward {
 	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $enlarged_spike, $window_length) = @_;
 	my @candidate_region = (min ($enlarged_spike->{end}+15, $chr_length), min ($enlarged_spike->{end}+$window_length, $chr_length));
@@ -508,6 +655,11 @@ sub __look_forward {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __look_backward {
 	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $enlarged_spike, $window_length) = @_;
 	my @candidate_region = (max ($enlarged_spike->{begin}-$window_length-15, 1), max ($enlarged_spike->{begin}-16, 1));
@@ -554,6 +706,11 @@ sub __look_backward {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __look_both_ways {
 	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $min_length, $window_length) = @_;
 	my $result_back = __look_backward($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $window_length);
@@ -562,6 +719,11 @@ sub __look_both_ways {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub __match_with_neighbor {
 	my ($detector, $miRnaPos, $strand, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $neighbor, $min_length) = @_;
 	$neighbor->{visited} = 1;
@@ -595,8 +757,14 @@ sub __match_with_neighbor {
 	return 0;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Private helper function. You shouldnt use this function.
+
+=cut
 sub process_window_spikes_for_chr {
-	my ($this, $chr, $windows, $mismatches) = @_;
+	my ($this, $chr, $windows) = @_;
 
 	my $accepting_time = $this->{accepting_time};
 	my @miRnaPos = (); # Array of [5p, 3p]
@@ -674,42 +842,11 @@ sub process_window_spikes_for_chr {
 }
 
 
-sub __get_windows_from_trains_for_chr {
-	my $this = shift;
-	my $read_loci = shift;
+=method __get_windows_process_train_spikes
 
-	my @windows = ();
-	if (scalar(@$read_loci) == 0) {
-		return \@windows;
-	}
+Private helper function. You shouldnt use this function.
 
-	my %current_train = (begin => $read_loci->[0]->{begin}, end => $read_loci->[0]->{end}, read_count => 1, forward_read_count => $read_loci->[0]->{strand} eq '+' ? 1 : 0,
-	last_read_begin => $read_loci->[0]->{begin}, begin_offset_count => 0, length_count => $read_loci->[0]->{end} - $read_loci->[0]->{begin}, spikes => []);
-	my %window = (begin => 0, read_count => 0, forward_read_count => 0, end => 0, trains => []);
-
-	# score at $i = (number_of_reads_at_$i)*$alpha + $beta;
-	foreach my $read_locus (@$read_loci) {
-		if ($current_train{begin} <= $read_locus->{begin} && $read_locus->{begin} < $current_train{end}) {
-			$current_train{end} = max $current_train{end}, $read_locus->{end};
-			$current_train{begin_offset_count} += $read_locus->{begin} - $current_train{begin};
-			$current_train{length_count} += $read_locus->{end} - $current_train{begin};
-			$current_train{read_count}++;
-			$current_train{forward_read_count}++ if $read_locus->{strand} eq '+';
-			$current_train{last_read_begin} = $read_locus->{begin};
-		}
-		else { # the read train ended
-			$this->__get_windows_process_train(\@windows, \%current_train, \%window);
-			%current_train = (begin => $read_locus->{begin}, end => $read_locus->{end}, read_count => 1, forward_read_count => $read_locus->{strand} eq '+' ? 1 : 0,
-			last_read_begin => $read_locus->{begin}, begin_offset_count => 0, length_count => $read_locus->{end} - $read_locus->{begin});
-		}
-	}
-	$this->__get_windows_process_train(\@windows, \%current_train, \%window);
-	if ($window{begin} != $window{end}) {
-		$this->__add_candidate_window_from_train(\@windows, \%window);
-	}
-	return \@windows;
-}
-
+=cut
 # args = (this, windows_ref, begin, end, read_count, forward_read_count
 sub __add_candidate_window_from_train {
 	my ($this, $windows, $window) = @_;
@@ -725,6 +862,11 @@ sub __add_candidate_window_from_train {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Private helper function. You shouldnt use this function.
+
+=cut
 sub __get_windows_process_train {
 	my ($this, $windows, $current_train, $window) = @_;
 	my $accepting_time = $this->{accepting_time};
@@ -758,6 +900,24 @@ sub __get_windows_process_train {
 	}
 }
 
+
+=method compute_candidate_precursors_from_miRnaPos
+
+Computes candidate precursors based miRNA candidates. This is made by adding 100 nt on both sides of the miRna couple.
+Regions that overlap by more than 60% are merged together.
+
+ Usage : my $candidate_precursors = $self->compute_candidate_precursors_from_miRnaPos($miRnas),
+ Input : The miRNAs returned by process_window_spikes
+ Return: A hash ref {
+			chr => [array of precursors {
+				begin => start position (1-based)
+				end => end position (excluded)
+				strand => '+' or '-'
+				miRnas => [] Array reference of miRNA candidates contained in the precursor. Picked from $miRnas.
+				}]
+			}
+
+=cut
 sub compute_candidate_precursors_from_miRnaPos {
 	my $this = shift;
 	my $miRnaPosPerChr = shift;
@@ -771,6 +931,12 @@ sub compute_candidate_precursors_from_miRnaPos {
 	return \%candidate_region;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub region_intertects {
 	my ($a, $b, $ratio) = @_;
 	if ($a->{begin} <= $b->{begin} && $a->{end} > $b->{begin}) {
@@ -788,6 +954,12 @@ sub region_intertects {
 	return 0;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub raw_regions_intertect {
 	my ($a, $b) = @_;
 	if ($a->{begin} <= $b->{begin} && $a->{end} > $b->{begin}) {
@@ -799,6 +971,12 @@ sub raw_regions_intertect {
 	return 0;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 # $a and $b must intersect
 # the result is merged in $a
 sub merge_regions {
@@ -821,6 +999,11 @@ sub merge_regions {
 }
 
 
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub compute_candidate_precursors_from_miRnaPos_for_chr {
 
 	sub binary_insert {
@@ -888,6 +1071,12 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 	return \@final_regions;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Private helper function. You shouldnt use this function.
+
+=cut
 # args = (this, windows_ref, begin, end, read_count, forward_read_count
 sub __add_candidate_window {
 	my ($this, $windows, $begin, $end, $read_count, $forward_read_count) = @_;
@@ -1096,6 +1285,12 @@ sub __intersectBed {
 	unlink $out. '_';
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub run_rnalfold {
 	my $seq_name = shift;
 	my $seq = shift;
@@ -1107,11 +1302,23 @@ sub run_rnalfold {
     return $rnalfold_output;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub run_rnastemloop {
 	my ( $input, $output_stemloop, $output_optimal ) = @_;
 	return miRkwood::Programs::run_rnastemloop($input, $output_stemloop, $output_optimal);
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 # returns an array of {begin, end, sequence, secondary_structure}
 sub parse_stemloop_output {
 	my $seq_name = shift;
@@ -1158,6 +1365,12 @@ sub parse_stemloop_output {
 	return \@results;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Static private helper function. You shouldnt use this function.
+
+=cut
 sub eval_stemloop_output {
 	my $stemloop_results = shift;
 	my $miRnaPos = shift;
@@ -1183,6 +1396,30 @@ sub eval_stemloop_output {
 	return \@retained_stemloops;
 }
 
+
+=method apply_structure_criterion
+
+Runs rnalfold and rnastemloop on the candidate precursors returned by compute_candidate_precursors_from_miRnaPos.
+This elimates candidates where no stem loops are possible, or where the detected miRnas fall outside the rnastemloop-predicted precursors.
+
+ Usage : my $retained_regions = $self->apply_structure_criterion($candidate_precursors),
+ Input : The candidate precursors returned by compute_candidate_precursors_from_miRnaPos.
+ Return: A hash ref {
+			chr => [array of precursors {
+				begin => start position (1-based). This is left unchanged from the passed $candidate_precursors.
+				end => end position (excluded). This is left unchanged from the passed $candidate_precursors.
+				strand => '+' or '-'. This is left unchanged from the passed $candidate_precursors.
+				miRnas => [] Array reference of miRNA candidates contained in the precursor. This is left unchanged from the passed $candidate_precursors.
+				stemloop => [array of valid secondary structures {
+					begin => start position (1-based). This is left unchanged from the passed $candidate_precursors.
+					end => end position (excluded). This is left unchanged from the passed $candidate_precursors.
+					sequence => genomic sequence.
+					secondary_structure => The secondary structure returned from rnastemloop
+					}]
+				}]
+			}
+
+=cut
 sub apply_structure_criterion {
 	my ($this, $regionsPerChr, $cache_folder) = @_;
 	my %retained_regions_per_chr = ();
@@ -1194,6 +1431,12 @@ sub apply_structure_criterion {
 	return \%retained_regions_per_chr;
 }
 
+
+=method __get_windows_process_train_spikes
+
+Private helper function. You shouldnt use this function.
+
+=cut
 sub apply_structure_criterion_per_chr {
 	my ($this, $chr, $regions, $cache_folder) = @_;
 	my $genome = $this->{genome_db};
