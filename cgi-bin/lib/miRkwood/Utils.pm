@@ -1061,8 +1061,8 @@ sub print_reads_clouds_for_known_miRNA {
     my $name            = $mirna->{'precursor_name'};
     my $strand          = $mirna->{'strand'};
     my $chromosome      = $mirna->{'chromosome'};
-    my $precursor_start = $mirna->{'precursor_start'};
-    my $precursor_end   = $mirna->{'precursor_end'};
+    my $precursor_start = $mirna->{'start_position'};
+    my $precursor_end   = $mirna->{'end_position'};
     my $reads           = $mirna->{'precursor_reads'};
     
     foreach $mature_id (keys %{$mirna->{'matures'}}){
