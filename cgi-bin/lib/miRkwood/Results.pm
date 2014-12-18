@@ -239,8 +239,8 @@ sub known_mirnas_for_jobID {
             $precursor_id = $id;
             $data->{$precursor_id}{'identifier'}      = $id;
             $data->{$precursor_id}{'precursor_name'}  = $name;
-            $data->{$precursor_id}{'precursor_start'} = $field[9];
-            $data->{$precursor_id}{'precursor_end'}   = $field[10];
+            $data->{$precursor_id}{'start_position'} = $field[9];
+            $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
         }
         elsif ( $field[8] eq "miRNA" ){
@@ -281,8 +281,8 @@ sub known_mirnas_for_jobID {
         $precursor_name  = $data->{$precursor_id}{'precursor_name'};
         $chromosome      = $data->{$precursor_id}{'chromosome'};
         $strand          = $data->{$precursor_id}{'strand'};
-        $precursor_start = $data->{$precursor_id}{'precursor_start'};
-        $precursor_end   = $data->{$precursor_id}{'precursor_end'};
+        $precursor_start = $data->{$precursor_id}{'start_position'};
+        $precursor_end   = $data->{$precursor_id}{'end_position'};
         $precursor_reads = 0;
         $mature_reads = 0;
         $score = '';
