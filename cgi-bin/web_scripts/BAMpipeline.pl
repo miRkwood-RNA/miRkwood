@@ -14,7 +14,7 @@ use miRkwood::WebPaths;
 use miRkwood::WebTemplate;
 use miRkwood::Results;
 use miRkwood::Utils;
-use miRkwood::FilterBED;
+use miRkwood::BEDHandler;
 use miRkwood::BEDPipeline;
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
@@ -121,10 +121,10 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species
 
 ##### Filter BED
 if ( $species ){
-    miRkwood::FilterBED->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+    miRkwood::BEDHandler->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
 }
 else{
-    miRkwood::FilterBED->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+    miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
 }
 
 

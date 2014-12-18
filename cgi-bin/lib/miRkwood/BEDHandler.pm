@@ -1,6 +1,6 @@
-package miRkwood::FilterBED;
+package miRkwood::BEDHandler;
 
-# ABSTRACT : methods to filter a BED file
+# ABSTRACT : methods to handle a BED or BED-like file
 
 use strict;
 use warnings;
@@ -10,8 +10,11 @@ use Log::Message::Simple qw[msg error debug];
 
 use miRkwood;
 use miRkwood::Paths;
+use miRkwood::Candidate;
+use miRkwood::CandidateHandler;
 
-=method filterBEDfile
+
+=method filterBEDfile_for_model_organism
 
 Method to filter a BED from the reads corresponding to known 
 miRNAS and from other features (CDS, rRNA, tRNA, snoRNA) for a 
@@ -135,6 +138,8 @@ sub filterBEDfile_for_user_sequence {
     my $filter_CDS         = shift @args;
     my $filter_tRNA_rRNA   = shift @args;
     my $filter_multimapped = shift @args;
+    
+    ##### Not yet implemented. Call to BlastX, rnammer, tRNAscan-SE... ?
 
     return;
 }
@@ -162,6 +167,7 @@ sub store_overlapping_reads {
     return;
 }
 
+
 =method store_non_overlapping_reads
 
 Method to write reads non overlapping with the given reference file
@@ -182,6 +188,7 @@ sub store_non_overlapping_reads {
 
     return;
 }
+
 
 =method filter_multimapped_reads
 
@@ -217,7 +224,7 @@ sub filter_multimapped_reads {
 
     ### Read the BED file a second time to write on output only the 
     ### non multi-mapped reads
-    open (my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!\n";
+    open ($BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!\n";
     open (my $KEEP, '>', $output_file) or die "ERROR while creating $output_file : $!\n";
     open (my $OUT, '>', $discarded_file) or die "ERROR while creating $discarded_file : $!\n";
 
@@ -239,5 +246,6 @@ sub filter_multimapped_reads {
 
     return;
 }
+
 
 1;
