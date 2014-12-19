@@ -239,8 +239,13 @@ sub known_mirnas_for_jobID {
             $precursor_id = $id;
             $data->{$precursor_id}{'identifier'}      = $id;
             $data->{$precursor_id}{'precursor_name'}  = $name;
-            $data->{$precursor_id}{'start_position'} = $field[9];
-            $data->{$precursor_id}{'end_position'}   = $field[10];
+            $data->{$precursor_id}{'name'}  = "$field[0]__$field[9]-$field[10]";
+            $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
+            #~ $data->{$precursor_id}{'start_position'} = $field[9];
+            #~ $data->{$precursor_id}{'end_position'}   = $field[10];
+            $data->{$precursor_id}{'position'} = "$field[9]-$field[10]";
+            $data->{$precursor_id}{'start_position'} = 1;
+            $data->{$precursor_id}{'end_position'}   = $field[10] - $field[9];            
             $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
         }
         elsif ( $field[8] eq "miRNA" ){
@@ -316,18 +321,17 @@ sub known_mirnas_for_jobID {
         miRkwood::CandidateHandler->serialize_candidate_information("$output_dir/candidates/known", $candidate);
 
         ### Create individual card with reads cloud
-        miRkwood::Utils::print_reads_clouds_for_known_miRNA( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );        
+        #~ miRkwood::Utils::print_reads_clouds_for_known_miRNA( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );  
+        miRkwood::CandidateHandler::print_reads_clouds_2( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );
 
         ##### Print the HTML table
         $html .= '<tr>';
         $html .= '<td><a href=' . miRkwood::Utils::make_mirbase_link($precursor_id) . ">$precursor_name</a></td>";
         $html .= "<td>$chromosome</td>";
         $html .= "<td>$strand</td>";
-        $html .= "<td>$precursor_start - $precursor_end</td>";
-        #~ $html .= "<td>$precursor_reads</td>";
+        $html .= "<td>$data->{$precursor_id}{'position'}</td>";
         $html .= '<td><a href=' . "./getCandidate.pl?jobId=$jobId&id=$precursor_id&type=reads" . ">$precursor_reads</a></td>";
-        $html .= "<td>$score</td>";
-        #~ $html .= '<td><a href=' . "./getCandidate.pl?jobId=$jobId&id=$precursor_id&type=reads" . ">Card</a></td>";      
+        $html .= "<td>$score</td>";     
         $html .= "</tr>\n";
 
     }  
