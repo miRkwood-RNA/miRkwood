@@ -116,7 +116,7 @@ sub exportAsReads {
     my @args      = @_;
     my $candidate = shift @args;
     my $jobPath   = shift @args;
-    my $filepath  = File::Spec->catdir( $jobPath, "reads/known/", $candidate->{'identifier'} );
+    my $filepath  = File::Spec->catdir( $jobPath, "reads/known/", "$candidate->{'identifier'}.txt" );
     my $contents = '';
     open (my $IN, '<', $filepath) or warn "ERROR when opening $filepath : $!";
     while ( <$IN> ){
