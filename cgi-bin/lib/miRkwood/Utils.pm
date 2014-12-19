@@ -1166,4 +1166,31 @@ sub print_reads_clouds_for_known_miRNA {
     
 }
 
+=method truncate_reads_out_of_candidate
+
+Given a hash of reads (key : 'start_position-end_position', value : depth)
+and the coordinates of a candidate, returns a hash with only the reads
+that are entirely included within the candidate position.
+
+=cut
+
+sub truncate_reads_out_of_candidate {
+
+    my ( $reads, $start_candidate, $end_candidate ) = @_;
+    my $truncated_reads = {};
+
+    foreach my $position ( keys %$reads ){
+        my $start_read = get_element_of_split( $position, '-', 0);
+        my $end_read   = get_element_of_split( $position, '-', 1);
+
+        if ($start_read >= $start_candidate and $end_read <= $end_candidate ){
+            $truncated_reads->{$position} = $reads->{$position};
+        }
+
+    }
+
+    return $truncated_reads;
+
+}
+
 1;
