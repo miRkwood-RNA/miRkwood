@@ -483,27 +483,50 @@ sub get_reads {
     
     my $reads = {};
     
+    #~ my $samtools_cmd = "samtools view $bam_file $candidate_position |";
+    #~ 
+    #~ open(my $SAMVIEW, $samtools_cmd);
+    #~ while ( <$SAMVIEW> ){
+        #~ my @line = split('\t');
+        # $line[1] : flag
+        # $line[3] : start position       
+        # $line[9] : sequence
+        
+        #~ $line[9] =~ s/T/U/g;
+        #~ 
+        #~ $reads->{$line[3]}{$line[9]}{'strand'} = "+";
+        #~ 
+        #~ # Count the depth of each read
+        #~ if (! exists($reads->{$line[3]}{$line[9]}{'count'}) ){
+            #~ $reads->{$line[3]}{$line[9]}{'count'} = 0;
+        #~ }
+        #~ $reads->{$line[3]}{$line[9]}{'count'}++;
+        #~ if ( $line[1] == "16" ){
+            #~ $reads->{$line[3]}{$line[9]}{'strand'} = "-";
+        #~ }
+  #~ 
+    #~ }
+    #~ close $SAMVIEW;
+    
     my $samtools_cmd = "samtools view $bam_file $candidate_position |";
     
     open(my $SAMVIEW, $samtools_cmd);
     while ( <$SAMVIEW> ){
         my @line = split('\t');
-        # $line[1] : flag
-        # $line[3] : start position       
-        # $line[9] : sequence
-        
-        $line[9] =~ s/T/U/g;
-        
-        $reads->{$line[3]}{$line[9]}{'strand'} = "+";
-        
-        # count the depth of each read
-        if (! exists($reads->{$line[3]}{$line[9]}{'count'}) ){
-            $reads->{$line[3]}{$line[9]}{'count'} = 0;
+        my $start = $line[3];
+        my $end = length($line[9]) + $start;
+
+        # Count the depth of each read
+        if ( !exists( $reads->{"$start-$end"} ) ){
+            $reads->{"$start-$end"} = 0;
         }
-        $reads->{$line[3]}{$line[9]}{'count'}++;
-        if ( $line[1] == "16" ){
-            $reads->{$line[3]}{$line[9]}{'strand'} = "-";
-        }
+        $reads->{"$start-$end"}++;
+        
+        #~ if (! exists($reads->{$line[3]}{$line[9]}{'count'}) ){
+            #~ $reads->{$line[3]}{$line[9]}{'count'} = 0;
+        #~ }
+        #~ $reads->{$line[3]}{$line[9]}{'count'}++;
+
   
     }
     close $SAMVIEW;
