@@ -241,8 +241,6 @@ sub known_mirnas_for_jobID {
             $data->{$precursor_id}{'precursor_name'}  = $name;
             $data->{$precursor_id}{'name'}  = "$field[0]__$field[9]-$field[10]";
             $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
-            #~ $data->{$precursor_id}{'start_position'} = $field[9];
-            #~ $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = "$field[9]-$field[10]";
             $data->{$precursor_id}{'start_position'} = 1;
             $data->{$precursor_id}{'end_position'}   = $field[10] - $field[9];            
@@ -271,7 +269,6 @@ sub known_mirnas_for_jobID {
     $html .= '<th>Position Precursor</th>';
     $html .= '<th>Number of reads</th>';
     $html .= '<th>Score</th>';
-    #~ $html .= '<th>Individual card</th>';
     
     $html .= "</tr>\n";
     
@@ -321,8 +318,7 @@ sub known_mirnas_for_jobID {
         miRkwood::CandidateHandler->serialize_candidate_information("$output_dir/candidates/known", $candidate);
 
         ### Create individual card with reads cloud
-        #~ miRkwood::Utils::print_reads_clouds_for_known_miRNA( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );  
-        miRkwood::CandidateHandler::print_reads_clouds_2( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );
+        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );
 
         ##### Print the HTML table
         $html .= '<tr>';

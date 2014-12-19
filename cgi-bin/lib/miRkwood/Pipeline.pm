@@ -291,8 +291,7 @@ sub serialize_candidates {
     foreach my $candidate (@candidates_array ) {
         if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
             $candidate = $candidate->get_reads($self->{'bam_file'});
-            #~ miRkwood::CandidateHandler->print_reads_cloud( $self->get_reads_dir(), $self->{'genome_file'}, $candidate );
-            miRkwood::CandidateHandler::print_reads_clouds_2( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
         }
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
         
