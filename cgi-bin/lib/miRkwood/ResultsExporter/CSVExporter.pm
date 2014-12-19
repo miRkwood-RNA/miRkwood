@@ -41,7 +41,7 @@ sub export_candidate {
         if ($header eq "reads"){
             $contents = 0;
             foreach my $key (keys( %{$candidate->{'reads'}} )){
-                $contents += keys( %{$candidate->{'reads'}{$key}} );
+                $contents += $candidate->{'reads'}{$key};
             }
         }        
         if ( !defined $contents ) {
