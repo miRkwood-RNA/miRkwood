@@ -5,11 +5,14 @@ package miRkwood::Results;
 use strict;
 use warnings;
 
+use Log::Message::Simple qw[msg error debug];
+
 use feature 'switch';
 use Time::gmtime;
 use File::Spec;
 
 use miRkwood;
+use miRkwood::Paths;
 use miRkwood::Candidate;
 use miRkwood::CandidateHandler;;
 use miRkwood::Utils;
@@ -191,7 +194,8 @@ sub known_mirnas_for_jobID {
     my $bed_file = shift @args;
     my $gff_file = shift @args;
     my $genome_file = shift @args;
-    my $output_dir = shift @args;
+    my $reads_dir = miRkwood::Paths::get_known_reads_dir( $jobId );
+    my $candidates_dir = miRkwood::Paths::get_known_candidates_dir( $jobId );
 
     my $html = '';
     my @field;
@@ -214,7 +218,7 @@ sub known_mirnas_for_jobID {
 
             if ( $field[2] eq "miRNA" and $field[8] =~ /ID=([^;]+).*Derives_from=([^;]+)/ ){
                 $precursor_of_mature->{ $1 } = $2;
-            } 
+            }
         }
     }
 
@@ -315,10 +319,10 @@ sub known_mirnas_for_jobID {
 
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
-        miRkwood::CandidateHandler->serialize_candidate_information("$output_dir/candidates/known", $candidate);
+        miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
 
         ### Create individual card with reads cloud
-        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome_file, "$output_dir/reads/known" );
+        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome_file, $reads_dir );
 
         ##### Print the HTML table
         $html .= '<tr>';
@@ -332,7 +336,9 @@ sub known_mirnas_for_jobID {
 
     }  
           
-    $html .= '</tbody></table>';  
+    $html .= '</tbody></table>';
+    
+    debug( "Known miRNAS stored in YAML format", miRkwood->DEBUG() );
     
     return $html;  
     
