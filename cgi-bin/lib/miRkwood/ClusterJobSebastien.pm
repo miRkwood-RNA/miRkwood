@@ -3,8 +3,10 @@ package miRkwood::ClusterJobSebastien;
 use strict;
 use warnings;
 use POSIX;
-use MiRnaDuplexDetector;
 use Bio::DB::Fasta;
+
+use miRkwood;
+use miRkwood::MiRnaDuplexDetector;
 
 use List::Util qw(max min);
 
@@ -857,7 +859,7 @@ sub process_RNAstemloop {
 	my ($STEM_FH)      = shift @args;
 	my ($EVAL_OPT_FH)  = shift @args;
 	my ($EVAL_STEM_FH) = shift @args;
-	my ($sequence_begin) = shift @args;
+	my ($seq_begin) = shift @args;
 	my ($seq_len) = shift @args;
 	my ($strand) = shift @args;
 	my ($sequence_miRnas) = shift @args;
@@ -897,14 +899,17 @@ sub process_RNAstemloop {
 				if ($nameSeq =~ /.*__(\d*)-(\d*)$/) {
 					my ($mfei, $amfe) = miRkwood::Utils::compute_mfei_and_amfe($dna, $energy_optimal);
 					my ($start, $end);
-					my %stemloop = ();
+					#~ my %stemloop = ();
+                    my $stemloop = {};
 					if ($strand eq '-') {
 						($start, $end) = @{ miRkwood::Utils::get_position_from_opposite_strand( $1, $2, $seq_len) };
-						%stemloop = (begin => $seq_len - $2 + $seq_begin, end => $seq_len - $1 +1 + $seq_begin);
+						#~ %stemloop = (begin => $seq_len - $2 + $seq_begin, end => $seq_len - $1 +1 + $seq_begin);
+                        $stemloop = {begin => $seq_len - $2 + $seq_begin, end => $seq_len - $1 +1 + $seq_begin};
 					}
 					else {
 						($start, $end) = ($1, $2);
-						%stemloop = (begin => $1 + $seq_begin-1, end => $2 + $seq_begin);
+						#~ %stemloop = (begin => $1 + $seq_begin-1, end => $2 + $seq_begin);
+                        $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
 					if (eval_single_stemloop($stemloop, $sequence_miRnas) == 1) {
 						my $res = {
