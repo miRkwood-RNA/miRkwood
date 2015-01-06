@@ -68,7 +68,11 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
-    mkdir $self->get_reads_dir() if ( exists($self->{'bam_file'}) );
+    if ( exists($self->{'bam_file'}) or exists($self->{'bed_file'})) {
+        mkdir $self->get_reads_dir();
+        mkdir $self->get_mirbase_reads_dir();
+        mkdir $self->get_new_reads_dir();
+    }
     return;
 }
 
@@ -111,6 +115,20 @@ sub get_sequences {
     return @{$self->{'sequences'}};
 }
 
+=method count_clusters
+
+Count the total number of clusters
+(including those without results)
+
+=cut
+sub count_clusters {
+    my ($self, @args) = @_;
+    my $count = 0;
+    foreach my $chromosome ( keys%{$self->{'sequences'}} ){
+        $count += scalar ( @{$self->{'sequences'}{$chromosome}} );
+    }
+    return $count;
+}
 
 =method get_job_dir
 
@@ -151,6 +169,34 @@ sub get_reads_dir {
     my $clusters_dir = File::Spec->catdir( $self->get_job_dir(), 'reads' );
 }
 
+=method get_mirbase_reads_dir
+
+Return the path to the directory
+with reads corresponding to known miRNAs.
+
+ Usage : $self->get_mirbase_reads_dir();
+
+=cut
+
+sub get_mirbase_reads_dir {
+    my ($self, @args) = @_;
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'known' );
+}
+
+=method get_new_reads_dir
+
+Return the path to the directory
+with reads corresponding to new miRNAs.
+
+ Usage : $self->get_new_reads_dir();
+
+=cut
+
+sub get_new_reads_dir {
+    my ($self, @args) = @_;
+    my $new_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'new' );
+}
+
 =method get_uploaded_sequences_file
 
 Return the path to the input sequences
@@ -174,9 +220,9 @@ Run the pipeline on the given sequences
 
 sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
-    my @sequences_array = $self->get_sequences();
+    #~ my @sequences_array = $self->get_sequences();
     $self->{'basic_candidates'} = [];
-    my $sequences_count = scalar @sequences_array;
+    my $sequences_count = $self->count_clusters();
     debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
     $self->compute_candidates();
     debug('miRkwood processing done', miRkwood->DEBUG() );
@@ -194,8 +240,8 @@ sub compute_candidates {
     my ($self, @args) = @_;
 # SEB BEGIN
     my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path());
-    $cluster_job->init_from_clustering($self->{'clustering'});
-    my $candidates = $cluster_job->run($self->{'sequences'});
+    $clusterJob->init_from_clustering($self->{'clustering'});
+    my $candidates = $clusterJob->run($self->{'sequences'});
     $self->serialize_candidates($candidates);
 # SEB END
     return;
