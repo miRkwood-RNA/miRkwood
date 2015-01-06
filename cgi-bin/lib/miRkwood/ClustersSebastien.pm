@@ -6,6 +6,8 @@ use strict;
 use warnings;
 use POSIX;
 
+use miRkwood::KMeanSebastien;
+
 use List::Util qw(max min);
 
 
@@ -273,7 +275,7 @@ sub __get_windows_for_chr {
 	}
 
 	my %current_train = (begin => $positions[0], end => $read_distribution->{$positions[0]}{end}, read_count => 0, forward_read_count => 0,
-	spikes => [], classifier => KMean->new());
+	spikes => [], classifier => KMeanSebastien->new());
 	$current_train{classifier}->add_point(0);
 	my %window = (begin => 0, read_count => 0, forward_read_count => 0, end => 0, trains => []);
 	my $last_read_count = 0;
@@ -351,7 +353,7 @@ sub __get_windows_maintain_read_count {
 			my $trigger = $end_reads->[0]{end};
 			shift @$end_reads;
 			my $added = $current_train->{classifier}->add_point($$total_read_count);
-			if ($added == KMean::ASSIGNED_FIRST_CLASS) {
+			if ($added == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
 				$last_spike->{end} = $trigger;
 				$last_spike->{strand} = get_strand $last_spike->{forward_read_count}, $last_spike->{read_count};
 				$current_train->{classifier}->clear_points();
@@ -407,11 +409,11 @@ sub __get_windows_process_train_spikes {
 	@$end_reads = sort {$a->{end} <=> $b->{end}} @$end_reads;
 	# Looking for spikes
 	my $added = $current_train->{classifier}->add_point($$total_read_count);
-	if ($added == KMean::ASSIGNED_SECOND_CLASS) {
+	if ($added == KMeanSebastien::ASSIGNED_SECOND_CLASS) {
 		if (scalar @$spikes) {
 			my $last_spike = $spikes->[-1];
 			if ($last_spike->{end} == -1) {
-				if ($current_train->{classifier}->class_of($last_spike->{trigger}) == KMean::ASSIGNED_FIRST_CLASS) {
+				if ($current_train->{classifier}->class_of($last_spike->{trigger}) == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
 					$last_spike->{begin} = $position;
 					$last_spike->{trigger} = $$total_read_count;
 					$last_spike->{read_count} = $read_locus->{read_count};
@@ -423,7 +425,7 @@ sub __get_windows_process_train_spikes {
 		push @$spikes, {begin => $position, end => -1, trigger => $$total_read_count, read_count => $read_locus->{read_count},
 		forward_read_count => $read_locus->{forward_read_count}};
 	}
-	elsif ($added == KMean::ASSIGNED_FIRST_CLASS) {
+	elsif ($added == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
 		my $last_spike = $spikes->[-1];
 		if ($last_spike->{end} == -1) {
 			$last_spike->{end} = $position;
