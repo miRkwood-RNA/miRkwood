@@ -3,10 +3,12 @@ package miRkwood::ClusterJobSebastien;
 use strict;
 use warnings;
 use POSIX;
-use Bio::DB::Fasta;
+# use Bio::DB::Fasta;
 
 use miRkwood;
 use miRkwood::MiRnaDuplexDetector;
+
+use miRkwood::Utils;
 
 use List::Util qw(max min);
 
@@ -48,9 +50,31 @@ sub new {
 sub init_from_clustering {
 	my ($this, $clustering) = @_;
 	$this->{genome_file} = $clustering->{'genome_file'};
-	$this->{genome_db} = Bio::DB::Fasta->new($this->{genome_file});
+# 	$this->{genome_db} = Bio::DB::Fasta->new($this->{genome_file});
+	$this->{genome_db} = miRkwood::Utils::multifasta_to_hash($this->{genome_file});
 	$this->{chr_info} = $clustering->{'chr_info'};
 	$this->{accepting_time} => $clustering->{'accepting_time'},
+}
+
+
+# gets the sequence. start starts at 1. end is included
+sub get_sub_sequence {
+	my ($this, $chr, $start, $end) = @_;
+	# Chr1, 1, 1
+	return substr($this->{genome_db}{$chr}, $start-1, $end-$start+1);
+}
+
+
+# gets the sequence. start starts at 1. end is included
+# strand is 1 or -1
+# if strand == -1, then the reverse complement is returned
+sub get_sub_sequence_on_strand {
+	my ($this, $chr, $start, $end, $strand) = @_;
+	my $seq = $this->get_sub_sequence($chr, $start, $end);
+	if ($strand == -1) {
+		return miRkwood::Utils::reverse_complement($seq);
+	}
+	return $seq;
 }
 
 
@@ -373,7 +397,7 @@ sub process_window_spikes_for_chr {
 				if ($genome_seq_end-$genome_seq_beg > $detector->admissibleTextLength()) {
 					$genome_seq_end = $genome_seq_beg+$detector->admissibleTextLength();
 				}
-				my $genome_seq = $genome->seq($chr, $genome_seq_beg, $genome_seq_end-1);
+				my $genome_seq = $this->get_sub_sequence($chr, $genome_seq_beg, $genome_seq_end-1);
 				my $has_neighbor = 0; # 0 == no neighbor, -1 = neighbor of other strand, 1 : neighbor on same strand
 				my $has_results = 0;
 				$detector->setMiRnaMinErrorsThreshold($min_error_for_two_spikes);
@@ -412,7 +436,7 @@ sub process_window_spikes_for_chr {
 
 				$genome_seq_beg = max($enlarged_spike->{begin}-$window_length-15, 1);
 				$genome_seq_end = min($enlarged_spike->{end}+$window_length+15, $chr_length);
-				$genome_seq = $genome->seq($chr, $genome_seq_beg, $genome_seq_end-1);
+				$genome_seq = $this->get_sub_sequence($chr, $genome_seq_beg, $genome_seq_end-1);
 
 				__look_both_ways($detector, \@miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $enlarged_spike,
 				$min_length_on_isolated_spike, $window_length);
@@ -762,7 +786,7 @@ sub apply_structure_criterion_per_chr {
 		my $rnalfold_output_filename = 'rnalfold_out';
 		my $rnalfold_output_filepath = File::Spec->catfile($working_dir, $rnalfold_output_filename);
 
-		my $genomic_seq = $genome->seq($chr, $region->{begin}, $region->{end}-1, $strand);
+		my $genomic_seq = $this->get_sub_sequence_on_strand($chr, $region->{begin}, $region->{end}-1, $strand);
 		
 		my $rnalfold_output_filepath = run_rnalfold('miRnaPrecursor', $genomic_seq, $working_dir, $rnalfold_output_filename);
 		
