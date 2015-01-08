@@ -51,9 +51,10 @@ sub init_from_clustering {
 	my ($this, $clustering) = @_;
 	$this->{genome_file} = $clustering->{'genome_file'};
 # 	$this->{genome_db} = Bio::DB::Fasta->new($this->{genome_file});
-	$this->{genome_db} = miRkwood::Utils::multifasta_to_hash($this->{genome_file});
+    my %genome = miRkwood::Utils::multifasta_to_hash($this->{genome_file});
+	$this->{genome_db} = \%genome;
 	$this->{chr_info} = $clustering->{'chr_info'};
-	$this->{accepting_time} => $clustering->{'accepting_time'},
+	$this->{accepting_time} = $clustering->{'accepting_time'};
 }
 
 
@@ -780,7 +781,7 @@ sub apply_structure_criterion_per_chr {
 	foreach my $region (@$regions) {
 		my $strand = $region->{strand} eq '+' ? 1 : -1;
 		my $seq_id = $chr . '__' . $region->{begin} . '-' . ($region->{end}-1);
-		my $working_dir = File::Spec->catdir($this->{workspace_dir}, $seq_id. '_('. $region->{strand}.')');
+		my $working_dir = File::Spec->catdir($this->{workspace_dir}, $seq_id. $region->{strand});
 		mkdir $working_dir;
 		
 		my $rnalfold_output_filename = 'rnalfold_out';
