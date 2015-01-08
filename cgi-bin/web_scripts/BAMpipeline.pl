@@ -15,7 +15,7 @@ use miRkwood::WebTemplate;
 use miRkwood::Results;
 use miRkwood::Utils;
 use miRkwood::BEDHandler;
-use miRkwood::BEDPipeline;
+use miRkwood::BamPipelineSebastien;
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
 
@@ -128,55 +128,8 @@ else{
 }
 
 
-my $pipeline = miRkwood::BEDPipeline->new($absolute_job_dir);
-#~ $pipeline->run_pipeline();
-$pipeline->init_pipeline();
-
-#~ ##### (temp) Convert BED into BAM to connect on the existing BAMpipeline
-#~ my $localBAM = $absolute_job_dir . "/remaining_reads.bam";
-#~ miRkwood::Utils::bed2bam( $localBED, $localBAM, $genome);
-#~ 
-#~ ##### Create a Pipeline object
-#~ my $pipeline = miRkwood::BamPipeline->new($absolute_job_dir, $localBAM, $genome);
-#~ $pipeline->run_pipeline();
-#~ 
-#~ 
-#~ 
-my $is_finished_file = File::Spec->catfile( $absolute_job_dir, 'finished' );
-open( my $finish, '>', $is_finished_file )
-    or die "Error when opening $is_finished_file: $!";
-close $finish;
+my $pipeline = miRkwood::BamPipelineSebastien->new($absolute_job_dir, $localBED, $genome);
+$pipeline->run_pipeline();
 
 
-#~ 
-#~ my $page = <<"END_TXT";
-#~ <div class="main">
-    #~ <p>Job title : $job_title</p>
-    #~ <p>mail : $mail</p>
-    #~ <p>BED file : $bedFile</p>
-    #~ <p>species : $species</p>
-    #~ <p>genome : $genome</p>
-    #~ 
-    #~ <p>filter_CDS : $filter_CDS</p>
-    #~ <p>filter_tRNA_rRNA : $filter_tRNA_rRNA</p>
-    #~ <p>filter_multimapped : $filter_multimapped</p>
-    #~ 
-    #~ <p>mfei : $mfei</p>
-    #~ <p>randfold : $randfold</p>
-    #~ <p>align : $align</p>
-    #~ <p>db : $db</p>
-        #~ 
-    #~ 
-#~ </div><!-- main -->
-#~ END_TXT
-#~ 
-#~ my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
-#~ my @js  = (miRkwood::WebTemplate->get_js_file());
-#~ my $html = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
-#~ print <<"DATA" or die("Error when displaying HTML: $!");
-#~ Content-type: text/html
-#~ 
-#~ $html
-#~ DATA
-#~ 
-#~ close $log_file;
+close $log_file;
