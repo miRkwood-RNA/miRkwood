@@ -268,7 +268,7 @@ sub compute_candidates {
 # SEB BEGIN
     my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path());
     $clusterJob->init_from_clustering($self->{'clustering'});
-    my $candidates = $clusterJob->run($self->{'sequences'});
+    my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
     $self->serialize_candidates($candidates);
 # SEB END
     return;

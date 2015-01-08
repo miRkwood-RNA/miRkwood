@@ -80,10 +80,11 @@ sub get_sub_sequence_on_strand {
 
 
 sub run {
-	my ($this, $sequences_per_chr) = @_;
+	my ($this, $sequences_per_chr, $parsed_bed) = @_;
 	my $candidates_miRNA = $this->process_window_spikes($sequences_per_chr);
 	my $regions = $this->compute_candidate_precursors_from_miRnaPos($candidates_miRNA);
-	return $this->apply_structure_criterion($regions);
+	my $candidate_precursors = $this->apply_structure_criterion($regions);
+	return $candidate_precursors;
 }
 
 =method process_window_spikes
@@ -756,12 +757,12 @@ This elimates candidates where no stem loops are possible, or where the detected
 
 =cut
 sub apply_structure_criterion {
-	my ($this, $regionsPerChr) = @_;
+	my ($this, $regionsPerChr, $parsed_bed) = @_;
 	my @candidates = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		print "\t", $chr, "\n";
 		my $regions = $regionsPerChr->{$chr};
-		push @candidates, @ {$this->apply_structure_criterion_per_chr($chr, $regions) };
+		push @candidates, @ {$this->apply_structure_criterion_per_chr($chr, $regions, $parsed_bed) };
 	}
 	return \@candidates;
 }
@@ -773,7 +774,7 @@ Private helper function. You shouldnt use this function.
 
 =cut
 sub apply_structure_criterion_per_chr {
-	my ($this, $chr, $regions) = @_;
+	my ($this, $chr, $regions, $parsed_bed) = @_;
 	my $genome = $this->{genome_db};
 	my $eliminated_by_stemloop = 0;
 	
@@ -800,7 +801,7 @@ sub apply_structure_criterion_per_chr {
 		my $rnaeval_out_stemloop = $this->run_RNAeval_on_RNAstemloop_stemloop_output($output_stemloop);
 
 		my $new_candidates = $this->process_RNAstemloop_on_filenames($output_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop,
-			$region->{begin}, $region->{end}-$region->{begin}, $region->{strand}, $region->{miRnas});
+			$region->{begin}, $region->{end}-$region->{begin}, $chr, $region->{strand}, $region->{miRnas}, $parsed_bed);
 
 		my @sorted_new_candidates = sort { $a->{start_position} <=> $b->{start_position} } @{$new_candidates};
 
@@ -857,19 +858,49 @@ sub process_RNAstemloop_on_filenames {
     my ($rnaeval_out_stemloop) = shift @args;
     my ($sequence_begin) = shift @args;
     my ($seq_len) = shift @args;
+    my $chr = shift @args;
     my ($strand) = shift @args;
     my ($sequence_miRnas) = shift @args;
+    my $parsed_bed = shift @args;
 
     open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die "Error opening $rnastemloop_out_stemloop: $!";
     open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
     open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
     my $msg = "Processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
     debug( $msg, miRkwood->DEBUG() );
-    my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $strand, $sequence_miRnas);
+    my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $chr, $strand, 
+    $sequence_miRnas, $parsed_bed);
     close($STEM_FH);
     close($EVAL_OPT_FH);
     close($EVAL_STEM_FH);
     return $candidates;
+}
+
+use List::BinarySearch qw( binsearch_range );
+
+sub get_contained_reads {
+	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
+	my $reads = $parsed_bed->{$chr}{$strand};
+	my @read_keys = keys %{$reads};
+	
+	my( $low, $high ) = binsearch_range { $a <=> $b }, $region_begin, $region_end, @read_keys;
+	
+	my %result = ();
+	if (!defined $low) {
+		return \%result;
+	}
+	
+	for (my $i = $low; $i <= $high; $i++) {
+		$read_begin = $read_keys[$i]-1;
+		my @read_ends = keys %{$reads->{$read_keys[$i]}{'ends'}};
+		foreach my $read_end (@read_ends) {
+			if ($read_end <= $region_end) {
+				$result{"$read_begin-$read_end"} = $reads->{$read_keys[$i]}{'ends'}{$read_end};
+			}
+		}
+	}
+	
+	return \%result;
 }
 
 =method process_RNAstemloop
@@ -886,8 +917,10 @@ sub process_RNAstemloop {
 	my ($EVAL_STEM_FH) = shift @args;
 	my ($seq_begin) = shift @args;
 	my ($seq_len) = shift @args;
+	my ($chr) = shift @args;
 	my ($strand) = shift @args;
 	my ($sequence_miRnas) = shift @args;
+	my ($parsed_bed) = shift @args;
 
 	my ($line_eval_opt, $line_eval_stem);
 	my ($nameSeq, $dna, $structure_stemloop);
@@ -948,7 +981,8 @@ sub process_RNAstemloop {
 							"structure_optimal" => $structure_optimal,
 							"energy_optimal" => $energy_optimal,
 							"structure_stemloop" => $structure_stemloop,
-							"energy_stemloop" => $energy_stemloop
+							"energy_stemloop" => $energy_stemloop,
+							"reads" => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand)
 						};
 						push @candidates_array, $res;
 					}

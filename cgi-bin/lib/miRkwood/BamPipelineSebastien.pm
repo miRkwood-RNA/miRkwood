@@ -38,9 +38,10 @@ sub init_sequences {
     my ($self, @args) = @_;
     debug( "Extracting sequences from genome using BAM clusters", miRkwood->DEBUG() );
     my $clustering = miRkwood::ClustersSebastien->new($self->{'genome_file'});
-    my $reads = $clustering->get_read_distribution_from_bed($self->{'bed_file'});
+    my ($reads, $parsed_bed) = $clustering->get_read_distribution_from_bed($self->{'bed_file'});
     my $sequences = $clustering->get_windows($reads, 2);
     $self->{'sequences'} = $sequences;
+    $self->{'parsed_reads'} = $parsed_bed;
     $self->{'clustering'} = $clustering;
     return;
 }

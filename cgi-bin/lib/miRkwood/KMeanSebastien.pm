@@ -41,12 +41,9 @@ sub __binary_insert {
     if ($max > 0) {
 		while (1) {
 			$middle = int(($min+$max)/2);
-# 			print "middle=$middle\n";
 			if ($min == $max) {
-# 				print "Exit on last;\n";
 				last;
 			}
-# 			$last = $middle;
 			if ($ary->[$middle] < $val) {
 				$min = $middle+1;
 			}
@@ -58,7 +55,6 @@ sub __binary_insert {
 			}
 		}
     }
-#     $i++ if $i;   # for index 0 we want that, otherwise we want next position
     splice @$ary, $middle, 0, $val;
     return $middle;
 }
