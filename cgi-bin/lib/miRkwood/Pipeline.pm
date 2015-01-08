@@ -143,6 +143,30 @@ sub get_candidates_dir {
     my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
 }
 
+=method get_known_candidates_dir
+
+Return the path to the known candidates directory
+( ie candidates corresponding to mirbase entries)
+
+ Usage : $self->get_known_candidates_dir();
+
+=cut
+sub get_known_candidates_dir {
+    my ($self, @args) = @_;
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );    
+}
+
+=method get_new_candidates_dir
+
+Return the path to the new candidates directory
+
+ Usage : $self->get_new_candidates_dir();
+
+=cut
+sub get_new_candidates_dir {
+    my ($self, @args) = @_;
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );    
+}
 =method get_mirbase_candidates_dir
 
 Return the path to the directory
@@ -293,7 +317,7 @@ sub serialize_candidates {
             $candidate = $candidate->get_reads($self->{'bam_file'});
             miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
         }
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
         
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }

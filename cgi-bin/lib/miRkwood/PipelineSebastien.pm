@@ -68,6 +68,8 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
+    mkdir $self->get_new_candidates_dir();
+    mkdir $self->get_known_candidates_dir();
     if ( exists($self->{'bam_file'}) or exists($self->{'bed_file'})) {
         mkdir $self->get_reads_dir();
         mkdir $self->get_mirbase_reads_dir();
@@ -154,6 +156,31 @@ Return the path to the candidates directory
 sub get_candidates_dir {
     my ($self, @args) = @_;
     my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
+}
+
+=method get_known_candidates_dir
+
+Return the path to the known candidates directory
+( ie candidates corresponding to mirbase entries)
+
+ Usage : $self->get_known_candidates_dir();
+
+=cut
+sub get_known_candidates_dir {
+    my ($self, @args) = @_;
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );    
+}
+
+=method get_new_candidates_dir
+
+Return the path to the new candidates directory
+
+ Usage : $self->get_new_candidates_dir();
+
+=cut
+sub get_new_candidates_dir {
+    my ($self, @args) = @_;
+    my $mirbase_reads_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );    
 }
 
 =method get_reads_dir
@@ -269,11 +296,11 @@ sub serialize_candidates {
     my $candidates = shift @args;
     my @candidates_array = @{$candidates};
     foreach my $candidate (@candidates_array ) {
-        if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
+        if ( exists($self->{'bam_file'}) ){ # only for the  transcriptome version
             $candidate = $candidate->get_reads($self->{'bam_file'});
             miRkwood::CandidateHandler->print_reads_cloud( $self->get_reads_dir(), $self->{'genome_file'}, $candidate );
         }
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
 
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
