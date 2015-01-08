@@ -128,7 +128,9 @@ sub multifasta_to_hash {
     my %sequence_hash;
     foreach my $item (@sequences_array) {
         my ( $name, $sequence ) = @{$item};
-        $sequence_hash{$name} = $sequence;
+        if ( $name =~ /([^_]+)/ ){
+            $sequence_hash{$1} = $sequence;
+        }
     }
     return %sequence_hash;
 }
