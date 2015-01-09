@@ -98,8 +98,8 @@ sub __get_read_distribution_from_bam_for_chr {
 			$chr_reads{$pos} = {read_count => 1, end => $end, forward_read_count => ($strand eq '+') ? 1 : 0};
         }
         my $added = 0;
-         if (scalar @{$parsed_reads{$chr}{$strand}}) {
-			my $read_ref = $parsed_reads{$chr}{$strand}[-1];
+         if (scalar @{$parsed_reads{$strand}}) {
+			my $read_ref = $parsed_reads{$strand}[-1];
 			if ($read_ref->{'begin'} == $pos) {
 				$read_ref->{'depth'}++;
 				if (defined $read_ref->{'ends'}{$end}) {
@@ -112,7 +112,7 @@ sub __get_read_distribution_from_bam_for_chr {
 			}
         }
         if ($added == 0) {
-			push @{$parsed_reads{$chr}{$strand}}, {'begin' => $pos, 'depth' => 1, 'ends' => {$end => 1}};
+			push @{$parsed_reads{$strand}}, {'begin' => $pos, 'depth' => 1, 'ends' => {$end => 1}};
         }
     }
     return (\%chr_reads, \%parsed_reads);
