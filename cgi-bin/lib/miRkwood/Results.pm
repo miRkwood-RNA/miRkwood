@@ -5,8 +5,6 @@ package miRkwood::Results;
 use strict;
 use warnings;
 
-use Log::Message::Simple qw[msg error debug];
-
 use feature 'switch';
 use Time::gmtime;
 use File::Spec;
@@ -193,7 +191,7 @@ sub known_mirnas_for_jobID {
     my $jobId = shift @args;
     my $bed_file = shift @args;
     my $gff_file = shift @args;
-    my $genome_file = shift @args;
+    my $genome = shift @args;
     my $reads_dir = miRkwood::Paths::get_known_reads_dir( $jobId );
     my $candidates_dir = miRkwood::Paths::get_known_candidates_dir( $jobId );
 
@@ -322,7 +320,7 @@ sub known_mirnas_for_jobID {
         miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
 
         ### Create individual card with reads cloud
-        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome_file, $reads_dir );
+        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome, $reads_dir );
 
         ##### Print the HTML table
         $html .= '<tr>';
@@ -337,8 +335,6 @@ sub known_mirnas_for_jobID {
     }  
           
     $html .= '</tbody></table>';
-    
-    debug( "Known miRNAS stored in YAML format", miRkwood->DEBUG() );
     
     return $html;  
     
