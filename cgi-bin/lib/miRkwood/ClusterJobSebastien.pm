@@ -883,7 +883,7 @@ sub get_contained_reads {
 	my $reads = $parsed_bed->{$chr}{$strand};
 	my @read_keys = keys %{$reads};
 	
-	my( $low, $high ) = binsearch_range { $a <=> $b }, $region_begin, $region_end, @read_keys;
+	my( $low, $high ) = binsearch_range { $a <=> $b } $region_begin, $region_end, @read_keys;
 	
 	my %result = ();
 	if (!defined $low) {
