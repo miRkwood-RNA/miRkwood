@@ -266,7 +266,7 @@ sub run_pipeline_on_sequences {
 sub compute_candidates {
     my ($self, @args) = @_;
 # SEB BEGIN
-    my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path());
+    my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
     $clusterJob->init_from_clustering($self->{'clustering'});
     my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
     $self->serialize_candidates($candidates);
@@ -304,7 +304,7 @@ sub serialize_candidates {
     foreach my $candidate (@candidates_array ) {
         if ( $mode eq 'BAM' ){ # only for the  transcriptome version
             #~ $candidate = $candidate->get_reads($self->{'bam_file'});     # this is only for the standalone version, think about how do it better
-            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_new_reads_dir() );
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
         }
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
 

@@ -3,7 +3,6 @@ package miRkwood::ClusterJobSebastien;
 use strict;
 use warnings;
 use POSIX;
-# use Bio::DB::Fasta;
 
 use miRkwood;
 use miRkwood::MiRnaDuplexDetector;
@@ -39,9 +38,10 @@ Constructor
 =cut
 
 sub new {
-    my ( $class, $workspace_dir ) = @_;
+    my ( $class, $workspace_dir, $genome_db ) = @_;
     my $self = bless {
-        workspace_dir => $workspace_dir
+        workspace_dir => $workspace_dir,
+        genome_db => $genome_db
     }, $class;
     return $self;
 }
@@ -50,9 +50,6 @@ sub new {
 sub init_from_clustering {
 	my ($this, $clustering) = @_;
 	$this->{genome_file} = $clustering->{'genome_file'};
-# 	$this->{genome_db} = Bio::DB::Fasta->new($this->{genome_file});
-    my %genome = miRkwood::Utils::multifasta_to_hash($this->{genome_file});
-	$this->{genome_db} = \%genome;
 	$this->{chr_info} = $clustering->{'chr_info'};
 	$this->{accepting_time} = $clustering->{'accepting_time'};
 }
