@@ -81,7 +81,7 @@ Static private helper function. You shouldnt use this function.
 sub __get_read_distribution_from_bam_for_chr {
     my $HANDLE = shift;
     my %chr_reads = ();
-    my %parsed_reads = ('+' => {}, '-' => {});
+    my %parsed_reads = ('+' => [], '-' => []);
     while (<$HANDLE>) {
         chomp;
         my @fields = split("\t");
@@ -97,17 +97,22 @@ sub __get_read_distribution_from_bam_for_chr {
         else {
 			$chr_reads{$pos} = {read_count => 1, end => $end, forward_read_count => ($strand eq '+') ? 1 : 0};
         }
-        if (defined $parsed_reads{$strand}{$pos}) {
-			$parsed_reads{$strand}{$pos}{'depth'}++;
-			if (defined $parsed_reads{$strand}{$pos}{'ends'}{$end}) {
-				$parsed_reads{$strand}{$pos}{'ends'}{$end}++;
-			}
-			else {
-				$parsed_reads{$strand}{$pos}{'ends'}{$end} = 1;
+        my $added = 0;
+         if (scalar @{$parsed_reads{$chr}{$strand}}) {
+			my $read_ref = $parsed_reads{$chr}{$strand}[-1];
+			if ($read_ref->{'begin'} == $pos) {
+				$read_ref->{'depth'}++;
+				if (defined $read_ref->{'ends'}{$end}) {
+					$read_ref->{'ends'}{$end}++;
+				}
+				else {
+					$read_ref->{'ends'}{$end} = 1;
+				}
+				$added = 1;
 			}
         }
-        else {
-			$parsed_reads{$strand}{$pos} = {'depth' => 1, 'ends' => {$end => 1}};
+        if ($added == 0) {
+			push @{$parsed_reads{$chr}{$strand}}, {'begin' => $pos, 'depth' => 1, 'ends' => {$end => 1}};
         }
     }
     return (\%chr_reads, \%parsed_reads);
@@ -142,7 +147,7 @@ sub get_read_distribution_from_bed {
     my %parsed_reads = ();
     foreach my $chr (keys %{$this->{chr_info}}) {
 		$reads{$chr} = {};
-		$parsed_reads{$chr} = {'+' => {}, '-' => {}};
+		$parsed_reads{$chr} = {'+' => [], '-' => []};
     }
     open( my $HANDLE, '<', $bed_file) or die "Can't open '$bed_file': $!";
     while (<$HANDLE>) {
@@ -163,17 +168,22 @@ sub get_read_distribution_from_bed {
         else {
 			$reads{$chr}{$pos} = {read_count => $fields[4], end => $end, forward_read_count => ($strand eq '+') ? $fields[4] : 0};
         }
-        if (defined $parsed_reads{$chr}{$strand}{$pos}) {
-			$parsed_reads{$chr}{$strand}{$pos}{'depth'} += $fields[4];
-			if (defined $parsed_reads{$chr}{$strand}{$pos}{'ends'}{$end}) {
-				$parsed_reads{$chr}{$strand}{$pos}{'ends'}{$end}+=$fields[4];
-			}
-			else {
-				$parsed_reads{$chr}{$strand}{$pos}{'ends'}{$end} = $fields[4];
+        my $added = 0;
+        if (scalar @{$parsed_reads{$chr}{$strand}}) {
+			my $read_ref = $parsed_reads{$chr}{$strand}[-1];
+			if ($read_ref->{'begin'} == $pos) {
+				$read_ref->{'depth'} += $fields[4];
+				if (defined $read_ref->{'ends'}{$end}) {
+					$read_ref->{'ends'}{$end}+=$fields[4];
+				}
+				else {
+					$read_ref->{'ends'}{$end} = $fields[4];
+				}
+				$added = 1;
 			}
         }
-        else {
-			$parsed_reads{$chr}{$strand}{$pos} = {'depth' => $fields[4], 'ends' => {$end => $fields[4]}};
+        if ($added == 0) {
+			push @{$parsed_reads{$chr}{$strand}}, {'begin' => $pos, 'depth' => $fields[4], 'ends' => {$end => $fields[4]}};
         }
     }
     close $HANDLE;

@@ -876,26 +876,49 @@ sub process_RNAstemloop_on_filenames {
     return $candidates;
 }
 
-use List::BinarySearch qw( binsearch_range );
-
 sub get_contained_reads {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
 	my $reads = $parsed_bed->{$chr}{$strand};
-	my @read_keys = keys %{$reads};
 	
-	my( $low, $high ) = binsearch_range { $a <=> $b } $region_begin, $region_end, @read_keys;
+	sub binsearch {
+		my $arr = shift;
+		my $beg = shift;
+		my $end = shift;
+		my $val = shift;
+		my $middle = $end;
+		
+		while ($beg < $end) {
+			$middle = ($beg+$end)/2;
+			if ($val < $arr->[$middle]{'begin'}) {
+				$end = $middle;
+			}
+			elsif ($arr->[$middle]{'begin'} < $val) {
+				$beg = $middle+1;
+			}
+			else {
+				return $middle;
+			}
+		}
+		return $middle;
+	}
+	
+	my $low = binsearch($reads, 0, scalar @$reads, $region_begin);
+	my $high = binsearch($reads, $low, scalar @$reads, $region_end);
 	
 	my %result = ();
-	if (!defined $low) {
+	if ($low == scalar @$reads) {
 		return \%result;
+	}
+	if ($high == scalar @$reads) {
+		$high--;
 	}
 	
 	for (my $i = $low; $i <= $high; $i++) {
-		my $read_begin = $read_keys[$i]-1;
-		my @read_ends = keys %{$reads->{$read_keys[$i]}{'ends'}};
+		my $read_begin = $reads->[$i]{'begin'}-1;
+		my @read_ends = keys %{$reads->[$i]{'ends'}};
 		foreach my $read_end (@read_ends) {
 			if ($read_end <= $region_end) {
-				$result{"$read_begin-$read_end"} = $reads->{$read_keys[$i]}{'ends'}{$read_end};
+				$result{"$read_begin-".($read_end-1)} = $reads->[$i]{'ends'}{$read_end};
 			}
 		}
 	}
