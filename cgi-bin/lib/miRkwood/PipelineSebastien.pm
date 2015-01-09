@@ -295,10 +295,16 @@ sub serialize_candidates {
     my ($self, @args) = @_;
     my $candidates = shift @args;
     my @candidates_array = @{$candidates};
+
+    my $run_options_file = miRkwood::Paths->get_job_config_path( $self->{'job_dir'} );
+    miRkwood->CONFIG_FILE($run_options_file);
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');
+
     foreach my $candidate (@candidates_array ) {
-        if ( exists($self->{'bam_file'}) ){ # only for the  transcriptome version
-            $candidate = $candidate->get_reads($self->{'bam_file'});
-            miRkwood::CandidateHandler->print_reads_cloud( $self->get_reads_dir(), $self->{'genome_file'}, $candidate );
+        if ( $mode eq 'BAM' ){ # only for the  transcriptome version
+            #~ $candidate = $candidate->get_reads($self->{'bam_file'});     # this is only for the standalone version, think about how do it better
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_new_reads_dir() );
         }
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
 
