@@ -53,9 +53,14 @@ if ( $valid ){
     }
     else{
         $genome_file = "$absolute_job_dir/genome.fa";
-    }    
+    }
+    
+    my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );   
 
     my $known_mirnas = '';
+    my $new_mirnas   = '';
+    my $nb_results   = miRkwood::Results->number_of_results_bis( $id_job );
+    
     my $mirna_bed    = '';
     my $other_bed    = '';
     my $final_bed    = '';
@@ -76,10 +81,12 @@ if ( $valid ){
     
     if ( $mirna_bed ne '' ){
         $known_mirnas  = '<div id="table">';
-        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($id_job, $mirna_bed, $mirbase_file, $genome_file );
+        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($id_job, $mirna_bed, $mirbase_file, \%genome_db );
         $known_mirnas .= '</div>';
     }
 
+    $new_mirnas .= "<p class='header-results' id='precursors_count'><b>" . $nb_results . " miRNA precursor(s) found</b></p>";
+    $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
 
     $page = <<"END_TXT";
 <body>
@@ -90,8 +97,14 @@ if ( $valid ){
         <div class="main main-full">
             $HTML_additional
             <br />
+            
             <h2>Known miRNAs :</h2>
             $known_mirnas
+            
+            <h2>New miRNAs :</h2>
+            <div id="table" ></div>
+            $new_mirnas
+            
         </div><!-- main -->
     </div><!-- bloc droit--> 
     $footer  
