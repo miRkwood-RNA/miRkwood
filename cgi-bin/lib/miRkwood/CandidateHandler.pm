@@ -99,16 +99,16 @@ sub print_reads_clouds {
 
     my @args = @_;
     my $mirna = shift @args;
-    my $genome = shift @args;
+    my $genome_db = shift @args;
     my $output_dir = shift @args;
 
     my $i;
     my $mature_id;
     my @positions_tags = ();
-    my $genome_name = "";
-    if ( $genome =~ /.*\/([^\/]+)/ ){
-        $genome_name = $1;
-    }
+    
+    my $cfg = miRkwood->CONFIG();
+    my $genome_name = $cfg->param('job.plant');
+    
     my $chromosome = "";
     my $cluster_start = -1;
     my $cluster_end = -1;
@@ -121,7 +121,7 @@ sub print_reads_clouds {
     my $precursor_end   = $mirna->{'end_position'};
     my $locus           = $mirna->{'name'};
 
-    $reads           = ( $mirna->{'precursor_reads'} or $mirna->{'reads'} );
+    $reads              = ( $mirna->{'precursor_reads'} or $mirna->{'reads'} );
 
     if ( !defined($reads) or $reads eq {} ){
         debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );  
@@ -142,7 +142,7 @@ sub print_reads_clouds {
 
     $reads = miRkwood::Utils::truncate_reads_out_of_candidate( $reads, $absolute_precursor_start, $absolute_precursor_end );
 
-    my $reference = miRkwood::Utils::get_sequence_from_positions ($genome, $chromosome, $absolute_precursor_start, $absolute_precursor_end);
+    my $reference = substr( $genome_db->{$chromosome}, $absolute_precursor_start -1, $absolute_precursor_end - $absolute_precursor_start);
 
     my $cloud_file = "$output_dir/$precursor_id.txt";
     open (my $OUT, '>', $cloud_file) or die "ERROR while creating $cloud_file : $!";
