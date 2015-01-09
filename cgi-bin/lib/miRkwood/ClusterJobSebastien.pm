@@ -891,7 +891,7 @@ sub get_contained_reads {
 	}
 	
 	for (my $i = $low; $i <= $high; $i++) {
-		$read_begin = $read_keys[$i]-1;
+		my $read_begin = $read_keys[$i]-1;
 		my @read_ends = keys %{$reads->{$read_keys[$i]}{'ends'}};
 		foreach my $read_end (@read_ends) {
 			if ($read_end <= $region_end) {
