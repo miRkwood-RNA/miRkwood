@@ -83,7 +83,7 @@ sub run {
 	my ($this, $sequences_per_chr, $parsed_bed) = @_;
 	my $candidates_miRNA = $this->process_window_spikes($sequences_per_chr);
 	my $regions = $this->compute_candidate_precursors_from_miRnaPos($candidates_miRNA);
-	my $candidate_precursors = $this->apply_structure_criterion($regions);
+	my $candidate_precursors = $this->apply_structure_criterion($regions, $parsed_bed);
 	return $candidate_precursors;
 }
 
@@ -899,7 +899,7 @@ sub get_contained_reads {
 			}
 		}
 	}
-	
+
 	return \%result;
 }
 
