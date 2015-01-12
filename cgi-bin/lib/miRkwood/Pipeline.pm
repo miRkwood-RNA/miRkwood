@@ -11,8 +11,10 @@ use miRkwood;
 use miRkwood::CandidateHandler;
 use miRkwood::FileUtils;
 use miRkwood::Paths;
-use miRkwood::SequenceJob;
 use miRkwood::Utils;
+use miRkwood::SequenceJob;
+use miRkwood::ClustersSebastien;
+use miRkwood::ClusterJobSebastien;
 
 
 =method new
@@ -67,11 +69,11 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
-    mkdir $self->get_mirbase_candidates_dir();
     mkdir $self->get_new_candidates_dir();
+    mkdir $self->get_known_candidates_dir();
     if ( exists($self->{'bam_file'}) or exists($self->{'bed_file'})) {
         mkdir $self->get_reads_dir();
-        mkdir $self->get_mirbase_reads_dir();
+        mkdir $self->get_known_reads_dir();
         mkdir $self->get_new_reads_dir();
     }
     return;
@@ -116,6 +118,20 @@ sub get_sequences {
     return @{$self->{'sequences'}};
 }
 
+=method count_clusters
+
+Count the total number of clusters
+(including those without results)
+
+=cut
+sub count_clusters {
+    my ($self, @args) = @_;
+    my $count = 0;
+    foreach my $chromosome ( keys%{$self->{'sequences'}} ){
+        $count += scalar ( @{$self->{'sequences'}{$chromosome}} );
+    }
+    return $count;
+}
 
 =method get_job_dir
 
@@ -153,7 +169,7 @@ Return the path to the known candidates directory
 =cut
 sub get_known_candidates_dir {
     my ($self, @args) = @_;
-    my $mirbase_reads_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );    
+    my $known_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );    
 }
 
 =method get_new_candidates_dir
@@ -165,34 +181,7 @@ Return the path to the new candidates directory
 =cut
 sub get_new_candidates_dir {
     my ($self, @args) = @_;
-    my $mirbase_reads_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );    
-}
-=method get_mirbase_candidates_dir
-
-Return the path to the directory
-with yaml corresponding to known miRNAs.
-
- Usage : $self->get_mirbase_candidates_dir();
-
-=cut
-
-sub get_mirbase_candidates_dir {
-    my ($self, @args) = @_;
-    my $mirbase_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );
-}
-
-=method get_new_candidates_dir
-
-Return the path to the directory
-with yaml corresponding to new miRNAs.
-
- Usage : $self->get_new_candidates_dir();
-
-=cut
-
-sub get_new_candidates_dir {
-    my ($self, @args) = @_;
-    my $new_candidatess_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );
+    my $new_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );    
 }
 
 =method get_reads_dir
@@ -208,18 +197,18 @@ sub get_reads_dir {
     my $reads_dir = File::Spec->catdir( $self->get_job_dir(), 'reads' );
 }
 
-=method get_mirbase_reads_dir
+=method get_known_reads_dir
 
 Return the path to the directory
 with reads corresponding to known miRNAs.
 
- Usage : $self->get_mirbase_reads_dir();
+ Usage : $self->get_known_reads_dir();
 
 =cut
 
-sub get_mirbase_reads_dir {
+sub get_known_reads_dir {
     my ($self, @args) = @_;
-    my $mirbase_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'known' );
+    my $known_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'known' );
 }
 
 =method get_new_reads_dir
@@ -257,17 +246,47 @@ Run the pipeline on the given sequences
 
 =cut
 
+#~ sub run_pipeline_on_sequences {
+    #~ my ($self, @args) = @_;
+    #~ my @sequences_array = $self->get_sequences();
+    #~ $self->{'basic_candidates'} = [];
+    #~ my $sequences_count = scalar @sequences_array;
+    #~ debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
+    #~ $self->compute_candidates();
+    #~ debug('miRkwood processing done', miRkwood->DEBUG() );
+    #~ $self->serialize_basic_candidates();
+    #~ $self->mark_job_as_finished();
+    #~ debug("Writing finish file", miRkwood->DEBUG() );
+    #~ return;
+#~ }
+
 sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
-    my @sequences_array = $self->get_sequences();
+    
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');  
     $self->{'basic_candidates'} = [];
-    my $sequences_count = scalar @sequences_array;
+    my $sequences_count = 0;
+    
+    if ( $mode eq 'WebBAM' ){
+        $sequences_count = $self->count_clusters();
+    }
+    else{
+        my @sequences_array = $self->get_sequences();
+        $sequences_count = scalar @sequences_array;
+    }
+
     debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
+    
     $self->compute_candidates();
     debug('miRkwood processing done', miRkwood->DEBUG() );
+    
     $self->serialize_basic_candidates();
+    
     $self->mark_job_as_finished();
+    
     debug("Writing finish file", miRkwood->DEBUG() );
+    
     return;
 }
 
@@ -275,19 +294,48 @@ sub run_pipeline_on_sequences {
 
 =cut
 
+#~ sub compute_candidates {
+    #~ my ($self, @args) = @_;
+    #~ my @sequences_array = $self->get_sequences();
+    #~ my $sequence_identifier = 0;
+    #~ foreach my $item (@sequences_array) {
+        #~ my ( $name, $sequence ) = @{$item};
+        #~ debug( "Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
+        #~ $sequence_identifier++;
+        #~ my $sequence_dir = $self->make_sequence_workspace_directory($sequence_identifier);
+        #~ my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
+        #~ my $sequence_candidates = $sequence_job->run();
+        #~ $self->serialize_candidates($sequence_candidates);
+    #~ }
+    #~ return;
+#~ }
+
 sub compute_candidates {
     my ($self, @args) = @_;
-    my @sequences_array = $self->get_sequences();
-    my $sequence_identifier = 0;
-    foreach my $item (@sequences_array) {
-        my ( $name, $sequence ) = @{$item};
-        debug( "Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
-        $sequence_identifier++;
-        my $sequence_dir = $self->make_sequence_workspace_directory($sequence_identifier);
-        my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
-        my $sequence_candidates = $sequence_job->run();
-        $self->serialize_candidates($sequence_candidates);
+    
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode'); 
+    
+    if ( $mode eq 'WebBAM' ){  
+        my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
+        $clusterJob->init_from_clustering($self->{'clustering'});
+        my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
+        $self->serialize_candidates($candidates);
     }
+    else {
+        my @sequences_array = $self->get_sequences();
+        my $sequence_identifier = 0;
+        foreach my $item (@sequences_array) {
+            my ( $name, $sequence ) = @{$item};
+            debug( "Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
+            $sequence_identifier++;
+            my $sequence_dir = $self->make_sequence_workspace_directory($sequence_identifier);
+            my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
+            my $sequence_candidates = $sequence_job->run();
+            $self->serialize_candidates($sequence_candidates);
+        }        
+    }
+    
     return;
 }
 
@@ -308,17 +356,42 @@ sub make_sequence_workspace_directory {
     return $sequence_dir;
 }
 
+#~ sub serialize_candidates {
+    #~ my ($self, @args) = @_;
+    #~ my $candidates = shift @args;
+    #~ my @candidates_array = @{$candidates};
+    #~ foreach my $candidate (@candidates_array ) {
+        #~ if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
+            #~ $candidate = $candidate->get_reads($self->{'bam_file'});
+            #~ miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
+        #~ }
+        #~ miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
+        #~ 
+        #~ push $self->{'basic_candidates'}, $candidate->get_basic_informations();
+    #~ }
+#~ }
+
 sub serialize_candidates {
     my ($self, @args) = @_;
     my $candidates = shift @args;
     my @candidates_array = @{$candidates};
+
+    my $run_options_file = miRkwood::Paths->get_job_config_path( $self->{'job_dir'} );
+    miRkwood->CONFIG_FILE($run_options_file);
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');
+
     foreach my $candidate (@candidates_array ) {
-        if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
+        if ( $mode eq 'BAM' ){ # CLI transcriptome version
             $candidate = $candidate->get_reads($self->{'bam_file'});
-            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
         }
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
+        if ( $mode eq 'WebBAM' ){ # WEB transcriptome version
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
+        }
         
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
+
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
 }

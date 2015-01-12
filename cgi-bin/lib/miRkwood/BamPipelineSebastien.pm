@@ -5,7 +5,7 @@ package miRkwood::BamPipelineSebastien;
 use strict;
 use warnings;
 
-use parent 'miRkwood::PipelineSebastien';
+use parent 'miRkwood::Pipeline';
 
 use Log::Message::Simple qw[msg error debug];
 
