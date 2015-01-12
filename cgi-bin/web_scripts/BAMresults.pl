@@ -101,7 +101,7 @@ if ( $valid ){
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
         $nb_results = miRkwood::Results->number_of_results_bis( $id_job );
-        $HTML_additional .= "<p class='header-results' id='precursors_count'><b>" . $nb_results . " miRNA precursor(s) found</b></p>";
+        #~ $HTML_additional .= "<p class='header-results' id='precursors_count'><b>" . $nb_results . " miRNA precursor(s) found</b></p>";
         $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
     }    
     
@@ -137,10 +137,17 @@ if ( $valid ){
                     <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
                     </p>
             </div> 
-                       
+            
+            <br />
+            
+            <h2>New miRNAs :</h2>
+            <p class='header-results' id='precursors_count'><b> $nb_results miRNA precursor(s) found</b></p> 
+                      
             <div id="table" ></div>
             <div id="singleCell"> </div>
             $new_mirnas   
+            
+            <br />
                     
             <div id="id_job" >$id_job</div>
             
