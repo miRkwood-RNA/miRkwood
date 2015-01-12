@@ -365,7 +365,7 @@ sub make_sequence_workspace_directory {
             #~ $candidate = $candidate->get_reads($self->{'bam_file'});
             #~ miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
         #~ }
-        #~ miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
+        #~ miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
         #~ 
         #~ push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     #~ }
@@ -390,7 +390,7 @@ sub serialize_candidates {
             miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
         }
         
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
 
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
