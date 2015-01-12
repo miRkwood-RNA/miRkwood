@@ -6,7 +6,7 @@ use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use File::Spec;
 use FindBin;
-use Data::Dumper;
+
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::Paths;
 use miRkwood::Results;
