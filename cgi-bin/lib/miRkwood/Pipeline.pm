@@ -382,7 +382,7 @@ sub serialize_candidates {
     my $mode = $cfg->param('job.mode');
 
     foreach my $candidate (@candidates_array ) {
-        if ( $mode eq 'BAM' ){ # CLI transcriptome version
+        if ( $mode eq 'bam' ){ # CLI transcriptome version
             $candidate = $candidate->get_reads($self->{'bam_file'});
             miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
         }
