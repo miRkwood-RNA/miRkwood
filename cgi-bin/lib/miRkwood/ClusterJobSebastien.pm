@@ -783,7 +783,6 @@ sub apply_structure_criterion_per_chr {
 		mkdir $working_dir;
 		
 		my $rnalfold_output_filename = 'rnalfold_out';
-		my $rnalfold_output_filepath = File::Spec->catfile($working_dir, $rnalfold_output_filename);
 
 		my $genomic_seq = $this->get_sub_sequence_on_strand($chr, $region->{begin}, $region->{end}-1, $strand);
 		
