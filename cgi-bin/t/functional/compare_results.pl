@@ -46,6 +46,8 @@ my $content2 = join(" ", sort(@dir2));
 
 if ( $content1 ne $content2 ){
     print "Lists of files in both folders are different.\n";
+    print "---$content1\n";
+    print "---$content2\n";
     exit 1;
 }
 
