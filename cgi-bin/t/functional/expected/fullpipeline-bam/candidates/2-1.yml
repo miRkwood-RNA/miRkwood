@@ -1,875 +1,246 @@
---- structure_stemloop
---- (((.(((((((((((((((((((((.(((((.......))))).))))))))))))))))))))).)))
---- length
---- 69
---- energy_optimal
---- '-33.30'
---- strand
---- +
---- mfe
---- '-33.30'
---- identifier
---- 2-1
---- hairpin
---- "   A                     C     CU\nUAG AAAAAACGAGUAAUAUAAGCC UCUUU  U\n||| |||||||||||||||||||||
-  |||||  A\nAUC UUUUUUGCUCGUUAUAUUCGG AGAAA  U\n   A                     A     UU\n"
---- alignment_existence
---- 0
---- amfe
---- -48.2608695652174
---- position
---- 34-102
---- start_position
---- 34
---- '%GC'
---- '27.54'
---- mfei
---- -1.75263157894737
---- structure_optimal
---- (((.(((((((((((((((((((((.(((((.......))))).))))))))))))))))))))).)))
---- name
---- ChrC__254-554
+--- end_position
+--- 102
 --- sequence
 --- UAGAAAAAAACGAGUAAUAUAAGCCCUCUUUCUUAUUUAAAGAAGGCUUAUAUUGCUCGUUUUUUACUA
 --- reads
 ---
-'285':
-  UAUAGAAAAAAACGAGUAAUA:
-    count: 1
-    strand: '-'
-  UAUAGAAAAAAACGAGUAAUAUA:
-    count: 1
-    strand: '-'
-  UUUAGAAAAAAACGAGUAA:
-    count: 2
-    strand: '-'
-'289':
-  GAAAAAAACGAGUAAUAUAAG:
-    count: 1
-    strand: '-'
-  GAAAAAAACGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  GUAAAAAACGAGUAAUAUAAGCCCUC:
-    count: 2
-    strand: '-'
-'290':
-  AAAAAAACGAGUAAUAUAAGCC:
-    count: 1
-    strand: '-'
-  UAAAAAACGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-'291':
-  AAAAAACGAGUAAUAUAAGCC:
-    count: 1
-    strand: '-'
-  AAAAAACGAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  UAAAAACGAGUAAUAUAAGCC:
-    count: 1
-    strand: '-'
-  UAAAAACGAGUAAUAUAAGCCC:
-    count: 3
-    strand: '-'
-  UAAAAACGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  UAAAAACGAGUAAUAUAAGCCCUC:
-    count: 2
-    strand: '-'
-'292':
-  AAAAACGAGUAAUAUAAGCC:
-    count: 2
-    strand: '-'
-  AAAAACGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  AAAAACGAGUAAUAUAAGCCCUC:
-    count: 5
-    strand: '-'
-  AAAAACGAGUAAUAUAAGCCCUCU:
-    count: 5
-    strand: '-'
-  AAAAACGAGUAAUAUAAGCCCUCUUU:
-    count: 2
-    strand: '-'
-  GAAAACGAGUAAUAUAAGC:
-    count: 1
-    strand: '-'
-  GAAAACGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  GAAAACGAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  GAAAACGAGUAAUAUAAGCCCUCUU:
-    count: 1
-    strand: '-'
-  UAAAACGAGUAAUAUAAGCCC:
-    count: 5
-    strand: '-'
-  UAAAACGAGUAAUAUAAGCCCU:
-    count: 3
-    strand: '-'
-  UAAAACGAGUAAUAUAAGCCCUC:
-    count: 6
-    strand: '-'
-  UAAAACGAGUAAUAUAAGCCCUCU:
-    count: 2
-    strand: '-'
-'293':
-  AAAACGAGUAAGAUAAGCCCUCUUU:
-    count: 1
-    strand: '-'
-  AAAACGAGUAAUAUAAGC:
-    count: 7
-    strand: '-'
-  AAAACGAGUAAUAUAAGCCCU:
-    count: 10
-    strand: '-'
-  AAAACGAGUAAUAUAAGCCCUC:
-    count: 20
-    strand: '-'
-  AAAACGAGUAAUAUAAGCCCUCU:
-    count: 7
-    strand: '-'
-  AAAACGAGUAAUAUAAGCCCUCUU:
-    count: 6
-    strand: '-'
-  AAAACGAGUAAUAUAAGCCCUCUUU:
-    count: 11
-    strand: '-'
-  AAAACGAGUAAUAUAAGCCCUCUUUC:
-    count: 4
-    strand: '-'
-  AAAACGAGUAAUAUAAUCCCU:
-    count: 1
-    strand: '-'
-  GAAACGAGUAAUAUAAGCCCU:
-    count: 2
-    strand: '-'
-  GAAACGAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  GAAACGAGUAAUAUAAGCCCUCU:
-    count: 3
-    strand: '-'
-  GAAACGAGUAAUAUAAGCCCUCUU:
-    count: 1
-    strand: '-'
-  UAAACGAGUAAUAUAAGCC:
-    count: 1
-    strand: '-'
-  UAAACGAGUAAUAUAAGCCC:
-    count: 2
-    strand: '-'
-  UAAACGAGUAAUAUAAGCCCU:
-    count: 5
-    strand: '-'
-  UAAACGAGUAAUAUAAGCCCUC:
-    count: 5
-    strand: '-'
-  UAAACGAGUAAUAUAAGCCCUCU:
-    count: 1
-    strand: '-'
-  UAAACGAGUAAUAUAAGCCCUCUUU:
-    count: 4
-    strand: '-'
-'294':
-  AAACAAGUAAUAUAAGCCCUCUU:
-    count: 1
-    strand: '-'
-  AAACGAGUAAUAUAAGC:
-    count: 1
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCU:
-    count: 11
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCUC:
-    count: 10
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCUCU:
-    count: 13
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCUCUU:
-    count: 2
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCUCUUU:
-    count: 13
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCUCUUUC:
-    count: 12
-    strand: '-'
-  AAACGAGUAAUAUAAGCCCUCUUUCU:
-    count: 2
-    strand: '-'
-  AAACGUGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  AAGCGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  AAGCGAGUAAUAUAAGCCCUCUUU:
-    count: 1
-    strand: '-'
-  CAACGAGUAAUAUAAGCCCUCUUUC:
-    count: 2
-    strand: '-'
-  UAACGAGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  UAACGAGUAAUAUAAGCCCUCUUU:
-    count: 1
-    strand: '-'
-'295':
-  AACGAAUAAUAUAAGCCCUC:
-    count: 2
-    strand: '-'
-  AACGACUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  AACGAGUAAUAUAAGC:
-    count: 1
-    strand: '-'
-  AACGAGUAAUAUAAGCC:
-    count: 2
-    strand: '-'
-  AACGAGUAAUAUAAGCCAUC:
-    count: 1
-    strand: '-'
-  AACGAGUAAUAUAAGCCC:
-    count: 1
-    strand: '-'
-  AACGAGUAAUAUAAGCCCU:
-    count: 2
-    strand: '-'
-  AACGAGUAAUAUAAGCCCUA:
-    count: 1
-    strand: '-'
-  AACGAGUAAUAUAAGCCCUC:
-    count: 41
-    strand: '-'
-  AACGAGUAAUAUAAGCCCUCU:
-    count: 15
-    strand: '-'
-  AACGAGUAAUAUAAGCCCUCUU:
-    count: 2
-    strand: '-'
-  AACGAGUAAUAUAAGCCCUCUUU:
-    count: 10
-    strand: '-'
-  AACGAGUAAUAUAAGCCCUCUUUC:
-    count: 2
-    strand: '-'
-  ACCGAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  AGCGAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  UACGAGUAAUAUAAGCCCUC:
-    count: 2
-    strand: '-'
-'296':
-  ACAAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  ACGAGUAAGAUAAGCCCUCUUU:
-    count: 1
-    strand: '-'
-  ACGAGUAAUAUAAGCC:
-    count: 1
-    strand: '-'
-  ACGAGUAAUAUAAGCCAUC:
-    count: 1
-    strand: '-'
-  ACGAGUAAUAUAAGCCC:
-    count: 2
-    strand: '-'
-  ACGAGUAAUAUAAGCCCU:
-    count: 8
-    strand: '-'
-  ACGAGUAAUAUAAGCCCUC:
-    count: 112
-    strand: '-'
-  ACGAGUAAUAUAAGCCCUCU:
-    count: 12
-    strand: '-'
-  ACGAGUAAUAUAAGCCCUCUU:
-    count: 2
-    strand: '-'
-  ACGAGUAAUAUAAGCCCUCUUU:
-    count: 7
-    strand: '-'
-  ACGAGUAAUAUAAGCCCUCUUUCU:
-    count: 1
-    strand: '-'
-  UCGAGUAAUAUAAGCCCUC:
-    count: 3
-    strand: '-'
-'297':
-  CAAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  CGAGGAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  CGAGUAAGAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  CGAGUAAUAUAAGCC:
-    count: 3
-    strand: '-'
-  CGAGUAAUAUAAGCCC:
-    count: 27
-    strand: '-'
-  CGAGUAAUAUAAGCCCCC:
-    count: 1
-    strand: '-'
-  CGAGUAAUAUAAGCCCU:
-    count: 15
-    strand: '-'
-  CGAGUAAUAUAAGCCCUA:
-    count: 1
-    strand: '-'
-  CGAGUAAUAUAAGCCCUC:
-    count: 303
-    strand: '-'
-  CGAGUAAUAUAAGCCCUCU:
-    count: 15
-    strand: '-'
-  CGAGUAAUAUAAGCCCUCUUU:
-    count: 3
-    strand: '-'
-  CGAGUAAUAUAAGCCCUG:
-    count: 1
-    strand: '-'
-  CGAGUAAUAUAUGCCCUC:
-    count: 1
-    strand: '-'
-  CGAGUAAUAUGAGCCCUC:
-    count: 2
-    strand: '-'
-  CUAGUAAUAUAAGCCCUC:
-    count: 2
-    strand: '-'
-  UGAGUAAUAUAAGCCCUC:
-    count: 3
-    strand: '-'
-'298':
-  CAGUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  GAGUAAUAUAAGCCCU:
-    count: 5
-    strand: '-'
-  GAGUAAUAUAAGCCCUC:
-    count: 202
-    strand: '-'
-  GAGUAAUAUAAGCCCUCU:
-    count: 6
-    strand: '-'
-  GAGUAAUAUAAGCCCUG:
-    count: 1
-    strand: '-'
-  GAGUGAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-  GGGUAAUAUAAGCCCUCUU:
-    count: 1
-    strand: '-'
-  UAGUAAUAUAAGCCCUC:
-    count: 5
-    strand: '-'
-'299':
-  AGUAAUAUAAGCCCU:
-    count: 1
-    strand: '-'
-  AGUAAUAUAAGCCCUC:
-    count: 54
-    strand: '-'
-  AGUAAUAUAAGCCCUCU:
-    count: 41
-    strand: '-'
-  AGUAAUAUAAGCCCUCUU:
-    count: 6
-    strand: '-'
-  AGUAAUAUAAGCCCUCUUU:
-    count: 3
-    strand: '-'
-  AUUAAUAUAAGCCCUC:
-    count: 1
-    strand: '-'
-'300':
-  GUAAUAUAAGCCCUCU:
-    count: 2
-    strand: '-'
-'301':
-  UAAUAUAAGCCCUCUUU:
-    count: 1
-    strand: '-'
-'302':
-  AAUAUAAGCCCUCUUU:
-    count: 2
-    strand: '-'
-'316':
-  UUCUUAUUUAAAGAAGUCUU:
-    count: 1
-    strand: +
-'328':
-  GAAGGCUUAUAUUGCUCG:
-    count: 1
-    strand: '-'
-  GAAGGCUUAUAUUGCUCGUU:
-    count: 1
-    strand: +
-'330':
-  AGGCUUAUAUUGCUCGUUUU:
-    count: 1
-    strand: +
-'352':
-  ACUAAACUAGAUCUAGAC:
-    count: 1
-    strand: '-'
-'368':
-  ACUAACACUAACGAAUUAUCCAU:
-    count: 1
-    strand: '-'
-  UCUAACACUAACGAAUUAUCC:
-    count: 1
-    strand: '-'
-'370':
-  UAACACUAACGAAUUAUCCAU:
-    count: 1
-    strand: '-'
-'374':
-  ACUAACGAAUUAUCCAU:
-    count: 2
-    strand: '-'
-  ACUAACGAAUUAUCCAUUUGUAGA:
-    count: 1
-    strand: '-'
-'385':
-  UUCCAUUUGUAGAUGGAGCC:
-    count: 1
-    strand: '-'
-'386':
-  UCCAUUUGUAGAUGGAG:
-    count: 1
-    strand: '-'
-  UCCAUUUGUAGAUGGAGCCU:
-    count: 1
-    strand: '-'
-'387':
-  CCAUUUGUAGAUGGAGCCUCAAA:
-    count: 1
-    strand: +
-'390':
-  UUUGUAGAUGGAGCCUCAACAGCAGCU:
-    count: 1
-    strand: '-'
-'393':
-  GUAGAUGGAGCCUCAACAGCAGCUA:
-    count: 1
-    strand: '-'
-'395':
-  AGAUGGAGCCUCAACAG:
-    count: 1
-    strand: '-'
-  AGAUGGAGCCUCAACAGCAGC:
-    count: 1
-    strand: '-'
-'397':
-  AGGGAGCCUCAACAGCAGCUAGGUC:
-    count: 1
-    strand: '-'
-  AUGGAGCCUCAACAGCAGCUAGGU:
-    count: 1
-    strand: '-'
-'399':
-  GGAGCCUCAACAGCAGCUAGG:
-    count: 2
-    strand: '-'
-'403':
-  CCUCAACAGCAGCUAGGUCUA:
-    count: 1
-    strand: '-'
-  CCUCAACAGCAGCUAGGUCUAGAGGG:
-    count: 1
-    strand: '-'
-'404':
-  CGCAACAGCAGCUAGGUC:
-    count: 1
-    strand: '-'
-  CUCAACAGCAGCUAGGUCUAGAGG:
-    count: 1
-    strand: '-'
-'407':
-  AACAGCAGCUAGGUCUAGAGGG:
-    count: 1
-    strand: '-'
-'410':
-  AGCAGCUAGGUCUAGAGGGAAGUU:
-    count: 2
-    strand: '-'
-'416':
-  UAGGUCUAGAGGGAAGU:
-    count: 2
-    strand: '-'
-'420':
-  UCUAGAGGGAAGUUGUGAGCAUUAC:
-    count: 1
-    strand: '-'
-'442':
-  UACGUUCAUGCAUAACUUCCA:
-    count: 1
-    strand: '-'
-'443':
-  ACGUUCAUGCAUAACUUC:
-    count: 1
-    strand: '-'
-  ACGUUCAUGCAUAACUUCCA:
-    count: 2
-    strand: '-'
-  ACGUUCAUGCAUAACUUCCAUACC:
-    count: 1
-    strand: '-'
-  ACGUUCAUGCAUAACUUCCAUACCA:
-    count: 1
-    strand: '-'
-'444':
-  CGUUCAUGCAUAACUUC:
-    count: 2
-    strand: '-'
-  CGUUCAUGCAUAACUUCCA:
-    count: 1
-    strand: '-'
-  CGUUCAUGCAUAACUUCCAUA:
-    count: 1
-    strand: '-'
-'446':
-  UUCAUGCAUAACUUCCAUACCAAGGU:
-    count: 2
-    strand: '-'
-'447':
-  UCAGGCAUAACUUCCAUACC:
-    count: 1
-    strand: '-'
-  UCAUGCAUAACUUCCA:
-    count: 2
-    strand: '-'
-  UCAUGCAUAACUUCCAUAC:
-    count: 2
-    strand: '-'
-  UCAUGCAUAACUUCCAUACCAAG:
-    count: 1
-    strand: '-'
-'448':
-  CAUGCAUAACUUCCAUACCAAGG:
-    count: 1
-    strand: '-'
-  CAUGCAUAACUUCCAUACCAAGGUU:
-    count: 1
-    strand: '-'
-  CAUGCAUAACUUCCAUACCAAGGUUA:
-    count: 1
-    strand: '-'
-  CAUGCAUAUCUUCCAUACCAAGGU:
-    count: 1
-    strand: '-'
-'450':
-  GGCAUAACUUCCAUACCAA:
-    count: 1
-    strand: '-'
-  UGCAUAACUUCCAUAC:
-    count: 1
-    strand: '-'
-  UGCAUAACUUCCAUACC:
-    count: 1
-    strand: '-'
-  UGCAUAACUUCCAUACCAAGG:
-    count: 1
-    strand: '-'
-  UGCAUAACUUCCAUACCAAGGU:
-    count: 1
-    strand: '-'
-'452':
-  CAUAACUUCCAUACAAAGGU:
-    count: 2
-    strand: '-'
-'454':
-  UAACUUCCAUACCAAGGU:
-    count: 1
-    strand: '-'
-  UAACUUCCAUACCAAGGUUA:
-    count: 1
-    strand: '-'
-'456':
-  ACUUCCAUACCAAGGU:
-    count: 2
-    strand: '-'
-  ACUUCCAUACCAAGGUU:
-    count: 1
-    strand: '-'
-  ACUUCCAUACCAAGGUUAGCACG:
-    count: 1
-    strand: '-'
-  UCUUCCAUACCAAGGUUAGCA:
-    count: 1
-    strand: '-'
-'458':
-  UUCCAUACCAAGGUUAGCA:
-    count: 2
-    strand: '-'
-  UUCCAUACCAAGGUUAGCAC:
-    count: 1
-    strand: '-'
-  UUCCAUACCAAGGUUAGCACG:
-    count: 1
-    strand: '-'
-'459':
-  UCCAUACCAAGGUUAG:
-    count: 1
-    strand: '-'
-  UCCAUACCAAGGUUAGC:
-    count: 2
-    strand: '-'
-  UCCAUACCAAGGUUAGCA:
-    count: 1
-    strand: '-'
-  UCCAUACCAAGGUUAGCAC:
-    count: 8
-    strand: '-'
-  UCCAUACCAAGGUUAGCACG:
-    count: 2
-    strand: '-'
-  UCCAUACCAAGGUUAGCACGG:
-    count: 1
-    strand: '-'
-'462':
-  AUACCAAGGUUAGCACGGUUA:
-    count: 1
-    strand: '-'
-'463':
-  UACCAAGGUUAGCACGG:
-    count: 4
-    strand: '-'
-  UACCAAGGUUAGCACGGU:
-    count: 3
-    strand: '-'
-  UACCAAGGUUAGCACGGUUA:
-    count: 1
-    strand: '-'
-'464':
-  ACCAAGGUUAGCACGGU:
-    count: 2
-    strand: '-'
-'465':
-  CCAAGGUUAGCACGGUU:
-    count: 1
-    strand: '-'
-  CCAAGGUUAGCACGGUUAAUAAUA:
-    count: 1
-    strand: '-'
-'466':
-  CAAGGUUAGCACGGUUAAUAA:
-    count: 1
-    strand: '-'
-'473':
-  AGCACGGUUAAUAAUAUC:
-    count: 1
-    strand: '-'
-  AGCACGGUUAAUAAUAUCAG:
-    count: 1
-    strand: '-'
-'481':
-  UAAUAAUAUCAGCCCAA:
-    count: 1
-    strand: '-'
-  UAAUAAUAUCAGCCCAAG:
-    count: 1
-    strand: '-'
-'482':
-  AAUAAUAUCAGCCCAA:
-    count: 1
-    strand: '-'
-  AAUAAUAUCAGCCCAAGUAUU:
-    count: 1
-    strand: '-'
-  AAUAAUAUCAGCCCAAGUAUUAA:
-    count: 3
-    strand: '-'
-  AAUAAUAUCAGCCCAAGUAUUAAU:
-    count: 1
-    strand: '-'
-  AAUAAUGUCAGCCCAAGU:
-    count: 1
-    strand: '-'
-'483':
-  AUAAUAUCAGCCCAAGU:
-    count: 2
-    strand: '-'
-'484':
-  UAAUAUCAGCCCAAGUA:
-    count: 1
-    strand: '-'
-'485':
-  AAUAUCAGCCCAAGUAU:
-    count: 1
-    strand: '-'
-  AAUAUCAGCCCAAGUAUUAAUAACA:
-    count: 1
-    strand: '-'
-'486':
-  AUAUCAGCCCAAGUAUUAAUA:
-    count: 1
-    strand: '-'
-'487':
-  AAUCAGCCCAAGUAUUAAUAACACGU:
-    count: 1
-    strand: '-'
-  UAUCAGCCCAAGUAUUAA:
-    count: 2
-    strand: '-'
-  UAUCAGCCCAAGUAUUAAUAACA:
-    count: 2
-    strand: '-'
-  UAUCAGCCCAAGUAUUAAUAACAC:
-    count: 1
-    strand: '-'
-'488':
-  AUCAGCCCAAGUAUUAAUAAC:
-    count: 1
-    strand: '-'
-  AUCAGCCCAAGUAUUAAUAACA:
-    count: 2
-    strand: '-'
-  AUCAGCCCAAGUAUUAAUAACACGU:
-    count: 2
-    strand: '-'
-'489':
-  UCAGCCCAAGUAUUAA:
-    count: 1
-    strand: '-'
-  UCAGCCCAAGUAUUAAUAA:
-    count: 2
-    strand: '-'
-  UCAGCCCAAGUAUUAAUAACA:
-    count: 1
-    strand: '-'
-  UCAGCCCAAGUAUUAAUAACAC:
-    count: 1
-    strand: '-'
-  UCAGCCCAAGUAUUAAUAACACGU:
-    count: 5
-    strand: '-'
-  UCAGCCCAAGUAUUAAUAACACGUC:
-    count: 1
-    strand: '-'
-'490':
-  CAGCCCAAGUAUUAAUAACA:
-    count: 1
-    strand: '-'
-  CAGCCCAAGUAUUAAUAACAC:
-    count: 1
-    strand: '-'
-  CAGCCCAAGUAUUAAUAACACGU:
-    count: 1
-    strand: '-'
-'491':
-  AGCCCAAGUAUUAAUAAC:
-    count: 3
-    strand: '-'
-  AGCCCAAGUAUUAAUAACA:
-    count: 2
-    strand: '-'
-  AGCCCAAGUAUUAAUAACAC:
-    count: 1
-    strand: '-'
-  AGCCCAAGUAUUAAUAACACGU:
-    count: 1
-    strand: '-'
-  AGCCCAAGUAUUAAUAACACGUC:
-    count: 1
-    strand: '-'
-  AGCCCAAGUAUUAAUAACACGUCCU:
-    count: 1
-    strand: '-'
-'492':
-  GCCCAAGUAUUAAUAACACGUCCU:
-    count: 1
-    strand: '-'
-  GCCCAAGUAUUAAUAACACGUCCUU:
-    count: 2
-    strand: '-'
-  UCCCAAGUAUUAAUAACACGUC:
-    count: 2
-    strand: '-'
-'493':
-  CCCAAGUAUUAAUAACACGUC:
-    count: 1
-    strand: '-'
-  CCCAAGUAUUAAUAACACGUCCU:
-    count: 1
-    strand: '-'
-  CCCAAGUAUUAAUAACACGUCCUU:
-    count: 1
-    strand: '-'
-'494':
-  CCAAGUAUUAAUAACACGUCCU:
-    count: 1
-    strand: '-'
-'495':
-  CAAGUAUUAAUAACACGUCCUUG:
-    count: 2
-    strand: '-'
-'496':
-  AAGUAUUAAUAACACGUCCUU:
-    count: 1
-    strand: '-'
-'499':
-  UAUUAAUAACACGUCCUUGACU:
-    count: 2
-    strand: '-'
-'502':
-  UAAUAACACGUCCUUGACUAUCA:
-    count: 1
-    strand: '-'
-'503':
-  AAUAACACGUCCUUGACUAUC:
-    count: 1
-    strand: '-'
-  AAUAACACGUCCUUGACUAUCAAC:
-    count: 1
-    strand: '-'
-'505':
-  UAACACGUCCUUGACUAUCAA:
-    count: 1
-    strand: '-'
-'506':
-  AACACGUCCUUGACUAUCAAC:
-    count: 2
-    strand: '-'
-'507':
-  ACACGUCCUUGACUAUCAACU:
-    count: 2
-    strand: '-'
-'509':
-  ACGUCCUUGACUAUCAAC:
-    count: 1
-    strand: '-'
-  ACGUCCUUGACUAUCAACU:
-    count: 1
-    strand: '-'
---- image
---- /home/guigon/Data/mirkwood_cli_output/mirkwood_bam/functional_test/trial4/workspace/2/1/image.png
+285-304: 2
+285-306: 1
+285-308: 1
+289-310: 1
+289-314: 1
+289-315: 2
+290-312: 1
+290-314: 1
+291-312: 2
+291-313: 3
+291-314: 1
+291-315: 3
+292-311: 1
+292-312: 2
+292-313: 5
+292-314: 5
+292-315: 12
+292-316: 7
+292-317: 1
+292-318: 2
+293-311: 7
+293-312: 1
+293-313: 2
+293-314: 18
+293-315: 26
+293-316: 11
+293-317: 7
+293-318: 16
+293-319: 4
+294-311: 1
+294-314: 13
+294-315: 11
+294-316: 13
+294-317: 3
+294-318: 15
+294-319: 14
+294-320: 2
+295-311: 1
+295-312: 2
+295-313: 1
+295-314: 2
+295-315: 50
+295-316: 15
+295-317: 2
+295-318: 10
+295-319: 2
+296-312: 1
+296-313: 2
+296-314: 8
+296-315: 117
+296-316: 12
+296-317: 2
+296-318: 8
+296-320: 1
+297-312: 3
+297-313: 27
+297-314: 15
+297-315: 317
+297-316: 15
+297-318: 3
+298-314: 5
+298-315: 210
+298-316: 6
+298-317: 1
+299-314: 1
+299-315: 55
+299-316: 41
+299-317: 6
+299-318: 3
+300-316: 2
+301-318: 1
+302-318: 2
+316-336: 1
+328-346: 1
+328-348: 1
+330-350: 1
+352-370: 1
+368-389: 1
+368-391: 1
+370-391: 1
+374-391: 2
+374-398: 1
+385-405: 1
+386-403: 1
+386-406: 1
+387-410: 1
+390-417: 1
+393-418: 1
+395-412: 1
+395-416: 1
+397-421: 1
+397-422: 1
+399-420: 2
+403-424: 1
+403-429: 1
+404-422: 1
+404-428: 1
+407-429: 1
+410-434: 2
+416-433: 2
+420-445: 1
+442-463: 1
+443-461: 1
+443-463: 2
+443-467: 1
+443-468: 1
+444-461: 2
+444-463: 1
+444-465: 1
+446-472: 2
+447-463: 2
+447-466: 2
+447-467: 1
+447-470: 1
+448-471: 1
+448-472: 1
+448-473: 1
+448-474: 1
+450-466: 1
+450-467: 1
+450-469: 1
+450-471: 1
+450-472: 1
+452-472: 2
+454-472: 1
+454-474: 1
+456-472: 2
+456-473: 1
+456-477: 1
+456-479: 1
+458-477: 2
+458-478: 1
+458-479: 1
+459-475: 1
+459-476: 2
+459-477: 1
+459-478: 8
+459-479: 2
+459-480: 1
+462-483: 1
+463-480: 4
+463-481: 3
+463-483: 1
+464-481: 2
+465-482: 1
+465-489: 1
+466-487: 1
+473-491: 1
+473-493: 1
+481-498: 1
+481-499: 1
+482-498: 1
+482-500: 1
+482-503: 1
+482-505: 3
+482-506: 1
+483-500: 2
+484-501: 1
+485-502: 1
+485-510: 1
+486-507: 1
+487-505: 2
+487-510: 2
+487-511: 1
+487-513: 1
+488-509: 1
+488-510: 2
+488-513: 2
+489-505: 1
+489-508: 2
+489-510: 1
+489-511: 1
+489-513: 5
+489-514: 1
+490-510: 1
+490-511: 1
+490-513: 1
+491-509: 3
+491-510: 2
+491-511: 1
+491-513: 1
+491-514: 1
+491-516: 1
+492-514: 2
+492-516: 1
+492-517: 2
+493-514: 1
+493-516: 1
+493-517: 1
+494-516: 1
+495-518: 2
+496-517: 1
+499-521: 2
+502-525: 1
+503-524: 1
+503-527: 1
+505-526: 1
+506-527: 2
+507-528: 2
+509-527: 1
+509-528: 1
+--- start_position
+--- 34
+--- structure_stemloop
+--- (((.(((((((((((((((((((((.(((((.......))))).))))))))))))))))))))).)))
+--- position
+--- 34-102
+--- alignment_existence
+--- 0
+--- structure_optimal
+--- (((.(((((((((((((((((((((.(((((.......))))).))))))))))))))))))))).)))
+--- identifier
+--- 2-1
+--- '%GC'
+--- '27.54'
+--- hairpin
+--- "   A                     C     CU\nUAG AAAAAACGAGUAAUAUAAGCC UCUUU  U\n||| |||||||||||||||||||||
+  |||||  A\nAUC UUUUUUGCUCGUUAUAUUCGG AGAAA  U\n   A                     A     UU\n"
+--- strand
+--- +
 --- alignment
 --- 0
---- alternatives
---- {}
---- end_position
---- 102
 --- quality
 --- 1
+--- alternatives
+--- {}
+--- name
+--- ChrC__254-554
+--- energy_optimal
+--- '-33.30'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bam/workspace/2/1/image.png
+--- length
+--- 69
+--- amfe
+--- -48.2608695652174
+--- mfei
+--- -1.75263157894737
+--- mfe
+--- '-33.30'
