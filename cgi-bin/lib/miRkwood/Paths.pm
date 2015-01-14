@@ -131,7 +131,19 @@ sub get_dir_candidates_path {
     return File::Spec->catdir($job_dir, 'candidates');
 }
 
-=method get_new_candidates_dir
+=method get_dir_candidates_path
+
+Return the path to the candidates directory
+Parameter : job directory
+
+=cut
+sub get_dir_candidates_path_from_job_dir {
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir($job_dir, 'candidates');
+}
+
+=method get_new_candidates_dir_from_job_dir
 
 Return the path to the new candidates directory
 Parameter : job id
@@ -141,6 +153,18 @@ sub get_new_candidates_dir {
     my (@args) = @_;
     my $job_id = shift @args;
     return File::Spec->catdir( get_dir_candidates_path($job_id), 'new');
+}
+
+=method get_new_candidates_dir_from_job_dir
+
+Return the path to the new candidates directory
+Parameter : job directory
+
+=cut
+sub get_new_candidates_dir_from_job_dir {
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir( get_dir_candidates_path_from_job_dir($job_dir), 'new');
 }
 
 =method get_known_candidates_dir
@@ -154,7 +178,19 @@ sub get_known_candidates_dir {
     my $job_id = shift @args;
     return File::Spec->catdir( get_dir_candidates_path($job_id), 'known');
 }
-    
+
+=method get_known_candidates_dir_from_job_dir
+
+Return the path to the new candidates directory
+Parameter : job directory
+
+=cut
+sub get_known_candidates_dir_from_job_dir {
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir( get_dir_candidates_path_from_job_dir($job_dir), 'known');
+}
+
 =method get_dir_reads_path
 
 Return the path to the reads directory
@@ -169,7 +205,20 @@ sub get_dir_reads_path {
     return File::Spec->catdir($job_dir, 'reads');
 }
 
-=method get_new_candidates_dir
+=method get_dir_reads_path_from_job_dir
+
+Return the path to the reads directory
+Parameter : job directory
+
+=cut
+
+sub get_dir_reads_path_from_job_dir {
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir($job_dir, 'reads');
+}
+
+=method get_new_reads_dir
 
 Return the path to the new reads directory
 Parameter : job id
@@ -181,7 +230,19 @@ sub get_new_reads_dir {
     return File::Spec->catdir( get_dir_reads_path($job_id), 'new');
 }
 
-=method get_known_candidates_dir
+=method get_new_reads_dir_from_job_dir
+
+Return the path to the new reads directory
+Parameter : job directory
+
+=cut
+sub get_new_reads_dir {
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'new');
+}
+
+=method get_known_reads_dir
 
 Return the path to the new reads directory
 Parameter : job id
@@ -193,5 +254,16 @@ sub get_known_reads_dir {
     return File::Spec->catdir( get_dir_reads_path($job_id), 'known');
 }
 
+=method get_known_reads_dir_from_job_dir
+
+Return the path to the new reads directory
+Parameter : job id
+
+=cut
+sub get_known_reads_dir_from_job_dir {
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'known');
+}
 
 1;
