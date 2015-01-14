@@ -22,11 +22,12 @@ sub new {
     my ($job_dir, $bed_file, $genome_file) = @args;
     my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );
     my $self = {
-        job_dir => $job_dir,
-        bed_file => $bed_file,
+        job_dir     => $job_dir,
+        initial_bed => $bed_file,
+        bed_file    => '',
         genome_file => $genome_file,
-        genome_db => \%genome_db,
-        sequences => undef
+        genome_db   => \%genome_db,
+        sequences   => undef
     };
     bless $self, $class;
     return $self;
