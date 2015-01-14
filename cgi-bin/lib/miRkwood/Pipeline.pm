@@ -115,7 +115,152 @@ sub setup_logging {
 sub treat_known_mirnas {
     my ($self, @args) = @_;
 
-    #~ $self->store_known_mirnas_as_candidate_objects();
+    $self->store_known_mirnas_as_candidate_objects();
+    $self->serialize_known_candidates();
+
+    return;
+
+}
+
+sub store_known_mirnas_as_candidate_objects {
+    my ($self, @args) = @_;
+    my $job_dir        = $self->{'job_dir'};
+    my $bed_file       = $self->{'mirna_bed'};
+    my $genome         = $self->{'genome_db'};
+    my $reads_dir      = miRkwood::Paths::get_known_reads_dir_from_job_dir( $job_dir );
+    my $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $job_dir );  
+    my $cfg            = miRkwood->CONFIG();
+    my $species        = $cfg->param('job.plant');      
+    my $gff_file       = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
+
+    my $html = '';
+    my @field;
+    my ($id, $name, $chromosome, $strand, $score);
+    my ($precursor_name, $precursor_start, $precursor_end, $precursor_reads, $precursor_id);
+    my ($precursor_of_mature, $mature_of_precursor);
+    my $mature_reads;
+    my $data;
+    my $star = "<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' />";
+
+    ##### Read the GFF and links each precursor with its mature
+
+    open (my $GFF, $gff_file) or die "ERROR while opening $gff_file : $!";
+
+    while ( <$GFF> ){
+        if ( ! /^#/ ){
+            chomp;
+
+            @field = split( /\t/xms );
+
+            if ( $field[2] eq "miRNA" and $field[8] =~ /ID=([^;]+).*Derives_from=([^;]+)/ ){
+                $precursor_of_mature->{ $1 } = $2;
+            }
+        }
+    }
+
+    close $GFF;
+
+
+    ##### Read the BED file
+    open (my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
+
+    while ( <$BED> ){
+
+        chomp;
+
+        @field = split( /\t/xms );
+
+        if ($field[14] =~ /ID=([^;]+).*Name=([^;]+)/ ){
+            $id = $1;
+            $name = $2;
+        }
+
+        if ( $field[8] eq "miRNA_primary_transcript" ){
+            $precursor_id = $id;
+            $data->{$precursor_id}{'identifier'}      = $id;
+            $data->{$precursor_id}{'precursor_name'}  = $name;
+            $data->{$precursor_id}{'name'}  = "$field[0]__$field[9]-$field[10]";
+            $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
+            $data->{$precursor_id}{'position'} = "$field[9]-$field[10]";
+            $data->{$precursor_id}{'start_position'} = 1;
+            $data->{$precursor_id}{'end_position'}   = $field[10] - $field[9];            
+            $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
+        }
+        elsif ( $field[8] eq "miRNA" ){
+            $precursor_id = $precursor_of_mature->{$id};
+            $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
+            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
+            $data->{$precursor_id}{'matures'}{$id}{'mature_end'}   = $field[10];
+            $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$field[1]-$field[2]"} = $field[4];
+        }
+
+        $data->{$precursor_id}{'chromosome'} = $field[0];
+        $data->{$precursor_id}{'strand'}     = $field[5];
+
+    }
+
+    close $BED;
+
+    ##### Treat data by precursor
+    $html = '<table><tbody id="cases"><tr>';
+    $html .= '<th>Name</th>';
+    $html .= '<th>Chromosome</th>';
+    $html .= '<th>Strand</th>';
+    $html .= '<th>Position Precursor</th>';
+    $html .= '<th>Number of reads</th>';
+    $html .= '<th>Score</th>';
+    
+    $html .= "</tr>\n";
+    
+    my @ids = sort { $data->{$a}{'chromosome'} <=> $data->{$b}{'chromosome'}
+                        ||
+                     $data->{$a}{'precursor_start'} <=> $data->{$b}{'precursor_start'}
+                        ||
+                     $data->{$a}{'precursor_end'} <=> $data->{$a}{'precursor_end'}   } keys%{$data};
+              
+    foreach $precursor_id ( @ids ){
+
+        $precursor_name  = $data->{$precursor_id}{'precursor_name'};
+        $chromosome      = $data->{$precursor_id}{'chromosome'};
+        $strand          = $data->{$precursor_id}{'strand'};
+        $precursor_start = $data->{$precursor_id}{'start_position'};
+        $precursor_end   = $data->{$precursor_id}{'end_position'};
+        $precursor_reads = 0;
+        $mature_reads = 0;
+        $score = '';
+
+        ##### Count number of reads
+        foreach (keys %{$data->{$precursor_id}{'precursor_reads'}}){
+            $precursor_reads += $data->{$precursor_id}{'precursor_reads'}{$_};
+        }
+        foreach my $mature_id ( keys %{$data->{$precursor_id}{'matures'}} ){
+            foreach my $read ( keys %{$data->{$precursor_id}{'matures'}{$mature_id}{'mature_reads'}} ){
+                $mature_reads += $data->{$precursor_id}{'matures'}{$mature_id}{'mature_reads'}{$read};
+            }
+        }
+
+        ##### Calculate score
+        $data->{$precursor_id}{'score'} = 0;
+        if ( $precursor_reads >= 10 ){
+           $data->{$precursor_id}{'score'}++; 
+        }
+        if ( $mature_reads >= ( $precursor_reads / 2 ) ){
+            $data->{$precursor_id}{'score'}++;
+        }
+        $score = '<center>';
+        for (my $i = 0; $i < $data->{$precursor_id}{'score'}; $i++){
+            $score .= $star;
+        }
+        $score .= '</center>';    
+
+        ### Create a Candidate object
+        my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
+        miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
+
+        ### Create individual card with reads cloud
+        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome, $reads_dir );
+
+    }
 
     return;
 
@@ -139,19 +284,22 @@ sub filter_BED {
     my $filter_multimapped = $cfg->param('options.filter_multimapped');
     my $localBED           = $self->{'initial_bed'};
     my $filteredBED        = '';
+    my $mirnaBED           = '';
 
     if ( $species ne '' ){
-        $filteredBED = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
     }
     else{
-        $filteredBED = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
     }
 
     if ( $filteredBED eq '' ){
         $self->{'bed_file'} = $self->{'initial_bed'};
+        $self->{'mirna_bed'} = '';
     }
     else{
         $self->{'bed_file'} = $filteredBED;
+        $self->{'mirna_bed'} = $mirnaBED;
     }
 
 }
@@ -412,6 +560,12 @@ sub serialize_candidates {
 
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
+}
+
+sub serialize_known_candidates {
+    my ($self, @args) = @_;
+    
+    return;
 }
 
 =method get_job_config_path

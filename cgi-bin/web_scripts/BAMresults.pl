@@ -105,11 +105,11 @@ if ( $valid ){
         $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
     }    
     
-    if ( $mirna_bed ne '' ){
-        $known_mirnas  = '<div id="table">';
-        $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($id_job, $mirna_bed, $mirbase_file, \%genome_db );
-        $known_mirnas .= '</div>';
-    }
+    #~ if ( $mirna_bed ne '' ){
+        #~ $known_mirnas  = '<div id="table">';
+        #~ $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($id_job, $mirna_bed, $mirbase_file, \%genome_db );
+        #~ $known_mirnas .= '</div>';
+    #~ }
 
     if ( $nb_results != 0 ) {
     
