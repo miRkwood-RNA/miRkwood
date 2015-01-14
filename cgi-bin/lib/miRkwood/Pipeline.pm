@@ -47,7 +47,16 @@ Run the pipeline
 sub run_pipeline {
     my ($self, @args) = @_;
     $self->init_pipeline();
+    
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');
+    if ( $mode eq 'WebBAM' ){ 
+        $self->filter_BED();
+        $self->treat_known_mirnas();
+    }       
+    
     $self->init_sequences();
+    
     $self->run_pipeline_on_sequences();
     return;
 }
@@ -95,6 +104,56 @@ sub setup_logging {
     $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
     miRkwood->DEBUG(1);
     return;
+}
+
+=method treat_known_mirnas
+
+ Usage : $self->treat_known_mirnas();
+ 
+=cut
+
+sub treat_known_mirnas {
+    my ($self, @args) = @_;
+
+    #~ $self->store_known_mirnas_as_candidate_objects();
+
+    return;
+
+}
+
+=method filter_BED
+
+Method to call module BEDHandler.pm and filter the given BED file
+of CDS, other RNA, multimapped reads, and known miRNAs.
+Initialize attribute 'bed_file' with the filtered BED, or with the
+initial BED file if no filter had been done.
+
+=cut
+
+sub filter_BED {
+    my ($self, @args) = @_;
+    my $cfg                = miRkwood->CONFIG();
+    my $species            = $cfg->param('job.plant');
+    my $filter_CDS         = $cfg->param('options.filter_CDS');
+    my $filter_tRNA_rRNA   = $cfg->param('options.filter_tRNA_rRNA');
+    my $filter_multimapped = $cfg->param('options.filter_multimapped');
+    my $localBED           = $self->{'initial_bed'};
+    my $filteredBED        = '';
+
+    if ( $species ne '' ){
+        $filteredBED = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+    }
+    else{
+        $filteredBED = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+    }
+
+    if ( $filteredBED eq '' ){
+        $self->{'bed_file'} = $self->{'initial_bed'};
+    }
+    else{
+        $self->{'bed_file'} = $filteredBED;
+    }
+
 }
 
 =method init_sequences
