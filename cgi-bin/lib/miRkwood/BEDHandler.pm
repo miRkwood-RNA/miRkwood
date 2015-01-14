@@ -120,7 +120,7 @@ sub filterBEDfile_for_model_organism {
     unlink $tmp_2;
     unlink $tmp_3;
 
-    return;
+    return $filtered_bed;
 
 }
 
