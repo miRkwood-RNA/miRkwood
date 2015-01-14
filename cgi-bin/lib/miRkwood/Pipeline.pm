@@ -66,12 +66,15 @@ sub init_pipeline {
     $self->setup_logging();
     my $run_options_file = $self->get_config_path();
     miRkwood->CONFIG_FILE($run_options_file);
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');
+        
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
     mkdir $self->get_new_candidates_dir();
     mkdir $self->get_known_candidates_dir();
-    if ( exists($self->{'bam_file'}) or exists($self->{'bed_file'})) {
+    if ( $mode eq 'bam' or $mode eq 'WebBAM' ){
         mkdir $self->get_reads_dir();
         mkdir $self->get_known_reads_dir();
         mkdir $self->get_new_reads_dir();
