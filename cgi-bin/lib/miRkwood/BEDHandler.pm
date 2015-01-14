@@ -120,7 +120,7 @@ sub filterBEDfile_for_model_organism {
     unlink $tmp_2;
     unlink $tmp_3;
 
-    return $filtered_bed;
+    return ($filtered_bed, $mirna_reads);
 
 }
 
