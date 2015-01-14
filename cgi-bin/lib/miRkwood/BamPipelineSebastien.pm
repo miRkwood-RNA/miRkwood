@@ -25,6 +25,7 @@ sub new {
         job_dir     => $job_dir,
         initial_bed => $bed_file,
         bed_file    => '',
+        mirna_bed   => '',
         genome_file => $genome_file,
         genome_db   => \%genome_db,
         sequences   => undef
