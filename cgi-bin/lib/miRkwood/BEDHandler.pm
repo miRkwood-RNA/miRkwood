@@ -58,8 +58,8 @@ sub filterBEDfile_for_model_organism {
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
 
         # Delete reads corresponding to known miRNAs from the BED
-        store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1);
-
+        #~ store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1); # un-comment when tests by Helene are done
+        $tmp_1 = $bed_file;                                               # delete it when tests by Helene are done
         debug( 'Known miRNAS have been filtered out from BED.', 1 );
     }
     else{
@@ -74,7 +74,7 @@ sub filterBEDfile_for_model_organism {
             store_overlapping_reads( $tmp_1, $CDS_file, $CDS_reads, '');
 
             # Delete reads corresponding to CDS from the BED
-            store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2);
+            store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2); 
 
             debug( 'CDS have been filtered out from BED.', 1 );
         }
@@ -116,7 +116,7 @@ sub filterBEDfile_for_model_organism {
         rename $tmp_3, $filtered_bed;
     }
 
-    unlink $tmp_1;
+    #~ unlink $tmp_1;   # un-comment when tests by Helene are done
     unlink $tmp_2;
     unlink $tmp_3;
 
