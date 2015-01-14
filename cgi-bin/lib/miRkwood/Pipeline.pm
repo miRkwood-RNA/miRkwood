@@ -246,20 +246,6 @@ Run the pipeline on the given sequences
 
 =cut
 
-#~ sub run_pipeline_on_sequences {
-    #~ my ($self, @args) = @_;
-    #~ my @sequences_array = $self->get_sequences();
-    #~ $self->{'basic_candidates'} = [];
-    #~ my $sequences_count = scalar @sequences_array;
-    #~ debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
-    #~ $self->compute_candidates();
-    #~ debug('miRkwood processing done', miRkwood->DEBUG() );
-    #~ $self->serialize_basic_candidates();
-    #~ $self->mark_job_as_finished();
-    #~ debug("Writing finish file", miRkwood->DEBUG() );
-    #~ return;
-#~ }
-
 sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
     
@@ -293,22 +279,6 @@ sub run_pipeline_on_sequences {
 =method compute_candidates
 
 =cut
-
-#~ sub compute_candidates {
-    #~ my ($self, @args) = @_;
-    #~ my @sequences_array = $self->get_sequences();
-    #~ my $sequence_identifier = 0;
-    #~ foreach my $item (@sequences_array) {
-        #~ my ( $name, $sequence ) = @{$item};
-        #~ debug( "Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
-        #~ $sequence_identifier++;
-        #~ my $sequence_dir = $self->make_sequence_workspace_directory($sequence_identifier);
-        #~ my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
-        #~ my $sequence_candidates = $sequence_job->run();
-        #~ $self->serialize_candidates($sequence_candidates);
-    #~ }
-    #~ return;
-#~ }
 
 sub compute_candidates {
     my ($self, @args) = @_;
@@ -356,20 +326,6 @@ sub make_sequence_workspace_directory {
     return $sequence_dir;
 }
 
-#~ sub serialize_candidates {
-    #~ my ($self, @args) = @_;
-    #~ my $candidates = shift @args;
-    #~ my @candidates_array = @{$candidates};
-    #~ foreach my $candidate (@candidates_array ) {
-        #~ if ( exists($self->{'bam_file'}) ){ # only for the standalone transcriptome version
-            #~ $candidate = $candidate->get_reads($self->{'bam_file'});
-            #~ miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_file'}, $self->get_reads_dir() );
-        #~ }
-        #~ miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
-        #~ 
-        #~ push $self->{'basic_candidates'}, $candidate->get_basic_informations();
-    #~ }
-#~ }
 
 sub serialize_candidates {
     my ($self, @args) = @_;
