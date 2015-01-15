@@ -38,9 +38,6 @@ my @js = (
 my $cgi = CGI->new();
 my $id_job = $cgi->param('run_id');    # get id job
 
-#~ my $genome_file;
-#~ my $mirbase_file;
-
 
 ##### Create page
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
@@ -51,10 +48,7 @@ my $page = '';
 my $known_mirnas = '';
 my $new_mirnas   = '';
 
-#~ my $mirna_bed    = '';
-#~ my $other_bed    = '';
-#~ my $final_bed    = '';
-    
+
 $HTML_additional .= '<p class="header-results" id="job_id"><b>Job ID:</b> ' . $id_job . '</p>';
 
 if ( $valid ){
@@ -64,48 +58,22 @@ if ( $valid ){
     my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg = miRkwood->CONFIG();    
-
-    #~ my $species = $cfg->param('job.plant');
-#~ 
-    #~ if ( $species ne '' ){
-        #~ $genome_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/$species.fa");
-        #~ $mirbase_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
-    #~ }
-    #~ else{
-        #~ $genome_file = "$absolute_job_dir/genome.fa";
-    #~ }
-    
-    #~ my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );   
-#~ 
-    #~ opendir (my $dh, $absolute_job_dir) or die "Cannot open $absolute_job_dir : $!";
-    #~ while (readdir $dh) {
-        #~ if ( /_miRNAs.bed/ ){
-            #~ $mirna_bed = File::Spec->catfile($absolute_job_dir, $_);
-        #~ }
-        #~ elsif ( /_other.bed/ ){
-            #~ $other_bed = File::Spec->catfile($absolute_job_dir, $_);    # not used currently
-        #~ }
-        #~ elsif ( /_filtered.bed/ ){
-            #~ $final_bed = File::Spec->catfile($absolute_job_dir, $_);    # not used currently
-        #~ }
-    #~ }
-    #~ closedir $dh;
     
     my $nb_results = 0;
     my $nb_known_results = 0;
     
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
-    }    
-    
+    }
+
 	unless ( miRkwood::Results->is_job_finished($id_job) ) {
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
         $nb_results = miRkwood::Results->number_of_results_bis( $id_job, 'basic_candidates' );
         $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'basic_known_candidates' );
         $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'basic_candidates');
-        $known_mirnas .= '';
-    }    
+        #~ $known_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'basic_known_candidates');;
+    }
 
     if ( $nb_results != 0 ) {
     
@@ -119,7 +87,7 @@ if ( $valid ){
             $HTML_additional
             
             <h2>miRNAs present in miRBase :</h2>
-            <p class='header-results' id='precursors_count'><b> $nb_known_results miRNA precursor(s) found</b></p> 
+            <p class='header-results' id='precursors_count'><b> $nb_known_results miRNA precursor(s) found</b></p>
                       
             <div id="table_known" ></div>
             <div id="singleCell"> </div>
