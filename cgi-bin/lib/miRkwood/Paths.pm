@@ -236,7 +236,7 @@ Return the path to the new reads directory
 Parameter : job directory
 
 =cut
-sub get_new_reads_dir {
+sub get_new_reads_dir_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
     return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'new');
