@@ -120,8 +120,10 @@ sub setup_logging {
 sub treat_known_mirnas {
     my ($self, @args) = @_;
 
+    $self->{'basic_known_candidates'} = [];
+
     $self->store_known_mirnas_as_candidate_objects();
-    $self->serialize_known_candidates();
+    $self->serialize_basic_candidates( 'basic_known_candidates' );
 
     return;
 
@@ -261,6 +263,9 @@ sub store_known_mirnas_as_candidate_objects {
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
         miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
+        
+        ### Store basic information (used for the HTML table) for this Candidate
+        push $self->{'basic_known_candidates'}, $candidate->get_basic_informations();
 
         ### Create individual card with reads cloud
         miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome, $reads_dir );
@@ -482,7 +487,7 @@ sub run_pipeline_on_sequences {
     $self->compute_candidates();
     debug('miRkwood processing done', miRkwood->DEBUG() );
     
-    $self->serialize_basic_candidates();
+    $self->serialize_basic_candidates( 'basic_candidates' );
     
     $self->mark_job_as_finished();
     
@@ -614,9 +619,12 @@ sub mark_job_as_finished {
 sub serialize_basic_candidates {
 	
     my ($self, @args) = @_;
-    my $serialization_file = File::Spec->catfile($self->get_job_dir(), "basic_candidates.yml");
+    my $type = shift @args;     # $type should be 'basic_candidates' or 'basic_known_candidates'
+
+    my $serialization_file = File::Spec->catfile($self->get_job_dir(), "$type.yml");
     	
-    return YAML::XS::DumpFile($serialization_file, $self->{'basic_candidates'});
+    return YAML::XS::DumpFile($serialization_file, $self->{$type});   
+
 }
 
 1;
