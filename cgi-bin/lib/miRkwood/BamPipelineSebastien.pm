@@ -23,11 +23,11 @@ sub new {
     my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );
     my $self = {
         job_dir     => $job_dir,
-        initial_bed => $bed_file,
-        bed_file    => '',
-        mirna_bed   => '',
+        initial_bed => $bed_file,       # this is for the non filtered BED provided by the user
+        bed_file    => '',              # this is for the final BED after all filtrations have been done
+        mirna_bed   => '',              # this is for known miRNAs (ie miRNAs from miRBase). created during the filtration step. Maybe change that name ?
         genome_file => $genome_file,
-        genome_db   => \%genome_db,
+        genome_db   => \%genome_db,     # hash containing the genome, to avoid reading the file each time we need it
         sequences   => undef
     };
     bless $self, $class;
