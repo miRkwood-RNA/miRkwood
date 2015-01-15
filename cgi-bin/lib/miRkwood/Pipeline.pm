@@ -247,15 +247,15 @@ sub store_known_mirnas_as_candidate_objects {
         }
 
         ##### Calculate score
-        $data->{$precursor_id}{'score'} = 0;
+        $data->{$precursor_id}{'quality'} = 0;
         if ( $precursor_reads >= 10 ){
-           $data->{$precursor_id}{'score'}++; 
+           $data->{$precursor_id}{'quality'}++; 
         }
         if ( $mature_reads >= ( $precursor_reads / 2 ) ){
-            $data->{$precursor_id}{'score'}++;
+            $data->{$precursor_id}{'quality'}++;
         }
         $score = '<center>';
-        for (my $i = 0; $i < $data->{$precursor_id}{'score'}; $i++){
+        for (my $i = 0; $i < $data->{$precursor_id}{'quality'}; $i++){
             $score .= $star;
         }
         $score .= '</center>';    
