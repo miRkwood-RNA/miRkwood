@@ -111,17 +111,20 @@ sub get_structure_for_jobID {
 sub get_basic_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
+    my $type    = shift @args;  # $type should be 'basic_candidates' or 'basic_known_candidates'
 	my $job_dir = $self->jobId_to_jobPath($jobId);
 	miRkwood->CONFIG_FILE(
 		miRkwood::Paths->get_job_config_path($job_dir) );
-	my $candidates_file = File::Spec->catfile( $job_dir, 'basic_candidates.yml');
+	my $candidates_file = File::Spec->catfile( $job_dir, "$type.yml");
 	return miRkwood::get_yaml_file( $candidates_file );
 }
 
 sub get_basic_pseudoXML_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-	my $results = $self->get_basic_structure_for_jobID($jobId);
+    my $type    = shift @args;  # $type should be 'basic_candidates' or 'basic_known_candidates'
+
+	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 
 	my $output = "";
 
@@ -412,7 +415,8 @@ sub number_of_results {
 sub number_of_results_bis {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-	my $results = $self->get_basic_structure_for_jobID($jobId);
+    my $type    = shift @args;  # $type should be 'basic_candidates' or 'basic_known_candidates'
+	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 	my $size    = scalar @{$results};
 	return $size;
 }
