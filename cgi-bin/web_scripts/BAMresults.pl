@@ -69,20 +69,20 @@ if ( $valid ){
 	unless ( miRkwood::Results->is_job_finished($id_job) ) {
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
-        $nb_results = miRkwood::Results->number_of_results_bis( $id_job, 'basic_candidates' );
-        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'basic_known_candidates' );
+        $nb_results = miRkwood::Results->number_of_results_bis( $id_job, 'new' );
+        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'known' );
 
         $HTML_additional .= "<ul>";
         $HTML_additional .= "<li>Total number of reads: XXX (XXX unique reads)</li>";
         $HTML_additional .= "<li>rRNA/tRNA: XXX reads (download)</li>";
         $HTML_additional .= "<li>CoDing Sequences: XXX reads (download)</li>";
         $HTML_additional .= "<li>Frequent reads: XXX reads (download)</li>";
-        $HTML_additional .= "<li>Known miRNAs: $nb_known_results sequences (<a href='#known_mirnas'>see results</a>)</li>";
-        $HTML_additional .= "<li>Novel miRNAs: $nb_results sequences (<a href='#new_mirnas'>see results</a>)</li>";
+        $HTML_additional .= "<li>Known miRNAs: $nb_known_results sequence(s) (<a href='#known_mirnas'>see results</a>)</li>";
+        $HTML_additional .= "<li>Novel miRNAs: $nb_results sequence(s) (<a href='#new_mirnas'>see results</a>)</li>";
         $HTML_additional .= "</ul>";
         
-        $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'basic_candidates');
-        #~ $known_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'basic_known_candidates');;
+        $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'new');
+        $known_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'known');
     }
     
     $HTML_additional .= "</div>";
@@ -90,7 +90,7 @@ if ( $valid ){
     if ( $nb_results != 0 ) {
     
         $page = <<"END_TXT";
-<body onload="main('all');">
+<body onload="main('all_new', 'table_new');">
     <div class="theme-border"></div>
     <div class="logo"></div>
     <div class="bloc_droit">
@@ -101,7 +101,9 @@ if ( $valid ){
             <div id='known_mirnas'>
                 <p class='header-results' id='precursors_count'><b>miRNAs present in miRBase : $nb_known_results miRNA precursor(s) found</b></p>
                           
-                <div id="table_known" ></div>
+                <div id="table" >
+                    <div id="table_known"></div>
+                </div>    
                 <div id="singleCell"> </div>
                 $known_mirnas   
             </div>
@@ -128,10 +130,14 @@ if ( $valid ){
                         </p>
                 </div> 
                           
-                <div id="table" ></div>
+                <div id="table" >
+                    <div id="table_new"></div>
+                </div>    
                 <div id="singleCell"> </div>
                 $new_mirnas   
             </div>
+            
+            <br />            
                     
         </div><!-- main -->
     </div><!-- bloc droit--> 
