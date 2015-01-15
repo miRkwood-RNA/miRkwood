@@ -140,14 +140,12 @@ sub store_known_mirnas_as_candidate_objects {
     my $species        = $cfg->param('job.plant');      
     my $gff_file       = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
 
-    my $html = '';
     my @field;
-    my ($id, $name, $chromosome, $strand, $score);
+    my ($id, $name, $chromosome, $strand);
     my ($precursor_name, $precursor_start, $precursor_end, $precursor_reads, $precursor_id);
     my ($precursor_of_mature, $mature_of_precursor);
     my $mature_reads;
     my $data;
-    my $star = "<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' />";
 
     ##### Read the GFF and links each precursor with its mature
 
@@ -209,22 +207,12 @@ sub store_known_mirnas_as_candidate_objects {
     close $BED;
 
     ##### Treat data by precursor
-    $html = '<table><tbody id="cases"><tr>';
-    $html .= '<th>Name</th>';
-    $html .= '<th>Chromosome</th>';
-    $html .= '<th>Strand</th>';
-    $html .= '<th>Position Precursor</th>';
-    $html .= '<th>Number of reads</th>';
-    $html .= '<th>Score</th>';
-    
-    $html .= "</tr>\n";
-    
     my @ids = sort { $data->{$a}{'chromosome'} <=> $data->{$b}{'chromosome'}
                         ||
                      $data->{$a}{'precursor_start'} <=> $data->{$b}{'precursor_start'}
                         ||
                      $data->{$a}{'precursor_end'} <=> $data->{$a}{'precursor_end'}   } keys%{$data};
-              
+
     foreach $precursor_id ( @ids ){
 
         $precursor_name  = $data->{$precursor_id}{'precursor_name'};
@@ -234,7 +222,6 @@ sub store_known_mirnas_as_candidate_objects {
         $precursor_end   = $data->{$precursor_id}{'end_position'};
         $precursor_reads = 0;
         $mature_reads = 0;
-        $score = '';
 
         ##### Count number of reads
         foreach (keys %{$data->{$precursor_id}{'precursor_reads'}}){
@@ -254,16 +241,11 @@ sub store_known_mirnas_as_candidate_objects {
         if ( $mature_reads >= ( $precursor_reads / 2 ) ){
             $data->{$precursor_id}{'quality'}++;
         }
-        $score = '<center>';
-        for (my $i = 0; $i < $data->{$precursor_id}{'quality'}; $i++){
-            $score .= $star;
-        }
-        $score .= '</center>';    
 
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
         miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
-        
+
         ### Store basic information (used for the HTML table) for this Candidate
         push $self->{'basic_known_candidates'}, $candidate->get_basic_informations();
 
