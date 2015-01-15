@@ -38,8 +38,8 @@ my @js = (
 my $cgi = CGI->new();
 my $id_job = $cgi->param('run_id');    # get id job
 
-my $genome_file;
-my $mirbase_file;
+#~ my $genome_file;
+#~ my $mirbase_file;
 
 
 ##### Create page
@@ -51,9 +51,9 @@ my $page = '';
 my $known_mirnas = '';
 my $new_mirnas   = '';
 
-my $mirna_bed    = '';
-my $other_bed    = '';
-my $final_bed    = '';
+#~ my $mirna_bed    = '';
+#~ my $other_bed    = '';
+#~ my $final_bed    = '';
     
 $HTML_additional .= '<p class="header-results" id="job_id"><b>Job ID:</b> ' . $id_job . '</p>';
 
@@ -65,33 +65,34 @@ if ( $valid ){
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg = miRkwood->CONFIG();    
 
-    my $species = $cfg->param('job.plant');
-
-    if ( $species ne '' ){
-        $genome_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/$species.fa");
-        $mirbase_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
-    }
-    else{
-        $genome_file = "$absolute_job_dir/genome.fa";
-    }
+    #~ my $species = $cfg->param('job.plant');
+#~ 
+    #~ if ( $species ne '' ){
+        #~ $genome_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "genomes/$species.fa");
+        #~ $mirbase_file = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
+    #~ }
+    #~ else{
+        #~ $genome_file = "$absolute_job_dir/genome.fa";
+    #~ }
     
-    my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );   
-
-    opendir (my $dh, $absolute_job_dir) or die "Cannot open $absolute_job_dir : $!";
-    while (readdir $dh) {
-        if ( /_miRNAs.bed/ ){
-            $mirna_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-        elsif ( /_other.bed/ ){
-            $other_bed = File::Spec->catfile($absolute_job_dir, $_);    # not used currently
-        }
-        elsif ( /_filtered.bed/ ){
-            $final_bed = File::Spec->catfile($absolute_job_dir, $_);    # not used currently
-        }
-    }
-    closedir $dh;
+    #~ my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );   
+#~ 
+    #~ opendir (my $dh, $absolute_job_dir) or die "Cannot open $absolute_job_dir : $!";
+    #~ while (readdir $dh) {
+        #~ if ( /_miRNAs.bed/ ){
+            #~ $mirna_bed = File::Spec->catfile($absolute_job_dir, $_);
+        #~ }
+        #~ elsif ( /_other.bed/ ){
+            #~ $other_bed = File::Spec->catfile($absolute_job_dir, $_);    # not used currently
+        #~ }
+        #~ elsif ( /_filtered.bed/ ){
+            #~ $final_bed = File::Spec->catfile($absolute_job_dir, $_);    # not used currently
+        #~ }
+    #~ }
+    #~ closedir $dh;
     
     my $nb_results = 0;
+    my $nb_known_results = 0;
     
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -100,16 +101,11 @@ if ( $valid ){
 	unless ( miRkwood::Results->is_job_finished($id_job) ) {
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
-        $nb_results = miRkwood::Results->number_of_results_bis( $id_job );
-        #~ $HTML_additional .= "<p class='header-results' id='precursors_count'><b>" . $nb_results . " miRNA precursor(s) found</b></p>";
-        $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
+        $nb_results = miRkwood::Results->number_of_results_bis( $id_job, 'basic_candidates' );
+        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'basic_known_candidates' );
+        $new_mirnas .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'basic_candidates');
+        $known_mirnas .= '';
     }    
-    
-    #~ if ( $mirna_bed ne '' ){
-        #~ $known_mirnas  = '<div id="table">';
-        #~ $known_mirnas .= miRkwood::Results->known_mirnas_for_jobID($id_job, $mirna_bed, $mirbase_file, \%genome_db );
-        #~ $known_mirnas .= '</div>';
-    #~ }
 
     if ( $nb_results != 0 ) {
     
@@ -121,6 +117,19 @@ if ( $valid ){
         $header_menu
         <div class="main main-full">
             $HTML_additional
+            
+            <h2>miRNAs present in miRBase :</h2>
+            <p class='header-results' id='precursors_count'><b> $nb_known_results miRNA precursor(s) found</b></p> 
+                      
+            <div id="table_known" ></div>
+            <div id="singleCell"> </div>
+            $known_mirnas   
+            
+            <br />           
+            
+            <h2>New miRNAs :</h2>
+            <p class='header-results' id='precursors_count'><b> $nb_results miRNA precursor(s) found</b></p> 
+                        
             <div id="select" >
                 <div style="width: 510px"  class="forms">
                     <p class='text-results'>Export selected entries \(<a id='select-all' onclick='selectAll()' >select all<\/a>/<a id='deselect-all' onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p>
@@ -137,11 +146,6 @@ if ( $valid ){
                     <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
                     </p>
             </div> 
-            
-            <br />
-            
-            <h2>New miRNAs :</h2>
-            <p class='header-results' id='precursors_count'><b> $nb_results miRNA precursor(s) found</b></p> 
                       
             <div id="table" ></div>
             <div id="singleCell"> </div>
