@@ -90,7 +90,7 @@ if ( $valid ){
     if ( $nb_results != 0 ) {
     
         $page = <<"END_TXT";
-<body onload="main('all_new', 'table_new');">
+<body>
     <div class="theme-border"></div>
     <div class="logo"></div>
     <div class="bloc_droit">
@@ -99,7 +99,10 @@ if ( $valid ){
             $HTML_additional
 
             <div id='known_mirnas'>
-                <p class='header-results' id='precursors_count'><b>miRNAs present in miRBase : $nb_known_results miRNA precursor(s) found</b></p>
+                <p class='header-results' id='precursors_count'>
+                    <img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' onload="main('all_known', 'table_known');"/>
+                    <b>miRNAs present in miRBase : $nb_known_results miRNA precursor(s) found</b>
+                </p>
                           
                 <div id="table" >
                     <div id="table_known"></div>
@@ -111,7 +114,10 @@ if ( $valid ){
             <br />
          
             <div id='new_mirnas'>
-                <p class='header-results' id='precursors_count'><b>New miRNAs : $nb_results miRNA precursor(s) found</b></p> 
+                <p class='header-results' id='precursors_count'>
+                    <img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' onload="main('all_new', 'table_new');"/>
+                    <b>New miRNAs : $nb_results miRNA precursor(s) found</b>
+                </p> 
                             
                 <div id="select" >
                     <div style="width: 510px"  class="forms">
