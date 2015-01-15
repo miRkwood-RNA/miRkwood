@@ -59,8 +59,8 @@ if ($valid) {
 	unless ( miRkwood::Results->is_job_finished($id_job) ) {
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
-		$HTML_results = miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job);
-		$nb_results = miRkwood::Results->number_of_results_bis( $id_job );
+		$HTML_results = miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'new');
+		$nb_results = miRkwood::Results->number_of_results_bis( $id_job, 'new' );
 			$HTML_additional .=
 	    "<p class='header-results' id='precursors_count'><b>"
 	  . $nb_results
@@ -69,7 +69,7 @@ if ($valid) {
 	my $body = "";
 	if ( $nb_results != 0 ) {
 		$body = <<"END_TXT";
-<body onload="main('all');">
+<body onload="main('all_new', 'table_new');">
     <div class="theme-border"></div>
     <div class="logo"></div>
     <div class="bloc_droit">
@@ -93,7 +93,7 @@ if ($valid) {
     		</p>
     </div>
     
-    <div id="table" ></div>
+    <div id="table" ><div id="table_new" ></div></div>
     <div id="singleCell"> </div>
     $HTML_results
     
