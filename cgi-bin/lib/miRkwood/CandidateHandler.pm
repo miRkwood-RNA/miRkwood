@@ -156,7 +156,7 @@ sub print_reads_clouds {
 
     ### Print miRBase tags
 
-    if ( $mirna->{'alignment'} > 0 ){   # case cli bam pipeline with alignment to mirbase
+    if ( defined($mirna->{'alignment'}) and $mirna->{'alignment'} > 0  ){   # case cli bam pipeline with alignment to mirbase
 
         @positions_tags = sort {
             ( miRkwood::Utils::get_element_of_split( $a, '-', 0 )
