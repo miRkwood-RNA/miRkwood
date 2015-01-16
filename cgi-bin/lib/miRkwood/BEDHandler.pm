@@ -59,12 +59,12 @@ sub filterBEDfile_for_model_organism {
 
         # Delete reads corresponding to known miRNAs from the BED
         #~ store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1); # un-comment when tests by Helene are done
-        $tmp_1 = $bed_file;                                               # delete it when tests by Helene are done
+        system("cp $bed_file $tmp_1");                                       # delete it when tests by Helene are done
         debug( 'Known miRNAS have been filtered out from BED.', 1 );
     }
     else{
         debug( 'WARNING : no miRNA file found for $species.', 1 );
-        $tmp_1 = $bed_file;
+        system("cp $bed_file $tmp_1");
     }
 
     ### Filter out CDS
@@ -80,11 +80,12 @@ sub filterBEDfile_for_model_organism {
         }
         else{
             debug( "WARNING : no CDS file found for $species.", 1 );
-            $tmp_2 = $tmp_1;
+            system("cp $tmp_1 $tmp_2");
         }
     }
     else{
-        $tmp_2 = $tmp_1;
+        #~ $tmp_2 = $tmp_1;
+        system("cp $tmp_1 $tmp_2");
     }
 
     ### Filter out rRNA, tRNA, snoRNA
@@ -100,11 +101,11 @@ sub filterBEDfile_for_model_organism {
         }
         else{
             debug( "WARNING : no rRNA/rRNA file found for $species.", 1 );
-            $tmp_3 = $tmp_2;
+            system("cp $tmp_2 $tmp_3");
         }
     }
     else{
-        $tmp_3 = $tmp_2;
+        system("cp $tmp_2 $tmp_3");
     }
 
     ### Filter out multimapped reads
@@ -116,7 +117,7 @@ sub filterBEDfile_for_model_organism {
         rename $tmp_3, $filtered_bed;
     }
 
-    #~ unlink $tmp_1;   # un-comment when tests by Helene are done
+    unlink $tmp_1;
     unlink $tmp_2;
     unlink $tmp_3;
 
