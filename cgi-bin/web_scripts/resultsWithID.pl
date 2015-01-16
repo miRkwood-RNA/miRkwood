@@ -69,7 +69,7 @@ if ($valid) {
 	my $body = "";
 	if ( $nb_results != 0 ) {
 		$body = <<"END_TXT";
-<body onload="main('all_new', 'table_new');">
+<body onload="main('all');">
     <div class="theme-border"></div>
     <div class="logo"></div>
     <div class="bloc_droit">
@@ -93,7 +93,7 @@ if ($valid) {
     		</p>
     </div>
     
-    <div id="table" ><div id="table_new" ></div></div>
+    <div id="table" ></div>
     <div id="singleCell"> </div>
     $HTML_results
     

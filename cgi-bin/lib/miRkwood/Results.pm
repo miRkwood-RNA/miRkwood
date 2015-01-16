@@ -135,7 +135,7 @@ sub get_basic_pseudoXML_for_jobID {
 
 	my $output = "";
 
-    $output .= "<results id='all_" . $type . "'>\n";
+    $output .= "<results id='all'>\n";
     my @candidates = sort {
         ( $a->{'name'} cmp  $b->{'name'} )
           || (
@@ -147,7 +147,7 @@ sub get_basic_pseudoXML_for_jobID {
     }
     $output .= "</results>\n";
     
-    $output .= "<results id='all_" . $type . "_2'>\n";
+    $output .= "<results id='all2'>\n";
     @candidates = sort {
         ( $b->{'quality'} cmp $a->{'quality'} )
           || (

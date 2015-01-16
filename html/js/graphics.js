@@ -1,12 +1,12 @@
 /**
  * Instantiation  de classe results.js
  */
-function main(id, id_table)
+function main(id)
 {
 	myResults = new results(id);
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
-	createGrid(id_table,rowsNumber+1,columnsNumber+1);// fonction permettant de créer le tableau par rapport au résultats
+	createGrid('table',rowsNumber+1,columnsNumber+1);// fonction permettant de créer le tableau par rapport au résultats
 	//#######plugin imgPreview########
 	jQuery.noConflict();
 	(function($){  
