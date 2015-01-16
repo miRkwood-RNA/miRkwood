@@ -248,5 +248,22 @@ sub filter_multimapped_reads {
     return;
 }
 
+sub count_reads_in_bed_file {
+    my @args = @_;
+    my $bed_file = shift @args;
+
+    my @tab;
+    my $reads = {};
+
+    open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
+    while ( <$BED> ){
+        @tab = split ( /\t/ );
+        $reads->{"$tab[1]-$tab[2]"} = 1;
+    }
+    
+    return scalar keys%{$reads};
+
+}
+
 
 1;
