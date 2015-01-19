@@ -433,4 +433,11 @@ span.mature {
 	font-size:14px;
 }
 
-
+/* Results */
+.results_summary {
+    font-size:14px;
+	border: 1px solid #CCCCCC;
+	color: #000000;
+	margin: 10px;
+	padding: 7px;
+}
