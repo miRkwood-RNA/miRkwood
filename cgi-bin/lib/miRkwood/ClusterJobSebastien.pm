@@ -993,8 +993,8 @@ sub process_RNAstemloop {
 							"name" => $nameSeq,
 							"strand" => $strand,
 							"sequence" => $dna,
-							"start_position" => $start,
-							"end_position" => $end,
+							"start_position" => $stemloop->{'begin'},
+							"end_position" => $stemloop->{'end'}-1, #includes the end
 							"mfei" => $mfei,
 							"amfe" => $amfe,
 							"structure_optimal" => $structure_optimal,
