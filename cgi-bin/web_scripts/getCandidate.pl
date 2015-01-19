@@ -122,7 +122,6 @@ sub exportAsReads {
     while ( <$IN> ){
         $contents .= $_;
     } 
-    
-    
+    close $IN;    
     return ( "$candidate->{'identifier'}.txt", $contents, 'attachment' );
 }
