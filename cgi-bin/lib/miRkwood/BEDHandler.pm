@@ -248,20 +248,28 @@ sub filter_multimapped_reads {
     return;
 }
 
+=method count_reads_in_bed_file
+
+Method to count the nb of total reads and unique reads in a BED(-like) file.
+Returns first the nb total and then the nb of unique reads.
+
+=cut
 sub count_reads_in_bed_file {
     my @args = @_;
     my $bed_file = shift @args;
 
     my @tab;
     my $reads = {};
+    my $nb_total_reads = 0;
 
     open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
     while ( <$BED> ){
         @tab = split ( /\t/ );
         $reads->{"$tab[1]-$tab[2]"} = 1;
+        $nb_total_reads += $tab[4];
     }
-    
-    return scalar keys%{$reads};
+
+    return ($nb_total_reads, scalar keys%{$reads});
 
 }
 
