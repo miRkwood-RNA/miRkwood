@@ -181,17 +181,32 @@ if ( $valid ){
         $HTML_results .= '<br />';
         $HTML_results .= "<li>Total number of reads: $nb_total_reads (XXX unique reads)</li>";
 
-        if ( -r $cds_bed ){
-            $nb_CDS_reads     = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
-            $HTML_results .= "<li>CoDing Sequences: $nb_CDS_reads reads (<a href=$cds_bed>download</a>)</li>";            
+        if ( $cfg->param('options.filter_CDS') ){
+            if ( -r $cds_bed ){
+                $nb_CDS_reads     = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
+                $HTML_results .= "<li>CoDing Sequences: $nb_CDS_reads reads (<a href=$cds_bed>download</a>)</li>";
+            }
+            else {
+                $HTML_results .= '<li>CoDing Sequences: 0 reads</li>';
+            }
         }
-        if ( -r $nb_other_reads ){
-            $nb_other_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
-            $HTML_results .= "<li>rRNA/tRNA: $nb_other_reads reads (<a href=$other_bed>download</a>)</li>";
+        if ( $cfg->param('options.filter_tRNA_rRNA') ){
+            if ( -r $nb_other_reads ){
+                $nb_other_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
+                $HTML_results .= "<li>rRNA/tRNA: $nb_other_reads reads (<a href=$other_bed>download</a>)</li>";
+            }
+            else {
+                $HTML_results .= '<li>rRNA/tRNA: 0 reads</li>';
+            }
         }
-        if ( -r $nb_multi_reads ){
-            $nb_multi_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed ); 
-            $HTML_results .= "<li>Frequent reads: $nb_multi_reads reads (<a href=$multimapped_bed>download</a>)</li>";
+        if ( $cfg->param('options.filter_multimapped') ){
+            if ( -r $nb_multi_reads ){
+                $nb_multi_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed ); 
+                $HTML_results .= "<li>Frequent reads: $nb_multi_reads reads (<a href=$multimapped_bed>download</a>)</li>";
+            }
+            else {
+                $HTML_results .= '<li>Frequent reads: 0 reads</li>';
+            }
         }
 
         $HTML_results .= "<li>Known miRNAs: $nb_known_results sequence(s) (<a href=$known_url>see results</a>)</li>";
