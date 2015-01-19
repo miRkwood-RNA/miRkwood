@@ -73,7 +73,7 @@ if ( $valid ){
         elsif ( /_filtered.bed/ ){
             $final_bed = File::Spec->catfile($absolute_job_dir, $_);
         }
-        elsif ( /_other.bed/ ){
+        elsif ( /_otherRNA.bed/ ){
             $other_bed = File::Spec->catfile($absolute_job_dir, $_);
         }
         elsif ( /_CDS.bed/ ){
@@ -94,6 +94,10 @@ if ( $valid ){
     my $nb_CDS_reads     = 0;
     my $nb_other_reads   = 0;
     my $nb_multi_reads   = 0;
+    my $nb_total_reads_unq = 0;
+    my $nb_CDS_reads_unq   = 0;
+    my $nb_other_reads_unq = 0;
+    my $nb_multi_reads_unq = 0;    
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -170,7 +174,7 @@ if ( $valid ){
         ##### Summary of results
         $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'new' );
         $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'known' );
-        $nb_total_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed );
+        ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed );
 
         my $arguments = '?jobID=' . $id_job;
         my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=known';
@@ -179,30 +183,30 @@ if ( $valid ){
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary:</h2>';
         $HTML_results .= '<br />';
-        $HTML_results .= "<li>Total number of reads: $nb_total_reads (XXX unique reads)</li>";
+        $HTML_results .= "<li>Total number of reads: $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
 
         if ( $cfg->param('options.filter_CDS') ){
-            if ( -r $cds_bed ){
-                $nb_CDS_reads     = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
-                $HTML_results .= "<li>CoDing Sequences: $nb_CDS_reads reads (<a href=$cds_bed>download</a>)</li>";
+            ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
+            if ( $nb_CDS_reads > 0 ){
+                $HTML_results .= "<li>CoDing Sequences: $nb_CDS_reads reads (download)</li>";
             }
             else {
                 $HTML_results .= '<li>CoDing Sequences: 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            if ( -r $nb_other_reads ){
-                $nb_other_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
-                $HTML_results .= "<li>rRNA/tRNA: $nb_other_reads reads (<a href=$other_bed>download</a>)</li>";
+            ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
+            if ( $nb_other_reads > 0 ){
+                $HTML_results .= "<li>rRNA/tRNA: $nb_other_reads reads (download)</li>";
             }
             else {
                 $HTML_results .= '<li>rRNA/tRNA: 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_multimapped') ){
-            if ( -r $nb_multi_reads ){
-                $nb_multi_reads   = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed ); 
-                $HTML_results .= "<li>Frequent reads: $nb_multi_reads reads (<a href=$multimapped_bed>download</a>)</li>";
+            ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
+            if ( $nb_multi_reads > 0 ){
+                $HTML_results .= "<li>Frequent reads: $nb_multi_reads reads (download)</li>";
             }
             else {
                 $HTML_results .= '<li>Frequent reads: 0 reads</li>';
