@@ -20,10 +20,12 @@ Constructor
 sub new {
     my ( $class, @args ) = @_;
     my ($job_dir, $bam_file, $genome_file) = @args;
+    my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );
     my $self = {
         job_dir => $job_dir,
         bam_file => $bam_file,
         genome_file => $genome_file,
+        genome_db   => \%genome_db,     # hash containing the genome, to avoid reading the file each time we need it
         sequences => undef
     };
     bless $self, $class;
