@@ -105,13 +105,10 @@ sub print_reads_clouds {
     my $i;
     my $mature_id;
     my @positions_tags = ();
-    
+
     my $cfg = miRkwood->CONFIG();
     my $genome_name = $cfg->param('job.plant');
-    
-    my $chromosome = "";
-    my $cluster_start = -1;
-    my $cluster_end = -1;
+
     my $reads = {};
 
     my $precursor_id    = $mirna->{'identifier'};
@@ -119,7 +116,7 @@ sub print_reads_clouds {
     my $strand          = $mirna->{'strand'};
     my $precursor_start = $mirna->{'start_position'};
     my $precursor_end   = $mirna->{'end_position'};
-    my $locus           = $mirna->{'name'};
+    my $chromosome      = $mirna->{'name'};
 
     $reads              = ( $mirna->{'precursor_reads'} or $mirna->{'reads'} );
 
@@ -128,21 +125,13 @@ sub print_reads_clouds {
         return;
     }
 
-    if ( $locus =~ /([^:]+)__(\d+)-(\d+)/ ){
+    if ( $mirna->{'name'} =~ /([^_]+)__(\d+)-(\d+)/ ){
         $chromosome = $1;
-        $cluster_start = $2;
-        $cluster_end = $3;
-    }
-    if ( $chromosome eq "" ){
-        $chromosome      = $mirna->{'chromosome'};
     }
 
-    my $absolute_precursor_start = $cluster_start + $precursor_start -1;
-    my $absolute_precursor_end = $cluster_start + $precursor_end;
+    $reads = miRkwood::Utils::truncate_reads_out_of_candidate( $reads, $precursor_start, $precursor_end );
 
-    $reads = miRkwood::Utils::truncate_reads_out_of_candidate( $reads, $absolute_precursor_start, $absolute_precursor_end );
-
-    my $reference = substr( $genome_db->{$chromosome}, $absolute_precursor_start -1, $absolute_precursor_end - $absolute_precursor_start);
+    my $reference = substr( $genome_db->{$chromosome}, $precursor_start -1, $precursor_end - $precursor_start);
 
     my $cloud_file = "$output_dir/$precursor_id.txt";
     open (my $OUT, '>', $cloud_file) or die "ERROR while creating $cloud_file : $!";
@@ -150,7 +139,7 @@ sub print_reads_clouds {
     ### Print the header
     print $OUT "$name\n";
     print $OUT "Genome : $genome_name\n";
-    print $OUT "Locus  : $chromosome:$absolute_precursor_start-$absolute_precursor_end\n";
+    print $OUT "Locus  : $chromosome:$precursor_start-$precursor_end\n";
     print $OUT "Strand : $strand\n";
     print $OUT "\n$reference\n";
 
@@ -172,7 +161,7 @@ sub print_reads_clouds {
         foreach $mature_id (keys %{$mirna->{'matures'}}){
             my $mature_start = $mirna->{'matures'}{$mature_id}{'mature_start'};
             my $mature_end = $mirna->{'matures'}{$mature_id}{'mature_end'};
-            my $relative_tag_start = $mature_start - $absolute_precursor_start +1;
+            my $relative_tag_start = $mature_start - $precursor_start +1;
             my $relative_tag_end = $relative_tag_start + $mature_end - $mature_start;
             push @positions_tags, "$relative_tag_start-$relative_tag_end";
         }
@@ -248,13 +237,13 @@ sub print_reads_clouds {
         my $read_end = miRkwood::Utils::get_element_of_split( $position, "-", 1 );
         my $read_length = $read_end - $read_start;
 
-        for ($i = 0; $i < $read_start - $absolute_precursor_start; $i++){
+        for ($i = 0; $i < $read_start - $precursor_start; $i++){
             print $OUT ".";
         }
         for ($i = 0; $i < $read_length; $i++){
             print $OUT "*";
         }
-        for ($i = 0; $i < $absolute_precursor_end - $read_end; $i++){
+        for ($i = 0; $i < $precursor_end - $read_end; $i++){
             print $OUT ".";
         }
         print $OUT " length=$read_length depth=$reads->{$position}\n";
