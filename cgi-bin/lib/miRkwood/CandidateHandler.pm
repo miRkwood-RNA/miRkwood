@@ -106,13 +106,9 @@ sub print_reads_clouds {
     my $mature_id;
     my @positions_tags = ();
 
-    my $cfg = miRkwood->CONFIG();
-    my $genome_name = $cfg->param('job.plant');
-
     my $reads = {};
 
     my $precursor_id    = $mirna->{'identifier'};
-    my $name            = ( $mirna->{'precursor_name'} or $mirna->{'name'} );
     my $strand          = $mirna->{'strand'};
     my $precursor_start = $mirna->{'start_position'};
     my $precursor_end   = $mirna->{'end_position'};
@@ -137,8 +133,9 @@ sub print_reads_clouds {
     open (my $OUT, '>', $cloud_file) or die "ERROR while creating $cloud_file : $!";
 
     ### Print the header
-    print $OUT "$name\n";
-    print $OUT "Genome : $genome_name\n";
+    if ( defined($mirna->{'precursor_name'}) ){
+        print $OUT $mirna->{'precursor_name'}."\n";
+    }
     print $OUT "Locus  : $chromosome:$precursor_start-$precursor_end\n";
     print $OUT "Strand : $strand\n";
     print $OUT "\n$reference\n";
