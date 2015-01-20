@@ -467,49 +467,52 @@ sub get_basic_informations {
 	
 }
 
+=method turn_relative_positions_into_absolute_positions
+
+=cut
+sub turn_relative_positions_into_absolute_positions {
+    my ($self) = @_;
+
+    my $locus = $self->{'name'};
+
+    my $chromosome = '';
+    my $start_cluster = -1;
+    my $end_cluster = -1;
+    if ( $locus =~ /([^_]+)__(\d+)-(\d+)/ ){
+        $chromosome = $1;
+        $start_cluster = $2;
+        $end_cluster = $3;
+    }
+
+    $self->{'start_position'} = $start_cluster + $self->{'start_position'} -1;
+    $self->{'end_position'}   = $start_cluster + $self->{'end_position'};
+    $self->{'position'}       = $self->{'start_position'} . '-' . $self->{'end_position'};
+    $self->{'name'}           = $chromosome;
+
+    return $self;
+        
+}
+
 =method get_reads
+
 Method to get all reads corresponding to a candidate sequence
 Parameter : bam file full path
 Modifies the object candidate to add a variable (hash) containing
-all reads with name, sequence and start.
+all reads with start, stop and depth.
+
 =cut
 sub get_reads {
-    
+
     my ( $self, @args ) = @_;
     my $bam_file = shift @args;
-    
-    my $candidate_position = $self->{'name'};
-    $candidate_position =~ s/__/:/;
-    
+
+    my $candidate_position = $self->{'name'} . ':' . $self->{'start_position'} . '-' . $self->{'end_position'};
+    #~ $candidate_position =~ s/__/:/;
+
     my $reads = {};
-    
-    #~ my $samtools_cmd = "samtools view $bam_file $candidate_position |";
-    #~ 
-    #~ open(my $SAMVIEW, $samtools_cmd);
-    #~ while ( <$SAMVIEW> ){
-        #~ my @line = split('\t');
-        # $line[1] : flag
-        # $line[3] : start position       
-        # $line[9] : sequence
-        
-        #~ $line[9] =~ s/T/U/g;
-        #~ 
-        #~ $reads->{$line[3]}{$line[9]}{'strand'} = "+";
-        #~ 
-        #~ # Count the depth of each read
-        #~ if (! exists($reads->{$line[3]}{$line[9]}{'count'}) ){
-            #~ $reads->{$line[3]}{$line[9]}{'count'} = 0;
-        #~ }
-        #~ $reads->{$line[3]}{$line[9]}{'count'}++;
-        #~ if ( $line[1] == "16" ){
-            #~ $reads->{$line[3]}{$line[9]}{'strand'} = "-";
-        #~ }
-  #~ 
-    #~ }
-    #~ close $SAMVIEW;
-    
+
     my $samtools_cmd = "samtools view $bam_file $candidate_position |";
-    
+
     open(my $SAMVIEW, $samtools_cmd);
     while ( <$SAMVIEW> ){
         my @line = split('\t');
@@ -521,20 +524,14 @@ sub get_reads {
             $reads->{"$start-$end"} = 0;
         }
         $reads->{"$start-$end"}++;
-        
-        #~ if (! exists($reads->{$line[3]}{$line[9]}{'count'}) ){
-            #~ $reads->{$line[3]}{$line[9]}{'count'} = 0;
-        #~ }
-        #~ $reads->{$line[3]}{$line[9]}{'count'}++;
 
-  
     }
     close $SAMVIEW;
 
     $self->{'reads'} = $reads;
 
     return $self;
-    
+
 }
 
 1;
