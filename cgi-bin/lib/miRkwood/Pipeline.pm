@@ -184,11 +184,16 @@ sub store_known_mirnas_as_candidate_objects {
             $precursor_id = $id;
             $data->{$precursor_id}{'identifier'}      = $id;
             $data->{$precursor_id}{'precursor_name'}  = $name;
-            $data->{$precursor_id}{'name'}  = "$field[0]__$field[9]-$field[10]";
+            #~ $data->{$precursor_id}{'name'}  = "$field[0]__$field[9]-$field[10]";     # harmonisation positions
+            #~ $data->{$precursor_id}{'name'}  = $name;
+            $data->{$precursor_id}{'name'}  = $field[0];     # harmonisation positions
             $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
-            $data->{$precursor_id}{'position'} = "$field[9]-$field[10]";
-            $data->{$precursor_id}{'start_position'} = 1;
-            $data->{$precursor_id}{'end_position'}   = $field[10] - $field[9];            
+            #~ $data->{$precursor_id}{'start_position'} = 1;     # harmonisation positions
+            #~ $data->{$precursor_id}{'end_position'}   = $field[10] - $field[9];     # harmonisation positions
+            $data->{$precursor_id}{'start_position'} = $field[9];     # harmonisation positions
+            $data->{$precursor_id}{'end_position'}   = $field[10];    # harmonisation positions       
+            #~ $data->{$precursor_id}{'position'} = "$field[9]-$field[10]";
+            $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};     # harmonisation positions
             $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
         }
         elsif ( $field[8] eq "miRNA" ){
@@ -199,7 +204,7 @@ sub store_known_mirnas_as_candidate_objects {
             $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$field[1]-$field[2]"} = $field[4];
         }
 
-        $data->{$precursor_id}{'chromosome'} = $field[0];
+        $data->{$precursor_id}{'chromosome'} = $field[0];   # useless ?
         $data->{$precursor_id}{'strand'}     = $field[5];
 
     }
@@ -207,19 +212,22 @@ sub store_known_mirnas_as_candidate_objects {
     close $BED;
 
     ##### Treat data by precursor
-    my @ids = sort { $data->{$a}{'chromosome'} <=> $data->{$b}{'chromosome'}
-                        ||
-                     $data->{$a}{'precursor_start'} <=> $data->{$b}{'precursor_start'}
-                        ||
-                     $data->{$a}{'precursor_end'} <=> $data->{$a}{'precursor_end'}   } keys%{$data};
+    #~ my @ids = sort { $data->{$a}{'chromosome'} <=> $data->{$b}{'chromosome'}
+    #~ my @ids = sort { $data->{$a}{'name'} <=> $data->{$b}{'name'}
+                        #~ ||
+                     #~ $data->{$a}{'precursor_start'} <=> $data->{$b}{'precursor_start'}
+                        #~ ||
+                     #~ $data->{$a}{'precursor_end'} <=> $data->{$a}{'precursor_end'}   } keys%{$data};
 
-    foreach $precursor_id ( @ids ){
+    #~ foreach $precursor_id ( @ids ){
+    foreach $precursor_id ( keys%{$data} ){   
 
-        $precursor_name  = $data->{$precursor_id}{'precursor_name'};
-        $chromosome      = $data->{$precursor_id}{'chromosome'};
-        $strand          = $data->{$precursor_id}{'strand'};
-        $precursor_start = $data->{$precursor_id}{'start_position'};
-        $precursor_end   = $data->{$precursor_id}{'end_position'};
+        #~ $precursor_name  = $data->{$precursor_id}{'precursor_name'};
+        #~ $chromosome      = $data->{$precursor_id}{'chromosome'};
+        #~ $chromosome      = $data->{$precursor_id}{'name'};
+        #~ $strand          = $data->{$precursor_id}{'strand'};
+        #~ $precursor_start = $data->{$precursor_id}{'start_position'};
+        #~ $precursor_end   = $data->{$precursor_id}{'end_position'};
         $precursor_reads = 0;
         $mature_reads = 0;
 
