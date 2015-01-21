@@ -544,12 +544,6 @@ sub serialize_candidates {
     }
 }
 
-sub serialize_known_candidates {
-    my ($self, @args) = @_;
-    
-    return;
-}
-
 =method get_job_config_path
 
 Given a job directory, return the path to the job configuration file
