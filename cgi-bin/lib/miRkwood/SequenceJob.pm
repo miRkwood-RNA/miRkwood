@@ -109,7 +109,7 @@ sub process_raw_candidates{
     my $candidates_array = shift @args;
     my @candidates_array = @{$candidates_array};
     my $cfg = miRkwood->CONFIG();
-    if ( $cfg->param('options.mfe') ) {
+    if ( $cfg->param('options.mfei') ) {
         debug("Select only sequences with MFEI < " . MFEI_THRESHOLD, miRkwood->DEBUG() );
         @candidates_array = grep { mfei_below_threshold($_, MFEI_THRESHOLD) } @candidates_array;
     }
