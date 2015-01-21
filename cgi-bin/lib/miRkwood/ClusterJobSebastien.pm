@@ -989,7 +989,6 @@ sub process_RNAstemloop {
                         $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
 					if (eval_single_stemloop($stemloop, $sequence_miRnas) == 1) {
-						my $position = $stemloop->{'begin'}. '.' . ($stemloop->{'end'}-1);
 						my $cluster_position = $seq_begin. '-' . ($seq_begin+$seq_len-1);
 						my $res = {
 							"name" => $chr,
@@ -997,7 +996,6 @@ sub process_RNAstemloop {
 							"sequence" => $dna,
 							"start_position" => $stemloop->{'begin'},
 							"end_position" => $stemloop->{'end'}-1, #includes the end
-							"position" => $position,
 							"mfei" => $mfei,
 							"amfe" => $amfe,
 							"structure_optimal" => $structure_optimal,
@@ -1005,7 +1003,7 @@ sub process_RNAstemloop {
 							"structure_stemloop" => $structure_stemloop,
 							"energy_stemloop" => $energy_stemloop,
 							"reads" => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
-							"cluster" => $cluster_position;
+							"cluster" => $cluster_position
 						};
 						push @candidates_array, $res;
 					}
