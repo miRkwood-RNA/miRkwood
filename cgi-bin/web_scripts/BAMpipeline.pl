@@ -54,7 +54,7 @@ if (@unavailable){
 }
 
 
-##### Get parameters
+##### Parameters
 my $cgi        = CGI->new();
 my $job_title  = $cgi->param('job');
 my $mail       = $cgi->param('mail');
@@ -66,7 +66,7 @@ my $filter_multimapped = $cgi->param('filter_multimapped');
 my $mfei       = $cgi->param('mfei');
 my $randfold   = $cgi->param('randfold');
 my $align      = $cgi->param('align');
-
+my $varna = 1;
 
 if ( $filter_tRNA_rRNA   ) { $filter_tRNA_rRNA   = 1 } else { $filter_tRNA_rRNA   = 0 }
 if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }
@@ -141,7 +141,10 @@ print $cgi->redirect( $waiting_url );
 ##### Create config file
 my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
 miRkwood->CONFIG_FILE($run_options_file);
-miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species, 'WebBAM', $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold);
+miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species, 
+                                         'WebBAM', $align, $species_db, $filter_CDS, 
+                                         $filter_tRNA_rRNA, $filter_multimapped, $mfei, 
+                                         $randfold, $varna);
 
 
 ##### Launch pipeline
