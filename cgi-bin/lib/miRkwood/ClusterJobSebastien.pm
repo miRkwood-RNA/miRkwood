@@ -801,7 +801,7 @@ sub apply_structure_criterion_per_chr {
 
 		my @sorted_new_candidates = sort { $a->{start_position} <=> $b->{start_position} } @{$new_candidates};
 
-		my $sequence_job = miRkwood::SequenceJob->new($working_dir, $seq_id, $seq_id, $genomic_seq);
+		my $sequence_job = miRkwood::SequenceJob->new($working_dir, $seq_id, $chr, $genomic_seq);
 		my %candidates_hash = $sequence_job->process_raw_candidates(\@sorted_new_candidates);
 		
 		@candidates = (@candidates, @{$sequence_job->process_candidates( \%candidates_hash )});
