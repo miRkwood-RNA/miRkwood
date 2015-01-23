@@ -328,7 +328,7 @@ sub count_clusters {
 
 Accessor to the job directory
 
- Usage : $self->get_sequences();
+ Usage : $self->get_job_dir();
 
 =cut
 
