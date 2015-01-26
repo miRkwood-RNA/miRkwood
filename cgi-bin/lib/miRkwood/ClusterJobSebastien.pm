@@ -757,7 +757,7 @@ sub apply_structure_criterion {
 	my ($this, $regionsPerChr, $parsed_bed) = @_;
 	my @candidates = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
-		print "\t", $chr, "\n";
+        debug("Work on chromosome $chr", miRkwood->DEBUG() );
 		my $regions = $regionsPerChr->{$chr};
 		push @candidates, @ {$this->apply_structure_criterion_per_chr($chr, $regions, $parsed_bed) };
 	}
@@ -991,7 +991,7 @@ sub process_RNAstemloop {
 					if (eval_single_stemloop($stemloop, $sequence_miRnas) == 1) {
 						my $cluster_position = $seq_begin. '-' . ($seq_begin+$seq_len-1);
 						my $res = {
-							"name" => $chr,
+							"name" => $nameSeq,
 							"strand" => $strand,
 							"sequence" => $dna,
 							"start_position" => $stemloop->{'begin'},
