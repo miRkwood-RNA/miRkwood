@@ -776,6 +776,7 @@ sub apply_structure_criterion_per_chr {
 	my $eliminated_by_stemloop = 0;
 	
 	my @candidates = ();
+    my $already_positioned = {};
 	foreach my $region (@$regions) {
 		my $strand = $region->{strand} eq '+' ? 1 : -1;
 		my $seq_id = $chr . '__' . $region->{begin} . '-' . ($region->{end}-1);
@@ -799,15 +800,38 @@ sub apply_structure_criterion_per_chr {
 		my $new_candidates = $this->process_RNAstemloop_on_filenames($output_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop,
 			$region->{begin}, $region->{end}-$region->{begin}, $chr, $region->{strand}, $region->{miRnas}, $parsed_bed);
 
+        ($new_candidates, $already_positioned) = filter_candidates_on_position($new_candidates, $already_positioned);
+
 		my @sorted_new_candidates = sort { $a->{start_position} <=> $b->{start_position} } @{$new_candidates};
 
 		my $sequence_job = miRkwood::SequenceJob->new($working_dir, $seq_id, $chr, $genomic_seq);
 		my %candidates_hash = $sequence_job->process_raw_candidates(\@sorted_new_candidates);
-		
+
 		@candidates = (@candidates, @{$sequence_job->process_candidates( \%candidates_hash )});
 	}
 	return \@candidates;
 }
+
+sub filter_candidates_on_position {
+    my (@args) = @_;
+    my $candidates_array = shift @args;
+    my $already_positioned = shift @args;
+    my $new_candidates_array = [];
+
+    foreach my $candidate ( @{$candidates_array} ){
+        my $start = $candidate->{'start_position'};
+        my $end   = $candidate->{'end_position'};
+        unless ( defined( $already_positioned->{"$start-$end"} ) and $already_positioned->{"$start-$end"} == 1 ){   
+            $already_positioned->{"$start-$end"} = 1;
+            push @{$new_candidates_array}, $candidate;
+        }
+    }
+
+    return ($new_candidates_array, $already_positioned);
+
+}
+
+
 
 =method run_RNAeval_on_RNAstemloop_optimal_output
 
