@@ -52,6 +52,7 @@ sub init_from_clustering {
 	$this->{genome_file} = $clustering->{'genome_file'};
 	$this->{chr_info} = $clustering->{'chr_info'};
 	$this->{accepting_time} = $clustering->{'accepting_time'};
+    return;
 }
 
 
@@ -119,7 +120,6 @@ sub process_window_spikes {
 	$this->{detector} = MiRnaDuplexDetector::MiRnaDetector->new(5000);
 
 	foreach my $chr (keys %{ $this->{chr_info} }) {
-		print "\t", $chr, "\n";
 		$miRnaPos{$chr} = $this->process_window_spikes_for_chr($chr, $windows_per_chr->{$chr});
 	}
 	return \%miRnaPos;
@@ -138,27 +138,7 @@ sub __enlarged_spike {
 		my $new_spike = {begin => $spike->{begin}, end => $spike->{end}};
 		my $length_by2 = int(($min_length - $spike_length)/2);
 		$new_spike->{begin} = max (1, ($new_spike->{begin} - $length_by2));
-		$new_spike->{end} = $new_spike->{begin} + $min_length;#min ($chr_length, ($new_spike->{end} + $min_length - $spike_length - $length_by2));
-		$new_spike->{strand} = $spike->{strand};
-		return $new_spike;
-	}
-	return $spike;
-}
-
-
-=method __shrink_spike
-
-Static private helper function. You shouldnt use this function.
-
-=cut
-sub __shrink_spike {
-	my ($spike, $max_length) = @_;
-	my $spike_length = $spike->{end} - $spike->{begin};
-	if ($spike_length > $max_length) {
-		my $new_spike = {begin => $spike->{begin}, end => $spike->{end}};
-		my $length_by2 = int(($spike_length - $max_length)/2);
-		$new_spike->{begin} = $new_spike->{begin} + $length_by2;
-		$new_spike->{end} = $new_spike->{begin} + $max_length;
+		$new_spike->{end} = $new_spike->{begin} + $min_length; # min ($chr_length, ($new_spike->{end} + $min_length - $spike_length - $length_by2));
 		$new_spike->{strand} = $spike->{strand};
 		return $new_spike;
 	}
@@ -194,19 +174,6 @@ sub __force_spike_size {
 }
 
 
-=method __look_backward_only
-
-Static private helper function. You shouldnt use this function.
-
-=cut
-sub __look_backward_only {
-	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $min_length, $window_length) = @_; # min_length = 40, window_length = 300
-# 	my $enlarged_spike = __force_spike_size($current_spike, $min_length, $chr_length);
-# 	my $mismatches_on_isolated_spike = int($mismatches*($enlarged_spike->{end} - $enlarged_spike->{begin})/$min_length);
-	return __look_backward($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $current_spike, $window_length);
-}
-
-
 =method __look_forward
 
 Static private helper function. You shouldnt use this function.
@@ -222,8 +189,8 @@ sub __look_forward {
 
 	if ($enlarged_spike->{begin} < $genome_seq_beg || $candidate_region[0] < $genome_seq_beg ||
 		$enlarged_spike->{end} > $genome_seq_end || $candidate_region[1] > $genome_seq_end) {
-		print "Looking forward... Genome seq: $chr:$genome_seq_beg-", $genome_seq_end-1, "\n";
-		print "Too long to test $chr:$enlarged_spike->{begin}-", $enlarged_spike->{end}-1, " against $chr:$candidate_region[0]-", $candidate_region[1]-1, "\n";
+		debug("Looking forward... Genome seq: $chr:$genome_seq_beg-" . $genome_seq_end-1 . "\n", 1);
+		debug("Too long to test $chr:$enlarged_spike->{begin}-" . $enlarged_spike->{end}-1 . " against $chr:$candidate_region[0]-" . $candidate_region[1]-1 . "\n", 1);
 		return 0;
 	}
 	my $results;
@@ -232,13 +199,13 @@ sub __look_forward {
 		$results = $detector->detect_on_strand('+', $genome_seq, $enlarged_spike->{begin}-$genome_seq_beg, $enlarged_spike->{end}-$genome_seq_beg,
 		$candidate_region[0]-$genome_seq_beg, $candidate_region[1]-$genome_seq_beg);
 		$strand = '+';
-		if (scalar @$results) {
+		if ( scalar @{$results} ) {
 			my @farthest = @{$results->[0]};
-			foreach my $r (@$results) {
-				@farthest = @$r if $r->[0] > $farthest[0]; # if begin_sequence of 'r' > begin_sequence of 'farthest'
+			foreach my $r ( @{$results} ) {
+				@farthest = @{$r} if $r->[0] > $farthest[0]; # if begin_sequence of 'r' > begin_sequence of 'farthest'
 			}
 			my $other = {begin => $candidate_region[0]+$farthest[0], end => $candidate_region[0]+$farthest[1], strand => $enlarged_spike->{strand}};
-			push @$miRnaPos, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $enlarged_spike, second => $other, source => DUE_TO_SINGLE_SPIKE};
+			push @{$miRnaPos}, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $enlarged_spike, second => $other, source => DUE_TO_SINGLE_SPIKE};
 		}
 		$results = $detector->detect_on_strand('-', $genome_seq, $enlarged_spike->{begin}-$genome_seq_beg, $enlarged_spike->{end}-$genome_seq_beg,
 		$candidate_region[0]-$genome_seq_beg, $candidate_region[1]-$genome_seq_beg);
@@ -249,13 +216,13 @@ sub __look_forward {
 		$candidate_region[0]-$genome_seq_beg, $candidate_region[1]-$genome_seq_beg);
 	}
 	# $results = [ [[begin_read, end_read], [begin_sequence, end_sequence]], [[begin_read, end_read], [begin_sequence, end_sequence]], ...]
-	if (scalar @$results) {
+	if ( scalar @{$results} ) {
 		my @farthest = @{$results->[0]};
-		foreach my $r (@$results) {
+		foreach my $r ( @{$results} ) {
 			@farthest = @$r if $r->[0] > $farthest[0]; # if begin_sequence of 'r' > begin_sequence of 'farthest'
 		}
 		my $other = {begin => $candidate_region[0]+$farthest[0], end => $candidate_region[0]+$farthest[1], strand => $enlarged_spike->{strand}};
-		push @$miRnaPos, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $enlarged_spike, second => $other, source => DUE_TO_SINGLE_SPIKE};
+		push @{$miRnaPos}, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $enlarged_spike, second => $other, source => DUE_TO_SINGLE_SPIKE};
 		return 1;
 	}
 	return 0;
@@ -275,8 +242,8 @@ sub __look_backward {
 	}
 	if ($enlarged_spike->{begin} < $genome_seq_beg || $candidate_region[0] < $genome_seq_beg ||
 		$enlarged_spike->{end} > $genome_seq_end || $candidate_region[1] > $genome_seq_end) {
-		print "Looking backward... Genome seq: $chr:$genome_seq_beg-", $genome_seq_end-1, "\n";
-		print "Too long to test $chr:$enlarged_spike->{begin}-", $enlarged_spike->{end}-1, " against $chr:$candidate_region[0]-", $candidate_region[1]-1, "\n";
+ 		debug("Looking backward... Genome seq: $chr:$genome_seq_beg-" . $genome_seq_end-1 . "\n", 1);
+		debug("Too long to test $chr:$enlarged_spike->{begin}-" . $enlarged_spike->{end}-1 . " against $chr:$candidate_region[0]-" . $candidate_region[1]-1 . "\n", 1);
 		return 0;
 	}
 
@@ -288,11 +255,11 @@ sub __look_backward {
 		$strand = '+';
 		if (scalar @$results) {
 			my @farthest = @{$results->[0]};
-			foreach my $r (@$results) {
-				@farthest = @$r if $r->[0] < $farthest[0]; # if begin_sequence of 'r' < begin_sequence of 'farthest'
+			foreach my $r ( @{$results} ) {
+				@farthest = @{$r} if $r->[0] < $farthest[0]; # if begin_sequence of 'r' < begin_sequence of 'farthest'
 			}
 			my $other = {begin => $candidate_region[0]+$farthest[0], end => $candidate_region[0]+$farthest[1], strand => $enlarged_spike->{strand}};
-			push @$miRnaPos, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $other, second => $enlarged_spike, source => DUE_TO_SINGLE_SPIKE};
+			push @{$miRnaPos}, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $other, second => $enlarged_spike, source => DUE_TO_SINGLE_SPIKE};
 		}
 		$results = $detector->detect_on_strand('-', $genome_seq, $enlarged_spike->{begin}-$genome_seq_beg, $enlarged_spike->{end}-$genome_seq_beg,
 		$candidate_region[0]-$genome_seq_beg, $candidate_region[1]-$genome_seq_beg);
@@ -302,13 +269,13 @@ sub __look_backward {
 		$results = $detector->detect_on_strand($enlarged_spike->{strand}, $genome_seq, $enlarged_spike->{begin}-$genome_seq_beg, $enlarged_spike->{end}-$genome_seq_beg,
 		$candidate_region[0]-$genome_seq_beg, $candidate_region[1]-$genome_seq_beg);
 	}
-	return 0 if scalar @$results == 0;
+	return 0 if scalar @{$results} == 0;
 	my @farthest = @{$results->[0]};
-	foreach my $r (@$results) {
-		@farthest = @$r if $r->[0] < $farthest[0]; # if begin_sequence of 'r' < begin_sequence of 'farthest'
+	foreach my $r ( @{$results} ) {
+		@farthest = @{$r} if $r->[0] < $farthest[0]; # if begin_sequence of 'r' < begin_sequence of 'farthest'
 	}
 	my $other = {begin => $candidate_region[0]+$farthest[0], end => $candidate_region[0]+$farthest[1], strand => $enlarged_spike->{strand}};
-	push @$miRnaPos, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $other, second => $enlarged_spike, source => DUE_TO_SINGLE_SPIKE};
+	push @{$miRnaPos}, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $other, second => $enlarged_spike, source => DUE_TO_SINGLE_SPIKE};
 	return 1;
 }
 
@@ -339,24 +306,24 @@ sub __match_with_neighbor {
 	my $results;
 	if ($current_spike->{begin} < $genome_seq_beg || $enlarged_neighbor->{begin} < $genome_seq_beg ||
 		$current_spike->{end} > $genome_seq_end || $enlarged_neighbor->{end} > $genome_seq_end) {
-		print "Matching neighbors... Genome seq: $chr:$genome_seq_beg-", $genome_seq_end-1, "\n";
-		print "Too long to test $chr:$current_spike->{begin}-", $current_spike->{end}-1, " against $chr:$enlarged_neighbor->{begin}-", $enlarged_neighbor->{end}-1, "\n";
+		debug("Matching neighbors... Genome seq: $chr:$genome_seq_beg-" . $genome_seq_end-1 . "\n", 1);
+		debug("Too long to test $chr:$current_spike->{begin}-" . $current_spike->{end}-1 . " against $chr:$enlarged_neighbor->{begin}-" . $enlarged_neighbor->{end}-1 . "\n", 1);
 		return 0;
 	}
 
 	if ($spike_len < $neighbor_len) {
 		$results = $detector->detect_on_strand($strand, $genome_seq, $current_spike->{begin}-$genome_seq_beg,
 		$current_spike->{end}-$genome_seq_beg, $enlarged_neighbor->{begin}-$genome_seq_beg, $enlarged_neighbor->{end}-$genome_seq_beg);
-		if (scalar @$results) {
-			push @$miRnaPos, {strand => $strand, first => $current_spike, second => __force_spike_size($neighbor, $spike_len, $chr_length), source => DUE_TO_TWO_SPIKES};
+		if ( scalar @{$results} ) {
+			push @{$miRnaPos}, {strand => $strand, first => $current_spike, second => __force_spike_size($neighbor, $spike_len, $chr_length), source => DUE_TO_TWO_SPIKES};
 			return 1;
 		}
 	}
 	else {
 		$results = $detector->detect_on_strand($strand, $genome_seq, $enlarged_neighbor->{begin}-$genome_seq_beg, $enlarged_neighbor->{end}-$genome_seq_beg,
 		$current_spike->{begin}-$genome_seq_beg, $current_spike->{end}-$genome_seq_beg);
-		if (scalar @$results) {
-			push @$miRnaPos, {strand => $strand, first => $current_spike, second => __force_spike_size($neighbor, $spike_len, $chr_length), source => DUE_TO_TWO_SPIKES};
+		if ( scalar @{$results} ) {
+			push @{$miRnaPos}, {strand => $strand, first => $current_spike, second => __force_spike_size($neighbor, $spike_len, $chr_length), source => DUE_TO_TWO_SPIKES};
 			return 1;
 		}
 	}
@@ -384,7 +351,7 @@ sub process_window_spikes_for_chr {
 	my $enlarging = max($window_length, $accepting_time);
 	my $min_error_for_single_spike = $detector->miRnaMinErrorsThreshold();
 	my $min_error_for_two_spikes = $detector->miRnaMaxErrorsThreshold();
-	foreach my $window (@$windows) {
+	foreach my $window ( @{$windows} ) {
 		foreach my $train (@{$window->{trains}}) {
 			my $spikes = $train->{spikes};
 			for (my $i = 0, my $e = scalar @$spikes; $i < $e; $i++) {
@@ -470,7 +437,6 @@ sub compute_candidate_precursors_from_miRnaPos {
 	my %candidate_region = ();
 
 	foreach my $chr (keys %{ $this->{chr_info} }) {
-		print "\t", $chr, "\n";
 		my $miRnaPos = $miRnaPosPerChr->{$chr};
 		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($miRnaPos, $this->{chr_info}{$chr});
 	}
@@ -542,6 +508,7 @@ sub merge_regions {
 		}
 	}
 	push @{$a->{miRnas}}, $b->{miRnas}[0];
+    return;
 }
 
 
@@ -585,7 +552,7 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 				return;
 			}
 		}
-		splice @$ary, $middle, 0, $val;
+		splice @{$ary}, $middle, 0, $val;
 	}
 
 	my $miRnaPos = shift;
@@ -594,7 +561,7 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 	my $padding = 100;
 
 	my %regions = ('+' => [], '-' => []);
-	if (scalar @$miRnaPos == 0) {
+	if (scalar @{$miRnaPos} == 0) {
 		return $regions{'+'};
 	}
 
@@ -605,7 +572,7 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 	strand => $current_miRna->{strand}, miRnas => [$current_miRna]};
 
 
-	for (my $i = 1, my $e = scalar @$miRnaPos; $i < $e; $i++) {
+	for (my $i = 1, my $e = scalar @{$miRnaPos}; $i < $e; $i++) {
 		my %region;
 		my $current_miRna = $miRnaPos->[$i];
 		%region = (begin => max(1, $current_miRna->{first}{begin}-$padding), end => min($chr_length, $current_miRna->{second}{end}+$padding), strand => $current_miRna->{strand},
@@ -709,7 +676,7 @@ sub eval_stemloop_output {
 
 	my @retained_stemloops = ();
 
-	foreach my $stemloop (@$stemloop_results) {
+	foreach my $stemloop ( @{$stemloop_results} ) {
 		if (eval_single_stemloop($stemloop, $miRnaPos) == 1) {
 			push @retained_stemloops, $stemloop;
 		}
@@ -727,7 +694,7 @@ sub eval_single_stemloop {
 	my $stemloop = shift;
 	my $miRnaPos = shift;
 
-	foreach my $miRnas (@$miRnaPos) {
+	foreach my $miRnas ( @{$miRnaPos} ) {
 		if ($miRnas->{source} == DUE_TO_TWO_SPIKES) {
 			if (raw_regions_intertect($stemloop, $miRnas->{first}) && raw_regions_intertect($stemloop, $miRnas->{second})) {
 				return 1;
@@ -773,8 +740,7 @@ Private helper function. You shouldnt use this function.
 sub apply_structure_criterion_per_chr {
 	my ($this, $chr, $regions, $parsed_bed) = @_;
 	my $genome = $this->{genome_db};
-	my $eliminated_by_stemloop = 0;
-	
+
 	my @candidates = ();
     my $already_positioned = {};
 	foreach my $region (@$regions) {
@@ -782,13 +748,13 @@ sub apply_structure_criterion_per_chr {
 		my $seq_id = $chr . '__' . $region->{begin} . '-' . ($region->{end}-1);
 		my $working_dir = File::Spec->catdir($this->{workspace_dir}, $seq_id. $region->{strand});
 		mkdir $working_dir;
-		
+
 		my $rnalfold_output_filename = 'rnalfold_out';
 
 		my $genomic_seq = $this->get_sub_sequence_on_strand($chr, $region->{begin}, $region->{end}-1, $strand);
-		
+
 		my $rnalfold_output_filepath = run_rnalfold('miRnaPrecursor', $genomic_seq, $working_dir, $rnalfold_output_filename);
-		
+
 		my $output_stemloop_opt = File::Spec->catfile($working_dir, 'rnastemloop_optimal');
 		my $output_stemloop = File::Spec->catfile($working_dir, 'rnastemloop_stemloop');
 
@@ -821,7 +787,7 @@ sub filter_candidates_on_position {
     foreach my $candidate ( @{$candidates_array} ){
         my $start = $candidate->{'start_position'};
         my $end   = $candidate->{'end_position'};
-        unless ( defined( $already_positioned->{"$start-$end"} ) and $already_positioned->{"$start-$end"} == 1 ){   
+        unless ( defined( $already_positioned->{"$start-$end"} ) and $already_positioned->{"$start-$end"} == 1 ){
             $already_positioned->{"$start-$end"} = 1;
             push @{$new_candidates_array}, $candidate;
         }
@@ -866,7 +832,7 @@ sub run_RNAeval_on_RNAstemloop_output {
     my $rnaeval_out = File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
     debug( "Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
-    miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or die("Problem when running RNAeval");
+    miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or die('Problem when running RNAeval');
 
     return $rnaeval_out;
 }
@@ -888,7 +854,7 @@ sub process_RNAstemloop_on_filenames {
     open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
     my $msg = "Processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
     debug( $msg, miRkwood->DEBUG() );
-    my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $chr, $strand, 
+    my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $chr, $strand,
     $sequence_miRnas, $parsed_bed);
     close($STEM_FH);
     close($EVAL_OPT_FH);
@@ -899,14 +865,14 @@ sub process_RNAstemloop_on_filenames {
 sub get_contained_reads {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
 	my $reads = $parsed_bed->{$chr}{$strand};
-	
+
 	sub binsearch {
 		my $arr = shift;
 		my $beg = shift;
 		my $end = shift;
 		my $val = shift;
 		my $middle = $end;
-		
+
 		while ($beg < $end) {
 			$middle = ($beg+$end)/2;
 			if ($val < $arr->[$middle]{'begin'}) {
@@ -921,18 +887,18 @@ sub get_contained_reads {
 		}
 		return $middle;
 	}
-	
-	my $low = binsearch($reads, 0, scalar @$reads, $region_begin);
-	my $high = binsearch($reads, $low, scalar @$reads, $region_end);
-	
+
+	my $low = binsearch($reads, 0, scalar @{$reads}, $region_begin);
+	my $high = binsearch($reads, $low, scalar @{$reads}, $region_end);
+
 	my %result = ();
-	if ($low == scalar @$reads) {
+	if ($low == scalar @{$reads}) {
 		return \%result;
 	}
-	if ($high == scalar @$reads) {
+	if ($high == scalar @{$reads}) {
 		$high--;
 	}
-	
+
 	for (my $i = $low; $i <= $high; $i++) {
 		my $read_begin = $reads->[$i]{'begin'}-1;
 		my @read_ends = keys %{$reads->[$i]{'ends'}};
@@ -1000,34 +966,31 @@ sub process_RNAstemloop {
 				if ($nameSeq =~ /.*__(\d*)-(\d*)$/) {
 					my ($mfei, $amfe) = miRkwood::Utils::compute_mfei_and_amfe($dna, $energy_optimal);
 					my ($start, $end);
-					#~ my %stemloop = ();
                     my $stemloop = {};
 					if ($strand eq '-') {
 						($start, $end) = @{ miRkwood::Utils::get_position_from_opposite_strand( $1, $2, $seq_len) };
-						#~ %stemloop = (begin => $seq_len - $2 + $seq_begin, end => $seq_len - $1 +1 + $seq_begin);
                         $stemloop = {begin => $seq_len - $2 + $seq_begin, end => $seq_len - $1 +1 + $seq_begin};
 					}
 					else {
 						($start, $end) = ($1, $2);
-						#~ %stemloop = (begin => $1 + $seq_begin-1, end => $2 + $seq_begin);
                         $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
 					if (eval_single_stemloop($stemloop, $sequence_miRnas) == 1) {
 						my $cluster_position = $seq_begin. '-' . ($seq_begin+$seq_len-1);
 						my $res = {
-							"name" => $nameSeq,
-							"strand" => $strand,
-							"sequence" => $dna,
-							"start_position" => $stemloop->{'begin'},
-							"end_position" => $stemloop->{'end'}-1, #includes the end
-							"mfei" => $mfei,
-							"amfe" => $amfe,
-							"structure_optimal" => $structure_optimal,
-							"energy_optimal" => $energy_optimal,
-							"structure_stemloop" => $structure_stemloop,
-							"energy_stemloop" => $energy_stemloop,
-							"reads" => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
-							"cluster" => $cluster_position
+							'name' => $nameSeq,
+							'strand' => $strand,
+							'sequence' => $dna,
+							'start_position' => $stemloop->{'begin'},
+							'end_position' => $stemloop->{'end'}-1, # includes the end
+							'mfei' => $mfei,
+							'amfe' => $amfe,
+							'structure_optimal' => $structure_optimal,
+							'energy_optimal' => $energy_optimal,
+							'structure_stemloop' => $structure_stemloop,
+							'energy_stemloop' => $energy_stemloop,
+							'reads' => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
+							'cluster' => $cluster_position
 						};
 						push @candidates_array, $res;
 					}
