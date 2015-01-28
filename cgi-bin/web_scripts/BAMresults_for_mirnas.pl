@@ -38,6 +38,8 @@ my @js = (
 my $cgi = CGI->new();
 my $id_job = $cgi->param('jobID');    # get id job
 my $mirnas_type = $cgi->param('type');      # 'known' or 'new'
+my $returnlink = miRkwood::WebTemplate::get_link_back_to_BAM_results($id_job);
+my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
 
 ##### Create page
@@ -85,7 +87,8 @@ if ( $valid ){
         $header_menu
         <div class="main main-full">
             $HTML_additional
-         
+            $return_html
+
             <div id='new_mirnas'>
                 <p class='header-results' id='precursors_count'>
                     <b>$mirnas_type miRNAs : $nb_results miRNA precursor(s) found</b>

@@ -71,6 +71,19 @@ sub get_link_back_to_results {
     return ("./resultsWithID.pl?run_id=$jobId");
 }
 
+=method get_link_back_to_BAM_results
+
+Return the link back to the main results page
+for BAM pipeline
+
+=cut
+
+sub get_link_back_to_BAM_results {
+    my @args = @_;
+    my $jobId = shift @args;
+    return ("./BAMresults.pl?run_id=$jobId");
+}
+
 =method get_css_file
 
 Return the project CSS file
