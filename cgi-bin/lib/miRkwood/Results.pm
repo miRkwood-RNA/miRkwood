@@ -143,7 +143,7 @@ sub get_basic_pseudoXML_for_jobID {
     } @{$results};
     
     foreach my $candidate (@candidates) {
-        $output .= $self->convert_basic_to_pseudoXML($candidate);
+        $output .= $self->convert_basic_to_pseudoXML($candidate, $type);
     }
     $output .= "</results>\n";
     
@@ -154,7 +154,7 @@ sub get_basic_pseudoXML_for_jobID {
             $a->{'start_position'} <=> $b->{'start_position'} )
     } @candidates;
     foreach my $candidate (@candidates) {
-        $output .= $self->convert_basic_to_pseudoXML($candidate) . "\n";
+        $output .= $self->convert_basic_to_pseudoXML($candidate, $type) . "\n";
     }
     $output .= "</results>";
 
@@ -165,11 +165,18 @@ sub convert_basic_to_pseudoXML {
 	my ( $self, @args ) = @_;
 	my $candidate = shift @args;
 	my %candidate = %{$candidate};
-	
+    my $type      = shift @args;  # $type should be 'new' or 'known'
+
+	my @headers;
 	my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
     my $result = "<Sequence";
 	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
-    my @headers = ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
+    #~ if ( $type eq 'known' ){
+        #~ @headers = ( 'precursor_name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
+    #~ }
+    #~ else{
+        @headers = ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
+    #~ }
 
     for my $header (@headers) {
         my $contents = $candidate->{$header};
