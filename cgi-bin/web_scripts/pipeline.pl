@@ -56,7 +56,7 @@ if (@unavailable){
     miRkwood::WebTemplate::web_die($error);
 }
 
-my $jobId = miRkwood::Results->make_job_id();
+my $jobId = miRkwood::Results->make_job_id( 'Fasta' );
 my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobId);
 mkdir $absolute_job_dir;
 

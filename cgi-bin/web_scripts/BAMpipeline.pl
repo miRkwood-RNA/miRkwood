@@ -21,7 +21,7 @@ my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
 
 
 ##### Create job id and job directory
-my $jobId = miRkwood::Results->make_job_id();
+my $jobId = miRkwood::Results->make_job_id( 'BAM' );
 my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobId);
 mkdir $absolute_job_dir;
 

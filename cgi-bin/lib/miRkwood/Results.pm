@@ -23,9 +23,10 @@ Return a jobId (based on the current time)
 
 sub make_job_id {
 	my ( $self, @args ) = @_;
+	my $type = shift @args;     # type should be 'BAM' or 'Fasta'
 	my $now = gmctime();
 	$now =~ s/[: ]//g;
-	$now = substr( $now, 3 );
+	$now = $type . substr( $now, 3 );
 	return $now;
 }
 
