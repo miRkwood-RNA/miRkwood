@@ -3,4 +3,4 @@
 # Note, these sequences do not represent the full primary transcript,
 # rather a predicted stem-loop portion that includes the precursor.
 
-ChrC__254-554	miRkwood	miRNA_primary_transcript	34	102	.	+	.	Name=preMir_ChrC__254-554__34-102	
+ChrC	miRkwood	miRNA_primary_transcript	287	356	.	+	.	Name=preMir_ChrC__287-356	

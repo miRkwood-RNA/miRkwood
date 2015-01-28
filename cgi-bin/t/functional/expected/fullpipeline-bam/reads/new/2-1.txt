@@ -1,9 +1,7 @@
-ChrC__254-554
-Genome : 0
 Locus  : ChrC:287-356
 Strand : +
 
-
+TAGAAAAAAACGAGTAATATAAGCCCTCTTTCTTATTTAAAGAAGGCTTATATTGCTCGTTTTTTACTA
 ..*********************.............................................. length=21 depth=1
 ..*************************.......................................... length=25 depth=1
 ..**************************......................................... length=26 depth=2
