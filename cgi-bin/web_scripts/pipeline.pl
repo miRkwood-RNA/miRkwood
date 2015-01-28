@@ -106,7 +106,7 @@ foreach my $line (@lines) {
 close $OUTPUT or die("Error when closing $sequence_upload: $!");
 
 # redirection vers la page wait en attendant le calcul
-my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail . '&mode=genomic';
+my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail;
 my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 

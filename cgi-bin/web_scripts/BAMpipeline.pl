@@ -103,10 +103,10 @@ if ( $seqArea eq q{} )    # case model organism
 }
 else{
     debug('Reference sequence is provided by the user.', 1);
-    
+
     # Check if genome is a valid fasta   
     $seqArea = miRkwood::Utils::cleanup_fasta_sequence($seqArea);
-    
+
     if ( ! miRkwood::Utils::is_fasta($seqArea) )
     {
         print $cgi->redirect($error_url . '?type=noFasta');
@@ -132,7 +132,7 @@ else{
 
 
 ##### Redirect to the wait.pl page until the job is done
-my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail . '&mode=BAM';
+my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail;
 my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 print $cgi->redirect( $waiting_url );
