@@ -81,8 +81,9 @@ sub run {
 	my ($this, $sequences_per_chr, $parsed_bed) = @_;
 	my $candidates_miRNA = $this->process_window_spikes($sequences_per_chr);
 	my $regions = $this->compute_candidate_precursors_from_miRnaPos($candidates_miRNA);
-	my $candidate_precursors = $this->apply_structure_criterion($regions, $parsed_bed);
-	return $candidate_precursors;
+	return $regions;
+	#~ my $candidate_precursors = $this->apply_structure_criterion($regions, $parsed_bed);
+	#~ return $candidate_precursors;
 }
 
 =method process_window_spikes
@@ -862,44 +863,64 @@ sub process_RNAstemloop_on_filenames {
     return $candidates;
 }
 
+sub lowerbound_binsearch {
+	my $arr = shift;
+	my $first = shift;
+	my $last = shift; # last is excluded, past the last item
+	my $val = shift;
+	
+	my $len = $last - $first;
+	while ($len > 0) {
+		my $half = $len >> 1;
+		my $middle = $first + $half;
+		if ($arr->[$middle]{'begin'} < $val) {
+			$first = $middle;
+			$first++;
+			$len = $len - $half - 1;
+		}
+		else {
+			$len = $half;
+		}
+	}
+	return $first;
+}
+
+sub upperbound_binsearch {
+	my $arr = shift;
+	my $first = shift;
+	my $last = shift; # last is excluded, past the last item
+	my $val = shift;
+	
+	my $it;
+	my ($count, $step);
+	$count = $last - $first;
+	while ($count > 0)	{
+		$it = $first; $step=$count/2; $it += $step;
+		if (!($val < $arr->[$it]{'begin'})) {
+			$it++;
+			$first = $it;
+			$count -= $step + 1;
+		}
+		else {
+			$count= $step;
+		}
+	}
+	return $first;
+}
+
 sub get_contained_reads {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
 	my $reads = $parsed_bed->{$chr}{$strand};
 
-	sub binsearch {
-		my $arr = shift;
-		my $beg = shift;
-		my $end = shift;
-		my $val = shift;
-		my $middle = $end;
-
-		while ($beg < $end) {
-			$middle = ($beg+$end)/2;
-			if ($val < $arr->[$middle]{'begin'}) {
-				$end = $middle;
-			}
-			elsif ($arr->[$middle]{'begin'} < $val) {
-				$beg = $middle+1;
-			}
-			else {
-				return $middle;
-			}
-		}
-		return $middle;
-	}
-
-	my $low = binsearch($reads, 0, scalar @{$reads}, $region_begin);
-	my $high = binsearch($reads, $low, scalar @{$reads}, $region_end);
+	my $low = lowerbound_binsearch($reads, 0, scalar @{$reads}, $region_begin);
+	my $high = upperbound_binsearch($reads, $low, scalar @{$reads}, $region_end);
 
 	my %result = ();
 	if ($low == scalar @{$reads}) {
 		return \%result;
 	}
-	if ($high == scalar @{$reads}) {
-		$high--;
-	}
 
-	for (my $i = $low; $i <= $high; $i++) {
+	for (my $i = $low; $i < $high; $i++) {
 		my $read_begin = $reads->[$i]{'begin'}-1;
 		my @read_ends = keys %{$reads->[$i]{'ends'}};
 		foreach my $read_end (@read_ends) {
@@ -1005,6 +1026,34 @@ sub process_RNAstemloop {
 		}    #if $line1
 	}    #while $line=<IN>
 	return \@candidates_array;
+}
+
+sub export_precursors_to_gff {
+	my ($this, $regionsPerChr, $output_folder, $output_file) = @_;
+
+	my $filename = "$output_folder/$output_file";
+	open(my $fh, '>', $filename.'.csv');
+	my $counter = 0, my $counter_single = 0;
+	foreach my $chr (keys %{ $this->{chr_info} }) {
+		my $regions = $regionsPerChr->{$chr};
+# 		print $chr, "\n";
+		foreach my $region (@$regions) { # Already sorted
+			print $fh $chr,"\t.\tmiRna-precursor\t",$region->{begin},"\t",$region->{end}-1,"\t.\t", $region->{strand} ,"\t.\t";
+			foreach my $miRna (@{$region->{miRnas}}) {
+				if ($miRna->{strand} eq '+') {
+					print $fh "{5p=$chr:", $miRna->{first}{begin}, "-", $miRna->{first}{end}-1, ",";
+					print $fh "3p=$chr:", $miRna->{second}{begin}, "-", $miRna->{second}{end}-1, "};";
+				}
+				else {
+					print $fh "{5p=$chr:", $miRna->{second}{begin}, "-", $miRna->{second}{end}-1, ",";
+					print $fh "3p=$chr:", $miRna->{first}{begin}, "-", $miRna->{first}{end}-1, "};";
+				}
+			}
+			print $fh "\n";
+		}
+	}
+	close $fh;
+	
 }
 
 1;
