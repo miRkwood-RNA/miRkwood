@@ -81,9 +81,8 @@ sub run {
 	my ($this, $sequences_per_chr, $parsed_bed) = @_;
 	my $candidates_miRNA = $this->process_window_spikes($sequences_per_chr);
 	my $regions = $this->compute_candidate_precursors_from_miRnaPos($candidates_miRNA);
-	return $regions;
-	#~ my $candidate_precursors = $this->apply_structure_criterion($regions, $parsed_bed);
-	#~ return $candidate_precursors;
+	my $candidate_precursors = $this->apply_structure_criterion($regions, $parsed_bed);
+	return $candidate_precursors;
 }
 
 =method process_window_spikes
@@ -863,6 +862,7 @@ sub process_RNAstemloop_on_filenames {
     return $candidates;
 }
 
+# See std::lower_bound in the C++ standard library
 sub lowerbound_binsearch {
 	my $arr = shift;
 	my $first = shift;
@@ -885,6 +885,7 @@ sub lowerbound_binsearch {
 	return $first;
 }
 
+# See std::upper_bound in the C++ standard library
 sub upperbound_binsearch {
 	my $arr = shift;
 	my $first = shift;
@@ -919,6 +920,9 @@ sub get_contained_reads {
 	if ($low == scalar @{$reads}) {
 		return \%result;
 	}
+	#~ if ($high == scalar @{$reads}) {
+		#~ $high--;
+	#~ }
 
 	for (my $i = $low; $i < $high; $i++) {
 		my $read_begin = $reads->[$i]{'begin'}-1;
@@ -1026,34 +1030,6 @@ sub process_RNAstemloop {
 		}    #if $line1
 	}    #while $line=<IN>
 	return \@candidates_array;
-}
-
-sub export_precursors_to_gff {
-	my ($this, $regionsPerChr, $output_folder, $output_file) = @_;
-
-	my $filename = "$output_folder/$output_file";
-	open(my $fh, '>', $filename.'.csv');
-	my $counter = 0, my $counter_single = 0;
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $regions = $regionsPerChr->{$chr};
-# 		print $chr, "\n";
-		foreach my $region (@$regions) { # Already sorted
-			print $fh $chr,"\t.\tmiRna-precursor\t",$region->{begin},"\t",$region->{end}-1,"\t.\t", $region->{strand} ,"\t.\t";
-			foreach my $miRna (@{$region->{miRnas}}) {
-				if ($miRna->{strand} eq '+') {
-					print $fh "{5p=$chr:", $miRna->{first}{begin}, "-", $miRna->{first}{end}-1, ",";
-					print $fh "3p=$chr:", $miRna->{second}{begin}, "-", $miRna->{second}{end}-1, "};";
-				}
-				else {
-					print $fh "{5p=$chr:", $miRna->{second}{begin}, "-", $miRna->{second}{end}-1, ",";
-					print $fh "3p=$chr:", $miRna->{first}{begin}, "-", $miRna->{first}{end}-1, "};";
-				}
-			}
-			print $fh "\n";
-		}
-	}
-	close $fh;
-	
 }
 
 1;
