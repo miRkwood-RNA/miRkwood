@@ -66,7 +66,7 @@ if ( $valid ){
     }
 
 
-    my $page = <<"END_TXT";
+    $page = <<"END_TXT";
 <div class="main">
   <div class="dialog">
     <div class="waitMessage">
@@ -88,8 +88,8 @@ END_TXT
 
 }
 else{
-    my $HTML_additional = "<p class='header-results' id='job_id'><b>Job ID:</b> " . $jobId . '</p>';
-	my $page = <<"END_TXT";
+    my $HTML_additional = "<p class='header-results' id='job_id'><b>Job ID:</b>$jobId</p>";
+	$page = <<"END_TXT";
 <div class="main">
     $HTML_additional
     <p>No results available for the given job identifier $jobId.</p>
