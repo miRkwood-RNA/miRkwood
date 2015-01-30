@@ -8,6 +8,8 @@ use warnings;
 use File::Spec;
 use YAML::XS;
 
+use Log::Message::Simple qw[msg error debug];
+
 use miRkwood;
 use miRkwood::Paths;
 use miRkwood::Parsers;
@@ -86,6 +88,14 @@ Compute a general quality score
 sub compute_quality {
     my ( $self, @args ) = @_;
     my $quality = 0;
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');
+
+    if ( $mode eq 'WebBAM' ){
+        my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
+        $quality += $self->compute_quality_from_reads( $end_arm_1, $start_arm_2 );
+    }
+
     if ( $self->{'mfei'} ) {
         if ( $self->{'mfei'} < -0.8 ){
             $quality += 1;
@@ -533,5 +543,97 @@ sub get_reads {
     return $self;
 
 }
+
+=method determine_precursor_arms
+
+  Method to determine the positions of the precursor
+  based on positions of last '(' and first ')' in the
+  structure
+  /!\ May be just a temporary way of doing
+  Waiting for approval
+
+=cut
+sub determine_precursor_arms {
+    my ( $self, @args ) = @_;
+
+    my $start_arm_2 = 0;
+    my $end_arm_1 = 0;
+    my @structure_array = split('', $self->{'structure_stemloop'});   
+    my $stop = 0;
+
+    my $index = 0;
+    
+    while ( $index < scalar(@structure_array) and ! $stop ){
+        if ( $structure_array[$index] eq '(' ){
+            $end_arm_1 = $index;
+        }
+        elsif ( $structure_array[$index] eq ')' ){
+            $start_arm_2 = $index;
+            $stop = 1;
+        }
+        $index++;
+    }
+
+    $start_arm_2 += $self->{'start_position'};
+    $end_arm_1   += $self->{'start_position'};
+
+    return ( $end_arm_1, $start_arm_2 );    
+}
+
+=method compute_quality_from_reads
+
+=cut
+sub compute_quality_from_reads {
+    my ( $self, @args ) = @_;
+    my $end_arm_1 = shift @args;
+    my $start_arm_2 = shift @args;
+
+    my $start_arm_1 = $self->{'start_position'};
+    my $end_arm_2   = $self->{'end_position'};
+    my $reads_arm_1 = {};
+    my $reads_arm_2 = {};
+    my $count_arm_1 = 0;
+    my $count_arm_2 = 0;
+    my $total_reads = 0;
+    my $criteria_nb_reads = 0;
+    my $criteria_precision_arm_1 = 0;
+    my $criteria_precision_arm_2 = 0;
+
+    if ( scalar(keys %{$self->{'reads'}}) > 0 ){
+        foreach my $read_position (keys %{$self->{'reads'}}){
+            my ($start_read, $end_read) = split('-', $read_position);
+            if ( $start_read >= $start_arm_1 and $end_read <= $end_arm_1 ){
+                $reads_arm_1->{ $start_read } += $self->{'reads'}{ $read_position };
+                $count_arm_1 += $self->{'reads'}{ $read_position };
+            }
+            if ( $start_read >= $start_arm_2 and $end_read <= $end_arm_2 ){
+                $reads_arm_2->{ $start_read } += $self->{'reads'}{ $read_position };
+                $count_arm_2 += $self->{'reads'}{ $read_position };
+            }
+            $total_reads += $self->{'reads'}{ $read_position };
+        }
+    }
+
+    if ( $count_arm_1 >= 10 and $count_arm_2 >= 10 ){
+        $criteria_nb_reads = 1;
+    }
+    if ( $count_arm_1 >= 5 and $count_arm_2 >= 5 and $total_reads >= 100 ){
+        $criteria_nb_reads = 1;
+    }
+
+    foreach my $start_read ( keys %{$reads_arm_1} ){
+        if ( $reads_arm_1->{$start_read} >= ( $count_arm_1 / 2 ) ){
+            $criteria_precision_arm_1 = 1;
+        }
+    }
+    foreach my $start_read ( keys %{$reads_arm_2} ){
+        if ( $reads_arm_2->{$start_read} >= ( $count_arm_2 / 2 ) ){
+            $criteria_precision_arm_2 = 1;
+        }
+    }
+
+    return $criteria_nb_reads + ( $criteria_precision_arm_1 * $criteria_precision_arm_2 );
+}
+
 
 1;
