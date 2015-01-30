@@ -14,50 +14,59 @@ use miRkwood;
 use miRkwood::WebTemplate;
 use miRkwood::Results;
 
+
+##### Page settings
+my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
+my @js  = (miRkwood::WebTemplate->get_js_file());
+
+
+##### Parameters
 my $html    = CGI->new();
 my $jobId   = $html->param('jobId');
 my $mail    = $html->param('mail');
 my $nameJob = $html->param('nameJob');
 $nameJob =~ s/ /_/g; # replace spaces with '_' in name job
-my $name    = $nameJob;
 
-my $res_arguments = '?run_id=' . $jobId;
-my $results_page  = 'nonImplemented.pl';
+my $page = '';
+my $html_text = '';
 
-if ( $jobId =~ /BAM/ ){
-    $results_page  = 'BAMresults.pl'
-}
-else {
-    $results_page  = 'resultsWithID.pl';
-}
+my $valid = miRkwood::Results->is_valid_jobID($jobId);
 
 
-my $results_link  = $results_page . $res_arguments;
-my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);
-my $results_url   = $results_baseurl . $res_arguments;
+##### Create page
+if ( $valid ){
 
-my $wait_arguments = '?jobId=' . $jobId . '&nameJob=' . $name . '&mail=' . $mail;
-my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $wait_arguments;
+    my $results_page  = 'nonImplemented.pl';
+    my $res_arguments = '?run_id=' . $jobId;
 
-if ( miRkwood::Results->is_job_finished($jobId) ) {
-    if ( $mail ne q{} ) {
-        miRkwood::WebTemplate::send_email($mail, $jobId, $name);
+    if ( $jobId =~ /BAM/ ){
+        $results_page  = 'BAMresults.pl'
     }
-    print $html->redirect( -uri => $results_url )
-      or die("Error when redirecting: $!");
-    exit;
-}
+    else {
+        $results_page  = 'resultsWithID.pl';
+    }
 
-my $email_HTML = '';
-if ( $mail ne q{} ) {
-    $email_HTML =
-"<p>An E-mail notification will be sent to <strong>$mail</strong><br/>as soon as the job is completed.</p>";
-}
+    my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);
+    my $results_url     = $results_baseurl . $res_arguments;
+    my $wait_arguments  = '?jobId=' . $jobId . '&nameJob=' . $nameJob . '&mail=' . $mail;
+    my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $wait_arguments;
 
-my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
-my @js  = (miRkwood::WebTemplate->get_js_file());
+    if ( miRkwood::Results->is_job_finished($jobId) ) {
+        if ( $mail ne q{} ) {
+            miRkwood::WebTemplate::send_email($mail, $jobId, $nameJob);
+        }
+        print $html->redirect( -uri => $results_url )
+          or die("Error when redirecting: $!");
+        exit;
+    }
 
-my $page = <<"END_TXT";
+    my $email_HTML = '';
+    if ( $mail ne q{} ) {
+        $email_HTML = "<p>An E-mail notification will be sent to <strong>$mail</strong><br/>as soon as the job is completed.</p>";
+    }
+
+
+    my $page = <<"END_TXT";
 <div class="main">
   <div class="dialog">
     <div class="waitMessage">
@@ -65,7 +74,7 @@ my $page = <<"END_TXT";
       <p>Your ID is <B>$jobId</B>.</p>
       $email_HTML
 
-      <p>You will be redirected to the <a href="./$results_link">results page</a> once the job is completed.</p>
+      <p>You will be redirected to the <a href="$results_url">results page</a> once the job is completed.</p>
       <p>Please wait...</p>
     </div><!-- waitMessage -->
 	<div id="waitGif"></div>
@@ -73,13 +82,28 @@ my $page = <<"END_TXT";
 </div><!-- main -->
 END_TXT
 
-my $html_text = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+    $html_text = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
 
-$html_text =~ s/<meta/<meta http-equiv='Refresh' content='10;URL=$waiting_url'><meta/;
+    $html_text =~ s/<meta/<meta http-equiv='Refresh' content='10;URL=$waiting_url'><meta/;
+
+}
+else{
+    my $HTML_additional = "<p class='header-results' id='job_id'><b>Job ID:</b> " . $jobId . '</p>';
+	my $page = <<"END_TXT";
+<div class="main">
+    $HTML_additional
+    <p>No results available for the given job identifier $jobId.</p>
+</div><!-- main -->
+END_TXT
+
+	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js, 1 );
+
+}
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 
 $html_text
 DATA
+
 ###End###
