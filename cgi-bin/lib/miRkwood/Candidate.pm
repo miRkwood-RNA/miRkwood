@@ -638,4 +638,20 @@ sub compute_quality_from_reads {
 }
 
 
+sub store_attribute_ct {
+    my ( @args ) = @_;
+    my $candidate = shift @args;
+    my $directory = shift @args;
+
+    open (my $CT, '<', "$directory/outB2ct_stemloop.ct")
+        or die "Error while opening $directory/outB2ct_stemloop.ct : $!";
+    my @ct = <$CT>;
+
+    $candidate->{'CT'} = \@ct;    
+
+    return $candidate;
+    
+}
+
+
 1;

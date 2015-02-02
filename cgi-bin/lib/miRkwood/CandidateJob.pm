@@ -146,6 +146,9 @@ sub process_tests_for_candidate {
         debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
         my ($mirdup_results, $alignments) =
             $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
+
+        miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
+
         if ($alignments) {
             $result->{'alignment_existence'} = 1;
             $result->{'alignments'} = $alignments;
