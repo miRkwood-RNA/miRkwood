@@ -91,17 +91,21 @@ sub compute_quality {
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.mode');
 
-    if ( $mode eq 'WebBAM' ){
-        my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
-        $quality += $self->compute_quality_from_reads( $end_arm_1, $start_arm_2 );
-    }
-
     if ( $self->{'mfei'} ) {
         if ( $self->{'mfei'} < -0.8 ){
             $quality += 1;
         }
     }
-    $quality += $self->{'alignment'};
+
+    if ( $mode eq 'WebBAM' ){
+        my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
+        $quality += $self->compute_quality_from_reads( $end_arm_1, $start_arm_2 );
+        $quality += $self->has_mirdup_validation();
+    }
+    else{
+        $quality += $self->{'alignment'};
+    }
+
     $self->{'quality'} =  $quality;
     return;
 }
@@ -549,8 +553,6 @@ sub get_reads {
   Method to determine the positions of the precursor
   based on positions of last '(' and first ')' in the
   structure
-  /!\ May be just a temporary way of doing
-  Waiting for approval
 
 =cut
 sub determine_precursor_arms {
