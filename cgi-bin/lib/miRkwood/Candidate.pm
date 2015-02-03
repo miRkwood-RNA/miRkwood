@@ -598,8 +598,13 @@ sub compute_quality_from_reads {
     my $count_arm_2 = 0;
     my $total_reads = 0;
     my $criteria_nb_reads = 0;
+    my $criteria_duplex = 0;
     my $criteria_precision_arm_1 = 0;
     my $criteria_precision_arm_2 = 0;
+    my $max_count_arm_1 = 0;
+    my $max_count_arm_2 = 0;
+    my $max_read_arm_1 = '';
+    my $max_read_arm_2 = '';
 
     if ( scalar(keys %{$self->{'reads'}}) > 0 ){
         foreach my $read_position (keys %{$self->{'reads'}}){
@@ -607,15 +612,24 @@ sub compute_quality_from_reads {
             if ( $start_read >= $start_arm_1 and $end_read <= $end_arm_1 ){
                 $reads_arm_1->{ $start_read } += $self->{'reads'}{ $read_position };
                 $count_arm_1 += $self->{'reads'}{ $read_position };
+                if ( $self->{'reads'}{ $read_position } > $max_count_arm_1 ){
+                    $max_read_arm_1  = $read_position;
+                    $max_count_arm_1 = $self->{'reads'}{ $read_position };
+                }
             }
             if ( $start_read >= $start_arm_2 and $end_read <= $end_arm_2 ){
                 $reads_arm_2->{ $start_read } += $self->{'reads'}{ $read_position };
                 $count_arm_2 += $self->{'reads'}{ $read_position };
+                if ( $self->{'reads'}{ $read_position } > $max_count_arm_2 ){
+                    $max_read_arm_2  = $read_position;
+                    $max_count_arm_2 = $self->{'reads'}{ $read_position };
+                }
             }
             $total_reads += $self->{'reads'}{ $read_position };
         }
     }
 
+    # Criteria nb of reads
     if ( $count_arm_1 >= 10 and $count_arm_2 >= 10 ){
         $criteria_nb_reads = 1;
     }
@@ -623,6 +637,35 @@ sub compute_quality_from_reads {
         $criteria_nb_reads = 1;
     }
 
+    # Criteria duplex
+    if ( $max_read_arm_1 ne '' && $max_read_arm_2 ne '' ){
+
+        my ($start_max_1, $end_max_1) = split('-', $max_read_arm_1);
+        my ($start_max_2, $end_max_2) = split('-', $max_read_arm_2);
+        my $relative_start_max_1 = $start_max_1 - $start_arm_1;
+        my $relative_end_max_2   = $end_max_2 - $start_arm_1;
+
+        if ( $self->{'CT'}{($relative_start_max_1)} ){
+            if ( $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 >= 0 
+             and $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 <= 4 ){
+                $criteria_duplex = 1;
+            }
+        }
+        elsif ( $self->{'CT'}{($relative_start_max_1 +1 )} ) {
+            if ( $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) >= 0 
+             and $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) <= 4 ){
+                $criteria_duplex = 1;
+            }
+        }
+        elsif( $self->{'CT'}{($relative_start_max_1 -1 )} ) {
+            if ( $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) >= 0 
+             and $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) <= 4 ){
+                $criteria_duplex = 1;
+            }
+        }
+    }
+
+    # Criteria precision
     foreach my $start_read ( keys %{$reads_arm_1} ){
         if ( $reads_arm_1->{$start_read} >= ( $count_arm_1 / 2 ) ){
             $criteria_precision_arm_1 = 1;
@@ -634,7 +677,7 @@ sub compute_quality_from_reads {
         }
     }
 
-    return $criteria_nb_reads + ( $criteria_precision_arm_1 * $criteria_precision_arm_2 );
+    return $criteria_nb_reads + $criteria_duplex + ( $criteria_precision_arm_1 * $criteria_precision_arm_2 );
 }
 
 
@@ -646,11 +689,15 @@ sub store_attribute_ct {
     open (my $CT, '<', "$directory/outB2ct_stemloop.ct")
         or die "Error while opening $directory/outB2ct_stemloop.ct : $!";
     my @ct = <$CT>;
-
-    $candidate->{'CT'} = \@ct;    
+    close $CT;
+    foreach ( @ct ){
+        if ( /(\d+)\s+[a-zA-Z]\s+\d+\s+\d+\s+(\d+)\s+\d+/ ){
+            $candidate->{'CT'}{ $1 } = $2;
+        }
+    } 
 
     return $candidate;
-    
+
 }
 
 
