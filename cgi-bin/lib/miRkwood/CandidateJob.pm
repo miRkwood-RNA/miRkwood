@@ -139,16 +139,16 @@ sub process_tests_for_candidate {
         $result->{'shuffles'} = $posteriori_tests->test_randfold( $seq_file );
     }
 
+    $posteriori_tests->{'sequence_name'} = $self->{'sequence_name'};
+    $posteriori_tests->{'candidate'} = $self->{'candidate'};
+    my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
+    debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
+    my ($mirdup_results, $alignments) =
+        $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
+
+    miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
+
     if ( $cfg->param('options.align') ) {
-        $posteriori_tests->{'sequence_name'} = $self->{'sequence_name'};
-        $posteriori_tests->{'candidate'} = $self->{'candidate'};
-        my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
-        debug( "Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
-        my ($mirdup_results, $alignments) =
-            $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
-
-        miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
-
         if ($alignments) {
             $result->{'alignment_existence'} = 1;
             $result->{'alignments'} = $alignments;
