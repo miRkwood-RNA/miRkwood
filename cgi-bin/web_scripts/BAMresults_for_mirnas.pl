@@ -24,13 +24,11 @@ my @css = (
 	miRkwood::WebTemplate->get_server_css_file(),
 	miRkwood::WebTemplate->get_css_file()
 );
-my @js = (
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'graphics.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'miARN.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(),
-		'imgpreview.full.jquery.js' )
+my @js = ( File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
+	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'graphics.js' ),
+	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'miARN.js' ),
+	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
+	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'imgpreview.full.jquery.js' )
 
 );
 
@@ -56,11 +54,11 @@ $HTML_additional .= '<p class="header-results" id="job_id"><b>Job ID:</b> ' . $i
 if ( $valid ){
 
     my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($id_job);
-    
+
     my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
     miRkwood->CONFIG_FILE($run_options_file);
-    my $cfg = miRkwood->CONFIG();    
-    
+    my $cfg = miRkwood->CONFIG();
+
     my $nb_results = 0;
 
     if ( $cfg->param('job.title') ) {
@@ -74,11 +72,11 @@ if ( $valid ){
 
         $mirnas_results .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, $mirnas_type);
     }
-    
-    $HTML_additional .= "</div>";
+
+    $HTML_additional .= '</div>';
 
     if ( $nb_results != 0 ) {
-    
+
         $page = <<"END_TXT";
 <body onload="main('all');">
     <div class="theme-border"></div>
@@ -113,7 +111,9 @@ if ( $valid ){
                           
                 <div id="table" > </div>    
                 <div id="singleCell"> </div>
-                $mirnas_results   
+                $mirnas_results
+                
+                <div id="id_job" >$id_job</div>
             </div>
             
             <br />            
