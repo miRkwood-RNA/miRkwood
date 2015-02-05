@@ -36,10 +36,10 @@ sub filterBEDfile_for_model_organism {
 
     my $data_path = miRkwood::Paths->get_data_path();
     my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
-    my $CDS_file = File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" );  
-    my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );   
-    
-    if ( $bed_file =~ /(.*)\.bed/ ){
+    my $CDS_file = File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" );
+    my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );
+
+    if ( $bed_file =~ /(.*)[.]bed/ ){
         $basename = $1;
     }
 
@@ -51,7 +51,7 @@ sub filterBEDfile_for_model_organism {
     my $tmp_1 = "${basename}_tmp_1.bed";
     my $tmp_2 = "${basename}_tmp_2.bed";
     my $tmp_3 = "${basename}_tmp_3.bed";
-    
+
     ### Filter out known miRNAs
     if ( -r $mirbase_file ) {
         # Create a file with known miRNAs
@@ -63,7 +63,7 @@ sub filterBEDfile_for_model_organism {
         debug( 'Known miRNAS have been filtered out from BED.', 1 );
     }
     else{
-        debug( 'WARNING : no miRNA file found for $species.', 1 );
+        debug( "WARNING : no miRNA file found for $species.", 1 );
         system("cp $bed_file $tmp_1");
     }
 
@@ -74,7 +74,7 @@ sub filterBEDfile_for_model_organism {
             store_overlapping_reads( $tmp_1, $CDS_file, $CDS_reads, '');
 
             # Delete reads corresponding to CDS from the BED
-            store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2); 
+            store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2);
 
             debug( 'CDS have been filtered out from BED.', 1 );
         }
@@ -96,7 +96,7 @@ sub filterBEDfile_for_model_organism {
 
             # Delete reads corresponding to CDS from the BED
             store_non_overlapping_reads( $tmp_2, $otherRNA_file, $tmp_3);
-            
+
             debug( 'Other RNA have been filtered out from BED.', 1 );
         }
         else{
@@ -139,7 +139,7 @@ sub filterBEDfile_for_user_sequence {
     my $filter_CDS         = shift @args;
     my $filter_tRNA_rRNA   = shift @args;
     my $filter_multimapped = shift @args;
-    
+
     ##### Not yet implemented. Call to BlastX, rnammer, tRNAscan-SE... ?
 
     return;
@@ -183,9 +183,9 @@ sub store_non_overlapping_reads {
     my $bed_file = shift @args;
     my $referenceFile = shift @args;
     my $outputFile = shift @args;
-    
+
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -v > $outputFile";
-    system($job);    
+    system($job);
 
     return;
 }
@@ -213,7 +213,7 @@ sub filter_multimapped_reads {
     while ( <$BED> ){
 
         chomp;
-        @line = split('\t');
+        @line = split( /\t/xms );
         if ( ! exists($counts->{$line[3]}) ){
             $counts->{$line[3]} = 0;
         }
@@ -243,7 +243,7 @@ sub filter_multimapped_reads {
 
     close $KEEP;
     close $OUT;
-    close $BED;    
+    close $BED;
 
     return;
 }
