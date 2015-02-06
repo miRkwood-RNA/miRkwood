@@ -233,8 +233,10 @@ sub store_known_mirnas_as_candidate_objects {
 
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
+        my $candidate_dir = File::Spec->catdir( $self->get_workspace_path, $precursor_id );
+        mkdir $candidate_dir;
 
-        my $candidatejob = miRkwood::CandidateJob->new( '',
+        my $candidatejob = miRkwood::CandidateJob->new( $candidate_dir,
                                                         $candidate->{'name'},
                                                         $precursor_id,
                                                         $candidate,
