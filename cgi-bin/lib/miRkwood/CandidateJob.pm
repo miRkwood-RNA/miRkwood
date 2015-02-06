@@ -95,6 +95,27 @@ sub update_candidate_information_from_run{
     return $candidate_structure;
 }
 
+sub update_known_candidate_information {
+    my ( $self, @args ) = @_;
+    my $candidate = shift @args;
+    my $genome = shift @args;
+
+    my $start = $candidate->{'start_position'};
+    my $end   = $candidate->{'end_position'};
+    $candidate->{'sequence'} = substr $genome->{ $candidate->{'chromosome'} }, $start-1, ($end - $start +1);
+
+    $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
+                             miRkwood::Utils::compute_gc_content($candidate->{'sequence'}), 3);
+
+    use Data::Dumper;
+    #~ debug("........... length sequence : " . length($candidate->{'sequence'}), 1);
+    #~ debug("........... Start position : $candidate->{'start_position'}", 1);
+    #~ debug("........... End position   : $candidate->{'end_position'}", 1);
+    debug('~~~~~~~~~' . Dumper($candidate), 1);
+
+    return $candidate;
+}
+
 sub make_full_position {
     my ( $self, @args ) = @_;
     my $candidate_structure = shift @args;
