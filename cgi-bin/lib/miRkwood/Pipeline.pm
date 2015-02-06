@@ -47,21 +47,21 @@ Run the pipeline
 sub run_pipeline {
     my ($self, @args) = @_;
     $self->init_pipeline();
-    
+
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.mode');
-    if ( $mode eq 'WebBAM' ){ 
+    if ( $mode eq 'WebBAM' ){
         $self->filter_BED();
         if ( $self->{'mirna_bed'} ne '' ){
             $self->treat_known_mirnas();
         }
         else{
-            debug( "No BED for known miRNAs.", miRkwood->DEBUG() );
+            debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
         }
-    }       
-    
+    }
+
     $self->init_sequences();
-    
+
     $self->run_pipeline_on_sequences();
     return;
 }
@@ -82,7 +82,7 @@ sub init_pipeline {
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.mode');
-        
+
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir $self->get_candidates_dir();
@@ -135,21 +135,21 @@ sub store_known_mirnas_as_candidate_objects {
     my $bed_file       = $self->{'mirna_bed'};
     my $genome         = $self->{'genome_db'};
     my $reads_dir      = miRkwood::Paths::get_known_reads_dir_from_job_dir( $job_dir );
-    my $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $job_dir );  
+    my $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $job_dir );
     my $cfg            = miRkwood->CONFIG();
-    my $species        = $cfg->param('job.plant');      
+    my $species        = $cfg->param('job.plant');
     my $gff_file       = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
 
     my @field;
-    my ($id, $name, $chromosome, $strand);
-    my ($precursor_name, $precursor_start, $precursor_end, $precursor_reads, $precursor_id);
-    my ($precursor_of_mature, $mature_of_precursor);
+    my ($id, $name, $chromosome);
+    my ($precursor_reads, $precursor_id);
+    my $precursor_of_mature;
     my $mature_reads;
     my $data;
 
     ##### Read the GFF and links each precursor with its mature
 
-    open (my $GFF, $gff_file) or die "ERROR while opening $gff_file : $!";
+    open (my $GFF, '<', $gff_file) or die "ERROR while opening $gff_file : $!";
 
     while ( <$GFF> ){
         if ( ! /^#/ ){
@@ -157,7 +157,7 @@ sub store_known_mirnas_as_candidate_objects {
 
             @field = split( /\t/xms );
 
-            if ( $field[2] eq "miRNA" and $field[8] =~ /ID=([^;]+).*Derives_from=([^;]+)/ ){
+            if ( $field[2] eq 'miRNA' and $field[8] =~ /ID=([^;]+).*Derives_from=([^;]+)/ ){
                 $precursor_of_mature->{ $1 } = $2;
             }
         }
@@ -180,18 +180,18 @@ sub store_known_mirnas_as_candidate_objects {
             $name = $2;
         }
 
-        if ( $field[8] eq "miRNA_primary_transcript" ){
+        if ( $field[8] eq 'miRNA_primary_transcript' ){
             $precursor_id = $id;
             $data->{$precursor_id}{'identifier'}      = $id;
             $data->{$precursor_id}{'precursor_name'}  = $name;
             $data->{$precursor_id}{'name'}  = $field[0];
             $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
             $data->{$precursor_id}{'start_position'} = $field[9];
-            $data->{$precursor_id}{'end_position'}   = $field[10];       
+            $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};
             $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
         }
-        elsif ( $field[8] eq "miRNA" ){
+        elsif ( $field[8] eq 'miRNA' ){
             $precursor_id = $precursor_of_mature->{$id};
             $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
             $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
@@ -207,7 +207,7 @@ sub store_known_mirnas_as_candidate_objects {
     close $BED;
 
     ##### Treat data by precursor
-    foreach $precursor_id ( keys%{$data} ){   
+    foreach $precursor_id ( keys%{$data} ){
 
         $precursor_reads = 0;
         $mature_reads = 0;
@@ -225,7 +225,7 @@ sub store_known_mirnas_as_candidate_objects {
         ##### Calculate score
         $data->{$precursor_id}{'quality'} = 0;
         if ( $precursor_reads >= 10 ){
-           $data->{$precursor_id}{'quality'}++; 
+           $data->{$precursor_id}{'quality'}++;
         }
         if ( $mature_reads >= ( $precursor_reads / 2 ) ){
             $data->{$precursor_id}{'quality'}++;
@@ -233,6 +233,15 @@ sub store_known_mirnas_as_candidate_objects {
 
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
+
+        my $candidatejob = miRkwood::CandidateJob->new( '',
+                                                        $candidate->{'name'},
+                                                        $precursor_id,
+                                                        $candidate,
+                                                        [] );
+
+        $candidate = $candidatejob->update_known_candidate_information( $candidate, $genome );
+
         miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
 
         ### Store basic information (used for the HTML table) for this Candidate
@@ -283,6 +292,7 @@ sub filter_BED {
         $self->{'mirna_bed'} = $mirnaBED;
     }
 
+    return;
 }
 
 =method init_sequences
@@ -348,6 +358,7 @@ Return the path to the candidates directory
 sub get_candidates_dir {
     my ($self, @args) = @_;
     my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
+    return $candidates_dir;
 }
 
 =method get_known_candidates_dir
@@ -360,7 +371,8 @@ Return the path to the known candidates directory
 =cut
 sub get_known_candidates_dir {
     my ($self, @args) = @_;
-    my $known_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );    
+    my $known_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );
+    return $known_candidates_dir;
 }
 
 =method get_new_candidates_dir
@@ -372,7 +384,8 @@ Return the path to the new candidates directory
 =cut
 sub get_new_candidates_dir {
     my ($self, @args) = @_;
-    my $new_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );    
+    my $new_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );
+    return $new_candidates_dir;
 }
 
 =method get_reads_dir
@@ -386,6 +399,7 @@ Return the path to the reads directory
 sub get_reads_dir {
     my ($self, @args) = @_;
     my $reads_dir = File::Spec->catdir( $self->get_job_dir(), 'reads' );
+    return $reads_dir;
 }
 
 =method get_known_reads_dir
@@ -400,6 +414,7 @@ with reads corresponding to known miRNAs.
 sub get_known_reads_dir {
     my ($self, @args) = @_;
     my $known_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'known' );
+    return $known_reads_dir;
 }
 
 =method get_new_reads_dir
@@ -414,6 +429,7 @@ with reads corresponding to new miRNAs.
 sub get_new_reads_dir {
     my ($self, @args) = @_;
     my $new_reads_dir = File::Spec->catdir( $self->get_reads_dir(), 'new' );
+    return $new_reads_dir;
 }
 
 =method get_uploaded_sequences_file
@@ -439,12 +455,12 @@ Run the pipeline on the given sequences
 
 sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
-    
+
     my $cfg = miRkwood->CONFIG();
-    my $mode = $cfg->param('job.mode');  
+    my $mode = $cfg->param('job.mode');
     $self->{'basic_candidates'} = [];
     my $sequences_count = 0;
-    
+
     if ( $mode eq 'WebBAM' ){
         $sequences_count = $self->count_clusters();
     }
@@ -454,16 +470,16 @@ sub run_pipeline_on_sequences {
     }
 
     debug( "$sequences_count sequences to process", miRkwood->DEBUG() );
-    
+
     $self->compute_candidates();
     debug('miRkwood processing done', miRkwood->DEBUG() );
-    
+
     $self->serialize_basic_candidates( 'basic_candidates' );
-    
+
     $self->mark_job_as_finished();
-    
-    debug("Writing finish file", miRkwood->DEBUG() );
-    
+
+    debug('Writing finish file', miRkwood->DEBUG() );
+
     return;
 }
 
@@ -473,11 +489,11 @@ sub run_pipeline_on_sequences {
 
 sub compute_candidates {
     my ($self, @args) = @_;
-    
+
     my $cfg = miRkwood->CONFIG();
-    my $mode = $cfg->param('job.mode'); 
-    
-    if ( $mode eq 'WebBAM' ){  
+    my $mode = $cfg->param('job.mode');
+
+    if ( $mode eq 'WebBAM' ){
         my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
         $clusterJob->init_from_clustering($self->{'clustering'});
         my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
@@ -494,9 +510,9 @@ sub compute_candidates {
             my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
             my $sequence_candidates = $sequence_job->run();
             $self->serialize_candidates($sequence_candidates);
-        }        
+        }
     }
-    
+
     return;
 }
 
@@ -537,11 +553,12 @@ sub serialize_candidates {
         if ( $mode eq 'WebBAM' ){ # WEB transcriptome version
             miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
         }
-        
+
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
 
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
+    return;
 }
 
 =method get_job_config_path
@@ -583,13 +600,13 @@ sub mark_job_as_finished {
 }
 
 sub serialize_basic_candidates {
-	
+
     my ($self, @args) = @_;
     my $type = shift @args;     # $type should be 'basic_candidates' or 'basic_known_candidates'
 
     my $serialization_file = File::Spec->catfile($self->get_job_dir(), "$type.yml");
-    	
-    return YAML::XS::DumpFile($serialization_file, $self->{$type});   
+
+    return YAML::XS::DumpFile($serialization_file, $self->{$type});
 
 }
 
