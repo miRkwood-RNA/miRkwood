@@ -414,8 +414,8 @@ sub __get_trains_for_chr {
 	my $total_read_count = 0;
 	my @end_reads = ();
 
-	foreach my $index (@$read_distribution) {
-		my $read_locus = $read_distribution->[$index];
+	foreach my $read_locus (@$read_distribution) {
+		#~ my $read_locus = $read_distribution->[$index];
 		my $position = $read_locus->{'begin'};
 		if ($current_train{'begin'} <= $position && $position < $current_train{'end'}) {
 			$current_train{'end'} = max($current_train{'end'}, $read_locus->{'end'});
