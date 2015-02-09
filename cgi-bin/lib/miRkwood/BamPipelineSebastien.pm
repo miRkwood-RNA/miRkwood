@@ -9,7 +9,7 @@ use parent 'miRkwood::Pipeline';
 
 use Log::Message::Simple qw[msg error debug];
 
-use miRkwood::ClustersSebastien;
+use miRkwood::ClusterBuilder;
 
 =method new
 
@@ -40,13 +40,13 @@ sub new {
 # SEB BEGIN
 sub init_sequences {
     my ($self, @args) = @_;
-    debug( "Extracting sequences from genome using BAM clusters", miRkwood->DEBUG() );
-    my $clustering = miRkwood::ClustersSebastien->new($self->{'genome_file'});
-    my ($reads, $parsed_bed) = $clustering->get_read_distribution_from_bed($self->{'bed_file'});
-    my $sequences = $clustering->get_windows($reads, 2);
-    $self->{'sequences'} = $sequences;
-    $self->{'parsed_reads'} = $parsed_bed;
-    $self->{'clustering'} = $clustering;
+    debug( "Extracting sequences from genome using BED clusters", miRkwood->DEBUG() );
+    my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
+    #~ my ($reads, $parsed_bed) = $clustering->get_read_distribution_from_bed($self->{'bed_file'});
+    #~ my $sequences = $clustering->get_windows($reads, 2);
+    #~ $self->{'sequences'} = $sequences;
+    $self->{'sequences'} = $clustering->build_loci();
+    $self->{'parsed_reads'} = $clustering->get_parsed_bed();
     return;
 }
 # SEB END

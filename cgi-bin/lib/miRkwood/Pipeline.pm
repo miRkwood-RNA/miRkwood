@@ -13,8 +13,9 @@ use miRkwood::FileUtils;
 use miRkwood::Paths;
 use miRkwood::Utils;
 use miRkwood::SequenceJob;
-use miRkwood::ClustersSebastien;
-use miRkwood::ClusterJobSebastien;
+#~ use miRkwood::ClustersSebastien;
+#~ use miRkwood::ClusterJobSebastien;
+use miRkwood::HairpinBuilder;
 
 
 =method new
@@ -494,12 +495,25 @@ sub compute_candidates {
 
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.mode');
-
-    if ( $mode eq 'WebBAM' ){
-        my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
-        $clusterJob->init_from_clustering($self->{'clustering'});
-        my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
-        $self->serialize_candidates($candidates);
+    
+    my $loci = $self->{'sequences'};
+    
+    if ($mode eq 'WebBAM') {
+		# 'parsed_reads' doesn't exist in the other mode
+		my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
+		my %hairpin_candidates = ();
+		foreach my $chr (keys %{$loci}) {
+			my $loci_for_chr = $loci->{$chr};
+			my @hairpin_candidates_for_chr = ();
+			foreach my $locus (@{$loci_for_chr}) {
+				push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
+			}
+			$hairpin_candidates{$chr} = \@hairpin_candidates_for_chr;
+		}
+        #~ my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
+        #~ $clusterJob->init_from_clustering($self->{'clustering'});
+        #~ my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
+        #~ $self->serialize_candidates($candidates);
     }
     else {
         my @sequences_array = $self->get_sequences();
