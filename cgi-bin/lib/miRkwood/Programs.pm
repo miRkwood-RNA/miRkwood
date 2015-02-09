@@ -123,7 +123,7 @@ sub convert_to_ct {
 
 =method run_rnalfold_on_file
 
-Run RNAfold on the given FASTA file
+Run RNAlfold on the given FASTA file
 Return whether the output file exists.
 
 =cut
@@ -136,9 +136,23 @@ sub run_rnalfold_on_file {
     return ( -e $output );
 }
 
+=method run_rnafold_on_file
+
+Run RNAfold on the given FASTA file
+Return whether the output file exists.
+
+=cut
+
+sub run_rnafold_on_file {
+    my ( $input, $output ) = @_;
+    my $rnafold_cmd = "$programs_paths{'rnafold'} < $input > $output";
+    system($rnafold_cmd);
+    return ( -e $output );
+}
+
 =method run_rnalfold
 
-Run RNAfold on the given FASTA sequence
+Run RNAlfold on the given FASTA sequence
 Return the results of run_rnalfold_on_file
 
 =cut
@@ -156,6 +170,30 @@ sub run_rnalfold {
     close $TEMPFILE_FH
       or die "Error when closing $temp_file: $!";
     my $result = run_rnalfold_on_file($temp_file, $output_file);
+    unlink $TEMPFILE_FH;
+    return $result;
+}
+
+=method run_rnafold
+
+Run RNAfold on the given FASTA sequence
+Return the results of run_rnafold_on_file
+
+=cut
+
+sub run_rnafold {
+    my ( @args ) = @_;
+    my $sequence_name = shift @args;
+    my $sequence      = shift @args;
+    my $temp_file     = shift @args;
+    my $output_file   = shift @args;
+    open( my $TEMPFILE_FH, '>', $temp_file )
+      or die "Error when opening tempfile -$temp_file-: $!";
+    print {$TEMPFILE_FH} ">$sequence_name\n$sequence"
+      or die "Error when writing in $temp_file: $!";
+    close $TEMPFILE_FH
+      or die "Error when closing $temp_file: $!";
+    my $result = run_rnafold_on_file($temp_file, $output_file);
     unlink $TEMPFILE_FH;
     return $result;
 }
