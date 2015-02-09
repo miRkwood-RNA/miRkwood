@@ -136,7 +136,6 @@ sub parse_Vienna_line {
                        \(\s*?           #Opening parenthesis and maybe whistespace
                            ([-.\d]*?)   #
                        \s*?\)           #Closing parenthesis and maybe whistespace
-                       \s*$             #Whitespace until the end
                    }smx;
     return ( $structure, $energy );
 }
@@ -166,6 +165,9 @@ sub parse_RNAfold_output {
             $dna = $line;
             $dna =~ s/^\s+//;
             $dna =~ s/\s+$//;
+        }
+        elsif ( $line =~ m{^\s*?\(([-.\d]*?)\)} ){
+            
         }
         else{
             ( $structure, $energy ) = parse_Vienna_line($line);
