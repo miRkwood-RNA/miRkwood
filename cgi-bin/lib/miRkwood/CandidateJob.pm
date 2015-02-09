@@ -102,16 +102,12 @@ sub update_known_candidate_information {
 
     my $start = $candidate->{'start_position'};
     my $end   = $candidate->{'end_position'};
-    $candidate->{'sequence'} = substr $genome->{ $candidate->{'chromosome'} }, $start-1, ($end - $start +1);
 
+    $candidate->{'sequence'} = substr $genome->{ $candidate->{'chromosome'} }, $start-1, ($end - $start +1);
     $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
                              miRkwood::Utils::compute_gc_content($candidate->{'sequence'}), 3);
-
-    use Data::Dumper;
-    #~ debug("........... length sequence : " . length($candidate->{'sequence'}), 1);
-    #~ debug("........... Start position : $candidate->{'start_position'}", 1);
-    #~ debug("........... End position   : $candidate->{'end_position'}", 1);
-    debug('~~~~~~~~~' . Dumper($candidate), 1);
+    ($candidate->{'stemloop_structure'}, $candidate->{'mfei'}) = $self->get_stemloop_structure_for_known_candidate();
+    $candidate->{'image'} = $self->write_VARNA_if_needed();
 
     return $candidate;
 }
@@ -138,6 +134,28 @@ sub write_VARNA_if_needed {
       return $varna_image
     }
     return '';
+}
+
+sub get_stemloop_structure_for_known_candidate {
+    my ( $self, @args ) = @_;
+
+    debug( 'Running RNAfold', miRkwood->DEBUG() );
+    my $rnafold_output = File::Spec->catfile( $self->get_directory(), 'RNAfold.out' );
+    my $temp_file = File::Spec->catfile( $self->get_directory(), 'tempFile.txt' );
+    my $sequence_name = $self->{'candidate'}{'name'};
+    my $sequence = $self->{'candidate'}{'sequence'};
+
+    miRkwood::Programs::run_rnalfold( $sequence_name, $sequence, $temp_file, $rnafold_output )
+      or die("Problem when running RNAfold: $!");
+
+    my $nameSeq = '';
+    my $dna = '';
+    my $stemloop_structure = '';
+    my $energy = 0;
+
+    ( $nameSeq, $dna, $stemloop_structure, $energy ) = miRkwood::Parsers::parse_RNAfold_output( $rnafold_output );
+
+    return ($stemloop_structure, $energy);
 }
 
 =method process_tests_for_candidate
@@ -190,7 +208,7 @@ Writing (pseudo) rnafold output
 sub write_RNAFold_stemloop_output {
     my ( $self, @args ) = @_;
     my $candidate_rnafold_output =
-      File::Spec->catfile( $self->get_directory(), "outRNAFold_stemloop.txt" );
+      File::Spec->catfile( $self->get_directory(), 'outRNAFold_stemloop.txt' );
     open( my $OUT2, '>', $candidate_rnafold_output )
       or die "Error when opening $candidate_rnafold_output: $!";
     print {$OUT2} ">$self->{'candidate'}{'name'}\n$self->{'candidate'}{'sequence'}\n$self->{'candidate'}{'structure_stemloop'} ($self->{'candidate'}{'energy_stemloop'})\n";
