@@ -43,7 +43,7 @@ sub get_sub_sequence {
 sub get_sub_sequence_on_strand {
 	my ($this, $chr, $start, $end, $strand) = @_;
 	my $seq = $this->get_sub_sequence($chr, $start, $end);
-	if ($strand == -1) {
+	if ($strand eq '-') {
 		return miRkwood::Utils::reverse_complement($seq);
 	}
 	return $seq;
@@ -54,17 +54,17 @@ sub build_hairpins {
 	my $locus = shift;
 	
 	my $chr = $locus->{'chr'};
-	my $strand = $locus->{strand} eq '+' ? 1 : -1;
+	#~ my $strand = $locus->{strand} eq '+' ? 1 : -1;
 	#~ my $seq_id = $chr . '__' . $locus->{begin}+1 . '-' . ($locus->{end});
 	
 	my $working_dir = File::Spec->catdir($this->{'workspace'}, $chr);
 	mkdir $working_dir;
-	$working_dir = File::Spec->catdir($working_dir, $locus->{begin}+1 . '-' . $locus->{end} . '_' . $strand);
+	$working_dir = File::Spec->catdir($working_dir, $locus->{begin} . '-' . ($locus->{end}-1) . $locus->{'strand'});
 	mkdir $working_dir;
 
 	my $rnalfold_output_filename = 'rnalfold_out';
 
-	my $genomic_seq = $this->get_sub_sequence_on_strand($chr, $locus->{begin}, $locus->{end}, $strand);
+	my $genomic_seq = $this->get_sub_sequence_on_strand($chr, $locus->{begin}, $locus->{end}, $locus->{'strand'});
 
 	my $rnalfold_output_filepath = run_rnalfold('miRnaPrecursor', $genomic_seq, $working_dir, $rnalfold_output_filename);
 
