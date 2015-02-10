@@ -341,7 +341,7 @@ sub process_RNAstemloop {
 					if (eval_single_stemloop($stemloop, $sequence_miRnas) == 1) {
 						my $cluster_position = $seq_begin. '-' . ($seq_begin+$seq_len-1);
 						my $res = {
-							'name' => $nameSeq,
+							'name' => $chr. '__' .($stemloop->{'begin'}+1).'-'.$stemloop->{'end'} . $strand,
 							'strand' => $strand,
 							'sequence' => $dna,
 							'start_position' => $stemloop->{'begin'}+1, # starts at 1
