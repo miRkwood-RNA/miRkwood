@@ -9,6 +9,7 @@ use miRkwood::ClusterJobSebastien;
 use miRkwood::KMeanSebastien;
 
 use Log::Message::Simple qw[msg error debug];
+use List::Util qw(max min);
 
 sub new {
     my ( $class, ,
@@ -35,7 +36,7 @@ sub build_loci {
 	my ($reads, $parsed_bed) = $this->get_read_distribution_from_bed($this->{'bed_file'});
 	$this->{'parsed_bed'} = $parsed_bed;
 	my $trains_hash = $this->get_trains($reads);
-	my $cluster_job = ClusterJobSebastien->new($this->{'workspace_dir'}, $this->{'genome_db'});
+	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'workspace_dir'}, $this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
 	my $spikes = $cluster_job->extract_spike_train($trains_hash);
 	my $putative_miRna = $cluster_job->process_spikes($spikes);
