@@ -57,7 +57,7 @@ sub build_hairpins {
 	my $strand = $locus->{strand} eq '+' ? 1 : -1;
 	#~ my $seq_id = $chr . '__' . $locus->{begin}+1 . '-' . ($locus->{end});
 	
-	my $working_dir = File::Spec->catdir($this->{workspace_dir}, $chr);
+	my $working_dir = File::Spec->catdir($this->{'workspace'}, $chr);
 	mkdir $working_dir;
 	$working_dir = File::Spec->catdir($working_dir, $locus->{begin}+1 . '-' . $locus->{end} . '_' . $strand);
 	mkdir $working_dir;

@@ -7,17 +7,16 @@ use parent 'miRkwood::LociBuilder';
 
 use miRkwood::ClusterJobSebastien;
 use miRkwood::KMeanSebastien;
-
-use Log::Message::Simple qw[msg error debug];
 use List::Util qw(max min);
+use Log::Message::Simple qw[msg error debug];
 
 sub new {
-    my ( $class, ,
+    my ( $class,
     $genome_db,
     $bed_file ) = @_;
     my $self = bless {
-        'bed_file' => $bed_file,
         'genome_db' => $genome_db,
+        'bed_file' => $bed_file,
         'accepting_time' => 350,
         'train_detection_threshold' => 2
     }, $class;
@@ -36,11 +35,12 @@ sub build_loci {
 	my ($reads, $parsed_bed) = $this->get_read_distribution_from_bed($this->{'bed_file'});
 	$this->{'parsed_bed'} = $parsed_bed;
 	my $trains_hash = $this->get_trains($reads);
-	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'workspace_dir'}, $this->{'genome_db'});
+	
+	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
 	my $spikes = $cluster_job->extract_spike_train($trains_hash);
 	my $putative_miRna = $cluster_job->process_spikes($spikes);
-	return $cluster_job->compute_candidate_precursors_from_miRnaPos($spikes);
+	return $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna);
 }
 
 =method get_read_distribution_from_bam
@@ -314,7 +314,7 @@ sub get_trains {
 	my $read_distribution_per_chr = shift;
 	my %trains_per_chr = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
-		print "\t", $chr, "\n";
+		#~ print "\t", $chr, "\n";
 		$trains_per_chr{$chr} = $this->__get_trains_for_chr($read_distribution_per_chr->{$chr});
 	}
 	return \%trains_per_chr;
@@ -422,7 +422,7 @@ sub __get_trains_for_chr {
 			$current_train{'end'} = max($current_train{'end'}, $read_locus->{'end'});
 			$current_train{'read_count'} += $read_locus->{'read_count'};
 			$current_train{'forward_read_count'} += $read_locus->{'forward_read_count'};
-			$current_train{last_read_begin} = $position;
+			#~ $current_train{last_read_begin} = $position;
 			static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, 
 				\$last_read_count, $spike_detection);
 		}

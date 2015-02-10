@@ -103,7 +103,7 @@ sub extract_spike_train {
 	my %spikes = ();
 
 	foreach my $chr (keys %{ $this->{chr_info} }) {
-		$spikes{$chr} = $this->extract_spike_train_per_chr($chr, $trains_per_chr->{$chr});
+		$spikes{$chr} = $this->extract_spike_train_per_chr($trains_per_chr->{$chr});
 	}
 	return \%spikes;
 }
@@ -119,7 +119,7 @@ sub extract_spike_train_per_chr {
 		}
 	}
 	
-	my $accepting_time = $this->{accepting_time};
+	my $accepting_time = $this->{'accepting_time'};
 	my $min_length = 21;
 	my $min_length_for_neighbor = 40;
 	

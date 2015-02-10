@@ -1,4 +1,4 @@
-package miRkwood::Pipeline;
+package miRkwood::LociBuilder;
 
 # ABSTRACT: Pipeline object
 
