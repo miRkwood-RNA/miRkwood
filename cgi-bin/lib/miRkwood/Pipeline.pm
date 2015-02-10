@@ -16,7 +16,8 @@ use miRkwood::SequenceJob;
 #~ use miRkwood::ClustersSebastien;
 #~ use miRkwood::ClusterJobSebastien;
 use miRkwood::HairpinBuilder;
-
+use miRkwood::HairpinFinalizer;
+use Data::Dumper;
 
 =method new
 
@@ -505,11 +506,20 @@ sub compute_candidates {
 		foreach my $chr (keys %{$loci}) {
 			my $loci_for_chr = $loci->{$chr};
 			my @hairpin_candidates_for_chr = ();
+			my @sorted_hairpin_candidates_for_chr = ();
 			foreach my $locus (@{$loci_for_chr}) {
 				push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
 			}
-			$hairpin_candidates{$chr} = \@hairpin_candidates_for_chr;
+			@sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
+			$hairpin_candidates{$chr} = \@sorted_hairpin_candidates_for_chr;
+
+            if ( scalar(@sorted_hairpin_candidates_for_chr) ){
+                my $candidates_hash = miRkwood::HairpinFinalizer::process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
+                my $final_candidates_hash = miRkwood::HairpinFinalizer::process_mirna_candidates( $self->get_workspace_path(), $candidates_hash, $chr, $chr );
+                $self->serialize_candidates($final_candidates_hash);
+            }
 		}
+        debug("Contenu de \%hairpin_candidates : ".Dumper(%hairpin_candidates), 1);
         #~ my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
         #~ $clusterJob->init_from_clustering($self->{'clustering'});
         #~ my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
