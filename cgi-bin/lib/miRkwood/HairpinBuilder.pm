@@ -118,10 +118,10 @@ sub run_RNAeval_on_RNAstemloop_output {
     my ( $self, @args ) = @_;
     my ( $rnastemloop_out, $suffix ) = @args    ;
     my $current_sequence_dir = dirname($rnastemloop_out);
-    debug("Processing RNAstemloop output for $suffix $rnastemloop_out", miRkwood->DEBUG() );
+    debug( "     Processing RNAstemloop output for $suffix $rnastemloop_out", miRkwood->DEBUG() );
     my $rnaeval_out = File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
-    debug( "Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
+    debug( "     Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
     miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or die('Problem when running RNAeval');
 
     return $rnaeval_out;
@@ -142,7 +142,7 @@ sub process_RNAstemloop_on_filenames {
     open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die "Error opening $rnastemloop_out_stemloop: $!";
     open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
     open( my $EVAL_STEM_FH, '<', $rnaeval_out_stemloop ) or die $!;
-    my $msg = "Processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
+    my $msg = "     Processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
     debug( $msg, miRkwood->DEBUG() );
     my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $chr, $strand,
     $sequence_miRnas 

@@ -24,14 +24,15 @@ sub process_hairpin_candidates{
     my $candidates_array = shift @args;
     my @candidates_array = @{$candidates_array};
     my $cfg = miRkwood->CONFIG();
+    debug('  - Process hairpin candidates', miRkwood->DEBUG() );
     if ( $cfg->param('options.mfei') ) {
-        debug("Select only sequences with MFEI < " . MFEI_THRESHOLD, miRkwood->DEBUG() );
+        debug('     Select only sequences with MFEI < ' . MFEI_THRESHOLD, miRkwood->DEBUG() );
         @candidates_array = grep { mfei_below_threshold($_, MFEI_THRESHOLD) } @candidates_array;
     }
 
     my %candidates_hash;
     if (@candidates_array) {
-        debug('Merging candidates', miRkwood->DEBUG() );
+        debug('     Merging candidates', miRkwood->DEBUG() );
         %candidates_hash = merge_candidates( \@candidates_array );
     }
     else {
@@ -176,8 +177,10 @@ sub process_mirna_candidates {
     my $sequence_name = shift @args;    
     my @candidates_result;
     my $candidate_identifier = 0;
+    debug('  - Process miRNA candidates', miRkwood->DEBUG() );
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
+        debug( "     - Process candidate $candidate_identifier", 1);
         my $candidate = $candidates_hash{$key};
         push @candidates_result, run_pipeline_on_candidate($workspace_dir,
                                                            $candidate_identifier,

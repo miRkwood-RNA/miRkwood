@@ -285,7 +285,7 @@ sub run_exonerate {
       . "--ryo '$output_fmt'"       # Using custom output format
       . "> $output  2> /dev/null";  # Stdout to file, stderr to /dev/null
 
-    debug($exonerate_cmd, miRkwood->DEBUG());
+    debug( '        ' . $exonerate_cmd, miRkwood->DEBUG());
     system($exonerate_cmd);
     return ( -e $output );
 }

@@ -13,8 +13,6 @@ use miRkwood::FileUtils;
 use miRkwood::Paths;
 use miRkwood::Utils;
 use miRkwood::SequenceJob;
-#~ use miRkwood::ClustersSebastien;
-#~ use miRkwood::ClusterJobSebastien;
 use miRkwood::HairpinBuilder;
 use miRkwood::HairpinFinalizer;
 use Data::Dumper;
@@ -55,6 +53,7 @@ sub run_pipeline {
     if ( $mode eq 'WebBAM' ){
         $self->filter_BED();
         if ( $self->{'mirna_bed'} ne '' ){
+            debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
             $self->treat_known_mirnas();
         }
         else{
@@ -496,18 +495,23 @@ sub compute_candidates {
 
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.mode');
-    
+
     my $loci = $self->{'sequences'};
-    
+    my $sequence_identifier = 0;
+
     if ($mode eq 'WebBAM') {
 		# 'parsed_reads' doesn't exist in the other mode
 		my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
 		my %hairpin_candidates = ();
+        
 		foreach my $chr (keys %{$loci}) {
+            debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
 			my $loci_for_chr = $loci->{$chr};
 			my @hairpin_candidates_for_chr = ();
 			my @sorted_hairpin_candidates_for_chr = ();
 			foreach my $locus (@{$loci_for_chr}) {
+                debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
+                $sequence_identifier++;                
 				push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
 			}
 			@sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
@@ -519,18 +523,13 @@ sub compute_candidates {
                 $self->serialize_candidates($final_candidates_hash);
             }
 		}
-        debug("Contenu de \%hairpin_candidates : ".Dumper(%hairpin_candidates), 1);
-        #~ my $clusterJob = miRkwood::ClusterJobSebastien->new($self->get_workspace_path(), $self->{'genome_db'});
-        #~ $clusterJob->init_from_clustering($self->{'clustering'});
-        #~ my $candidates = $clusterJob->run($self->{'sequences'}, $self->{'parsed_reads'});
-        #~ $self->serialize_candidates($candidates);
+        #~ debug("Contenu de \%hairpin_candidates : ".Dumper(%hairpin_candidates), 1);
     }
     else {
         my @sequences_array = $self->get_sequences();
-        my $sequence_identifier = 0;
         foreach my $item (@sequences_array) {
             my ( $name, $sequence ) = @{$item};
-            debug( "Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
+            debug( "- Considering sequence $sequence_identifier: $name", miRkwood->DEBUG() );
             $sequence_identifier++;
             my $sequence_dir = $self->make_sequence_workspace_directory($sequence_identifier);
             my $sequence_job = miRkwood::SequenceJob->new($sequence_dir, $sequence_identifier, $name, $sequence);
