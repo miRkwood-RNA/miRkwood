@@ -197,33 +197,26 @@ sub process_mirna_candidates {
         $candidate_identifier++;
         debug( "     - Process candidate $candidate_identifier", 1);
         my $candidate = $candidates_hash{$key};
-        push @candidates_result, run_pipeline_on_candidate($self->{'workspace_dir'},
-                                                           $candidate_identifier,
-                                                           $candidate,
-                                                           $self->{'chromosome_id'},
-                                                           $self->{'chromosome_name'},);
+        push @candidates_result, $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
     }
     return \@candidates_result;
 }
 
 
 sub run_pipeline_on_candidate {
-    my (@args) = @_;
-    my $workspace_dir = shift @args;
+    my ( $self, @args ) = @_;
     my $candidate_identifier = shift @args;
     my $candidate = shift @args;
-    my $sequence_identifier = shift @args;
-    my $sequence_name = shift @args;
 
     # Create candidate directory
-    my $candidate_dir = create_candidate_directory($workspace_dir, $candidate, $candidate_identifier);
+    my $candidate_dir = create_candidate_directory($self->{'workspace_dir'}, $candidate, $candidate_identifier);
 
     # Run CandidateJob on the Candidate
-    my $candidate_full_identifier = "$sequence_identifier-$candidate_identifier";
+    my $candidate_full_identifier = "$self->{'chromosome_id'}-$candidate_identifier";
     my $candidate_ref = $candidate->{'max'};
     my $alternatives = $candidate->{'alternatives'};
     my $candidatejob = miRkwood::CandidateJob->new($candidate_dir,
-                                                   $sequence_name,
+                                                   $self->{'chromosome_name'},
                                                    $candidate_full_identifier,
                                                    $candidate_ref,
                                                    $alternatives);
