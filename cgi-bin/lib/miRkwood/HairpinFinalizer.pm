@@ -209,7 +209,7 @@ sub run_pipeline_on_candidate {
     my $candidate = shift @args;
 
     # Create candidate directory
-    my $candidate_dir = create_candidate_directory($self->{'workspace_dir'}, $candidate, $candidate_identifier);
+    my $candidate_dir = $self->create_candidate_directory( $candidate, $candidate_identifier );
 
     # Run CandidateJob on the Candidate
     my $candidate_full_identifier = "$self->{'chromosome_id'}-$candidate_identifier";
@@ -225,15 +225,13 @@ sub run_pipeline_on_candidate {
 
 
 sub create_candidate_directory {
-    my (@args) = @_;
-    my $workspace_dir = shift @args;
+    my ( $self, @args ) = @_;
     my $candidate = shift @args;
     my $candidate_identifier = shift @args;
-    my $chromosome = '';
-    if ( $candidate->{'max'}{'name'} =~ /([^_]+)__/ ){
-        $chromosome = $1;
-    }
-    my $cluster_directory = File::Spec->catdir( $workspace_dir, $chromosome, $candidate->{'max'}{'cluster'} . $candidate->{'max'}{'strand'} ); # TO CHECK : ok for WebBAM but for genomic... ?
+
+    my $cluster_directory = File::Spec->catdir( $self->{'workspace_dir'}, 
+                                                $self->{'chromosome_id'}, 
+                                                $candidate->{'max'}{'cluster'} . $candidate->{'max'}{'strand'} ); # TO CHECK : ok for WebBAM but for genomic... ?
     my $candidate_dir = File::Spec->catdir( $cluster_directory, $candidate_identifier );
     mkdir $candidate_dir;
     return $candidate_dir;
