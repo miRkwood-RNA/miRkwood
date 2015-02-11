@@ -503,7 +503,6 @@ sub compute_candidates {
 		# 'parsed_reads' doesn't exist in the other mode
 		my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
 		my %hairpin_candidates = ();
-        
 		foreach my $chr (keys %{$loci}) {
             debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
 			my $loci_for_chr = $loci->{$chr};
@@ -518,8 +517,9 @@ sub compute_candidates {
 			$hairpin_candidates{$chr} = \@sorted_hairpin_candidates_for_chr;
 
             if ( scalar(@sorted_hairpin_candidates_for_chr) ){
-                my $candidates_hash = miRkwood::HairpinFinalizer::process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
-                my $final_candidates_hash = miRkwood::HairpinFinalizer::process_mirna_candidates( $self->get_workspace_path(), $candidates_hash, $chr, $chr );
+                my $hairpinFinalizerJob = miRkwood::HairpinFinalizer->new( $self->get_workspace_path(), $chr, $chr );
+                my $candidates_hash = $hairpinFinalizerJob->process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
+                my $final_candidates_hash = $hairpinFinalizerJob->process_mirna_candidates( $candidates_hash );
                 $self->serialize_candidates($final_candidates_hash);
             }
 		}

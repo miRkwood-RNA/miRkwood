@@ -9,6 +9,24 @@ use miRkwood;
 
 use constant MFEI_THRESHOLD => -0.6;
 
+=method new
+  
+  Constructor
+  my $hairpinFinalizer = miRkwood::HairpinFinalizer->new( $workspace_dir, $chromosome_id, $chromosome_name );
+  
+=cut
+sub new {
+    my ( $class, @args ) = @_;
+    my ( $workspace_dir, $chromosome_id, $chromosome_name ) = @args;
+    my $self = {
+        workspace_dir => $workspace_dir,
+        chromosome_id => $chromosome_id,
+        chromosome_name => $chromosome_name,
+    };
+    bless $self, $class;
+    return $self;
+}
+
 
 =method process_hairpin_candidates
 
@@ -20,7 +38,7 @@ use constant MFEI_THRESHOLD => -0.6;
 
 =cut
 sub process_hairpin_candidates{
-    my (@args) = @_;
+    my ( $self, @args ) = @_;
     my $candidates_array = shift @args;
     my @candidates_array = @{$candidates_array};
     my $cfg = miRkwood->CONFIG();
@@ -170,11 +188,8 @@ sub is_included {
 =cut
 
 sub process_mirna_candidates {
-    my (@args) = @_;
-    my $workspace_dir = shift @args;
+    my ( $self, @args ) = @_;
     my (%candidates_hash) = %{ shift @args };
-    my $sequence_identifier = shift @args;
-    my $sequence_name = shift @args;    
     my @candidates_result;
     my $candidate_identifier = 0;
     debug('  - Process miRNA candidates', miRkwood->DEBUG() );
@@ -182,11 +197,11 @@ sub process_mirna_candidates {
         $candidate_identifier++;
         debug( "     - Process candidate $candidate_identifier", 1);
         my $candidate = $candidates_hash{$key};
-        push @candidates_result, run_pipeline_on_candidate($workspace_dir,
+        push @candidates_result, run_pipeline_on_candidate($self->{'workspace_dir'},
                                                            $candidate_identifier,
                                                            $candidate,
-                                                           $sequence_identifier,
-                                                           $sequence_name);
+                                                           $self->{'chromosome_id'},
+                                                           $self->{'chromosome_name'},);
     }
     return \@candidates_result;
 }
