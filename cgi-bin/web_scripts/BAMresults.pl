@@ -172,13 +172,13 @@ if ( $valid ){
         $HTML_additional .= "</ul></div>";
 
         ##### Summary of results
-        $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'new' );
-        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'known' );
+        $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'New' );
+        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'Known' );
         ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed );
 
         my $arguments = '?jobID=' . $id_job;
-        my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=known';
-        my $new_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=new';
+        my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=Known';
+        my $new_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=New';
 
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary:</h2>';

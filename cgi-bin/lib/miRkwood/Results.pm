@@ -115,7 +115,7 @@ sub get_basic_structure_for_jobID {
     my $type    = shift @args;  # $type should be 'new' or 'known'
 	my $job_dir = $self->jobId_to_jobPath($jobId);
     my $yml_file = '';
-    if ( $type eq 'known' ){
+    if ( $type eq 'Known' ){
         $yml_file = 'basic_known_candidates.yml';
     }
     else{
