@@ -73,7 +73,7 @@ my $page = <<"END_TXT";
                 <div id='listParam'>  
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="filter_multimapped" id="filter_multimapped" value="filter_multimappedChecked" />
-                        &#160;<label for='filter_multimapped'>Filter out reads mapping at more than 5 positions.</label>                        
+                        &#160;<label for='filter_multimapped'>Filter out reads mapping at more than 5 positions</label>                        
                     </p>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
