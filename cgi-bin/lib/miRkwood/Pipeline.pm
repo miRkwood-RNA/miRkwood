@@ -52,13 +52,6 @@ sub run_pipeline {
     my $mode = $cfg->param('job.mode');
     if ( $mode eq 'WebBAM' ){
         $self->filter_BED();
-        if ( $self->{'mirna_bed'} ne '' ){
-            debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
-            $self->treat_known_mirnas();
-        }
-        else{
-            debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
-        }
     }
 
     $self->init_sequences();
@@ -500,6 +493,14 @@ sub compute_candidates {
     my $sequence_identifier = 0;
 
     if ($mode eq 'WebBAM') {
+        if ( $self->{'mirna_bed'} ne '' ){
+            debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
+            $self->treat_known_mirnas();
+        }
+        else{
+            debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
+        }
+
 		# 'parsed_reads' doesn't exist in the other mode
 		my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
 		my %hairpin_candidates = ();
