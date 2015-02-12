@@ -1,4 +1,4 @@
-package miRkwood::HairpinFinalizer;
+package miRkwood::PrecursorBuilder;
 
 use strict;
 use warnings;
@@ -12,7 +12,7 @@ use constant MFEI_THRESHOLD => -0.6;
 =method new
   
   Constructor
-  my $hairpinFinalizer = miRkwood::HairpinFinalizer->new( $workspace_dir, $chromosome_id, $chromosome_name );
+  my $precursorBuilder = miRkwood::PrecursorBuilder->new( $workspace_dir, $chromosome_id, $chromosome_name );
   
 =cut
 sub new {
@@ -34,7 +34,7 @@ sub new {
   - filter on MFEI
   - merge overlapping candidates
   
-  Usage : miRkwood::HairpinFinalizer::process_hairpin_candidates( @candidates_array );
+  Usage : miRkwood::PrecursorBuilder::process_hairpin_candidates( @candidates_array );
 
 =cut
 sub process_hairpin_candidates{

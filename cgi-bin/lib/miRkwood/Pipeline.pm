@@ -14,7 +14,7 @@ use miRkwood::Paths;
 use miRkwood::Utils;
 use miRkwood::SequenceJob;
 use miRkwood::HairpinBuilder;
-use miRkwood::HairpinFinalizer;
+use miRkwood::PrecursorBuilder;
 use Data::Dumper;
 
 =method new
@@ -517,13 +517,12 @@ sub compute_candidates {
 			$hairpin_candidates{$chr} = \@sorted_hairpin_candidates_for_chr;
 
             if ( scalar(@sorted_hairpin_candidates_for_chr) ){
-                my $hairpinFinalizerJob = miRkwood::HairpinFinalizer->new( $self->get_workspace_path(), $chr, $chr );
-                my $candidates_hash = $hairpinFinalizerJob->process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
-                my $final_candidates_hash = $hairpinFinalizerJob->process_mirna_candidates( $candidates_hash );
+                my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chr, $chr );
+                my $candidates_hash = $precursorBuilderJob->process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
+                my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
                 $self->serialize_candidates($final_candidates_hash);
             }
 		}
-        #~ debug("Contenu de \%hairpin_candidates : ".Dumper(%hairpin_candidates), 1);
     }
     else {
         my @sequences_array = $self->get_sequences();
