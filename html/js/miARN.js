@@ -2,8 +2,9 @@
  * 
  */
 function showHideBlock() 
-{ 
-    if(document.getElementById('CDS').checked)
+{
+    var species = document.getElementById('species').value;
+    if((document.getElementById('CDS').checked) && (species == ''))
     { 
         document.getElementById('menuDb').style.visibility='visible';
         document.getElementById('menuDb').style.display='block';
