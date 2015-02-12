@@ -24,22 +24,24 @@ my $page = <<"END_TXT";
             </div> 
             
             <div class="forms">
-                <label for='bedFile'><b>Enter your set of reads: </b>&nbsp;[<a href="$help_page">?</a>]</label><br />
+                <label for='bedFile'><b>Enter your set of reads </b>&nbsp;[<a href="$help_page">?</a>]</label>
+                <br /><br />
                 This must be a BED file created by our script <i>mirkwood-bam2bed.pl</i>.
                 <p><input type="file" name="bedFile" id="bedFile" /></p>
                 <a id="area_clear" onclick="resetElementByID('bedFile');">Clear BED</a>
             </div> 
             
             <div class="forms">
-                <label for="species"><b>Model organism: </b>Choose an organism in the list below: </label><br />
+                <b>Enter your reference sequence </b>
+                <br /><br />
+                <label for="species">Select a genome in the list below: </label><br />
                 <select name="species" id="species">
                     <option value="" selected>--Choose species--</option>
-                    <option value="Arabidopsis_thaliana">Arabidopsis thaliana</option>
+                    <option value="Arabidopsis_thaliana">Arabidopsis thaliana (TAIR10)</option>
                 </select>  
-                <br />
-                <p>
-                    <label for='seqArea'>Or paste your reference sequence in FASTA format &nbsp;[<a href="$help_page">?</a>]</label>
-                </p>
+                <br /><br />
+                <label for='seqArea'>Or paste your reference sequence in FASTA format &nbsp;[<a href="$help_page">?</a>]</label>
+                <br /><br />
                 <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
                 <br />
                 <a id="area_clear" onclick="resetElementByID('seqArea')">Clear</a> 
