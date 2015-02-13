@@ -233,8 +233,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			}
 			if ((i==0)&&(j==0))
 			{
-				var value = 'name';
-				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
+				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')">CHROMOSOME</h3>';
 			}
 			
 			tr.appendChild(td); // ajoute colonne à la ligne
