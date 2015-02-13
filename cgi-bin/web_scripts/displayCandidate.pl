@@ -92,11 +92,17 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
         </li>"
     }
 
+    my $name = '';
+    if ( defined($candidate->{'precursor_name'}) ){
+        $name = "<li><b>miRbase name :</b> $candidate->{'precursor_name'}</li>";
+    }
+
     $html_contents = <<"END_TXT";
             <div id = 'showInfo'>
         <ul>
+        $name
         <li>
-          <b>Name: </b>$candidate->{'name'}
+          <b>Chromosome: </b>$candidate->{'name'}
         </li>
         <li>
           <b>Position:</b> $candidate->{'position'} ($size nt)
