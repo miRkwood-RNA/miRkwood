@@ -154,7 +154,11 @@ function createGrid(id,rowsNumber,columnsNumber)
 				//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
 				if  (value.toString() == 'image')  {
 					td.innerHTML = '<h3>2D<br>structure</h3>' ;
-				}else if (value.toString() == 'strand') 
+                }else if (value.toString() == 'precursor_name') 
+				{
+					td.innerHTML = '<h3>miRbase name</h3>' ;
+				}
+				else if (value.toString() == 'strand')
 				{
 					td.innerHTML = '<h3>+/-</h3>' ;
 				}
