@@ -54,6 +54,19 @@ sub get_candidate_filepath {
     return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
 }
 
+sub get_candidate_reads_cloud_file {
+    my (@args) = @_;
+    my $jobId = shift @args;
+    my $candidate_id = shift @args;
+    if ( -e File::Spec->catfile( miRkwood::Paths::get_new_reads_dir( $jobId ), $candidate_id . '.txt' ) ){
+        return File::Spec->catfile( miRkwood::Paths::get_new_reads_dir( $jobId ), $candidate_id . '.txt' );
+    }
+    elsif ( -e File::Spec->catfile( miRkwood::Paths::get_known_reads_dir( $jobId ), $candidate_id . '.txt' ) ){
+        return File::Spec->catfile( miRkwood::Paths::get_known_reads_dir( $jobId ), $candidate_id . '.txt' );
+    }
+    return;
+}
+
 =method make_candidate_filename
 
 Return the candidate filename based on the identifier.
