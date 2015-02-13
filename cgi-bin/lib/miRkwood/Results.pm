@@ -112,7 +112,7 @@ sub get_structure_for_jobID {
 sub get_basic_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-    my $type    = shift @args;  # $type should be 'new' or 'known'
+    my $type    = shift @args;  # $type should be 'New' or 'Known'
 	my $job_dir = $self->jobId_to_jobPath($jobId);
     my $yml_file = '';
     if ( $type eq 'Known' ){
@@ -120,7 +120,7 @@ sub get_basic_structure_for_jobID {
     }
     else{
         $yml_file = 'basic_candidates.yml';
-    }       
+    }
 	miRkwood->CONFIG_FILE(
 		miRkwood::Paths->get_job_config_path($job_dir) );
 	my $candidates_file = File::Spec->catfile( $job_dir, $yml_file);
@@ -130,11 +130,11 @@ sub get_basic_structure_for_jobID {
 sub get_basic_pseudoXML_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-    my $type    = shift @args;  # $type should be 'new' or 'known'
+    my $type    = shift @args;  # $type should be 'New' or 'Known'
 
 	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 
-	my $output = "";
+	my $output = '';
 
     $output .= "<results id='all'>\n";
     my @candidates = sort {
@@ -142,12 +142,12 @@ sub get_basic_pseudoXML_for_jobID {
           || (
             $a->{'start_position'} <=> $b->{'start_position'} )
     } @{$results};
-    
+
     foreach my $candidate (@candidates) {
-        $output .= $self->convert_basic_to_pseudoXML($candidate, $type);
+        $output .= $self->convert_basic_to_pseudoXML($candidate, $type) . "\n";
     }
     $output .= "</results>\n";
-    
+
     $output .= "<results id='all2'>\n";
     @candidates = sort {
         ( $b->{'quality'} cmp $a->{'quality'} )
@@ -157,7 +157,7 @@ sub get_basic_pseudoXML_for_jobID {
     foreach my $candidate (@candidates) {
         $output .= $self->convert_basic_to_pseudoXML($candidate, $type) . "\n";
     }
-    $output .= "</results>";
+    $output .= '</results>';
 
     return $output;
 }
@@ -166,19 +166,18 @@ sub convert_basic_to_pseudoXML {
 	my ( $self, @args ) = @_;
 	my $candidate = shift @args;
 	my %candidate = %{$candidate};
-    my $type      = shift @args;  # $type should be 'new' or 'known'
+    my $type      = shift @args;  # $type should be 'New' or 'Known'
 
 	my @headers;
-	my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
-    my $result = "<Sequence";
+    my @fields_to_truncate = qw{mfe mfei amfe};
+    my $result = '<Sequence';
 	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
-    #~ if ( $type eq 'known' ){
-        #~ @headers = ( 'precursor_name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
-    #~ }
-    #~ else{
-        @headers = ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
-    #~ }
 
+    if ( $type eq 'Known' ){
+        push @headers, ( 'precursor_name', 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
+    }
+
+    push @headers, ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' ); 
     for my $header (@headers) {
         my $contents = $candidate->{$header};
         if (grep { $header eq $_ } @fields_to_truncate){
@@ -192,7 +191,7 @@ sub convert_basic_to_pseudoXML {
         }
         $result .= " $header='$contents'";
     }
-    $result .= "></Sequence>";
+    $result .= '></Sequence>';
 }
 
 =method has_candidates
@@ -231,8 +230,8 @@ sub deserialize_results {
 	foreach my $file (@files)        # parcours du contenu
 	{
 		my $full_file = File::Spec->catfile( $candidates_dir, $file );
-		if (   $file ne "."
-			&& $file ne ".." )
+		if (   $file ne '.'
+			&& $file ne '..' )
 		{
 			my $candidate;
 			if (
@@ -267,7 +266,7 @@ sub number_of_results {
 sub number_of_results_bis {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-    my $type    = shift @args;  # $type should be 'new' or 'known'
+    my $type    = shift @args;  # $type should be 'New' or 'Known'
 	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 	my $size    = scalar @{$results};
 	return $size;
