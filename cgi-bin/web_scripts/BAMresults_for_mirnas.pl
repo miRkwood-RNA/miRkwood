@@ -35,7 +35,7 @@ my @js = ( File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' 
 ##### Parameters
 my $cgi = CGI->new();
 my $id_job = $cgi->param('jobID');    # get id job
-my $mirnas_type = $cgi->param('type');      # 'known' or 'new'
+my $mirnas_type = $cgi->param('type');      # 'Known' or 'New'
 my $returnlink = miRkwood::WebTemplate::get_link_back_to_BAM_results($id_job);
 my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
