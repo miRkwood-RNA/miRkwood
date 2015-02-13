@@ -464,12 +464,15 @@ sub candidate_as_pseudoXML {
 }
 
 sub get_basic_informations {
-	
+
 	my ( $self, @args ) = @_;
-	
+
 	my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers =
-      ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', @optional_fields );
+    my @headers;
+    if ( defined( $self->{'precursor_name'} ) ){
+        push @headers, 'precursor_name';
+    }
+    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', @optional_fields );
 	my $result = {};
 	
 	foreach (@headers){
@@ -478,7 +481,7 @@ sub get_basic_informations {
 	$result->{'name'} = $self->get_shortened_sequence_name();
 	$result->{'image'} = $self->get_relative_image();
 	return $result;
-	
+
 }
 
 =method turn_relative_positions_into_absolute_positions
