@@ -174,7 +174,7 @@ sub convert_basic_to_pseudoXML {
 	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
 
     if ( $type eq 'Known' ){
-        push @headers, ( 'precursor_name', 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
+        push @headers, 'precursor_name';
     }
 
     push @headers, ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' ); 
