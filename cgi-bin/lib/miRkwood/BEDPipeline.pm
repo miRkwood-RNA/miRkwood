@@ -1,4 +1,4 @@
-package miRkwood::BamPipelineSebastien;
+package miRkwood::BEDPipeline;
 
 # ABSTRACT: BAM Pipeline object
 

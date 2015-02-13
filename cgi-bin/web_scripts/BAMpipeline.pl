@@ -15,7 +15,7 @@ use miRkwood::WebTemplate;
 use miRkwood::Results;
 use miRkwood::Utils;
 use miRkwood::BEDHandler;
-use miRkwood::BamPipelineSebastien;
+use miRkwood::BEDPipeline;
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
 
@@ -148,7 +148,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species
 
 
 ##### Launch pipeline
-my $pipeline = miRkwood::BamPipelineSebastien->new($absolute_job_dir, $localBED, $genome);
+my $pipeline = miRkwood::BEDPipeline->new($absolute_job_dir, $localBED, $genome);
 $pipeline->run_pipeline();
 
 
