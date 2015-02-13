@@ -99,7 +99,6 @@ sub print_reads_clouds {
 
     my @args = @_;
     my $mirna = shift @args;
-    my $genome_db = shift @args;
     my $output_dir = shift @args;
 
     my $i;
@@ -127,7 +126,7 @@ sub print_reads_clouds {
 
     $reads = miRkwood::Utils::truncate_reads_out_of_candidate( $reads, $precursor_start, $precursor_end );
 
-    my $reference = substr( $genome_db->{$chromosome}, $precursor_start -1, $precursor_end - $precursor_start);
+    my $reference = $mirna->{'sequence'};
 
     my $cloud_file = "$output_dir/$precursor_id.txt";
     open (my $OUT, '>', $cloud_file) or die "ERROR while creating $cloud_file : $!";
@@ -240,7 +239,7 @@ sub print_reads_clouds {
         for ($i = 0; $i < $read_length; $i++){
             print $OUT "*";
         }
-        for ($i = 0; $i < $precursor_end - $read_end; $i++){
+        for ($i = 0; $i <= $precursor_end - $read_end; $i++){
             print $OUT ".";
         }
         print $OUT " length=$read_length depth=$reads->{$position}\n";

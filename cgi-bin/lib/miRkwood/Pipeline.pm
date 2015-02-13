@@ -388,10 +388,10 @@ sub serialize_candidates {
         if ( $mode eq 'bam' ){ # CLI transcriptome version
             $candidate->turn_relative_positions_into_absolute_positions();
             $candidate = $candidate->get_reads($self->{'bam_file'});
-            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
         }
         if ( $mode eq 'WebBAM' ){ # WEB transcriptome version
-            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->{'genome_db'}, $self->get_new_reads_dir() );
+            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
         }
 
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );

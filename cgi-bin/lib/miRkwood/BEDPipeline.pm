@@ -237,7 +237,7 @@ sub store_known_mirnas_as_candidate_objects {
         push $self->{'basic_known_candidates'}, $candidate->get_basic_informations();
 
         ### Create individual card with reads cloud
-        miRkwood::CandidateHandler::print_reads_clouds( $data->{$precursor_id}, $genome, $reads_dir );
+        miRkwood::CandidateHandler::print_reads_clouds( $candidate, $reads_dir );
 
     }
 
