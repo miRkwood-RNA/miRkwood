@@ -47,6 +47,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkVienna = "$export_link&type=dot";
     my $linkAlternatives = "$export_link&type=alt";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
+    my $linkReadsCloud = "$export_link&type=reads";
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if($candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'}){
@@ -119,6 +120,9 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
         $Vienna_HTML
         <li>
           $alternatives_HTML
+        </li>
+        <li>
+          <b>Reads cloud : </b><a href='$linkReadsCloud'>download</a>
         </li>
         </ul>
         $imgHTML

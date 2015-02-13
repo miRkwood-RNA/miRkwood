@@ -57,7 +57,7 @@ else {
         }
         when (/reads/) {
             ( $filename, $contents, $disposition ) =
-              exportAsReads( $candidate, $job )            
+              exportReadsClouds( $candidate_id, $jobId )
         }
         default {
             miRkwood::WebTemplate::web_die("Error: the export type '$export_type' is not supported");
@@ -112,16 +112,16 @@ sub exportAsYAML {
     return ( "$filename.yml", $yaml, 'attachment' );
 }
 
-sub exportAsReads {
-    my @args      = @_;
-    my $candidate = shift @args;
-    my $jobPath   = shift @args;
-    my $filepath  = File::Spec->catdir( $jobPath, "reads/known/", "$candidate->{'identifier'}.txt" );
+sub exportReadsClouds {
+    my @args           = @_;
+    my $candidate_id   = shift @args;
+    my $job_id         = shift @args;
+    my $linkReadsCloud = miRkwood::CandidateHandler::get_candidate_reads_cloud_file( $job_id, $candidate_id );
     my $contents = '';
-    open (my $IN, '<', $filepath) or warn "ERROR when opening $filepath : $!";
+    open (my $IN, '<', $linkReadsCloud) or warn "ERROR when opening $linkReadsCloud : $!";
     while ( <$IN> ){
         $contents .= $_;
-    } 
-    close $IN;    
+    }
+    close $IN;
     return ( "$candidate->{'identifier'}.txt", $contents, 'attachment' );
 }
