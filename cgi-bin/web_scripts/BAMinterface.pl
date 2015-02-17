@@ -37,7 +37,11 @@ my $page = <<"END_TXT";
                 <label for="species">Select a genome in the list below: </label><br />
                 <select name="species" id="species">
                     <option value="" selected>--Choose species--</option>
+                    <option value="Arabidopsis_lyrata">Arabidopsis lyrata (v1.0)</option>
                     <option value="Arabidopsis_thaliana">Arabidopsis thaliana (TAIR10)</option>
+                    <option value="Brassica_rapa">Brassica rapa (Brapa_1.1)</option>
+                    <option value="Glycine_max">Glycine max (v1.0.23)</option>
+                    <option value="Lotus_japonicus">Lotus japonicus (Lj2.5)</option>
                 </select>  
                 <br /><br />
                 <label for='seqArea'>Or paste your reference sequence in FASTA format &nbsp;[<a href="$help_page">?</a>]</label>
