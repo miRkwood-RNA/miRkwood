@@ -1002,4 +1002,29 @@ sub truncate_reads_out_of_candidate {
 
 }
 
+=method delete_element_in_array
+
+  Delete all elements in a tab corresponding to the variable
+  given in parameter
+
+  Usage : my @newArray = delete_element_in_array( $element, @array );
+
+=cut
+sub delete_element_in_array {
+
+    my ( @args ) = @_;
+    my $element = shift @args;
+    my @oldArray = shift @args;
+    my @newArray;
+
+    foreach my $element_of_array ( @oldArray ){
+        if ( $element_of_array ne $element ){
+            push @newArray, $element_of_array;
+        }
+    }
+
+    return @newArray;
+
+}
+
 1;
