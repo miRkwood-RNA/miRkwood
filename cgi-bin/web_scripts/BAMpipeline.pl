@@ -99,7 +99,17 @@ my $max_length = 100000;
 if ( $seqArea eq q{} )    # case model organism
 {
     debug('Reference species is a model organism.', 1);
-    $genome = File::Spec->catfile( miRkwood::Paths->get_data_path(), 'genomes/', $species . '.fa');
+    if ( -r File::Spec->catfile( miRkwood::Paths->get_data_path(), 'genomes/', $species . '.fa') ){
+        $genome = File::Spec->catfile( miRkwood::Paths->get_data_path(), 'genomes/', $species . '.fa');
+    }
+    elsif ( -r File::Spec->catfile( miRkwood::Paths->get_data_path(), 'genomes/', $species . '.fasta') ){
+        $genome = File::Spec->catfile( miRkwood::Paths->get_data_path(), 'genomes/', $species . '.fasta');
+    }
+    else{
+        print $cgi->redirect($error_url . '?type=noGenome');
+        exit;            
+    }
+    
 }
 else{
     debug('Reference sequence is provided by the user.', 1);
