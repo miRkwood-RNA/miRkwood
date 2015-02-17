@@ -52,7 +52,15 @@ elsif ( $errorType eq "noBED" ){
     
 END_MSG
 }
-
+elsif ( $errorType eq "noGenome" ){
+    $errorMessage = <<"END_MSG";
+    <p>An error occured when processing your data:</p>
+    <p>No genome file were found for the chosen species.</p>
+    <br /><br />    
+    
+    
+END_MSG
+}
    
 my $page = <<"END_TXT";
 <div class="main">
