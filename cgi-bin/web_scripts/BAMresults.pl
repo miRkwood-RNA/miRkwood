@@ -48,12 +48,6 @@ my $HTML_additional = '';
 my $HTML_results = '';
 my $page = '';
 
-my $mirna_bed;
-my $final_bed;
-my $other_bed;
-my $cds_bed;
-my $multimapped_bed;
-my $initial_bed;
 
 $HTML_additional .= '<p class="header-results" id="job_id"><b>Job ID:</b> ' . $id_job . '</p>';
 
@@ -65,28 +59,12 @@ if ( $valid ){
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg = miRkwood->CONFIG();
 
-    opendir (my $dh, $absolute_job_dir) or die "Cannot open $absolute_job_dir : $!";
-    while (readdir $dh) {
-        if ( /_miRNAs.bed/ ){
-            $mirna_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-        elsif ( /_filtered.bed/ ){
-            $final_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-        elsif ( /_otherRNA.bed/ ){
-            $other_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-        elsif ( /_CDS.bed/ ){
-            $cds_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-        elsif ( /_multimapped.bed/ ){
-            $multimapped_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-        elsif ( /.bed/ ){
-            $initial_bed = File::Spec->catfile($absolute_job_dir, $_);
-        }
-    }
-    closedir $dh;    
+    my $initial_bed     = miRkwood::Paths::get_bed_file ( $id_job, '' );
+    my $mirna_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_miRNAs' );
+    my $final_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_filtered' );
+    my $other_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_otherRNA' );
+    my $cds_bed         = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
+    my $multimapped_bed = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
 
     my $nb_new_results   = 0;
     my $nb_known_results = 0;
@@ -97,7 +75,7 @@ if ( $valid ){
     my $nb_total_reads_unq = 0;
     my $nb_CDS_reads_unq   = 0;
     my $nb_other_reads_unq = 0;
-    my $nb_multi_reads_unq = 0;    
+    my $nb_multi_reads_unq = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -114,62 +92,62 @@ if ( $valid ){
         $HTML_additional .= "<div class='results_summary'><ul>";
         $HTML_additional .= '<h2>Options summary:</h2>';
         $HTML_additional .= '<br />';
-        $HTML_additional .= "<li>BED file: $basename_bed</li>";
+        $HTML_additional .= "<li><b>BED file:</b> $basename_bed</li>";
 
         # Reference species
         if ( $cfg->param('job.plant') ){
-            $HTML_additional .= '<li>Reference species: ' . $cfg->param('job.plant') . '</li>';
+            $HTML_additional .= '<li><b>Reference species:</b> ' . $cfg->param('job.plant') . '</li>';
         }
 
         # Align
         if ( $cfg->param('options.align') ){
-            $HTML_additional .= "<li>Flag conserved mature miRNAs: yes</li>";
+            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> yes</li>';
         }
         else{
-            $HTML_additional .= "<li>Flag conserved mature miRNAs: no</li>";
+            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> no</li>';
         }
 
         # MFEI
         if ( $cfg->param('options.mfei') ){
-            $HTML_additional .= "<li>Select only sequences with MFEI < -0.6: yes</li>";
+            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> yes</li>';
         }
         else{
-            $HTML_additional .= "<li>Select only sequences with MFEI < -0.6: no</li>";
+            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> no</li>';
         }
 
         # Ranfold
         if ( $cfg->param('options.ranfold') ){
-            $HTML_additional .= "<li>Compute thermodynamic stability: yes</li>";
+            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> yes</li>';
         }
         else{
-            $HTML_additional .= "<li>Compute thermodynamic stability: no</li>";
+            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> no</li>';
         }                
 
         # CDS
         if ( $cfg->param('options.filter_CDS') ){
-            $HTML_additional .= "<li>Filter CoDing Sequences: yes</li>";
+            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> yes</li>';
         }
         else{
-            $HTML_additional .= "<li>Filter CoDing Sequences: no</li>";
+            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> no</li>';
         }
 
         # tRNA and rRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            $HTML_additional .= "<li>Filter tRNA and rRNA: yes</li>";
+            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> yes</li>';
         }
         else{
-            $HTML_additional .= "<li>Filter tRNA and rRNA: no</li>";
+            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> no</li>';
         }
 
         # Multimapped reads
         if ( $cfg->param('options.filter_multimapped') ){
-            $HTML_additional .= "<li>Filter multimapped reads: yes</li>";
+            $HTML_additional .= '<li><b>Filter multimapped reads:</b> yes</li>';
         }
         else{
-            $HTML_additional .= "<li>Filter multimapped reads: no</li>";
+            $HTML_additional .= '<li><b>Filter multimapped reads:</b> no</li>';
         }
 
-        $HTML_additional .= "</ul></div>";
+        $HTML_additional .= '</ul></div>';
 
         ##### Summary of results
         $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'New' );

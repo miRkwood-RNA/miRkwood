@@ -266,4 +266,22 @@ sub get_known_reads_dir_from_job_dir {
     return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'known');
 }
 
+=method get_bed_file
+
+Return the path to the BED file corresponding to given type
+'', '_filtered', '_CDS, '_miRNAs', '_otherRNA', '_multimapped'
+for the given job ID.
+Parameter : job id and bed type
+
+=cut
+sub get_bed_file {
+    my (@args) = @_;
+    my $jobID    = shift @args;
+    my $bed_type = shift @args; # should be '', '_filtered', '_CDS, '_miRNAs', '_otherRNA', '_multimapped'
+    my $cfg      = miRkwood->CONFIG();
+    my $bed_name = $cfg->param('job.bed');
+    my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobID);
+    return File::Spec->catdir( $absolute_job_dir, $bed_name. $bed_type . '.bed');
+}
+
 1;
