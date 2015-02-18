@@ -91,6 +91,11 @@ while ( <$bedFile> ){
 }
 close $BED;
 
+my $basename_bed = '';
+if ( $localBED =~ /.*\/([^\/.]+)[.]bed/ ){
+    $basename_bed = $1;
+}
+
 
 ##### Get species or reference sequence
 my $seqArea = $cgi->param('seqArea');
@@ -151,10 +156,10 @@ print $cgi->redirect( $waiting_url );
 ##### Create config file
 my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
 miRkwood->CONFIG_FILE($run_options_file);
-miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species, 
-                                         'WebBAM', $align, $species_db, $filter_CDS, 
-                                         $filter_tRNA_rRNA, $filter_multimapped, $mfei, 
-                                         $randfold, $varna);
+miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species,
+                                         'WebBAM', $basename_bed, $align, $species_db,
+                                         $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped,
+                                         $mfei, $randfold, $varna);
 
 
 ##### Launch pipeline

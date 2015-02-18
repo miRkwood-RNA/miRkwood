@@ -223,12 +223,13 @@ Write the run options for Web BAM pipeline to the job configuration file.
 =cut
 
 sub write_config_for_bam_pipeline {
-    my ( $run_options_file, $job_title, $species, $mode, $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold, $varna) = @_;
+    my ( $run_options_file, $job_title, $species, $mode, $bed, $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold, $varna) = @_;
     my $run_options = miRkwood->CONFIG();
 
     $run_options->param( "job.title",        $job_title );
     $run_options->param( "job.plant",        $species );
     $run_options->param( "job.mode",         $mode );
+    $run_options->param( "job.bed",          $bed );
     $run_options->param( "options.filter_CDS",            $filter_CDS );
     $run_options->param( "options.filter_tRNA_rRNA",      $filter_tRNA_rRNA );
     $run_options->param( "options.filter_multimapped",    $filter_multimapped );
