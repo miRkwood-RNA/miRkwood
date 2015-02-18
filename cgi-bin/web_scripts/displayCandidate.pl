@@ -95,7 +95,8 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
 
     my $name = '';
     if ( defined($candidate->{'precursor_name'}) ){
-        $name = "<li><b>miRbase name :</b> $candidate->{'precursor_name'}</li>";
+        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $candidate->{'identifier'} );
+        $name = "<li><b>miRbase name :</b> <a href='$mirbase_link'>$candidate->{'precursor_name'}</a></li>";
     }
 
     $html_contents = <<"END_TXT";
