@@ -101,50 +101,50 @@ if ( $valid ){
 
         # Align
         if ( $cfg->param('options.align') ){
-            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> yes</li>';
+            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> no</li>';
+            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> No</li>';
         }
 
         # MFEI
         if ( $cfg->param('options.mfei') ){
-            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> yes</li>';
+            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> no</li>';
+            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> No</li>';
         }
 
         # Ranfold
         if ( $cfg->param('options.ranfold') ){
-            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> yes</li>';
+            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> no</li>';
-        }                
+            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> No</li>';
+        }
 
         # CDS
         if ( $cfg->param('options.filter_CDS') ){
-            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> yes</li>';
+            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> no</li>';
+            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> No</li>';
         }
 
         # tRNA and rRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> yes</li>';
+            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> no</li>';
+            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> No</li>';
         }
 
         # Multimapped reads
         if ( $cfg->param('options.filter_multimapped') ){
-            $HTML_additional .= '<li><b>Filter multimapped reads:</b> yes</li>';
+            $HTML_additional .= '<li><b>Filter multimapped reads:</b> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Filter multimapped reads:</b> no</li>';
+            $HTML_additional .= '<li><b>Filter multimapped reads:</b> No</li>';
         }
 
         $HTML_additional .= '</ul></div>';
@@ -157,42 +157,43 @@ if ( $valid ){
         my $arguments = '?jobID=' . $id_job;
         my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=Known';
         my $new_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=New';
+        my $exportFileLink = miRkwood::WebTemplate::get_cgi_url('getBEDFile.pl') . '?jobId=' . $id_job;
 
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary:</h2>';
         $HTML_results .= '<br />';
-        $HTML_results .= "<li>Total number of reads: $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
+        $HTML_results .= "<li><b>Total number of reads:</b> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
 
         if ( $cfg->param('options.filter_CDS') ){
             ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
             if ( $nb_CDS_reads > 0 ){
-                $HTML_results .= "<li>CoDing Sequences: $nb_CDS_reads reads (download)</li>";
+                $HTML_results .= "<li><b>CoDing Sequences:</b> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li>CoDing Sequences: 0 reads</li>';
+                $HTML_results .= '<li><b>CoDing Sequences:</b> 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
             ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
             if ( $nb_other_reads > 0 ){
-                $HTML_results .= "<li>rRNA/tRNA: $nb_other_reads reads (download)</li>";
+                $HTML_results .= "<li><b>rRNA/tRNA:</b> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li>rRNA/tRNA: 0 reads</li>';
+                $HTML_results .= '<li><b>rRNA/tRNA:</b> 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_multimapped') ){
             ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
             if ( $nb_multi_reads > 0 ){
-                $HTML_results .= "<li>Frequent reads: $nb_multi_reads reads (download)</li>";
+                $HTML_results .= "<li><b>Frequent reads:</b> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li>Frequent reads: 0 reads</li>';
+                $HTML_results .= '<li><b>Frequent reads:</b> 0 reads</li>';
             }
         }
 
-        $HTML_results .= "<li>Known miRNAs: $nb_known_results sequence(s) (<a href=$known_url>see results</a>)</li>";
-        $HTML_results .= "<li>Novel miRNAs: $nb_new_results sequence(s) (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "<li><b>Known miRNAs:</b> $nb_known_results sequence(s) (<a href=$known_url>see results</a>)</li>";
+        $HTML_results .= "<li><b>Novel miRNAs:</b> $nb_new_results sequence(s) (<a href=$new_url>see results</a>)</li>";
         $HTML_results .= "</ul></div>";
 
     }
