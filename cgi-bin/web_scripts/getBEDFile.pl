@@ -8,6 +8,7 @@ use FindBin;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::WebTemplate;
+use miRkwood::FileUtils;
 
 my $cgi = CGI->new();
 
@@ -35,15 +36,7 @@ sub exportFile {
     if ( $file =~ /.*\/([^\/]+)/ ){
         $filename = $1;
     }
-
-    my $contents = '';
-
-    open( my $IN, '<', $file) or warn "ERROR while opening $file : $!";
-    while ( <$IN> ){
-        $contents .= $_;
-    }
-    close $IN;
+    my $contents = miRkwood::FileUtils::slurp_file ( $file );
     return ( $filename, $contents, 'attachment' );
 }
-
 
