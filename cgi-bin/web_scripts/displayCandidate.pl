@@ -50,7 +50,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkReadsCloud = "$export_link&type=reads";
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    if($candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'}){
+    if( defined($candidate->{'structure_optimal'}) && ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'}) ){
         $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li>"
     } else {
         $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li>"
