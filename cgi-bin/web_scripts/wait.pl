@@ -22,9 +22,12 @@ my @js  = (miRkwood::WebTemplate->get_js_file());
 
 ##### Parameters
 my $html    = CGI->new();
-my $jobId   = $html->param('jobId');
-my $mail    = $html->param('mail');
-my $nameJob = $html->param('nameJob');
+my $jobId   = '';
+my $mail    = '';
+my $nameJob = '';
+$jobId   = $html->param('jobId');
+$mail    = $html->param('mail');
+$nameJob = $html->param('nameJob');
 $nameJob =~ s/ /_/g; # replace spaces with '_' in name job
 
 my $page = '';
