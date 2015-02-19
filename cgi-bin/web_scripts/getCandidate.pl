@@ -11,6 +11,7 @@ BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::CandidateHandler;
 use miRkwood::Results;
 use miRkwood::WebTemplate;
+use miRkwood::FileUtils;
 
 my $cgi = CGI->new();
 
@@ -117,11 +118,6 @@ sub exportReadsClouds {
     my $candidate_id   = shift @args;
     my $job_id         = shift @args;
     my $linkReadsCloud = miRkwood::CandidateHandler::get_candidate_reads_cloud_file( $job_id, $candidate_id );
-    my $contents = '';
-    open (my $IN, '<', $linkReadsCloud) or warn "ERROR when opening $linkReadsCloud : $!";
-    while ( <$IN> ){
-        $contents .= $_;
-    }
-    close $IN;
-    return ( "$candidate->{'identifier'}.txt", $contents, 'attachment' );
+    my $contents = miRkwood::FileUtils::slurp_file ( $linkReadsCloud );
+    return ( "$candidate_id.txt", $contents, 'attachment' );
 }
