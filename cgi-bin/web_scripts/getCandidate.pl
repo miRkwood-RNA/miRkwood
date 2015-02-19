@@ -117,7 +117,7 @@ sub exportReadsClouds {
     my @args           = @_;
     my $candidate_id   = shift @args;
     my $job_id         = shift @args;
-    my $linkReadsCloud = miRkwood::CandidateHandler::get_candidate_reads_cloud_file( $job_id, $candidate_id );
-    my $contents = miRkwood::FileUtils::slurp_file ( $linkReadsCloud );
+    my $reads_cloud_file = miRkwood::CandidateHandler::get_candidate_reads_cloud_file( $job_id, $candidate_id );
+    my $contents = miRkwood::FileUtils::slurp_file ( $reads_cloud_file );
     return ( "$candidate_id.txt", $contents, 'attachment' );
 }
