@@ -44,4 +44,5 @@
         src=/home/vagrant/results
         dest={{ mirkwood_html_path }}/results
         state=link
+        force=yes
 

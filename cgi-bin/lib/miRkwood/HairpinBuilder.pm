@@ -15,37 +15,49 @@ use miRkwood::Parsers;
 use miRkwood::Programs;
 use miRkwood::Utils;
 use miRkwood::ClusterJobSebastien;
+use miRkwood::CppBinarySearch;
 
 use File::Spec;
 use File::Basename;
 use Log::Message::Simple qw[msg error debug];
 
 sub new {
-	my ($class, $genome_db, $workspace, $parsed_bed) = @_;
-	return bless {
+	my ($class, $genome_db, $workspace, $parsed_bed
+	#STATS BEG
+	#~ ,$stats
+	#STATS END
+	) = @_;
+	my $this = bless {
         'genome_db'  => $genome_db,
         'workspace'  => $workspace,
-        'parsed_bed' => $parsed_bed
+        'parsed_bed' => $parsed_bed,
+        # THIS DISCARDS HAIRPIN CANDIDATES THAT CONTAIN STRICTLY LESS THAN 'read_coverage_threshold' READS
+        'read_coverage_threshold' => 2, # TO MODIFY IN RELEASE
+    #STATS BEG
+		#~ 'stats' => $stats
+    #STATS END
     }, $class;
+    
+    return $this;
 }
 
-# gets the sequence. start starts at 0. end is excluded
-sub get_sub_sequence {
-	my ($this, $chr, $start, $end) = @_;
-	# Chr1, 1, 1
-	return substr($this->{genome_db}{$chr}, $start, $end-$start);
+sub get_parsed_bed {
+	my $this = shift;
+	return $this->{'parsed_bed'};
 }
-
 
 # gets the sequence. start starts at 0. end is excluded
 # strand is 1 or -1
 # if strand == -1, then the reverse complement is returned
 sub get_sub_sequence_on_strand {
 	my ($this, $chr, $start, $end, $strand) = @_;
-	my $seq = $this->get_sub_sequence($chr, $start, $end);
-	if ($strand eq '-') {
-		return miRkwood::Utils::reverse_complement($seq);
-	}
+	#~ my $seq = $this->get_sub_sequence($chr, $start, $end);
+	#~ if ($strand == -1) {
+		#~ return miRkwood::Utils::reverse_complement($seq);
+	#~ }
+	#~ return $seq;
+	my $seq = $this->{'genome_db'}->seq($chr, $start+1, $end, $strand);
+	$seq =~ s/[RYSWKMBDHV]/N/ig;
 	return $seq;
 }
 
@@ -53,13 +65,15 @@ sub build_hairpins {
 	my $this = shift;
 	my $locus = shift;
 	
+	#~ warn("HairpinBuilder: $locus->{'chr'}:", $locus->{begin}+1, '-', $locus->{end}, ' [', $locus->{strand}, "]\n");
+	
 	my $chr = $locus->{'chr'};
 	#~ my $strand = $locus->{strand} eq '+' ? 1 : -1;
 	#~ my $seq_id = $chr . '__' . $locus->{begin}+1 . '-' . ($locus->{end});
 	
 	my $working_dir = File::Spec->catdir($this->{'workspace'}, $chr);
 	mkdir $working_dir;
-	$working_dir = File::Spec->catdir($working_dir, $locus->{begin} . '-' . ($locus->{end}-1) . $locus->{'strand'});
+	$working_dir = File::Spec->catdir($working_dir, $locus->{begin}+1 . '-' . $locus->{end} . '_' . $locus->{strand});
 	mkdir $working_dir;
 
 	my $rnalfold_output_filename = 'rnalfold_out';
@@ -71,15 +85,19 @@ sub build_hairpins {
 	my $output_stemloop_opt = File::Spec->catfile($working_dir, 'rnastemloop_optimal');
 	my $output_stemloop = File::Spec->catfile($working_dir, 'rnastemloop_stemloop');
 
-	run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt);
+	#~ if (!-e $output_stemloop) {
+		run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt)
+		or die("Problem running RNAstemloop [Input: '$rnalfold_output_filepath', Outputs: '$output_stemloop', '$output_stemloop_opt'");
+	#~ }
+	#~ else {
+		#~ print "\tRNAstemloop output already exists\n";
+	#~ }
 
 	my $rnaeval_out_optimal = $this->run_RNAeval_on_RNAstemloop_optimal_output($output_stemloop_opt);
 	my $rnaeval_out_stemloop = $this->run_RNAeval_on_RNAstemloop_stemloop_output($output_stemloop);
 
 	my $new_candidates = $this->process_RNAstemloop_on_filenames($output_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop,
-		$locus->{begin}, $locus->{end}-$locus->{begin}, $chr, $locus->{strand}, $locus->{miRnas}, 
-		$this->{'parsed_bed'}
-		);
+		$locus->{begin}, $locus->{end}-$locus->{begin}, $chr, $locus->{strand}, $locus->{miRnas});
 
 	#~ ($new_candidates, $already_positioned) = filter_candidates_on_position($new_candidates, $already_positioned);
 
@@ -122,8 +140,11 @@ sub run_RNAeval_on_RNAstemloop_output {
     my $rnaeval_out = File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
     debug( "     Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
-    miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or die('Problem when running RNAeval');
-
+    
+    #~ if (!-e $rnaeval_out) {
+		miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or 
+		die("Problem when running RNAeval [Input file: '$rnastemloop_out' Output file: '$rnaeval_out'");
+	#~ }
     return $rnaeval_out;
 }
 
@@ -137,7 +158,7 @@ sub process_RNAstemloop_on_filenames {
     my $chr = shift @args;
     my ($strand) = shift @args;
     my ($sequence_miRnas) = shift @args;
-    my $parsed_bed = shift @args;
+    #~ my $parsed_bed = shift @args;
 
     open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die "Error opening $rnastemloop_out_stemloop: $!";
     open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
@@ -145,9 +166,7 @@ sub process_RNAstemloop_on_filenames {
     my $msg = "     Processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )";
     debug( $msg, miRkwood->DEBUG() );
     my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $chr, $strand,
-    $sequence_miRnas 
-    ,$parsed_bed
-    );
+    $sequence_miRnas);
     close($STEM_FH);
     close($EVAL_OPT_FH);
     close($EVAL_STEM_FH);
@@ -155,73 +174,101 @@ sub process_RNAstemloop_on_filenames {
 }
 
 # See std::lower_bound in the C++ standard library
-sub lowerbound_binsearch {
-	my $arr = shift;
-	my $first = shift;
-	my $last = shift; # last is excluded, past the last item
-	my $val = shift;
-	
-	my $len = $last - $first;
-	while ($len > 0) {
-		my $half = $len >> 1;
-		my $middle = $first + $half;
-		if ($arr->[$middle]{'begin'} < $val) {
-			$first = $middle;
-			$first++;
-			$len = $len - $half - 1;
-		}
-		else {
-			$len = $half;
-		}
-	}
-	return $first;
-}
+#~ sub lowerbound_binsearch {
+	#~ my $arr = shift;
+	#~ my $first = shift;
+	#~ my $last = shift; # last is excluded, past the last item
+	#~ my $val = shift;
+	#~ 
+	#~ my $len = $last - $first;
+	#~ while ($len > 0) {
+		#~ my $half = $len >> 1;
+		#~ my $middle = $first + $half;
+		#~ if ($arr->[$middle]{'begin'} < $val) {
+			#~ $first = $middle;
+			#~ $first++;
+			#~ $len = $len - $half - 1;
+		#~ }
+		#~ else {
+			#~ $len = $half;
+		#~ }
+	#~ }
+	#~ return $first;
+#~ }
+#~ 
+#~ # See std::upper_bound in the C++ standard library
+#~ sub upperbound_binsearch {
+	#~ my $arr = shift;
+	#~ my $first = shift;
+	#~ my $last = shift; # last is excluded, past the last item
+	#~ my $val = shift;
+	#~ 
+	#~ my $it;
+	#~ my ($count, $step);
+	#~ $count = $last - $first;
+	#~ while ($count > 0)	{
+		#~ $it = $first; $step = $count >> 1; $it += $step;
+		#~ if (!($val < $arr->[$it]{'begin'})) {
+			#~ $it++;
+			#~ $first = $it;
+			#~ $count -= $step + 1;
+		#~ }
+		#~ else {
+			#~ $count= $step;
+		#~ }
+	#~ }
+	#~ return $first;
+#~ }
 
-# See std::upper_bound in the C++ standard library
-sub upperbound_binsearch {
-	my $arr = shift;
-	my $first = shift;
-	my $last = shift; # last is excluded, past the last item
-	my $val = shift;
-	
-	my $it;
-	my ($count, $step);
-	$count = $last - $first;
-	while ($count > 0)	{
-		$it = $first; $step=$count/2; $it += $step;
-		if (!($val < $arr->[$it]{'begin'})) {
-			$it++;
-			$first = $it;
-			$count -= $step + 1;
-		}
-		else {
-			$count= $step;
+sub get_contained_read_coverage {
+	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
+	my $reads = $parsed_bed->{$chr}{$strand};
+
+	my $low = CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
+	if ($low == scalar @{$reads}) {
+		return 0;
+	}
+	my $high = CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
+
+	my $cov = 0;
+
+	for (my $i = $low; $i < $high; $i++) {
+		my $read_begin = $reads->[$i]{'begin'};
+		my @read_ends = keys %{$reads->[$i]{'ends'}};
+		foreach my $read_end (@read_ends) {
+			if ($read_end <= $region_end) {
+				$cov += $reads->[$i]{'ends'}{$read_end};
+			}
 		}
 	}
-	return $first;
+
+	return $cov;
 }
 
 sub get_contained_reads {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
 	my $reads = $parsed_bed->{$chr}{$strand};
 
-	my $low = lowerbound_binsearch($reads, 0, scalar @{$reads}, $region_begin);
-	my $high = upperbound_binsearch($reads, $low, scalar @{$reads}, $region_end);
+	my $low = CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
+	if ($low == scalar @{$reads}) {
+		return {};
+	}
+	my $high = CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
 
 	my %result = ();
-	if ($low == scalar @{$reads}) {
-		return \%result;
-	}
+	#~ if ($low == scalar @{$reads}) {
+		#~ return \%result;
+	#~ }
 	#~ if ($high == scalar @{$reads}) {
 		#~ $high--;
 	#~ }
 
 	for (my $i = $low; $i < $high; $i++) {
-		my $read_begin = $reads->[$i]{'begin'}-1;
+		my $read_begin = $reads->[$i]{'begin'};
 		my @read_ends = keys %{$reads->[$i]{'ends'}};
 		foreach my $read_end (@read_ends) {
 			if ($read_end <= $region_end) {
-				$result{"$read_begin-".($read_end-1)} = $reads->[$i]{'ends'}{$read_end};
+				$result{($read_begin+1).'-'.$read_end} = $reads->[$i]{'ends'}{$read_end};
 			}
 		}
 	}
@@ -252,14 +299,14 @@ sub raw_regions_intertect {
 Static private helper function. You shouldnt use this function.
 
 =cut
-sub eval_single_stemloop {
+sub test_miRna_intersection {
 	my $stemloop = shift;
 	my $miRnaPos = shift;
 	
 	if (!defined ($miRnaPos)) {
 		return 1;
 	}
-
+	
 	foreach my $miRnas ( @{$miRnaPos} ) {
 		if ($miRnas->{source} == miRkwood::ClusterJobSebastien::DUE_TO_TWO_SPIKES) {
 			if (raw_regions_intertect($stemloop, $miRnas->{first}) && raw_regions_intertect($stemloop, $miRnas->{second})) {
@@ -273,6 +320,33 @@ sub eval_single_stemloop {
 		}
 	}
 	return 0;
+}
+
+
+sub eval_single_stemloop {
+	my $this = shift;
+	my $chr = shift;
+	my $strand = shift;
+	my $stemloop = shift;
+	my $miRnaPos = shift;
+	
+	if (test_miRna_intersection($stemloop, $miRnaPos) == 0) {
+		return 0;
+	}
+	
+	my $parsed_bed = $this->get_parsed_bed;
+	
+	# No bed supplied
+	if (!defined ($parsed_bed)) {
+		return 1;
+	}
+	if (get_contained_read_coverage($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand) >= 
+				$this->{'read_coverage_threshold'}) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
 
 =method process_RNAstemloop
@@ -292,11 +366,13 @@ sub process_RNAstemloop {
 	my ($chr) = shift @args;
 	my ($strand) = shift @args;
 	my ($sequence_miRnas) = shift @args;
-	my ($parsed_bed) = shift @args;
+	my ($parsed_bed) = $self->get_parsed_bed;
 
 	my ($line_eval_opt, $line_eval_stem);
 	my ($nameSeq, $dna, $structure_stemloop);
 	my @candidates_array = ();
+	
+	my $DEBUG_NAME = $chr. ':' . ($seq_begin+1) . '-' . ($seq_begin+$seq_len) . ' [' . $strand . ']';
 
 	while ( my $stem_line = <$STEM_FH> ) {
 		if (miRkwood::Utils::is_fasta_header($stem_line)) {
@@ -313,7 +389,7 @@ sub process_RNAstemloop {
 				$line_eval_stem = substr( <$EVAL_STEM_FH>, 0, -1 );
 			}
 			if ( $dna ne $line_eval_opt || $dna ne $line_eval_stem ) {
-				warn ('The sequences differ in RNAeval and RNAstemloop output');
+				warn ('The sequences differ in RNAeval and RNAstemloop output for '. $DEBUG_NAME);
 			}
 		}
 		elsif ($stem_line =~ /(.*)/) {
@@ -338,8 +414,8 @@ sub process_RNAstemloop {
 						#~ ($start, $end) = ($1, $2);
                         $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
-					if (eval_single_stemloop($stemloop, $sequence_miRnas) == 1) {
-						my $cluster_position = $seq_begin. '-' . ($seq_begin+$seq_len-1);
+					if ($self->eval_single_stemloop($chr, $strand, $stemloop, $sequence_miRnas) == 1) {
+						my $cluster_position = ($seq_begin+1). '-' . ($seq_begin+$seq_len);
 						my $res = {
 							'name' => $chr. '__' .($stemloop->{'begin'}+1).'-'.$stemloop->{'end'} . $strand,
 							'strand' => $strand,
@@ -353,18 +429,29 @@ sub process_RNAstemloop {
 							'structure_stemloop' => $structure_stemloop,
 							'energy_stemloop' => $energy_stemloop,
 							'reads' => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
-							'cluster' => $cluster_position
+							'cluster' => $cluster_position,
+							'peaks' => $sequence_miRnas
 						};
 						push @candidates_array, $res;
 					}
+					
+    #STATS BEG
+					#~ else {
+						#~ $self->update_stats_for_discarded_miRNA($sequence_miRnas);
+					#~ }
+    
+    #STATS END
 				}
 			}
 			else {
-				warn( "No structure found in $line_eval_opt" );
+				warn( "No structure found in $line_eval_opt for $DEBUG_NAME" );
+				#STATS BEG
+				#~ $self->update_stats_for_discarded_miRNA($sequence_miRnas);
+				#STATS END
 			}    # if $line2
 		}
 		else {
-			warn( "Unrecognized line " );
+			warn( "Unrecognized line for $DEBUG_NAME" );
 		}    #if $line1
 	}    #while $line=<IN>
 	return \@candidates_array;
@@ -382,7 +469,9 @@ sub run_rnalfold {
 	my $output_file = shift;
 	my $rnalfold_output = File::Spec->catfile($output_folder, $output_file);
     my $temp_file = File::Spec->catfile($output_folder, $output_file . '_sequence.txt');
-    miRkwood::Programs::run_rnalfold($seq_name, $seq, $temp_file, $rnalfold_output) or die("Problem when running RNALfold: $!");
+    #~ if (!-e $rnalfold_output) {
+		miRkwood::Programs::run_rnalfold($seq_name, $seq, $temp_file, $rnalfold_output) or die("Problem when running RNALfold [$temp_file]: $!");
+	#~ }
     return $rnalfold_output;
 }
 
@@ -397,4 +486,21 @@ sub run_rnastemloop {
 	return miRkwood::Programs::run_rnastemloop($input, $output_stemloop, $output_optimal);
 }
 
+#STATS BEG
+    
+#~ sub update_stats_for_discarded_miRNA {
+	#~ my $this = shift;
+	#~ my $sequence_miRnas = shift;
+	#~ 
+	#~ foreach my $miRnas ( @{$sequence_miRnas} ) {
+		#~ if ($miRnas->{source} == miRkwood::ClusterJobSebastien::DUE_TO_TWO_SPIKES) {
+			#~ $this->{'stats'}{'COUPLE_DISCARDED'}++;
+		#~ }
+		#~ else {
+			#~ $this->{'stats'}{'SINGLE_DISCARDED'}++;
+		#~ }
+	#~ }
+#~ }
+    
+#STATS END
 1;

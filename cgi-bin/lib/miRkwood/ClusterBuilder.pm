@@ -5,6 +5,7 @@ use warnings;
 
 use parent 'miRkwood::LociBuilder';
 
+use miRkwood::HairpinBuilder;
 use miRkwood::ClusterJobSebastien;
 use miRkwood::KMeanSebastien;
 use List::Util qw(max min);
@@ -41,6 +42,18 @@ sub build_loci {
 	my $spikes = $cluster_job->extract_spike_train($trains_hash);
 	my $putative_miRna = $cluster_job->process_spikes($spikes);
 	return $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna);
+}
+
+sub add_read_info_in_loci {
+	my $this = shift;
+	my $loci = shift;
+	
+	foreach my $chr (keys %$loci) {
+		foreach my $locus (@{$loci->{$chr}}) {
+			$locus->{'reads'} = miRkwood::HairpinBuilder::get_contained_reads($this->get_parsed_bed, $chr, $locus->{'begin'}
+			, $locus->{'end'}, $locus->{'strand'});
+		}
+	}
 }
 
 =method get_read_distribution_from_bam
@@ -244,9 +257,12 @@ sub get_chromosomes_info_from_genome_file {
     my ($self, @args) = @_;
     
     my %chr_lengths;
-    foreach my $chr (keys %{$self->{'genome_db'}}) {
-		$chr_lengths{$chr} = length($self->{'genome_db'}{$chr});
+    foreach my $chr ($self->{'genome_db'}->get_all_primary_ids) {
+		$chr_lengths{$chr} = $self->{'genome_db'}->length($chr);
 	}
+    #~ foreach my $chr (keys %{$self->{'genome_db'}}) {
+		#~ $chr_lengths{$chr} = length($self->{'genome_db'}{$chr});
+	#~ }
 
     #~ my $genome_file = $self->{genome_file};
     #~ my $fai_file = $self->get_faidx_file();
@@ -334,65 +350,6 @@ sub get_strand {
 	my ($forward_read_count, $read_count) = @_;
 	return $forward_read_count >= $read_count*.7 ? '+' : $forward_read_count <= $read_count*.3 ? '-' : '?';
 }
-
-
-=method __get_windows_for_chr
-
-Private helper function that returns the windows for a given chr. You shouldnt use this function.
-
-=cut
-#~ sub __get_windows_for_chr {
-	#~ my $this = shift;
-	#~ my $read_distribution = shift;
-	#~ my $train_detection_threshold = shift;
-#~ 
-	#~ my @positions = sort {$a <=> $b} keys %$read_distribution;
-#~ 
-	#~ my @windows = ();
-	#~ if (scalar(@positions) == 0) {
-		#~ return \@windows;
-	#~ }
-#~ 
-	#~ my %current_train = (begin => $positions[0], end => $read_distribution->{$positions[0]}{'end'}, read_count => 0, forward_read_count => 0,
-	#~ spikes => [], classifier => KMeanSebastien->new());
-	#~ $current_train{'classifier'}->add_point(0);
-	#~ my %window = (begin => 0, read_count => 0, forward_read_count => 0, end => 0, trains => []);
-	#~ my $last_read_count = 0;
-	#~ my $spike_detection = 2;
-	#~ my $total_read_count = 0;
-	#~ my @end_reads = ();
-#~ 
-	#~ foreach my $position (@positions) {
-		#~ my $read_locus = $read_distribution->{$position};
-		#~ if ($current_train{'begin'} <= $position && $position < $current_train{'end'}) {
-			#~ $current_train{'end'} = max $current_train{'end'}, $read_locus->{'end'};
-			#~ $current_train{begin_offset_count} += $position - $current_train{'begin'};
-			#~ $current_train{length_count} += $read_locus->{'end'} - $current_train{'begin'};
-			#~ $current_train{'read_count'} += $read_locus->{'read_count'};
-			#~ $current_train{'forward_read_count'} += $read_locus->{'forward_read_count'};
-			#~ $current_train{last_read_begin} = $position;
-			#~ static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, \$last_read_count, $spike_detection);
-		#~ }
-		#~ else { # the read train ended
-			#~ static__get_trains__maintain_read_count(\%current_train, $position, \$total_read_count, \$last_read_count, \@end_reads, $spike_detection);
-			#~ static__get_trains__finish_train_spikes(\%current_train);
-			#~ $this->__get_windows_process_train_from_distribution(\@windows, \%current_train, \%window, $train_detection_threshold);
-			#~ %current_train = (begin => $position, end => $read_locus->{'end'}, read_count => $read_locus->{'read_count'}, forward_read_count => $read_locus->{'forward_read_count'}, spikes => [],
-			#~ classifier => $current_train{'classifier'});
-			#~ $total_read_count = 0;
-			#~ @end_reads = ();
-			#~ $last_read_count = 0;
-			#~ static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, \$last_read_count, $spike_detection);
-		#~ }
-		#~ $last_read_count = $total_read_count;
-	#~ }
-	#~ static__get_trains__finish_train_spikes(\%current_train);
-	#~ $this->__get_windows_process_train_from_distribution(\@windows, \%current_train, \%window, $train_detection_threshold);
-	#~ if ($window{'begin'} != $window{'end'}) {
-		#~ $this->__add_candidate_window_from_train(\@windows, \%window);
-	#~ }
-	#~ return \@windows;
-#~ }
 
 
 sub __get_trains_for_chr {
