@@ -50,7 +50,11 @@ my $page = <<"END_TXT";
                 <br /><br />
                 <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
                 <br />
-                <a id="area_clear" onclick="resetElementByID('seqArea')">Clear</a> 
+                <a id="area_clear" onclick="resetElementByID('seqArea')">Clear</a>
+                <br /><br />
+                <label for='seqFile'>Or upload a file: </label><input type="file" name="seqFile" id="seqFile" />
+                <br />
+                <a id="area_clear" onclick="resetElementByID('seqFile');">Clear Fasta</a>
                 
                 <br /><br />
                 
