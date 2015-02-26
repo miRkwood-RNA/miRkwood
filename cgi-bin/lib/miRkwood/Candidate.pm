@@ -200,16 +200,16 @@ Convert a given candidate to Vienna dot-bracket format
 sub candidateAsVienna {
     my ( $self, @args ) = @_;
     my $optimal = shift @args;
-    my $output = "";
+    my $output = '';
     my $candidate_name = $self->get_name();
     my $header = ">$candidate_name";
     my $structure;
     if ($optimal){
-        $header .= ", MFE structure";
+        $header .= ', MFE structure';
         $structure = $self->{'structure_optimal'};
     }else{
         $structure = $self->{'structure_stemloop'};
-        $header .= ", stemloop structure";
+        $header .= ', stemloop structure';
     }
     $output .= $header . "\n" . $self->{'sequence'} . "\n" . "$structure" . "\n";
     return $output;
@@ -223,7 +223,7 @@ Convert a given candidate to FASTA format
 
 sub candidateAsFasta {
     my ( $self, @args ) = @_;
-    my $output = "";
+    my $output = '';
     my $candidate_name = $self->get_name();
     $output .= '>'.$candidate_name . "\n" . $self->{'sequence'} . "\n";
     return $output;
@@ -241,7 +241,7 @@ my $gff_line = $candidate->candidate_as_gff();
 sub candidate_as_gff {
     my ( $self, @args ) = @_;
     my $candidate_name = 'preMir_' . $self->get_shortened_name();
-    my $text .= q{} .                       # BEGIN
+    my $text = q{} .                        # BEGIN
       $self->{'name'} . "\t" .              # seqid
       'miRkwood' . "\t" .                   # source
       'miRNA_primary_transcript' . "\t" .   # type
@@ -265,7 +265,7 @@ Return alternative candidates as Vienna dot-bracket
 sub alternativeCandidatesAsVienna {
     my ( $self, @args ) = @_;
     my $alternatives = $self->{'alternatives'};
-    my $output = "";
+    my $output = '';
     if ($alternatives) {
         my %alternatives = %{$alternatives};
         foreach my $name (sort keys %alternatives) {
@@ -291,7 +291,7 @@ sub make_alignments_HTML {
     my %alignments = %{$self->{'alignments'}};
     my %mirdup_results = %{$self->{'mirdup_validation'}};
 
-    my $contents = "";
+    my $contents = '';
     my @TOC;
     my $predictionCounter = 0;
 
@@ -337,7 +337,7 @@ sub make_alignments_HTML {
         foreach my $hit (@hits){
             my $alignment = $hit->{'alignment'};
             my $names = $hit->{'name'} . q{ } . $hit->{'def_query'};
-            my $additional_content = "";
+            my $additional_content = '';
             my $name;
             my $html_name;
             my @splitted = split('\|', $names);
@@ -347,14 +347,14 @@ sub make_alignments_HTML {
             $top    = sprintf "%-${spacing}s %3s %s %s", 'query', $hit->{'begin_target'}, $top,   $hit->{'end_target'};
             $middle = sprintf "%-${spacing}s %3s %s %s", '',      '',                     $middle, '';
 
-            my $title = '';
+            my $mirbase_title = '';
             if( (scalar @splitted) > 1 ) {
-                $title = 'miRBase sequences: ';
+                $mirbase_title = 'miRBase sequences: ';
             }else{
-                $title = 'miRBase sequence: ';
+                $mirbase_title = 'miRBase sequence: ';
             }
 
-            $name = "miRBase";
+            $name = 'miRBase';
             my @sequences;
             foreach my $seq (@splitted){
                 $seq =~ s/^\s+//;
@@ -369,11 +369,11 @@ sub make_alignments_HTML {
                     push @sequences, $html_name;
                 }
             }
-            $additional_content = "<span class='others'>$title" . join(', ', @sequences) . "</span>";
+            $additional_content = "<span class='others'>$mirbase_title" . join(', ', @sequences) . "</span>";
 
 
             $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
-            my $additional_space = "";
+            my $additional_space = '';
             my $sub_string = substr($bottom, 0, $spacing);
             $additional_space .= ' ' while ($sub_string =~ m/ /g);
             substr($bottom, 0, $spacing) = $name . $additional_space;
@@ -388,7 +388,7 @@ INNER
         }
 
     }
-    my $toc = "<span class='toc'>Putative miRNA locus: " . join(", ", @TOC) . '</span>';
+    my $toc = "<span class='toc'>Putative miRNA locus: " . join(', ', @TOC) . '</span>';
     return $toc . "\n" . $contents;
 
 }
@@ -403,7 +403,7 @@ sub get_optional_candidate_fields {
     my ( $self, @args ) = @_;
     my @fields = ();
     my $cfg    = miRkwood->CONFIG();
-    push @fields, ( 'mfe', 'mfei', 'amfe' );
+    push @fields, qw{mfe mfei amfe};
     if ( $cfg->param('options.randfold') ) {
         push @fields, ('shuffles');
     }
@@ -430,13 +430,12 @@ sub candidate_as_pseudoXML {
 
     my $name = $self->get_shortened_sequence_name();
 
-    my @fields_to_truncate = ( 'mfe', 'mfei', 'amfe' );
+    my @fields_to_truncate = qw{mfe mfei amfe};
 
     my @optional_fields = $self->get_optional_candidate_fields();
     my @headers1        =
       ( 'position', 'length', 'strand', 'quality', @optional_fields );
-    my @headers2 = ( 'structure_stemloop', 'sequence', 'identifier' );
-
+    my @headers2 = qw{structure_stemloop sequence identifier};
     my $result = "<Sequence";
 
     $result .= " name='$name'";
@@ -474,7 +473,7 @@ sub get_basic_informations {
     }
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', @optional_fields );
 	my $result = {};
-	
+
 	foreach (@headers){
 		$result->{$_} = $self->{$_};
 	}
@@ -507,7 +506,7 @@ sub turn_relative_positions_into_absolute_positions {
     $self->{'name'}           = $chromosome;
 
     return $self;
-        
+
 }
 
 =method get_reads
@@ -532,7 +531,7 @@ sub get_reads {
 
     open(my $SAMVIEW, $samtools_cmd);
     while ( <$SAMVIEW> ){
-        my @line = split('\t');
+        my @line = split(/\t/);
         my $start = $line[3];
         my $end = length($line[9]) + $start;
 
@@ -563,11 +562,11 @@ sub determine_precursor_arms {
 
     my $start_arm_2 = 0;
     my $end_arm_1 = 0;
-    my @structure_array = split('', $self->{'structure_stemloop'});   
+    my @structure_array = split('', $self->{'structure_stemloop'});
     my $stop = 0;
 
     my $index = 0;
-    
+
     while ( $index < scalar(@structure_array) and ! $stop ){
         if ( $structure_array[$index] eq '(' ){
             $end_arm_1 = $index;
@@ -582,7 +581,7 @@ sub determine_precursor_arms {
     $start_arm_2 += $self->{'start_position'};
     $end_arm_1   += $self->{'start_position'};
 
-    return ( $end_arm_1, $start_arm_2 );    
+    return ( $end_arm_1, $start_arm_2 );
 }
 
 =method compute_quality_from_reads
@@ -611,7 +610,7 @@ sub compute_quality_from_reads {
 
     if ( scalar(keys %{$self->{'reads'}}) > 0 ){
         foreach my $read_position (keys %{$self->{'reads'}}){
-            my ($start_read, $end_read) = split('-', $read_position);
+            my ($start_read, $end_read) = split(/-/, $read_position);
             if ( $start_read >= $start_arm_1 and $end_read <= $end_arm_1 ){
                 $reads_arm_1->{ $start_read } += $self->{'reads'}{ $read_position };
                 $count_arm_1 += $self->{'reads'}{ $read_position };
@@ -643,25 +642,25 @@ sub compute_quality_from_reads {
     # Criteria duplex
     if ( $max_read_arm_1 ne '' && $max_read_arm_2 ne '' ){
 
-        my ($start_max_1, $end_max_1) = split('-', $max_read_arm_1);
-        my ($start_max_2, $end_max_2) = split('-', $max_read_arm_2);
+        my ($start_max_1, $end_max_1) = split(/-/, $max_read_arm_1);
+        my ($start_max_2, $end_max_2) = split(/-/, $max_read_arm_2);
         my $relative_start_max_1 = $start_max_1 - $start_arm_1;
         my $relative_end_max_2   = $end_max_2 - $start_arm_1;
 
         if ( $self->{'CT'}{($relative_start_max_1)} ){
-            if ( $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 >= 0 
+            if ( $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 >= 0
              and $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 <= 4 ){
                 $criteria_duplex = 1;
             }
         }
         elsif ( $self->{'CT'}{($relative_start_max_1 +1 )} ) {
-            if ( $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) >= 0 
+            if ( $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) >= 0
              and $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) <= 4 ){
                 $criteria_duplex = 1;
             }
         }
         elsif( $self->{'CT'}{($relative_start_max_1 -1 )} ) {
-            if ( $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) >= 0 
+            if ( $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) >= 0
              and $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) <= 4 ){
                 $criteria_duplex = 1;
             }
@@ -697,7 +696,7 @@ sub store_attribute_ct {
         if ( /(\d+)\s+[a-zA-Z]\s+\d+\s+\d+\s+(\d+)\s+\d+/ ){
             $candidate->{'CT'}{ $1 } = $2;
         }
-    } 
+    }
 
     return $candidate;
 
