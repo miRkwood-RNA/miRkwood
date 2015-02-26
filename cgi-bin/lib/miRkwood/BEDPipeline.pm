@@ -13,6 +13,7 @@ use miRkwood::ClusterBuilder;
 use miRkwood::HairpinBuilder;
 use miRkwood::PrecursorBuilder;
 
+use Bio::DB::Fasta;
 
 =method new
 
@@ -23,14 +24,15 @@ Constructor
 sub new {
     my ( $class, @args ) = @_;
     my ($job_dir, $bed_file, $genome_file) = @args;
-    my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );
+    #~ my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );
+	my $genome_db = Bio::DB::Fasta->new($genome_file);
     my $self = {
         job_dir     => $job_dir,
         initial_bed => $bed_file,       # this is for the non filtered BED provided by the user
         bed_file    => '',              # this is for the final BED after all filtrations have been done
         mirna_bed   => '',              # this is for known miRNAs (ie miRNAs from miRBase). created during the filtration step. Maybe change that name ?
         genome_file => $genome_file,
-        genome_db   => \%genome_db,     # hash containing the genome, to avoid reading the file each time we need it
+        genome_db   => $genome_db,
         sequences   => undef
     };
     bless $self, $class;

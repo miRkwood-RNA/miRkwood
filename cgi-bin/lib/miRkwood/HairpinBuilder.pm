@@ -57,7 +57,7 @@ sub get_sub_sequence_on_strand {
 	#~ }
 	#~ return $seq;
 	my $seq = $this->{'genome_db'}->seq($chr, $start+1, $end, $strand);
-	$seq =~ s/[RYSWKMBDHV]/N/ig;
+	#~ $seq =~ s/[RYSWKMBDHV]/N/ig;
 	return $seq;
 }
 
