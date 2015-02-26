@@ -56,10 +56,16 @@ if (@unavailable){
 
 ##### Parameters
 my $cgi        = CGI->new();
-my $job_title  = $cgi->param('job');
-my $mail       = $cgi->param('mail');
-my $species    = $cgi->param('species');
-my $species_db = $cgi->param('db');
+my $job_title  = '';
+my $mail       = '';
+my $species    = '';
+my $species_db = '';
+my $seqArea    = '';
+
+$job_title  = $cgi->param('job');
+$mail       = $cgi->param('mail');
+$species    = $cgi->param('species');
+$species_db = $cgi->param('db');
 my $filter_CDS = $cgi->param('CDS');
 my $filter_tRNA_rRNA   = $cgi->param('filter-tRNA-rRNA');
 my $filter_multimapped = $cgi->param('filter_multimapped');
@@ -98,10 +104,10 @@ if ( $localBED =~ /.*\/([^\/.]+)[.]bed/ ){
 
 
 ##### Get species or reference sequence
-my $seqArea = $cgi->param('seqArea');
+$seqArea = $cgi->param('seqArea');
 my $genome = '';
 my $max_length = 100000;
-if ( $seqArea eq q{} )    # case model organism
+if ( $species ne '' )    # case model organism
 {
     debug('Reference species is a model organism.', 1);
     if ( -r File::Spec->catfile( miRkwood::Paths->get_data_path(), 'genomes/', $species . '.fa') ){
@@ -116,8 +122,16 @@ if ( $seqArea eq q{} )    # case model organism
     }
     
 }
-else{
+else {
     debug('Reference sequence is provided by the user.', 1);
+
+    if ( $seqArea eq q{} ){
+        my $upload = $cgi->upload('seqFile')
+          or miRkwood::WebTemplate::web_die("Error when getting seqFile: $!");
+        while ( my $ligne = <$upload> ) {
+            $seqArea .= $ligne;
+        }        
+    }
 
     # Check if genome is a valid fasta   
     $seqArea = miRkwood::Utils::cleanup_fasta_sequence($seqArea);
