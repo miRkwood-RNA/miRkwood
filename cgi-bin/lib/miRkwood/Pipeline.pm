@@ -133,7 +133,7 @@ sub filter_BED {
         ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
     }
 
-    if ( $filteredBED eq '' ){
+    if ( ! defined($filteredBED) or $filteredBED eq '' ){
         $self->{'bed_file'} = $self->{'initial_bed'};
         $self->{'mirna_bed'} = '';
     }
