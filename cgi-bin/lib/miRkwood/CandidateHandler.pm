@@ -44,13 +44,13 @@ Get the candidate filepath given its identifier and the job directory
 sub get_candidate_filepath {
     my ( $self, @args ) = @_;
     my $job = shift @args;
-    my $id = shift @args; 
+    my $id = shift @args;
     if ( -e File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id)) ) {
         return File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id));
     }
     elsif ( -e File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id)) ) {
         return File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id));
-    } 
+    }
     return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
 }
 
@@ -129,7 +129,7 @@ sub print_reads_clouds {
     $reads              = ( $mirna->{'precursor_reads'} or $mirna->{'reads'} );
 
     if ( !defined($reads) or $reads eq {} ){
-        debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );  
+        debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
         return;
     }
 
@@ -195,38 +195,38 @@ sub print_reads_clouds {
 
             $is_placed = 0;
             $i = 0;
-            while ( $is_placed == 0 && $i < scalar(@$placed) ){
+            while ( $is_placed == 0 && $i < scalar(@{$placed}) ){
                 if ( ! miRkwood::Utils::mirbase_tags_overlapping( $placed->[$i][-1], $position ) ){
                     push @{$placed->[$i]}, $position;
                     $is_placed = 1;
                 }
                 $i++;
             }
-            if ( $i == scalar(@$placed) && $is_placed == 0){
+            if ( $i == scalar(@{$placed}) && $is_placed == 0){
                 push @{$placed->[$i]}, $position;
             }
         }
 
-        my $tag = "";
+        my $tag = '';
 
         foreach my $line ( @$placed ){
 
-            $tag = "";
+            $tag = '';
 
             for ($i = 0; $i < miRkwood::Utils::get_element_of_split( $line->[0], '-', 0) -1; $i++){
-                $tag .= " ";
+                $tag .= ' ';
             }
-            $tag .= miRkwood::Utils::create_mirbase_tag( 
-                    miRkwood::Utils::get_element_of_split( $line->[0], '-', 0), 
+            $tag .= miRkwood::Utils::create_mirbase_tag(
+                    miRkwood::Utils::get_element_of_split( $line->[0], '-', 0),
                     miRkwood::Utils::get_element_of_split( $line->[0], '-', 1) );
 
-            for ($i = 1; $i < scalar(@$line); $i++){
+            for ($i = 1; $i < scalar(@{$line}); $i++){
                 for (my $j = 0; $j < miRkwood::Utils::get_element_of_split( $line->[$i], '-', 0) - miRkwood::Utils::get_element_of_split( $line->[$i-1], '-', 1) -1; $j++){
-                    $tag .= " ";
+                    $tag .= ' ';
                 }
                 $tag .= miRkwood::Utils::create_mirbase_tag(
                         miRkwood::Utils::get_element_of_split( $line->[$i], '-', 0),
-                        miRkwood::Utils::get_element_of_split( $line->[$i], '-', 1) );    
+                        miRkwood::Utils::get_element_of_split( $line->[$i], '-', 1) );
             }
             print $OUT "$tag\n";
 
@@ -235,25 +235,25 @@ sub print_reads_clouds {
     }
 
     ### Print the reads
-    my @sorted_positions = sort { miRkwood::Utils::get_element_of_split( $a, "-", 0 ) <=> miRkwood::Utils::get_element_of_split( $b, "-", 0 )
+    my @sorted_positions = sort { miRkwood::Utils::get_element_of_split( $a, '-', 0 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 )
                                     ||
-                                  miRkwood::Utils::get_element_of_split( $a, "-", 1 ) <=> miRkwood::Utils::get_element_of_split( $b, "-", 1 )  
+                                  miRkwood::Utils::get_element_of_split( $a, '-', 1 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 )
                               } (keys %$reads);
 
     foreach my $position (@sorted_positions){
 
-        my $read_start = miRkwood::Utils::get_element_of_split( $position, "-", 0 );
-        my $read_end = miRkwood::Utils::get_element_of_split( $position, "-", 1 );
+        my $read_start = miRkwood::Utils::get_element_of_split( $position, '-', 0 );
+        my $read_end = miRkwood::Utils::get_element_of_split( $position, '-', 1 );
         my $read_length = $read_end - $read_start;
 
         for ($i = 0; $i < $read_start - $precursor_start; $i++){
-            print $OUT ".";
+            print $OUT '.';
         }
         for ($i = 0; $i < $read_length; $i++){
-            print $OUT "*";
+            print $OUT '*';
         }
         for ($i = 0; $i <= $precursor_end - $read_end; $i++){
-            print $OUT ".";
+            print $OUT '.';
         }
         print $OUT " length=$read_length depth=$reads->{$position}\n";
 
