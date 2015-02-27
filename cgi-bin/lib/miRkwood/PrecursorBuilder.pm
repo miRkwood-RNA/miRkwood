@@ -6,6 +6,7 @@ use warnings;
 use Log::Message::Simple qw[msg error debug];
 
 use miRkwood;
+use miRkwood::Paths;
 
 use constant MFEI_THRESHOLD => -0.6;
 
@@ -229,9 +230,11 @@ sub create_candidate_directory {
     my $candidate = shift @args;
     my $candidate_identifier = shift @args;
 
-    my $cluster_directory = File::Spec->catdir( $self->{'workspace_dir'}, 
-                                                $self->{'chromosome_id'}, 
-                                                $candidate->{'max'}{'cluster'} . $candidate->{'max'}{'strand'} ); # TO CHECK : ok for WebBAM but for genomic... ?
+    my $cluster_directory = miRkwood::Paths::get_workspace_candidate_dir( $self->{'workspace_dir'},
+                                                                          $self->{'chromosome_id'},
+                                                                          $candidate->{'max'}{'cluster'},
+                                                                          $candidate->{'max'}{'strand'} ); # TO CHECK : ok for WebBAM but for genomic... ?
+
     my $candidate_dir = File::Spec->catdir( $cluster_directory, $candidate_identifier );
     mkdir $candidate_dir;
     return $candidate_dir;
