@@ -10,7 +10,7 @@ use miRkwood::Utils;
 
 use List::Util qw(max min);
 
-
+use miRkwood::Paths;
 use miRkwood::Parsers;
 use miRkwood::Programs;
 use miRkwood::Utils;
@@ -71,9 +71,13 @@ sub build_hairpins {
 	#~ my $strand = $locus->{strand} eq '+' ? 1 : -1;
 	#~ my $seq_id = $chr . '__' . $locus->{begin}+1 . '-' . ($locus->{end});
 	
-	my $working_dir = File::Spec->catdir($this->{'workspace'}, $chr);
-	mkdir $working_dir;
-	$working_dir = File::Spec->catdir($working_dir, $locus->{begin}+1 . '-' . $locus->{end} . '_' . $locus->{strand});
+    my $working_chr_dir = miRkwood::Paths::get_workspace_chromosome_dir( $this->{'workspace'}, $chr );
+	mkdir $working_chr_dir;
+
+    my $working_dir = miRkwood::Paths::get_workspace_candidate_dir( $this->{'workspace'},
+                                                                    $chr,
+                                                                    ($locus->{begin}+1) . '-' . ($locus->{end}),
+                                                                    $locus->{strand} );
 	mkdir $working_dir;
 
 	my $rnalfold_output_filename = 'rnalfold_out';
