@@ -122,7 +122,6 @@ sub store_known_mirnas_as_candidate_objects {
     my ($self, @args) = @_;
     my $job_dir        = $self->{'job_dir'};
     my $bed_file       = $self->{'mirna_bed'};
-    my $genome         = $self->{'genome_db'};
     my $reads_dir      = miRkwood::Paths::get_known_reads_dir_from_job_dir( $job_dir );
     my $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $job_dir );
     my $cfg            = miRkwood->CONFIG();
@@ -231,7 +230,7 @@ sub store_known_mirnas_as_candidate_objects {
                                                         $candidate,
                                                         [] );
 
-        $candidate = $candidatejob->update_known_candidate_information( $candidate, $genome );
+        $candidate = $candidatejob->update_known_candidate_information( $candidate, $self->{'genome_db'} );
 
         miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
 
