@@ -287,4 +287,40 @@ sub get_bed_file {
     return File::Spec->catdir( $absolute_job_dir, $bed_name. $bed_type . '.bed');
 }
 
+=method get_workspace_chromosome_dir
+
+  Return the path to a given chromosome directory
+  in the workspace directory
+  Parameters : - workspace directory
+               - chromosome id
+
+=cut
+sub get_workspace_chromosome_dir {
+    my (@args) = @_;
+    my $workspace_dir = shift @args;
+    my $chromosome = shift @args;
+    return File::Spec->catdir( $workspace_dir, $chromosome);
+}
+
+=method get_workspace_candidate_dir
+
+  Return the path to a Candidate directory
+  in the workspace directory
+  Parameters : - workspace directory
+               - chromosome id
+               - cluster positions
+               - strand  
+
+=cut
+sub get_workspace_candidate_dir {
+    my (@args) = @_;
+    my $workspace_dir = shift @args;
+    my $chromosome = shift @args;
+    my $cluster = shift @args;
+    my $strand = shift @args;
+
+    my $chromosome_dir = get_workspace_chromosome_dir( $workspace_dir, $chromosome );
+    return File::Spec->catdir( $chromosome_dir, $cluster . $strand );
+}
+
 1;
