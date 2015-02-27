@@ -103,7 +103,7 @@ sub update_known_candidate_information {
     my $start = $candidate->{'start_position'};
     my $end   = $candidate->{'end_position'};
 
-    $candidate->{'sequence'} = substr $genome->{ $candidate->{'chromosome'} }, $start-1, ($end - $start +1);
+    $candidate->{'sequence'} = $genome->seq( $candidate->{'chromosome'}, $start => $end );
     $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
                              miRkwood::Utils::compute_gc_content($candidate->{'sequence'}), 3);
     ($candidate->{'structure_stemloop'}, $candidate->{'mfe'}) = $self->get_stemloop_structure_for_known_candidate();
