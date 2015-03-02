@@ -47,16 +47,11 @@ sub get_parsed_bed {
 }
 
 # gets the sequence. start starts at 0. end is excluded
-# strand is 1 or -1
-# if strand == -1, then the reverse complement is returned
+# strand is '+' or '-'
+# if strand == '-', then the reverse complement is returned
 sub get_sub_sequence_on_strand {
 	my ($this, $chr, $start, $end, $strand) = @_;
-	#~ my $seq = $this->get_sub_sequence($chr, $start, $end);
-	#~ if ($strand == -1) {
-		#~ return miRkwood::Utils::reverse_complement($seq);
-	#~ }
-	#~ return $seq;
-	my $seq = $this->{'genome_db'}->seq($chr, $start+1, $end, $strand);
+	my $seq = $this->{'genome_db'}->seq($chr, $start+1, $end, $strand eq '+' ? 1 : -1);
 	#~ $seq =~ s/[RYSWKMBDHV]/N/ig;
 	return $seq;
 }
@@ -68,15 +63,13 @@ sub build_hairpins {
 	#~ warn("HairpinBuilder: $locus->{'chr'}:", $locus->{begin}+1, '-', $locus->{end}, ' [', $locus->{strand}, "]\n");
 	
 	my $chr = $locus->{'chr'};
-	#~ my $strand = $locus->{strand} eq '+' ? 1 : -1;
-	#~ my $seq_id = $chr . '__' . $locus->{begin}+1 . '-' . ($locus->{end});
 	
     my $working_chr_dir = miRkwood::Paths::get_workspace_chromosome_dir( $this->{'workspace'}, $chr );
 	mkdir $working_chr_dir;
 
     my $working_dir = miRkwood::Paths::get_workspace_candidate_dir( $this->{'workspace'},
                                                                     $chr,
-                                                                    ($locus->{begin}+1) . '-' . ($locus->{end}),
+                                                                    ($locus->{begin}) . '-' . ($locus->{end}),
                                                                     $locus->{strand} );
 	mkdir $working_dir;
 
@@ -162,7 +155,6 @@ sub process_RNAstemloop_on_filenames {
     my $chr = shift @args;
     my ($strand) = shift @args;
     my ($sequence_miRnas) = shift @args;
-    #~ my $parsed_bed = shift @args;
 
     open( my $STEM_FH, '<', $rnastemloop_out_stemloop ) or die "Error opening $rnastemloop_out_stemloop: $!";
     open( my $EVAL_OPT_FH, '<', $rnaeval_out_optimal ) or die $!;
@@ -176,53 +168,6 @@ sub process_RNAstemloop_on_filenames {
     close($EVAL_STEM_FH);
     return $candidates;
 }
-
-# See std::lower_bound in the C++ standard library
-#~ sub lowerbound_binsearch {
-	#~ my $arr = shift;
-	#~ my $first = shift;
-	#~ my $last = shift; # last is excluded, past the last item
-	#~ my $val = shift;
-	#~ 
-	#~ my $len = $last - $first;
-	#~ while ($len > 0) {
-		#~ my $half = $len >> 1;
-		#~ my $middle = $first + $half;
-		#~ if ($arr->[$middle]{'begin'} < $val) {
-			#~ $first = $middle;
-			#~ $first++;
-			#~ $len = $len - $half - 1;
-		#~ }
-		#~ else {
-			#~ $len = $half;
-		#~ }
-	#~ }
-	#~ return $first;
-#~ }
-#~ 
-#~ # See std::upper_bound in the C++ standard library
-#~ sub upperbound_binsearch {
-	#~ my $arr = shift;
-	#~ my $first = shift;
-	#~ my $last = shift; # last is excluded, past the last item
-	#~ my $val = shift;
-	#~ 
-	#~ my $it;
-	#~ my ($count, $step);
-	#~ $count = $last - $first;
-	#~ while ($count > 0)	{
-		#~ $it = $first; $step = $count >> 1; $it += $step;
-		#~ if (!($val < $arr->[$it]{'begin'})) {
-			#~ $it++;
-			#~ $first = $it;
-			#~ $count -= $step + 1;
-		#~ }
-		#~ else {
-			#~ $count= $step;
-		#~ }
-	#~ }
-	#~ return $first;
-#~ }
 
 sub get_contained_read_coverage {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
@@ -260,19 +205,13 @@ sub get_contained_reads {
 	my $high = CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
 
 	my %result = ();
-	#~ if ($low == scalar @{$reads}) {
-		#~ return \%result;
-	#~ }
-	#~ if ($high == scalar @{$reads}) {
-		#~ $high--;
-	#~ }
 
 	for (my $i = $low; $i < $high; $i++) {
 		my $read_begin = $reads->[$i]{'begin'};
 		my @read_ends = keys %{$reads->[$i]{'ends'}};
 		foreach my $read_end (@read_ends) {
 			if ($read_end <= $region_end) {
-				$result{($read_begin+1).'-'.$read_end} = $reads->[$i]{'ends'}{$read_end};
+				$result{($read_begin).'-'.$read_end} = $reads->[$i]{'ends'}{$read_end};
 			}
 		}
 	}
@@ -419,13 +358,13 @@ sub process_RNAstemloop {
                         $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
 					if ($self->eval_single_stemloop($chr, $strand, $stemloop, $sequence_miRnas) == 1) {
-						my $cluster_position = ($seq_begin+1). '-' . ($seq_begin+$seq_len);
+						my $cluster_position = ($seq_begin). '-' . ($seq_begin+$seq_len);
 						my $res = {
-							'name' => $chr. '__' .($stemloop->{'begin'}+1).'-'.$stemloop->{'end'} . $strand,
+							'name' => $chr. '__' .($stemloop->{'begin'}).'-'.$stemloop->{'end'} . $strand,
 							'strand' => $strand,
 							'sequence' => $dna,
-							'start_position' => $stemloop->{'begin'}+1, # starts at 1
-							'end_position' => $stemloop->{'end'}, # includes the end
+							'start_position' => $stemloop->{'begin'}, # 0-based
+							'end_position' => $stemloop->{'end'}, # excludes the end
 							'mfei' => $mfei,
 							'amfe' => $amfe,
 							'structure_optimal' => $structure_optimal,

@@ -252,7 +252,7 @@ Static private helper function. You shouldnt use this function.
 =cut
 sub __look_forward {
 	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $enlarged_spike, $window_length) = @_;
-	my @candidate_region = (min ($enlarged_spike->{'end'}+15, $chr_length), min ($enlarged_spike->{'end'}+$window_length, $chr_length));
+	my @candidate_region = (min ($enlarged_spike->{'end'}+15, $chr_length), min ($enlarged_spike->{'end'}+$window_length+15, $chr_length));
 	if ($candidate_region[1] - $candidate_region[0] < $enlarged_spike->{'end'} - $enlarged_spike->{'begin'}) {
 		# At the right end of the chromosome
 		return 0;
@@ -308,7 +308,7 @@ Static private helper function. You shouldnt use this function.
 =cut
 sub __look_backward {
 	my ($detector, $miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $enlarged_spike, $window_length) = @_;
-	my @candidate_region = (max ($enlarged_spike->{'begin'}-$window_length-15, 0), max ($enlarged_spike->{'begin'}-16, 0));
+	my @candidate_region = (max ($enlarged_spike->{'begin'}-$window_length-15, 0), max ($enlarged_spike->{'begin'}-15, 0));
 	if ($candidate_region[1] - $candidate_region[0] < $enlarged_spike->{'end'} - $enlarged_spike->{'begin'}) {
 		return 0;
 	}
