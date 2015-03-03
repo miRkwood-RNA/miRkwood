@@ -178,7 +178,7 @@ sub store_known_mirnas_as_candidate_objects {
             $data->{$precursor_id}{'precursor_name'}  = $name;
             $data->{$precursor_id}{'name'}  = $field[0];
             $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
-            $data->{$precursor_id}{'start_position'} = $field[9] + 1;
+            $data->{$precursor_id}{'start_position'} = $field[9];
             $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};
             $data->{$precursor_id}{'precursor_reads'}{"$read_start-$read_end"} = $field[4];
@@ -186,7 +186,7 @@ sub store_known_mirnas_as_candidate_objects {
         elsif ( $field[8] eq 'miRNA' ){
             $precursor_id = $precursor_of_mature->{$id};
             $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
-            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9] + 1;
+            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
             $data->{$precursor_id}{'matures'}{$id}{'mature_end'}   = $field[10];
             $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$read_start-$read_end"} = $field[4];
         }
