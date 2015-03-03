@@ -244,7 +244,7 @@ sub print_reads_clouds {
 
         my $read_start = miRkwood::Utils::get_element_of_split( $position, '-', 0 );
         my $read_end = miRkwood::Utils::get_element_of_split( $position, '-', 1 );
-        my $read_length = $read_end - $read_start;
+        my $read_length = $read_end - $read_start + 1;
 
         for ($i = 0; $i < $read_start - $precursor_start; $i++){
             print $OUT '.';
