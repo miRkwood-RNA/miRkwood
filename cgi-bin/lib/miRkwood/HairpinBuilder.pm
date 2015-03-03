@@ -69,7 +69,7 @@ sub build_hairpins {
 
     my $working_dir = miRkwood::Paths::get_workspace_candidate_dir( $this->{'workspace'},
                                                                     $chr,
-                                                                    ($locus->{begin}) . '-' . ($locus->{end}),
+                                                                    ($locus->{begin}+1) . '-' . ($locus->{end}),
                                                                     $locus->{strand} );
 	mkdir $working_dir;
 
