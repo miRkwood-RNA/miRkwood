@@ -163,6 +163,9 @@ sub store_known_mirnas_as_candidate_objects {
 
         @field = split( /\t/xms );
 
+        my $read_start = $field[1] + 1; # 1-based
+        my $read_end   = $field[2];     # 1-based       
+
         if ($field[14] =~ /ID=([^;]+).*Name=([^;]+)/ ){
             $id = $1;
             $name = $2;
@@ -170,24 +173,25 @@ sub store_known_mirnas_as_candidate_objects {
 
         if ( $field[8] eq 'miRNA_primary_transcript' ){
             $precursor_id = $id;
+
             $data->{$precursor_id}{'identifier'}      = $id;
             $data->{$precursor_id}{'precursor_name'}  = $name;
             $data->{$precursor_id}{'name'}  = $field[0];
             $data->{$precursor_id}{'length'} = $field[10] - $field[9] + 1;
-            $data->{$precursor_id}{'start_position'} = $field[9];
+            $data->{$precursor_id}{'start_position'} = $field[9] + 1;
             $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};
-            $data->{$precursor_id}{'precursor_reads'}{"$field[1]-$field[2]"} = $field[4];
+            $data->{$precursor_id}{'precursor_reads'}{"$read_start-$read_end"} = $field[4];
         }
         elsif ( $field[8] eq 'miRNA' ){
             $precursor_id = $precursor_of_mature->{$id};
             $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
-            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
+            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9] + 1;
             $data->{$precursor_id}{'matures'}{$id}{'mature_end'}   = $field[10];
-            $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$field[1]-$field[2]"} = $field[4];
+            $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$read_start-$read_end"} = $field[4];
         }
 
-        $data->{$precursor_id}{'chromosome'} = $field[0];   # useless ?
+        $data->{$precursor_id}{'chromosome'} = $field[0];
         $data->{$precursor_id}{'strand'}     = $field[5];
 
     }
