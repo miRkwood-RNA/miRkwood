@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+
+# PODNAME: mirkwood-bed.pl
+# ABSTRACT: miRkwood - A micro-RNA analysis pipeline for sRNAseq analysis
+
 use warnings;
 use strict;
 
