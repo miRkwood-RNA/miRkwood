@@ -6,7 +6,7 @@ use POSIX;
 
 use miRkwood;
 use miRkwood::MiRnaDuplexDetector;
-
+use miRkwood::HairpinBuilder;
 use miRkwood::Utils;
 
 
@@ -74,14 +74,6 @@ sub get_sub_sequence {
 sub display_chr_coordinatees {
 	my ($chr, $begin, $end) = @_;
 	return $chr. ':' . $begin+1 . '-' . $end;
-}
-
-sub run {
-	my ($this, $sequences_per_chr, $parsed_bed) = @_;
-	my $candidates_miRNA = $this->process_window_spikes($sequences_per_chr);
-	my $regions = $this->compute_candidate_precursors_from_miRnaPos($candidates_miRNA);
-	my $candidate_precursors = $this->apply_structure_criterion($regions, $parsed_bed);
-	return $candidate_precursors;
 }
 
 
@@ -516,11 +508,16 @@ Regions that overlap by more than 60% are merged together.
 sub compute_candidate_precursors_from_miRnaPos {
 	my $this = shift;
 	my $miRnaPosPerChr = shift;
+	
+	my $read_coverage_threshold = shift;
+	my $peak_padding = shift;
+	my $parsed_bed = shift;
 	my %candidate_region = ();
 
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		my $miRnaPos = $miRnaPosPerChr->{$chr};
-		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($chr, $miRnaPos, $this->{chr_info}{$chr});
+		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($chr, $miRnaPos, $this->{chr_info}{$chr},
+		$read_coverage_threshold, $peak_padding, $parsed_bed);
 	}
 	return \%candidate_region;
 }
@@ -628,30 +625,27 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 	my $chr = shift;
 	my $miRnaPos = shift;
 	my $chr_length = shift;
-
-	my $padding = 100;
+	
+	my $read_coverage_threshold = shift;
+	my $peak_padding = shift;
+	my $parsed_bed = shift;
 
 	if (scalar @{$miRnaPos} == 0) {
 		return [];
 	}
 	my %regions = ('+' => [], '-' => []);
 
-	my $current_miRna = $miRnaPos->[0];
-	my %last_region = ('+' => undef, '-' => undef);
-
-	push @{$regions{$current_miRna->{'strand'}}}, 
-		{'begin'  => max(0, $current_miRna->{first}{'begin'}-$padding), 
-		 'end'    => min($chr_length, $current_miRna->{second}{'end'}+$padding),
-		 'strand' => $current_miRna->{'strand'}, 
-		 'miRnas' => [$current_miRna],
-		 'chr' => $chr
-		 };
-
-	for (my $i = 1; $i < scalar @{$miRnaPos}; $i++) {
+	for (my $i = 0; $i < scalar @{$miRnaPos}; $i++) {
 		my $current_miRna = $miRnaPos->[$i];
+		my $region_begin = max(0, $current_miRna->{first}{'begin'}-$peak_padding);
+		my $region_end = min($chr_length, $current_miRna->{second}{'end'}+$peak_padding);
+		if (HairpinBuilder::get_contained_read_coverage($parsed_bed, $chr, $region_begin, $region_end, $current_miRna->{'strand'})
+		< $read_coverage_threshold) {
+			next;
+		}
 		my %region = (
-			'begin'  => max(0, $current_miRna->{first}{'begin'}-$padding), 
-			'end'    => min($chr_length, $current_miRna->{second}{'end'}+$padding), 
+			'begin'  => $region_begin, 
+			'end'    => $region_end, 
 			'strand' => $current_miRna->{'strand'},
 			'miRnas' => [$current_miRna],
 			'chr' => $chr);

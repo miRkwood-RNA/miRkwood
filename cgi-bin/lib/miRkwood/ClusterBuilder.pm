@@ -19,7 +19,9 @@ sub new {
         'genome_db' => $genome_db,
         'bed_file' => $bed_file,
         'accepting_time' => 350,
-        'train_detection_threshold' => 2
+        'train_detection_threshold' => 3, # How much overlapping reads (with depth) there should be to capture a train
+        'loci_read_coverage_threshold' => 10, # The read coverage threshold below which the locus is discarded
+        'peak_padding' => 100 # How much nt we add on both sides of miRNAs to create a locus
     }, $class;
     my %chr_info = $self->get_chromosomes_info_from_genome_file();
     $self->{chr_info} = \%chr_info;
@@ -40,8 +42,19 @@ sub build_loci {
 	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
 	my $spikes = $cluster_job->extract_spike_train($trains_hash);
+	
+	undef $trains_hash;
+	
 	my $putative_miRna = $cluster_job->process_spikes($spikes);
-	return $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna);
+	
+	undef $spikes;
+	
+	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $this->{'loci_read_coverage_threshold'}, 
+	$this->{'peak_padding'}, $parsed_bed);
+	
+	undef $putative_miRna;
+	
+	return $loci;
 }
 
 sub add_read_info_in_loci {
