@@ -173,11 +173,11 @@ sub get_contained_read_coverage {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
 	my $reads = $parsed_bed->{$chr}{$strand};
 
-	my $low = CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
+	my $low = miRkwood::CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
 	if ($low == scalar @{$reads}) {
 		return 0;
 	}
-	my $high = CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
+	my $high = miRkwood::CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
 
 	my $cov = 0;
 
@@ -198,11 +198,11 @@ sub get_contained_reads {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
 	my $reads = $parsed_bed->{$chr}{$strand};
 
-	my $low = CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
+	my $low = miRkwood::CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
 	if ($low == scalar @{$reads}) {
 		return {};
 	}
-	my $high = CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
+	my $high = miRkwood::CppBinarySearch::upper_bound($reads, $low, scalar @{$reads}, $region_end);
 
 	my %result = ();
 

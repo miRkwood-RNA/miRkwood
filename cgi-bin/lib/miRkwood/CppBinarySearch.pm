@@ -1,4 +1,4 @@
-package CppBinarySearch;
+package miRkwood::CppBinarySearch;
 
 use strict;
 use warnings;
