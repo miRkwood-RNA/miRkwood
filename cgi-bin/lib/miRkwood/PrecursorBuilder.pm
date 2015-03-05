@@ -1,5 +1,7 @@
 package miRkwood::PrecursorBuilder;
 
+# ABSTRACT: methods to get a miRNA precursor Candidate from an Hairpin Candidate
+
 use strict;
 use warnings;
 
