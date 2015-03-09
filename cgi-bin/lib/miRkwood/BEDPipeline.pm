@@ -74,7 +74,6 @@ sub compute_candidates {
 
     # Look for new miRNAs
     my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
-    my %hairpin_candidates = ();
     foreach my $chr (keys %{$loci}) {
         debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
         my $loci_for_chr = $loci->{$chr};
@@ -82,11 +81,10 @@ sub compute_candidates {
         my @sorted_hairpin_candidates_for_chr = ();
         foreach my $locus (@{$loci_for_chr}) {
             debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
-            $sequence_identifier++;                
+            $sequence_identifier++;
             push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
         }
         @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
-        $hairpin_candidates{$chr} = \@sorted_hairpin_candidates_for_chr;
 
         if ( scalar(@sorted_hairpin_candidates_for_chr) ){
             my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chr, $chr );
@@ -129,8 +127,8 @@ sub store_known_mirnas_as_candidate_objects {
     my $gff_file       = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
 
     my @field;
-    my ($id, $name, $chromosome);
-    my ($precursor_reads, $precursor_id);
+    my ($id, $name);
+    my $precursor_reads;
     my $precursor_of_mature;
     my $mature_reads;
     my $data;
@@ -162,7 +160,7 @@ sub store_known_mirnas_as_candidate_objects {
         chomp;
 
         @field = split( /\t/xms );
-
+        my $precursor_id = '';
         my $read_start = $field[1] + 1; # 1-based
         my $read_end   = $field[2];     # 1-based       
 
@@ -199,7 +197,7 @@ sub store_known_mirnas_as_candidate_objects {
     close $BED;
 
     ##### Treat data by precursor
-    foreach $precursor_id ( keys%{$data} ){
+    foreach my $precursor_id ( keys%{$data} ){
 
         $precursor_reads = 0;
         $mature_reads = 0;
