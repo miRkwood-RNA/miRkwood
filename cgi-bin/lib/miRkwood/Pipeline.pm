@@ -15,7 +15,8 @@ use miRkwood::Utils;
 use miRkwood::SequenceJob;
 use miRkwood::HairpinBuilder;
 use miRkwood::PrecursorBuilder;
-use Data::Dumper;
+use miRkwood::BEDHandler;
+
 
 =method new
 
