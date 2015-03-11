@@ -7,6 +7,10 @@ use warnings;
 
 use feature 'switch';
 
+use Devel::Size qw(size total_size);
+use PadWalker;
+use Log::Message::Simple qw[msg error debug];
+
 =method reverse_complement
 
 Compute de reverse complement of the sequence
@@ -1025,6 +1029,27 @@ sub delete_element_in_array {
 
     return @newArray;
 
+}
+
+=method display_var_sizes_in_log_file
+
+  Method to track the memory use
+  Return all user variables and their size in scope at the
+  point in the program where this function is called.
+  
+=cut
+sub display_var_sizes_in_log_file {
+    my ( @args ) = @_;
+    my $message = shift @args;
+    my $variables = PadWalker::peek_my (1);
+    my $total = 0;
+    debug( $message, miRkwood->DEBUG() );
+    foreach my $var ( keys%{$variables} ){
+        debug( ".......... $var : ". total_size( $variables->{ $var } ), miRkwood->DEBUG());
+        $total += total_size( $variables->{ $var } );
+    }
+    debug(  ".................... TOTAL : $total", miRkwood->DEBUG());
+    return;
 }
 
 1;
