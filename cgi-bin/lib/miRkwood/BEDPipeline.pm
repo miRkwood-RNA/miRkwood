@@ -62,14 +62,13 @@ sub init_sequences {
 sub compute_candidates {
     my ($self, @args) = @_;
 
-    my $loci = $self->{'sequences'};
     my $sequence_identifier = 0;
 
     # Look for new miRNAs
-    foreach my $chr (keys %{$loci}) {
+    foreach my $chr (keys %{ $self->{'sequences'} }) {
         debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
         my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
-        my $loci_for_chr = $loci->{$chr};
+        my $loci_for_chr = $self->{'sequences'}->{$chr};
         my @hairpin_candidates_for_chr = ();
         foreach my $locus (@{$loci_for_chr}) {
             debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
