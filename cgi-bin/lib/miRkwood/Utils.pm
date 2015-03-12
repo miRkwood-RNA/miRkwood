@@ -7,8 +7,6 @@ use warnings;
 
 use feature 'switch';
 
-use Devel::Size qw(size total_size);
-use PadWalker;
 use Log::Message::Simple qw[msg error debug];
 
 =method reverse_complement
@@ -1037,10 +1035,18 @@ sub delete_element_in_array {
   Return all user variables and their size in scope at the
   point in the program where this function is called.
   
+  /!\ WARNING : this needs 2 modules to be installed.
+  Use it only if you need to optimize the code.
+  
 =cut
 sub display_var_sizes_in_log_file {
     my ( @args ) = @_;
     my $message = shift @args;
+
+    use Devel::Size qw(size total_size);
+    use PadWalker;
+    $Devel::Size::warn = 0;    # This is to avoid annoying warnings
+
     my $variables = PadWalker::peek_my (1);
     my $total = 0;
     debug( $message, miRkwood->DEBUG() );
