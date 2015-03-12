@@ -65,15 +65,6 @@ sub compute_candidates {
     my $loci = $self->{'sequences'};
     my $sequence_identifier = 0;
 
-    # Look for known miRNAs
-    if ( $self->{'mirna_bed'} ne '' ){
-        debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
-        $self->treat_known_mirnas();
-    }
-    else{
-        debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
-    }
-
     # Look for new miRNAs
     foreach my $chr (keys %{$loci}) {
         debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
@@ -123,6 +114,8 @@ sub treat_known_mirnas {
 
     $self->store_known_mirnas_as_candidate_objects();
     $self->serialize_basic_candidates( 'basic_known_candidates' );
+
+    undef $self->{'basic_known_candidates'};
 
     return;
 

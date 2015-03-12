@@ -53,6 +53,15 @@ sub run_pipeline {
     my $mode = $cfg->param('job.mode');
     if ( $mode eq 'WebBAM' ){
         $self->filter_BED();
+
+        # Look for known miRNAs
+        if ( $self->{'mirna_bed'} ne '' ){
+            debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
+            $self->treat_known_mirnas();
+        }
+        else{
+            debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
+        }        
     }
 
     $self->init_sequences();
