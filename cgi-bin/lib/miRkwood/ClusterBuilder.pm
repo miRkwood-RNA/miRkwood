@@ -1,10 +1,13 @@
 package miRkwood::ClusterBuilder;
 
+# ABSTRACT: ClusterBuilder object
+
 use strict;
 use warnings;
 
 use parent 'miRkwood::LociBuilder';
 
+use miRkwood::Utils;
 use miRkwood::HairpinBuilder;
 use miRkwood::ClusterJobSebastien;
 use miRkwood::KMeanSebastien;
@@ -38,22 +41,24 @@ sub build_loci {
 	my ($reads, $parsed_bed) = $this->get_read_distribution_from_bed($this->{'bed_file'});
 	$this->{'parsed_bed'} = $parsed_bed;
 	my $trains_hash = $this->get_trains($reads);
-	
+
 	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
 	my $spikes = $cluster_job->extract_spike_train($trains_hash);
-	
+
 	undef $trains_hash;
-	
+
 	my $putative_miRna = $cluster_job->process_spikes($spikes);
-	
+
 	undef $spikes;
-	
+
 	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $this->{'loci_read_coverage_threshold'}, 
 	$this->{'peak_padding'}, $parsed_bed);
-	
+
 	undef $putative_miRna;
-	
+
+	miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterBuilder : build_loci' );
+
 	return $loci;
 }
 
@@ -61,12 +66,14 @@ sub add_read_info_in_loci {
 	my $this = shift;
 	my $loci = shift;
 	
-	foreach my $chr (keys %$loci) {
+	foreach my $chr (keys %{$loci}) {
 		foreach my $locus (@{$loci->{$chr}}) {
 			$locus->{'reads'} = miRkwood::HairpinBuilder::get_contained_reads($this->get_parsed_bed, $chr, $locus->{'begin'}
 			, $locus->{'end'}, $locus->{'strand'});
 		}
 	}
+
+    return;
 }
 
 =method get_read_distribution_from_bam
@@ -86,8 +93,8 @@ Retrieve the reads from a bam file.
 
 =cut
 sub get_read_distribution_from_bam {
-	die ("Not supported anymore");
     my ( $this, $bam_file ) = @_;
+    die ('Not supported anymore');
     # go chr by chr, using the .fai index file to get the chr names
     my %reads = ();
     my %parsed_reads = ();
@@ -117,13 +124,13 @@ Static private helper function. You shouldnt use this function.
 
 =cut
 sub __get_read_distribution_from_bam_for_chr {
-	die ("Not supported anymore");
+	die ('Not supported anymore');
     my $HANDLE = shift;
     my %chr_reads = ();
     my %parsed_reads = ('+' => [], '-' => []);
     while (<$HANDLE>) {
         chomp;
-        my @fields = split("\t");
+        my @fields = split( /\t/ );
         my $pos = $fields[3]-1;
         my $strand = '+';
         $strand = '-' if $fields[1] & 0x10;
@@ -192,7 +199,7 @@ sub get_read_distribution_from_bed {
     while (<$HANDLE>) {
 		# First data structure
         chomp;
-        my @fields = split("\t");
+        my @fields = split( /\t/ );
         if (scalar @fields != 6) {
 			next;
         }
@@ -213,9 +220,9 @@ sub get_read_distribution_from_bed {
 			}
         }
         else {
-			push @{$reads{$chr}}, {'begin' => $pos, 
-									'read_count' => $depth, 
-									'end' => $end, 
+			push @{$reads{$chr}}, { 'begin' => $pos,
+									'read_count' => $depth,
+									'end' => $end,
 									'forward_read_count' => ($strand eq '+') ? $depth : 0};
         }
         # Second data structure
@@ -268,7 +275,7 @@ Retrieve chromosomes name and length and from FAI file.
 
 sub get_chromosomes_info_from_genome_file {
     my ($self, @args) = @_;
-    
+
     my %chr_lengths;
     foreach my $chr ($self->{'genome_db'}->get_all_primary_ids) {
 		$chr_lengths{$chr} = $self->{'genome_db'}->length($chr);
@@ -343,7 +350,6 @@ sub get_trains {
 	my $read_distribution_per_chr = shift;
 	my %trains_per_chr = ();
 	foreach my $chr (keys %{ $this->{chr_info} }) {
-		#~ print "\t", $chr, "\n";
 		$trains_per_chr{$chr} = $this->__get_trains_for_chr($read_distribution_per_chr->{$chr});
 	}
 	return \%trains_per_chr;
@@ -371,21 +377,21 @@ sub __get_trains_for_chr {
 	my $train_detection_threshold = $this->{'train_detection_threshold'};
 
 	my @trains = ();
-	if (scalar @$read_distribution == 0) {
+	if (scalar @{$read_distribution} == 0) {
 		return \@trains;
 	}
 
-	my %current_train = (begin => $read_distribution->[0]{'begin'}, 
+	my %current_train = (begin => $read_distribution->[0]{'begin'},
 		end => $read_distribution->[0]{'end'}, read_count => 0, forward_read_count => 0,
 		spikes => [], classifier => KMeanSebastien->new());
 	$current_train{'classifier'}->add_point(0);
-	
+
 	my $last_read_count = 0;
 	my $spike_detection = 2;
 	my $total_read_count = 0;
 	my @end_reads = ();
 
-	foreach my $read_locus (@$read_distribution) {
+	foreach my $read_locus (@{$read_distribution}) {
 		#~ my $read_locus = $read_distribution->[$index];
 		my $position = $read_locus->{'begin'};
 		if ($current_train{'begin'} <= $position && $position < $current_train{'end'}) {
@@ -393,23 +399,23 @@ sub __get_trains_for_chr {
 			$current_train{'read_count'} += $read_locus->{'read_count'};
 			$current_train{'forward_read_count'} += $read_locus->{'forward_read_count'};
 			#~ $current_train{last_read_begin} = $position;
-			static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, 
+			static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads,
 				\$last_read_count, $spike_detection);
 		}
 		else { # the read train ended
-			static__get_trains__maintain_read_count(\%current_train, $position, \$total_read_count, \$last_read_count, \@end_reads, 
+			static__get_trains__maintain_read_count(\%current_train, $position, \$total_read_count, \$last_read_count, \@end_reads,
 				$spike_detection);
 			static__get_trains__finish_train_spikes(\%current_train);
 			static__get_trains__add_candidate_train(\@trains, \%current_train, $train_detection_threshold);
 			$current_train{'begin'} = $position;
 			$current_train{'end'} = $read_locus->{'end'};
-			$current_train{'read_count'} = $read_locus->{'read_count'}; 
+			$current_train{'read_count'} = $read_locus->{'read_count'};
 			$current_train{'forward_read_count'} = $read_locus->{'forward_read_count'};
 			$current_train{spikes} = [];
 			$total_read_count = 0;
 			@end_reads = ();
 			$last_read_count = 0;
-			static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads, 
+			static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads,
 				\$last_read_count, $spike_detection);
 		}
 		$last_read_count = $total_read_count;
@@ -431,6 +437,7 @@ sub static__get_trains__add_candidate_train {
 	if ($current_train->{'forward_read_count'} >= $train_detection_threshold || $reverse_read_count >= $train_detection_threshold) {
 		push @{$trains}, {%{$current_train}, 'strand' => get_strand($current_train->{'forward_read_count'}, $current_train->{'read_count'})};
 	}
+    return;
 }
 
 =method static__get_trains__maintain_read_count
@@ -443,9 +450,9 @@ sub static__get_trains__maintain_read_count {
 	my $spikes = $current_train->{spikes};
 
 	# Maintaining read count
-	if (scalar @$spikes && $spikes->[-1]{'end'} == -1) {
+	if (scalar @{$spikes} && $spikes->[-1]{'end'} == -1) {
 		my $last_spike = $spikes->[-1];
-		while (scalar @$end_reads && $end_reads->[0]{'end'} <= $position) {
+		while (scalar @{$end_reads} && $end_reads->[0]{'end'} <= $position) {
 			$$last_read_count = $$total_read_count;
 			$$total_read_count -= $end_reads->[0]{'read_count'};
 			my $trigger = $end_reads->[0]{'end'};
@@ -460,11 +467,12 @@ sub static__get_trains__maintain_read_count {
 			}
 		}
 	}
-	while (scalar @$end_reads && $end_reads->[0]{'end'} <= $position) {
+	while (scalar @{$end_reads} && $end_reads->[0]{'end'} <= $position) {
 		$$last_read_count = $$total_read_count;
 		$$total_read_count -= $end_reads->[0]{'read_count'};
 		shift @$end_reads;
 	}
+    return;
 }
 
 
@@ -488,6 +496,7 @@ sub static__get_trains__finish_train_spikes {
 	}
 	$current_train->{'classifier'}->clear_points();
 	$current_train->{'classifier'}->add_point(0);
+    return;
 }
 
 
@@ -503,12 +512,12 @@ sub static__get_trains__process_train_spikes {
 	# Maintaining read count
 	static__get_trains__maintain_read_count($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection);
 	$$total_read_count += $read_locus->{'read_count'};
-	push @$end_reads, {end => $read_locus->{'end'}, read_count => $read_locus->{'read_count'}};
-	@$end_reads = sort {$a->{'end'} <=> $b->{'end'}} @$end_reads;
+	push @{$end_reads}, {end => $read_locus->{'end'}, read_count => $read_locus->{'read_count'}};
+	@{$end_reads} = sort {$a->{'end'} <=> $b->{'end'}} @{$end_reads};
 	# Looking for spikes
 	my $added = $current_train->{'classifier'}->add_point($$total_read_count);
 	if ($added == KMeanSebastien::ASSIGNED_SECOND_CLASS) {
-		if (scalar @$spikes) {
+		if (scalar @{$spikes}) {
 			my $last_spike = $spikes->[-1];
 			if ($last_spike->{'end'} == -1) {
 				if ($current_train->{'classifier'}->class_of($last_spike->{'trigger'}) == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
@@ -520,7 +529,7 @@ sub static__get_trains__process_train_spikes {
 				return;
 			}
 		}
-		push @$spikes, {begin => $position, end => -1, trigger => $$total_read_count, read_count => $read_locus->{'read_count'},
+		push @{$spikes}, {begin => $position, end => -1, trigger => $$total_read_count, read_count => $read_locus->{'read_count'},
 		forward_read_count => $read_locus->{'forward_read_count'}};
 	}
 	elsif ($added == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
@@ -532,11 +541,12 @@ sub static__get_trains__process_train_spikes {
 		$current_train->{'classifier'}->clear_points();
 		$current_train->{'classifier'}->add_point($$total_read_count);
 	}
-	elsif (scalar @$spikes && $spikes->[-1]{'end'} == -1) {
+	elsif (scalar @{$spikes} && $spikes->[-1]{'end'} == -1) {
 		my $last_spike = $spikes->[-1];
 		$last_spike->{'read_count'} += $read_locus->{'read_count'};
 		$last_spike->{'forward_read_count'} += $read_locus->{'forward_read_count'};
 	}
+    return;
 }
 
 1;
