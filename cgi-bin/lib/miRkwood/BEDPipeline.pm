@@ -9,6 +9,7 @@ use parent 'miRkwood::Pipeline';
 
 use Log::Message::Simple qw[msg error debug];
 
+use miRkwood::Utils;
 use miRkwood::ClusterBuilder;
 use miRkwood::HairpinBuilder;
 use miRkwood::PrecursorBuilder;
@@ -49,6 +50,7 @@ sub init_sequences {
     my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
     $self->{'sequences'} = $clustering->build_loci();
     $self->{'parsed_reads'} = $clustering->get_parsed_bed();
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : init_sequences()');
     return;
 }
 # SEB END
@@ -73,24 +75,34 @@ sub compute_candidates {
     }
 
     # Look for new miRNAs
-    my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
     foreach my $chr (keys %{$loci}) {
         debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
+        my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
         my $loci_for_chr = $loci->{$chr};
         my @hairpin_candidates_for_chr = ();
-        my @sorted_hairpin_candidates_for_chr = ();
         foreach my $locus (@{$loci_for_chr}) {
             debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
             $sequence_identifier++;
             push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
+
+            #~ miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)' );  # /!\ WARNING : comment this line for web pipeline
         }
-        @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
+        undef $hairpinBuilder;
+
+        my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
+
+        undef @hairpin_candidates_for_chr;
 
         if ( scalar(@sorted_hairpin_candidates_for_chr) ){
             my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chr, $chr );
             my $candidates_hash = $precursorBuilderJob->process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
             my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
+
+            undef $candidates_hash;
+
             $self->serialize_candidates($final_candidates_hash);
+
+            miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (sort candidates)' );
         }
     }
 
@@ -243,6 +255,8 @@ sub store_known_mirnas_as_candidate_objects {
         miRkwood::CandidateHandler::print_reads_clouds( $candidate, $reads_dir );
 
     }
+
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : store_known_mirnas_as_candidate_objects' );
 
     return;
 
