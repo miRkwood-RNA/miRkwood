@@ -337,6 +337,8 @@ sub push_to_array_in_hash {
 
 Parse our custom Exonerate output
 (as defined in Programs::run_exonerate)
+This method can also be used to parse
+RNAcomp output.
 
 Usage: parse_exonerate_alignment($alignment);
 
