@@ -9,12 +9,27 @@ use Inline CPP => <<'END_OF_C_CODE';
 #include <vector>
 #include <utility>
 #include <cmath>
+#include <iostream>
 
+int ntToIndex(char nt) {
+	switch (nt) {
+		case 'A':
+			return 0;
+		case 'C':
+			return 1;
+		case 'G':
+			return 2;
+		case 'T':
+		case 'U':
+			return 3;
+		default:
+			return 4;
+	}
+}
 
-// This function returns true iff the nucleotide 'a' can bind with 'b'
-// If either nucleotide is 'N', it returns false
-// 'U' and 'T' are treated equally
-// You may call this function from Perl. Simply write '$result = equiv_forward_strand("C", "T");' and it will work.
+struct forward_strand {};
+struct reverse_strand {};
+
 bool equiv_forward_strand(char a, char b) {
 	if (a == 'G')
 		return b == 'C' || b == 'U' || b == 'T';
@@ -27,10 +42,7 @@ bool equiv_forward_strand(char a, char b) {
 	return false; // a == 'N'
 }
 
-// This function returns true iff the nucleotide 'a' can bind with 'b' on the reverse strand. (i.e. if the complement of 'a' can bind to the complement of 'b')
-// If either nucleotide is 'N', it returns false
-// 'U' and 'T' are treated equally
-// You may call this function from Perl. Simply write '$result = equiv_reverse_strand("C", "T");' and it will work.
+
 bool equiv_reverse_strand(char a, char b) {
 	if (a == 'A')
 		return b == 'U' || b == 'T' || b == 'C';
@@ -43,6 +55,64 @@ bool equiv_reverse_strand(char a, char b) {
 	return false; // a == 'N'
 }
 
+template <class>
+struct cost_function;
+
+#define INDEL -3
+#define SUBS -2
+
+template<>
+struct cost_function<forward_strand> {
+
+		static int match[5][5];
+
+		static int matchCost(char a, char b) { return match[ntToIndex(a)][ntToIndex(b)]; }
+
+		static int const insertion = INDEL;
+		static int const deletion = INDEL;
+
+		static bool equiv(char a, char b) {
+			return equiv_forward_strand(a, b);
+		}
+
+};
+template<>
+struct cost_function<reverse_strand> {
+
+		static int match[5][5];
+
+		static int matchCost(char a, char b) { return match[ntToIndex(a)][ntToIndex(b)]; }
+
+		static int const insertion = INDEL;
+		static int const deletion = INDEL;
+
+		static bool equiv(char a, char b) {
+			return equiv_reverse_strand(a, b);
+		}
+
+};
+
+int cost_function<forward_strand>::match[5][5] = {
+//		A		C		G		U		N
+/*A*/	{SUBS,	SUBS,	SUBS,	2,		SUBS},
+/*C*/	{SUBS,	SUBS,	3,		SUBS,	SUBS},
+/*G*/	{SUBS,	3,		SUBS,	1,		SUBS},
+/*U*/	{2,		SUBS,	1,		SUBS,	SUBS},
+/*N*/	{SUBS,	SUBS,	SUBS,	SUBS,	SUBS}
+};
+
+int cost_function<reverse_strand>::match[5][5] = {
+//		A		C		G		U		N
+/*A*/	{SUBS,	1,		SUBS,	2,		SUBS},
+/*C*/	{1,		SUBS,	3,		SUBS,	SUBS},
+/*G*/	{SUBS,	3,		SUBS,	SUBS,	SUBS},
+/*U*/	{2,		SUBS,	SUBS,	SUBS,	SUBS},
+/*N*/	{SUBS,	SUBS,	SUBS,	SUBS,	SUBS}
+};
+
+#undef SUBS
+#undef INDEL
+
 // This function just create a perl array reference. It returns: [r, s] (a reference on (r, s)).
 // SV stands for Scalar value
 // You shouldn't call this function from Perl
@@ -52,6 +122,22 @@ SV* __get_pos(int r, int s) {
 	av_push(array, newSViv(r)); // iv stands for Integer value
 	av_push(array, newSViv(s));
 	return newRV_noinc((SV*)array); // rv stands for Reference value
+}
+
+
+struct Locus {
+		unsigned int begin, end;
+		Locus(unsigned int b, unsigned int e) : begin(b), end(e) {}
+
+		SV* toPerl() const { return __get_pos(begin, end); }
+};
+
+enum ExtensionResult {
+	DistanceAboveThreshold, TestPassed, TooShortToTest, ReadAndSeqOverlap
+};
+
+inline std::ostream& operator<<(std::ostream& os, Locus const& pos) {
+	return os << "Locus: (" << pos.begin << " -> " << pos.end << ")";
 }
 
 struct EditDistanceScore {
@@ -87,173 +173,134 @@ class matrix {
 
 		EditDistanceScore& operator()(std::size_t i_row, std::size_t j_column) { return myData[myColumns*i_row+j_column]; }
 		EditDistanceScore const& operator()(std::size_t i_row, std::size_t j_column) const { return myData[myColumns*i_row+j_column]; }
+
+		void print(std::size_t from_i, std::size_t to_i, std::size_t from_j, std::size_t to_j, char* read, char* seq) const {
+			std::cout << "x\te\t";
+			seq += to_j-from_j-1;
+			for (std::size_t j = from_j+1; j <= to_j; ++j, --seq) {
+				std::cout << *seq << "\t";
+			}
+			std::cout << std::endl;
+			for (std::size_t i = from_i; i <= to_i; ++i) {
+				if (i == from_i)
+					std::cout << "e\t";
+				else
+					std::cout << *read++ << "\t";
+				for (std::size_t j = from_j; j <= to_j; ++j) {
+					std::cout << (*this)(i, j).value << "\t";
+				}
+				std::cout << std::endl;
+			}
+			std::cout << std::endl;
+		}
 };
 
-class matrix_int {
-	public:
-		//typedef unsigned int value_type;
-
-	private:
-		std::size_t myRows, myColumns;
-		std::vector<unsigned int> myData;
-
-	public:
-		matrix_int(std::size_t rows, std::size_t columns) : myRows(rows), myColumns(columns), myData(rows*columns) {}
-		matrix_int(std::size_t rows, std::size_t columns, unsigned int value) : myRows(rows), myColumns(columns), myData(rows*columns, value) {}
-
-		std::size_t rows() const { return myRows; }
-		std::size_t columns() const { return myColumns; }
-
-		std::size_t size() const { return myData.size(); }
-
-		//EditDistanceScore* data() { return myData.data(); }
-
-		unsigned int& operator()(std::size_t i_row, std::size_t j_column) { return myData[myColumns*i_row+j_column]; }
-		unsigned int const& operator()(std::size_t i_row, std::size_t j_column) const { return myData[myColumns*i_row+j_column]; }
-};
-
-// This function just create a perl array reference. It returns: [r, s] (a reference on (r, s)).
-// SV stands for Scalar value
-// You shouldn't call this function from Perl
-SV* __get_region(int begin_read, int end_read, int begin_seq, int end_seq) {
-	AV* array; // AV stands for Array Value
-	array = newAV();
-	av_push(array, __get_pos(begin_read, end_read)); // iv stands for Integer value
-	av_push(array, __get_pos(begin_seq, end_seq));
-	return newRV_noinc((SV*)array); // rv stands for Reference value
-}
-
-template <bool (*_equiv_function)(char, char)>
-EditDistanceScore process_score(matrix& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
+template <class _Strand>
+EditDistanceScore process_score(matrix& score_matrix, std::size_t i, std::size_t j, char read, char sequence, bool allowBinding) {
 	EditDistanceScore s;
-	if (_equiv_function(read, sequence))
-		s = (score_matrix(i, j) = score_matrix(i-1, j-1));
-	else {
-		EditDistanceScore subs = score_matrix(i-1,j-1).increasedBy(1);
-		EditDistanceScore insertion = score_matrix(i-1,j).increasedBy(2);
-		EditDistanceScore deletion = score_matrix(i,j-1).increasedBy(2);
-		if (subs.value <= insertion.value and subs.value <= deletion.value)
+//	if (_equiv_function(read, sequence) && allowBinding)
+//		s = (score_matrix(i, j) = score_matrix(i-1, j-1));
+//	else {
+		EditDistanceScore subs = score_matrix(i-1,j-1).increasedBy(cost_function<_Strand>::matchCost(allowBinding ? read : 'N', sequence));
+		EditDistanceScore insertion = score_matrix(i-1,j).increasedBy(cost_function<_Strand>::insertion);
+		EditDistanceScore deletion = score_matrix(i,j-1).increasedBy(cost_function<_Strand>::deletion);
+		if (subs.value >= insertion.value and subs.value >= deletion.value)
 			s = (score_matrix(i, j) = subs);
-		else if (insertion.value <= subs.value and insertion.value <= deletion.value)
+		else if (insertion.value >= subs.value and insertion.value >= deletion.value)
 			s = (score_matrix(i, j) = insertion);
 		else
 			s = (score_matrix(i, j) = deletion);
-	}
+//	}
 	return s;
-}
-
-template <bool (*_equiv_function)(char, char)>
-unsigned int process_score(matrix_int& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
-	unsigned int s;
-	if (_equiv_function(read, sequence))
-		s = (score_matrix(i, j) = score_matrix(i-1, j-1));
-	else {
-		unsigned int subs = score_matrix(i-1,j-1)+1;
-		unsigned int insertion = score_matrix(i-1,j)+2;
-		unsigned int deletion = score_matrix(i,j-1)+2;
-		if (subs <= insertion and subs <= deletion)
-			s = (score_matrix(i, j) = subs);
-		else if (insertion <= subs and insertion <= deletion)
-			s = (score_matrix(i, j) = insertion);
-		else
-			s = (score_matrix(i, j) = deletion);
-	}
-	return s;
-}
-
-EditDistanceScore process_score_forward_strand(matrix& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
-	return process_score<equiv_forward_strand>(score_matrix, i, j, read, sequence);
-}
-EditDistanceScore process_score_reverse_strand(matrix& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
-	return process_score<equiv_reverse_strand>(score_matrix, i, j, read, sequence);
-}
-
-unsigned int process_score_forward_strand(matrix_int& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
-	return process_score<equiv_forward_strand>(score_matrix, i, j, read, sequence);
-}
-unsigned int process_score_reverse_strand(matrix_int& score_matrix, std::size_t i, std::size_t j, char read, char sequence) {
-	return process_score<equiv_reverse_strand>(score_matrix, i, j, read, sequence);
 }
 
 // EDIT DISTANCE EXTENDED
 
 #include <limits>
+#include <algorithm>
+#include <vector>
 
-struct Locus {
-		unsigned int begin, end;
-		Locus(unsigned int b, unsigned int e) : begin(b), end(e) {}
 
-		SV* toPerl() const { return __get_pos(begin, end); }
-};
-
-#include <deque>
-
-SV* dequeToPerl(std::deque<Locus> const& loci) {
+SV* vectorToPerl(std::vector<Locus> const& loci) {
 	AV* results = newAV();
-	for (std::deque<Locus>::const_iterator it = loci.begin(), e = loci.end(); it != e; ++it) {
+	for (std::vector<Locus>::const_iterator it = loci.begin(), e = loci.end(); it != e; ++it) {
 		av_push(results, it->toPerl());
 	}
 	return newRV_noinc((SV*)results);
 }
 
+//struct TextBounds {
+//		Locus read, sequence;
+
+//		TextBounds(Locus r, Locus s) : read(r), sequence(s) {}
+//};
+
+typedef int TextBounds;
+
 class MiRnaDetector;
 
-template <bool (*_equiv_function)(char, char)>
-void computeDistance(char* text, int from_i, int to_i, int from_j, int to_j, MiRnaDetector& self);
-template <bool (*_equiv_function)(char, char)>
-bool checkInwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self);
-template <bool (*_equiv_function)(char, char)>
-bool checkOutwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self);
-template <bool (*_equiv_function)(char, char)>
-std::deque<Locus> tp_detect_on_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end, MiRnaDetector& self);
+template <class _Strand>
+void computeDistance(char* text, Locus read, Locus sequence, TextBounds const& bounds, MiRnaDetector& self);
+template <class _Strand>
+ExtensionResult checkInwardExtent(char* text, Locus read, Locus sequence, Locus locus, TextBounds const& bounds, MiRnaDetector& self);
+template <class _Strand>
+ExtensionResult checkOutwardExtent(char* text, Locus read, Locus sequence, Locus locus, TextBounds const& bounds, MiRnaDetector& self);
+template <class _Strand>
+std::vector<Locus> tp_detect_on_strand(char* text, int text_size, Locus read, Locus sequence, MiRnaDetector& self);
 
 class MiRnaDetector {
 
 	public:
 
 		matrix m_matrix;
-		int m_miRnaMinErrorsThreshold, m_miRnaMaxErrorsThreshold;
+		int m_miRnaHigherScoreThreshold, m_miRnaLowerScoreThreshold;
 		int m_miRnaMinLengthToExtend;
 		int m_increaseMiRnaEachNt;
-		double m_miRnaExtendedRatioErrorThreshold;
+		double m_miRnaExtendedRatioScoreThreshold;
 
-		void initRegion(int from_i, int to_i, int from_j, int to_j, bool realDistance) {
-			for (int i = 0, e = to_i-from_i; i <= e; i++) {
-				EditDistanceScore* data = m_matrix.scanRow(i+from_i) + from_j;
-				*data = EditDistanceScore(i, 0);
+		void initRegion(Locus read, Locus sequence, bool realDistance) {
+			for (int i = 0, e = read.end-read.begin; i <= e; i++) {
+				EditDistanceScore* data = m_matrix.scanRow(i+read.begin) + sequence.begin;
+				*data = EditDistanceScore(i*cost_function<forward_strand>::insertion, 0);
 			}
 			if (realDistance) {
-				EditDistanceScore* data = m_matrix.scanRow(from_i) + from_j+1;
-				for (int j = 1, e = to_j-from_j; j <= e; j++, data++)
-					*data = EditDistanceScore(j, j);
+				EditDistanceScore* data = m_matrix.scanRow(read.begin) + sequence.begin+1;
+				for (int j = 1, e = sequence.end-sequence.begin; j <= e; j++, data++)
+					*data = EditDistanceScore(j*cost_function<forward_strand>::deletion, j);
 			}
 			else {
-				EditDistanceScore* data = m_matrix.scanRow(from_i) + from_j+1;
-				for (int j = 1, e = to_j-from_j; j <= e; j++, data++)
+				EditDistanceScore* data = m_matrix.scanRow(read.begin) + sequence.begin+1;
+				for (int j = 1, e = sequence.end-sequence.begin; j <= e; j++, data++)
 					*data = EditDistanceScore(0, j);
 			}
 		}
 
-		std::deque<Locus> lookForMiRnaResult(int to_i, int from_j, int to_j, bool& meetMinThreshold) {
-			meetMinThreshold = false;
-			EditDistanceScore* data = m_matrix.scanRow(to_i) + from_j+1;
-			std::deque<Locus> result;
-			for (int j = 1, e = to_j-from_j; j <= e; j++, data++) {
-				if (data->value <= m_miRnaMinErrorsThreshold) {
-					if (!meetMinThreshold)
+		std::vector<Locus> lookForMiRnaResult(int to_i, Locus sequence, bool& meetHigherThreshold) {
+			meetHigherThreshold = false;
+			EditDistanceScore* data = m_matrix.scanRow(to_i) + sequence.begin+1;
+			std::vector<Locus> result;
+			for (int j = 1, e = sequence.end-sequence.begin; j <= e; j++, data++) {
+				if (data->value >= m_miRnaHigherScoreThreshold) {
+					if (!meetHigherThreshold)
 						result.clear();
-					meetMinThreshold = true;
+					meetHigherThreshold = true;
 					result.push_back(Locus(e-j, e-data->from_j));
 				}
-				else if (!meetMinThreshold && data->value <= m_miRnaMaxErrorsThreshold)
+				else if (!meetHigherThreshold && data->value >= m_miRnaLowerScoreThreshold)
 					result.push_back(Locus(e-j, e-data->from_j));
 			}
 			return result;
 		}
-		bool lookForResult(int to_i, int from_j, int to_j, int threshold) const {
-			EditDistanceScore const* data = m_matrix.scanRow(to_i) + from_j+1;
-			for (int j = 1, e = to_j-from_j; j <= e; j++, data++) {
-				if (data->value <= threshold)
+		bool lookForResult(Locus read, Locus sequence) const {
+			// Last row
+			EditDistanceScore const* data = m_matrix.scanRow(read.end) + sequence.begin+1;
+			for (uint j = sequence.begin+1; j <= sequence.end; j++, data++) {
+				if (data->value >= m_miRnaExtendedRatioScoreThreshold*std::max(read.end-read.begin, j-sequence.begin))
+					return true;
+			}
+			// Last column
+			for (uint i = read.begin+1; i <= read.end; i++) {
+				if (m_matrix(i, sequence.end).value >= m_miRnaExtendedRatioScoreThreshold*std::max(i-read.begin, sequence.end-sequence.begin))
 					return true;
 			}
 			return false;
@@ -261,38 +308,38 @@ class MiRnaDetector {
 
 	public:
 		MiRnaDetector(int textSize) : m_matrix(textSize+1, textSize+1, EditDistanceScore(0, 0)) {
-			setMiRnaMinErrorsThreshold(4);
-			setMiRnaMaxErrorsThreshold(7);
-			setMiRnaMinLengthToExtend(15);
-			setIncreaseMiRnaEachNt(5);
-			setMiRnaExtendedRatioErrorThreshold(0.34);
+			setMiRnaHigherScoreThreshold(32);
+			setMiRnaLowerScoreThreshold(14);
+			setMiRnaMinLengthToExtend(24);
+			setIncreaseMiRnaEachNt(1);
+			setMiRnaExtendedRatioScoreThreshold(0.85);
 		}
 
 		int admissibleTextLength() const { return m_matrix.rows()-1; }
 
-		SV* detect_forward_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
-			return dequeToPerl(tp_detect_on_strand<equiv_forward_strand>(text, read_beg, read_end, seq_beg, seq_end, *this));
+		SV* detect_forward_strand(char* text, int text_size, int read_beg, int read_end, int seq_beg, int seq_end) {
+			return vectorToPerl(tp_detect_on_strand<forward_strand>(text, text_size, Locus(read_beg, read_end), Locus(seq_beg, seq_end), *this));
 		}
-		SV* detect_reverse_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
-			return dequeToPerl(tp_detect_on_strand<equiv_reverse_strand>(text, read_beg, read_end, seq_beg, seq_end, *this));
+		SV* detect_reverse_strand(char* text, int text_size, int read_beg, int read_end, int seq_beg, int seq_end) {
+			return vectorToPerl(tp_detect_on_strand<reverse_strand>(text, text_size, Locus(read_beg, read_end), Locus(seq_beg, seq_end), *this));
 		}
-		SV* detect_on_strand(char strand, char* text, int read_beg, int read_end, int seq_beg, int seq_end) {
-			return strand == '+' ? detect_forward_strand(text, read_beg, read_end, seq_beg, seq_end) :
-								   detect_reverse_strand(text, read_beg, read_end, seq_beg, seq_end);
-		}
-
-		int miRnaMinErrorsThreshold() const {
-			return m_miRnaMinErrorsThreshold;
-		}
-		void setMiRnaMinErrorsThreshold(int miRnaMinErrorsThreshold) {
-			m_miRnaMinErrorsThreshold = miRnaMinErrorsThreshold;
+		SV* detect_on_strand(char strand, char* text, int text_size, int read_beg, int read_end, int seq_beg, int seq_end) {
+			return strand == '+' ? detect_forward_strand(text, text_size, read_beg, read_end, seq_beg, seq_end) :
+								   detect_reverse_strand(text, text_size, read_beg, read_end, seq_beg, seq_end);
 		}
 
-		int miRnaMaxErrorsThreshold() const {
-			return m_miRnaMaxErrorsThreshold;
+		int miRnaHigherScoreThreshold() const {
+			return m_miRnaHigherScoreThreshold;
 		}
-		void setMiRnaMaxErrorsThreshold(int miRnaMaxErrorsThreshold) {
-			m_miRnaMaxErrorsThreshold = miRnaMaxErrorsThreshold;
+		void setMiRnaHigherScoreThreshold(int miRnaHigherScoreThreshold) {
+			m_miRnaHigherScoreThreshold = miRnaHigherScoreThreshold;
+		}
+
+		int miRnaLowerScoreThreshold() const {
+			return m_miRnaLowerScoreThreshold;
+		}
+		void setMiRnaLowerScoreThreshold(int miRnaLowerScoreThreshold) {
+			m_miRnaLowerScoreThreshold = miRnaLowerScoreThreshold;
 		}
 
 		int miRnaMinLengthToExtend() const {
@@ -309,107 +356,118 @@ class MiRnaDetector {
 			m_increaseMiRnaEachNt = increaseMiRnaEachNt;
 		}
 
-		double miRnaExtendedRatioErrorThreshold() const {
-			return m_miRnaExtendedRatioErrorThreshold;
+		double miRnaExtendedRatioScoreThreshold() const {
+			return m_miRnaExtendedRatioScoreThreshold;
 		}
-		void setMiRnaExtendedRatioErrorThreshold(double miRnaExtendedRatioErrorThreshold) {
-			m_miRnaExtendedRatioErrorThreshold = miRnaExtendedRatioErrorThreshold;
+		void setMiRnaExtendedRatioScoreThreshold(double miRnaExtendedRatioScoreThreshold) {
+			m_miRnaExtendedRatioScoreThreshold = miRnaExtendedRatioScoreThreshold;
 		}
 };
 
 
-template <bool (*_equiv_function)(char, char)>
-void computeDistance(char* text, int from_i, int to_i, int from_j, int to_j, MiRnaDetector& self) {
-	char* read = text + from_i;
-	for (int i = from_i+1; i <= to_i; i++, read++) {
-		char* sequence = text + to_j-1;
-		for (std::size_t j = from_j+1; j <= to_j; j++, sequence--)
-			process_score<_equiv_function>(self.m_matrix, i, j, *read, *sequence);
+template <class _Strand>
+void computeDistance(char* text, Locus read, Locus sequence, TextBounds const& bounds, MiRnaDetector& self) {
+//	std::cout << "Compute distance between read: " << read << " and sequence: " << sequence << std::endl;
+	char* read_str = text + read.begin;
+	for (int i = read.begin+1; i <= read.end; i++, read_str++) {
+		char previousRead = i <= 1 ? 'N' : *(read_str-1);
+		char nextRead = i >= bounds ? 'N' : *(read_str+1);
+		char* sequence_str = text + sequence.end-1;
+		for (std::size_t j = sequence.begin+1; j <= sequence.end; j++, sequence_str--) {
+			char previousSeq = j <= 1 ? 'N' : *(sequence_str+1);
+			char nextSeq = j >= bounds ? 'N' : *(sequence_str-1);
+			process_score<_Strand>(self.m_matrix, i, j, *read_str, *sequence_str,
+			 cost_function<_Strand>::equiv(previousRead, previousSeq) || cost_function<_Strand>::equiv(nextRead, nextSeq));
+		}
 	}
 }
 
-template <bool (*_equiv_function)(char, char)>
-bool checkInwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self) {
-	Locus seq_locus(seq_beg + locus.begin, seq_beg + locus.end);
-	int length, new_seq_beg, new_read_beg;
-	if (seq_locus.end <= read_beg) { // Read is the 3p
-		length = std::ceil(static_cast<float>(read_beg - seq_locus.end)/self.m_increaseMiRnaEachNt);
-		if (read_beg < length)
-			length = read_beg;
-		if (seq_locus.end+length > self.m_matrix.rows()-1)
-			length = self.m_matrix.rows()-1 - seq_locus.end;
+template <class _Strand>
+//bool checkInwardExtent(char* text, int read_beg, int read_end, int sequence_begin, int seq_end, Locus locus, MiRnaDetector& self) {
+ExtensionResult checkInwardExtent(char* text, Locus read, Locus sequence, Locus locus, TextBounds const& bounds, MiRnaDetector& self) {
+	Locus seq_locus(sequence.begin + locus.begin, sequence.begin + locus.end);
+	Locus newReadLocus(0, 0), newSeqLocus(0, 0);
+	int length;
+	if (seq_locus.end <= read.begin) { // Read is the 3p
+		length = std::ceil(static_cast<float>(read.begin - seq_locus.end)/self.m_increaseMiRnaEachNt);
+		length = std::min((uint)length, std::min(read.begin, std::min((uint)self.m_matrix.rows()-1 - seq_locus.end, (seq_locus.end - read.begin)/2)));
 		if (length < self.m_miRnaMinLengthToExtend)
-			return true;
-		new_read_beg = read_beg-length;
-		new_seq_beg = seq_locus.end;
+			return TooShortToTest;
+		newReadLocus.begin = read.begin-length;
+		newSeqLocus.begin = seq_locus.end;
 	}
-	else if (seq_locus.begin >= read_end) { // Read is the 5p
-		length = std::ceil(static_cast<float>(seq_locus.begin - read_end)/self.m_increaseMiRnaEachNt);
-		if (seq_locus.begin < length)
-			length = seq_locus.begin;
-		if (read_end+length > self.m_matrix.rows()-1)
-			length = self.m_matrix.rows()-1 - read_end;
+	else if (seq_locus.begin >= read.end) { // Read is the 5p
+		length = std::ceil(static_cast<float>(seq_locus.begin - read.end)/self.m_increaseMiRnaEachNt);
+		length = std::min((uint)length, std::min(seq_locus.begin, std::min((uint)(self.m_matrix.rows()-1 - read.end), (seq_locus.begin - read.end)/2)));
 		if (length < self.m_miRnaMinLengthToExtend)
-			return true;
-		new_read_beg = read_end;
-		new_seq_beg = seq_locus.begin - length;
+			return TooShortToTest;
+		newReadLocus.begin = read.end;
+		newSeqLocus.begin = seq_locus.begin - length;
 	}
 	else
-		return false;
+		return ReadAndSeqOverlap;
 
-	self.initRegion(new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, true);
-	computeDistance<_equiv_function>(text, new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, self);
-	return self.lookForResult(new_read_beg+length, new_seq_beg, new_seq_beg+length, length*self.m_miRnaExtendedRatioErrorThreshold);
+	newReadLocus.end = newReadLocus.begin + length;
+	newSeqLocus.end = newSeqLocus.begin + length;
+
+	self.initRegion(newReadLocus, newSeqLocus, true);
+	computeDistance<_Strand>(text, newReadLocus, newSeqLocus, bounds, self);
+	return self.lookForResult(newReadLocus, newSeqLocus) ?
+				TestPassed : DistanceAboveThreshold;
 }
 
-template <bool (*_equiv_function)(char, char)>
-bool checkOutwardExtent(char* text, int read_beg, int read_end, int seq_beg, int seq_end, Locus locus, MiRnaDetector& self) {
-	Locus seq_locus(seq_beg + locus.begin, seq_beg + locus.end);
-	int length, new_seq_beg, new_read_beg;
-	if (seq_locus.end <= read_beg) { // Read is the 3p
-		length = std::ceil(static_cast<float>(read_beg - seq_locus.end)/self.m_increaseMiRnaEachNt);
-		if (seq_locus.begin < length)
-			length = seq_locus.begin;
-		if (read_end+length > self.m_matrix.rows()-1)
-			length = self.m_matrix.rows()-1 - read_end;
+template <class _Strand>
+ExtensionResult checkOutwardExtent(char* text, Locus read, Locus sequence, Locus locus, TextBounds const& bounds, MiRnaDetector& self) {
+	Locus seq_locus(sequence.begin + locus.begin, sequence.begin + locus.end);
+	Locus newReadLocus(0, 0), newSeqLocus(0, 0);
+	int length;
+	if (seq_locus.end <= read.begin) { // Read is the 3p
+		length = std::ceil(static_cast<float>(read.begin - seq_locus.end)/self.m_increaseMiRnaEachNt);
+		length = std::min((uint)length, std::min(seq_locus.begin, std::min((uint)(self.m_matrix.rows()-1 - read.end), (seq_locus.begin - read.end)/2)));
 		if (length < self.m_miRnaMinLengthToExtend)
-			return true;
-		new_read_beg = read_end;
-		new_seq_beg = seq_locus.begin - length;
+			return TooShortToTest;
+		newReadLocus.begin = read.end;
+		newSeqLocus.begin = seq_locus.begin - length;
 	}
-	else if (seq_locus.begin >= read_end) { // Read is the 5p
-		length = std::ceil(static_cast<float>(seq_locus.begin - read_end)/self.m_increaseMiRnaEachNt);
-		if (read_beg < length)
-			length = read_beg;
-		if (seq_locus.end+length > self.m_matrix.rows()-1)
-			length = self.m_matrix.rows()-1 - seq_locus.end;
+	else if (seq_locus.begin >= read.end) { // Read is the 5p
+		length = std::ceil(static_cast<float>(seq_locus.begin - read.end)/self.m_increaseMiRnaEachNt);
+		length = std::min((uint)length, std::min(read.begin, std::min((uint)self.m_matrix.rows()-1 - seq_locus.end, (seq_locus.end - read.begin)/2)));
 		if (length < self.m_miRnaMinLengthToExtend)
-			return true;
-		new_read_beg = read_beg-length;
-		new_seq_beg = seq_locus.end;
+			return TooShortToTest;
+		newReadLocus.begin = read.begin-length;
+		newSeqLocus.begin = seq_locus.end;
 	}
 	else
-		return false;
+		return ReadAndSeqOverlap;;
 
-	self.initRegion(new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, true);
-	computeDistance<_equiv_function>(text, new_read_beg, new_read_beg+length, new_seq_beg, new_seq_beg+length, self);
-	return self.lookForResult(new_read_beg+length, new_seq_beg, new_seq_beg+length, length*self.m_miRnaExtendedRatioErrorThreshold);
+	newReadLocus.end = newReadLocus.begin + length;
+	newSeqLocus.end = newSeqLocus.begin + length;
+
+	self.initRegion(newReadLocus, newSeqLocus, true);
+	computeDistance<_Strand>(text, newReadLocus, newSeqLocus, bounds, self);
+	return self.lookForResult(newReadLocus, newSeqLocus) ?
+				TestPassed : DistanceAboveThreshold;
 }
 
-template <bool (*_equiv_function)(char, char)>
-std::deque<Locus> tp_detect_on_strand(char* text, int read_beg, int read_end, int seq_beg, int seq_end, MiRnaDetector& self) {
-	self.initRegion(read_beg, read_end, seq_beg, seq_end, false);
-	computeDistance<_equiv_function>(text, read_beg, read_end, seq_beg, seq_end, self);
+template <class _Strand>
+std::vector<Locus> tp_detect_on_strand(char* text, int text_size, Locus readLocus, Locus seqLocus, MiRnaDetector& self) {
+	TextBounds bounds(text_size);
+	self.initRegion(readLocus, seqLocus, false);
+	computeDistance<_Strand>(text, readLocus, seqLocus, bounds, self);
 	bool hasMinThreshold = false;
-	std::deque<Locus> candidates = self.lookForMiRnaResult(read_end, seq_beg, seq_end, hasMinThreshold);
+	std::vector<Locus> candidates = self.lookForMiRnaResult(readLocus.end, seqLocus, hasMinThreshold);
 	if (hasMinThreshold)
 		return candidates;
-	std::deque<Locus> result;
-	for (std::deque<Locus>::const_iterator it = candidates.begin(), e = candidates.end(); it != e; ++it) {
-		if (checkInwardExtent<_equiv_function>(text, read_beg, read_end, seq_beg, seq_end, *it, self)) {
+	std::vector<Locus> result;
+	for (std::vector<Locus>::const_iterator it = candidates.begin(), e = candidates.end(); it != e; ++it) {
+		ExtensionResult inwardResult = checkInwardExtent<_Strand>(text, readLocus, seqLocus, *it, bounds, self);
+		if (inwardResult == TestPassed) {
 			result.push_back(*it);
+			continue;
 		}
-		if (checkOutwardExtent<_equiv_function>(text, read_beg, read_end, seq_beg, seq_end, *it, self)) {
+		ExtensionResult outwardResult = checkOutwardExtent<_Strand>(text, readLocus, seqLocus, *it, bounds, self);
+		if (outwardResult == TestPassed ||
+				(inwardResult == TooShortToTest && outwardResult == TooShortToTest)) {
 			result.push_back(*it);
 		}
 	}
