@@ -550,6 +550,38 @@ sub get_reads_from_bam_file {
 
 }
 
+=method get_reads_from_bed_file
+
+Method to get all reads corresponding to a candidate sequence
+Parameter : bed file full path
+Modifies the object candidate to add a variable (hash) containing
+all reads with start, stop and depth.
+
+=cut
+sub get_reads_from_bed_file {
+    my ( $self, @args ) = @_;
+    my $bed_file = shift @args;
+    my $reads = {};
+
+    open (my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
+    while ( <$BED> ){
+        chomp;
+        my @fields = split( /\t/ );
+        if ( $fields[0] eq $self->{'name'} && $fields[5] eq $self->{'strand'} ){
+            my $start_read = $fields[1] + 1;
+            my $end_read   = $fields[2];
+            if ( $start_read >= $self->{'start_position'} && $end_read <= $self->{'end_position'} ){
+                $reads->{"$start_read-$end_read"} = $fields[4];
+            }
+        }
+    }
+
+    $self->{'reads'} = $reads;
+
+    return $self;
+
+}
+
 =method determine_precursor_arms
 
   Method to determine the positions of the precursor
