@@ -509,7 +509,7 @@ sub turn_relative_positions_into_absolute_positions {
 
 }
 
-=method get_reads
+=method get_reads_from_bam_file
 
 Method to get all reads corresponding to a candidate sequence
 Parameter : bam file full path
@@ -517,7 +517,7 @@ Modifies the object candidate to add a variable (hash) containing
 all reads with start, stop and depth.
 
 =cut
-sub get_reads {
+sub get_reads_from_bam_file {
 
     my ( $self, @args ) = @_;
     my $bam_file = shift @args;

@@ -397,7 +397,7 @@ sub serialize_candidates {
     foreach my $candidate (@candidates_array ) {
         if ( $mode eq 'bam' ){ # CLI transcriptome version
             $candidate->turn_relative_positions_into_absolute_positions();
-            $candidate = $candidate->get_reads($self->{'bam_file'});
+            $candidate = $candidate->get_reads_from_bam_file($self->{'bam_file'});
             miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
         }
         if ( $mode eq 'WebBAM' ){ # WEB transcriptome version
