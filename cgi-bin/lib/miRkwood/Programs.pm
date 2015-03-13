@@ -290,6 +290,25 @@ sub run_exonerate {
     return ( -e $output );
 }
 
+=method run_RNAcomp
+
+  Run RNAcomp on the given file
+  Return whether the output file exists.
+  RNAcomp output format is the same as exonerate, so
+  exonerate output parser can be used for RNAcomp output file.
+
+=cut
+sub run_RNAcomp {
+    my ( $input, $output ) = @_;
+    my $mirbase_file = miRkwood::Data::get_mirbase_file();
+
+    my $cmd = "$programs_paths{'RNAcomp'} -r $mirbase_file -i $input --all > $output";
+    system($cmd);
+    debug( '        ' . $cmd, miRkwood->DEBUG());
+    return ( -e $output );
+
+}
+
 =method run_rnastemloop
 
 Run RNAstemloop on the given file
