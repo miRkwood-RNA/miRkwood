@@ -48,7 +48,7 @@ sub test_randfold {
 
 =method test_alignment
 
-Run the Alignment (exonerate) a posteriori test
+Run the Alignment (RNAcomp) a posteriori test
 
 =cut
 
@@ -65,8 +65,8 @@ sub test_alignment {
     my $seqN = File::Spec->catfile( $self->get_directory(), 'seqWithN.txt' );
     $self->mask_CT_file($candidate_ct_stemloop_file, $seqN);
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
-    miRkwood::Programs::run_exonerate( $seqN, $exonerate_out )
-      or die('Problem when running Exonerate');
+    miRkwood::Programs::run_RNAcomp( $seqN, $exonerate_out )
+      or die("Problem when running RNAcomp : $!");
     my ($mirdup_results, $alignments) = $self->post_process_alignments($exonerate_out );
     return ($mirdup_results, $alignments);
 }
@@ -94,7 +94,7 @@ sub post_process_alignments {
       )
     {
         # Catching exception
-        carp("Exception when parsing exonerate output $file_alignement");
+        carp("Exception when parsing RNAcomp output $file_alignement");
         return;
     }
     else {
