@@ -323,4 +323,19 @@ sub get_workspace_candidate_dir {
     return File::Spec->catdir( $chromosome_dir, $cluster . $strand );
 }
 
+=method create_folder
+
+  Method to create a folder if it not already exists
+  Parameter : the folder name
+
+=cut
+sub create_folder {
+    my (@args) = @_;
+    my $folder = shift @args;
+    if ( !-e $folder ) {
+        mkdir $folder or die "ERROR when creating $folder : $!";
+    }
+    return $folder;
+}
+
 1;
