@@ -94,22 +94,22 @@ sub make_all_exports {
     my $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
-    my $fasta_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
+    my $fasta_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
     $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter();
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
-    my $dotbracket_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
+    my $dotbracket_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
     $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter();
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
-    my $gff_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
+    my $gff_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
     $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter();
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
-    my $csv_file = File::Spec->catfile($pieces_folder, $exporter->get_filename());
+    my $csv_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
     my $html = '<h3>Get results as</h3> <ul>';
     $html .= "<li><a href='$csv_file'>tab-delimited format (csv)</a></li>";
