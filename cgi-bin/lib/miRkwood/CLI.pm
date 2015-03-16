@@ -22,7 +22,7 @@ sub process_results_dir_for_offline {
     my @args          = @_;
     my $output_folder = shift @args;
 
-    my $candidates_dir = File::Spec->catdir( $output_folder, 'candidates' );
+    my $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $output_folder );
 
 # In debug mode (without executing the pipeline), we need to set the config file
 #miRkwood->CONFIG_FILE(miRkwood::Paths->get_job_config_path( $output_folder ));
@@ -53,10 +53,9 @@ sub make_html_from_results {
     my @args    = @_;
     my $results = shift @args;
     my %results = %{$results};
-
-    my $pieces_folder = File::Spec->catdir('pieces');
-
     my $output_folder = shift @args;
+    my $pieces_folder = File::Spec->catdir('pieces');
+    
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter();
