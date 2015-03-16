@@ -389,23 +389,8 @@ sub serialize_candidates {
     my $candidates = shift @args;
     my @candidates_array = @{$candidates};
 
-    my $run_options_file = miRkwood::Paths->get_job_config_path( $self->{'job_dir'} );
-    miRkwood->CONFIG_FILE($run_options_file);
-    my $cfg = miRkwood->CONFIG();
-    my $mode = $cfg->param('job.mode');
-
     foreach my $candidate (@candidates_array ) {
-        if ( $mode eq 'bam' ){ # CLI transcriptome version
-            $candidate->turn_relative_positions_into_absolute_positions();
-            $candidate = $candidate->get_reads_from_bam_file($self->{'bam_file'});
-            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
-        }
-        if ( $mode eq 'WebBAM' ){ # WEB transcriptome version
-            miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
-        }
-
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
-
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
     return;

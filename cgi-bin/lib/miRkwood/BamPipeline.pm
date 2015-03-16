@@ -45,4 +45,21 @@ sub init_sequences {
     return;
 }
 
+sub serialize_candidates {
+    my ($self, @args) = @_;
+    my $candidates = shift @args;
+    my @candidates_array = @{$candidates};
+
+    foreach my $candidate (@candidates_array ) {
+
+        $candidate->turn_relative_positions_into_absolute_positions();
+        $candidate = $candidate->get_reads_from_bam_file($self->{'bam_file'});
+        miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+
+        push $self->{'basic_candidates'}, $candidate->get_basic_informations();
+    }
+    return;
+}
+
 1;
