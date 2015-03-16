@@ -95,11 +95,8 @@ $pipeline->run_pipeline();
 
 
 unless ($no_process) {
-	my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );
-	if ( !-e $tmp_pieces_folder ) {
-        mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
-    }
-	miRkwood::CLI::process_results_dir_for_offline($abs_output_folder) unless $no_process;
+    my $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
+	miRkwood::CLI::process_results_dir_for_offline($candidates_dir, $abs_output_folder) unless $no_process;
 }
 
 __END__

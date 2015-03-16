@@ -19,13 +19,17 @@ Usage:
 =cut
 
 sub process_results_dir_for_offline {
-    my @args          = @_;
-    my $output_folder = shift @args;
-
-    my $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $output_folder );
+    my @args           = @_;
+    my $candidates_dir = shift @args;
+    my $output_folder  = shift @args;
 
 # In debug mode (without executing the pipeline), we need to set the config file
 #miRkwood->CONFIG_FILE(miRkwood::Paths->get_job_config_path( $output_folder ));
+
+    my $tmp_pieces_folder = File::Spec->catdir( $output_folder, 'pieces' );
+    if ( !-e $tmp_pieces_folder ) {
+        mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
+    }
 
     my %results = miRkwood::Results->deserialize_results($candidates_dir);
 

@@ -113,11 +113,13 @@ my $pipeline = miRkwood::BEDPipeline->new($output_folder, $bed_file, $genome_fil
 $pipeline->run_pipeline();
 
 
+##### Write results
+my $results_folder       = miRkwood::Paths::create_folder( File::Spec->catdir( $abs_output_folder, 'Results' ) );
+my $new_results_folder   = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'new_miRNAs' ) );
+my $known_results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'known_miRNAs' ) );
 
-my $tmp_pieces_folder = File::Spec->catdir( $abs_output_folder, 'pieces' );
-if ( !-e $tmp_pieces_folder ) {
-    mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
-}
-miRkwood::CLI::process_results_dir_for_offline($abs_output_folder);
+my $new_candidates_dir   = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
+my $known_candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $abs_output_folder );
 
-
+miRkwood::CLI::process_results_dir_for_offline($new_candidates_dir, $new_results_folder);
+miRkwood::CLI::process_results_dir_for_offline($known_candidates_dir, $known_results_folder);
