@@ -1776,7 +1776,7 @@
 --- name
 --- '1'
 --- image
---- /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/78833-79130-/10/image.png
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/10/image.png
 --- amfe
 --- -32.5
 --- length

@@ -138,7 +138,7 @@
 --- energy_optimal
 --- '-23.40'
 --- image
---- /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/55821-56324-/7/image.png
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/7/image.png
 --- amfe
 --- -25.4347826086956
 --- length

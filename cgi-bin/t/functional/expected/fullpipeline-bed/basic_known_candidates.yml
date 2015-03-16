@@ -2,7 +2,7 @@
 - alignment: ~
   amfe: -36.9369369369369
   identifier: MI0000199
-  image: /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/MI0000199/image.png
+  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0000199/image.png
   length: 111
   mfe: '-41.00'
   mfei: -0.872340425531915
@@ -16,7 +16,7 @@
 - alignment: ~
   amfe: -35.974025974026
   identifier: MI0010632
-  image: /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/MI0010632/image.png
+  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0010632/image.png
   length: 154
   mfe: '-55.40'
   mfei: -0.923333333333333
@@ -30,7 +30,7 @@
 - alignment: ~
   amfe: -38.743961352657
   identifier: MI0005394
-  image: /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/MI0005394/image.png
+  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0005394/image.png
   length: 207
   mfe: '-80.20'
   mfei: -1.02820512820513

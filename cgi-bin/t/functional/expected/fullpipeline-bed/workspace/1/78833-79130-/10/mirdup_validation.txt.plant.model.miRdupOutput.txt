@@ -1,4 +1,4 @@
-File /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/78833-79130-/10/mirdup_validation.txt adapted in /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/78833-79130-/10/mirdup_validation.txt.arff submitted to model plant.model
+File /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/10/mirdup_validation.txt adapted in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/10/mirdup_validation.txt.arff submitted to model plant.model
 
 Summary results of predictions
 ======

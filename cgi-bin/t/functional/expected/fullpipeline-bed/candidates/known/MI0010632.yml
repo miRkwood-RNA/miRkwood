@@ -31,7 +31,7 @@ MIMAT0011155:
     234017-234037: 2
   mature_start: '234017'
 --- image
---- /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/MI0010632/image.png
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0010632/image.png
 --- length
 --- 154
 --- amfe

@@ -38,7 +38,7 @@ MIMAT0031879:
     79010-79030: 15
   mature_start: '79010'
 --- image
---- /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/MI0000199/image.png
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0000199/image.png
 --- amfe
 --- -36.9369369369369
 --- length
