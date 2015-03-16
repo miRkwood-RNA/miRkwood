@@ -21,7 +21,7 @@ fi
 
 
 # Testing
-plan 3
+plan 4
 
 if [ ! -d "$BASEDIR/output/" ]; then
     mkdir "$BASEDIR/output/"
@@ -49,3 +49,10 @@ perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpi
 perl compare_results.pl $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ > $BASEDIR/output/diff_fullpipeline-bam
 DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
 ok 'Full BAM pipeline' [ $DIFF -eq 0 ]
+
+
+rm -rf $BASEDIR/output/fullpipeline-bed/
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bed.pl --align --output $BASEDIR/output/fullpipeline-bed/ --genome $BASEDIR/../../data/genomes/Arabidopsis_thaliana.fasta $BASEDIR/../../data/very_short.bed
+perl compare_results.pl $BASEDIR/output/fullpipeline-bed/ $BASEDIR/expected/fullpipeline-bed/ > $BASEDIR/output/diff_fullpipeline-bed
+DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline-bed/ $BASEDIR/expected/fullpipeline-bed/ | wc -l)
+ok 'Full BED pipeline' [ $DIFF -eq 0 ]

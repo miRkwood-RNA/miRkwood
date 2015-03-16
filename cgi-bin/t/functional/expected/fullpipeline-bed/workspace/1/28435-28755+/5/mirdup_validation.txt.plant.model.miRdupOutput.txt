@@ -1,0 +1,10 @@
+File /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/28435-28755+/5/mirdup_validation.txt adapted in /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/28435-28755+/5/mirdup_validation.txt.arff submitted to model plant.model
+
+Summary results of predictions
+======
+Correctly Classified Instances           0                0      %
+Incorrectly Classified Instances         2              100      %
+Kappa statistic                          0     
+Mean absolute error                      0.796 
+Total Number of Instances                2     
+

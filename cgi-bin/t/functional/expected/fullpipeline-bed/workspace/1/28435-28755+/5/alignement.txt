@@ -1,0 +1,96 @@
+- name : aly-miR838-5p
+  begin_target  : 36
+  end_target    : 56
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0017621 Arabidopsis lyrata miR838-5p | 
+  seq_query     : UGCAAGAAUGAGAAGCAAAGC
+
+  score: -2
+  alignment: |
+    U U match
+    G G match
+    C C match
+    A A match
+    A A match
+    G G match
+    A A match
+    A A match
+    U G match
+    G G match
+    A A match
+    G G match
+    A A match
+    A A match
+    G G match
+    C C match
+    A A match
+    A A match
+    A A match
+    G G match
+    C - gap
+- name : ath-miR838
+  begin_target  : 118
+  end_target    : 139
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0004260 Arabidopsis thaliana miR838 | 
+  seq_query     : UUUUCUUCUACUUCUUGCACA
+
+  score: 0
+  alignment: |
+    U U match
+    U U match
+    U U match
+    U U match
+    C C match
+    U U match
+    U U match
+    C C match
+    U U match
+    A A match
+    C C match
+    U U match
+    U U match
+    C C match
+    U U match
+    U U match
+    G G match
+    C C match
+    A A match
+    C C match
+    A A match
+- name : aly-miR838-3p
+  begin_target  : 118
+  end_target    : 139
+  strand_target : +
+  begin_query   : 0
+  end_query     : 21
+  def_query     : MIMAT0017622 Arabidopsis lyrata miR838-3p | 
+  seq_query     : UUUUCUUCUUCUUCUUGCACA
+
+  score: -1
+  alignment: |
+    U U match
+    U U match
+    U U match
+    U U match
+    C C match
+    U U match
+    U U match
+    C C match
+    U U match
+    U A match
+    C C match
+    U U match
+    U U match
+    C C match
+    U U match
+    U U match
+    G G match
+    C C match
+    A A match
+    C C match
+    A A match

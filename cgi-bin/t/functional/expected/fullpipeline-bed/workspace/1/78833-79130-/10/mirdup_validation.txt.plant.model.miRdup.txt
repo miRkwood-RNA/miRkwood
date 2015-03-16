@@ -1,0 +1,33 @@
+
+--------
+#ID	1__114-134
+#WE	ID1,18,-17.90,66,6,33,3,14,false,-1,false,-1,true,5,16,16,22,44,0,0,5,11,5,5,0,5,5,0,11,5,5,11,5,16,8,36,false,0,5.25,3.79,2.25,false,false,false,false,false,false,true,false,false,false,false,false,true,true,false,false,3,2,11,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,28.57,21.43,C,U,G,C,C,C,true
+#PR	Prediction	true
+#SC	Score	0.9999989034742385
+#PM	CGAUUAUCAUGAGGGUUAAGCUAUUUCAGUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAACAUGUUAUUGCCUCUGAUCACCAUUUAUUG
+#SS	((((....(((..(((((.((.((..((((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).)))).))..)).))...)))))..)))..))))
+#MM	                                                                                                                  CGGACCAGGCUUCAUCCCCC
+
+
+
+--------
+#ID	1__114-132
+#WE	ID2,20,-21.50,50,6,30,1,16,false,-1,false,-1,true,8,20,30,40,10,5,0,15,0,10,5,10,5,5,15,10,5,0,10,0,0,5,36,false,0,5.43,3.94,2.39,false,false,true,false,false,false,false,true,false,false,false,false,false,false,false,false,3,2,10,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5,0.0,0.0,10,0.0,5,0.0,5,5,5,10,15,15,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5,10,0.0,0.0,0.0,25,62.5,12.5,G,G,A,G,G,A,true
+#PR	Prediction	false
+#SC	Score	0.9999997141913421
+#PM	CGAUUAUCAUGAGGGUUAAGCUAUUUCAGUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAACAUGUUAUUGCCUCUGAUCACCAUUUAUUG
+#SS	((((....(((..(((((.((.((..((((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).)))).))..)).))...)))))..)))..))))
+#MM	                                                                                                                  CGGACCAGGCUUCAUCCC
+
+
+
+--------
+#ID	1__36-56
+#WE	
+#PR	Prediction	true
+#SC	Score	0.9999935885999244
+#PM	CGAUUAUCAUGAGGGUUAAGCUAUUUCAGUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAACAUGUUAUUGCCUCUGAUCACCAUUUAUUG
+#SS	((((....(((..(((((.((.((..((((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).)))).))..)).))...)))))..)))..))))
+#MM	                                    GAAUGUUGUCUGGAUCGAGG
+
+

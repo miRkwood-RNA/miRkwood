@@ -1,0 +1,1792 @@
+--- end_position
+--- 79065
+--- sequence
+--- CGAUUAUCAUGAGGGUUAAGCUAUUUCAGUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAACAUGUUAUUGCCUCUGAUCACCAUUUAUUG
+--- reads
+---
+78932-78952: 229
+78932-78953: 2
+78934-78953: 1
+78935-78955: 25
+78937-78952: 1
+79007-79027: 1
+79008-79030: 1
+79009-79029: 1
+79010-79030: 15
+--- start_position
+--- 78898
+--- structure_stemloop
+--- ((((....(((..(((((.((.((..((((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).)))).))..)).))...)))))..)))..))))
+--- position
+--- 78898-79065
+--- alignments
+---
+114-132:
+- alignment: "-cucggaccaggcuuca-uc\n |||||||||||||||| ||\nucucggaccaggcuucauuc\n"
+  begin_query: 1
+  begin_target: 113
+  def_query: MIMAT0024903 Glycine max miR166u |
+  end_query: 20
+  end_target: 130
+  name: gma-miR166u
+  score: -2
+  seq: UCUCGGACCAGGCUUCAUUC
+  strand_target: +
+- alignment: "-cucggaccaggcuuca-ucc\n |||||||||||||||| |||\nucucggaccaggcuucauucc\n"
+  begin_query: 1
+  begin_target: 113
+  def_query: MIMAT0020984 Glycine max miR166h-3p | bdi-miR166f MIMAT0020658 Brachypodium
+    distachyon miR166f | gma-miR166k MIMAT0023223 Glycine max miR166k |
+  end_query: 21
+  end_target: 131
+  name: gma-miR166h-3p
+  score: -2
+  seq: UCUCGGACCAGGCUUCAUUCC
+  strand_target: +
+- alignment: 'cucggaccaggcuuca-uccc
+
+    |||||||||||||||| ||||
+
+    cucggaccaggcuucauuccc
+
+'
+  begin_query: 1
+  begin_target: 113
+  def_query: MIMAT0020687 Brachypodium distachyon miR166e-3p |
+  end_query: 21
+  end_target: 132
+  name: bdi-miR166e-3p
+  score: -1
+  seq: CUCGGACCAGGCUUCAUUCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-ucc
+
+    ||||||||||||||| |||
+
+    ucggaccaggcuucauucc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0005662 Vitis vinifera miR166a | vvi-miR166b MIMAT0005663 Vitis
+    vinifera miR166b | hbr-miR166a MIMAT0025284 Hevea brasiliensis miR166a | pde-miR166a
+    MIMAT0025327 Pinus densata miR166a | pde-miR166b MIMAT0025328 Pinus densata miR166b
+    |
+  end_query: 19
+  end_target: 131
+  name: vvi-miR166a
+  score: -1
+  seq: UCGGACCAGGCUUCAUUCC
+  strand_target: +
+- alignment: "ucggaccaggcuuca-ucc-\n||||||||||||||| ||| \nucggaccaggcuucauuccu\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011330 Sorghum bicolor miR166k | aqc-miR166c MIMAT0012558 Aquilegia
+    caerulea miR166c |
+  end_query: 20
+  end_target: 131
+  name: sbi-miR166k
+  score: -2
+  seq: UCGGACCAGGCUUCAUUCCU
+  strand_target: +
+- alignment: "ucggaccaggcuuca-ucc--\n||||||||||||||| |||  \nucggaccaggcuucauuccua\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011061 Medicago truncatula miR166b |
+  end_query: 21
+  end_target: 131
+  name: mtr-miR166b
+  score: -3
+  seq: UCGGACCAGGCUUCAUUCCUA
+  strand_target: +
+- alignment: "ucggaccaggcuuca-ucc--\n||||||||||||||| |||  \nucggaccaggcuucauuccuu\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0001937 Populus trichocarpa miR166n | ptc-miR166o MIMAT0001938 Populus
+    trichocarpa miR166o | ptc-miR166q MIMAT0001940 Populus trichocarpa miR166q | pab-miR166b
+    MIMAT0018149 Picea abies miR166b | lus-miR166f MIMAT0027221 Linum usitatissimum
+    miR166f |
+  end_query: 21
+  end_target: 131
+  name: ptc-miR166n
+  score: -3
+  seq: UCGGACCAGGCUUCAUUCCUU
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-uc-c
+
+    ||||||||||||||| || |
+
+    ucggaccaggcuucauucuc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0026091 Cucumis melo miR166i |
+  end_query: 20
+  end_target: 131
+  name: cme-miR166i
+  score: -2
+  seq: UCGGACCAGGCUUCAUUCUC
+  strand_target: +
+- alignment: 'uc-ggaccaggcuuca-uccc
+
+    || ||||||||||||| ||||
+
+    uccggaccaggcuucauuccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0005046 Physcomitrella patens miR166j | ppt-miR166k MIMAT0005047
+    Physcomitrella patens miR166k | ppt-miR166l MIMAT0005048 Physcomitrella patens
+    miR166l |
+  end_query: 21
+  end_target: 132
+  name: ppt-miR166j
+  score: -2
+  seq: UCCGGACCAGGCUUCAUUCCC
+  strand_target: +
+- alignment: "ucggaccaggcuuc-auccc-\n|||||||||||||| ||||| \nucggaccaggcuucaaucccu\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0001037 Oryza sativa miR166k-3p | osa-miR166l-3p MIMAT0001038 Oryza
+    sativa miR166l-3p | sbi-miR166e MIMAT0001446 Sorghum bicolor miR166e | zma-miR166k-3p
+    MIMAT0001719 Zea mays miR166k-3p | zma-miR166j-3p MIMAT0001720 Zea mays miR166j-3p
+    | sbi-miR166g MIMAT0001755 Sorghum bicolor miR166g | zma-miR166n-3p MIMAT0013986
+    Zea mays miR166n-3p | bdi-miR166h-3p MIMAT0030088 Brachypodium distachyon miR166h-3p
+    |
+  end_query: 21
+  end_target: 132
+  name: osa-miR166k-3p
+  score: -2
+  seq: UCGGACCAGGCUUCAAUCCCU
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-uccc
+
+    ||||||||||||||| ||||
+
+    ucggaccaggcuucauuccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0001377 Zea mays miR166h-3p | zma-miR166e MIMAT0001378 Zea mays
+    miR166e | zma-miR166i-3p MIMAT0001379 Zea mays miR166i-3p | zma-miR166f MIMAT0001380
+    Zea mays miR166f | zma-miR166g-3p MIMAT0001381 Zea mays miR166g-3p | zma-miR166b-3p
+    MIMAT0001382 Zea mays miR166b-3p | zma-miR166c-3p MIMAT0001383 Zea mays miR166c-3p
+    | zma-miR166d-3p MIMAT0001384 Zea mays miR166d-3p | sbi-miR166d MIMAT0001391 Sorghum
+    bicolor miR166d | sbi-miR166c MIMAT0001392 Sorghum bicolor miR166c | sbi-miR166b
+    MIMAT0001393 Sorghum bicolor miR166b | sbi-miR166a MIMAT0001394 Sorghum bicolor
+    miR166a | sbi-miR166h MIMAT0011327 Sorghum bicolor miR166h | sbi-miR166i MIMAT0011328
+    Sorghum bicolor miR166i | sbi-miR166j MIMAT0011329 Sorghum bicolor miR166j | csi-miR166c
+    MIMAT0018451 Citrus sinensis miR166c | tcc-miR166b MIMAT0020384 Theobroma cacao
+    miR166b | gma-miR166p MIMAT0024898 Glycine max miR166p | gma-miR166q MIMAT0024899
+    Glycine max miR166q | gma-miR166r MIMAT0024900 Glycine max miR166r | gma-miR166s
+    MIMAT0024901 Glycine max miR166s | gma-miR166t MIMAT0024902 Glycine max miR166t
+    | cme-miR166g MIMAT0026165 Cucumis melo miR166g |
+  end_query: 20
+  end_target: 132
+  name: zma-miR166h-3p
+  score: -1
+  seq: UCGGACCAGGCUUCAUUCCC
+  strand_target: +
+- alignment: "ucggaccaggcuuca-uccc-\n||||||||||||||| |||| \nucggaccaggcuucauucccg\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0021648 Glycine max miR166j-3p | cpa-miR166d MIMAT0031799 Carica
+    papaya miR166d |
+  end_query: 21
+  end_target: 132
+  name: gma-miR166j-3p
+  score: -2
+  seq: UCGGACCAGGCUUCAUUCCCG
+  strand_target: +
+- alignment: "ucggaccaggcuuca-uccc--\n||||||||||||||| ||||  \nucggaccaggcuucauucccgu\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0014084 Citrus reticulata miR166a | csi-miR166b MIMAT0014091 Citrus
+    sinensis miR166b | mes-miR166h MIMAT0029199 Manihot esculenta miR166h |
+  end_query: 22
+  end_target: 132
+  name: crt-miR166a
+  score: -3
+  seq: UCGGACCAGGCUUCAUUCCCGU
+  strand_target: +
+- alignment: "ucggaccaggcuuca-uccc-\n||||||||||||||| |||| \nucggaccaggcuucauucccu\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0001087 Oryza sativa miR166m | csi-miR166d MIMAT0018452 Citrus sinensis
+    miR166d |
+  end_query: 21
+  end_target: 132
+  name: osa-miR166m
+  score: -2
+  seq: UCGGACCAGGCUUCAUUCCCU
+  strand_target: +
+- alignment: "ucggaccaggcuuca-uccc--\n||||||||||||||| ||||  \nucggaccaggcuucauucccuu\n"
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0014085 Citrus reticulata miR166b |
+  end_query: 22
+  end_target: 132
+  name: crt-miR166b
+  score: -3
+  seq: UCGGACCAGGCUUCAUUCCCUU
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-ucc-c
+
+    ||||||||||||||| ||| |
+
+    ucggaccaggcuucauuccuc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0001072 Oryza sativa miR166g-3p | osa-miR166h-3p MIMAT0001073 Oryza
+    sativa miR166h-3p | sbi-miR166f MIMAT0001465 Sorghum bicolor miR166f | zma-miR166l-3p
+    MIMAT0001743 Zea mays miR166l-3p | zma-miR166m-3p MIMAT0001744 Zea mays miR166m-3p
+    | mtr-miR166c MIMAT0011067 Medicago truncatula miR166c | mtr-miR166f MIMAT0011100
+    Medicago truncatula miR166f | aqc-miR166a MIMAT0012556 Aquilegia caerulea miR166a
+    | aqc-miR166d MIMAT0012559 Aquilegia caerulea miR166d | pab-miR166a MIMAT0018148
+    Picea abies miR166a | tcc-miR166c MIMAT0020385 Theobroma cacao miR166c | ssl-miR166a
+    MIMAT0022509 Salvia sclarea miR166a | dpr-miR166a MIMAT0023529 Digitalis purpurea
+    miR166a | lus-miR166e MIMAT0027217 Linum usitatissimum miR166e | cme-miR166e MIMAT0026179
+    Cucumis melo miR166e | mes-miR166j MIMAT0029201 Manihot esculenta miR166j | stu-miR166b
+    MIMAT0031251 Solanum tuberosum miR166b |
+  end_query: 21
+  end_target: 132
+  name: osa-miR166g-3p
+  score: -2
+  seq: UCGGACCAGGCUUCAUUCCUC
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-ucc-c
+
+    ||||| ||||||||| ||| |
+
+    ucggaucaggcuucauuccuc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0001074 Oryza sativa miR166i-3p |
+  end_query: 21
+  end_target: 132
+  name: osa-miR166i-3p
+  score: -3
+  seq: UCGGAUCAGGCUUCAUUCCUC
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-ucccc
+
+    ||| ||||||||||| |||||
+
+    ucgaaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000639 Oryza sativa miR166e-3p |
+  end_query: 21
+  end_target: 133
+  name: osa-miR166e-3p
+  score: -2
+  seq: UCGAACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccc
+
+    ||||||||||||||||||||
+
+    ucggaccaggcuucaucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 133
+  name: aly-miR165a-3p
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccc
+
+    ||||||||||||||||||||
+
+    ucggaccaggcuucaucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 133
+  name: aly-miR165a-3p
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccc
+
+    ||||||||||||||||||||
+
+    ucggaccaggcuucaucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 133
+  name: aly-miR165a-3p
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccc
+
+    ||||||||||||||||||||
+
+    ucggaccaggcuucaucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 133
+  name: aly-miR165a-3p
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-ucccc
+
+    ||||||||||||||| |||||
+
+    ucggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000189 Arabidopsis thaliana miR166a | ath-miR166b MIMAT0000190
+    Arabidopsis thaliana miR166b | ath-miR166c MIMAT0000191 Arabidopsis thaliana miR166c
+    | ath-miR166d MIMAT0000192 Arabidopsis thaliana miR166d | ath-miR166e MIMAT0000193
+    Arabidopsis thaliana miR166e | ath-miR166f MIMAT0000194 Arabidopsis thaliana miR166f
+    | ath-miR166g MIMAT0000195 Arabidopsis thaliana miR166g | osa-miR166a-3p MIMAT0000635
+    Oryza sativa miR166a-3p | osa-miR166b-3p MIMAT0000636 Oryza sativa miR166b-3p
+    | osa-miR166c-3p MIMAT0000637 Oryza sativa miR166c-3p | osa-miR166d-3p MIMAT0000638
+    Oryza sativa miR166d-3p | osa-miR166f MIMAT0000640 Oryza sativa miR166f | osa-miR166j-3p
+    MIMAT0001088 Oryza sativa miR166j-3p | zma-miR166a-3p MIMAT0001375 Zea mays miR166a-3p
+    | mtr-miR166a MIMAT0001642 Medicago truncatula miR166a | gma-miR166a-3p MIMAT0001677
+    Glycine max miR166a-3p | gma-miR166b MIMAT0001678 Glycine max miR166b | ptc-miR166a
+    MIMAT0001924 Populus trichocarpa miR166a | ptc-miR166b MIMAT0001925 Populus trichocarpa
+    miR166b | ptc-miR166c MIMAT0001926 Populus trichocarpa miR166c | ptc-miR166d MIMAT0001927
+    Populus trichocarpa miR166d | ptc-miR166e MIMAT0001928 Populus trichocarpa miR166e
+    | ptc-miR166f MIMAT0001929 Populus trichocarpa miR166f | ptc-miR166g MIMAT0001930
+    Populus trichocarpa miR166g | ptc-miR166h MIMAT0001931 Populus trichocarpa miR166h
+    | ptc-miR166i MIMAT0001932 Populus trichocarpa miR166i | ptc-miR166j MIMAT0001933
+    Populus trichocarpa miR166j | ptc-miR166k MIMAT0001934 Populus trichocarpa miR166k
+    | ptc-miR166l MIMAT0001935 Populus trichocarpa miR166l | ptc-miR166m MIMAT0001936
+    Populus trichocarpa miR166m | mtr-miR166e-3p MIMAT0011080 Medicago truncatula
+    miR166e-3p | mtr-miR166g-3p MIMAT0011104 Medicago truncatula miR166g-3p | ghr-miR166b
+    MIMAT0005813 Gossypium hirsutum miR166b | ppt-miR166b MIMAT0004351 Physcomitrella
+    patens miR166b | ppt-miR166a MIMAT0004352 Physcomitrella patens miR166a | pta-miR166a
+    MIMAT0004993 Pinus taeda miR166a | pta-miR166b MIMAT0004994 Pinus taeda miR166b
+    | ppt-miR166c MIMAT0005039 Physcomitrella patens miR166c | ppt-miR166d MIMAT0005040
+    Physcomitrella patens miR166d | ppt-miR166e MIMAT0005041 Physcomitrella patens
+    miR166e | ppt-miR166f MIMAT0005042 Physcomitrella patens miR166f | ppt-miR166g
+    MIMAT0005043 Physcomitrella patens miR166g | ppt-miR166h MIMAT0005044 Physcomitrella
+    patens miR166h | ppt-miR166i MIMAT0005045 Physcomitrella patens miR166i | smo-miR166a
+    MIMAT0005220 Selaginella moellendorffii miR166a | smo-miR166b MIMAT0005221 Selaginella
+    moellendorffii miR166b | smo-miR166c MIMAT0005222 Selaginella moellendorffii miR166c
+    | bna-miR166a MIMAT0005629 Brassica napus miR166a | bna-miR166b MIMAT0005630 Brassica
+    napus miR166b | bna-miR166c MIMAT0005631 Brassica napus miR166c | bna-miR166d
+    MIMAT0005632 Brassica napus miR166d | vvi-miR166c MIMAT0005664 Vitis vinifera
+    miR166c | vvi-miR166d MIMAT0005665 Vitis vinifera miR166d | vvi-miR166e MIMAT0005666
+    Vitis vinifera miR166e | vvi-miR166f MIMAT0005667 Vitis vinifera miR166f | vvi-miR166g
+    MIMAT0005668 Vitis vinifera miR166g | vvi-miR166h MIMAT0005669 Vitis vinifera
+    miR166h | sly-miR166a MIMAT0007915 Solanum lycopersicum miR166a | sly-miR166b
+    MIMAT0007916 Solanum lycopersicum miR166b | pvu-miR166a MIMAT0011175 Phaseolus
+    vulgaris miR166a | bdi-miR166a-3p MIMAT0012185 Brachypodium distachyon miR166a-3p
+    | aqc-miR166e MIMAT0012555 Aquilegia caerulea miR166e | aqc-miR166b MIMAT0012557
+    Aquilegia caerulea miR166b | csi-miR166e-3p MIMAT0014070 Citrus sinensis miR166e-3p
+    | rco-miR166a MIMAT0014160 Ricinus communis miR166a | rco-miR166b MIMAT0014161
+    Ricinus communis miR166b | rco-miR166c MIMAT0014162 Ricinus communis miR166c |
+    rco-miR166d MIMAT0014163 Ricinus communis miR166d | rco-miR166e MIMAT0014164 Ricinus
+    communis miR166e | aly-miR166a-3p MIMAT0017460 Arabidopsis lyrata miR166a-3p |
+    aly-miR166b-3p MIMAT0017462 Arabidopsis lyrata miR166b-3p | aly-miR166c-3p MIMAT0017464
+    Arabidopsis lyrata miR166c-3p | aly-miR166d-3p MIMAT0017466 Arabidopsis lyrata
+    miR166d-3p | aly-miR166e-3p MIMAT0017468 Arabidopsis lyrata miR166e-3p | aly-miR166f-3p
+    MIMAT0017470 Arabidopsis lyrata miR166f-3p | aly-miR166g-3p MIMAT0017472 Arabidopsis
+    lyrata miR166g-3p | hvu-miR166a MIMAT0018213 Hordeum vulgare miR166a | hvu-miR166b
+    MIMAT0018500 Hordeum vulgare miR166b | tcc-miR166a MIMAT0020383 Theobroma cacao
+    miR166a | tcc-miR166d MIMAT0020386 Theobroma cacao miR166d | gma-miR166c-3p MIMAT0020978
+    Glycine max miR166c-3p | gma-miR166d MIMAT0020979 Glycine max miR166d | gma-miR166e
+    MIMAT0020980 Glycine max miR166e | gma-miR166f MIMAT0020981 Glycine max miR166f
+    | gma-miR166g MIMAT0020982 Glycine max miR166g | bdi-miR166d-3p MIMAT0020664 Brachypodium
+    distachyon miR166d-3p | bdi-miR166b-3p MIMAT0020667 Brachypodium distachyon miR166b-3p
+    | bdi-miR166c-3p MIMAT0020688 Brachypodium distachyon miR166c-3p | hvu-miR166c
+    MIMAT0020737 Hordeum vulgare miR166c | gma-miR166i-3p MIMAT0021646 Glycine max
+    miR166i-3p | ssl-miR166b MIMAT0022510 Salvia sclarea miR166b | dpr-miR166b MIMAT0023530
+    Digitalis purpurea miR166b | bna-miR166e MIMAT0023626 Brassica napus miR166e |
+    lus-miR166a MIMAT0027168 Linum usitatissimum miR166a | lus-miR166c MIMAT0027192
+    Linum usitatissimum miR166c | lus-miR166d MIMAT0027204 Linum usitatissimum miR166d
+    | lus-miR166g MIMAT0027223 Linum usitatissimum miR166g | lus-miR166h MIMAT0027231
+    Linum usitatissimum miR166h | nta-miR166a MIMAT0024649 Nicotiana tabacum miR166a
+    | nta-miR166b MIMAT0024650 Nicotiana tabacum miR166b | nta-miR166c MIMAT0024651
+    Nicotiana tabacum miR166c | nta-miR166d MIMAT0024652 Nicotiana tabacum miR166d
+    | nta-miR166e MIMAT0024653 Nicotiana tabacum miR166e | nta-miR166f MIMAT0024654
+    Nicotiana tabacum miR166f | nta-miR166g MIMAT0024655 Nicotiana tabacum miR166g
+    | nta-miR166h MIMAT0024656 Nicotiana tabacum miR166h | gma-miR166n MIMAT0024896
+    Glycine max miR166n | gma-miR166o MIMAT0024897 Glycine max miR166o | hpa-miR166a
+    MIMAT0025503 Helianthus paradoxus miR166a | hpe-miR166a MIMAT0025504 Helianthus
+    petiolaris miR166a | mdm-miR166a MIMAT0025913 Malus domestica miR166a | mdm-miR166b
+    MIMAT0025914 Malus domestica miR166b | mdm-miR166c MIMAT0025915 Malus domestica
+    miR166c | mdm-miR166d MIMAT0025916 Malus domestica miR166d | mdm-miR166e MIMAT0025917
+    Malus domestica miR166e | mdm-miR166f MIMAT0025918 Malus domestica miR166f | mdm-miR166g
+    MIMAT0025919 Malus domestica miR166g | mdm-miR166h MIMAT0025920 Malus domestica
+    miR166h | mdm-miR166i MIMAT0025921 Malus domestica miR166i | cme-miR166c MIMAT0026097
+    Cucumis melo miR166c | cme-miR166b MIMAT0026103 Cucumis melo miR166b | cme-miR166d
+    MIMAT0026107 Cucumis melo miR166d | cme-miR166h MIMAT0026108 Cucumis melo miR166h
+    | cme-miR166f MIMAT0026109 Cucumis melo miR166f | cme-miR166a MIMAT0026110 Cucumis
+    melo miR166a | mes-miR166a MIMAT0029192 Manihot esculenta miR166a | mes-miR166b
+    MIMAT0029193 Manihot esculenta miR166b | mes-miR166c MIMAT0029194 Manihot esculenta
+    miR166c | mes-miR166d MIMAT0029195 Manihot esculenta miR166d | mes-miR166e MIMAT0029196
+    Manihot esculenta miR166e | mes-miR166f MIMAT0029197 Manihot esculenta miR166f
+    | mes-miR166g MIMAT0029198 Manihot esculenta miR166g | bdi-miR166i-3p MIMAT0030090
+    Brachypodium distachyon miR166i-3p | ssp-miR166 MIMAT0030451 Saccharum ssp. miR166
+    | stu-miR166a-3p MIMAT0031250 Solanum tuberosum miR166a-3p | stu-miR166c-3p MIMAT0031253
+    Solanum tuberosum miR166c-3p | stu-miR166d-3p MIMAT0031255 Solanum tuberosum miR166d-3p
+    | aly-miR166h-3p MIMAT0031383 Arabidopsis lyrata miR166h-3p | ppe-miR166a MIMAT0031445
+    Prunus persica miR166a | ppe-miR166b MIMAT0031446 Prunus persica miR166b | ppe-miR166c
+    MIMAT0031447 Prunus persica miR166c | ppe-miR166d MIMAT0031448 Prunus persica
+    miR166d | ppe-miR166e MIMAT0031449 Prunus persica miR166e | cpa-miR166a MIMAT0031796
+    Carica papaya miR166a | cpa-miR166b MIMAT0031797 Carica papaya miR166b | cpa-miR166c
+    MIMAT0031798 Carica papaya miR166c | lus-miR166j MIMAT0031855 Linum usitatissimum
+    miR166j |
+  end_query: 21
+  end_target: 133
+  name: ath-miR166a
+  score: -1
+  seq: UCGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-ucccc
+
+    | ||||||||||||| |||||
+
+    uuggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0029200 Manihot esculenta miR166i |
+  end_query: 21
+  end_target: 133
+  name: mes-miR166i
+  score: -2
+  seq: UUGGACCAGGCUUCAUUCCCC
+  strand_target: +
+114-134:
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||| ||||
+
+    ucggaccaggcuucau-cccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 134
+  name: aly-miR165a-3p
+  score: -1
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||| ||||
+
+    ucggaccaggcuucau-cccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 134
+  name: aly-miR165a-3p
+  score: -1
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||| ||||
+
+    ucggaccaggcuucau-cccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 134
+  name: aly-miR165a-3p
+  score: -1
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||||||||
+
+    ucggaccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 134
+  name: ath-miR165a
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||||||||
+
+    ucggaccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 134
+  name: ath-miR165a
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||||||||
+
+    ucggaccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 134
+  name: ath-miR165a
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||||||||||||||||||||
+
+    ucggaccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 134
+  name: ath-miR165a
+  score: 0
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuuca-uccccc
+
+    ||||||||||||||| ||||||
+
+    ucggaccaggcuucauuccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0014071 Citrus trifoliata miR166 | csi-miR166a MIMAT0014090 Citrus
+    sinensis miR166a | lus-miR166i MIMAT0027236 Linum usitatissimum miR166i | hbr-miR166b
+    MIMAT0025285 Hevea brasiliensis miR166b | lus-miR166k MIMAT0031856 Linum usitatissimum
+    miR166k |
+  end_query: 22
+  end_target: 134
+  name: ctr-miR166
+  score: -1
+  seq: UCGGACCAGGCUUCAUUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||| ||||||||||||||||
+
+    ucgggccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011068 Medicago truncatula miR166d |
+  end_query: 21
+  end_target: 134
+  name: mtr-miR166d
+  score: -1
+  seq: UCGGGCCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||| ||||||||||||||||
+
+    ucgggccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011068 Medicago truncatula miR166d |
+  end_query: 21
+  end_target: 134
+  name: mtr-miR166d
+  score: -1
+  seq: UCGGGCCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccc
+
+    |||| ||||||||||||||||
+
+    ucgggccaggcuucauccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011068 Medicago truncatula miR166d |
+  end_query: 21
+  end_target: 134
+  name: mtr-miR166d
+  score: -1
+  seq: UCGGGCCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    ||||||||||||||||  ||||
+
+    ucggaccaggcuucau--cccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 135
+  name: aly-miR165a-3p
+  score: -2
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    ||||||||||||||||  ||||
+
+    ucggaccaggcuucau--cccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 135
+  name: aly-miR165a-3p
+  score: -2
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    |||||||||||||||| |||||
+
+    ucggaccaggcuucau-ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 135
+  name: ath-miR165a
+  score: -1
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    |||||||||||||||| |||||
+
+    ucggaccaggcuucau-ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 135
+  name: ath-miR165a
+  score: -1
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    |||||||||||||||| |||||
+
+    ucggaccaggcuucau-ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 135
+  name: ath-miR165a
+  score: -1
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    |||| ||||||||||| |||||
+
+    ucgggccaggcuucau-ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011068 Medicago truncatula miR166d |
+  end_query: 21
+  end_target: 135
+  name: mtr-miR166d
+  score: -2
+  seq: UCGGGCCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucaucccccc
+
+    |||| ||||||||||| |||||
+
+    ucgggccaggcuucau-ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011068 Medicago truncatula miR166d |
+  end_query: 21
+  end_target: 135
+  name: mtr-miR166d
+  score: -2
+  seq: UCGGGCCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccccc
+
+    ||||||||||||||||   ||||
+
+    ucggaccaggcuucau---cccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0017456 Arabidopsis lyrata miR165a-3p | aly-miR165b-3p MIMAT0017458
+    Arabidopsis lyrata miR165b-3p |
+  end_query: 20
+  end_target: 136
+  name: aly-miR165a-3p
+  score: -3
+  seq: UCGGACCAGGCUUCAUCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccccc
+
+    ||||||||||||||||  |||||
+
+    ucggaccaggcuucau--ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 136
+  name: ath-miR165a
+  score: -2
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccccc
+
+    ||||||||||||||||  |||||
+
+    ucggaccaggcuucau--ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0000187 Arabidopsis thaliana miR165a | ath-miR165b MIMAT0000188
+    Arabidopsis thaliana miR165b | bna-miR166f MIMAT0023625 Brassica napus miR166f
+    | lus-miR166b MIMAT0027172 Linum usitatissimum miR166b |
+  end_query: 21
+  end_target: 136
+  name: ath-miR165a
+  score: -2
+  seq: UCGGACCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: 'ucggaccaggcuucauccccccc
+
+    |||| |||||||||||  |||||
+
+    ucgggccaggcuucau--ccccc
+
+'
+  begin_query: 1
+  begin_target: 114
+  def_query: MIMAT0011068 Medicago truncatula miR166d |
+  end_query: 21
+  end_target: 136
+  name: mtr-miR166d
+  score: -3
+  seq: UCGGGCCAGGCUUCAUCCCCC
+  strand_target: +
+- alignment: "c-ggaccaggcuucauccc--\n| |||||||||||||||||  \nccggaccaggcuucaucccag\n"
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0004995 Pinus taeda miR166c | far-miR166 MIMAT0018375 Festuca arundinacea
+    miR166 | cln-miR166 MIMAT0027350 Cunninghamia lanceolata miR166 |
+  end_query: 21
+  end_target: 132
+  name: pta-miR166c
+  score: -3
+  seq: CCGGACCAGGCUUCAUCCCAG
+  strand_target: +
+- alignment: 'cggaccaggcuuca-ucccc
+
+    |||||||||||||| |||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 133
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuuca-ucccc
+
+    |||||||||||||| |||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 133
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuuca-ucccc
+
+    |||||||||||||| |||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 133
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuuca-ucccc
+
+    |||||||||||||| |||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 133
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuuca-ucccc
+
+    |||||||||||||| |||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 133
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucauccccc
+
+    ||||||||||||||| ||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 134
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucauccccc
+
+    ||||||||||||||| ||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 134
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucauccccc
+
+    ||||||||||||||| ||||
+
+    cggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 134
+  name: gma-miR166m
+  score: -1
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucaucccccc
+
+    |||||||||||||||  ||||
+
+    cggaccaggcuucau-ucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 135
+  name: gma-miR166m
+  score: -2
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucaucccccc
+
+    |||||||||||||||  ||||
+
+    cggaccaggcuucau-ucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 135
+  name: gma-miR166m
+  score: -2
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucaucccccc
+
+    |||||||||||||||  ||||
+
+    cggaccaggcuucau-ucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 135
+  name: gma-miR166m
+  score: -2
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucauccccccc
+
+    |||||||||||||||   ||||
+
+    cggaccaggcuucau--ucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 136
+  name: gma-miR166m
+  score: -3
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'cggaccaggcuucauccccccc
+
+    |||||||||||||||   ||||
+
+    cggaccaggcuucau--ucccc
+
+'
+  begin_query: 1
+  begin_target: 115
+  def_query: MIMAT0023247 Glycine max miR166m |
+  end_query: 20
+  end_target: 136
+  name: gma-miR166m
+  score: -3
+  seq: CGGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-u-ccc
+
+    ||||||||||||| | |||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 132
+  name: cpa-miR166e
+  score: -2
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-u-ccc
+
+    ||||||||||||| | |||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 132
+  name: cpa-miR166e
+  score: -2
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-ucccc
+
+    ||||||||||||| |||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 133
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-ucccc
+
+    ||||||||||||| |||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 133
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-ucccc
+
+    ||||||||||||| |||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 133
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-ucccc
+
+    ||||||||||||| |||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 133
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuuca-ucccc
+
+    ||||||||||||| |||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 133
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucauccccc
+
+    |||||||||||||| ||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 134
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucauccccc
+
+    |||||||||||||| ||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 134
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucauccccc
+
+    |||||||||||||| ||||
+
+    ggaccaggcuucauucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 134
+  name: cpa-miR166e
+  score: -1
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucaucccccc
+
+    ||||||||||||||  ||||
+
+    ggaccaggcuucau-ucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 135
+  name: cpa-miR166e
+  score: -2
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucaucccccc
+
+    ||||||||||||||  ||||
+
+    ggaccaggcuucau-ucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 135
+  name: cpa-miR166e
+  score: -2
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucaucccccc
+
+    ||||||||||||||  ||||
+
+    ggaccaggcuucau-ucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 135
+  name: cpa-miR166e
+  score: -2
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucauccccccc
+
+    ||||||||||||||   ||||
+
+    ggaccaggcuucau--ucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 136
+  name: cpa-miR166e
+  score: -3
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+- alignment: 'ggaccaggcuucauccccccc
+
+    ||||||||||||||   ||||
+
+    ggaccaggcuucau--ucccc
+
+'
+  begin_query: 1
+  begin_target: 116
+  def_query: MIMAT0031800 Carica papaya miR166e |
+  end_query: 19
+  end_target: 136
+  name: cpa-miR166e
+  score: -3
+  seq: GGACCAGGCUUCAUUCCCC
+  strand_target: +
+36-56:
+- alignment: 'ggaauguugucuggaucgag
+
+    ||||||| |||||| |||||
+
+    ggaaugucgucugguucgag
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0021645 Glycine max miR166i-5p |
+  end_query: 20
+  end_target: 55
+  name: gma-miR166i-5p
+  score: -2
+  seq: GGAAUGUCGUCUGGUUCGAG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgag
+
+    ||||||||||||||  ||||
+
+    ggaauguugucugguccgag
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022857 Oryza sativa miR166c-5p |
+  end_query: 20
+  end_target: 55
+  name: osa-miR166c-5p
+  score: -2
+  seq: GGAAUGUUGUCUGGUCCGAG
+  strand_target: +
+- alignment: "ggaauguugucuggaucgag-\n|||||||||||||| | ||| \nggaauguugucugguuggaga\n"
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0015150 Zea mays miR166g-5p | bdi-miR166d-5p MIMAT0027046 Brachypodium
+    distachyon miR166d-5p |
+  end_query: 21
+  end_target: 55
+  name: zma-miR166g-5p
+  score: -3
+  seq: GGAAUGUUGUCUGGUUGGAGA
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    ||||||||| |||| ||||||
+
+    ggaauguuggcuggcucgagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022882 Oryza sativa miR166h-5p | zma-miR166m-5p MIMAT0015204 Zea
+    mays miR166m-5p | mtr-miR166e-5p MIMAT0026726 Medicago truncatula miR166e-5p |
+  end_query: 21
+  end_target: 56
+  name: osa-miR166h-5p
+  score: -2
+  seq: GGAAUGUUGGCUGGCUCGAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    ||||||||||||||  |||||
+
+    ggaauguugucuggcacgagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0017467 Arabidopsis lyrata miR166e-5p |
+  end_query: 21
+  end_target: 56
+  name: aly-miR166e-5p
+  score: -2
+  seq: GGAAUGUUGUCUGGCACGAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    |||||||||||||| ||||||
+
+    ggaauguugucuggcucgagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022858 Oryza sativa miR166d-5p | zma-miR166c-5p MIMAT0015152 Zea
+    mays miR166c-5p | gma-miR166a-5p MIMAT0020920 Glycine max miR166a-5p | mtr-miR166g-5p
+    MIMAT0026730 Medicago truncatula miR166g-5p | csi-miR166e-5p MIMAT0017386 Citrus
+    sinensis miR166e-5p | aly-miR166a-5p MIMAT0017459 Arabidopsis lyrata miR166a-5p
+    | aly-miR166c-5p MIMAT0017463 Arabidopsis lyrata miR166c-5p | aly-miR166d-5p MIMAT0017465
+    Arabidopsis lyrata miR166d-5p | gma-miR166c-5p MIMAT0022980 Glycine max miR166c-5p
+    | bdi-miR166e-5p MIMAT0027063 Brachypodium distachyon miR166e-5p | gma-miR166l
+    MIMAT0023235 Glycine max miR166l | stu-miR166a-5p MIMAT0031249 Solanum tuberosum
+    miR166a-5p |
+  end_query: 21
+  end_target: 56
+  name: osa-miR166d-5p
+  score: -1
+  seq: GGAAUGUUGUCUGGCUCGAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    |||||||||||||| ||| ||
+
+    ggaauguugucuggcucgggg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022856 Oryza sativa miR166b-5p | zma-miR166a-5p MIMAT0015146 Zea
+    mays miR166a-5p | bdi-miR166b-5p MIMAT0027048 Brachypodium distachyon miR166b-5p
+    |
+  end_query: 21
+  end_target: 56
+  name: osa-miR166b-5p
+  score: -2
+  seq: GGAAUGUUGUCUGGCUCGGGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    |||||||||||||| || |||
+
+    ggaauguugucugguucaagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022855 Oryza sativa miR166a-5p | osa-miR166e-5p MIMAT0022859 Oryza
+    sativa miR166e-5p | zma-miR166b-5p MIMAT0015151 Zea mays miR166b-5p | zma-miR166d-5p
+    MIMAT0015153 Zea mays miR166d-5p | bdi-miR166c-5p MIMAT0027064 Brachypodium distachyon
+    miR166c-5p |
+  end_query: 21
+  end_target: 56
+  name: osa-miR166a-5p
+  score: -2
+  seq: GGAAUGUUGUCUGGUUCAAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    |||||||||| ||| ||||||
+
+    ggaauguuguuuggcucgagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0017471 Arabidopsis lyrata miR166g-5p | gma-miR166h-5p MIMAT0020983
+    Glycine max miR166h-5p | gma-miR166j-5p MIMAT0021647 Glycine max miR166j-5p |
+    stu-miR166c-5p MIMAT0031252 Solanum tuberosum miR166c-5p |
+  end_query: 21
+  end_target: 56
+  name: aly-miR166g-5p
+  score: -2
+  seq: GGAAUGUUGUUUGGCUCGAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    ||| |||||||||| ||||||
+
+    ggacuguugucuggcucgagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0017461 Arabidopsis lyrata miR166b-5p |
+  end_query: 21
+  end_target: 56
+  name: aly-miR166b-5p
+  score: -2
+  seq: GGACUGUUGUCUGGCUCGAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    ||| |||||||||| ||| ||
+
+    ggauuguugucuggcucgggg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0015184 Zea mays miR166k-5p |
+  end_query: 21
+  end_target: 56
+  name: zma-miR166k-5p
+  score: -3
+  seq: GGAUUGUUGUCUGGCUCGGGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    ||| |||||||||| || |||
+
+    ggauuguugucugguucaagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022871 Oryza sativa miR166l-5p |
+  end_query: 21
+  end_target: 56
+  name: osa-miR166l-5p
+  score: -3
+  seq: GGAUUGUUGUCUGGUUCAAGG
+  strand_target: +
+- alignment: 'ggaauguugucuggaucgagg
+
+    ||  |||||||||| ||||||
+
+    gguuuguugucuggcucgagg
+
+'
+  begin_query: 1
+  begin_target: 36
+  def_query: MIMAT0022870 Oryza sativa miR166k-5p |
+  end_query: 21
+  end_target: 56
+  name: osa-miR166k-5p
+  score: -3
+  seq: GGUUUGUUGUCUGGCUCGAGG
+  strand_target: +
+- alignment: 'gaauguugucuggaucgagg
+
+    ||||||||||||||||||||
+
+    gaauguugucuggaucgagg
+
+'
+  begin_query: 1
+  begin_target: 37
+  def_query: MIMAT0017455 Arabidopsis lyrata miR165a-5p |
+  end_query: 20
+  end_target: 56
+  name: aly-miR165a-5p
+  score: 0
+  seq: GAAUGUUGUCUGGAUCGAGG
+  strand_target: +
+- alignment: 'gaauguugucuggaucgagg
+
+    ||||||||| ||||||||||
+
+    gaauguuguuuggaucgagg
+
+'
+  begin_query: 1
+  begin_target: 37
+  def_query: MIMAT0017457 Arabidopsis lyrata miR165b-5p |
+  end_query: 20
+  end_target: 56
+  name: aly-miR165b-5p
+  score: -1
+  seq: GAAUGUUGUUUGGAUCGAGG
+  strand_target: +
+--- structure_optimal
+--- ((((....(((..(((((.((.((..((((((.((((.(((..((((((.(((((((((((......((((((....))))))..((((((.....))))))....))))))))))).))))))..))).)))).)))).))..)).))...)))))..)))..))))
+--- alignment_existence
+--- 1
+--- identifier
+--- 1-10
+--- CT
+---
+'1': '168'
+'10': '161'
+'100': '0'
+'101': '0'
+'102': '0'
+'103': '0'
+'104': '0'
+'105': '0'
+'106': '0'
+'107': '61'
+'108': '60'
+'109': '59'
+'11': '160'
+'110': '58'
+'111': '57'
+'112': '56'
+'113': '55'
+'114': '54'
+'115': '53'
+'116': '52'
+'117': '51'
+'118': '0'
+'119': '49'
+'12': '0'
+'120': '48'
+'121': '47'
+'122': '46'
+'123': '45'
+'124': '44'
+'125': '0'
+'126': '0'
+'127': '41'
+'128': '40'
+'129': '39'
+'13': '0'
+'130': '0'
+'131': '37'
+'132': '36'
+'133': '35'
+'134': '34'
+'135': '0'
+'136': '32'
+'137': '31'
+'138': '30'
+'139': '29'
+'14': '157'
+'140': '0'
+'141': '28'
+'142': '27'
+'143': '0'
+'144': '0'
+'145': '24'
+'146': '23'
+'147': '0'
+'148': '21'
+'149': '20'
+'15': '156'
+'150': '0'
+'151': '0'
+'152': '0'
+'153': '18'
+'154': '17'
+'155': '16'
+'156': '15'
+'157': '14'
+'158': '0'
+'159': '0'
+'16': '155'
+'160': '11'
+'161': '10'
+'162': '9'
+'163': '0'
+'164': '0'
+'165': '4'
+'166': '3'
+'167': '2'
+'168': '1'
+'17': '154'
+'18': '153'
+'19': '0'
+'2': '167'
+'20': '149'
+'21': '148'
+'22': '0'
+'23': '146'
+'24': '145'
+'25': '0'
+'26': '0'
+'27': '142'
+'28': '141'
+'29': '139'
+'3': '166'
+'30': '138'
+'31': '137'
+'32': '136'
+'33': '0'
+'34': 134
+'35': '133'
+'36': '132'
+'37': '131'
+'38': '0'
+'39': '129'
+'4': '165'
+'40': '128'
+'41': '127'
+'42': '0'
+'43': '0'
+'44': '124'
+'45': '123'
+'46': '122'
+'47': '121'
+'48': '120'
+'49': '119'
+'5': '0'
+'50': '0'
+'51': '117'
+'52': '116'
+'53': '115'
+'54': '114'
+'55': '113'
+'56': '112'
+'57': '111'
+'58': '110'
+'59': '109'
+'6': '0'
+'60': '108'
+'61': '107'
+'62': '0'
+'63': '0'
+'64': '0'
+'65': '0'
+'66': '0'
+'67': '0'
+'68': '0'
+'69': '0'
+'7': '0'
+'70': '0'
+'71': '0'
+'72': '0'
+'73': '0'
+'74': '0'
+'75': '0'
+'76': '0'
+'77': '0'
+'78': '0'
+'79': '0'
+'8': '0'
+'80': '0'
+'81': '0'
+'82': '0'
+'83': '0'
+'84': '0'
+'85': '0'
+'86': '0'
+'87': '0'
+'88': '0'
+'89': '0'
+'9': '162'
+'90': '0'
+'91': '0'
+'92': '0'
+'93': '0'
+'94': '0'
+'95': '0'
+'96': '0'
+'97': '0'
+'98': '0'
+'99': '0'
+--- '%GC'
+--- '39.88'
+--- hairpin
+--- "    UAUC   AG     A--  U  UU  -    A    A   UU      A           AUAGAUAUAUACAUGUGUAUG\nCGAU
+  \   AUG  GGUUA   GC AU  CA GUUG GGGG AUG  GUCUGG UCGAGGAUAUU                     U\n||||
+  \   |||  |||||   || ||  || |||| |||| |||  |||||| |||||||||||                     U\nGUUA
+  \   UAC  CUAGU   CG UA  GU CAAC CCCC UAC  CGGACC GGCUCCUAUGA                     A\n
+  \   UU--   CA     CUC  U  UU  A    C    C   UU      A           GAGAUACUAGUGAACUUAGUA\n"
+--- strand
+--- '-'
+--- alignment
+--- 2
+--- quality
+--- 5
+--- alternatives
+--- {}
+--- cluster
+--- 78833-79130
+--- energy_optimal
+--- '-54.60'
+--- name
+--- '1'
+--- image
+--- /vagrant/results/cli_bed/very_short_bed_RNAcomp/workspace/1/78833-79130-/10/image.png
+--- amfe
+--- -32.5
+--- length
+--- 168
+--- mfei
+--- -0.814925373134328
+--- mfe
+--- '-47.47'
+--- mirdup_validation
+---
+1__114-132: 0
+1__114-134: 1
+1__36-56: 1
