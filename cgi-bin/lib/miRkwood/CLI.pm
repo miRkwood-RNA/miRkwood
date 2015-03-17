@@ -59,7 +59,7 @@ sub make_html_from_results {
     my %results = %{$results};
     my $output_folder = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
-    
+
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter();
@@ -186,15 +186,15 @@ sub make_candidate_page {
       or die("Cannot write in file $alternatives_file: $!");
     close($ALT_FILE)
       or die("Cannot close file $alternatives_file: $!");
-      
-    my $reads_file = File::Spec->catfile( 
+
+    my $reads_file = File::Spec->catfile(
         $output_folder ."/clusters/", $candidate->{'identifier'} . '.txt' );
 
     my $linkFasta         = "$candidate_fasta_file";
     my $linkVienna        = "$vienna_file";
     my $linkAlternatives  = "$alternatives_file";
     my $linkViennaOptimal = "$vienna_file_optimal";
-    my $linkReads         = "$reads_file";  
+    my $linkReads         = "$reads_file";
 
     my $Vienna_HTML =
 "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -262,8 +262,8 @@ sub make_candidate_page {
     </ul>
 END_TXT
 
-    if ( $cfg->param('options.align') ){   
-        
+    if ( $cfg->param('options.align') ){
+
         $html .=  <<"END_TXT";
 <h3>miRBase alignments</h3>
 
