@@ -4,12 +4,9 @@ use strict;
 use warnings;
 use POSIX;
 
-use miRkwood;
-
-use miRkwood::Utils;
-
 use List::Util qw(max min);
 
+use miRkwood;
 use miRkwood::Paths;
 use miRkwood::Parsers;
 use miRkwood::Programs;
@@ -37,7 +34,7 @@ sub new {
 		#~ 'stats' => $stats
     #STATS END
     }, $class;
-    
+
     return $this;
 }
 
@@ -59,7 +56,7 @@ sub get_sub_sequence_on_strand {
 sub build_hairpins {
 	my $this = shift;
 	my $locus = shift;
-	
+
 	#~ warn("HairpinBuilder: $locus->{'chr'}:", $locus->{begin}+1, '-', $locus->{end}, ' [', $locus->{strand}, "]\n");
 	
 	my $chr = $locus->{'chr'};
@@ -99,7 +96,9 @@ sub build_hairpins {
 	#~ ($new_candidates, $already_positioned) = filter_candidates_on_position($new_candidates, $already_positioned);
 
 	my @sorted_new_candidates = sort { $a->{'start_position'} <=> $b->{'start_position'} } @{$new_candidates};
-	
+
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... HairpinBuilder : build_hairpins' );
+
 	return \@sorted_new_candidates;
 }
 
@@ -251,7 +250,7 @@ sub test_miRna_intersection {
 	}
 	
 	foreach my $miRnas ( @{$miRnaPos} ) {
-		if ($miRnas->{source} == miRkwood::ClusterJobSebastien::DUE_TO_TWO_SPIKES) {
+		if ($miRnas->{source} == miRkwood::ClusterJobSebastien->DUE_TO_TWO_SPIKES ) {
 			if (raw_regions_intertect($stemloop, $miRnas->{first}) && raw_regions_intertect($stemloop, $miRnas->{second})) {
 				return 1;
 			}
