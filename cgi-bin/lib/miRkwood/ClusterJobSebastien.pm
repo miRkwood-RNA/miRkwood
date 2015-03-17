@@ -16,7 +16,7 @@ use List::Util qw(max min);
 use constant {
 	DUE_TO_SINGLE_SPIKE => 1,
 	DUE_TO_TWO_SPIKES => 2,
-	
+
 	ISOLATED_SPIKE => 3,
 	COUPLE_OF_SPIKES => 4,
 	MULTIPLE_SPIKES => 5
@@ -42,7 +42,7 @@ Constructor
 =cut
 
 sub new {
-    my ( $class, 
+    my ( $class,
     #~ $workspace_dir, 
     $genome_db ) = @_;
     my $self = bless {
@@ -73,14 +73,14 @@ sub get_sub_sequence {
 
 sub display_chr_coordinatees {
 	my ($chr, $begin, $end) = @_;
-	return $chr. ':' . $begin+1 . '-' . $end;
+	return $chr. ':' . ($begin+1) . '-' . $end;
 }
 
 
 sub extract_spike_train {
 	my $this = shift;
 	my $trains_per_chr = shift;
-	
+
 	my %spikes = ();
 
 	foreach my $chr (keys %{ $this->{chr_info} }) {
@@ -92,23 +92,23 @@ sub extract_spike_train {
 sub extract_spike_train_per_chr {
 	my $this = shift;
 	my $trains_for_chr = shift;
-	
+
 	my @spike_array = ();
-	foreach my $train (@$trains_for_chr) {
+	foreach my $train (@{$trains_for_chr}) {
 		foreach my $spike (@{$train->{spikes}}) {
 			push @spike_array, { 'spike' => $spike };
 		}
 	}
-	
+
 	my $accepting_time = $this->{'accepting_time'};
 	my $min_length = 21;
 	my $min_length_for_neighbor = 40;
-	
+
 	for (my $i = 0, my $e = scalar @spike_array; $i < $e; $i++) {
 		my $current_spike = $spike_array[$i]{'spike'};
 		my @neighbors = ();
 		my $unknown_strand = $current_spike->{'strand'} eq '?';
-		
+
 		for (my $j = $i+1; $j < $e; $j++) {
 			my $neighbor = $spike_array[$j]{'spike'};
 			if ($neighbor->{'begin'} - $current_spike->{'end'} < $accepting_time) {
@@ -123,7 +123,7 @@ sub extract_spike_train_per_chr {
 		$spike_array[$i]{'neighbors'} = \@neighbors;
 		$spike_array[$i]{'class'} = (scalar(@neighbors) == 0 ? ISOLATED_SPIKE : scalar(@neighbors) == 1 ? COUPLE_OF_SPIKES : MULTIPLE_SPIKES);
 	}
-	
+
 	return \@spike_array;
 }
 
@@ -158,7 +158,7 @@ sub process_spikes {
 	my $this = shift;
 	my $spikes_per_chr = shift;
 	my %miRnaPos = ();
-	
+
 	#STATS BEG
 	#~ my %stats = (
 	#~ 'ISOLATED_SPIKE_DISCARDED' => 0,
@@ -253,9 +253,9 @@ sub __look_forward {
 
 	if ($enlarged_spike->{'begin'} < $genome_seq_beg || $candidate_region[0] < $genome_seq_beg ||
 		$enlarged_spike->{'end'} > $genome_seq_end || $candidate_region[1] > $genome_seq_end) {
-		debug("Looking forward... Genome seq: ". display_chr_coordinatees($chr, $genome_seq_beg, $genome_seq_end) . "\n", 1);
-		debug("Too long to test " . display_chr_coordinatees($chr, $enlarged_spike->{'begin'}, $enlarged_spike->{'end'}) . 
-			" against " . display_chr_coordinatees($chr, $candidate_region[0], $candidate_region[1]) . "\n", 1);
+		debug('Looking forward... Genome seq: '. display_chr_coordinatees($chr, $genome_seq_beg, $genome_seq_end) . "\n", 1);
+		debug('Too long to test ' . display_chr_coordinatees($chr, $enlarged_spike->{'begin'}, $enlarged_spike->{'end'}) .
+			' against ' . display_chr_coordinatees($chr, $candidate_region[0], $candidate_region[1]) . "\n", 1);
 		return 0;
 	}
 	my $results;
@@ -284,7 +284,7 @@ sub __look_forward {
 	if ( scalar @{$results} ) {
 		my @farthest = @{$results->[0]};
 		foreach my $r ( @{$results} ) {
-			@farthest = @$r if $r->[0] > $farthest[0]; # if begin_sequence of 'r' > begin_sequence of 'farthest'
+			@farthest = @{$r} if $r->[0] > $farthest[0]; # if begin_sequence of 'r' > begin_sequence of 'farthest'
 		}
 		my $other = {begin => $candidate_region[0]+$farthest[0], end => $candidate_region[0]+$farthest[1], strand => $enlarged_spike->{'strand'}};
 		push @{$miRnaPos}, {strand => $strand, from_read => $enlarged_spike, detected => $other, first => $enlarged_spike, second => $other, source => DUE_TO_SINGLE_SPIKE};
@@ -308,9 +308,9 @@ sub __look_backward {
 	}
 	if ($enlarged_spike->{'begin'} < $genome_seq_beg || $candidate_region[0] < $genome_seq_beg ||
 		$enlarged_spike->{'end'} > $genome_seq_end || $candidate_region[1] > $genome_seq_end) {
- 		debug("Looking backward... Genome seq: ".display_chr_coordinatees($chr, $genome_seq_beg, $genome_seq_end) . "\n", 1);
-		debug("Too long to test " . display_chr_coordinatees($chr, $enlarged_spike->{'begin'}, $enlarged_spike->{'end'}) . 
-			" against " . display_chr_coordinatees($chr, $candidate_region[0], $candidate_region[1]) . "\n", 1);
+ 		debug('Looking backward... Genome seq: '.display_chr_coordinatees($chr, $genome_seq_beg, $genome_seq_end) . "\n", 1);
+		debug('Too long to test ' . display_chr_coordinatees($chr, $enlarged_spike->{'begin'}, $enlarged_spike->{'end'}) .
+			' against ' . display_chr_coordinatees($chr, $candidate_region[0], $candidate_region[1]) . "\n", 1);
 		return 0;
 	}
 
@@ -320,7 +320,7 @@ sub __look_backward {
 		$results = $detector->detect_on_strand('+', $genome_seq, $genome_seq_length, $enlarged_spike->{'begin'}-$genome_seq_beg, $enlarged_spike->{'end'}-$genome_seq_beg,
 		$candidate_region[0]-$genome_seq_beg, $candidate_region[1]-$genome_seq_beg);
 		$strand = '+';
-		if (scalar @$results) {
+		if (scalar @{$results}) {
 			my @farthest = @{$results->[0]};
 			foreach my $r ( @{$results} ) {
 				@farthest = @{$r} if $r->[0] < $farthest[0]; # if begin_sequence of 'r' < begin_sequence of 'farthest'
@@ -374,9 +374,9 @@ sub __match_with_neighbor {
 	my $results;
 	if ($current_spike->{'begin'} < $genome_seq_beg || $enlarged_neighbor->{'begin'} < $genome_seq_beg ||
 		$current_spike->{'end'} > $genome_seq_end || $enlarged_neighbor->{'end'} > $genome_seq_end) {
-		debug("Matching neighbors... Genome seq: ".display_chr_coordinatees($chr, $genome_seq_beg, $genome_seq_end) . "\n", 1);
-		debug("Too long to test " . display_chr_coordinatees($chr, $current_spike->{'begin'}, $current_spike->{'end'}) . 
-			" against " . display_chr_coordinatees($chr, $enlarged_neighbor->{'begin'}, $enlarged_neighbor->{'end'}) . "\n", 1);
+		debug('Matching neighbors... Genome seq: '.display_chr_coordinatees($chr, $genome_seq_beg, $genome_seq_end) . "\n", 1);
+		debug('Too long to test ' . display_chr_coordinatees($chr, $current_spike->{'begin'}, $current_spike->{'end'}) .
+			' against ' . display_chr_coordinatees($chr, $enlarged_neighbor->{'begin'}, $enlarged_neighbor->{'end'}) . "\n", 1);
 		return 0;
 	}
 
@@ -424,8 +424,8 @@ sub process_spikes_for_chr {
 	my $enlarging = max($window_length, $accepting_time);
 	#~ my $min_error_for_single_spike = $detector->miRnaHigherScoreThreshold();
 	#~ my $min_error_for_two_spikes = $detector->miRnaLowerScoreThreshold();
-	
-	
+
+
 	foreach my $current_spike_entry (@{$spikes_for_chr}) {
 		my $current_spike = $current_spike_entry->{'spike'};
 		my $unknown_strand = $current_spike->{'strand'} eq '?';
@@ -438,7 +438,7 @@ sub process_spikes_for_chr {
 		}
 		my $genome_seq = $this->get_sub_sequence($chr, $genome_seq_beg, $genome_seq_end);
 		my $has_results = 0;
-		
+
 		#~ STATS BEG
 		#~ my $stats__couple_spike = $current_spike_entry->{'class'} != ISOLATED_SPIKE ? 1 : 0;
 		#~ STATS END
@@ -458,7 +458,7 @@ sub process_spikes_for_chr {
 				}
 			}
 		}
-		if ($has_results == 0) { 
+		if ($has_results == 0) {
 			#~ $detector->setMiRnaMinErrorsThreshold($min_error_for_single_spike);
 
 			$genome_seq_beg = max($enlarged_spike->{'begin'}-$window_length-15, 0);
@@ -467,14 +467,14 @@ sub process_spikes_for_chr {
 
 			$has_results = __look_both_ways($detector, \@miRnaPos, $genome_seq_beg, $genome_seq_end, $genome_seq, $chr, $chr_length, $enlarged_spike,
 			$min_length_on_isolated_spike, $window_length);
-			
+
 			#~ STATS BEG
 			#~ if ($stats__couple_spike == 1 && $has_results != 0) {
 				#~ $stats->{'COUPLE_OF_SPIKES_TO_ISOLATED_SPIKE'}++;
 			#~ }
 			#~ STATS END
 		}
-		
+
 		#~ STATS BEG
 		#~ if ($has_results == 0) {
 			#~ if ($stats__couple_spike == 1) {
@@ -511,7 +511,7 @@ Regions that overlap by more than 60% are merged together.
 sub compute_candidate_precursors_from_miRnaPos {
 	my $this = shift;
 	my $miRnaPosPerChr = shift;
-	
+
 	my $read_coverage_threshold = shift;
 	my $peak_padding = shift;
 	my $parsed_bed = shift;
@@ -595,12 +595,12 @@ sub merge_regions {
 
 sub merge_overlapping_regions {
 	my $regions = shift;
-	my @sorted_regions = sort {$a->{'begin'} <=> $b->{'begin'}} @$regions;
-	
+	my @sorted_regions = sort {$a->{'begin'} <=> $b->{'begin'}} @{$regions};
+
 	if (scalar @sorted_regions == 0) {
 		return [];
 	}
-	
+
 	my @stack = ($sorted_regions[0]);
 	for (my $i = 1; $i < scalar @sorted_regions; $i++) {
 		my $top = $stack[0];
@@ -614,7 +614,7 @@ sub merge_overlapping_regions {
 			unshift @stack, $top;
 		}
 	}
-	
+
 	return \@stack;
 }
 
@@ -628,7 +628,7 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 	my $chr = shift;
 	my $miRnaPos = shift;
 	my $chr_length = shift;
-	
+
 	my $read_coverage_threshold = shift;
 	my $peak_padding = shift;
 	my $parsed_bed = shift;
@@ -647,15 +647,15 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 			next;
 		}
 		my %region = (
-			'begin'  => $region_begin, 
-			'end'    => $region_end, 
+			'begin'  => $region_begin,
+			'end'    => $region_end,
 			'strand' => $current_miRna->{'strand'},
 			'miRnas' => [$current_miRna],
 			'chr' => $chr);
-			
+
 		push @{$regions{$current_miRna->{'strand'}}}, \%region;
 	}
-	
+
 	$regions{'+'} = merge_overlapping_regions($regions{'+'});
 	$regions{'-'} = merge_overlapping_regions($regions{'-'});
 
