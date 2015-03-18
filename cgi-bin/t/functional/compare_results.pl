@@ -13,104 +13,142 @@ use Data::Dumper;
 my $results_folder_1 = $ARGV[0];
 my $results_folder_2 = $ARGV[1];
 
-
-########## Compare the yml files
-
-my $yml_folder_1 = "$results_folder_1/candidates";
-my $yml_folder_2 = "$results_folder_2/candidates";
-
-my @dir1;
-my @dir2;
-
-##### Get yml folders contents
-opendir(D, $yml_folder_1) or die "ERROR : cannot opendir $yml_folder_1 : $!";
-while (readdir D) {
-    if ( $_ ne "." && $_ ne ".." && $_ ne "basic_candidates.yml" && /.yml$/ ){
-        push @dir1, $_;
-    }
-}
-closedir D;
-
-opendir(D, $yml_folder_2) or die "ERROR : cannot opendir $yml_folder_2 : $!";
-while (readdir D) {
-    if ( $_ ne "." && $_ ne ".." && $_ ne "basic_candidates.yml" && /.yml$/ ){
-        push @dir2, $_;
-    }
-}
-closedir D;
-
-##### Compare yml folders contents
-my $content1 = join(" ", sort(@dir1));
-my $content2 = join(" ", sort(@dir2));
-
-
-if ( $content1 ne $content2 ){
-    print "Lists of files in both folders are different.\n";
-    print "---$content1\n";
-    print "---$content2\n";
-    exit 1;
-}
-
-foreach ( sort(@dir1) ){
-    
-    my $yml_file_1 = "$yml_folder_1/$_";
-    my $yml_file_2 = "$yml_folder_2/$_"; 
-    
-    my %attributes_1 = YAML::XS::LoadFile($yml_file_1);
-    my %attributes_2 = YAML::XS::LoadFile($yml_file_2);
-    
-    compare_2_hash( \%attributes_1, \%attributes_2, $_); 
-}
-
-
-########## Compare the other files
-my $excludes = "--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg --exclude=*.png --exclude=*.yml --exclude=*.html";
-open CMD, "diff $excludes $results_folder_1 $results_folder_2 | grep -v 'Binary' | grep -v 'Les sous-répertoires.*sont identiques' | grep -v 'Common subdirectories:' |";
-while ( <CMD> ){
-    if ( ! /^\n$/ ){
-        print $_;
-    }
-}
-close CMD;
+compare_folders( $results_folder_1, $results_folder_2 );
 
 
 
 ########## Functions
+=method compare_folders
+
+  Compare recursively folders and files.
+  If files are yaml, deserialize them and use 
+  function compare_2_hash.
+
+=cut
+sub compare_folders {
+    my ($folder_1, $folder_2) = @_;
+    
+    ### List all sub-folders and files in each folder
+    my ($list_files_1, $list_subfolders_1) = list_files_and_folders( $folder_1 );
+    my ($list_files_2, $list_subfolders_2) = list_files_and_folders( $folder_2 );
+
+    ### Compare files
+    my $files_1 = join(' ', sort( @{$list_files_1} ) );
+    my $files_2 = join(' ', sort( @{$list_files_2} ) );
+    if ( $files_1 ne $files_2 ){
+        print "Lists of files in $folder_1 and $folder_2 are different.\n";
+        print "---$files_1\n";
+        print "---$files_2\n";
+    }
+    else{
+        foreach ( @{$list_files_1} ){
+            if ( $_ eq 'basic_candidates.yml' or $_ eq 'basic_known_candidates.yml' ){
+
+            }
+            elsif ( /[.]yml/ ){
+                my $yml_file_1 = "$folder_1/$_";
+                my $yml_file_2 = "$folder_2/$_";
+
+                my %attributes_1 = YAML::XS::LoadFile($yml_file_1);
+                my %attributes_2 = YAML::XS::LoadFile($yml_file_2);
+
+                compare_2_hash( \%attributes_1, \%attributes_2, $_);
+            }
+            elsif ($_ !~/[\.svn|\.log|\.cfg|\.png|\.html|pvalue\.txt|outBlast\.txt|miRdupOutput\.txt]$/ ) {
+                open CMD, "diff $folder_1/$_ folder_2/$_ |";
+                while ( my $line == <CMD> ){
+                    if ( $line != /^\n$/ ){
+                        print $line;
+                    }
+                }
+                close CMD;
+            }
+        }
+    }
+
+    ### Compare subfolders
+    my $subfolders_1 = join(' ', sort( @{$list_subfolders_1} ) );
+    my $subfolders_2 = join(' ', sort( @{$list_subfolders_2} ) );
+    if ( $subfolders_1 ne $subfolders_2 ){
+        print "Lists of subfolders in $folder_1 and $folder_2 are different.\n";
+        print "---$subfolders_1\n";
+        print "---$subfolders_2\n";
+    }
+    else{
+        foreach ( @{$list_subfolders_1} ){
+            compare_folders( "$folder_1/$_", "$folder_2/$_" );
+        }
+    }
+
+}
+
+=method list_files_and_folders
+
+  List files and subfolders in the folder
+  given in parameter.
+  Output : 2 reference arrays, one for files
+  and one for folders.
+  
+=cut
+sub list_files_and_folders {
+    my ($folder) = @_;
+    my $list_files = [];
+    my $list_folders = [];
+
+    opendir (my $DIR, $folder) or die "ERROR : cannot open directory $folder : $!";
+    while ( readdir $DIR ){
+        if ( $_ ne "." && $_ ne ".." ){
+            if ( -f "$folder/$_" ){
+                push @{$list_files}, $_;
+            }
+            elsif ( -d "$folder/$_" ){
+                push @{$list_folders}, $_;
+            }
+        }
+    }
+    closedir $DIR;
+
+    return ($list_files, $list_folders);
+
+}
+
+
 =method compare_2_hash
-Compares 2 hash tables given by reference.
-If the values are hash, recursive call to compare_2_hash
+
+  Compares 2 hash tables given by reference.
+  If the values are hash, recursive call to compare_2_hash
+
 =cut
 sub compare_2_hash {
-    my ($hash1, $hash2) = @_;
-    
-    my $keys_1 = join(" ", sort (keys%$hash1) );
-    my $keys_2 = join(" ", sort (keys%$hash2) );
-    
+    my ($hash1, $hash2, $file) = @_;
+
+    my $keys_1 = join(" ", sort (keys%{$hash1}) );
+    my $keys_2 = join(" ", sort (keys%{$hash2}) );
+
     if ( $keys_1 ne $keys_2 ){
-        print "Hash tables don't have the same features.\n";
+        print "(File $file) Hash tables don't have the same features.\n";
         print "--- $keys_1\n";
-        print "--- $keys_2\n";        
+        print "--- $keys_2\n";
     }
     else{
         foreach ( sort (keys%$hash1) ) {
             if ( $_ ne "image" ){
                 if ( eval { scalar(keys%{$hash1->{$_}}) >= 0 } ){   # value is a hash
-                    compare_2_hash( $hash1->{$_}, $hash2->{$_} );
+                    compare_2_hash( $hash1->{$_}, $hash2->{$_}, $file );
                 }
                 elsif ( eval { scalar(keys@{$hash1->{$_}}) >= 0 } ){    # value is an array
                     my $value_1 = join(" ", sort( keys@{$hash1->{$_}} ) );
                     my $value_2 = join(" ", sort( keys@{$hash2->{$_}} ) );
-                    
                     if ( $value_1 ne $value_2 ){
-                        print "Arrays don't have the same contents.\n";
+                        print "(File $file) Arrays don't have the same contents.\n";
                         print "--- $value_1\n";
-                        print "--- $value_2\n";        
-                    }                   
+                        print "--- $value_2\n";
+                    }
                 }
                 elsif ( $$hash1{$_} ne $$hash2{$_} ){   # value is a scalar
-                    print "Different values for key $_.\n";
+                    print "(File $file) Different values for key $_.\n";
                 }
             }
         }
-    }  
+    }
 }
