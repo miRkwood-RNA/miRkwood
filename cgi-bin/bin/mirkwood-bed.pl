@@ -32,6 +32,7 @@ my $mfei = 0;
 my $align = 0;
 my $species = '';
 my $species_db = '';
+my $force = 0;
 
 ##### Get options
 GetOptions(
@@ -45,6 +46,7 @@ GetOptions(
     'output=s'       => \$output_folder,
     'genome=s'       => \$genome_file,
     'help|?'         => \$help,
+    'force'          => \$force,
     man              => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
@@ -63,7 +65,14 @@ if (! -d $output_folder){
 }
 
 if( my @files = glob("$output_folder/*") ) {
-     die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
+    if ( $force ){
+        print "Directory $output_folder is not empty. It will be cleared out.\n";
+        system("rm -Rf $output_folder");
+        mkdir $output_folder, 0777;
+    }
+    else{
+        die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
+    }
 } 
 
 my $abs_output_folder = File::Spec->rel2abs($output_folder);
