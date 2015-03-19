@@ -137,10 +137,19 @@ sub filter_BED {
     my $mirnaBED           = '';
 
     if ( $species ne '' ){
-        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $localBED, $species, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $self->get_job_dir(),
+                                                                                            $localBED,
+                                                                                            $species,
+                                                                                            $filter_CDS,
+                                                                                            $filter_tRNA_rRNA,
+                                                                                            $filter_multimapped );
     }
     else{
-        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $localBED, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped );
+        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $self->get_job_dir(),
+                                                                                           $localBED,
+                                                                                           $filter_CDS,
+                                                                                           $filter_tRNA_rRNA,
+                                                                                           $filter_multimapped );
     }
 
     if ( ! defined($filteredBED) or $filteredBED eq '' ){

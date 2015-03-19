@@ -27,20 +27,20 @@ Input : - a BED file
 sub filterBEDfile_for_model_organism {
     my @args = @_;
     my $class              = shift @args;
+    my $basename           = shift @args;
     my $bed_file           = shift @args;
     my $species            = shift @args;
     my $filter_CDS         = shift @args;
     my $filter_tRNA_rRNA   = shift @args;
     my $filter_multimapped = shift @args;
-    my $basename = '';
 
     my $data_path = miRkwood::Paths->get_data_path();
     my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
     my $CDS_file = File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" );
     my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );
 
-    if ( $bed_file =~ /(.*)[.]bed/ ){
-        $basename = $1;
+    if ( $bed_file =~ /[\/\\]([^\/\\]+)[.]bed/ ){
+        $basename .= '/'.$1;
     }
 
     my $mirna_reads       = "${basename}_miRNAs.bed";
@@ -135,6 +135,7 @@ sequence given by the user.
 sub filterBEDfile_for_user_sequence {
     my @args = @_;
     my $class              = shift @args;
+    my $out_dir            = shift @args;
     my $bed_file           = shift @args;
     my $filter_CDS         = shift @args;
     my $filter_tRNA_rRNA   = shift @args;
