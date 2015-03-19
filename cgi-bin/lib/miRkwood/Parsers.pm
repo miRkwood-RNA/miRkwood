@@ -166,8 +166,8 @@ sub parse_RNAfold_output {
             $dna =~ s/^\s+//;
             $dna =~ s/\s+$//;
         }
-        elsif ( $line =~ m{^\s*?\(([-.\d]*?)\)} ){
-            
+        elsif ( $line =~ m{^\s*?\(([-.\d ]*?)\)} ){
+
         }
         else{
             ( $structure, $energy ) = parse_Vienna_line($line);
