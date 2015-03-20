@@ -233,7 +233,7 @@ sub filter_multimapped_reads {
     while ( <$BED> ){
 
         @line = split( /\t/xms );
-        if ( $counts->{$line[3]} < $max_positions ){
+        if ( $counts->{$line[3]} <= $max_positions ){
             print $KEEP $_;
         }
         else{
