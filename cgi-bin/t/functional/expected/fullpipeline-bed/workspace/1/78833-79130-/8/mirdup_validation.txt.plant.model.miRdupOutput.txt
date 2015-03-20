@@ -1,0 +1,10 @@
+File /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/8/mirdup_validation.txt adapted in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/8/mirdup_validation.txt.arff submitted to model plant.model
+
+Summary results of predictions
+======
+Correctly Classified Instances           2               66.6667 %
+Incorrectly Classified Instances         1               33.3333 %
+Kappa statistic                          0     
+Mean absolute error                      0.3333
+Total Number of Instances                3     
+

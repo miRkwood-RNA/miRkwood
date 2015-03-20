@@ -1,4 +1,7 @@
 [DEBUG] Known miRNAS have been filtered out from BED.
+[DEBUG] CDS have been filtered out from BED.
+[DEBUG] Other RNA have been filtered out from BED.
+[DEBUG] Multi_mapped reads have been filtered out from BED.
 [DEBUG] Treat known miRNAs.
 [DEBUG] ..... BEDPipeline : store_known_mirnas_as_candidate_objects
 [DEBUG] .......... $name : 88
@@ -6,12 +9,12 @@
 [DEBUG] .......... @field : 1224
 [DEBUG] .......... @args : 64
 [DEBUG] .......... $gff_file : 104
-[DEBUG] .......... $bed_file : 104
-[DEBUG] .......... $cfg : 4342
+[DEBUG] .......... $bed_file : 128
+[DEBUG] .......... $cfg : 4534
 [DEBUG] .......... $species : 64
 [DEBUG] .......... $BED : 311
 [DEBUG] .......... $id : 88
-[DEBUG] .......... $self : 58289
+[DEBUG] .......... $self : 58337
 [DEBUG] .......... $precursor_reads : 56
 [DEBUG] .......... $mature_reads : 24
 [DEBUG] .......... $precursor_of_mature : 71642
@@ -19,48 +22,26 @@
 [DEBUG] .......... $GFF : 311
 [DEBUG] .......... $candidates_dir : 112
 [DEBUG] .......... $reads_dir : 112
-[DEBUG] .................... TOTAL : 148142
+[DEBUG] .................... TOTAL : 148406
 [DEBUG] Extracting sequences from genome using BED clusters
 [DEBUG] ..... ClusterBuilder : build_loci
-[DEBUG] .......... $parsed_bed : 539663
+[DEBUG] .......... $parsed_bed : 247979
 [DEBUG] .......... $trains_hash : 24
 [DEBUG] .......... $cluster_job : 54213
-[DEBUG] .......... $loci : 39968
+[DEBUG] .......... $loci : 29112
 [DEBUG] .......... $putative_miRna : 24
 [DEBUG] .......... $spikes : 24
-[DEBUG] .......... $reads : 393134
-[DEBUG] .......... $this : 594069
-[DEBUG] .................... TOTAL : 1621119
+[DEBUG] .......... $reads : 181070
+[DEBUG] .......... $this : 302401
+[DEBUG] .................... TOTAL : 814847
 [DEBUG] ..... BEDPipeline : init_sequences()
-[DEBUG] .......... $clustering : 594069
-[DEBUG] .......... $self : 633646
+[DEBUG] .......... $clustering : 302401
+[DEBUG] .......... $self : 331154
 [DEBUG] .......... @args : 64
-[DEBUG] .................... TOTAL : 1227779
-[DEBUG] 18 sequences to process
+[DEBUG] .................... TOTAL : 633619
+[DEBUG] 12 sequences to process
 [DEBUG] - Considering chromosome 1
 [DEBUG]   - Considering sequence 0
-[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_optimal
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_optimal.out
-[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_stemloop
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_stemloop.out
-[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_stemloop.out )
-[DEBUG] ..... HairpinBuilder : build_hairpins
-[DEBUG] .......... $working_chr_dir : 112
-[DEBUG] .......... $rnaeval_out_optimal : 136
-[DEBUG] .......... @sorted_new_candidates : 64
-[DEBUG] .......... $rnalfold_output_filename : 56
-[DEBUG] .......... $chr : 75
-[DEBUG] .......... $output_stemloop : 136
-[DEBUG] .......... $rnalfold_output_filepath : 128
-[DEBUG] .......... $locus : 2120
-[DEBUG] .......... $new_candidates : 88
-[DEBUG] .......... $working_dir : 120
-[DEBUG] .......... $genomic_seq : 304
-[DEBUG] .......... $rnaeval_out_stemloop : 136
-[DEBUG] .......... $output_stemloop_opt : 136
-[DEBUG] .......... $this : 593110
-[DEBUG] .................... TOTAL : 596721
-[DEBUG]   - Considering sequence 1
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_stemloop
@@ -80,9 +61,19 @@
 [DEBUG] .......... $genomic_seq : 320
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593110
-[DEBUG] .................... TOTAL : 601729
-[DEBUG]   - Considering sequence 2
+[DEBUG] .......... $this : 301426
+[DEBUG] .................... TOTAL : 310045
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331396
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... @hairpin_candidates_for_chr : 2540
+[DEBUG] .......... $loci_for_chr : 28081
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301426
+[DEBUG] .................... TOTAL : 665766
+[DEBUG]   - Considering sequence 1
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/rnastemloop_stemloop
@@ -102,53 +93,19 @@
 [DEBUG] .......... $genomic_seq : 368
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593110
-[DEBUG] .................... TOTAL : 602647
-[DEBUG]   - Considering sequence 3
-[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnastemloop_optimal
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnaeval_optimal.out
-[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnastemloop_stemloop
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnaeval_stemloop.out
-[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/rnaeval_stemloop.out )
-[DEBUG] ..... HairpinBuilder : build_hairpins
-[DEBUG] .......... $working_chr_dir : 112
-[DEBUG] .......... $rnaeval_out_optimal : 144
-[DEBUG] .......... @sorted_new_candidates : 12287
-[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $this : 301426
+[DEBUG] .................... TOTAL : 310963
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331436
+[DEBUG] .......... @args : 64
 [DEBUG] .......... $chr : 75
-[DEBUG] .......... $output_stemloop : 144
-[DEBUG] .......... $rnalfold_output_filepath : 136
-[DEBUG] .......... $locus : 2120
-[DEBUG] .......... $new_candidates : 12311
-[DEBUG] .......... $working_dir : 120
-[DEBUG] .......... $genomic_seq : 488
-[DEBUG] .......... $rnaeval_out_stemloop : 144
-[DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593110
-[DEBUG] .................... TOTAL : 621391
-[DEBUG]   - Considering sequence 4
-[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnastemloop_optimal
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnaeval_optimal.out
-[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnastemloop_stemloop
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnaeval_stemloop.out
-[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44583-44842-/rnaeval_stemloop.out )
-[DEBUG] ..... HairpinBuilder : build_hairpins
-[DEBUG] .......... $working_chr_dir : 112
-[DEBUG] .......... $rnaeval_out_optimal : 144
-[DEBUG] .......... @sorted_new_candidates : 64
-[DEBUG] .......... $rnalfold_output_filename : 56
-[DEBUG] .......... $chr : 75
-[DEBUG] .......... $output_stemloop : 144
-[DEBUG] .......... $rnalfold_output_filepath : 136
-[DEBUG] .......... $locus : 2120
-[DEBUG] .......... $new_candidates : 88
-[DEBUG] .......... $working_dir : 120
-[DEBUG] .......... $genomic_seq : 304
-[DEBUG] .......... $rnaeval_out_stemloop : 144
-[DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 596785
-[DEBUG]   - Considering sequence 5
+[DEBUG] .......... $locus : 2388
+[DEBUG] .......... @hairpin_candidates_for_chr : 4715
+[DEBUG] .......... $loci_for_chr : 28121
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301426
+[DEBUG] .................... TOTAL : 668289
+[DEBUG]   - Considering sequence 2
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_stemloop
@@ -168,9 +125,19 @@
 [DEBUG] .......... $genomic_seq : 552
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 603549
-[DEBUG]   - Considering sequence 6
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 311865
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331500
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... @hairpin_candidates_for_chr : 7371
+[DEBUG] .......... $loci_for_chr : 28161
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 670805
+[DEBUG]   - Considering sequence 3
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_stemloop
@@ -190,9 +157,19 @@
 [DEBUG] .......... $genomic_seq : 304
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 612929
-[DEBUG]   - Considering sequence 7
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 321245
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331540
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... @hairpin_candidates_for_chr : 14841
+[DEBUG] .......... $loci_for_chr : 28201
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 678355
+[DEBUG]   - Considering sequence 4
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_stemloop
@@ -212,9 +189,19 @@
 [DEBUG] .......... $genomic_seq : 304
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 601593
-[DEBUG]   - Considering sequence 8
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 309909
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331580
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... @hairpin_candidates_for_chr : 16659
+[DEBUG] .......... $loci_for_chr : 28241
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 680253
+[DEBUG]   - Considering sequence 5
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_stemloop
@@ -234,9 +221,19 @@
 [DEBUG] .......... $genomic_seq : 312
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 596793
-[DEBUG]   - Considering sequence 9
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 305109
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331620
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... @hairpin_candidates_for_chr : 16659
+[DEBUG] .......... $loci_for_chr : 28281
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 680333
+[DEBUG]   - Considering sequence 6
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_stemloop
@@ -256,9 +253,19 @@
 [DEBUG] .......... $genomic_seq : 312
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 596793
-[DEBUG]   - Considering sequence 10
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 305109
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331660
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... @hairpin_candidates_for_chr : 16659
+[DEBUG] .......... $loci_for_chr : 28321
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 680413
+[DEBUG]   - Considering sequence 7
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/rnastemloop_stemloop
@@ -278,31 +285,19 @@
 [DEBUG] .......... $genomic_seq : 344
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 604408
-[DEBUG]   - Considering sequence 11
-[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnastemloop_optimal
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnaeval_optimal.out
-[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnastemloop_stemloop
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnaeval_stemloop.out
-[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/111791-112058-/rnaeval_stemloop.out )
-[DEBUG] ..... HairpinBuilder : build_hairpins
-[DEBUG] .......... $working_chr_dir : 112
-[DEBUG] .......... $rnaeval_out_optimal : 144
-[DEBUG] .......... @sorted_new_candidates : 64
-[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 312724
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331700
+[DEBUG] .......... @args : 64
 [DEBUG] .......... $chr : 75
-[DEBUG] .......... $output_stemloop : 144
-[DEBUG] .......... $rnalfold_output_filepath : 136
-[DEBUG] .......... $locus : 2332
-[DEBUG] .......... $new_candidates : 88
-[DEBUG] .......... $working_dir : 128
-[DEBUG] .......... $genomic_seq : 312
-[DEBUG] .......... $rnaeval_out_stemloop : 144
-[DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 597013
-[DEBUG]   - Considering sequence 12
+[DEBUG] .......... $locus : 2441
+[DEBUG] .......... @hairpin_candidates_for_chr : 19688
+[DEBUG] .......... $loci_for_chr : 28361
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 683843
+[DEBUG]   - Considering sequence 8
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/233907-234253-/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/233907-234253-/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/233907-234253-/rnastemloop_stemloop
@@ -322,9 +317,19 @@
 [DEBUG] .......... $genomic_seq : 392
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 602942
-[DEBUG]   - Considering sequence 13
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 311258
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331740
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2441
+[DEBUG] .......... @hairpin_candidates_for_chr : 22020
+[DEBUG] .......... $loci_for_chr : 28401
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 686255
+[DEBUG]   - Considering sequence 9
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_stemloop
@@ -344,9 +349,19 @@
 [DEBUG] .......... $genomic_seq : 624
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 607401
-[DEBUG]   - Considering sequence 14
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 315717
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331780
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 6352
+[DEBUG] .......... @hairpin_candidates_for_chr : 24446
+[DEBUG] .......... $loci_for_chr : 28441
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 692672
+[DEBUG]   - Considering sequence 10
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_stemloop
@@ -366,9 +381,19 @@
 [DEBUG] .......... $genomic_seq : 360
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 597617
-[DEBUG]   - Considering sequence 15
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 305933
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331820
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... @hairpin_candidates_for_chr : 24446
+[DEBUG] .......... $loci_for_chr : 28481
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 689288
+[DEBUG]   - Considering sequence 11
 [DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_optimal
 [DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnaeval_optimal.out
 [DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_stemloop
@@ -388,62 +413,29 @@
 [DEBUG] .......... $genomic_seq : 464
 [DEBUG] .......... $rnaeval_out_stemloop : 144
 [DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 609929
-[DEBUG]   - Considering sequence 16
-[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_optimal
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_optimal.out
-[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_stemloop
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_stemloop.out
-[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_stemloop.out )
-[DEBUG] ..... HairpinBuilder : build_hairpins
-[DEBUG] .......... $working_chr_dir : 112
-[DEBUG] .......... $rnaeval_out_optimal : 144
-[DEBUG] .......... @sorted_new_candidates : 64
-[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $this : 301450
+[DEBUG] .................... TOTAL : 318245
+[DEBUG] ..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)
+[DEBUG] .......... $self : 331860
+[DEBUG] .......... @args : 64
 [DEBUG] .......... $chr : 75
-[DEBUG] .......... $output_stemloop : 144
-[DEBUG] .......... $rnalfold_output_filepath : 136
-[DEBUG] .......... $locus : 2120
-[DEBUG] .......... $new_candidates : 88
-[DEBUG] .......... $working_dir : 128
-[DEBUG] .......... $genomic_seq : 312
-[DEBUG] .......... $rnaeval_out_stemloop : 144
-[DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 596801
-[DEBUG]   - Considering sequence 17
-[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_optimal
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_optimal.out
-[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_stemloop
-[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_stemloop.out
-[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_stemloop.out )
-[DEBUG] ..... HairpinBuilder : build_hairpins
-[DEBUG] .......... $working_chr_dir : 112
-[DEBUG] .......... $rnaeval_out_optimal : 144
-[DEBUG] .......... @sorted_new_candidates : 64
-[DEBUG] .......... $rnalfold_output_filename : 56
-[DEBUG] .......... $chr : 75
-[DEBUG] .......... $output_stemloop : 144
-[DEBUG] .......... $rnalfold_output_filepath : 136
-[DEBUG] .......... $locus : 2880
-[DEBUG] .......... $new_candidates : 88
-[DEBUG] .......... $working_dir : 128
-[DEBUG] .......... $genomic_seq : 312
-[DEBUG] .......... $rnaeval_out_stemloop : 144
-[DEBUG] .......... $output_stemloop_opt : 144
-[DEBUG] .......... $this : 593134
-[DEBUG] .................... TOTAL : 597561
+[DEBUG] .......... $locus : 4048
+[DEBUG] .......... @hairpin_candidates_for_chr : 29368
+[DEBUG] .......... $loci_for_chr : 28521
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 301450
+[DEBUG] .................... TOTAL : 695450
 [DEBUG]   - Process hairpin candidates
+[DEBUG]      Select only sequences with MFEI < -0.6
 [DEBUG]      Merging candidates
 [DEBUG] ..... PrecursorBuilder : process_hairpin_candidates
-[DEBUG] .......... %candidates_hash : 44616
-[DEBUG] .......... @candidates_array : 41357
+[DEBUG] .......... %candidates_hash : 27365
+[DEBUG] .......... @candidates_array : 24726
 [DEBUG] .......... $self : 578
 [DEBUG] .......... @args : 96
-[DEBUG] .......... $candidates_array : 41381
-[DEBUG] .......... $cfg : 4342
-[DEBUG] .................... TOTAL : 132370
+[DEBUG] .......... $candidates_array : 29712
+[DEBUG] .......... $cfg : 4534
+[DEBUG] .................... TOTAL : 87011
 [DEBUG]   - Process miRNA candidates
 [DEBUG]      - Process candidate 1
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
@@ -467,14 +459,6 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/1/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/1/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 21853
-[DEBUG] .......... $self : 22422
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 21713
-[DEBUG] .......... %complete_candidate : 21689
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 87925
 [DEBUG]      - Process candidate 2
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
@@ -495,14 +479,6 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/233907-234253-/2/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/233907-234253-/2/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 33539
-[DEBUG] .......... $self : 30170
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 29461
-[DEBUG] .......... %complete_candidate : 33418
-[DEBUG] .......... $candidate_test_info : 4203
-[DEBUG] .................... TOTAL : 130855
 [DEBUG]      - Process candidate 3
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
@@ -523,44 +499,7 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/3/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/3/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 21777
-[DEBUG] .......... $self : 22346
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 21637
-[DEBUG] .......... %complete_candidate : 21613
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 87621
 [DEBUG]      - Process candidate 4
-[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
-[DEBUG] .......... $candidate_dir : 128
-[DEBUG] .......... $self : 578
-[DEBUG] .......... @args : 96
-[DEBUG] .......... $alternatives : 88
-[DEBUG] .......... $candidate : 5855
-[DEBUG] .......... $candidate_full_identifier : 56
-[DEBUG] .......... $candidate_ref : 5492
-[DEBUG] .......... $candidate_identifier : 64
-[DEBUG] .......... $candidatejob : 6326
-[DEBUG] .................... TOTAL : 18683
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/4/outRNAFold_stemloop.txt
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/4/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/4/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 32444
-[DEBUG] .......... $self : 33013
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 32304
-[DEBUG] .......... %complete_candidate : 32280
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 130289
-[DEBUG]      - Process candidate 5
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
 [DEBUG] .......... $self : 578
@@ -572,186 +511,15 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG] .......... $candidate_identifier : 64
 [DEBUG] .......... $candidatejob : 3579
 [DEBUG] .................... TOTAL : 10442
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/5/outRNAFold_stemloop.txt
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/4/outRNAFold_stemloop.txt
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/5/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/5/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 36886
-[DEBUG] .......... $self : 32517
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 31808
-[DEBUG] .......... %complete_candidate : 36765
-[DEBUG] .......... $candidate_test_info : 5203
-[DEBUG] .................... TOTAL : 143243
-[DEBUG]      - Process candidate 6
-[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
-[DEBUG] .......... $candidate_dir : 128
-[DEBUG] .......... $self : 578
-[DEBUG] .......... @args : 96
-[DEBUG] .......... $alternatives : 88
-[DEBUG] .......... $candidate : 12554
-[DEBUG] .......... $candidate_full_identifier : 56
-[DEBUG] .......... $candidate_ref : 12191
-[DEBUG] .......... $candidate_identifier : 64
-[DEBUG] .......... $candidatejob : 13025
-[DEBUG] .................... TOTAL : 38780
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/6/outRNAFold_stemloop.txt
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/6/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/44507-44951+/6/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 53679
-[DEBUG] .......... $self : 54248
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 53539
-[DEBUG] .......... %complete_candidate : 53515
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 215229
-[DEBUG]      - Process candidate 7
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/4/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/28435-28755+/4/alignement.txt
+[DEBUG]      - Process candidate 5
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
 [DEBUG] .......... $self : 578
@@ -763,23 +531,15 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG] .......... $candidate_identifier : 64
 [DEBUG] .......... $candidatejob : 4060
 [DEBUG] .................... TOTAL : 11885
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/7/outRNAFold_stemloop.txt
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/5/outRNAFold_stemloop.txt
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/7/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/7/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 19590
-[DEBUG] .......... $self : 20159
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 19450
-[DEBUG] .......... %complete_candidate : 19426
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 78873
-[DEBUG]      - Process candidate 8
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/5/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/5/alignement.txt
+[DEBUG]      - Process candidate 6
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
 [DEBUG] .......... $self : 578
@@ -791,7 +551,7 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG] .......... $candidate_identifier : 64
 [DEBUG] .......... $candidatejob : 8874
 [DEBUG] .................... TOTAL : 26327
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/8/outRNAFold_stemloop.txt
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/6/outRNAFold_stemloop.txt
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
@@ -964,16 +724,8 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/8/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/8/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 47684
-[DEBUG] .......... $self : 48253
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 47544
-[DEBUG] .......... %complete_candidate : 47520
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 191249
-[DEBUG]      - Process candidate 9
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/6/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/6/alignement.txt
+[DEBUG]      - Process candidate 7
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
 [DEBUG] .......... $self : 578
@@ -985,22 +737,14 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG] .......... $candidate_identifier : 64
 [DEBUG] .......... $candidatejob : 3206
 [DEBUG] .................... TOTAL : 9323
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/9/outRNAFold_stemloop.txt
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/7/outRNAFold_stemloop.txt
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/9/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/9/alignement.txt
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 18752
-[DEBUG] .......... $self : 19321
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 18612
-[DEBUG] .......... %complete_candidate : 18588
-[DEBUG] .......... $candidate_test_info : 184
-[DEBUG] .................... TOTAL : 75521
-[DEBUG]      - Process candidate 10
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/7/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/7/alignement.txt
+[DEBUG]      - Process candidate 8
 [DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
 [DEBUG] .......... $candidate_dir : 128
 [DEBUG] .......... $self : 578
@@ -1012,7 +756,7 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 [DEBUG] .......... $candidate_identifier : 64
 [DEBUG] .......... $candidatejob : 4433
 [DEBUG] .................... TOTAL : 13004
-[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/10/outRNAFold_stemloop.txt
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/8/outRNAFold_stemloop.txt
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
@@ -1058,41 +802,33 @@ Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
 Unexpected character in sequence: 'N'. Replacing it by A.
-[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/10/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/10/alignement.txt
-[Mon Mar 16 14:49:24 2015] mirkwood-bed.pl: Use of uninitialized value $structure in string at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/Candidate.pm line 214.
-[Mon Mar 16 14:49:24 2015] mirkwood-bed.pl: Use of uninitialized value in string ne at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/CLI.pm line 204.
-[Mon Mar 16 14:49:24 2015] mirkwood-bed.pl: Use of uninitialized value $structure in string at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/Candidate.pm line 214.
-[Mon Mar 16 14:49:24 2015] mirkwood-bed.pl: Use of uninitialized value in string ne at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/CLI.pm line 204.
-[Mon Mar 16 14:49:24 2015] mirkwood-bed.pl: Use of uninitialized value $structure in string at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/Candidate.pm line 214.
-[Mon Mar 16 14:49:24 2015] mirkwood-bed.pl: Use of uninitialized value in string ne at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/CLI.pm line 204.
-[DEBUG] ..... CandidateJob : run
-[DEBUG] .......... $candidate : 151031
-[DEBUG] .......... $self : 33065
-[DEBUG] .......... @args : 64
-[DEBUG] .......... $candidate_information : 32356
-[DEBUG] .......... %complete_candidate : 150910
-[DEBUG] .......... $candidate_test_info : 118800
-[DEBUG] .................... TOTAL : 486226
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/8/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/78833-79130-/8/alignement.txt
+[Fri Mar 20 14:06:00 2015] mirkwood-bed.pl: Use of uninitialized value $structure in string at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/Candidate.pm line 214.
+[Fri Mar 20 14:06:00 2015] mirkwood-bed.pl: Use of uninitialized value in string ne at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/CLI.pm line 201.
+[Fri Mar 20 14:06:00 2015] mirkwood-bed.pl: Use of uninitialized value $structure in string at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/Candidate.pm line 214.
+[Fri Mar 20 14:06:00 2015] mirkwood-bed.pl: Use of uninitialized value in string ne at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/CLI.pm line 201.
+[Fri Mar 20 14:06:00 2015] mirkwood-bed.pl: Use of uninitialized value $structure in string at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/Candidate.pm line 214.
+[Fri Mar 20 14:06:00 2015] mirkwood-bed.pl: Use of uninitialized value in string ne at /vagrant/cgi-bin/t/functional/../../lib/miRkwood/CLI.pm line 201.
 [DEBUG] ..... PrecursorBuilder : process_mirna_candidates
-[DEBUG] .......... %candidates_hash : 257502
+[DEBUG] .......... %candidates_hash : 187079
 [DEBUG] .......... $candidate_identifier : 64
 [DEBUG] .......... $self : 578
 [DEBUG] .......... @args : 96
-[DEBUG] .......... @candidates_result : 380952
-[DEBUG] .................... TOTAL : 639192
+[DEBUG] .......... @candidates_result : 311125
+[DEBUG] .................... TOTAL : 498942
 [DEBUG] ..... BEDPipeline : compute_candidates() (sort candidates)
-[DEBUG] .......... $self : 671578
+[DEBUG] .......... $self : 353367
 [DEBUG] .......... @args : 64
 [DEBUG] .......... $precursorBuilderJob : 578
 [DEBUG] .......... $chr : 75
-[DEBUG] .......... $final_candidates_hash : 387608
+[DEBUG] .......... $final_candidates_hash : 317541
 [DEBUG] .......... $candidates_hash : 24
-[DEBUG] .......... @sorted_hairpin_candidates_for_chr : 41757
+[DEBUG] .......... @sorted_hairpin_candidates_for_chr : 30008
 [DEBUG] .......... @hairpin_candidates_for_chr : 64
-[DEBUG] .......... $loci_for_chr : 39617
+[DEBUG] .......... $loci_for_chr : 28521
 [DEBUG] .......... $sequence_identifier : 64
 [DEBUG] .......... $hairpinBuilder : 24
-[DEBUG] .................... TOTAL : 1141453
+[DEBUG] .................... TOTAL : 730330
 [DEBUG] - Considering chromosome 4
 [DEBUG] - Considering chromosome 3
 [DEBUG] - Considering chromosome chloroplast
