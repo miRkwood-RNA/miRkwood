@@ -1,0 +1,13 @@
+##gff-version 3
+# miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
+# Note, these sequences do not represent the full primary transcript,
+# rather a predicted stem-loop portion that includes the precursor.
+
+1	miRkwood	miRNA_primary_transcript	18132	18243	.	+	.	Name=preMir_1__18132-18243	
+1	miRkwood	miRNA_primary_transcript	28517	28686	.	+	.	Name=preMir_1__28517-28686	
+1	miRkwood	miRNA_primary_transcript	55915	56006	.	-	.	Name=preMir_1__55915-56006	
+1	miRkwood	miRNA_primary_transcript	56391	56629	.	+	.	Name=preMir_1__56391-56629	
+1	miRkwood	miRNA_primary_transcript	76829	76920	.	+	.	Name=preMir_1__76829-76920	
+1	miRkwood	miRNA_primary_transcript	78898	79065	.	-	.	Name=preMir_1__78898-79065	
+1	miRkwood	miRNA_primary_transcript	234006	234159	.	-	.	Name=preMir_1__234006-234159	
+1	miRkwood	miRNA_primary_transcript	238672	238779	.	+	.	Name=preMir_1__238672-238779	
