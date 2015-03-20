@@ -43,13 +43,16 @@ sub get_parsed_bed {
 	return $this->{'parsed_bed'};
 }
 
-# gets the sequence. start starts at 0. end is excluded
-# strand is '+' or '-'
-# if strand == '-', then the reverse complement is returned
+=method get_sub_sequence_on_strand
+  
+  gets the sequence. start starts at 0. end is excluded
+  strand is '+' or '-'
+  if strand == '-', then the reverse complement is returned
+
+=cut
 sub get_sub_sequence_on_strand {
 	my ($this, $chr, $start, $end, $strand) = @_;
 	my $seq = $this->{'genome_db'}->seq($chr, $start+1, $end, $strand eq '+' ? 1 : -1);
-	#~ $seq =~ s/[RYSWKMBDHV]/N/ig;
 	return $seq;
 }
 
@@ -57,10 +60,8 @@ sub build_hairpins {
 	my $this = shift;
 	my $locus = shift;
 
-	#~ warn("HairpinBuilder: $locus->{'chr'}:", $locus->{begin}+1, '-', $locus->{end}, ' [', $locus->{strand}, "]\n");
-	
 	my $chr = $locus->{'chr'};
-	
+
     my $working_chr_dir = miRkwood::Paths::get_workspace_chromosome_dir( $this->{'workspace'}, $chr );
 	mkdir $working_chr_dir;
 
@@ -79,21 +80,14 @@ sub build_hairpins {
 	my $output_stemloop_opt = File::Spec->catfile($working_dir, 'rnastemloop_optimal');
 	my $output_stemloop = File::Spec->catfile($working_dir, 'rnastemloop_stemloop');
 
-	#~ if (!-e $output_stemloop) {
-		miRkwood::Programs::run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt)
-		or die("Problem running RNAstemloop [Input: '$rnalfold_output_filepath', Outputs: '$output_stemloop', '$output_stemloop_opt'");
-	#~ }
-	#~ else {
-		#~ print "\tRNAstemloop output already exists\n";
-	#~ }
+    miRkwood::Programs::run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt)
+       or die("Problem running RNAstemloop [Input: '$rnalfold_output_filepath', Outputs: '$output_stemloop', '$output_stemloop_opt'");
 
 	my $rnaeval_out_optimal = $this->run_RNAeval_on_RNAstemloop_optimal_output($output_stemloop_opt);
 	my $rnaeval_out_stemloop = $this->run_RNAeval_on_RNAstemloop_stemloop_output($output_stemloop);
 
 	my $new_candidates = $this->process_RNAstemloop_on_filenames($output_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop,
 		$locus->{begin}, $locus->{end}-$locus->{begin}, $chr, $locus->{strand}, $locus->{miRnas});
-
-	#~ ($new_candidates, $already_positioned) = filter_candidates_on_position($new_candidates, $already_positioned);
 
 	my @sorted_new_candidates = sort { $a->{'start_position'} <=> $b->{'start_position'} } @{$new_candidates};
 
@@ -137,10 +131,9 @@ sub run_RNAeval_on_RNAstemloop_output {
 
     debug( "     Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
     
-    #~ if (!-e $rnaeval_out) {
-		miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or 
-		die("Problem when running RNAeval [Input file: '$rnastemloop_out' Output file: '$rnaeval_out'");
-	#~ }
+    miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or 
+        die("Problem when running RNAeval [Input file: '$rnastemloop_out' Output file: '$rnaeval_out'");
+
     return $rnaeval_out;
 }
 
@@ -244,11 +237,11 @@ Static private helper function. You shouldnt use this function.
 sub test_miRna_intersection {
 	my $stemloop = shift;
 	my $miRnaPos = shift;
-	
+
 	if (!defined ($miRnaPos)) {
 		return 1;
 	}
-	
+
 	foreach my $miRnas ( @{$miRnaPos} ) {
 		if ($miRnas->{source} == miRkwood::ClusterJobSebastien->DUE_TO_TWO_SPIKES ) {
 			if (raw_regions_intertect($stemloop, $miRnas->{first}) && raw_regions_intertect($stemloop, $miRnas->{second})) {
@@ -271,18 +264,18 @@ sub eval_single_stemloop {
 	my $strand = shift;
 	my $stemloop = shift;
 	my $miRnaPos = shift;
-	
+
 	if (test_miRna_intersection($stemloop, $miRnaPos) == 0) {
 		return 0;
 	}
-	
+
 	my $parsed_bed = $this->get_parsed_bed;
-	
+
 	# No bed supplied
 	if (!defined ($parsed_bed)) {
 		return 1;
 	}
-	if (get_contained_read_coverage($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand) >= 
+	if (get_contained_read_coverage($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand) >=
 				$this->{'read_coverage_threshold'}) {
 		return 1;
 	}
@@ -313,7 +306,7 @@ sub process_RNAstemloop {
 	my ($line_eval_opt, $line_eval_stem);
 	my ($nameSeq, $dna, $structure_stemloop);
 	my @candidates_array = ();
-	
+
 	my $DEBUG_NAME = $chr. ':' . ($seq_begin+1) . '-' . ($seq_begin+$seq_len) . ' [' . $strand . ']';
 
 	while ( my $stem_line = <$STEM_FH> ) {
@@ -346,14 +339,11 @@ sub process_RNAstemloop {
 			if ($structure_optimal) { # We have a structure
 				if ($nameSeq =~ /.*__(\d*)-(\d*)$/) {
 					my ($mfei, $amfe) = miRkwood::Utils::compute_mfei_and_amfe($dna, $energy_optimal);
-					#~ my ($start, $end);
                     my $stemloop = {};
 					if ($strand eq '-') {
-						#~ ($start, $end) = @{ miRkwood::Utils::get_position_from_opposite_strand( $1, $2, $seq_len) };
                         $stemloop = {begin => $seq_len - $2 + $seq_begin, end => $seq_len - $1 +1 + $seq_begin};
 					}
 					else {
-						#~ ($start, $end) = ($1, $2);
                         $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
 					if ($self->eval_single_stemloop($chr, $strand, $stemloop, $sequence_miRnas) == 1) {
@@ -410,9 +400,7 @@ sub run_rnalfold {
 	my $output_file = shift;
 	my $rnalfold_output = File::Spec->catfile($output_folder, $output_file);
     my $temp_file = File::Spec->catfile($output_folder, $output_file . '_sequence.txt');
-    #~ if (!-e $rnalfold_output) {
-		miRkwood::Programs::run_rnalfold($seq_name, $seq, $temp_file, $rnalfold_output) or die("Problem when running RNALfold [$temp_file]: $!");
-	#~ }
+    miRkwood::Programs::run_rnalfold($seq_name, $seq, $temp_file, $rnalfold_output) or die("Problem when running RNALfold [$temp_file]: $!");
     return $rnalfold_output;
 }
 
