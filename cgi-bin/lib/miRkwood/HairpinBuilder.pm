@@ -80,7 +80,7 @@ sub build_hairpins {
 	my $output_stemloop = File::Spec->catfile($working_dir, 'rnastemloop_stemloop');
 
 	#~ if (!-e $output_stemloop) {
-		run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt)
+		miRkwood::Programs::run_rnastemloop($rnalfold_output_filepath, $output_stemloop, $output_stemloop_opt)
 		or die("Problem running RNAstemloop [Input: '$rnalfold_output_filepath', Outputs: '$output_stemloop', '$output_stemloop_opt'");
 	#~ }
 	#~ else {
@@ -416,16 +416,6 @@ sub run_rnalfold {
     return $rnalfold_output;
 }
 
-
-=method run_rnastemloop
-
-Static private helper function. You shouldnt use this function.
-
-=cut
-sub run_rnastemloop {
-	my ( $input, $output_stemloop, $output_optimal ) = @_;
-	return miRkwood::Programs::run_rnastemloop($input, $output_stemloop, $output_optimal);
-}
 
 #STATS BEG
     
