@@ -116,7 +116,7 @@ if ( $valid ){
         }
 
         # Ranfold
-        if ( $cfg->param('options.ranfold') ){
+        if ( $cfg->param('options.randfold') ){
             $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> Yes</li>';
         }
         else{
