@@ -84,7 +84,11 @@ sub compute_candidates {
 
         if ( scalar(@sorted_hairpin_candidates_for_chr) ){
             my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chr, $chr );
-            my $candidates_hash = $precursorBuilderJob->process_hairpin_candidates( \@sorted_hairpin_candidates_for_chr );
+
+            # Merge candidates
+            my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
+
+            # Posteriori tests and update candidate information
             my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
 
             undef $candidates_hash;
@@ -106,7 +110,7 @@ sub serialize_candidates {
 
     foreach my $candidate (@candidates_array ) {
 
-        $candidate = $candidate->get_reads_from_bed_file($self->{'bed_file'});
+        #~ $candidate = $candidate->get_reads_from_bed_file($self->{'bed_file'});
         miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
 

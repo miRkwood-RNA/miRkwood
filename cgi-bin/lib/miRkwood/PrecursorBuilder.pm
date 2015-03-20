@@ -8,9 +8,9 @@ use warnings;
 use Log::Message::Simple qw[msg error debug];
 
 use miRkwood;
+use miRkwood::Utils;
 use miRkwood::Paths;
 
-use constant MFEI_THRESHOLD => -0.6;
 
 =method new
   
@@ -31,54 +31,6 @@ sub new {
 }
 
 
-=method process_hairpin_candidates
-
-  Process 'raw' hairpin to 
-  - filter on MFEI
-  - merge overlapping candidates
-  
-  Usage : miRkwood::PrecursorBuilder::process_hairpin_candidates( @candidates_array );
-
-=cut
-sub process_hairpin_candidates{
-    my ( $self, @args ) = @_;
-    my $candidates_array = shift @args;
-    my @candidates_array = @{$candidates_array};
-    my $cfg = miRkwood->CONFIG();
-    debug('  - Process hairpin candidates', miRkwood->DEBUG() );
-    if ( $cfg->param('options.mfei') ) {
-        debug('     Select only sequences with MFEI < ' . MFEI_THRESHOLD, miRkwood->DEBUG() );
-        @candidates_array = grep { mfei_below_threshold($_, MFEI_THRESHOLD) } @candidates_array;
-    }
-
-    my %candidates_hash;
-    if (@candidates_array) {
-        debug('     Merging candidates', miRkwood->DEBUG() );
-        %candidates_hash = merge_candidates( \@candidates_array );
-    }
-    else {
-        %candidates_hash = ();
-    }
-    return \%candidates_hash;
-}
-
-
-=method mfei_below_threshold
-
-  Return whether a given candidate has its mfei above a given threshold
-
-=cut
-
-sub mfei_below_threshold {
-    my @args      = @_;
-    my $candidate = shift @args;
-    my $threshold = shift @args;
-    my %current_candidate = %{ $candidate };
-    my $mfei = $current_candidate{'mfei'};
-    return $mfei < $threshold;
-}
-
-
 =method merge_candidates
 
   Process the candidates and try merging them.
@@ -90,6 +42,7 @@ sub merge_candidates {
     my (@args) = @_;
     my $candidates_array = shift @args;
     my @candidates_array = @{$candidates_array};
+
     my $nb_candidates = scalar @candidates_array;
 
     my @merged_candidates   = ();
@@ -143,7 +96,7 @@ sub merge_candidates {
     $final_hash{$final_name}                 = {};
     $final_hash{$final_name}{'max'}          = {%best_candidate};
     $final_hash{$final_name}{'alternatives'} = [@merged_candidates];
-    return %final_hash;
+    return \%final_hash;
 }
 
 
@@ -196,12 +149,16 @@ sub process_mirna_candidates {
     my @candidates_result;
     my $candidate_identifier = 0;
     debug('  - Process miRNA candidates', miRkwood->DEBUG() );
+
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
         debug( "     - Process candidate $candidate_identifier", 1);
         my $candidate = $candidates_hash{$key};
         push @candidates_result, $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
     }
+
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... PrecursorBuilder : process_mirna_candidates' );
+
     return \@candidates_result;
 }
 
@@ -223,6 +180,9 @@ sub run_pipeline_on_candidate {
                                                    $candidate_full_identifier,
                                                    $candidate_ref,
                                                    $alternatives);
+
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... PrecursorBuilder : run_pipeline_on_candidate' );
+
     return $candidatejob->run();
 }
 

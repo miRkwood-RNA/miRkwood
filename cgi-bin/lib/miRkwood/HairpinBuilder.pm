@@ -18,6 +18,8 @@ use File::Spec;
 use File::Basename;
 use Log::Message::Simple qw[msg error debug];
 
+use constant MFEI_THRESHOLD => -0.6;
+
 sub new {
 	my ($class, $genome_db, $workspace, $parsed_bed
 	#STATS BEG
@@ -307,6 +309,8 @@ sub process_RNAstemloop {
 	my ($nameSeq, $dna, $structure_stemloop);
 	my @candidates_array = ();
 
+    my $cfg = miRkwood->CONFIG();
+
 	my $DEBUG_NAME = $chr. ':' . ($seq_begin+1) . '-' . ($seq_begin+$seq_len) . ' [' . $strand . ']';
 
 	while ( my $stem_line = <$STEM_FH> ) {
@@ -347,23 +351,25 @@ sub process_RNAstemloop {
                         $stemloop = {begin => $1 + $seq_begin-1, end => $2 + $seq_begin};
 					}
 					if ($self->eval_single_stemloop($chr, $strand, $stemloop, $sequence_miRnas) == 1) {
-						my $cluster_position = ($seq_begin+1). '-' . ($seq_begin+$seq_len);
-						my $res = {
-							'name' => $chr. '__' .($stemloop->{'begin'}+1).'-'.$stemloop->{'end'} . $strand,
-							'strand' => $strand,
-							'sequence' => $dna,
-							'start_position' => $stemloop->{'begin'}+1, # 1-based
-							'end_position' => $stemloop->{'end'}, # excludes the end
-							'mfei' => $mfei,
-							'amfe' => $amfe,
-							'structure_optimal' => $structure_optimal,
-							'energy_optimal' => $energy_optimal,
-							'structure_stemloop' => $structure_stemloop,
-							'energy_stemloop' => $energy_stemloop,
-							'reads' => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
-							'cluster' => $cluster_position
-						};
-						push @candidates_array, $res;
+                        if ( ($cfg->param('options.mfei') and $mfei < MFEI_THRESHOLD ) or ! $cfg->param('options.mfei') ) {
+                            my $cluster_position = ($seq_begin+1). '-' . ($seq_begin+$seq_len);
+                            my $res = {
+                                'name' => $chr. '__' .($stemloop->{'begin'}+1).'-'.$stemloop->{'end'} . $strand,
+                                'strand' => $strand,
+                                'sequence' => $dna,
+                                'start_position' => $stemloop->{'begin'}+1, # 1-based
+                                'end_position' => $stemloop->{'end'}, # excludes the end
+                                'mfei' => $mfei,
+                                'amfe' => $amfe,
+                                'structure_optimal' => $structure_optimal,
+                                'energy_optimal' => $energy_optimal,
+                                'structure_stemloop' => $structure_stemloop,
+                                'energy_stemloop' => $energy_stemloop,
+                                'reads' => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
+                                'cluster' => $cluster_position
+                            };
+                            push @candidates_array, $res;
+                        }
 					}
 					
     #STATS BEG
