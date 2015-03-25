@@ -146,6 +146,7 @@ Return whether the output file exists.
 sub run_rnafold_on_file {
     my ( $input, $output ) = @_;
     my $rnafold_cmd = "$programs_paths{'rnafold'} < $input > $output";
+    debug( '        ' . $rnafold_cmd, miRkwood->DEBUG());
     system($rnafold_cmd);
     return ( -e $output );
 }
@@ -303,8 +304,8 @@ sub run_RNAcomp {
     my $mirbase_file = miRkwood::Data::get_mirbase_file();
 
     my $cmd = "$programs_paths{'RNAcomp'} -r $mirbase_file -i $input --all > $output";
-    system($cmd);
     debug( '        ' . $cmd, miRkwood->DEBUG());
+    system($cmd);
     return ( -e $output );
 
 }
@@ -319,6 +320,7 @@ Return whether the output files exist.
 sub run_rnastemloop {
     my ( $input, $output_stemloop, $output_optimal ) = @_;
     my $rnastemloop_cmd = "$programs_paths{'rnastemloop'} -i $input -s $output_stemloop -o $output_optimal";
+    debug( '        ' . $rnastemloop_cmd, miRkwood->DEBUG());
     system($rnastemloop_cmd);
     return ( -e $output_stemloop && -e $output_optimal);
 }
