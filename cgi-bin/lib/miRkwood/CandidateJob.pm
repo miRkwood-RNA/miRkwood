@@ -141,12 +141,13 @@ sub get_stemloop_structure_for_known_candidate {
     my ( $self, @args ) = @_;
 
     #~ debug( '        Running RNAfold', miRkwood->DEBUG() );
-    my $rnafold_output = File::Spec->catfile( $self->get_directory(), 'RNAfold.out' );
-    my $temp_file = File::Spec->catfile( $self->get_directory(), 'tempFile.txt' );
     my $sequence_name = $self->{'candidate'}{'name'};
     my $sequence = $self->{'candidate'}{'sequence'};
 
-    miRkwood::Programs::run_rnalfold( $sequence_name, $sequence, $temp_file, $rnafold_output )
+    my $rnafold_output = File::Spec->catfile( $self->get_directory(), 'RNAfold.out' );
+    my $temp_file = File::Spec->catfile( $self->get_directory(), 'tempFile.txt' );
+
+    miRkwood::Programs::run_rnafold( $sequence_name, $sequence, $temp_file, $rnafold_output )
       or die("Problem when running RNAfold: $!");
 
     my $nameSeq = '';
