@@ -171,7 +171,7 @@ sub run_rnalfold {
     close $TEMPFILE_FH
       or die "Error when closing $temp_file: $!";
     my $result = run_rnalfold_on_file($temp_file, $output_file);
-    unlink $TEMPFILE_FH;
+    unlink $temp_file;
     return $result;
 }
 
@@ -195,7 +195,7 @@ sub run_rnafold {
     close $TEMPFILE_FH
       or die "Error when closing $temp_file: $!";
     my $result = run_rnafold_on_file($temp_file, $output_file);
-    unlink $TEMPFILE_FH;
+    unlink $temp_file;
     return $result;
 }
 
@@ -241,7 +241,7 @@ sub run_randfold {
     my $output_file = shift @args;
     my $iterations  = shift @args;
     my $randfold_cmd = "$programs_paths{'rnashuffles'} --iterations $iterations --fast --fasta $input_file > $output_file";
-    debug($randfold_cmd, miRkwood->DEBUG());
+    debug( '        ' . $randfold_cmd, miRkwood->DEBUG());
     system($randfold_cmd);
     return ( -e $output_file );
 }
