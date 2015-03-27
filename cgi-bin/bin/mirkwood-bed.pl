@@ -24,11 +24,15 @@ my $output_folder = '';
 my $genome_file;
 my $varna = 1;
 my $no_varna = 0;
-my $filter_tRNA_rRNA;
-my $filter_CDS;
-my $filter_multimapped;
+my $filter_tRNA_rRNA = 1;
+my $no_filter_tRNA_rRNA = 0;
+my $filter_CDS = 1;
+my $no_filter_CDS = 0;
+my $filter_multimapped = 1;
+my $no_filter_multimapped = 0;
 my $randfold;
-my $mfei = 0;
+my $mfei = 1;
+my $no_mfei = 0;
 my $align = 0;
 my $species = '';
 my $species_db = '';
@@ -36,24 +40,37 @@ my $force = 0;
 
 ##### Get options
 GetOptions(
-    shuffles         => \$randfold,
-    mfei             => \$mfei,
-    align            => \$align,
-    'filter_otherRNA' => \$filter_tRNA_rRNA,
-    'filter_CDS'      => \$filter_CDS,
-    'filter_multimapped' => \$filter_multimapped,
-    'no-varna'       => \$no_varna,
-    'output=s'       => \$output_folder,
-    'genome=s'       => \$genome_file,
-    'help|?'         => \$help,
-    'force'          => \$force,
-    man              => \$man
+    'shuffles'           => \$randfold,
+    'no-mfei'            => \$no_mfei,
+    'align'              => \$align,
+    'no-filter_otherRNA' => \$no_filter_tRNA_rRNA,
+    'no-filter_CDS'      => \$no_filter_CDS,
+    'no-filter_multimapped' => \$no_filter_multimapped,
+    'no-varna'           => \$no_varna,
+    'output=s'           => \$output_folder,
+    'genome=s'           => \$genome_file,
+    'help|?'             => \$help,
+    'force'              => \$force,
+    man                  => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
 
 pod2usage("$0: No BED file given.") if ( @ARGV == 0 );
 pod2usage("$0: No genome file given.") if ( ! $genome_file );
+
+if ( $no_mfei ){
+    $mfei = 0;
+}
+if ( $no_filter_tRNA_rRNA ){
+    $filter_tRNA_rRNA = 0;
+}
+if ( $no_filter_CDS ){
+    $filter_CDS = 0;
+}
+if ( $no_filter_multimapped ){
+    $filter_multimapped = 0;
+}
 
 # Check output folder
 if ($output_folder eq ''){
