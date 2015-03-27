@@ -156,6 +156,11 @@ sub store_known_mirnas_as_candidate_objects {
     my $mature_reads;
     my $data;
 
+    if ( ! -r $gff_file ){
+        debug("No miRBase file for $species.", miRkwood->DEBUG() );
+        return;
+    }
+
     ##### Read the GFF and links each precursor with its mature
 
     open (my $GFF, '<', $gff_file) or die "ERROR while opening $gff_file : $!";
