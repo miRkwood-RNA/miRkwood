@@ -113,6 +113,7 @@ sub setup_logging {
     my ($self, @args) = @_;
     my $log_file = File::Spec->catfile( $self->{'job_dir'}, 'log.log' );
     $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);
+    select((select($Log::Message::Simple::DEBUG_FH), $| = 1)[0]);
     miRkwood->DEBUG(1);
     return;
 }
