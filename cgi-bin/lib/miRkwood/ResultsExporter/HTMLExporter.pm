@@ -63,13 +63,16 @@ sub perform_export{
     my ( $self, @args ) = @_;
 
     my %results = %{$self->{'results'}};
+    my @keys = $self->get_sorted_keys();
+    my $nb_results = scalar( @keys );
+
     my $output = '';
+    $output .= "<h3>$nb_results candidates found.</h3>\n";
 
     $output .= "<table>\n<tbody>";
 
     $output .= $self->get_header();
 
-    my @keys = $self->get_sorted_keys();
     foreach my $key (@keys) {
         if ( $self->is_sequence_to_export($key)){
             my $candidate = $results{$key};
