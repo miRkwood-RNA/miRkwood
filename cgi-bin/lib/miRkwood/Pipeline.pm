@@ -52,6 +52,8 @@ sub run_pipeline {
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.mode');
     if ( $mode eq 'WebBAM' ){
+        $self->calculate_reads_coverage();
+
         $self->filter_BED();
 
         # Look for known miRNAs
@@ -61,7 +63,7 @@ sub run_pipeline {
         }
         else{
             debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
-        }        
+        }
     }
 
     $self->init_sequences();

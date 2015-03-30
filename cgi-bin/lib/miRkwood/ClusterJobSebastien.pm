@@ -86,6 +86,7 @@ sub extract_spike_train {
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		$spikes{$chr} = $this->extract_spike_train_per_chr($trains_per_chr->{$chr});
 	}
+    debug('--- extract_spike_train : OK', miRkwood->DEBUG() );
 	return \%spikes;
 }
 
@@ -176,6 +177,7 @@ sub process_spikes {
 		#STATS END
 		);
 	}
+    debug('--- process_spikes : OK', miRkwood->DEBUG() );
 	return \%miRnaPos
 	#STATS BEG
 	#~ , \%stats
@@ -511,7 +513,7 @@ Regions that overlap by more than 60% are merged together.
 sub compute_candidate_precursors_from_miRnaPos {
 	my $this = shift;
 	my $miRnaPosPerChr = shift;
-
+    my $average_coverage = shift;
 	my $read_coverage_threshold = shift;
 	my $peak_padding = shift;
 	my $parsed_bed = shift;
@@ -519,9 +521,10 @@ sub compute_candidate_precursors_from_miRnaPos {
 
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		my $miRnaPos = $miRnaPosPerChr->{$chr};
-		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($chr, $miRnaPos, $this->{chr_info}{$chr},
+		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($chr, $miRnaPos, $this->{chr_info}{$chr}, $average_coverage,
 		$read_coverage_threshold, $peak_padding, $parsed_bed);
 	}
+    debug('--- compute_candidate_precursors_from_miRnaPos : OK', miRkwood->DEBUG() );
 	return \%candidate_region;
 }
 
@@ -628,7 +631,7 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 	my $chr = shift;
 	my $miRnaPos = shift;
 	my $chr_length = shift;
-
+    my $average_coverage = shift;
 	my $read_coverage_threshold = shift;
 	my $peak_padding = shift;
 	my $parsed_bed = shift;
@@ -642,8 +645,11 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 		my $current_miRna = $miRnaPos->[$i];
 		my $region_begin = max(0, $current_miRna->{first}{'begin'}-$peak_padding);
 		my $region_end = min($chr_length, $current_miRna->{second}{'end'}+$peak_padding);
+        my $threshold = ( $region_end - $region_begin - 19 ) / $average_coverage;
+        my $final_threshold = max( $read_coverage_threshold, $threshold );
+        debug("Reads threshold for locus $region_begin-$region_end (chrom $chr) : $final_threshold ($threshold)", 1);
 		if (miRkwood::HairpinBuilder::get_contained_read_coverage($parsed_bed, $chr, $region_begin, $region_end, $current_miRna->{'strand'})
-		< $read_coverage_threshold) {
+		< $final_threshold) {
 			next;
 		}
 		my %region = (

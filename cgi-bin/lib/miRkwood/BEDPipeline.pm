@@ -47,12 +47,51 @@ sub init_sequences {
     my ($self, @args) = @_;
     debug( 'Extracting sequences from genome using BED clusters', miRkwood->DEBUG() );
     my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
-    $self->{'sequences'} = $clustering->build_loci();
+    $self->{'sequences'} = $clustering->build_loci( $self->{'average_coverage'} );
     $self->{'parsed_reads'} = $clustering->get_parsed_bed();
     miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : init_sequences()');
     return;
 }
 # SEB END
+
+sub calculate_reads_coverage {
+    my ($self, @args) = @_;
+
+    my $line;
+    my $size_genome = 0;
+    my $nb_tot_reads = 0;
+    my $chromosome = '';
+    my $end_position = 0;
+
+    open (my $BED, $self->{'initial_bed'}) or die "ERROR while opening $self->{'initial_bed'} : $!";
+    while( <$BED> ){
+        chomp;
+
+        my @fields = split( /\t/);
+
+        $nb_tot_reads += $fields[4];
+
+        if ( $chromosome ne '' and $chromosome ne $fields[0] ){
+            $size_genome += $end_position;
+        }
+        $chromosome = $fields[0];
+        $end_position = $fields[2];
+
+        $line = $_;
+
+    }
+    close $BED;
+    chomp $line;
+    my @fields = split( /\t/, $line);
+    $size_genome += $fields[2];
+
+    $self->{'average_coverage'} = int( $size_genome / $nb_tot_reads );
+    debug( "Average reads coverage for this BED file : 1 read every $self->{'average_coverage'} nt.", miRkwood->DEBUG() );
+
+    return;
+
+}
+
 
 =method compute_candidates
 

@@ -38,6 +38,7 @@ sub get_parsed_bed {
 
 sub build_loci {
 	my $this = shift;
+    my $average_coverage = shift;
 	my ($reads, $parsed_bed) = $this->get_read_distribution_from_bed($this->{'bed_file'});
 	$this->{'parsed_bed'} = $parsed_bed;
 	my $trains_hash = $this->get_trains($reads);
@@ -52,7 +53,7 @@ sub build_loci {
 
 	undef $spikes;
 
-	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $this->{'loci_read_coverage_threshold'}, 
+	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $average_coverage, $this->{'loci_read_coverage_threshold'}, 
 	$this->{'peak_padding'}, $parsed_bed);
 
 	undef $putative_miRna;
@@ -245,6 +246,7 @@ sub get_read_distribution_from_bed {
         }
     }
     close $HANDLE;
+    debug('--- get_read_distribution_from_bed : OK', miRkwood->DEBUG() );
     return (\%reads, \%parsed_reads);
 }
 
@@ -352,6 +354,7 @@ sub get_trains {
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		$trains_per_chr{$chr} = $this->__get_trains_for_chr($read_distribution_per_chr->{$chr});
 	}
+    debug('--- get_trains : OK', miRkwood->DEBUG() );
 	return \%trains_per_chr;
 }
 
