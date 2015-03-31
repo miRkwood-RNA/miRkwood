@@ -59,20 +59,6 @@ sub is_job_finished {
     return (-e $is_finished_file);
 }
 
-
-=method get_candidates_dir
-
-
-=cut
-
-sub get_candidates_dir {
-	my ( $self, @args ) = @_;
-	my $id_job         = shift @args;
-	my $results_dir    = $self->jobId_to_jobPath($id_job);
-	my $candidates_dir = File::Spec->catdir( $results_dir, 'candidates' );
-	return $candidates_dir;
-}
-
 =method is_valid_jobID
 
 Test whether a jobID is valid - ie if there are results for it.
@@ -98,10 +84,20 @@ my %results = miRkwood::Results->get_structure_for_jobID($jobId);
 sub get_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
+	my $mirna_type = shift @args;   # should be "Known", "New" (for BEDPipeline) or "" (for other pipelines)
 	my $job_dir = $self->jobId_to_jobPath($jobId);
 	miRkwood->CONFIG_FILE(
 		miRkwood::Paths->get_job_config_path($job_dir) );
-	my $candidates_dir = $self->get_candidates_dir($jobId);
+	my $candidates_dir = '';
+    if ( $mirna_type eq "Known" ){
+        $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir($job_dir);
+    }
+    elsif ($mirna_type eq "New" ){
+        $candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir($job_dir);
+    }
+    else{
+        $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir($job_dir);
+    }
 	return $self->deserialize_results($candidates_dir);
 }
 
@@ -178,7 +174,7 @@ sub convert_basic_to_pseudoXML {
         @optional_fields = miRkwood::Utils::delete_element_in_array( 'alignment', @optional_fields );
     }
 
-    push @headers, ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' ); 
+    push @headers, ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
     for my $header (@headers) {
         my $contents = $candidate->{$header};
         if (grep { $header eq $_ } @fields_to_truncate){
@@ -193,6 +189,7 @@ sub convert_basic_to_pseudoXML {
         $result .= " $header='$contents'";
     }
     $result .= '></Sequence>';
+    return;
 }
 
 =method has_candidates

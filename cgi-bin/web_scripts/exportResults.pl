@@ -17,6 +17,7 @@ my $cgi = CGI->new;
 my $id_job = $cgi->param('run_id');    # récupération id job
 my $export_type = $cgi->param('type');
 my $data= $cgi->param('data');  # identifiant des candidats sélectionnés
+my $mirna_type = $cgi->param('mirna_type');
 my @sequences_to_export =  split( ',',$data  );
 
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
@@ -26,7 +27,8 @@ if (! $valid) {
 }
 
 my $exporter;
-my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job);
+my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job, $mirna_type);
+
 given ($export_type) {
     when (/gff/) {
         $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter();
