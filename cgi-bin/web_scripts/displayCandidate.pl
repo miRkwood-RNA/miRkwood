@@ -34,8 +34,10 @@ $candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $c
 
 if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
-    $html_contents = "No results for the given identifiers";
+    $html_contents = 'No results for the given identifiers';
 }else{
+
+    my $cfg = miRkwood->CONFIG();
 
     my $image_url = $candidate->get_relative_image();
 
@@ -48,21 +50,24 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkAlternatives = "$export_link&type=alt";
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
     my $linkReadsCloud = "$export_link&type=reads";
+    my $htmlReadsCloud = '';
+    if ( $cfg->param('job.mode') ne 'fasta' ){
+        $htmlReadsCloud = "<li><b>Reads cloud : </b><a href='$linkReadsCloud'>download</a></li>";
+    }
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
     if( defined($candidate->{'structure_optimal'}) && ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'}) ){
         $Vienna_HTML .= "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li>"
     } else {
-        $Vienna_HTML .= "<br/>This stem-loop structure is the MFE structure.</li>"
+        $Vienna_HTML .= '<br/>This stem-loop structure is the MFE structure.</li>'
     }
 
     my $alternatives_HTML = '<b>Alternative candidates (dot-bracket format):</b> ';
     if($candidate->{'alternatives'}){
         $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>"
     } else {
-        $alternatives_HTML .= "<i>None</i>"
+        $alternatives_HTML .= '<i>None</i>'
     }
-    my $cfg = miRkwood->CONFIG();
 
     my $alignmentHTML;
 
@@ -77,7 +82,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
               $candidate->make_alignments_HTML();
         }
         else {
-            $alignmentHTML .= "No alignment has been found.";
+            $alignmentHTML .= 'No alignment has been found.';
         }
     }
 
@@ -122,9 +127,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
         <li>
           $alternatives_HTML
         </li>
-        <li>
-          <b>Reads cloud : </b><a href='$linkReadsCloud'>download</a>
-        </li>
+        $htmlReadsCloud
         </ul>
         $imgHTML
         <h2>Thermodynamics stability</h2>
