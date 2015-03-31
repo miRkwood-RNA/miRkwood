@@ -63,7 +63,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     }
 
     my $alternatives_HTML = '<b>Alternative candidates (dot-bracket format):</b> ';
-    if($candidate->{'alternatives'}){
+    if( $candidate->{'alternatives'} and scalar(keys%{ $candidate->{'alternatives'} }) ){
         $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>"
     } else {
         $alternatives_HTML .= '<i>None</i>'
