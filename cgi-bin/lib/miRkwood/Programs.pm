@@ -145,7 +145,7 @@ Return whether the output file exists.
 
 sub run_rnafold_on_file {
     my ( $input, $output ) = @_;
-    my $rnafold_cmd = "$programs_paths{'rnafold'} < $input > $output";
+    my $rnafold_cmd = "$programs_paths{'rnafold'} --noPS < $input > $output";
     debug( '        ' . $rnafold_cmd, miRkwood->DEBUG());
     system($rnafold_cmd);
     return ( -e $output );
