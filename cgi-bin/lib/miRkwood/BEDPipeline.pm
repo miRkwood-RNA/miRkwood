@@ -135,6 +135,8 @@ sub compute_candidates {
             $self->serialize_candidates($final_candidates_hash);
 
             miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (sort candidates)' );
+
+            undef $final_candidates_hash;
         }
     }
 
@@ -151,7 +153,7 @@ sub serialize_candidates {
 
         #~ $candidate = $candidate->get_reads_from_bed_file($self->{'bed_file'});
         miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
 
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
