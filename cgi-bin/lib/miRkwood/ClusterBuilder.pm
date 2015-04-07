@@ -26,8 +26,7 @@ sub new {
         'loci_read_coverage_threshold' => 10, # The read coverage threshold below which the locus is discarded
         'peak_padding' => 100 # How much nt we add on both sides of miRNAs to create a locus
     }, $class;
-    my %chr_info = $self->get_chromosomes_info_from_genome_file();
-    $self->{chr_info} = \%chr_info;
+    $self->{chr_info} = $self->get_chromosomes_info_from_genome_file();
     return $self;
 }
 
@@ -278,9 +277,9 @@ Retrieve chromosomes name and length and from FAI file.
 sub get_chromosomes_info_from_genome_file {
     my ($self, @args) = @_;
 
-    my %chr_lengths;
+    my $chr_lengths;
     foreach my $chr ($self->{'genome_db'}->get_all_primary_ids) {
-		$chr_lengths{$chr} = $self->{'genome_db'}->length($chr);
+		$chr_lengths->{$chr} = $self->{'genome_db'}->length($chr);
 	}
     #~ foreach my $chr (keys %{$self->{'genome_db'}}) {
 		#~ $chr_lengths{$chr} = length($self->{'genome_db'}{$chr});
@@ -297,7 +296,7 @@ sub get_chromosomes_info_from_genome_file {
         #~ my $chr_length = $fields[1];
         #~ $chr_lengths{$chr_name} = $chr_length;
     #~ }
-    return %chr_lengths;
+    return $chr_lengths;
 }
 
 
