@@ -39,6 +39,31 @@ sub new {
     return $self;
 }
 
+
+sub run_pipeline {
+    my ($self, @args) = @_;
+    $self->init_pipeline();
+
+    $self->calculate_reads_coverage();
+
+    $self->filter_BED();
+
+    # Look for known miRNAs
+    if ( $self->{'mirna_bed'} ne '' ){
+        debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
+        $self->treat_known_mirnas();
+    }
+    else{
+        debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
+    }
+
+    $self->init_sequences();
+
+    $self->run_pipeline_on_sequences();
+    return;
+}
+
+
 =method init_sequences
 
 =cut
