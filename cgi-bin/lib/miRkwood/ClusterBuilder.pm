@@ -26,7 +26,7 @@ sub new {
         'loci_read_coverage_threshold' => 10, # The read coverage threshold below which the locus is discarded
         'peak_padding' => 100 # How much nt we add on both sides of miRNAs to create a locus
     }, $class;
-    $self->{chr_info} = $self->get_chromosomes_info_from_genome_file();
+    $self->{'chr_info'} = $self->get_chromosomes_info_from_genome_file();
     return $self;
 }
 
@@ -52,8 +52,8 @@ sub build_loci {
 
 	undef $spikes;
 
-	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $average_coverage, $this->{'loci_read_coverage_threshold'}, 
-	$this->{'peak_padding'}, $parsed_bed);
+	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $average_coverage, $this->{'loci_read_coverage_threshold'},
+                $this->{'peak_padding'}, $parsed_bed);
 
 	undef $putative_miRna;
 
@@ -65,11 +65,11 @@ sub build_loci {
 sub add_read_info_in_loci {
 	my $this = shift;
 	my $loci = shift;
-	
+
 	foreach my $chr (keys %{$loci}) {
 		foreach my $locus (@{$loci->{$chr}}) {
-			$locus->{'reads'} = miRkwood::HairpinBuilder::get_contained_reads($this->get_parsed_bed, $chr, $locus->{'begin'}
-			, $locus->{'end'}, $locus->{'strand'});
+			$locus->{'reads'} = miRkwood::HairpinBuilder::get_contained_reads($this->get_parsed_bed, $chr, $locus->{'begin'},
+			  $locus->{'end'}, $locus->{'strand'});
 		}
 	}
 
@@ -96,17 +96,17 @@ sub get_read_distribution_from_bam {
     my ( $this, $bam_file ) = @_;
     die ('Not supported anymore');
     # go chr by chr, using the .fai index file to get the chr names
-    my %reads = ();
-    my %parsed_reads = ();
-    my @chrs = keys %{ $this->{chr_info} };
-
-    foreach my $chr (@chrs) {
-        my $samtools_cmd = "samtools view $bam_file $chr";
-        open( my $DEPTH, '-|', $samtools_cmd ) or die "Can't open '$samtools_cmd': $!";
-        $reads{$chr} = __get_read_distribution_from_bam_for_chr($DEPTH);
-        close $DEPTH;
-    }
-    return (\%reads, \%parsed_reads);
+    #~ my %reads = ();
+    #~ my %parsed_reads = ();
+    #~ my @chrs = keys %{ $this->{chr_info} };
+#~ 
+    #~ foreach my $chr (@chrs) {
+        #~ my $samtools_cmd = "samtools view $bam_file $chr";
+        #~ open( my $DEPTH, '-|', $samtools_cmd ) or die "Can't open '$samtools_cmd': $!";
+        #~ $reads{$chr} = __get_read_distribution_from_bam_for_chr($DEPTH);
+        #~ close $DEPTH;
+    #~ }
+    #~ return (\%reads, \%parsed_reads);
 }
 
 =method __get_read_distribution_from_bam_for_chr
@@ -125,43 +125,43 @@ Static private helper function. You shouldnt use this function.
 =cut
 sub __get_read_distribution_from_bam_for_chr {
 	die ('Not supported anymore');
-    my $HANDLE = shift;
-    my %chr_reads = ();
-    my %parsed_reads = ('+' => [], '-' => []);
-    while (<$HANDLE>) {
-        chomp;
-        my @fields = split( /\t/ );
-        my $pos = $fields[3]-1;
-        my $strand = '+';
-        $strand = '-' if $fields[1] & 0x10;
-        my $end = $pos + length $fields[9];
-        if (defined $chr_reads{$pos}) {
-			$chr_reads{$pos}->{'read_count'}++;
-			$chr_reads{$pos}->{'end'} = $end if $end > $chr_reads{$pos}->{'end'};
-			$chr_reads{$pos}->{'forward_read_count'}++ if $strand eq '+';
-        }
-        else {
-			$chr_reads{$pos} = {read_count => 1, end => $end, forward_read_count => ($strand eq '+') ? 1 : 0};
-        }
-        my $added = 0;
-         if (scalar @{$parsed_reads{$strand}}) {
-			my $read_ref = $parsed_reads{$strand}[-1];
-			if ($read_ref->{'begin'} == $pos) {
-				$read_ref->{'depth'}++;
-				if (defined $read_ref->{'ends'}{$end}) {
-					$read_ref->{'ends'}{$end}++;
-				}
-				else {
-					$read_ref->{'ends'}{$end} = 1;
-				}
-				$added = 1;
-			}
-        }
-        if ($added == 0) {
-			push @{$parsed_reads{$strand}}, {'begin' => $pos, 'depth' => 1, 'ends' => {$end => 1}};
-        }
-    }
-    return (\%chr_reads, \%parsed_reads);
+    #~ my $HANDLE = shift;
+    #~ my %chr_reads = ();
+    #~ my %parsed_reads = ('+' => [], '-' => []);
+    #~ while (<$HANDLE>) {
+        #~ chomp;
+        #~ my @fields = split( /\t/ );
+        #~ my $pos = $fields[3]-1;
+        #~ my $strand = '+';
+        #~ $strand = '-' if $fields[1] & 0x10;
+        #~ my $end = $pos + length $fields[9];
+        #~ if (defined $chr_reads{$pos}) {
+			#~ $chr_reads{$pos}->{'read_count'}++;
+			#~ $chr_reads{$pos}->{'end'} = $end if $end > $chr_reads{$pos}->{'end'};
+			#~ $chr_reads{$pos}->{'forward_read_count'}++ if $strand eq '+';
+        #~ }
+        #~ else {
+			#~ $chr_reads{$pos} = {read_count => 1, end => $end, forward_read_count => ($strand eq '+') ? 1 : 0};
+        #~ }
+        #~ my $added = 0;
+         #~ if (scalar @{$parsed_reads{$strand}}) {
+			#~ my $read_ref = $parsed_reads{$strand}[-1];
+			#~ if ($read_ref->{'begin'} == $pos) {
+				#~ $read_ref->{'depth'}++;
+				#~ if (defined $read_ref->{'ends'}{$end}) {
+					#~ $read_ref->{'ends'}{$end}++;
+				#~ }
+				#~ else {
+					#~ $read_ref->{'ends'}{$end} = 1;
+				#~ }
+				#~ $added = 1;
+			#~ }
+        #~ }
+        #~ if ($added == 0) {
+			#~ push @{$parsed_reads{$strand}}, {'begin' => $pos, 'depth' => 1, 'ends' => {$end => 1}};
+        #~ }
+    #~ }
+    #~ return (\%chr_reads, \%parsed_reads);
 }
 
 
@@ -249,20 +249,6 @@ sub get_read_distribution_from_bed {
     return (\%reads, \%parsed_reads);
 }
 
-=method get_faidx_file
-
-
-=cut
-#~ sub get_faidx_file {
-    #~ my ( $self, @args ) = @_;
-    #~ my $expected_faidx = $self->{genome_file} . '.fai';
-    #~ if ( !-e $expected_faidx ) {
-        #~ my $samtools_cmd = "samtools faidx $self->{genome_file}";
-        #~ system $samtools_cmd;
-    #~ }
-    #~ return $expected_faidx;
-#~ }
-
 
 =method get_chromosomes_info_from_genome_file
 
@@ -281,21 +267,7 @@ sub get_chromosomes_info_from_genome_file {
     foreach my $chr ($self->{'genome_db'}->get_all_primary_ids) {
 		$chr_lengths->{$chr} = $self->{'genome_db'}->length($chr);
 	}
-    #~ foreach my $chr (keys %{$self->{'genome_db'}}) {
-		#~ $chr_lengths{$chr} = length($self->{'genome_db'}{$chr});
-	#~ }
 
-    #~ my $genome_file = $self->{genome_file};
-    #~ my $fai_file = $self->get_faidx_file();
-    #~ open( my $FAI, '<', "$fai_file" )
-      #~ or die "Error when opening $fai_file: $!";
-    #~ while (<$FAI>) {
-        #~ chomp;
-        #~ my @fields = split( "\t", $_ );
-        #~ my $chr_name = $fields[0];
-        #~ my $chr_length = $fields[1];
-        #~ $chr_lengths{$chr_name} = $chr_length;
-    #~ }
     return $chr_lengths;
 }
 
@@ -358,7 +330,7 @@ sub get_trains {
 }
 
 
-=method get_windows
+=method get_strand
 
 Static private helper function that returns the strand of a region based on read statistics.
 
@@ -394,13 +366,11 @@ sub __get_trains_for_chr {
 	my @end_reads = ();
 
 	foreach my $read_locus (@{$read_distribution}) {
-		#~ my $read_locus = $read_distribution->[$index];
 		my $position = $read_locus->{'begin'};
 		if ($current_train{'begin'} <= $position && $position < $current_train{'end'}) {
 			$current_train{'end'} = max($current_train{'end'}, $read_locus->{'end'});
 			$current_train{'read_count'} += $read_locus->{'read_count'};
 			$current_train{'forward_read_count'} += $read_locus->{'forward_read_count'};
-			#~ $current_train{last_read_begin} = $position;
 			static__get_trains__process_train_spikes(\%current_train, $position, $read_locus, \$total_read_count, \@end_reads,
 				\$last_read_count, $spike_detection);
 		}
@@ -458,7 +428,7 @@ sub static__get_trains__maintain_read_count {
 			$$last_read_count = $$total_read_count;
 			$$total_read_count -= $end_reads->[0]{'read_count'};
 			my $trigger = $end_reads->[0]{'end'};
-			shift @$end_reads;
+			shift @{$end_reads};
 			my $added = $current_train->{'classifier'}->add_point($$total_read_count);
 			if ($added == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
 				$last_spike->{'end'} = $trigger;
@@ -486,14 +456,14 @@ Static private helper function. You shouldnt use this function.
 sub static__get_trains__finish_train_spikes {
 	my ($current_train) = @_;
 	my $spikes = $current_train->{spikes};
-	if (scalar @$spikes && $spikes->[-1]{'end'} == -1) {
+	if (scalar @{$spikes} && $spikes->[-1]{'end'} == -1) {
 		my $last_spike = $spikes->[-1];
 		$last_spike->{'end'} = $current_train->{'end'};
 		$last_spike->{'strand'} = get_strand $last_spike->{'forward_read_count'}, $last_spike->{'read_count'};
 	}
-	elsif (scalar @$spikes == 0 && $current_train->{'end'} - $current_train->{'begin'} <= 40) {
+	elsif (scalar @{$spikes} == 0 && $current_train->{'end'} - $current_train->{'begin'} <= 40) {
 		my $strand = get_strand $current_train->{'forward_read_count'}, $current_train->{'read_count'};
-		push @$spikes, {begin => $current_train->{'begin'}, end => $current_train->{'end'}, trigger => 0,
+		push @{$spikes}, {begin => $current_train->{'begin'}, end => $current_train->{'end'}, trigger => 0,
 		read_count => $current_train->{'read_count'}, forward_read_count => $current_train->{'forward_read_count'}, strand => $strand};
 	}
 	$current_train->{'classifier'}->clear_points();
