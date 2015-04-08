@@ -132,6 +132,7 @@ sub run_rnalfold_on_file {
     my ( $input, $output ) = @_;
     my $options = '-L 400';
     my $rnalfold_cmd = "$programs_paths{'rnalfold'} $options < $input > $output";
+    debug( '     ' . $rnalfold_cmd, miRkwood->DEBUG());
     system($rnalfold_cmd);
     return ( -e $output );
 }
@@ -146,7 +147,7 @@ Return whether the output file exists.
 sub run_rnafold_on_file {
     my ( $input, $output ) = @_;
     my $rnafold_cmd = "$programs_paths{'rnafold'} --noPS < $input > $output";
-    debug( '        ' . $rnafold_cmd, miRkwood->DEBUG());
+    #~ debug( '        ' . $rnafold_cmd, miRkwood->DEBUG());
     system($rnafold_cmd);
     return ( -e $output );
 }
@@ -320,7 +321,7 @@ Return whether the output files exist.
 sub run_rnastemloop {
     my ( $input, $output_stemloop, $output_optimal ) = @_;
     my $rnastemloop_cmd = "$programs_paths{'rnastemloop'} -i $input -s $output_stemloop -o $output_optimal";
-    debug( '        ' . $rnastemloop_cmd, miRkwood->DEBUG());
+    debug( '     ' . $rnastemloop_cmd, miRkwood->DEBUG());
     system($rnastemloop_cmd);
     return ( -e $output_stemloop && -e $output_optimal);
 }
