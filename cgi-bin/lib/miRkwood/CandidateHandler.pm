@@ -249,7 +249,7 @@ sub print_reads_clouds {
         for ($i = 0; $i < $read_length; $i++){
             print $OUT '*';
         }
-        for ($i = 0; $i <= $precursor_end - $read_end; $i++){
+        for ($i = 0; $i < $precursor_end - $read_end; $i++){
             print $OUT '.';
         }
         print $OUT " length=$read_length depth=$reads->{$position}\n";
