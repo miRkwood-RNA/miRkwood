@@ -106,11 +106,80 @@ sub update_known_candidate_information {
     $candidate->{'sequence'} = $genome->seq( $candidate->{'chromosome'}, $start => $end );
     $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
                              miRkwood::Utils::compute_gc_content($candidate->{'sequence'}), 3);
-    ($candidate->{'structure_stemloop'}, $candidate->{'mfe'}) = $self->get_stemloop_structure_for_known_candidate();
+    ($candidate->{'structure_optimal'}, $candidate->{'mfe'}) = $self->get_stemloop_structure_for_known_candidate();
+    $candidate->{'structure_stemloop'} = get_stemloop_structure_from_optimal( $candidate->{'structure_optimal'} );
     ($candidate->{'mfei'}, $candidate->{'amfe'}) = miRkwood::Utils::compute_mfei_and_amfe( $candidate->{'sequence'}, $candidate->{'mfe'} );
     $candidate->{'image'} = $self->write_VARNA_if_needed();
 
     return $candidate;
+}
+
+=method get_stemloop_structure_from_optimal
+
+  From the dot-bracket optimal structure, 
+  calculates the stemloop structure
+  
+=cut
+sub get_stemloop_structure_from_optimal {
+    my (@args) = @_;
+    my $optimal = shift @args;
+    my @optimal = split( '', $optimal );
+    my $length_structure = length( $optimal );
+
+    my $stemloop = '';
+    my $nb_open_brackets = 0;
+    my $nb_closed_brackets = 0;
+    my $i = 0;
+    my $continue = 1;
+    my $found_close = 0;
+
+    while ( $i < $length_structure and $continue ){
+        if ( $optimal[$i] eq '(' ){
+            if ( !$found_close ){
+                $nb_open_brackets++;
+            }
+            else{
+                $continue = 0;
+            }
+        }
+        elsif ( $optimal[$i] eq ')' ){
+            if ( !$found_close ){
+                $found_close = 1;
+            }
+            $nb_closed_brackets++;
+        }
+        $i++;
+    }
+
+    if ( $nb_open_brackets == $nb_closed_brackets ){
+        $stemloop = $optimal;
+    }
+    else{
+        my $nb_brackets_in_stemloop = $nb_open_brackets - $nb_closed_brackets;
+        my $nb_characters = 0;
+        my $nb_brackets = 0;
+        $i = 0;
+        while ( $nb_brackets < $nb_brackets_in_stemloop) {
+            $stemloop .= $optimal[$nb_characters];
+            if ( $optimal[$nb_characters] eq '(' ){
+                $nb_brackets++;
+            }
+            $nb_characters++;
+        }
+        my $nb_dots_in_middle = $length_structure - (2 * $nb_characters);
+        while ( $i < $nb_dots_in_middle ){
+            $i++;
+            $stemloop .= '.';
+        }
+        $i = 0;
+        while ( $i < $nb_characters ){
+            $stemloop .= $optimal[$nb_characters+$nb_dots_in_middle+$i];
+            $i++;
+        }
+    }
+
+    return $stemloop;
+
 }
 
 sub make_full_position {
