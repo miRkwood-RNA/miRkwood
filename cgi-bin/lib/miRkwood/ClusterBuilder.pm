@@ -68,21 +68,27 @@ sub build_loci_per_chr {
     my $chromosome = shift @args;
     my $average_coverage = shift @args;
 
+    debug( '    - Get read distribution...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 	my ($reads_per_chr, $parsed_bed) = $this->get_read_distribution_per_chr_from_bed( $this->{'bed_file'}, $chromosome );
 	$this->{'parsed_bed'} = $parsed_bed;
 
+    debug( '    - Get trains...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 	my $trains_hash_per_chr = $this->__get_trains_for_chr( $reads_per_chr );
 
 	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
+
+    debug( '    - Get spikes...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 	my $spikes_per_chr = $cluster_job->extract_spike_train_per_chr($trains_hash_per_chr);
 
 	undef $trains_hash_per_chr;
 
+    debug( '    - Process spikes...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 	my $putative_miRna = $cluster_job->process_spikes_for_chr($chromosome, $spikes_per_chr);
 
 	undef $spikes_per_chr;
 
+    debug( '    - Get loci...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 	my $loci_per_chr = $cluster_job->compute_candidate_precursors_from_miRnaPos_for_chr($chromosome,
                                                                                         $putative_miRna,
                                                                                         $this->{'chr_info'}{$chromosome},

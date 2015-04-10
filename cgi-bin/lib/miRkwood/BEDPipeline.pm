@@ -42,7 +42,10 @@ sub new {
 
 sub run_pipeline {
     my ($self, @args) = @_;
+
     $self->init_pipeline();
+
+    debug( 'miRkwood : start processing.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 
     $self->calculate_reads_coverage();
 
@@ -50,7 +53,7 @@ sub run_pipeline {
 
     # Look for known miRNAs
     if ( $self->{'mirna_bed'} ne '' ){
-        debug( 'Treat known miRNAs.', miRkwood->DEBUG() );
+        debug( 'Treat known miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
         $self->treat_known_mirnas();
     }
     else{
@@ -58,14 +61,14 @@ sub run_pipeline {
     }
 
     # Look for new miRNAs
-    debug( 'Treat new miRNAs.', miRkwood->DEBUG() );
+    debug( 'Treat new miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
     
 # Start new way of doing (chromosome by chromosome)
 # Comment out the following lines to go back to the previous version    
     $self->list_chrom_in_bed();
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
-        debug( "- Considering chromosome $chromosome", miRkwood->DEBUG() );
+        debug( "- Considering chromosome $chromosome" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
     }
@@ -77,7 +80,7 @@ sub run_pipeline {
 
     $self->mark_job_as_finished();
 
-    debug('Writing finish file', miRkwood->DEBUG() );
+    debug( 'Writing finish file' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 
     return;
 }
@@ -211,7 +214,7 @@ sub init_sequences {
 sub init_sequences_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
-    debug( '   Extracting sequences from genome using BED clusters', miRkwood->DEBUG() );
+    debug( '   Constructing loci' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
     my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
     $self->{'sequences'} = $clustering->build_loci_per_chr( $chromosome, $self->{'average_coverage'} );
     $self->{'parsed_reads'} = $clustering->get_parsed_bed();
@@ -300,7 +303,7 @@ sub compute_candidates_per_chr {
     my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
     my @hairpin_candidates_for_chr = ();
     foreach my $locus ( @{$self->{'sequences'}} ) {
-        debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
+        debug( "  - Considering sequence $sequence_identifier" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
         $sequence_identifier++;
         push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
 
