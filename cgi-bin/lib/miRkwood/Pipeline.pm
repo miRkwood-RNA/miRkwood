@@ -102,54 +102,6 @@ sub setup_logging {
 }
 
 
-=method filter_BED
-
-Method to call module BEDHandler.pm and filter the given BED file
-of CDS, other RNA, multimapped reads, and known miRNAs.
-Initialize attribute 'bed_file' with the filtered BED, or with the
-initial BED file if no filter had been done.
-
-=cut
-
-sub filter_BED {
-    my ($self, @args) = @_;
-    my $cfg                = miRkwood->CONFIG();
-    my $species            = $cfg->param('job.plant');
-    my $filter_CDS         = $cfg->param('options.filter_CDS');
-    my $filter_tRNA_rRNA   = $cfg->param('options.filter_tRNA_rRNA');
-    my $filter_multimapped = $cfg->param('options.filter_multimapped');
-    my $localBED           = $self->{'initial_bed'};
-    my $filteredBED        = '';
-    my $mirnaBED           = '';
-
-    if ( $species ne '' ){
-        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $self->get_job_dir(),
-                                                                                            $localBED,
-                                                                                            $species,
-                                                                                            $filter_CDS,
-                                                                                            $filter_tRNA_rRNA,
-                                                                                            $filter_multimapped );
-    }
-    else{
-        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $self->get_job_dir(),
-                                                                                           $localBED,
-                                                                                           $filter_CDS,
-                                                                                           $filter_tRNA_rRNA,
-                                                                                           $filter_multimapped );
-    }
-
-    if ( ! defined($filteredBED) or $filteredBED eq '' ){
-        $self->{'bed_file'} = $self->{'initial_bed'};
-        $self->{'mirna_bed'} = '';
-    }
-    else{
-        $self->{'bed_file'} = $filteredBED;
-        $self->{'mirna_bed'} = $mirnaBED;
-    }
-
-    return;
-}
-
 =method init_sequences
 
 Abstract method.
