@@ -1,5 +1,10 @@
 --- end_position
 --- 28706
+--- reads
+---
+28534-28556: 2
+28535-28556: 200
+28635-28655: 500
 --- sequence
 --- TACTTTTCTAATATCACGAGGACTTACATGGCCTCAAGTCACCTGTGGTGTTGTGCAAGAAGGAGAAGCAAAGTCTGTCTATGTATTATGAGATAGCTACTTCTATGGCTAGGATATATGTTGTACAAGACCGGCTTTTCTTCTACTTCTTGCACAACCTGAGGTTATTGAGGCTATACAAGTCTTCTTCTATAATGTTATTTATTA
 --- start_position
@@ -7,7 +12,7 @@
 --- position
 --- 28500-28706
 --- structure_stemloop
---- .................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................
+--- '.................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................'
 --- precursor_name
 --- ath-MIR838
 --- identifier
@@ -40,8 +45,3 @@ MIMAT0004260:
 --- -1.02820512820513
 --- mfe
 --- '-80.20'
---- precursor_reads
----
-28534-28556: 2
-28535-28556: 200
-28635-28655: 500

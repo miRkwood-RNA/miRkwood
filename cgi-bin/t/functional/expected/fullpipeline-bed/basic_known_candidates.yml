@@ -10,7 +10,16 @@
   position: 78927-79037
   precursor_name: ath-MIR165a
   quality: 2
-  reads: ~
+  reads:
+    78932-78952: 229
+    78932-78953: 2
+    78934-78953: 1
+    78935-78955: 25
+    78937-78952: 1
+    79007-79027: 1
+    79008-79030: 1
+    79009-79029: 1
+    79010-79030: 15
   start_position: 78927
   strand: '-'
 - alignment: ~
@@ -24,7 +33,11 @@
   position: 234006-234159
   precursor_name: ath-MIR2112
   quality: 1
-  reads: ~
+  reads:
+    234010-234030: 5
+    234017-234037: 2
+    234129-234149: 1
+    234133-234153: 16
   start_position: 234006
   strand: '-'
 - alignment: ~
@@ -38,6 +51,9 @@
   position: 28500-28706
   precursor_name: ath-MIR838
   quality: 2
-  reads: ~
+  reads:
+    28534-28556: 2
+    28535-28556: 200
+    28635-28655: 500
   start_position: 28500
   strand: +

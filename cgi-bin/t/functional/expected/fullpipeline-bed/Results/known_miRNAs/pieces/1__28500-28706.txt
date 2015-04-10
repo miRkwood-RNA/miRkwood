@@ -1,3 +1,3 @@
 >1__28500-28706, stemloop structure
 TACTTTTCTAATATCACGAGGACTTACATGGCCTCAAGTCACCTGTGGTGTTGTGCAAGAAGGAGAAGCAAAGTCTGTCTATGTATTATGAGATAGCTACTTCTATGGCTAGGATATATGTTGTACAAGACCGGCTTTTCTTCTACTTCTTGCACAACCTGAGGTTATTGAGGCTATACAAGTCTTCTTCTATAATGTTATTTATTA
-.((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..)))))))).
+.................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................

@@ -1,5 +1,16 @@
 --- end_position
 --- 79037
+--- reads
+---
+78932-78952: 229
+78932-78953: 2
+78934-78953: 1
+78935-78955: 25
+78937-78952: 1
+79007-79027: 1
+79008-79030: 1
+79009-79029: 1
+79010-79030: 15
 --- sequence
 --- GTTGGGGGGGATGAAGCCTGGTCCGAGGATACTCTCTATGATCACTTGAATCATTAACATACACATGTATATATCTATAATATCCTCGATCCAGACAACATTCCCCTCAAC
 --- start_position
@@ -39,22 +50,11 @@ MIMAT0031879:
   mature_start: '79010'
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0000199/image.png
---- amfe
---- -36.9369369369369
 --- length
 --- 111
+--- amfe
+--- -36.9369369369369
 --- mfei
 --- -0.872340425531915
 --- mfe
 --- '-41.00'
---- precursor_reads
----
-78932-78952: 229
-78932-78953: 2
-78934-78953: 1
-78935-78955: 25
-78937-78952: 1
-79007-79027: 1
-79008-79030: 1
-79009-79029: 1
-79010-79030: 15
