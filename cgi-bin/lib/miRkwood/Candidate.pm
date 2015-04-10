@@ -533,7 +533,7 @@ sub get_reads_from_bam_file {
     while ( <$SAMVIEW> ){
         my @line = split(/\t/);
         my $start = $line[3];
-        my $end = length($line[9]) + $start;
+        my $end = length($line[9]) + $start - 1;
 
         # Count the depth of each read
         if ( !exists( $reads->{"$start-$end"} ) ){
