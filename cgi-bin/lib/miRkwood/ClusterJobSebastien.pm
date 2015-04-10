@@ -86,7 +86,6 @@ sub extract_spike_train {
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		$spikes{$chr} = $this->extract_spike_train_per_chr($trains_per_chr->{$chr});
 	}
-    debug('--- extract_spike_train : OK', miRkwood->DEBUG() );
 	return \%spikes;
 }
 
@@ -177,7 +176,6 @@ sub process_spikes {
 		#STATS END
 		);
 	}
-    debug('--- process_spikes : OK', miRkwood->DEBUG() );
 	return \%miRnaPos
 	#STATS BEG
 	#~ , \%stats
@@ -413,7 +411,7 @@ sub process_spikes_for_chr {
 	#~ , $stats
 	#~ STAT END
 	) = @_;
-
+	$this->{detector} = MiRnaDuplexDetector::MiRnaDetector->new(5000);  #VOIE2    # Comment out to go back to the previous version
 	my $accepting_time = $this->{accepting_time};
 	my @miRnaPos = (); # Array of [5p, 3p]
 	my $genome = $this->{'genome_db'};
@@ -432,7 +430,7 @@ sub process_spikes_for_chr {
 		my $current_spike = $current_spike_entry->{'spike'};
 		my $unknown_strand = $current_spike->{'strand'} eq '?';
 		my $enlarged_spike = __force_spike_size($current_spike, $min_length, $chr_length);
-		
+
 		my $genome_seq_beg = max($enlarged_spike->{'begin'}-50, 0);
 		my $genome_seq_end = min($enlarged_spike->{'end'}+$accepting_time*2+100, $chr_length);
 		if ($genome_seq_end-$genome_seq_beg > $detector->admissibleTextLength()) {
@@ -524,7 +522,6 @@ sub compute_candidate_precursors_from_miRnaPos {
 		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($chr, $miRnaPos, $this->{chr_info}{$chr}, $average_coverage,
 		$read_coverage_threshold, $peak_padding, $parsed_bed);
 	}
-    debug('--- compute_candidate_precursors_from_miRnaPos : OK', miRkwood->DEBUG() );
 	return \%candidate_region;
 }
 
@@ -628,6 +625,7 @@ Static private helper function. You shouldnt use this function.
 
 =cut
 sub compute_candidate_precursors_from_miRnaPos_for_chr {
+	my $this = shift;   #VOIE2    # Comment out to go back to the previous version
 	my $chr = shift;
 	my $miRnaPos = shift;
 	my $chr_length = shift;
@@ -645,9 +643,9 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 		my $current_miRna = $miRnaPos->[$i];
 		my $region_begin = max(0, $current_miRna->{first}{'begin'}-$peak_padding);
 		my $region_end = min($chr_length, $current_miRna->{second}{'end'}+$peak_padding);
-        my $threshold = ( $region_end - $region_begin - 19 ) / $average_coverage;
-        my $final_threshold = max( $read_coverage_threshold, $threshold );
-        debug("Reads threshold for locus $region_begin-$region_end (chrom $chr) : $final_threshold ($threshold)", 1);
+		my $threshold = ( $region_end - $region_begin - 19 ) / $average_coverage;
+		#~ my $final_threshold = max( $read_coverage_threshold, $threshold );   # Un-comment out to come back to variable threshold
+		my $final_threshold = 10;;   # Comment out to come back to variable threshold
 		if (miRkwood::HairpinBuilder::get_contained_read_coverage($parsed_bed, $chr, $region_begin, $region_end, $current_miRna->{'strand'})
 		< $final_threshold) {
 			next;

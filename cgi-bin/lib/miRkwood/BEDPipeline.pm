@@ -57,10 +57,85 @@ sub run_pipeline {
         debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
     }
 
-    $self->init_sequences();
+    # Look for new miRNAs
+    debug( 'Treat new miRNAs.', miRkwood->DEBUG() );
+    
+# Start new way of doing (chromosome by chromosome)
+# Comment out the following lines to go back to the previous version    
+    $self->list_chrom_in_bed();
+    debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
+    foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
+        debug( "- Considering chromosome $chromosome", miRkwood->DEBUG() );
+        $self->init_sequences_per_chr( $chromosome );
+        $self->run_pipeline_on_sequences_per_chr( $chromosome );
+    }
+# End new way of doing
 
-    $self->run_pipeline_on_sequences();
+# Un-comment out the two following lines to go back to previous version
+    #~ $self->init_sequences();
+    #~ $self->run_pipeline_on_sequences();
+
+    $self->mark_job_as_finished();
+
+    debug('Writing finish file', miRkwood->DEBUG() );    
+
     return;
+}
+
+
+=method calculate_reads_coverage
+
+  On the BED given by the user, calculate the read coverage, ie the 
+  number X such as on average one read starts every X nt.
+
+=cut
+sub calculate_reads_coverage {
+    my ($self, @args) = @_;
+    my $line;
+    my $size_genome = 0;
+    my $nb_tot_reads = 0;
+    my $chromosome = '';
+    my $end_position = 0;
+    open (my $BED, $self->{'initial_bed'}) or die "ERROR while opening $self->{'initial_bed'} : $!";
+    while( <$BED> ){
+        chomp;
+        my @fields = split( /\t/);
+        $nb_tot_reads += $fields[4];
+        if ( $chromosome ne '' and $chromosome ne $fields[0] ){
+            $size_genome += $end_position;
+        }
+        $chromosome = $fields[0];
+        $end_position = $fields[2];
+        $line = $_;
+    }
+    close $BED;
+    chomp $line;
+    my @fields = split( /\t/, $line);
+    $size_genome += $fields[2];
+    $self->{'average_coverage'} = int( $size_genome / $nb_tot_reads );
+    debug( "Average reads coverage for this BED file : 1 read every $self->{'average_coverage'} nt.", miRkwood->DEBUG() );
+    return;
+}
+
+
+=method list_chrom_in_bed
+
+  Read the BED file and store the name of all chromosomes
+  
+=cut
+sub list_chrom_in_bed {
+    my ($self) = @_;
+
+    my %list_chromosomes;
+    open ( my $BED, '<', $self->{'bed_file'} ) or die "ERROR while opening $self->{'bed_file'} : $!";
+    while ( <$BED> ){
+        my @fields = split( /\t/ );
+        $list_chromosomes{ $fields[0] } = 1;
+    }
+    close $BED;
+    my @sorted_list = sort( keys( %list_chromosomes ) );
+    $self->{'chromosomes_in_bed'} = \@sorted_list;
+
 }
 
 
@@ -71,7 +146,7 @@ sub run_pipeline {
 sub init_sequences {
     my ($self, @args) = @_;
     debug( 'Extracting sequences from genome using BED clusters', miRkwood->DEBUG() );
-    my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
+    my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});   
     $self->{'sequences'} = $clustering->build_loci( $self->{'average_coverage'} );
     $self->{'parsed_reads'} = $clustering->get_parsed_bed();
     miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : init_sequences()');
@@ -79,42 +154,39 @@ sub init_sequences {
 }
 # SEB END
 
-sub calculate_reads_coverage {
+
+=method init_sequences_per_chr
+
+=cut
+# SEB BEGIN
+sub init_sequences_per_chr {
     my ($self, @args) = @_;
+    my $chromosome = shift @args;
+    debug( '   Extracting sequences from genome using BED clusters', miRkwood->DEBUG() );
+    my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
+    $self->{'sequences'} = $clustering->build_loci_per_chr( $chromosome, $self->{'average_coverage'} );
+    $self->{'parsed_reads'} = $clustering->get_parsed_bed();
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : init_sequences_per_chr()');
+    return;
+}
+# SEB END
 
-    my $line;
-    my $size_genome = 0;
-    my $nb_tot_reads = 0;
-    my $chromosome = '';
-    my $end_position = 0;
 
-    open (my $BED, $self->{'initial_bed'}) or die "ERROR while opening $self->{'initial_bed'} : $!";
-    while( <$BED> ){
-        chomp;
+sub run_pipeline_on_sequences_per_chr {
+    my ($self, @args) = @_;
+    my $chromosome = shift @args;
 
-        my @fields = split( /\t/);
+    $self->{'basic_candidates'} = [];
 
-        $nb_tot_reads += $fields[4];
+    my $sequences_count = scalar( @{$self->{'sequences'}} );
 
-        if ( $chromosome ne '' and $chromosome ne $fields[0] ){
-            $size_genome += $end_position;
-        }
-        $chromosome = $fields[0];
-        $end_position = $fields[2];
+    debug( "   $sequences_count sequences to process", miRkwood->DEBUG() );
 
-        $line = $_;
+    $self->compute_candidates_per_chr( $chromosome );
 
-    }
-    close $BED;
-    chomp $line;
-    my @fields = split( /\t/, $line);
-    $size_genome += $fields[2];
-
-    $self->{'average_coverage'} = int( $size_genome / $nb_tot_reads );
-    debug( "Average reads coverage for this BED file : 1 read every $self->{'average_coverage'} nt.", miRkwood->DEBUG() );
+    $self->serialize_basic_candidates( 'basic_candidates' );
 
     return;
-
 }
 
 
@@ -163,6 +235,50 @@ sub compute_candidates {
 
             undef $final_candidates_hash;
         }
+    }
+
+    return;
+}
+
+
+sub compute_candidates_per_chr {
+    my ($self, @args) = @_;
+    my $chromosome = shift @args;
+
+    my $sequence_identifier = 0;
+
+    # Look for new miRNAs
+    my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
+    my @hairpin_candidates_for_chr = ();
+    foreach my $locus ( @{$self->{'sequences'}} ) {
+        debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
+        $sequence_identifier++;
+        push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
+
+        miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)' );  # /!\ WARNING : comment this line for web pipeline
+    }
+    undef $hairpinBuilder;
+
+    my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
+
+    undef @hairpin_candidates_for_chr;
+
+    if ( scalar(@sorted_hairpin_candidates_for_chr) ){
+        my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chromosome, $chromosome );
+
+        # Merge candidates
+        my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
+
+        # Posteriori tests and update candidate information
+        my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
+
+        undef $candidates_hash;
+
+        $self->serialize_candidates($final_candidates_hash);
+
+        miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (sort candidates)' );
+
+        undef $final_candidates_hash;
     }
 
     return;

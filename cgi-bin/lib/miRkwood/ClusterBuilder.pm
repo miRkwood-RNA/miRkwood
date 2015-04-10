@@ -62,6 +62,43 @@ sub build_loci {
 	return $loci;
 }
 
+
+sub build_loci_per_chr {
+    my ($this, @args) = @_;
+    my $chromosome = shift @args;
+    my $average_coverage = shift @args;
+
+	my ($reads_per_chr, $parsed_bed) = $this->get_read_distribution_per_chr_from_bed( $this->{'bed_file'}, $chromosome );
+	$this->{'parsed_bed'} = $parsed_bed;
+
+	my $trains_hash_per_chr = $this->__get_trains_for_chr( $reads_per_chr );
+
+	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
+	$cluster_job->init_from_clustering($this);
+	my $spikes_per_chr = $cluster_job->extract_spike_train_per_chr($trains_hash_per_chr);
+
+	undef $trains_hash_per_chr;
+
+	my $putative_miRna = $cluster_job->process_spikes_for_chr($chromosome, $spikes_per_chr);
+
+	undef $spikes_per_chr;
+
+	my $loci_per_chr = $cluster_job->compute_candidate_precursors_from_miRnaPos_for_chr($chromosome,
+                                                                                        $putative_miRna,
+                                                                                        $this->{'chr_info'}{$chromosome},
+                                                                                        $average_coverage,
+                                                                                        $this->{'loci_read_coverage_threshold'},
+                                                                                        $this->{'peak_padding'},
+                                                                                        $parsed_bed);
+
+	undef $putative_miRna;
+
+	miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterBuilder : build_loci' );
+
+	return $loci_per_chr;
+}
+
+
 sub add_read_info_in_loci {
 	my $this = shift;
 	my $loci = shift;
@@ -168,7 +205,7 @@ sub __get_read_distribution_from_bam_for_chr {
 =method get_read_distribution_from_bed
 
 Retrieve the reads from a miRkwood-normalized bed file. The bed file must have the following columns (tab-separated):
-# 0: chromosom name,
+# 0: chromosome name,
 # 1: starting position (0-based, starting at 0),
 # 2: end positing (excluded)
 # 3: sequence name
@@ -245,8 +282,69 @@ sub get_read_distribution_from_bed {
         }
     }
     close $HANDLE;
-    debug('--- get_read_distribution_from_bed : OK', miRkwood->DEBUG() );
     return (\%reads, \%parsed_reads);
+}
+
+
+sub get_read_distribution_per_chr_from_bed {
+    my ($this, $bed_file, $chromosome) = @_;
+    my $reads = [];
+    my $parsed_reads = { '+' => [], '-' => [] };
+
+    open( my $HANDLE, '<', $bed_file) or die "Can't open '$bed_file': $!";
+    while (<$HANDLE>) {
+        chomp;
+        my @fields = split( /\t/ );
+        if (scalar @fields != 6) {
+			next;
+        }
+        my $chr = $fields[0];
+        my $pos = $fields[1];
+        my $end = $fields[2];
+        my $depth = $fields[4];        
+        my $strand = $fields[5];
+        if ($strand ne '+' && $strand ne '-') {
+			die ("Error while parsing bed: Incorrect strand, expected '+' or '-', got '$strand'.");
+		}
+
+        if ( $chr eq $chromosome ) {
+            # First data structure
+            if (scalar @{$reads} && $reads->[-1]{'begin'} == $pos) {
+                my $locus = $reads->[-1];
+                if ($locus->{'begin'} == $pos) {
+                    $locus->{'read_count'} += $depth;
+                    $locus->{'end'} = $end if $end > $locus->{'end'};
+                    $locus->{'forward_read_count'} += $depth if $strand eq '+';
+                }
+            }
+            else {
+                push @{$reads}, { 'begin' => $pos,
+                                  'read_count' => $depth,
+                                  'end' => $end,
+                                  'forward_read_count' => ($strand eq '+') ? $depth : 0};
+            }
+            # Second data structure
+            my $added = 0;
+            if (scalar @{$parsed_reads->{$strand}}) {
+                my $read_ref = $parsed_reads->{$strand}[-1];
+                if ($read_ref->{'begin'} == $pos) {
+                    $read_ref->{'depth'} += $depth;
+                    if (defined $read_ref->{'ends'}{$end}) {
+                        $read_ref->{'ends'}{$end}+=$depth;
+                    }
+                    else {
+                        $read_ref->{'ends'}{$end} = $depth;
+                    }
+                    $added = 1;
+                }
+            }
+            if ($added == 0) {
+                push @{$parsed_reads->{$strand}}, {'begin' => $pos, 'depth' => $depth, 'ends' => {$end => $depth}};
+            }
+        }
+    }
+    close $HANDLE;
+    return ($reads, $parsed_reads);
 }
 
 
@@ -325,7 +423,6 @@ sub get_trains {
 	foreach my $chr (keys %{ $this->{chr_info} }) {
 		$trains_per_chr{$chr} = $this->__get_trains_for_chr($read_distribution_per_chr->{$chr});
 	}
-    debug('--- get_trains : OK', miRkwood->DEBUG() );
 	return \%trains_per_chr;
 }
 
