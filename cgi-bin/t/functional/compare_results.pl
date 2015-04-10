@@ -42,8 +42,8 @@ sub compare_folders {
     }
     else{
         foreach ( @{$list_files_1} ){
-            if ( $_ eq 'basic_candidates.yml' or $_ eq 'basic_known_candidates.yml' ){
-
+            if ( $_ eq 'outBlast.txt' or $_ eq 'pvalue.txt' or $_ eq 'basic_candidates.yml' or $_ eq 'basic_known_candidates.yml' ){
+                # don't compare these files
             }
             elsif ( /[.]yml/ ){
                 my $yml_file_1 = "$folder_1/$_";
@@ -54,10 +54,10 @@ sub compare_folders {
 
                 compare_2_hash( \%attributes_1, \%attributes_2, $_);
             }
-            elsif ($_ !~/[\.svn|\.log|\.cfg|\.png|\.html|pvalue\.txt|outBlast\.txt|miRdupOutput\.txt]$/ ) {
-                open CMD, "diff $folder_1/$_ folder_2/$_ |";
-                while ( my $line == <CMD> ){
-                    if ( $line != /^\n$/ ){
+            elsif ( $_ !~/[.]svn|[.]log|[.]cfg|[.]png|[.]html|miRdupOutput[.]txt$/ ) {
+                open CMD, "diff $folder_1/$_ $folder_2/$_ |";
+                while ( my $line = <CMD> ){
+                    if ( $line ne /^\n$/ ){
                         print $line;
                     }
                 }
