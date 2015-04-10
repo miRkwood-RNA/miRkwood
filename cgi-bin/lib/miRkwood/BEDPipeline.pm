@@ -389,7 +389,7 @@ sub store_known_mirnas_as_candidate_objects {
             $data->{$precursor_id}{'start_position'} = $field[9];
             $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};
-            $data->{$precursor_id}{'precursor_reads'}{"$read_start-$read_end"} = $field[4];
+            $data->{$precursor_id}{'reads'}{"$read_start-$read_end"} = $field[4];
         }
         elsif ( $field[8] eq 'miRNA' ){
             $precursor_id = $precursor_of_mature->{$id};
@@ -413,8 +413,8 @@ sub store_known_mirnas_as_candidate_objects {
         $mature_reads = 0;
 
         ##### Count number of reads
-        foreach (keys %{$data->{$precursor_id}{'precursor_reads'}}){
-            $precursor_reads += $data->{$precursor_id}{'precursor_reads'}{$_};
+        foreach (keys %{$data->{$precursor_id}{'reads'}}){
+            $precursor_reads += $data->{$precursor_id}{'reads'}{$_};
         }
         foreach my $mature_id ( keys %{$data->{$precursor_id}{'matures'}} ){
             foreach my $read ( keys %{$data->{$precursor_id}{'matures'}{$mature_id}{'mature_reads'}} ){

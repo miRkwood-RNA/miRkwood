@@ -118,15 +118,12 @@ sub print_reads_clouds {
     my $mature_id;
     my @positions_tags = ();
 
-    my $reads = {};
-
     my $precursor_id    = $mirna->{'identifier'};
     my $strand          = $mirna->{'strand'};
     my $precursor_start = $mirna->{'start_position'};
     my $precursor_end   = $mirna->{'end_position'};
     my $chromosome      = $mirna->{'name'};
-
-    $reads              = ( $mirna->{'precursor_reads'} or $mirna->{'reads'} );
+    my $reads           = $mirna->{'reads'};
 
     if ( !defined($reads) or $reads eq {} ){
         debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
