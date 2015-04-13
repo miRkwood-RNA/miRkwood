@@ -45,7 +45,7 @@ my $page = <<"END_TXT";
                     <option value="Oryza_sativa">Oryza sativa (MSU7)</option>
                     <option value="Solanum_lycopersicum">Solanum_lycopersicum (SL2.4)</option>
                 </select>  
-                <br /><br />
+                <!-- <br /><br />
                 <label for='seqArea'>Or paste your reference sequence in FASTA format &nbsp;[<a href="$help_page">?</a>]</label>
                 <br /><br />
                 <textarea id='seqArea' name="seqArea"  rows="10" cols="150" ></textarea>
@@ -54,7 +54,7 @@ my $page = <<"END_TXT";
                 <br /><br />
                 <label for='seqFile'>Or upload a file: </label><input type="file" name="seqFile" id="seqFile" />
                 <br />
-                <a id="area_clear" onclick="resetElementByID('seqFile');">Clear Fasta</a>
+                <a id="area_clear" onclick="resetElementByID('seqFile');">Clear Fasta</a> -->
                 
                 <br /><br />
                 
