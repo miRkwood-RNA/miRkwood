@@ -102,14 +102,16 @@ sub calculate_reads_coverage {
     open (my $BED, $self->{'initial_bed'}) or die "ERROR while opening $self->{'initial_bed'} : $!";
     while( <$BED> ){
         chomp;
-        my @fields = split( /\t/);
-        $nb_tot_reads += $fields[4];
-        if ( $chromosome ne '' and $chromosome ne $fields[0] ){
-            $size_genome += $end_position;
+        if ( $_ ne '' ){
+            my @fields = split( /\t/);
+            $nb_tot_reads += $fields[4];
+            if ( $chromosome ne '' and $chromosome ne $fields[0] ){
+                $size_genome += $end_position;
+            }
+            $chromosome = $fields[0];
+            $end_position = $fields[2];
+            $line = $_;
         }
-        $chromosome = $fields[0];
-        $end_position = $fields[2];
-        $line = $_;
     }
     close $BED;
     chomp $line;
