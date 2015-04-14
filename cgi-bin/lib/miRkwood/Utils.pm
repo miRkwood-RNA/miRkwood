@@ -1043,18 +1043,18 @@ sub display_var_sizes_in_log_file {
     my ( @args ) = @_;
     my $message = shift @args;
 
-    use Devel::Size qw(size total_size);
-    use PadWalker;
-    $Devel::Size::warn = 0;    # This is to avoid annoying warnings
-
-    my $variables = PadWalker::peek_my (1);
-    my $total = 0;
-    debug( $message, miRkwood->DEBUG() );
-    foreach my $var ( keys%{$variables} ){
-        debug( ".......... $var : ". total_size( $variables->{ $var } ), miRkwood->DEBUG());
-        $total += total_size( $variables->{ $var } );
-    }
-    debug(  ".................... TOTAL : $total", miRkwood->DEBUG());
+    #~ use Devel::Size qw(size total_size);
+    #~ use PadWalker;
+    #~ $Devel::Size::warn = 0;    # This is to avoid annoying warnings
+#~ 
+    #~ my $variables = PadWalker::peek_my (1);
+    #~ my $total = 0;
+    #~ debug( $message, miRkwood->DEBUG() );
+    #~ foreach my $var ( keys%{$variables} ){
+        #~ debug( ".......... $var : ". total_size( $variables->{ $var } ), miRkwood->DEBUG());
+        #~ $total += total_size( $variables->{ $var } );
+    #~ }
+    #~ debug(  ".................... TOTAL : $total", miRkwood->DEBUG());
     return;
 }
 
