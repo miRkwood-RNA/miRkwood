@@ -45,6 +45,13 @@ Return the HTML BioInfo header menu
 
 sub get_header_menu {
     my @args = @_;
+    my $pipeline = shift @args;
+    if ( $pipeline eq 'smallrnaseq' ){
+        return get_static_file('../smallRNAseq/header_menu.txt');
+    }
+    elsif ( $pipeline eq 'abinitio' ){
+        return get_static_file('../abinitio/header_menu.txt');
+    }
     return get_static_file('header_menu.txt');
 }
 
@@ -133,7 +140,7 @@ sub get_error_page {
     my $explanation = "The error which occured is:";
     my $footer = "Please send this to the miRkwood team, at the address in the footer.";
     my $contents = "<br/><br/>$header<br/><br/>$explanation<br/><br/>$error_message<br/><br/><br/>$footer";
-    my $html = miRkwood::WebTemplate::get_HTML_page_for_content($contents, \@css, \@js);
+    my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $contents, \@css, \@js);
     my $res = <<"HTML";
 Content-type: text/html
 
@@ -175,6 +182,7 @@ sub get_cgi_url {
 
 sub get_HTML_page_for_content {
     my @args      = @_;
+    my $pipeline  = shift @args;    # should be 'abinitio' or 'smallrnaseq'
     my $page      = shift @args;
     my $css_files = shift @args;
     my $js_files  = shift @args;
@@ -185,7 +193,7 @@ sub get_HTML_page_for_content {
         $bioinfo_menu = miRkwood::WebTemplate::get_bioinfo_menu();
     }
 
-    my $header_menu  = miRkwood::WebTemplate::get_header_menu();
+    my $header_menu  = miRkwood::WebTemplate::get_header_menu($pipeline);
     my $footer       = miRkwood::WebTemplate::get_footer();
 
     my $body = <<"END_TXT";
