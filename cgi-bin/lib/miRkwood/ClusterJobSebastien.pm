@@ -644,8 +644,8 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 		my $region_begin = max(0, $current_miRna->{first}{'begin'}-$peak_padding);
 		my $region_end = min($chr_length, $current_miRna->{second}{'end'}+$peak_padding);
 		my $threshold = ( $region_end - $region_begin - 19 ) / $average_coverage;
-		#~ my $final_threshold = max( $read_coverage_threshold, $threshold );   # Un-comment out to come back to variable threshold
-		my $final_threshold = 10;;   # Comment out to come back to variable threshold
+		my $final_threshold = max( $read_coverage_threshold, $threshold );   # Un-comment out to come back to variable threshold
+		#~ my $final_threshold = 10;;   # Comment out to come back to variable threshold
 		if (miRkwood::HairpinBuilder::get_contained_read_coverage($parsed_bed, $chr, $region_begin, $region_end, $current_miRna->{'strand'})
 		< $final_threshold) {
 			next;
