@@ -117,7 +117,7 @@ my $page = <<"END_TXT";
 </div><!-- main -->
 END_TXT
 
-my $html = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+my $html = miRkwood::WebTemplate::get_HTML_page_for_content('smallrnaseq', $page, \@css, \@js);
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 

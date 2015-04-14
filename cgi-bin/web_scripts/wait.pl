@@ -85,7 +85,7 @@ if ( $valid ){
 </div><!-- main -->
 END_TXT
 
-    $html_text = miRkwood::WebTemplate::get_HTML_page_for_content($page, \@css, \@js);
+    $html_text = miRkwood::WebTemplate::get_HTML_page_for_content('static/', $page, \@css, \@js);
 
     $html_text =~ s/<meta/<meta http-equiv='Refresh' content='10;URL=$waiting_url'><meta/;
 
@@ -99,7 +99,7 @@ else{
 </div><!-- main -->
 END_TXT
 
-	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js, 1 );
+	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, 1 );
 
 }
 

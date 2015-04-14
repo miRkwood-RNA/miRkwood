@@ -16,7 +16,7 @@ use miRkwood::ResultsExporterMaker;
 
 my $cgi = CGI->new;
 
-my $header_menu = miRkwood::WebTemplate::get_header_menu();
+my $header_menu = miRkwood::WebTemplate::get_header_menu( 'abinitio' );
 my $footer      = miRkwood::WebTemplate::get_footer();
 my $web_scripts = miRkwood::WebPaths->get_web_scripts();
 
@@ -136,7 +136,7 @@ else {
 END_TXT
 
 	$html =
-	  miRkwood::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js,
+	  miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js,
 		1 );
 }
 print <<"DATA" or die("Error when displaying HTML: $!");

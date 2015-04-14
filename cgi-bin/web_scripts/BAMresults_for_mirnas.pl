@@ -16,7 +16,7 @@ use miRkwood::ResultsExporterMaker;
 
 
 ##### Page settings
-my $header_menu = miRkwood::WebTemplate::get_header_menu();
+my $header_menu = miRkwood::WebTemplate::get_header_menu( 'smallrnaseq' );
 my $footer      = miRkwood::WebTemplate::get_footer();
 my $web_scripts = miRkwood::WebPaths->get_web_scripts();
 
@@ -155,7 +155,7 @@ else{   # job id is not a valid ID
 </div><!-- main -->
 END_TXT
 
-	$html = miRkwood::WebTemplate::get_HTML_page_for_content( $page, \@css, \@js, 1 );
+	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'smallrnaseq', $page, \@css, \@js, 1 );
 }
 
 
