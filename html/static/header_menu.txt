@@ -1,9 +1,8 @@
 <div class="frametitle">
- <h1>miRkwood</h1>
-   <div class="menu_central">
-     <a href="/mirkwood/">home</a>
-     <a href="/cgi-bin/mirkwood/web_scripts/interface.pl">web server</a>
-     <a href="/mirkwood/help.php">help</a>
-     <a href="/mirkwood/id.php">retrieve result with an ID</a>
-   </div>
+    <h1>miRkwood</h1>
+    <div class="menu_central">
+        <a href="/mirkwood/">home</a>
+        <a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a>
+        <a href="/mirkwood/smallRNAseq/index.php">miRkwood small RNA-seq</a>
+    </div>
 </div>

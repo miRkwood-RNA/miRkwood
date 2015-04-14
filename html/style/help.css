@@ -17,7 +17,9 @@ h2 {
     font-weight: normal; 
     counter-reset:subsection;
     background-color:#FFF0BC; 
+/*
     width:40%; 
+*/
     border-left: 7px solid #f4ba31; 
 }
 
@@ -73,7 +75,13 @@ p.equation {
     font-family:monospace;
 }
 
-
+p.code {
+    margin-left:50px;
+    font-family:monospace;
+/*
+    font-weight:bold;
+*/
+}
 
 .example{
     text-align: justify;
@@ -143,4 +151,8 @@ dt {
 dd {
  padding-top: 4px; 
  padding-bottom: 6px;
+}
+
+span.code {
+    margin: 100px;
 }

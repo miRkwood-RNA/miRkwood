@@ -1,64 +1,75 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
+    <head>
         <link type='text/css' rel='stylesheet' href='../Style/bioinfo.css' />
-		<link type='text/css' rel='stylesheet' href='./style/script.css' />
-		<link type='text/css' rel='stylesheet' href='./style/rna.css' />
+        <link type='text/css' rel='stylesheet' href='./style/script.css' />
+        <link type='text/css' rel='stylesheet' href='./style/rna.css' />
         <script type='text/javascript' src='/js/miARN.js'></script>
         <title>miRkwood - MicroRNA identification</title>
     </head>
- <body>
-<div class="theme-border"></div>
-        <a href="/">
-            <div class="logo"></div>
-        </a>
-         <? include("./static/bioinfo_menu.txt") ?>
-        <div class="bloc_droit">
+<body>
+    <div class="theme-border"></div>
+    <a href="/">
+        <div class="logo"></div>
+    </a>
+    <? include("./static/bioinfo_menu.txt") ?>
+    <div class="bloc_droit">
         <? include("./static/header_menu.txt") ?>
-<div class="main">
+        <div class="main">
 
-    <p>miRkwood is a computational pipeline for the identification of miRNAs and their hairpin precursors. The method is specifically calibrated for plant miRNAs, that have a large structural diversity. It can be used with short (&#60;100 kb) genomic regions or assembled expressed sequences (Sanger or NGS).</p>
+            <p>miRkwood is a web application that allows for the fast and easy identification of microRNAs. It is specifically designed for plant microRNAs. It offers an user-friendly interface to navigate in the data, as well as many export options to allow the user to conduct further analyses on a local computer.</p>
 
-    <p>miRkwood first identifies potential pre-miRNAs on the basis of the secondary structure, and then refines this result through a variety of additional complementary features that bring new evidence to the prediction:  Thermodynamical stability, conservation of the mature miRNA, nature of complementarity of the miRNA-miRNA* duplex.</p>
+            <p>miRkwood comes in two versions: </p>
 
 
-<ul>
- <li><a href='help.php'>read user manual</a></li>
-<!-- <li><a href='method.php'>learn about the method</a></li> -->
- <li><a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>use web server</a></li>
-</ul>
+            <ul>
+                <li><b>mirkwood ab initio</b>, for the analysis of raw genomic sequence,</li>
 
-<img style='width:542px; display: block; margin: 0 auto;' src='style/diagram.png'/ alt='miRkwood diagram'>
+                <li><b>mirkwood small RNA-seq</b>, for the analysis of deep sequencing data.</li>
+            </ul>
 
-<h2>Authors</h2>
-<p>Sylvain Legrand, <a href='http://pdv.univ-lille1.fr/labo/sitesadv/'>SADV</a> (University of Lille and INRA)<br/>
-Mohcen Benmounah, Jean-Fr&eacute;d&eacute;ric Berthelot, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (LIFL and Inria Lille)</p>
+            <br /><br />
+            
+            <div>
+                <a href="./abinitio/index.php"><span class="urlbox">Use miRkwood ab initio</span></a>
+                <a href="./smallRNAseq/index.php"><span class="urlbox">Use miRkwood small RNA-seq</span></a>
+            </div>
+            
+            <br /><br /><br />
 
-<h2>Contact</h2>
-<p><script type="text/javascript">
-<!--
-	    function escramble()
-	    {
-	    var a,b,c,d,e,f;
-	    a=  '<a href="';
-	    b=  'mai';
-	    c= 'mirkw';
-	    b+= 'lto:';
-	    d=  'ood@u';
-	    i= 'niv-l';
-	    j= 'ille1.fr';
-	    e=  '">';
-	    g=  '<';
-	    h=  '/a>';
-	    document.write(a+b+c+d+i+j+'?Subject=[miRkwood]'+e+c+d+i+j+g+h);
-	    }
-	    escramble();
+            <h2>Authors</h2>
+            <p>Sylvain Legrand (Evo-Eco-Paleo, UMR CNRS 8198 University of Lille)<br/>
+            Isabelle Guigon, Jean-Fr&eacute;d&eacute;ric Berthelot, Mohcen Benmounah, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (CRIStAL, UMR CNRS 9189 University of Lille,  and Inria Lille Nord Europe)</p>
 
-            //-->
-	    </script></p>
- </div>
-        </div><!-- bloc droit-->
-       <? include("./static/footer.txt") ?>
-    </body>
-    
+
+            <p>This project is funded by <a href="https://www.france-genomique.org/">France Genomique.</a></p>
+
+
+            <h2>Contact</h2>
+            <p><script type="text/javascript">
+                <!--
+                function escramble()
+                {
+                var a,b,c,d,e,f;
+                a=  '<a href="';
+                b=  'mai';
+                c= 'mirkw';
+                b+= 'lto:';
+                d=  'ood@u';
+                i= 'niv-l';
+                j= 'ille1.fr';
+                e=  '">';
+                g=  '<';
+                h=  '/a>';
+                document.write(a+b+c+d+i+j+'?Subject=[miRkwood]'+e+c+d+i+j+g+h);
+                }
+                escramble();
+
+                //-->
+            </script></p>
+        </div><!-- main-->
+    </div><!-- bloc droit-->
+    <? include("./static/footer.txt") ?>
+</body>
+
 </html>

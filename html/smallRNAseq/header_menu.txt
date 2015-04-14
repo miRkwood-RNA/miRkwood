@@ -1,0 +1,10 @@
+<div class="frametitle">
+ <h1>miRkwood</h1>
+   <div class="menu_central">
+     <a href="/mirkwood/">miRkwood</a>
+     <a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a>
+     <a href="/cgi-bin/mirkwood/web_scripts/BAMinterface.pl">web server</a>
+     <a href="/mirkwood/smallRNAseq/help.php">help</a>
+     <a href="/mirkwood/id.php">retrieve result with an ID</a>
+   </div>
+</div>
