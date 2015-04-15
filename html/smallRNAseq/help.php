@@ -261,6 +261,8 @@
             
             <p>The stem-loop structure of the miRNA precursor is also displayed with <a href="http://varna.lri.fr/">Varna.</a></p>
             
+            <img style='width:400px; display: block; margin: 0 auto;' src='../style/varna.png'' alt='Varna image' />
+            
             <p><b>Thermodynamics stability</b></p>
             
             <ul>
@@ -274,10 +276,11 @@
             
             <p>All alignments with miRBase are reported and gathered according to their positions. </p>
             
+            <img style='width:610px; display: block; margin: 0 auto;' src='../style/alignment.png'' alt='alignment' />
             
             <p>query is the user sequence, and miRBase designates the mature miRNA found in miRBase. It is possible to access the corresponding mirBase entry by clicking on the link under the alignment. The report also indicates whether the location is validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>.  Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
             
-                    
+            <img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png'' alt='hairpin with mature' />
             
             </div> <!-- main full -->
         
