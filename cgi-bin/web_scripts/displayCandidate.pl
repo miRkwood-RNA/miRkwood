@@ -52,7 +52,17 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkReadsCloud = "$export_link&type=reads";
     my $htmlReadsCloud = '';
     if ( $cfg->param('job.mode') ne 'fasta' ){
-        $htmlReadsCloud = "<li><b>Reads cloud : </b><a href='$linkReadsCloud'>download</a></li>";
+        my $nb_reads = 0;
+        foreach my $key (keys( %{$candidate->{'reads'}} )){
+            $nb_reads += $candidate->{'reads'}{$key};
+        }
+        $htmlReadsCloud = <<"END_TXT";
+        <h2>Reads</h2>
+        <ul>
+            <li><b>Number of reads:</b> $nb_reads</li>
+            <li><b>Reads cloud : </b><a href='$linkReadsCloud'>download</a>
+        </ul>    
+END_TXT
     }
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -127,9 +137,9 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
         <li>
           $alternatives_HTML
         </li>
-        $htmlReadsCloud
         </ul>
         $imgHTML
+        $htmlReadsCloud
         <h2>Thermodynamics stability</h2>
         <ul>
         <li>
