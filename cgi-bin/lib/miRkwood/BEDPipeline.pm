@@ -309,7 +309,7 @@ sub compute_candidates_per_chr {
         $sequence_identifier++;
         push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
 
-        miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)' );  # /!\ WARNING : comment this line for web pipeline
+        #~ miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)' );  # /!\ WARNING : comment this line for web pipeline
     }
     undef $hairpinBuilder;
 
