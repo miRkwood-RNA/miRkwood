@@ -19,7 +19,9 @@
                 
             <br />
             
-            <b>How to prepare my input files ?</b>
+            <b style='font-size: 150%;' >How to prepare my input files ?</b>
+            
+            <br /><br />
             
             <p>The input of miRkwood is a set of reads produced by deep sequencing of small RNAs and mapped to a reference genome. Typically, length of the reads should range between 16nt and 30nt. The user is required to upload a BED file that contains all positions of mapped sequence tags. This file can be obtained from the raw sequencing data by taking three easy steps on your computer. </p>
             
@@ -28,34 +30,42 @@
             
             <p>This can be performed with cutadapt, for example.</p>
             
-            <p class='code'>cutadapt -a AACCGGTT -o output.fastq input.fastq</p>
+            <pre class='example'>cutadapt -a AACCGGTT -o output.fastq input.fastq</pre>
             
             
             <h2 id='map'>Map the trimmed reads onto the reference genome</h2>
             
             <p>The goal of this step is to generate a BAM file that contains the alignments of the expressed reads with the reference genome.</p>
             
-            <p>We recommend to perform exact matching. For that, you can use Bowtie2 with the following parameters. Any other read mapper can also do the job.</p>
+            <p>We recommend to perform exact matching. For that, you can use <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie2</a> with the following parameters. Any other read mapper can also do the job.</p>
             
-            <p class='code'>bowtie  XXXX</p>
+            <pre class='example'>bowtie -v 0 -f --all --best --strata -S &lt;genome&gt; &lt;reads&gt;   </pre>
             
-            <p>The list of assemblies accepted by miRkwood is given in Section XXX. Should you work with any other organism or assembly, then you can upload part of the reference genome (see Section XXX).</p>
+            <p>Reads file must be in FASTA, FASTQ, or colorspace-fasta format. Genome file must be in Fasta format.</p>
+  
+            <p>The list of assemblies accepted by miRkwood is given in <a href="./help.php#reference">Section "Select an assembly"</a> on the help page. 
+<!--
+            Should you work with any other organism or assembly, then you can upload part of the reference genome (<a href="./help.php#reference">Section "Select an assembly"</a> on the help page).
+-->
+            </p>
             
             
             <h2 id='convert'>Convert the BAM file into a BED file</h2>
             
-            <p>For this step, you should use our custom script mirkwood_BAM2BED.pl (download the script).  mirkwood_BAM2BED.pl is a perl script (compatible with versions XXXX) dependent upon the installation of SAMtools. In practice, the BED file is up to 10 times smaller than the BAM file and up to XXX times smaller than the set of raw reads, while retaining all information needed to conduct the analysis. This allows to reduce significantly the bandwidth necessary to upload the data to miRkwood server. </p>
+            <p>For this step, you should use our custom script mirkwood-bam2bed.pl (<a href="../../cgi-bin/mirkwood/web_scripts/getScript.pl?file=mirkwood-bam2bed.pl">download the script</a>).  mirkwood-bam2bed.pl is a perl script dependent upon the installation of SAMtools. In practice, the BED file is up to 10 times smaller than the BAM file and up to XXX times smaller than the set of raw reads, while retaining all information needed to conduct the analysis. This allows to reduce significantly the bandwidth necessary to upload the data to miRkwood server. </p>
             
-            <p class='code'>mirkwood_BAM2BED.pl -bam /path/to/your/bam/file -out /output/directory/</p>
+            <pre class='example'>mirkwood-bam2bed.pl -bam /path/to/your/bam/file -out /output/directory/</pre>
             
             <br />
             
             <p>The generated BED file has the following syntax.</p>
             
-            <p class='code'>1    18092    18112    SRR051927.5475072    1    -</p>
-            <p class='code'>1    18094    18118    SRR051927.2544175    2    +</p>
-            <p class='code'>1    18096    18119    SRR051927.3033336    1    +</p>
-            <p class='code'>1    18100    18124    SRR051927.172198     9    +</p>
+            <pre class='example'>
+1    18092    18112    SRR051927.5475072    1    -
+1    18094    18118    SRR051927.2544175    2    +
+1    18096    18119    SRR051927.3033336    1    +
+1    18100    18124    SRR051927.172198     9    +
+</pre>
             
             <p>In this file, each line is a unique read. The fields are, from left to right:  name of the chromosome, starting position, ending position, read identifier, number of occurrences of the read in the data, strand. Positions follow the BED numbering convention: the first base of the chromosome is considered position 0 (0-based position) and the feature does not include the stop position. </p>
             
