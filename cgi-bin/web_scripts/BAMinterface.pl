@@ -26,7 +26,7 @@ my $page = <<"END_TXT";
             <div class="forms">
                 <label for='bedFile'><b>Upload your set of reads </b>&nbsp;</label>
                 <br /><br />
-                This must be a BED file created by our script <i>mirkwood-bam2bed.pl. [<a href="$help_page#input_form">?</a>]</i>
+                This must be a BED file created by our script <i>mirkwood-bam2bed.pl [<a href="$help_page#input_form">?</a>]</i>
                 <p><input type="file" name="bedFile" id="bedFile" /></p>
             </div> 
             
@@ -34,7 +34,7 @@ my $page = <<"END_TXT";
                 <b>Select a species </b>
                 <br /><br />
                 <label for="species">Select a genome in the list below [<a href="$help_page#reference">?</a>]</label><br />
-                <select name="species" id="species">
+                <p><select name="species" id="species">
                     <option value="" selected>--Choose assembly--</option>
                     <option value="Arabidopsis_lyrata">Arabidopsis lyrata (v1.0)</option>
                     <option value="Arabidopsis_thaliana">Arabidopsis thaliana (TAIR10)</option>
@@ -43,7 +43,7 @@ my $page = <<"END_TXT";
                     <option value="Lotus_japonicus">Lotus japonicus (Lj2.5)</option>
                     <option value="Oryza_sativa">Oryza sativa (MSU7)</option>
                     <option value="Solanum_lycopersicum">Solanum_lycopersicum (SL2.4)</option>
-                </select>  
+                </select>  </p>
                 <!-- <br /><br />
                 <label for='seqArea'>Or paste your reference sequence in FASTA format &nbsp;[<a href="$help_page">?</a>]</label>
                 <br /><br />
@@ -54,15 +54,11 @@ my $page = <<"END_TXT";
                 <label for='seqFile'>Or upload a file: </label><input type="file" name="seqFile" id="seqFile" />
                 <br />
                 <a id="area_clear" onclick="resetElementByID('seqFile');">Clear Fasta</a> -->
-                
-                <br /><br />
-               
-                
             </div>
             
             <div class="forms">
                     <p>
-                        <b>Parameters</b>: [<a href="$help_page#parameters">?</a>]
+                        <b>Parameters</b>
                     </p>
                     <div id='listParam'> 
                     <p>
