@@ -75,14 +75,6 @@ p.equation {
     font-family:monospace;
 }
 
-p.code {
-    margin-left:50px;
-    font-family:monospace;
-/*
-    font-weight:bold;
-*/
-}
-
 .example{
     text-align: justify;
     padding-top: 10px;
