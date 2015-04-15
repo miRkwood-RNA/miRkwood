@@ -63,7 +63,10 @@ function generateExample() {
 function verifyBEDForm()
 {	
     var b = !document.getElementById('bedFile').value;
-    if (b) alert ("You must provide a BED file.");     
+    if (b) {
+        alert ("You must provide a BED file.");
+        return false;
+    }
 
     var ref = 0;
     if ( document.getElementById('seqArea').value ) ref+=1;
