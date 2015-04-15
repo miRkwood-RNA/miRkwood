@@ -91,6 +91,32 @@ sub get_link_back_to_BAM_results {
     return ("./BAMresults.pl?run_id=$jobId");
 }
 
+=method get_link_back_to_BED_known_results
+
+Return the link back to the known results page
+for BED pipeline
+
+=cut
+
+sub get_link_back_to_BED_known_results {
+    my @args = @_;
+    my $jobId = shift @args;
+    return ("./BAMresults_for_mirnas.pl?jobID=$jobId&type=Known");
+}
+
+=method get_link_back_to_BED_new_results
+
+Return the link back to the new results page
+for BED pipeline
+
+=cut
+
+sub get_link_back_to_BED_new_results {
+    my @args = @_;
+    my $jobId = shift @args;
+    return ("./BAMresults_for_mirnas.pl?jobID=$jobId&type=New");
+}
+
 =method get_css_file
 
 Return the project CSS file
