@@ -81,7 +81,7 @@ END_TXT
 
     my $alignmentHTML;
 
-    if ( !$cfg->param('options.align') ) {
+    if ( !$cfg->param('options.align') or defined($candidate->{'precursor_name'}) ) {
         $alignmentHTML = qw{};
     }
     else {
