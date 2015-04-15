@@ -37,13 +37,13 @@ my $cgi = CGI->new();
 my $id_job = $cgi->param('jobID');    # get id job
 my $mirnas_type = $cgi->param('type');      # 'Known' or 'New'
 my $returnlink = miRkwood::WebTemplate::get_link_back_to_BAM_results($id_job);
-my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
+my $return_html = "<p><a class='returnlink' href='$returnlink'>Back to main results page</a></p>";
 
 
 ##### Create page
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
 my $html = '';
-my $HTML_additional = "<div class='forms'>";
+my $HTML_additional = '';
 my $page = '';
 
 my $mirnas_results = '';
@@ -73,8 +73,6 @@ if ( $valid ){
         $mirnas_results .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, $mirnas_type);
     }
 
-    $HTML_additional .= '</div>';
-
     if ( $nb_results != 0 ) {
 
         $page = <<"END_TXT";
@@ -88,7 +86,7 @@ if ( $valid ){
             $return_html
 
             <div id='new_mirnas'>
-                <p class='header-results' id='precursors_count'>
+                <p class='header-results' id='precursors_count' style='font-size: 150%;'>
                     <b>$mirnas_type miRNAs : $nb_results miRNA precursor(s) found</b>
                 </p> 
                             
