@@ -96,18 +96,18 @@
             
             <p>The first step of miRkwood is to locate signals into the set of mapped reads.  This is performed by scanning the set of reads and detecting peaks (see <a href="../method.php">miRkwood method</a> for more explanation on this step).</p>
             
-            <p><b>Remove multiply mapped reads:</b> All reads that are mapped to more than 5 loci on the reference sequence are discarded.  This allows to XXXX transposons. Default: checked.</p>
+            <p id='filter_multimapped'><b>Remove multiply mapped reads:</b> All reads that are mapped to more than 5 loci on the reference sequence are discarded.  This allows to XXXX transposons. Default: checked.</p>
             
-            <p><b>Filter out tRNA/rRNA:</b> When this option is checked, products from tRNA and rRNA degradation are filtered out from the input reads.  This task is performed based on the existing annotation provided in the GFF annotation file. All reads that intersect a tRNA or rRNA feature are removed. Default: checked.</p>
+            <p id='filter_tRNA_rRNA'><b>Filter out tRNA/rRNA:</b> When this option is checked, products from tRNA and rRNA degradation are filtered out from the input reads.  This task is performed based on the existing annotation provided in the GFF annotation file. All reads that intersect a tRNA or rRNA feature are removed. Default: checked.</p>
             
-            <p><b>Mask coding regions:</b> This option allows selecting reads that are aligned to non-coding sequences. The selection is performed with the GFF annotation file. All reads that intersect  a CDS feature are removed. Default: checked.</p>
+            <p id='mask_coding_regions'><b>Mask coding regions:</b> This option allows selecting reads that are aligned to non-coding sequences. The selection is performed with the GFF annotation file. All reads that intersect  a CDS feature are removed. Default: checked.</p>
             
             
             <h4 id='secondary_structure'>Parameters concerning the secondary structure of the hairpin precursor</h4>
             
             <p>After peak detection,  miRkwood aims at determining which sequences can fold into a MIR stem-loop structure (see <a href="../method.php">miRkwood method</a> for more explanation on this step). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins. </p>
             
-            <p><b>Select only sequences with MFEI &lt; -0.6:</b> MFEI is the minimal folding free energy index. It is calculated by the following equation: </p>
+            <p id='filter_mfei'><b>Select only sequences with MFEI &lt; -0.6:</b> MFEI is the minimal folding free energy index. It is calculated by the following equation: </p>
             
             <p class='equation'>MFEI = [MFE / sequence length x 100] / (G+C%)</p>
             
@@ -115,7 +115,7 @@
             
             <p id='thermodynamic_stability'><b>Compute thermodynamic stability:</b> The significance of the stability of the sequence can also be measured by comparison with other equivalent sequences. <a href="http://www.ncbi.nlm.nih.gov/pubmed/15217813">Bonnet <em>et al</em></a> have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.  We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </p>
             
-            <p><b>Flag conserved mature miRNAs:</b> This option permits to check if the predicted miRNA belongs to some known miRNA family.  For that, we compare the sequence of the precursor with the database of mature miRNAs of plant (<em>Viridiplantae</em>) deposited in <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> (Release 20). Alignments are performed with <a href="http://www.ebi.ac.uk/~guy/exonerate/">Exonerate</a>, which implements an exact model for pairwise alignment. We select alignments with at most three errors (mismatch, deletion or insertion) against the full-length mature miRNA and that occur in one of the two arms of the stem-loop. Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.  This location is then validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>, that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRbase <em>Viridiplantae</em> V20.</p>
+            <p id='flag_conserved_mirnas'><b>Flag conserved mature miRNAs:</b> This option permits to check if the predicted miRNA belongs to some known miRNA family.  For that, we compare the sequence of the precursor with the database of mature miRNAs of plant (<em>Viridiplantae</em>) deposited in <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> (Release 20). Alignments are performed with <a href="http://www.ebi.ac.uk/~guy/exonerate/">Exonerate</a>, which implements an exact model for pairwise alignment. We select alignments with at most three errors (mismatch, deletion or insertion) against the full-length mature miRNA and that occur in one of the two arms of the stem-loop. Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.  This location is then validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>, that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRbase <em>Viridiplantae</em> V20.</p>
 
 
             <h3 id='submission'>Submission</h3>

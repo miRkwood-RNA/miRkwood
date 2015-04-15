@@ -12,7 +12,7 @@ use miRkwood::WebTemplate;
 my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
 my @js  = (miRkwood::WebTemplate->get_js_file());
 
-my $help_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'help.php');
+my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
 
 my $page = <<"END_TXT";
 <div class="main">
@@ -24,19 +24,18 @@ my $page = <<"END_TXT";
             </div> 
             
             <div class="forms">
-                <label for='bedFile'><b>Enter your set of reads </b>&nbsp;[<a href="$help_page">?</a>]</label>
+                <label for='bedFile'><b>Upload your set of reads </b>&nbsp;</label>
                 <br /><br />
-                This must be a BED file created by our script <i>mirkwood-bam2bed.pl</i>.
+                This must be a BED file created by our script <i>mirkwood-bam2bed.pl. [<a href="$help_page#input_form">?</a>]</i>
                 <p><input type="file" name="bedFile" id="bedFile" /></p>
-                <a id="area_clear" onclick="resetElementByID('bedFile');">Clear BED</a>
             </div> 
             
             <div class="forms">
-                <b>Enter your reference sequence </b>
+                <b>Select a species </b>
                 <br /><br />
-                <label for="species">Select a genome in the list below: </label><br />
+                <label for="species">Select a genome in the list below [<a href="$help_page#reference">?</a>]</label><br />
                 <select name="species" id="species">
-                    <option value="" selected>--Choose species--</option>
+                    <option value="" selected>--Choose assembly--</option>
                     <option value="Arabidopsis_lyrata">Arabidopsis lyrata (v1.0)</option>
                     <option value="Arabidopsis_thaliana">Arabidopsis thaliana (TAIR10)</option>
                     <option value="Brassica_rapa">Brassica rapa (Brapa_1.1)</option>
@@ -57,47 +56,46 @@ my $page = <<"END_TXT";
                 <a id="area_clear" onclick="resetElementByID('seqFile');">Clear Fasta</a> -->
                 
                 <br /><br />
-                
-                <b>Parameters:</b>
-                <p>
-                    <input class="checkbox" type="checkbox" name='CDS' id ="CDS" onclick="showHideBlock()"/>
-                    &#160;<label for='CDS'>Mask coding regions</label>  [<a href="$help_page#mask-coding-regions">?</a>]
-                </p>
-                <div id="menuDb">
-                    <label class="choixDiv selectdb" for="db">Choose organism database:</label>
-                    <select class="db" name="db" id='db'>
-                        <option class="db" selected="selected">Arabidopsis_thaliana</option>
-                        <option class="db">Oryza_sativa</option>
-                        <option class="db">Medicago_truncatula</option> 
-                    </select>
-                </div>
-                <p>
-                    <input class="checkbox" type="checkbox" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
-                    &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
-                </p>                
+               
                 
             </div>
             
             <div class="forms">
-                <p>
-                    <b>Parameters</b>: Choose the annotation criteria for the miRNA precursors [<a href="$help_page#parameters">?</a>]
-                </p>
-                <div id='listParam'>  
+                    <p>
+                        <b>Parameters</b>: [<a href="$help_page#parameters">?</a>]
+                    </p>
+                    <div id='listParam'> 
+                    <p>
+                        <input class="checkbox" type="checkbox" checked="checked" name='CDS' id ="CDS" onclick="showHideBlock()"/>
+                        &#160;<label for='CDS'>Mask coding regions</label>  [<a href="$help_page#mask_coding_regions">?</a>]
+                    </p>
+                    <div id="menuDb">
+                        <label class="choixDiv selectdb" for="db">Choose organism database:</label>
+                        <select class="db" name="db" id='db'>
+                            <option class="db" selected="selected">Arabidopsis_thaliana</option>
+                            <option class="db">Oryza_sativa</option>
+                            <option class="db">Medicago_truncatula</option> 
+                        </select>
+                    </div>
+                    <p>
+                        <input class="checkbox" type="checkbox" checked="checked" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
+                        &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
+                    </p>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="filter_multimapped" id="filter_multimapped" value="filter_multimappedChecked" />
-                        &#160;<label for='filter_multimapped'>Filter out reads mapping at more than 5 positions</label>                        
+                        &#160;<label for='filter_multimapped'>Filter out reads mapping at more than 5 positions</label>   [<a href="$help_page#filter_multimapped">?</a>]                       
                     </p>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
-                        &#160;<label for='mfei'>Select only sequences with MFEI &lt; -0.6</label>
+                        &#160;<label for='mfei'>Select only sequences with MFEI &lt; -0.6</label>  [<a href="$help_page#filter_mfei">?</a>]
                     </p>
                     <p>
                         <input class="checkbox" type="checkbox" name="randfold" id="randfold" value="randfoldChecked" />
-                        &#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label>
+                        &#160;<label for='randfold'>Compute thermodynamic stability <i>(shuffled sequences)</i></label>  [<a href="$help_page#thermodynamic_stability">?</a>]
                     </p>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="align" id="align" value="alignChecked" />
-                        &#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label>
+                        &#160;<label for='align'>Flag conserved mature miRNAs <i>(alignment with miRBase + miRdup)</i></label>  [<a href="$help_page#flag_conserved_mirnas">?</a>]
                     </p>
                 </div>
             </div>
