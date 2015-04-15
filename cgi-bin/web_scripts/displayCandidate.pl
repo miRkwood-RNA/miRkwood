@@ -22,8 +22,6 @@ my @css = (File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'results.css'
 my @js  = (miRkwood::WebTemplate->get_js_file());
 
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
-my $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
-my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
 my $candidate;
 my $html_contents;
@@ -32,12 +30,26 @@ my $cfg_path = miRkwood::Paths->get_job_config_path($job);
 miRkwood->CONFIG_FILE($cfg_path);
 $candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);
 
+my $cfg = miRkwood->CONFIG();
+
+my $returnlink = '';
+if ( $cfg->param('job.mode') eq 'WebBAM' ){
+    if ( defined($candidate->{'precursor_name'}) ){
+        $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
+    }
+    else{
+        $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_new_results($jobId);
+    }    
+}
+else {
+    $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
+}
+my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
+
 if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
     $html_contents = 'No results for the given identifiers';
 }else{
-
-    my $cfg = miRkwood->CONFIG();
 
     my $image_url = $candidate->get_relative_image();
 
