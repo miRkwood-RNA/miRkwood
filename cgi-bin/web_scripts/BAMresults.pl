@@ -92,59 +92,59 @@ if ( $valid ){
         $HTML_additional .= "<div class='results_summary'><ul>";
         $HTML_additional .= '<h2>Options summary:</h2>';
         $HTML_additional .= '<br />';
-        $HTML_additional .= "<li><b>BED file:</b> $basename_bed</li>";
+        $HTML_additional .= "<li><em>BED file:</em> $basename_bed</li>";
 
         # Reference species
         if ( $cfg->param('job.plant') ){
-            $HTML_additional .= '<li><b>Reference species:</b> ' . $cfg->param('job.plant') . '</li>';
+            $HTML_additional .= '<li><em>Reference species:</em> ' . $cfg->param('job.plant') . '</li>';
         }
 
         # Align
         if ( $cfg->param('options.align') ){
-            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> Yes</li>';
+            $HTML_additional .= '<li><em>Flag conserved mature miRNAs:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Flag conserved mature miRNAs:</b> No</li>';
+            $HTML_additional .= '<li><em>Flag conserved mature miRNAs:</em> No</li>';
         }
 
         # MFEI
         if ( $cfg->param('options.mfei') ){
-            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> Yes</li>';
+            $HTML_additional .= '<li><em>Select only sequences with MFEI < -0.6:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Select only sequences with MFEI < -0.6:</b> No</li>';
+            $HTML_additional .= '<li><em>Select only sequences with MFEI < -0.6:</em> No</li>';
         }
 
         # Ranfold
         if ( $cfg->param('options.randfold') ){
-            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> Yes</li>';
+            $HTML_additional .= '<li><em>Compute thermodynamic stability:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Compute thermodynamic stability:</b> No</li>';
+            $HTML_additional .= '<li><em>Compute thermodynamic stability:</em> No</li>';
         }
 
         # CDS
         if ( $cfg->param('options.filter_CDS') ){
-            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> Yes</li>';
+            $HTML_additional .= '<li><em>Filter CoDing Sequences:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Filter CoDing Sequences:</b> No</li>';
+            $HTML_additional .= '<li><em>Filter CoDing Sequences:</em> No</li>';
         }
 
         # tRNA and rRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> Yes</li>';
+            $HTML_additional .= '<li><em>Filter tRNA and rRNA:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Filter tRNA and rRNA:</b> No</li>';
+            $HTML_additional .= '<li><em>Filter tRNA and rRNA:</em> No</li>';
         }
 
         # Multimapped reads
         if ( $cfg->param('options.filter_multimapped') ){
-            $HTML_additional .= '<li><b>Filter multimapped reads:</b> Yes</li>';
+            $HTML_additional .= '<li><em>Filter multimapped reads:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><b>Filter multimapped reads:</b> No</li>';
+            $HTML_additional .= '<li><em>Filter multimapped reads:</em> No</li>';
         }
 
         $HTML_additional .= '</ul></div>';
@@ -162,38 +162,38 @@ if ( $valid ){
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary:</h2>';
         $HTML_results .= '<br />';
-        $HTML_results .= "<li><b>Total number of reads:</b> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
+        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
 
         if ( $cfg->param('options.filter_CDS') ){
             ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
             if ( $nb_CDS_reads > 0 ){
-                $HTML_results .= "<li><b>CoDing Sequences:</b> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li><b>CoDing Sequences:</b> 0 reads</li>';
+                $HTML_results .= '<li><em>CoDing Sequences:</em> 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
             ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
             if ( $nb_other_reads > 0 ){
-                $HTML_results .= "<li><b>rRNA/tRNA:</b> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>rRNA/tRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li><b>rRNA/tRNA:</b> 0 reads</li>';
+                $HTML_results .= '<li><em>rRNA/tRNA:</em> 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_multimapped') ){
             ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
             if ( $nb_multi_reads > 0 ){
-                $HTML_results .= "<li><b>Frequent reads:</b> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>Frequent reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li><b>Frequent reads:</b> 0 reads</li>';
+                $HTML_results .= '<li><em>Frequent reads:</em> 0 reads</li>';
             }
         }
 
-        $HTML_results .= "<li><b>Known miRNAs:</b> $nb_known_results sequence(s) (<a href=$known_url>see results</a>)</li>";
-        $HTML_results .= "<li><b>Novel miRNAs:</b> $nb_new_results sequence(s) (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) (<a href=$known_url>see results</a>)</li>";
+        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) (<a href=$new_url>see results</a>)</li>";
         $HTML_results .= "</ul></div>";
 
     }
