@@ -180,7 +180,7 @@
                 <li><em>Stability of the miRNA:miRNA* duplex:</em> The location of the mature miRNA is validated by miRdup.</li>
             </ul>           
             
-            <p>Each criterion contributes equally to the overall ranking, and adds one star. Criteria on the number of reads, the presence of the miRNA:miRNA* duplex  and the precision of the precursor processing  are taken from miRBase 21, where they are used to select “high qulity” sequences (see <a href="http://nar.oxfordjournals.org/content/39/suppl_1/D152">http://nar.oxfordjournals.org/content/39/suppl_1/D152</a> and <a href="http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/">http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/</a>).</p>
+            <p>Each criterion contributes equally to the overall ranking, and adds one star. Criteria on the number of reads, the presence of the miRNA:miRNA* duplex  and the precision of the precursor processing  are taken from miRBase 21, where they are used to select "high quality" sequences (see <a href="http://nar.oxfordjournals.org/content/39/suppl_1/D152">http://nar.oxfordjournals.org/content/39/suppl_1/D152</a> and <a href="http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/">http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/</a>).</p>
             
             <p><b>Reads:</b> number of reads included in the locus</p>
             
@@ -226,11 +226,11 @@
                 <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
                 <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
                 <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. 
-                    <p class='code'>
-                    > Sample_1001-1085, stemloop structure <br />
-                    cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag<br />
-                    (((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))<br />
-                    </p>
+<pre class='example'>
+> Sample_1001-1085, stemloop structure
+cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
+(((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
+</pre>
                 
                 </li>
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
@@ -247,11 +247,11 @@
                 <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
                 <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
                 <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>. The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. 
-                    <p class='code'>
-                    > Sample_1001-1085, stemloop structure<br />
-                    cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag<br />
-                    (((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))<br />
-                    </p>
+<pre class='example'>
+> Sample_1001-1085, stemloop structure
+cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
+(((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
+</pre>
                 </li>
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
                 <li><b>Mapping profile:</b> Visual representation of all reads included in the locus.</li>
