@@ -1,5 +1,5 @@
 <div class="frametitle">
- <h1>miRkwood <em>ab initio</em></h1>
+ <h1><a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a></h1>
    <div class="menu_central">
      <a href="/mirkwood/">miRkwood</a>
      <a href="/mirkwood/smallRNAseq/index.php">miRkwood small RNA-seq</a>
