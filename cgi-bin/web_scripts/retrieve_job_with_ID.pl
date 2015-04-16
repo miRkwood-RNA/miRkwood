@@ -30,6 +30,7 @@ $jobId   = $html->param('jobId');
 $mail    = $html->param('mail');
 $nameJob = $html->param('nameJob');
 $nameJob =~ s/ /_/g; # replace spaces with '_' in name job
+$jobId   =~ s/\s//g; # delete possible spaces before or after the job ID
 
 my $page = '';
 my $html_text = '';
