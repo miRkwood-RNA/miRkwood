@@ -2,6 +2,7 @@ Locus  : 1:78898-79065
 Strand : -
 
 CGAUUAUCAUGAGGGUUAAGCUAUUUCAGUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAACAUGUUAUUGCCUCUGAUCACCAUUUAUUG
+((((....(((..(((((.((.((..((((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).)))).))..)).))...)))))..)))..))))
                                    <------miRBase------>                                                         <-----miRBase----->
                                                                                                                  <------miRBase------>
 ..................................*********************................................................................................................................. length=21 depth=229
