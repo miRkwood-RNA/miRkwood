@@ -9,29 +9,31 @@
     </head>
     <body>
         <div class="theme-border"></div>
-            <a href="/">
-                <div class="logo"></div>
-            </a>
-            <? include("../static/bioinfo_menu.txt") ?>
-            <div class="bloc_droit">
-                <? include("header_menu.txt") ?>
-                <div class="main">
+        <a href="/">
+            <div class="logo"></div>
+        </a>
+        <? include("../static/bioinfo_menu.txt") ?>
+        <div class="bloc_droit">
+            <? include("header_menu.txt") ?>
+            <div class="main">
 
-                    <br />
+                <br />
 
-                    <p>miRkwood small RNA-seq is a web application that allows to analyse small RNA deep sequencing data in plants. It takes as input a set of short expressed reads (from 15 to 35 nt) that have been previously mapped on a reference genome, and searches for all expressed microRNAs.</p>
+                <p>miRkwood small RNA-seq is a web application that allows to analyse small RNA deep sequencing data in plants. It takes as input a set of short expressed reads (from 15 to 35 nt) that have been previously mapped on a reference genome, and searches for all expressed microRNAs.</p>
 
-                    <ul>
-                        <li><a href='help.php'>read user manual</a></li>
-                        
-                        <li><a href='prepare_file.php'>how to prepare my files</a></li>
-                        
-                        <li><a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>use web server</a></li>
-                    </ul>
+                <ul>
+                    <li><a href='example.php'>quick start with an example</a></li>
+                                        
+                    <li><a href='help.php'>read user manual</a></li>
+                    
+                    <li><a href='BED_file.php'>how to prepare my files</a></li>
+                    
+                    <li><a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>use web server</a></li>
+                </ul>
 
-                </div><!-- main-->
-            </div><!-- bloc droit-->
-    <? include("../static/footer.txt") ?>
+            </div><!-- main-->
+        </div><!-- bloc droit-->
+        <? include("../static/footer.txt") ?>
     </body>
 
 </html>
