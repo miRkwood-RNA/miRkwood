@@ -1016,10 +1016,10 @@ sub delete_element_in_array {
 
     my ( @args ) = @_;
     my $element = shift @args;
-    my @oldArray = shift @args;
+    my $oldArray = shift @args;
     my @newArray;
 
-    foreach my $element_of_array ( @oldArray ){
+    foreach my $element_of_array ( @{$oldArray} ){
         if ( $element_of_array ne $element ){
             push @newArray, $element_of_array;
         }
