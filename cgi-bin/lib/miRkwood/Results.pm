@@ -172,8 +172,9 @@ sub convert_basic_to_pseudoXML {
 
     if ( $type eq 'Known' ){
         push @headers, 'precursor_name';
-        @optional_fields = miRkwood::Utils::delete_element_in_array( 'alignment', @optional_fields );
-        @optional_fields = miRkwood::Utils::delete_element_in_array( 'mfe', @optional_fields );
+        @optional_fields = miRkwood::Utils::delete_element_in_array( 'alignment', \@optional_fields );
+        @optional_fields = miRkwood::Utils::delete_element_in_array( 'mfe', \@optional_fields );
+        @optional_fields = miRkwood::Utils::delete_element_in_array( 'mfei', \@optional_fields );
     }
 
     push @headers, ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
