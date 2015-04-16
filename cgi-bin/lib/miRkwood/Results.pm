@@ -188,6 +188,12 @@ sub convert_basic_to_pseudoXML {
         if ( $header eq 'shuffles' && $contents == 1){
             $contents = q{};
         }
+        if ($header eq 'reads'){
+            $contents = 0;
+            foreach my $key (keys( %{$candidate->{'reads'}} )){
+                $contents += $candidate->{'reads'}{$key};
+            }
+        }
         $result .= " $header='$contents'";
     }
     $result .= '></Sequence>';
