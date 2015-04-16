@@ -124,6 +124,7 @@ sub print_reads_clouds {
     my $precursor_end   = $mirna->{'end_position'};
     my $chromosome      = $mirna->{'name'};
     my $reads           = $mirna->{'reads'};
+    my $structure       = $mirna->{'structure_stemloop'};
 
     if ( !defined($reads) or $reads eq {} ){
         debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
@@ -148,6 +149,7 @@ sub print_reads_clouds {
     print $OUT "Locus  : $chromosome:$precursor_start-$precursor_end\n";
     print $OUT "Strand : $strand\n";
     print $OUT "\n$reference\n";
+    print $OUT "$structure\n";
 
     ### Print miRBase tags
 
