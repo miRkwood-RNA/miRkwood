@@ -29,7 +29,7 @@
   
   
                 <div class="forms">
-                    <form method="post" action="/cgi-bin/mirkwood/web_scripts/wait.pl">
+                    <form method="post" action="/cgi-bin/mirkwood/web_scripts/retrieve_job_with_ID.pl">
                         <p>The ID remains valid 15 days after sequence submission.</p>
                         <p>
                             <label for='jobId'><b>Enter the ID:</b></label>
