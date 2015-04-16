@@ -4,7 +4,7 @@
         <link type='text/css' rel='stylesheet' href='../../Style/bioinfo.css' />
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
-        <script type='text/javascript' src='/js/miARN.js'></script>
+        <script type='text/javascript' src='../js/miARN.js'></script>
         <title>miRkwood - MicroRNA identification - Help</title>
     </head>
     <body>
@@ -67,7 +67,7 @@
             
             <h3 id='reads'>Enter the set of expressed sequence tags</h3>
             
-            <p>The input is a set of reads produced by deep sequencing of small RNAs and then mapped to a reference genome. For that, you should organize your data in a BED file. <a href="./prepare_file.php">See the detailed instructions.</a> </p>
+            <p>The input is a set of reads produced by deep sequencing of small RNAs and then mapped to a reference genome. For that, you should organize your data in a BED file. <a href="./BED_file.php">See the detailed instructions.</a> </p>
             
             
             <h3 id='reference'>Select an assembly</h3>
