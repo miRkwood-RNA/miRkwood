@@ -133,18 +133,18 @@ if ( $valid ){
 
         # tRNA and rRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            $HTML_additional .= '<li><em>Filter tRNA and rRNA:</em> Yes</li>';
+            $HTML_additional .= '<li><em>Filter tRNA/rRNA/snoRNA:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><em>Filter tRNA and rRNA:</em> No</li>';
+            $HTML_additional .= '<li><em>Filter tRNA/rRNA/snoRNA:</em> No</li>';
         }
 
         # Multimapped reads
         if ( $cfg->param('options.filter_multimapped') ){
-            $HTML_additional .= '<li><em>Filter multimapped reads:</em> Yes</li>';
+            $HTML_additional .= '<li><em>Filter multiply mapped reads:</em> Yes</li>';
         }
         else{
-            $HTML_additional .= '<li><em>Filter multimapped reads:</em> No</li>';
+            $HTML_additional .= '<li><em>Filter multiply mapped reads:</em> No</li>';
         }
 
         $HTML_additional .= '</ul></div>';
@@ -176,19 +176,19 @@ if ( $valid ){
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
             ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
             if ( $nb_other_reads > 0 ){
-                $HTML_results .= "<li><em>rRNA/tRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li><em>rRNA/tRNA:</em> 0 reads</li>';
+                $HTML_results .= '<li><em>tRNA/rRNA/snoRNA:</em> 0 reads</li>';
             }
         }
         if ( $cfg->param('options.filter_multimapped') ){
             ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
             if ( $nb_multi_reads > 0 ){
-                $HTML_results .= "<li><em>Frequent reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
             }
             else {
-                $HTML_results .= '<li><em>Frequent reads:</em> 0 reads</li>';
+                $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
             }
         }
 
