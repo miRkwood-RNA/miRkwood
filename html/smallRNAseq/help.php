@@ -17,7 +17,7 @@
             
             <div class="main-full">
 
-<br /> 
+<br /> <br />
 	      
             <p>This page is a user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>. This application allows to search for microRNAs in small RNA sequencing data in plants.</p>
             
@@ -29,7 +29,7 @@
                     <li><a href="#input_form"> Input form</a>
                         <ol>
                             <li><a href="#reads"> Upload your set of reads</a> </li>
-                            <li><a href="#reference"> Select a species</a></li>
+                            <li><a href="#reference"> Select an assembly</a></li>
                             <li><a href="#parameters"> Parameters</a></li>
                                 <ol>
                                     <li><a href="#reads_distribution"> Parameters for the processing of the read data</a></li>
@@ -136,12 +136,8 @@ finished. The email contains a link to access the results for 2 weeks.</p>
 <h3>Summary</h3> 
 <p>The result page has two main parts. The first one is simply a summary of your job parameters. The other one provides the detailed results.</p> 
                 
-Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
-                        The initial BED file contains 19756 reads, forming 4075 unique reads.
-                        <br> <br> 
-                    </li> 
-
-                    <li>
+<p><b>Total number of reads (unique reads):</b> This is the total number of reads in your initial file. The number of unique reads (obtained after merging identical reads) is indicated in parentheses. </p> 
+                    
  <p> <b>CoDing Sequences:</b> This is the number of reads that have been discarded by the option <i>Mask coding regions</i>.  You can list them by clicking on
                         the <i>download</i> link.</p>
                     
@@ -149,7 +145,7 @@ Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
                         the <i>download</i> link.
            </p>
 		    
-<p><b>Multiply mapped reads:</b> This is the number of reads that have been discarded by the option <i> Remove multiply mapped reads<i>.   You can list them by clicking on
+<p><b>Multiply mapped reads:</b> This is the number of reads that have been discarded by the option <i> Remove multiply mapped reads</i>.   You can list them by clicking on
                         the <i>download</i> link.</p>
                     
 		    <p><b>Known miRNAs:</b> This is the number of loci annotated as microRNA precursors
@@ -169,7 +165,7 @@ Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
             <p>Known miRNAs are miRNAs that are already present in the miRBase database (version 21). We consider that a known microRNA is found in the data as soon as there is at least one read  on the precursor sequence.</p>
 
 
-	<img style='width:600px; display: block; margin: 0 auto;'src='../style/results_knownmirna.png' alt='results table' />
+	<img style='width:660px; display: block; margin: 0 auto;'src='../style/results_knownmirna.png' alt='results table' />
 		    
             <p>The list of all known miRNAs found is displayed in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p> 
             
@@ -199,7 +195,7 @@ Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
 	    by a significant read coverage  and the presence of a stem-loop secondary structure.</p> 
 
 
-	<img style='width:600px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
+	<img style='width:660px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
 	    
             <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
             
@@ -267,15 +263,16 @@ Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
                 <li><b>Strand:</b> + (forward) or - (reverse).</li>
                 <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
                 <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
-                <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. 
+                <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots.
+		  </li>
+		</ul>
 <pre class='example'>
->  1:234006-234096, stem-loop structure
-GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
-((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
+>  1:234009-234092,-, stem-loop structure
+GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
+((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
 </pre>
                 
-                </li>
-		</ul>
+              
 
 		<p><b> Reads</b></p>
 
@@ -283,25 +280,26 @@ GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCA
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
                 <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
 
+		</li>
+            </ul>
+		
 <pre class='example'>
-Locus  : 1:234006-234096
+Locus  : 1:234009-234092
 Strand : -
 
-GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
-((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
-             <------miRBase------>                          <------miRBase------>
-....*********************.................................................................. length=21 depth=5
-...........*********************........................................................... length=21 depth=2
-............................................................*********************.......... length=21 depth=1
-................................................................*********************...... length=21 depth=16
+GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
+((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
+         <------miRBase------>                          <------miRBase------>
+*********************............................................................... length=21 depth=5
+.......*********************........................................................ length=21 depth=2
+........................................................*********************....... length=21 depth=1
+............................................................*********************... length=21 depth=16
 </pre>
 
 Each <tt>**********</tt> string is a unique read. Its length and its depth (its number of occurrences in the set of reads) are reported at the end of the dotted line.
 <tt><------miRBase------> indicates the positions of the miRNA referenced in miRBase.  
 		
 
-		</li>
-            </ul>
 
 	    
 	    
@@ -314,15 +312,15 @@ Each <tt>**********</tt> string is a unique read. Its length and its depth (its 
                 <li><b>Strand:</b> + (forward) or - (reverse).</li>
                 <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
                 <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
-                <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>. The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. 
+                <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>. The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. </li></ul>
 
 <pre class='example'>
->  1:234006-234096, stem-loop structure
-GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
-((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
+>  1:234009-234092,-, stem-loop structure
+GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
+((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
 </pre>
-</li>
 
+<ul> 
                 
                 <li><b>Optimal MFE secondary structure:</b> If the stem-loop structure is not the MFE structure, we also provide a link to download the MFE structure.</li>
                 <li><b>Alternative candidates (dot-bracket format):</b> This is the set of stem-loop sequences that overlap the current prediction. The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.</li>
@@ -340,16 +338,16 @@ GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCA
                 <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
 
 <pre class='example'>
-Locus  : 1:234006-234096
+Locus  : 1:234009-234092
 Strand : -
 
-GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
-((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
-             <------miRBase------>                          <------miRBase------>
-....*********************.................................................................. length=21 depth=5
-...........*********************........................................................... length=21 depth=2
-............................................................*********************.......... length=21 depth=1
-................................................................*********************...... length=21 depth=16
+GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
+((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
+         <------miRBase------>                          <------miRBase------>
+*********************............................................................... length=21 depth=5
+.......*********************........................................................ length=21 depth=2
+........................................................*********************....... length=21 depth=1
+............................................................*********************... length=21 depth=16
 </pre>
 
 Each <tt>**********</tt> string is a unique read. Its length and its depth (the number of occurrences of this read  in the total set of reads) are reported at the end of the dotted line.  Each <tt><------miRBase------> string indicates the existence of an alignmnent with a sequence from miRBase. More information on this alignment is provided in the sequel of the report, in Section <i>Conservation of the mature miRNA</i>.
