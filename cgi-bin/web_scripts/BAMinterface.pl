@@ -16,6 +16,7 @@ my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get
 
 my $page = <<"END_TXT";
 <div class="main">
+    <br />
     <form id="form" onsubmit="return verifyBEDForm();" method="post" action="./BAMpipeline.pl" enctype="multipart/form-data">
         <fieldset id="fieldset">
             <div class="forms">
@@ -31,9 +32,9 @@ my $page = <<"END_TXT";
             </div> 
             
             <div class="forms">
-                <b>Select a species </b>
+                <b>Select an assembly </b>
                 <br /><br />
-                <label for="species">Select a genome in the list below [<a href="$help_page#reference">?</a>]</label><br />
+                <label for="species">Select a reference genome in the list below [<a href="$help_page#reference">?</a>]</label><br />
                 <p><select name="species" id="species">
                     <option value="" selected>--Choose assembly--</option>
                     <option value="Arabidopsis_lyrata">Arabidopsis lyrata (v1.0)</option>
@@ -75,11 +76,11 @@ my $page = <<"END_TXT";
                     </div>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
-                        &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
+                        &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA/snoRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
                     </p>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="filter_multimapped" id="filter_multimapped" value="filter_multimappedChecked" />
-                        &#160;<label for='filter_multimapped'>Filter out reads mapping at more than 5 positions</label>   [<a href="$help_page#filter_multimapped">?</a>]                       
+                        &#160;<label for='filter_multimapped'>Remove multiply mapped reads ( &gt; 5 positions) </label>   [<a href="$help_page#filter_multimapped">?</a>]                       
                     </p>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name="mfei" id="mfei" value="mfeiChecked" />
