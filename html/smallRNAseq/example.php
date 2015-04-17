@@ -19,7 +19,7 @@
                 
                 <br /> <br />
         
-                <b font-size: 120%;' >Quick start</b>
+                <h1>Quick start</h1>
 
 	      <br />
 	      
@@ -113,17 +113,17 @@
 
 		<img style='width:600px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
 		
-		<pre class='example'>
-Locus  : 1:234006-234096
+<pre class='example'>
+Locus  : 1:234009-234092
 Strand : -
 
-GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
-((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
-             <------miRBase------>                          <------miRBase------>
-....*********************.................................................................. length=21 depth=5
-...........*********************........................................................... length=21 depth=2
-............................................................*********************.......... length=21 depth=1
-................................................................*********************...... length=21 depth=16
+GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
+((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
+         <------miRBase------>                          <------miRBase------>
+*********************............................................................... length=21 depth=5
+.......*********************........................................................ length=21 depth=2
+........................................................*********************....... length=21 depth=1
+............................................................*********************... length=21 depth=16
 </pre>
 
 		<img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png' alt='hairpin with mature' />		
