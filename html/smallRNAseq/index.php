@@ -31,6 +31,11 @@
                     <li><a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>use web server</a></li>
                 </ul>
 
+
+		<br />
+
+<img style='width:660px; display: block; margin: 0 auto;' src='../style/pipeline_smallrnaseq.jpg' alt='' />
+		
             </div><!-- main-->
         </div><!-- bloc droit-->
         <? include("../static/footer.txt") ?>
