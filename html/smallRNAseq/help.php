@@ -16,28 +16,29 @@
             <?php include("./header_menu.txt") ?>
             
             <div class="main-full">
-            
-            <p>This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq website</a>. This web application allows to search for microRNAs in small RNA sequencing data in plants.</p>
-            
-            <p>The method implemented in miRkwood is described in full detail in this other page.</p>
 
+<br /> 
+	      
+            <p>This page is a user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>. This application allows to search for microRNAs in small RNA sequencing data in plants.</p>
+            
+            
             <br /> 
             
             <div class="table-of-contents">
                 <ol>
                     <li><a href="#input_form"> Input form</a>
                         <ol>
-                            <li><a href="#reads"> Enter the set of expressed reads</a> </li>
-                            <li><a href="#reference"> Enter the reference sequence</a></li>
+                            <li><a href="#reads"> Upload your set of reads</a> </li>
+                            <li><a href="#reference"> Select a species</a></li>
                             <li><a href="#parameters"> Parameters</a></li>
                                 <ol>
-                                    <li><a href="#reads_distribution"> Parameters concerning the distribution of reads</a></li>
-                                    <li><a href="#secondary_structure"> Parameters concerning the secondary structure of the hairpin precursor</a></li>
+                                    <li><a href="#reads_distribution"> Parameters for the processing of the read data</a></li>
+                                    <li><a href="#secondary_structure"> Parameters for the secondary structure of the hairpin precursor</a></li>
                                 </ol>
                             <li><a href="#submission"> Submit the job</a></li> 
                         </ol>
                     </li>
-                    <li><a href="#results_page"> Result page</a>
+                    <li><a href="#results_page"> Results page</a>
                         <ol>
                             <li><a href="#known_mirnas"> Known miRNAs</a></li>
                             <li><a href="#novel_mirnas"> Novel miRNAs</a></li>
@@ -46,8 +47,8 @@
                     <li><a href="#export"> Export</a>
                         <ol>
                             <li><a href="#gff"> GFF format</a></li>
-                            <li><a href="#fasta"> FASTA</a></li>
-                            <li><a href="#dot_bracket"> dot-bracket format<br/>(plain sequence + secondary structure) </a></li>
+                            <li><a href="#fasta"> FASTA format</a></li>
+                            <li><a href="#dot_bracket"> Dot-bracket format</a></li>
                             <li><a href="#csv"> Tabular format (CSV) </a></li>
                             <li><a href="#odf"> Full report in document format (ODF)</a></li>
                             
@@ -55,8 +56,8 @@
                     </li> 
                     <li><a href="#html_report"> HTML report</a>
                         <ol>
-                            <li><a href="#html_known_mirnas"> HTML Report for known miRNAs</a></li>
-                            <li><a href="#html_novel_mirnas"> HTML Report for novel miRNAs</a></li>
+                            <li><a href="#html_known_mirnas"> HTML report for known miRNAs</a></li>
+                            <li><a href="#html_novel_mirnas"> HTML report for novel miRNAs</a></li>
                         </ol>
                     </li>
                 </ol>
@@ -65,14 +66,14 @@
             
             <h2 id='input_form'>Input form</h2>
             
-            <h3 id='reads'>Enter the set of expressed sequence tags</h3>
+            <h3 id='reads'>Upload your set of reads</h3>
             
-            <p>The input is a set of reads produced by deep sequencing of small RNAs and then mapped to a reference genome. For that, you should organize your data in a BED file. <a href="./BED_file.php">See the detailed instructions.</a> </p>
+            <p>The input is a set of reads produced by deep sequencing of small RNAs and then mapped to a reference genome. For that, you should organize your data in a BED file. See the <a href="./BED_file.php">detailed instructions</a> on how to build this file.</p>
             
             
             <h3 id='reference'>Select an assembly</h3>
             
-            <p>miRkwood proposes 7 assemblies, which are listed below.</p>
+            <p>miRkwood currently proposes 7 assemblies, which are listed below.</p>
             
             <ul>
                 <li><em>Arabidopsis lyrata</em> - v1.0</li>
@@ -84,7 +85,7 @@
                 <li><em>Solanum lycopersicum</em> - SL2.4</li>
             </ul>
             
-            <p>Each assembly is supplemented by two GFF format files. The first one contains the genome coordinates of  annotated mRNAs, CDS, tRNAs and rRNAs,  and is used to apply masking options described in <a href="#parameters">Section 1.3 - Parameters</a>.  The source of this file is indicated above, case by case. The other GFF file compiles all miRNAs and pre-miRNAs available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
+            <p>Each assembly is supplemented by two GFF format files. The first one contains the genome coordinates of  annotated mRNAs, CDS, tRNAs, rRNAs and snoRNAs,  and is used to apply masking options described in <a href="#parameters">Section 1.3 - Parameters</a>.  The source of this file is indicated above, case by case. The other GFF file compiles all miRNAs and pre-miRNAs available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
             
             
             <h3 id='parameters'>Parameters</h3>
@@ -92,30 +93,32 @@
             <p>miRkwood comes with a series of options, that allow to customize the search and enhance the results. These options can be divided in  two main types: parameters concerning the processing of the sequence reads and parameters concerning the secondary structure of the miRNA precursor. Note that they only apply  to novel miRNAs. For known miRNAs, the user can rely on the additional information delivered by miRBase and make up his/her own mind.</p>
             
             
-            <h4 id='reads_distribution'>Parameters concerning the distribution of reads</h4>
+            <h4 id='reads_distribution'>Parameters for the processing of the read data</h4>
             
-            <p>The first step of miRkwood is to locate signals into the set of mapped reads.  This is performed by scanning the set of reads and detecting peaks (see <a href="../method.php">miRkwood method</a> for more explanation on this step).</p>
+            <p>The first step of miRkwood is to locate signals into the set of mapped reads.  This is performed by scanning the set of reads and detecting statistically significant peaks. To this end, it is advised to filter out the data beforehand. </p>
+
+
+	    
+            <p id='filter_multimapped'><b>Remove multiply mapped reads:</b> All reads that are mapped to more than 5 loci on the reference sequence are discarded.  This allows to avoid spurious predictions due to transposons. Default: checked.</p>
             
-            <p id='filter_multimapped'><b>Remove multiply mapped reads:</b> All reads that are mapped to more than 5 loci on the reference sequence are discarded.  This allows to XXXX transposons. Default: checked.</p>
-            
-            <p id='filter_tRNA_rRNA'><b>Filter out tRNA/rRNA:</b> When this option is checked, products from tRNA and rRNA degradation are filtered out from the input reads.  This task is performed based on the existing annotation provided in the GFF annotation file. All reads that intersect a tRNA or rRNA feature are removed. Default: checked.</p>
+            <p id='filter_tRNA_rRNA'><b>Filter out tRNA/rRNA/snoRNA:</b> When this option is checked, products from tRNA, rRNA and snoRNA degradation are filtered out from the input reads.  This task is performed based on the existing annotation provided in the GFF annotation file. All reads that intersect a tRNA, rRNA, or snoRNA feature are removed. Default: checked.</p>
             
             <p id='mask_coding_regions'><b>Mask coding regions:</b> This option allows selecting reads that are aligned to non-coding sequences. The selection is performed with the GFF annotation file. All reads that intersect  a CDS feature are removed. Default: checked.</p>
             
             
-            <h4 id='secondary_structure'>Parameters concerning the secondary structure of the hairpin precursor</h4>
+            <h4 id='secondary_structure'>Parameters for the secondary structure of the hairpin precursor</h4>
             
-            <p>After peak detection,  miRkwood aims at determining which sequences can fold into a MIR stem-loop structure (see <a href="../method.php">miRkwood method</a> for more explanation on this step). This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins. </p>
+            <p>After peak detection,  miRkwood aims at determining which sequences can fold into a MIR stem-loop structure. This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins. </p>
             
-            <p id='filter_mfei'><b>Select only sequences with MFEI &lt; -0.6:</b> MFEI is the minimal folding free energy index. It is calculated by the following equation: </p>
+            <p id='filter_mfei'><b>Select only sequences with MFEI &lt; -0.6:</b> MFEI is the minimum folding free energy index. It is calculated by the following equation: </p>
             
             <p class='equation'>MFEI = [MFE / sequence length x 100] / (G+C%)</p>
             
-            <p>where MFE (minimal free energy) denotes the negative folding free energies of a secondary structure, and is calculated using the Matthews-Turner nearest neighbor model implemented in RNAeval. When checked, this option removes all candidate pre-miRNAs with an MFEI greater than or equal to -0.6.  Indeed, more than 96% of miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI (see <a href="../method.php">miRkwood method</a> for more details). Default: checked.</p>
+            <p>where MFE (minimum free energy) denotes the negative folding free energies of a secondary structure, and is calculated using the Matthews-Turner nearest neighbor model implemented in RNAeval. When checked, this option removes all candidate pre-miRNAs with an MFEI greater than or equal to -0.6.  Indeed, more than 96% of miRBase precursors have an MFEI smaller than -0.6, whereas pseudo-hairpins show significantly larger values of MFEI. Default: checked.</p>
             
             <p id='thermodynamic_stability'><b>Compute thermodynamic stability:</b> The significance of the stability of the sequence can also be measured by comparison with other equivalent sequences. <a href="http://www.ncbi.nlm.nih.gov/pubmed/15217813">Bonnet <em>et al</em></a> have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.  We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </p>
             
-            <p id='flag_conserved_mirnas'><b>Flag conserved mature miRNAs:</b> This option permits to check if the predicted miRNA belongs to some known miRNA family.  For that, we compare the sequence of the precursor with the database of mature miRNAs of plant (<em>Viridiplantae</em>) deposited in <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> (Release 20). Alignments are performed with <a href="http://www.ebi.ac.uk/~guy/exonerate/">Exonerate</a>, which implements an exact model for pairwise alignment. We select alignments with at most three errors (mismatch, deletion or insertion) against the full-length mature miRNA and that occur in one of the two arms of the stem-loop. Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.  This location is then validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>, that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRbase <em>Viridiplantae</em> V20.</p>
+            <p id='flag_conserved_mirnas'><b>Flag conserved mature miRNAs:</b> This option permits to check if the predicted miRNA belongs to some known miRNA family.  For that, we compare the sequence of the precursor with the database of mature miRNAs of plant (<em>Viridiplantae</em>) deposited in <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> (Release 20). We select alignments with at most three errors (mismatch, deletion or insertion) against the full-length mature miRNA and that occur in one of the two arms of the stem-loop. Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.  This location is then validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>, that assesses the stability of the miRNA:miRNA* duplex. Here, it was trained on miRbase <em>Viridiplantae</em> V20.</p>
 
 
             <h3 id='submission'>Submission</h3>
@@ -124,56 +127,85 @@
 
             <p><b>Job title.</b> It's possible to identify the tool result by giving it a name. </p>
 
-            <p><b>Email Address.</b> You can enter your email address to be notified when the job is finished. The email contains a link to access the results for 2 weeks.</p>
+            <p><b>Email Address.</b> You can enter your email address to be notified when the job is
+finished. The email contains a link to access the results for 2 weeks.</p>
             
             
-            <h2 id='results_page'>Result page</h2>
-            
-            <p>The page starts with a heading that summarizes the main results of the computation. Full results for known miRNAs (<a href="#known_mirnas">section 2.1</a>) and novel miRNAs (<a href="#new_mirnas">section 2.2</a>) are displayed in two new pages. </p>
-            
-            
-            <h3 id="known_mirnas">Known miRNAs</h3>
+<h2 id='results_page'>Results page</h2>
+
+<h3>Summary</h3> 
+<p>The result page has two main parts. The first one is simply a summary of your job parameters. The other one provides the detailed results.</p> 
+                
+Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
+                        The initial BED file contains 19756 reads, forming 4075 unique reads.
+                        <br> <br> 
+                    </li> 
+
+                    <li>
+ <p> <b>CoDing Sequences:</b> This is the number of reads that have been discarded by the option <i>Mask coding regions</i>.  You can list them by clicking on
+                        the <i>download</i> link.</p>
+                    
+<p><b>rRNA/tRNA/snoRNA:</b> This is the number of reads that have been discarded by the option <i>Filter out tRNA/rRNA/snoRNA</i>. You can list them by clicking on
+                        the <i>download</i> link.
+           </p>
+		    
+<p><b>Multiply mapped reads:</b> This is the number of reads that have been discarded by the option <i> Remove multiply mapped reads<i>.   You can list them by clicking on
+                        the <i>download</i> link.</p>
+                    
+		    <p><b>Known miRNAs:</b> This is the number of loci annotated as microRNA precursors
+		    in miRBase that intersect with reads from the BED file.    
+		    You can display detailed results by clicking on the link <i>see results</i>.
+		    See <a href="#known_mirna">Section 2.2</a>.
+		    </p>
+
+                    <p><b>Novel miRNAs:</b> This is the number of miRNAs found by  miRkwood that have not
+		    been previously  reported in miRbase. 
+		    You can display detailed results by clicking on the link <i>see results</i>.
+		    See <a href="#novel_mirna">Section 2.2</a>.</p>
+
+                
+           <h3 id="known_mirnas">Known miRNAs</h3>
             
             <p>Known miRNAs are miRNAs that are already present in the miRBase database (version 21). We consider that a known microRNA is found in the data as soon as there is at least one read  on the precursor sequence.</p>
             
-            <p>The list of all known miRNAs found is displayed in a two-way table.</p>
+            <p>The list of all known miRNAs found is displayed in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p> 
             
-            <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p> 
+            <p><b>Name:</b> miRBase identifier.</p>
             
-            <p><b>Name:</b> miRBase identifier</p>
+            <p><b>Position:</b> Start and end positions of the pre-miRNA, as documented in miRBase.</p>
             
-            <p><b>Position:</b> Start and end positions of the pre-miRNA, as provided in miRBase</p>
+            <p><b>+/- :</b> Strand, forward (+) or reverse (-).</p>
             
-            <p><b>+/- :</b> Strand, forward or reverse complement.</p>
-            
-            <p><b>Quality:</b> This score measures the consistency between the distribution of reads along the locus and the annotation provided in miRbase. It ranges between 0 and 2 stars, and  is calculated as follows: </p>
+            <p><b>Quality:</b> This score measures the consistency between the distribution of reads along the locus and the annotation provided in miRbase. It ranges between 0 and 2 stars, and  is calculated as follows. </p>
             
             <ul>
                 <li>the locus contains more than 10 reads: add one star.</li>
                 <li>more than half of the reads intersect either with the miRNA or the miRNA*: add one star. </li>
             </ul>
 
-            <p><b>Reads:</b> number of reads included in the locus.</p>
+            <p><b>Reads:</b> Number of reads included in the locus.</p>
                         
             <p><b>2D structure:</b> You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href="http://varna.lri.fr/">Varna.</a></p>
                         
                         
             <h3 id="novel_mirnas">Novel miRNAs</h3> 
             
-            <p>Novel miRNAs are miRNAS that are not reported in miRBase.</p> 
+            <p>Novel miRNAs are miRNAS that are not reported in miRBase.  The prediction is supported both
+	    by a significant read coverage  and the presence of a stem-loop secondary structure.</p> 
             
-            <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition) You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
+            <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
             
             <p><b>Name:</b> Name of the original sequence, as specified in the heading of the FASTA format.</p>
             
             <p><b>Position:</b> Start and end positions of the putative pre-miRNA in the original sequence in 1 based notation (consistently to the GFF format)</p>
             
-            <p><b>+/- :</b> Strand, forward or reverse complement. </p>
+            <p><b>+/- :</b> Strand, forward (+) or reverse (-). </p>
             
             <p><b>Quality:</b> It is a combination of all other criteria described afterwards, and allows to rank the predictions according to the significance, from zero- to five- stars. It is calculated as follows.</p>
             
              <ul>
-                <li><em>Thermodynamic stability of the hairpin precursor: MFEI &lt; -0.8.</em>  This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins (see XXX).</li>
+                <li><em>Thermodynamic stability of the hairpin precursor: MFEI &lt; -0.8.</em>  This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins.</li>
+		
                 <li><em>Number of reads:</em> The  sequence has either at least 10 reads mapping to each arm, or  at least 5 reads mapping to each arm *and* at least 100 reads mapping in total. </li>
                 <li><em>Presence of the miRNA:miRNA* duplex:</em> The most abundant reads from each arm of the precursor pair in the mature microRNA duplex with 0-4 nt overhang at their 3' ends.</li>
                 <li><em>Precision of the precursor processing:</em>  At least 50% of reads mapping to each arm of the hairpin precursor have the same 5' end.</li>
@@ -182,9 +214,9 @@
             
             <p>Each criterion contributes equally to the overall ranking, and adds one star. Criteria on the number of reads, the presence of the miRNA:miRNA* duplex  and the precision of the precursor processing  are taken from miRBase 21, where they are used to select "high quality" sequences (see <a href="http://nar.oxfordjournals.org/content/39/suppl_1/D152">http://nar.oxfordjournals.org/content/39/suppl_1/D152</a> and <a href="http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/">http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/</a>).</p>
             
-            <p><b>Reads:</b> number of reads included in the locus</p>
+            <p><b>Reads:</b> Number of reads included in the locus</p>
             
-            <p><b>MFE:</b> value of the minimal free energy of the secondary structure (computed with <a href="http://www.tbi.univie.ac.at/RNA/RNAeval.html">RNAeval</a>).</p>
+            <p><b>MFE:</b> Value of the minimum free energy of the secondary structure (computed with <a href="http://www.tbi.univie.ac.at/RNA/RNAeval.html">RNAeval</a>).</p>
             
             <p><b>MFEI:</b> value of the MFEI, as defined <a href="">here.</a></p>
             
@@ -211,13 +243,13 @@
             <p id='odf'><b>ODF:</b> This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. This document format is compatible with Word or OpenOffice. </p>    
                         
 
-            <h2 id='html_export'>HTML Export </h2>
+            <h2 id='html_export'>HTML report </h2>
             
             
             <p>The HTML report contains all information related to a given predicted pre-miRNA.</p>
             
             
-            <h3 id='html_known_mirnas'>HTML Report for known miRNAs</h3>
+            <h3 id='html_known_mirnas'>HTML report for known miRNAs</h3>
             
             <ul>
                 <li><b>Name:</b> miRBase identifier, and link to access the miRBase entry.</li>
@@ -227,18 +259,44 @@
                 <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
                 <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.  The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. 
 <pre class='example'>
-> Sample_1001-1085, stemloop structure
-cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
-(((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
+>  1:234006-234096, stem-loop structure
+GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
+((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
 </pre>
                 
                 </li>
+		</ul>
+
+		<p><b> Reads</b></p>
+
+		<ul> 
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
-                <li><b>Mapping profile:</b> Visual representation of all reads included in the locus.</li>
+                <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
+
+<pre class='example'>
+Locus  : 1:234006-234096
+Strand : -
+
+GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
+((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
+             <------miRBase------>                           <------miRBase------>
+....*********************................................................................... length=21 depth=5
+...........*********************............................................................ length=21 depth=2
+.............................................................*********************.......... length=21 depth=1
+.................................................................*********************...... length=21 depth=16
+</pre>
+
+Each <tt>**********</tt> string is a unique read. Its length and its depth (its number of occurrences in the set of reads) are reported at the end of the dotted line.
+<tt><------miRBase------> indicates the positions of the miRNA referenced in miRBase.  
+		
+
+		</li>
             </ul>
+
+	    
+	    
             
-            
-            <h3 id='html_novel_mirnas'>HTML Report for novel miRNAs</h3>
+            <h3 id='html_novel_mirnas'>HTML report for novel miRNAs</h3>
             
             <ul>
                 <li><b>Name:</b> miRBase identifier, and link to access the miRBase entry.</li>
@@ -247,14 +305,15 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
                 <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
                 <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
                 <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>. The first line contains a FASTA-like header. The second line contains the nucleic acid sequence. The last line contains the set of associated pairings encoded by brackets and dots. A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')' at position <em>j</em>. Unpaired bases are represented by dots. 
+
 <pre class='example'>
-> Sample_1001-1085, stemloop structure
-cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggguacag
-(((...((((.((((((((........(((.((((((((.......)))))))....).)))........)))))))))))))))
+>  1:234006-234096, stem-loop structure
+GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
+((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
 </pre>
-                </li>
-                <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
-                <li><b>Mapping profile:</b> Visual representation of all reads included in the locus.</li>
+</li>
+
+                
                 <li><b>Optimal MFE secondary structure:</b> If the stem-loop structure is not the MFE structure, we also provide a link to download the MFE structure.</li>
                 <li><b>Alternative candidates (dot-bracket format):</b> This is the set of stem-loop sequences that overlap the current prediction. The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.</li>
             </ul>
@@ -262,7 +321,31 @@ cugagauacugccauagacgacuagccaucccucuggcucuuagauagccggauacagugauuuugaaagguuugugggg
             <p>The stem-loop structure of the miRNA precursor is also displayed with <a href="http://varna.lri.fr/">Varna.</a></p>
             
             <img style='width:400px; display: block; margin: 0 auto;' src='../style/varna.png'' alt='Varna image' />
-            
+
+
+		<p><b> Reads</b></p>
+
+		<ul> 
+                <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
+                <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
+
+<pre class='example'>
+Locus  : 1:234006-234096
+Strand : -
+
+GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
+((..((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).))..))
+             <------miRBase------>                           <------miRBase------>
+....*********************................................................................... length=21 depth=5
+...........*********************............................................................ length=21 depth=2
+.............................................................*********************.......... length=21 depth=1
+.................................................................*********************...... length=21 depth=16
+</pre>
+
+Each <tt>**********</tt> string is a unique read. Its length and its depth (its number of occurrences in the set of reads) are reported at the end of the dotted line.
+Each <tt><------miRBase------> string indicates the existence of an alignmnent with a sequence from  miRBase. More information on this alignment is provided in the sequel of the report, in Section <i>Conservation of the mature miRNA</i>. 
+
+	    
             <p><b>Thermodynamics stability</b></p>
             
             <ul>
