@@ -24,7 +24,7 @@
 <h1> Where does the name come from ?</h1>
 
 
-	<img style='width:600px; display: block; margin: 0 auto;'src='/style/mirkwood.jpg' alt='mirkwood forest' />
+	<img style='width:600px; display: block; margin: 0 auto;'src='/style/forest.jpg' alt='mirkwood forest' />
 
 <p>
 The term Mirkwood is taken from the germanic mythology (Myrkvior, meaning "mirky wood, dark wood") and is used  for two distinct fictional forests on the continent of Middle-earth in Tolkien's legendarium.
