@@ -165,6 +165,7 @@ my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail
 my $waiting_url = miRkwood::WebTemplate::get_cgi_url('wait.pl') . $arguments;
 
 print $cgi->redirect( $waiting_url );
+print "Location: $waiting_url \n\n";
 
 
 ##### Create config file
