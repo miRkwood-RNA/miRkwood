@@ -17,6 +17,8 @@
         <? include("./static/header_menu.txt") ?>
         <div class="main">
 
+<br />
+	  
             <p>miRkwood is a web application that allows for the fast and easy identification of microRNAs. It is specifically designed for plant microRNAs. It offers an user-friendly interface to navigate in the data, as well as many export options to allow the user to conduct further analyses on a local computer.</p>
 
             <p>miRkwood comes in two versions: </p>
@@ -29,20 +31,28 @@
             </ul>
 
             <br /><br />
-            
+
+	    <center>
             <div>
-                <a href="./abinitio/index.php"><span class="urlbox">Use miRkwood ab initio</span></a>
+                <a href="./abinitio/index.php"><span class="urlbox">Use miRkwood <i>ab initio</i></span></a>
                 <a href="./smallRNAseq/index.php"><span class="urlbox">Use miRkwood small RNA-seq</span></a>
             </div>
-            
+            </center>
             <br /><br /><br />
 
-            <h2>Authors</h2>
+	    <h2> Where does the name come from ? </h2> 
+
+	    <ul>
+	      <li> <a href="name.php">visit Tolkien's legendarium</a></li> 
+           </ul>
+	    
+	    
+            <h2> Authors</h2>
             <p>Sylvain Legrand (Evo-Eco-Paleo, UMR CNRS 8198 University of Lille)<br/>
             Isabelle Guigon, Jean-Fr&eacute;d&eacute;ric Berthelot, Mohcen Benmounah, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (CRIStAL, UMR CNRS 9189 University of Lille,  and Inria Lille Nord Europe)</p>
 
 
-            <p>This project is funded by <a href="https://www.france-genomique.org/">France Genomique.</a></p>
+          
 
 
             <h2>Contact</h2>
@@ -67,6 +77,9 @@
 
                 //-->
             </script></p>
+
+	    <br />
+	     <p><b>Chromosome:</b> Number of the chromosome.</p>
         </div><!-- main-->
     </div><!-- bloc droit-->
     <? include("./static/footer.txt") ?>
