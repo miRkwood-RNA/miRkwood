@@ -79,7 +79,7 @@
             </script></p>
 
 	    <br />
-	     <p><b>Chromosome:</b> Number of the chromosome.</p>
+        <p>This project is funded by <a href="https://www.france-genomique.org/">France Genomique.</a></p>
         </div><!-- main-->
     </div><!-- bloc droit-->
     <? include("./static/footer.txt") ?>
