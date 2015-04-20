@@ -88,6 +88,15 @@ p.title {
     padding-left: 15px;
     padding-right: 15px;
     margin: 2px 30px 2px 40px;
+}
+
+.code {
+    text-align: justify;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 2px 30px 2px 40px;
     background-color: #EEE;
 }
 
@@ -151,6 +160,3 @@ dd {
  padding-bottom: 6px;
 }
 
-span.code {
-    margin: 100px;
-}

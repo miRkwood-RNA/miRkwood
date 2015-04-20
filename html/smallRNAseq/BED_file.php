@@ -26,7 +26,7 @@
                 
                 <p>This can be performed with cutadapt, for example.</p>
                 
-                <pre class='example'>cutadapt -a AACCGGTT -o output.fastq input.fastq</pre>
+                <pre class='code'>cutadapt -a AACCGGTT -o output.fastq input.fastq</pre>
                 
                 
                 <h2 id='map'>Map the trimmed reads onto the reference genome</h2>
@@ -35,7 +35,7 @@
                 
                 <p>We recommend to perform exact matching. For that, you can use <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie2</a> with the following parameters. Any other read mapper can also do the job.</p>
                 
-                <pre class='example'>bowtie -v 0 -f --all --best --strata -S &lt;genome&gt; &lt;reads&gt;   </pre>
+                <pre class='code'>bowtie -v 0 -f --all --best --strata -S &lt;genome&gt; &lt;reads&gt;   </pre>
                 
                 <p>Reads file must be in FASTA, FASTQ, or colorspace-fasta format. Genome file must be in Fasta format.</p>
       
@@ -50,7 +50,7 @@
                 
                 <p>For this step, you should use our custom script mirkwood-bam2bed.pl (<a href="../../cgi-bin/mirkwood/web_scripts/getScript.pl?file=mirkwood-bam2bed.pl">download the script</a>).  mirkwood-bam2bed.pl is a perl script dependent upon the installation of SAMtools. In practice, the BED file is up to 10 times smaller than the BAM file and up to XXX times smaller than the set of raw reads, while retaining all information needed to conduct the analysis. This allows to reduce significantly the bandwidth necessary to upload the data to miRkwood server. </p>
                 
-                <pre class='example'>mirkwood-bam2bed.pl -bam /path/to/your/bam/file -out /output/directory/</pre>
+                <pre class='code'>mirkwood-bam2bed.pl -bam /path/to/your/bam/file -out /output/directory/</pre>
                 
                 <br />
                 
