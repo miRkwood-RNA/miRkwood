@@ -76,13 +76,13 @@
             <p>miRkwood currently proposes 7 assemblies, which are listed below.</p>
             
             <ul>
-                <li><em>Arabidopsis lyrata</em> - v1.0</li>
-                <li><em>Arabidopsis thaliana</em> - TAIR 10</li> 
-                <li><em>Brassica rapa</em> - Brapa 1.1</li>
-                <li><em>Glycine max</em> - v1.0.23</li>
-                <li><em>Lotus japonicus</em> - Lj2.5</li>
-                <li><em>Oryza sativa</em> - MSU7</li>
-                <li><em>Solanum lycopersicum</em> - SL2.4</li>
+                <li><em>Arabidopsis lyrata</em> - v1.0 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
+                <li><em>Arabidopsis thaliana</em> - TAIR 10 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li> 
+                <li><em>Brassica rapa</em> - Brapa 1.1 - GFF: <a href="http://brassicadb.org/brad/">brassicadb</a></li>
+                <li><em>Glycine max</em> - v1.0.23 - GFF: <a href="http://www.ensembl.org/index.html">Ensembl</a></li>
+                <li><em>Lotus japonicus</em> - Lj2.5 - GFF: <a href="http://www.kazusa.or.jp/lotus/">kazusa.or.jp</a></li>
+                <li><em>Oryza sativa</em> - MSU7 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
+                <li><em>Solanum lycopersicum</em> - SL2.4 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
             </ul>
             
             <p>Each assembly is supplemented by two GFF format files. The first one contains the genome coordinates of  annotated mRNAs, CDS, tRNAs, rRNAs and snoRNAs,  and is used to apply masking options described in <a href="#parameters">Section 1.3 - Parameters</a>.  The source of this file is indicated above, case by case. The other GFF file compiles all miRNAs and pre-miRNAs available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
