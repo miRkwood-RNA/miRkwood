@@ -19,9 +19,20 @@
 
                 <p class='title'>How to prepare my input files ?</p>
 
-                <p>The input of miRkwood is a set of reads produced by deep sequencing of small RNAs and mapped to a reference genome. Typically, length of the reads should range between 16nt and 30nt. The user is required to upload a BED file that contains all positions of mapped sequence tags. This file can be obtained from the raw sequencing data by taking three easy steps on your computer. </p>
+                <p>The input of miRkwood is a set of reads produced by
+                deep sequencing of small RNAs and mapped to a
+                reference genome. Typically, length of the reads
+                should range between 16nt and 35nt. The user is
+                required to upload a BED file that contains all
+                positions of mapped sequence tags. This file can be
+                obtained from the raw sequencing data by taking three
+                easy steps on your computer. If you are new to
+                miRkwood, you might also want to test it with a sample
+                BED file.</p>
                 
-                
+                <ul><li> <a href="sample.bed">Download the sample BED file</a> </li></ul>
+
+	      
                 <h2 id='adapter'>Remove adapter sequences</h2>
                 
                 <p>This can be performed with cutadapt, for example.</p>
@@ -37,7 +48,7 @@
                 
                 <pre class='code'>bowtie -v 0 -f --all --best --strata -S &lt;genome&gt; &lt;reads&gt;   </pre>
                 
-                <p>Reads file must be in FASTA, FASTQ, or colorspace-fasta format. Genome file must be in Fasta format.</p>
+                <p>Reads file must be in FASTA, FASTQ, or colorspace-fasta format. Genome file must be in FASTA format.</p>
       
                 <p>The list of assemblies accepted by miRkwood is given in <a href="./help.php#reference">Section "Select an assembly"</a> on the help page. 
 <!--
@@ -67,7 +78,8 @@
                 
                 <br />
                 
-                <p><b>You are now ready to use miRkwood small RNA-seq on your data.</b></p>
+                <p><b>You are now ready to use miRkwood small RNA-seq
+                on your data. </b></p>
             
             </div> <!-- main full -->
         
