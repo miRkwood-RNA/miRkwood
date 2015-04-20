@@ -1,0 +1,1970 @@
+[DEBUG] miRkwood : start processing. [Mon Apr 20 12:03:00 2015]
+[DEBUG] Average reads coverage for this BED file : 1 read every 111 nt.
+[DEBUG] Known miRNAS have been filtered out from BED.
+[DEBUG] CDS have been filtered out from BED.
+[DEBUG] Other RNA have been filtered out from BED.
+[DEBUG] Multi_mapped reads have been filtered out from BED.
+[DEBUG] Treat known miRNAs. [Mon Apr 20 12:03:01 2015]
+[DEBUG] ..... BEDPipeline : store_known_mirnas_as_candidate_objects
+[DEBUG] .......... $name : 88
+[DEBUG] .......... $data : 16193
+[DEBUG] .......... @field : 1224
+[DEBUG] .......... @args : 64
+[DEBUG] .......... $gff_file : 104
+[DEBUG] .......... $bed_file : 120
+[DEBUG] .......... $cfg : 4534
+[DEBUG] .......... $species : 64
+[DEBUG] .......... $BED : 311
+[DEBUG] .......... $id : 88
+[DEBUG] .......... $self : 65219
+[DEBUG] .......... $precursor_reads : 56
+[DEBUG] .......... $mature_reads : 56
+[DEBUG] .......... $precursor_of_mature : 71642
+[DEBUG] .......... $job_dir : 104
+[DEBUG] .......... $GFF : 311
+[DEBUG] .......... $candidates_dir : 112
+[DEBUG] .......... $reads_dir : 112
+[DEBUG] .................... TOTAL : 160402
+[DEBUG] Treat new miRNAs. [Mon Apr 20 12:03:08 2015]
+[DEBUG] 1 chromosome(s) to consider
+[DEBUG] - Considering chromosome 1 [Mon Apr 20 12:03:08 2015]
+[DEBUG]    Constructing loci [Mon Apr 20 12:03:08 2015]
+[DEBUG]     - Get read distribution... [Mon Apr 20 12:03:08 2015]
+[DEBUG]     - Get trains... [Mon Apr 20 12:03:08 2015]
+[DEBUG]     - Get spikes... [Mon Apr 20 12:03:08 2015]
+[DEBUG]     - Process spikes... [Mon Apr 20 12:03:08 2015]
+[DEBUG] ..... ClusterJobSebastien : process_spikes_for_chr
+[DEBUG] .......... $chr_length : 24
+[DEBUG] .......... @miRnaPos : 201921
+[DEBUG] .......... $window_length : 24
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $min_length_for_neighbor : 24
+[DEBUG] .......... $enlarging : 24
+[DEBUG] .......... $min_length : 24
+[DEBUG] .......... $accepting_time : 24
+[DEBUG] .......... $detector : 96
+[DEBUG] .......... $genome : 52892
+[DEBUG] .......... $spikes_for_chr : 325086
+[DEBUG] .......... $min_length_on_isolated_spike : 24
+[DEBUG] .......... $this : 54173
+[DEBUG] .................... TOTAL : 634411
+[DEBUG]     - Get loci... [Mon Apr 20 12:03:21 2015]
+[DEBUG] ..... ClusterBuilder : build_loci
+[DEBUG] .......... $parsed_bed : 1933432
+[DEBUG] .......... $average_coverage : 64
+[DEBUG] .......... $trains_hash_per_chr : 24
+[DEBUG] .......... $cluster_job : 54173
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $putative_miRna : 24
+[DEBUG] .......... $chromosome : 75
+[DEBUG] .......... $reads_per_chr : 1426372
+[DEBUG] .......... $loci_per_chr : 152465
+[DEBUG] .......... $spikes_per_chr : 24
+[DEBUG] .......... $this : 1988072
+[DEBUG] .................... TOTAL : 5554821
+[DEBUG] ..... BEDPipeline : init_sequences_per_chr()
+[DEBUG] .......... $chromosome : 75
+[DEBUG] .......... $clustering : 1988072
+[DEBUG] .......... $self : 2140576
+[DEBUG] .......... @args : 96
+[DEBUG] .................... TOTAL : 4128819
+[DEBUG]    66 sequences to process
+[DEBUG]   - Considering sequence 0 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/34-293+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 136
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 136
+[DEBUG] .......... $rnalfold_output_filepath : 128
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 136
+[DEBUG] .......... $output_stemloop_opt : 136
+[DEBUG] .......... $this : 1986879
+[DEBUG] .................... TOTAL : 1990490
+[DEBUG]   - Considering sequence 1 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/18066-18338+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 320
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986879
+[DEBUG] .................... TOTAL : 1990546
+[DEBUG]   - Considering sequence 2 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 3362
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 3386
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 552
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1997398
+[DEBUG]   - Considering sequence 3 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 8176
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 8200
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2006778
+[DEBUG]   - Considering sequence 4 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/76804-77064+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990554
+[DEBUG]   - Considering sequence 5 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77229-77492-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 6 [Mon Apr 20 12:03:21 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/77358-77621+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 120
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 7 [Mon Apr 20 12:03:22 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/238261-238841+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 6352
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 624
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1995114
+[DEBUG]   - Considering sequence 8 [Mon Apr 20 12:03:22 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/239113-239426+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 360
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991386
+[DEBUG]   - Considering sequence 9 [Mon Apr 20 12:03:22 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/258287-258708+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 4048
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 464
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1992650
+[DEBUG]   - Considering sequence 10 [Mon Apr 20 12:03:22 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/291776-292040-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 11 [Mon Apr 20 12:03:22 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/292300-292563-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2880
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991330
+[DEBUG]   - Considering sequence 12 [Mon Apr 20 12:03:22 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 7162
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 7186
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 632
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2005086
+[DEBUG]   - Considering sequence 13 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431199-431461-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 14 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431837-432092+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2880
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991322
+[DEBUG]   - Considering sequence 15 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 15802
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 15834
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 360
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2022870
+[DEBUG]   - Considering sequence 16 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433025-433907-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 10361
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 928
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1999427
+[DEBUG]   - Considering sequence 17 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/433540-433795+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 18 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/447038-447302-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 19 [Mon Apr 20 12:03:23 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 6769
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 6793
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 656
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2004324
+[DEBUG]   - Considering sequence 20 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512620-513202+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 6912
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 6936
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 624
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2004578
+[DEBUG]   - Considering sequence 21 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587476-587735-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 22 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/587614-587922+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 352
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991378
+[DEBUG]   - Considering sequence 23 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/634089-634347-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 24 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/670507-670767-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 25 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/696485-696750-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 26 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/758918-759180-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2441
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990883
+[DEBUG]   - Considering sequence 27 [Mon Apr 20 12:03:24 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/789376-789675-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 344
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991370
+[DEBUG]   - Considering sequence 28 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/958653-958914-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 29 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1160172-1160429+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 30 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1184796-1185036+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2027
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 288
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990453
+[DEBUG]   - Considering sequence 31 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1215569-1215872-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 352
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991378
+[DEBUG]   - Considering sequence 32 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250170-1250781+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 656
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990914
+[DEBUG]   - Considering sequence 33 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 5729
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 5753
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2001900
+[DEBUG]   - Considering sequence 34 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1276044-1276290+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2027
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 288
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990453
+[DEBUG]   - Considering sequence 35 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1286791-1287046+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 36 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1324833-1325091+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 37 [Mon Apr 20 12:03:25 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 12751
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 12775
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 344
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2015976
+[DEBUG]   - Considering sequence 38 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430215-1430541-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 368
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991394
+[DEBUG]   - Considering sequence 39 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 10825
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3272
+[DEBUG] .......... $new_candidates : 10849
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 328
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2013260
+[DEBUG]   - Considering sequence 40 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430766-1431030+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 4939
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 4963
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2000320
+[DEBUG]   - Considering sequence 41 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441566-1441835+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 42 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1441858-1442125+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 43 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442334-1442590+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2027
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990469
+[DEBUG]   - Considering sequence 44 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 10848
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 10872
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 408
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2012234
+[DEBUG]   - Considering sequence 45 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1443874-1444140-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 46 [Mon Apr 20 12:03:26 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 42069
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 7449
+[DEBUG] .......... $new_candidates : 42133
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 984
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2080621
+[DEBUG]   - Considering sequence 47 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 4003
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 4027
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 480
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1998616
+[DEBUG]   - Considering sequence 48 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 3715
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 4056
+[DEBUG] .......... $new_candidates : 3739
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 376
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1999872
+[DEBUG]   - Considering sequence 49 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 9343
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3249
+[DEBUG] .......... $new_candidates : 9367
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 344
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2010289
+[DEBUG]   - Considering sequence 50 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598189-1598447-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 51 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1598361-1598670+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3264
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 352
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991754
+[DEBUG]   - Considering sequence 52 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1613456-1613719+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 53 [Mon Apr 20 12:03:27 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 4359
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2888
+[DEBUG] .......... $new_candidates : 4383
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 344
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1999960
+[DEBUG]   - Considering sequence 54 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1617560-1617865+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3272
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 352
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991762
+[DEBUG]   - Considering sequence 55 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1705924-1706184+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 56 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 6307
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 6331
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2003048
+[DEBUG]   - Considering sequence 57 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 7727
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 5592
+[DEBUG] .......... $new_candidates : 7751
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 640
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2009696
+[DEBUG]   - Considering sequence 58 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 4891
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3272
+[DEBUG] .......... $new_candidates : 4915
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 480
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2001544
+[DEBUG]   - Considering sequence 59 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975335-1975594-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 304
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990562
+[DEBUG]   - Considering sequence 60 [Mon Apr 20 12:03:28 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 9083
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3272
+[DEBUG] .......... $new_candidates : 9107
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 472
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2009920
+[DEBUG]   - Considering sequence 61 [Mon Apr 20 12:03:29 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1976145-1976437+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3264
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 336
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991738
+[DEBUG]   - Considering sequence 62 [Mon Apr 20 12:03:29 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2107212-2107476-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 312
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1990570
+[DEBUG]   - Considering sequence 63 [Mon Apr 20 12:03:29 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2110965-2111249-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 64
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 3272
+[DEBUG] .......... $new_candidates : 88
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 328
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1991738
+[DEBUG]   - Considering sequence 64 [Mon Apr 20 12:03:29 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 7853
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 4440
+[DEBUG] .......... $new_candidates : 7877
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 440
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 2008596
+[DEBUG]   - Considering sequence 65 [Mon Apr 20 12:03:29 2015]
+[DEBUG]      /usr/bin/RNALfold -L 400 < /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnalfold_out_sequence.txt > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnalfold_out
+[DEBUG]      /vagrant/cgi-bin/programs/RNAstemloop -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnalfold_out -s /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnastemloop_stemloop -o /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnastemloop_optimal
+[DEBUG]      Processing RNAstemloop output for optimal /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnastemloop_optimal
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnaeval_optimal.out
+[DEBUG]      Processing RNAstemloop output for stemloop /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnastemloop_stemloop
+[DEBUG]      Running RNAeval in /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnaeval_stemloop.out
+[DEBUG]      Processing RNAstemloop ( /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnastemloop_stemloop, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnaeval_optimal.out, /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/rnaeval_stemloop.out )
+[DEBUG] ..... HairpinBuilder : build_hairpins
+[DEBUG] .......... $working_chr_dir : 112
+[DEBUG] .......... $rnaeval_out_optimal : 144
+[DEBUG] .......... @sorted_new_candidates : 2869
+[DEBUG] .......... $rnalfold_output_filename : 56
+[DEBUG] .......... $chr : 75
+[DEBUG] .......... $output_stemloop : 144
+[DEBUG] .......... $rnalfold_output_filepath : 136
+[DEBUG] .......... $locus : 2120
+[DEBUG] .......... $new_candidates : 2893
+[DEBUG] .......... $working_dir : 128
+[DEBUG] .......... $genomic_seq : 344
+[DEBUG] .......... $rnaeval_out_stemloop : 144
+[DEBUG] .......... $output_stemloop_opt : 144
+[DEBUG] .......... $this : 1986903
+[DEBUG] .................... TOTAL : 1996212
+[DEBUG]   - Process miRNA candidates [Mon Apr 20 12:03:29 2015]
+[DEBUG]      - Process candidate 1 [Mon Apr 20 12:03:29 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 3393
+[DEBUG] .......... $candidate : 6004
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 3249
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 6475
+[DEBUG] .................... TOTAL : 20043
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/1/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/1/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1250350-1250613-/1/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 2 [Mon Apr 20 12:03:30 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 8942
+[DEBUG] .......... $candidate : 13034
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 5367
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 13505
+[DEBUG] .................... TOTAL : 41770
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/2/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/2/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/2/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 3 [Mon Apr 20 12:03:33 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 10099
+[DEBUG] .......... $candidate : 15381
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 6753
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 15852
+[DEBUG] .................... TOTAL : 49007
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/3/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/3/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430762-1431043-/3/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 4 [Mon Apr 20 12:03:34 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 7358
+[DEBUG] .......... $candidate : 11131
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 4656
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 11602
+[DEBUG] .................... TOTAL : 35669
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/4/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/4/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/4/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 5 [Mon Apr 20 12:03:37 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 24198
+[DEBUG] .......... $candidate : 30161
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 7973
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 30632
+[DEBUG] .................... TOTAL : 93886
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/5/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/5/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/5/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 6 [Mon Apr 20 12:03:38 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 10059
+[DEBUG] .......... $candidate : 13222
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 4095
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 13693
+[DEBUG] .................... TOTAL : 41991
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/6/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/6/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1445215-1446154+/6/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 7 [Mon Apr 20 12:03:39 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 4270
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 3907
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 4741
+[DEBUG] .................... TOTAL : 13928
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/7/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/7/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/7/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 8 [Mon Apr 20 12:03:40 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 3982
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 3619
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 4453
+[DEBUG] .................... TOTAL : 13064
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/8/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/8/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1522747-1523075+/8/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 9 [Mon Apr 20 12:03:41 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 9610
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 9247
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 10081
+[DEBUG] .................... TOTAL : 29948
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/9/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/9/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1592381-1592680+/9/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 10 [Mon Apr 20 12:03:42 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 4626
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 4263
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 5097
+[DEBUG] .................... TOTAL : 14996
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/10/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/10/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/10/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 11 [Mon Apr 20 12:03:44 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 3321
+[DEBUG] .......... $candidate : 6582
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 3899
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 7053
+[DEBUG] .................... TOTAL : 21777
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/11/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/11/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1728976-1729237-/11/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 12 [Mon Apr 20 12:03:45 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 5119
+[DEBUG] .......... $candidate : 8010
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 3431
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 8481
+[DEBUG] .................... TOTAL : 25963
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/12/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/12/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/12/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 13 [Mon Apr 20 12:03:46 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 5158
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 4795
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 5629
+[DEBUG] .................... TOTAL : 16592
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/13/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/13/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975119-1975555+/13/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 14 [Mon Apr 20 12:03:47 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 5315
+[DEBUG] .......... $candidate : 9358
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 5171
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 9829
+[DEBUG] .................... TOTAL : 30595
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/14/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/14/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1975854-1976283-/14/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 15 [Mon Apr 20 12:03:48 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 8120
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 7757
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 8591
+[DEBUG] .................... TOTAL : 25478
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/15/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/15/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/15/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 16 [Mon Apr 20 12:03:49 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 3136
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 2773
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 3607
+[DEBUG] .................... TOTAL : 10526
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/16/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/16/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/16/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 17 [Mon Apr 20 12:03:50 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 4042
+[DEBUG] .......... $candidate : 7437
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 4066
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 7908
+[DEBUG] .................... TOTAL : 24375
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/17/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/17/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/423794-424382+/17/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 18 [Mon Apr 20 12:03:51 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 12938
+[DEBUG] .......... $candidate : 16093
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 4061
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 16564
+[DEBUG] .................... TOTAL : 50578
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/18/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/18/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/431848-432165-/18/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 19 [Mon Apr 20 12:03:52 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 6912
+[DEBUG] .......... $candidate : 13290
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 6673
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 13761
+[DEBUG] .................... TOTAL : 41558
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/19/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/19/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/19/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 20 [Mon Apr 20 12:03:53 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 3629
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 3266
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 4100
+[DEBUG] .................... TOTAL : 12005
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/20/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/20/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/20/alignement.txt 2> /dev/null
+[DEBUG]      - Process candidate 21 [Mon Apr 20 12:03:54 2015]
+[DEBUG] ..... PrecursorBuilder : run_pipeline_on_candidate
+[DEBUG] .......... $candidate_dir : 128
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $alternatives : 88
+[DEBUG] .......... $candidate : 8443
+[DEBUG] .......... $candidate_full_identifier : 56
+[DEBUG] .......... $candidate_ref : 8080
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $candidatejob : 8914
+[DEBUG] .................... TOTAL : 26447
+[DEBUG]         Running test_alignment on /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/21/outRNAFold_stemloop.txt
+[DEBUG]         /vagrant/cgi-bin/programs/RNAcomp -r /vagrant/cgi-bin/data/MirbaseFile.txt -i /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/21/seqWithN.txt --all > /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/21/alignement.txt 2> /dev/null
+[DEBUG] ..... PrecursorBuilder : process_mirna_candidates
+[DEBUG] .......... %candidates_hash : 765470
+[DEBUG] .......... $candidate_identifier : 64
+[DEBUG] .......... $self : 578
+[DEBUG] .......... @args : 96
+[DEBUG] .......... @candidates_result : 762656
+[DEBUG] .................... TOTAL : 1528864
+[DEBUG] ..... BEDPipeline : compute_candidates() (sort candidates)
+[DEBUG] .......... $self : 2227196
+[DEBUG] .......... @args : 96
+[DEBUG] .......... $precursorBuilderJob : 578
+[DEBUG] .......... $final_candidates_hash : 769184
+[DEBUG] .......... $candidates_hash : 24
+[DEBUG] .......... $chromosome : 75
+[DEBUG] .......... @sorted_hairpin_candidates_for_chr : 183588
+[DEBUG] .......... @hairpin_candidates_for_chr : 64
+[DEBUG] .......... $sequence_identifier : 64
+[DEBUG] .......... $hairpinBuilder : 24
+[DEBUG] .................... TOTAL : 3180893
+[DEBUG] Writing finish file [Mon Apr 20 12:03:56 2015]

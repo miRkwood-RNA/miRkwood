@@ -1,0 +1,106 @@
+@relation mirnaInPrecursor
+@attribute id string
+@attribute length real
+@attribute mfe real
+@attribute GCperc real
+@attribute MaximumLengthWithoutBulges real
+@attribute MaximumLengthWithoutBulgesPerc real
+@attribute StartLengthWithoutBulges real
+@attribute BasePairsInDuplexMirnaMirnaStar real
+@attribute PresenceOfPerfect20MerBasePair { true, false}
+@attribute StartOfPerfect20MerBasePair real
+@attribute PresenceOfPerfect10MerBasePair { true, false}
+@attribute StartOfPerfect10MerBasePair real
+@attribute PresenceOfPerfect5MerBasePair { true, false}
+@attribute StartOfPerfect5MerBasePair real
+@attribute PercOfA real
+@attribute PercOfU real
+@attribute PercOfG real
+@attribute PercOfC real
+@attribute PercOfAA real
+@attribute PercOfUA real
+@attribute PercOfGA real
+@attribute PercOfCA real
+@attribute PercOfAU real
+@attribute PercOfUU real
+@attribute PercOfGU real
+@attribute PercOfCU real
+@attribute PercOfAG real
+@attribute PercOfUG real
+@attribute PercOfGG real
+@attribute PercOfCG real
+@attribute PercOfAC real
+@attribute PercOfUC real
+@attribute PercOfGC real
+@attribute PercOfCC real
+@attribute DistanceFromTerminalLoop real
+@attribute DistanceFromHairpinStart real
+@attribute MirnaIncludedInLoop { true, false}
+@attribute LengthOfOverlapInLoop real
+@attribute AverageNumberOfPairedBasesInWindow7 real
+@attribute AverageNumberOfPairedBasesInWindow5 real
+@attribute AverageNumberOfPairedBasesInWindow3 real
+@attribute BulgeAtPosition0 { true, false}
+@attribute BulgeAtPositionMinus1 { true, false}
+@attribute BulgeAtPositionPlus1 { true, false}
+@attribute BulgeAtPositionMinus2 { true, false}
+@attribute BulgeAtPositionPlus2 { true, false}
+@attribute BulgeAtPositionMinus3 { true, false}
+@attribute BulgeAtPositionPlus3 { true, false}
+@attribute BulgeAtPositionMinus4 { true, false}
+@attribute BulgeAtEndPosition0 { true, false}
+@attribute BulgeAtEndPositionPlus1 { true, false}
+@attribute BulgeAtEndPositionMinus1 { true, false}
+@attribute BulgeAtEndPositionPlus2 { true, false}
+@attribute BulgeAtEndPositionMinus2 { true, false}
+@attribute BulgeAtEndPositionPlus3 { true, false}
+@attribute BulgeAtEndPositionMinus3 { true, false}
+@attribute BulgeAtEndPositionPlus4 { true, false}
+@attribute NumberOfBulges real
+@attribute LenghtOfBiggestBulge real
+@attribute LengthBiggestBulgesPerc real
+@attribute A... real
+@attribute C... real
+@attribute G... real
+@attribute U... real
+@attribute A(.. real
+@attribute C(.. real
+@attribute G(.. real
+@attribute U(.. real
+@attribute A((. real
+@attribute C((. real
+@attribute G((. real
+@attribute U((. real
+@attribute A.(( real
+@attribute C.(( real
+@attribute G.(( real
+@attribute U.(( real
+@attribute A((( real
+@attribute C((( real
+@attribute G((( real
+@attribute U((( real
+@attribute A.(. real
+@attribute C.(. real
+@attribute G.(. real
+@attribute U.(. real
+@attribute A..( real
+@attribute C..( real
+@attribute G..( real
+@attribute U..( real
+@attribute A(.( real
+@attribute C(.( real
+@attribute G(.( real
+@attribute U(.( real
+@attribute PercBasedPairAU real
+@attribute PercBasedPairGC real
+@attribute PercBasedPairGU real
+@attribute nucleotideAt0 { A, U, G, C, N}
+@attribute nucleotideAtMinus1 { A, U, G, C, N}
+@attribute nucleotideAtPlus1 { A, U, G, C, N}
+@attribute nucleotideAtEnd0 { A, U, G, C, N}
+@attribute nucleotideAtEndMinus1 { A, U, G, C, N}
+@attribute nucleotideAtEndPlus1 { A, U, G, C, N}
+@attribute Class { true, false}
+@data
+ID0,20,-12.70,45,8,40,3,16,false,-1,false,-1,true,9,30,25,35,10,10,0,15,5,15,0,10,0,0,25,5,0,5,0,0,5,59,19,false,0,5.71,4,2.33,false,false,false,true,false,true,true,false,false,false,false,false,true,false,true,true,3,2,10,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.25,6.25,25,G,A,A,G,U,A,true
+

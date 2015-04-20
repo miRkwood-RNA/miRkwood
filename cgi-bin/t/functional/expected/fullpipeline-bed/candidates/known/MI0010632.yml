@@ -1,0 +1,50 @@
+--- end_position
+--- 234159
+--- reads
+---
+234010-234030: 5
+234017-234037: 2
+234129-234149: 1
+234133-234153: 16
+--- sequence
+--- GTCAGAGATGATGCGCAAATGCGGATATAAAGGTATATCATGACCCCAATGTTTCTGATAAACCCTTTTCACATTTTGTTGTTTTCGCTGAGCACCTCTATTGGTTTGTTGTCCTGATTTACATTGATATCCGCATTTGCGCATCATTTCATAC
+--- start_position
+--- 234006
+--- position
+--- 234006-234159
+--- structure_stemloop
+--- '....((((((((((((((((((((((((....(((.((((.(((............((((((((.............(.(((((.....))))).)......))))))))))).)))).)))....))))))))))))))))))))))))....'
+--- precursor_name
+--- ath-MIR2112
+--- structure_optimal
+--- '....((((((((((((((((((((((((....(((.((((.(((............((((((((.............(.(((((.....))))).)......))))))))))).)))).)))....))))))))))))))))))))))))....'
+--- identifier
+--- MI0010632
+--- chromosome
+--- '1'
+--- '%GC'
+--- '38.96'
+--- strand
+--- '-'
+--- quality
+--- 1
+--- name
+--- '1'
+--- matures
+---
+MIMAT0011155:
+  mature_end: '234037'
+  mature_name: ath-miR2112-3p
+  mature_reads:
+    234017-234037: 2
+  mature_start: '234017'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0010632/image.png
+--- length
+--- 154
+--- amfe
+--- -35.974025974026
+--- mfei
+--- -0.923333333333333
+--- mfe
+--- '-55.40'

@@ -1,0 +1,49 @@
+--- end_position
+--- 28706
+--- reads
+---
+28534-28556: 2
+28535-28556: 2
+28635-28655: 5
+--- sequence
+--- TACTTTTCTAATATCACGAGGACTTACATGGCCTCAAGTCACCTGTGGTGTTGTGCAAGAAGGAGAAGCAAAGTCTGTCTATGTATTATGAGATAGCTACTTCTATGGCTAGGATATATGTTGTACAAGACCGGCTTTTCTTCTACTTCTTGCACAACCTGAGGTTATTGAGGCTATACAAGTCTTCTTCTATAATGTTATTTATTA
+--- start_position
+--- 28500
+--- position
+--- 28500-28706
+--- structure_stemloop
+--- '.................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................'
+--- precursor_name
+--- ath-MIR838
+--- structure_optimal
+--- '.................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................'
+--- identifier
+--- MI0005394
+--- chromosome
+--- '1'
+--- '%GC'
+--- '37.68'
+--- strand
+--- +
+--- quality
+--- 1
+--- name
+--- '1'
+--- matures
+---
+MIMAT0004260:
+  mature_end: '28655'
+  mature_name: ath-miR838
+  mature_reads:
+    28635-28655: 5
+  mature_start: '28635'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0005394/image.png
+--- length
+--- 207
+--- amfe
+--- -38.743961352657
+--- mfei
+--- -1.02820512820513
+--- mfe
+--- '-80.20'

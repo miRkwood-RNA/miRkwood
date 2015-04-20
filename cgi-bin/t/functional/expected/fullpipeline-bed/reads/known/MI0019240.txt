@@ -1,0 +1,7 @@
+ath-MIR5656
+Locus  : 1:1727263-1727415
+Strand : +
+
+ATCTTTCTTGACAAATCATAACAACTTTGGTTAAAAGGTTTCGAAAACTCAACCTCTTCTTCAGTCTCTCTCTTTCCAAAAGGGAAAGACTGAAGTAGAGATTGGGTTTCCGATACCTTTTGGCCCATGTCGTTATGATTTGTCGAGGAAGGT
+((((((((((((((((((((((.((...(((((((((((.(((.((((((((.((((.(((((((((.(((((((...))))))).))))))))).)))).)))))))).))).)))))))))))...)).))))))))))))))))))))))
+.......................................................................................................................*********************............. length=21 depth=1
