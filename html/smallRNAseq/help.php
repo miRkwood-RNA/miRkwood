@@ -23,7 +23,7 @@
 
 	      <p>
 	      If this is your first time using miRkwood, we would
-  suggest visiting  our <a href='example.php'>quick start</a>
+  suggest visiting  our <a href="./example.php">quick start</a>
 	      guide before.
 	      </p>
             
@@ -73,7 +73,16 @@
             
             <h3 id='reads'>Upload your set of reads</h3>
             
-            <p>The input is a set of reads produced by deep sequencing of small RNAs and then mapped to a reference genome. For that, you should organize your data in a BED file. See the <a href="./BED_file.php">detailed instructions</a> on how to build this file.</p>
+            <p>The input is a set of reads produced by deep sequencing
+            of small RNAs and then mapped to a reference genome. For
+            that, you should organize your data in a BED file. See the
+            <a href="./BED_file.php">detailed instructions</a> on how
+            to build this file, or grab a sample file below.</p>
+
+	     <ul><li> <a href="sample.bed">Download the sample BED file</a> </li></ul> 
+
+	    <p>You will find more information on this sample file in our 
+            <a href="./example.php">quick start</a> guide.</p>
             
             
             <h3 id='reference'>Select an assembly</h3>
