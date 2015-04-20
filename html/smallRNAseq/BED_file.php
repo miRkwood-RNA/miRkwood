@@ -16,13 +16,9 @@
             <?php include("./header_menu.txt") ?>
             
             <div class="main-full">
-                
-                <br />
-                
-                <b style='font-size: 150%;' >How to prepare my input files ?</b>
-                
-                <br /><br />
-                
+
+                <p class='title'>How to prepare my input files ?</p>
+
                 <p>The input of miRkwood is a set of reads produced by deep sequencing of small RNAs and mapped to a reference genome. Typically, length of the reads should range between 16nt and 30nt. The user is required to upload a BED file that contains all positions of mapped sequence tags. This file can be obtained from the raw sequencing data by taking three easy steps on your computer. </p>
                 
                 

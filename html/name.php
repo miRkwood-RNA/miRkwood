@@ -17,11 +17,8 @@
             <? include("./static/header_menu.txt") ?>
             
             <div class="main-full">
-            
-                <br /> 
-                
+
                 <p class='title'>Where does the name come from ?</p>
-                <br />
                 
                 <img style='width:600px; display: block; margin: 0 auto;'src='./style/forest.jpg' alt='mirkwood forest' />
                 

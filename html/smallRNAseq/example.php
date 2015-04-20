@@ -16,12 +16,8 @@
             <?php include("./header_menu.txt") ?>
             
             <div class="main-full">
-                
-                <br /> <br />
         
-                <h1>Quick start</h1>
-
-	      <br />
+                <p class='title'>Quick start</p>
 	      
                 <p>This page covers the basics on how to get started with miRkwood small RNA-seq. The main input of miRkwood is a set of reads (ranging from 15 nt to 35 nt approximately) that have been previously mapped onto a reference genome and that are stored in a file in BED format. We advise you to first practice with a sample BED file. </p>
                 
@@ -72,7 +68,7 @@
                     </li> 
 
                     <li>
-                        <i>Frequent reads:</i> 16 reads <br> <br> 
+                        <i>Multiply mapped reads:</i> 16 reads <br> <br> 
                         16 reads map to more than five locations, and are discarded from the
                         analysis.  You can list them by clicking on
                         the <i>download</i> link.
@@ -111,8 +107,8 @@
 
 		<center>
 
-		<img style='width:600px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
-		
+		<img style='width:700px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
+<br />		
 <pre class='example'>
 Locus  : 1:234009-234092
 Strand : -
@@ -125,7 +121,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 ........................................................*********************....... length=21 depth=1
 ............................................................*********************... length=21 depth=16
 </pre>
-
+<br />
 		<img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png' alt='hairpin with mature' />		
 
 		</center>
@@ -134,9 +130,6 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
                 <p>If you want to know more about all parameter options, export formats, visualisation tools,  please visit our  main <a href="help.php">help page</a>.</p>  
 
                 <br />
-
-
-		
 
             </div><!-- main-->
         </div><!-- bloc droit-->
