@@ -75,6 +75,12 @@ p.equation {
     font-family:monospace;
 }
 
+p.title {
+    font-size:22px;
+    padding-top: 12px;
+    padding-bottom: 20px;    
+}
+
 .example{
     text-align: justify;
     padding-top: 10px;
