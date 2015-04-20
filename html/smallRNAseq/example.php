@@ -98,9 +98,10 @@
                         for each predicted miRNA :
                         positions, secondary structure, read
                         distribution, thermodynamic stability, precision of the duplex
-                        processing, conservation, ... Predictions are ranked according to a
+                        processing, conservation, ... <br />
+                        Predictions are ranked according to a
                         quality score.
-                        <br> <br>
+                        <br /> <br />
                     </li> 
 
                 </ul>
@@ -108,7 +109,9 @@
 		<center>
 
 		<img style='width:700px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
-<br />		
+        
+        <br />
+
 <pre class='example'>
 Locus  : 1:234009-234092
 Strand : -
@@ -121,12 +124,13 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 ........................................................*********************....... length=21 depth=1
 ............................................................*********************... length=21 depth=16
 </pre>
-<br />
+
+        <br />
+        
 		<img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png' alt='hairpin with mature' />		
 
 		</center>
 
-		
                 <p>If you want to know more about all parameter options, export formats, visualisation tools,  please visit our  main <a href="help.php">help page</a>.</p>  
 
                 <br />
