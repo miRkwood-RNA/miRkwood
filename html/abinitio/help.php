@@ -17,7 +17,8 @@
 
 <div class="main-full">
 
-  
+<br /> 
+
 <p><a href='/mirkwood/'>miRkwood</a> is a computational pipeline for
   the identification of plant miRNAs and their hairpin precursors.</p>
   <p>
@@ -26,7 +27,7 @@
   href="method.php">miRkwood method</a>.-->
 </p>
 
-<br> 
+<br />
 
 <div class="table-of-contents">
   <ol>
