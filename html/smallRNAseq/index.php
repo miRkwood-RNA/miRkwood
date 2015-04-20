@@ -17,7 +17,7 @@
             <? include("header_menu.txt") ?>
             <div class="main">
 
-                <br />
+                <br /><br />
 
                 <p>miRkwood small RNA-seq is a web application that allows to analyse small RNA deep sequencing data in plants. It takes as input a set of short expressed reads (from 15 to 35 nt) that have been previously mapped on a reference genome, and searches for all expressed microRNAs.</p>
 
@@ -32,7 +32,7 @@
                 </ul>
 
 
-		<br />
+		<br /><br /><br /><br /><br />
 
 <img style='width:660px; display: block; margin: 0 auto;' src='../style/pipeline_smallrnaseq.jpg' alt='' />
 		
