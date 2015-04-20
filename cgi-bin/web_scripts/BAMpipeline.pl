@@ -18,6 +18,8 @@ use miRkwood::BEDHandler;
 use miRkwood::BEDPipeline;
 
 my $error_url = miRkwood::WebTemplate::get_cgi_url('error.pl');
+my $dirScript = miRkwood::Paths->get_scripts_path();
+my $dirLib    = miRkwood::Paths->get_lib_path();
 
 
 ##### Create job id and job directory
@@ -178,8 +180,12 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species
 
 
 ##### Launch pipeline
-my $pipeline = miRkwood::BEDPipeline->new($absolute_job_dir, $localBED, $genome);
-$pipeline->run_pipeline();
-
+#~ my $pipeline = miRkwood::BEDPipeline->new($absolute_job_dir, $localBED, $genome);
+#~ $pipeline->run_pipeline();
+my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
+my $cmd = "perl -I$dirLib $perl_script 'WebBAM' $absolute_job_dir $localBED $genome";
+debug("Running perl script $cmd", 1);
+system($cmd);
+debug("Getting back from Perl script", 1);
 
 close $log_file;
