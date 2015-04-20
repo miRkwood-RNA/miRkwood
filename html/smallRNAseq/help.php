@@ -19,8 +19,13 @@
 
             <br />
 	      
-            <p>This page is a user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>. This application allows to search for microRNAs in small RNA sequencing data in plants.</p>
-            
+            <p>This page is a  user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>. This application allows to search for microRNAs in small RNA sequencing data in plants.</p>
+
+	      <p>
+	      If this is your first time using miRkwood, we would
+  suggest visiting  our <a href='example.php'>quick start</a>
+	      guide before.
+	      </p>
             
             <br /> 
             
