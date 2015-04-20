@@ -31,7 +31,7 @@
                         <li><a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>use web server</a></li>
                     </ul>
 
-	<br /> <br />
+	<br /> <br /><br /><br />
 
 <img style='width:660px; display: block; margin: 0 auto;' src='../style/pipeline_abinitio.jpg' alt='' />
 		    
