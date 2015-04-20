@@ -18,7 +18,10 @@ use File::Spec;
 use File::Basename;
 use Log::Message::Simple qw[msg error debug];
 
-use constant MFEI_THRESHOLD => -0.6;
+use constant { 
+    MFEI_THRESHOLD => -0.6,
+    READS_THRESHOLD_FOR_CANDIDATE => 10
+};
 
 sub new {
 	my ($class, $genome_db, $workspace, $parsed_bed
@@ -370,7 +373,13 @@ sub process_RNAstemloop {
                                 'reads' => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
                                 'cluster' => $cluster_position
                             };
-                            push @candidates_array, $res;
+                            my $nb_reads = 0;
+                            foreach my $key (keys( %{$res->{'reads'}} )){
+                                $nb_reads += $res->{'reads'}{$key};
+                            }
+                            if ( $nb_reads >= READS_THRESHOLD_FOR_CANDIDATE ){
+                                push @candidates_array, $res;
+                            }
                         }
 					}
 					
