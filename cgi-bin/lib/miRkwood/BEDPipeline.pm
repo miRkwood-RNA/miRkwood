@@ -86,6 +86,20 @@ sub run_pipeline {
 }
 
 
+=method create_additional_directories
+
+=cut
+sub create_additional_directories {
+    my ($self, @args) = @_;
+    mkdir $self->get_new_candidates_dir();
+    mkdir $self->get_known_candidates_dir();
+    mkdir $self->get_reads_dir();
+    mkdir $self->get_known_reads_dir();
+    mkdir $self->get_new_reads_dir();
+    return;
+}
+
+
 =method calculate_reads_coverage
 
   On the BED given by the user, calculate the read coverage, ie the 

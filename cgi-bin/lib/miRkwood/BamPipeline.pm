@@ -32,6 +32,17 @@ sub new {
     return $self;
 }
 
+
+=method create_additional_directories
+
+=cut
+sub create_additional_directories {
+    my ($self, @args) = @_;
+    mkdir $self->get_reads_dir();
+    return;
+}
+
+
 =method init_sequences
 
 =cut
@@ -54,7 +65,7 @@ sub serialize_candidates {
 
         $candidate->turn_relative_positions_into_absolute_positions();
         $candidate = $candidate->get_reads_from_bam_file($self->{'bam_file'});
-        miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
+        miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_reads_dir() );
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
 
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
