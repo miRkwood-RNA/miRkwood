@@ -136,7 +136,7 @@ miRkwood::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei
 # execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd =
-"perl -I$dirLib $perl_script $absolute_job_dir";
+"perl -I$dirLib $perl_script 'fasta' $absolute_job_dir";
 debug("Running perl script $cmd", 1);
 system($cmd);
 debug("Getting back from Perl script", 1);
