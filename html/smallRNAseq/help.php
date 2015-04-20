@@ -17,7 +17,7 @@
             
             <div class="main-full">
 
-<br /> <br />
+            <br /> <br />
 	      
             <p>This page is a user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>. This application allows to search for microRNAs in small RNA sequencing data in plants.</p>
             
@@ -164,9 +164,10 @@ finished. The email contains a link to access the results for 2 weeks.</p>
             
             <p>Known miRNAs are miRNAs that are already present in the miRBase database (version 21). We consider that a known microRNA is found in the data as soon as there is at least one read  on the precursor sequence.</p>
 
-
-	<img style='width:660px; display: block; margin: 0 auto;'src='../style/results_knownmirna.png' alt='results table' />
-		    
+            <br />
+            <img style='width:660px; display: block; margin: 0 auto;'src='../style/results_knownmirna.png' alt='results table' />
+            <br />
+        
             <p>The list of all known miRNAs found is displayed in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p> 
             
             <p><b>Chromosome:</b> Number of the chromosome.</p>           
@@ -184,7 +185,7 @@ finished. The email contains a link to access the results for 2 weeks.</p>
 
             <p><b>Reads:</b> Number of reads included in the locus.</p>
 
-	    <p><b>miRBAse name:</b> miRBase identifier.</p>
+            <p><b>miRBAse name:</b> miRBase identifier.</p>
 	    
             <p><b>2D structure:</b> You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href="http://varna.lri.fr/">Varna.</a></p>
                         
@@ -194,9 +195,10 @@ finished. The email contains a link to access the results for 2 weeks.</p>
             <p>Novel miRNAs are miRNAS that are not reported in miRBase.  The prediction is supported both
 	    by a significant read coverage  and the presence of a stem-loop secondary structure.</p> 
 
-
-	<img style='width:660px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
-	    
+            <br />
+            <img style='width:660px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
+            <br />
+      
             <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
             
             <p><b>Chromosome:</b> Number of the chromosome.</p>
@@ -226,7 +228,7 @@ finished. The email contains a link to access the results for 2 weeks.</p>
             
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (see <a href="">Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</p>
 
-	    <p><b>Reads:</b> Number of reads included in the locus</p>
+            <p><b>Reads:</b> Number of reads included in the locus</p>
 	    
             <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when an alignment between the candidate sequence and miRBase is found (see <a href="">Flag conserved mature miRNAs</a>). It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /><img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML or ODF report.</p>
             
@@ -279,7 +281,9 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 		<ul> 
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
                 <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
-
+                <br />
+Each <tt>**********</tt> string is a unique read. Its length and its depth (its number of occurrences in the set of reads) are reported at the end of the dotted line.
+<tt><------miRBase------> </tt>indicates the positions of the miRNA referenced in miRBase. 
 		</li>
             </ul>
 		
@@ -296,13 +300,6 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 ............................................................*********************... length=21 depth=16
 </pre>
 
-Each <tt>**********</tt> string is a unique read. Its length and its depth (its number of occurrences in the set of reads) are reported at the end of the dotted line.
-<tt><------miRBase------> indicates the positions of the miRNA referenced in miRBase.  
-		
-
-
-	    
-	    
             
             <h3 id='html_novel_mirnas'>HTML report for novel miRNAs</h3>
             
@@ -328,7 +325,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
             
             <p>The stem-loop structure of the miRNA precursor is also displayed with <a href="http://varna.lri.fr/">Varna.</a></p>
             
-            <img style='width:400px; display: block; margin: 0 auto;' src='../style/varna.png'' alt='Varna image' />
+            <img style='width:400px; display: block; margin: 0 auto;' src='../style/varna.png' alt='Varna image' />
 
 
 		<p><b> Reads</b></p>
@@ -336,6 +333,10 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 		<ul> 
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
                 <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
+<br />
+Each <tt>**********</tt> string is a unique read. Its length and its depth (the number of occurrences of this read  in the total set of reads) are reported at the end of the dotted line.  Each <tt><------miRBase------></tt> string indicates the existence of an alignmnent with a sequence from miRBase. More information on this alignment is provided in the sequel of the report, in Section <i>Conservation of the mature miRNA</i>.
+</li>
+</ul>
 
 <pre class='example'>
 Locus  : 1:234009-234092
@@ -350,7 +351,6 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 ............................................................*********************... length=21 depth=16
 </pre>
 
-Each <tt>**********</tt> string is a unique read. Its length and its depth (the number of occurrences of this read  in the total set of reads) are reported at the end of the dotted line.  Each <tt><------miRBase------> string indicates the existence of an alignmnent with a sequence from miRBase. More information on this alignment is provided in the sequel of the report, in Section <i>Conservation of the mature miRNA</i>.
 
 	    
             <p><b>Thermodynamics stability</b></p>
