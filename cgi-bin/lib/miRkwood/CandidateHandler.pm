@@ -208,7 +208,7 @@ sub print_reads_clouds {
 
         my $tag = '';
 
-        foreach my $line ( @$placed ){
+        foreach my $line ( @{$placed} ){
 
             $tag = '';
 
@@ -237,7 +237,7 @@ sub print_reads_clouds {
     my @sorted_positions = sort { miRkwood::Utils::get_element_of_split( $a, '-', 0 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 )
                                     ||
                                   miRkwood::Utils::get_element_of_split( $a, '-', 1 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 )
-                              } (keys %$reads);
+                              } (keys %{$reads});
 
     foreach my $position (@sorted_positions){
 

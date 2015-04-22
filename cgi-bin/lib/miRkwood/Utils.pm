@@ -46,6 +46,7 @@ sub cleanup_fasta_sequence {
     my $sequence = shift @args;
     $sequence =~ s/\r//g;
     $sequence = lc($sequence) . "\n";
+    return $sequence;
 }
 
 =method get_position_from_opposite_strand
@@ -144,9 +145,9 @@ given in parameter.
 =cut
 sub get_sequence_from_positions {
     my ($fasta, $chrom, $start, $end) = @_;
-                
+
     my %sequences = multifasta_to_hash( $fasta );
-    
+
     foreach my $key (keys%sequences){
         if ( $key =~ /([^_]+)_.*/ ){
             $sequences{$1} = $sequences{$key};
@@ -154,8 +155,8 @@ sub get_sequence_from_positions {
     }
 
     my $subSeq = substr $sequences{$chrom}, $start-1, ($end - $start);
-        
-    return $subSeq;   
+
+    return $subSeq;
 }
 
 
@@ -377,12 +378,12 @@ sub check_nb_sequences {
     my (@args) = @_;
     my $reference = shift @args;
     my $max_length = shift @args;
-    
+
     my @nb_sequences = $reference =~ />/g;
     if (scalar(@nb_sequences) == 0 or scalar(@nb_sequences) > 1 ){
         return 0;
     }
-  
+
     return 1;
 }
 
@@ -401,25 +402,25 @@ sub check_sequence_length {
     my (@args) = @_;
     my $reference = shift @args;
     my $max_length = shift @args;
-    
+
     my @lines = split /\n/smx, $reference;
-    my $sequence = "";
+    my $sequence = '';
     foreach (@lines) {
         chomp;
         if ( ! /^>/ ){
             $sequence .= $_;
         }
-    } 
+    }
     if (length($sequence) > $max_length){
         return 0;
-    }    
+    }
     return 1;
 }
 
 sub is_correct_BED_line {
     my (@args) = @_;
     my $line = shift @args;
-    
+
     if ( $line !~ /[^\t]+\t\d+\t\d+\t[^\t]+\t\d+\t[-+*]/ ){
         warn "[BED file] Problem with line $line.\n";
         return 0;
@@ -669,11 +670,11 @@ sub make_hairpin_with_mature {
 		  compute_mature_boundaries( $converted_left, $pseudo_size, $bottom );
 		my $bottom_mature = substr( $bottom, $true_left, $size );
 		my $lower_mature = substr( $lower, $true_left, $size );
-        if ($mode eq "html"){
+        if ($mode eq 'html'){
 			$bottom_mature = '<span class="mature">' . $bottom_mature . '</span>';
 			$lower_mature  = '<span class="mature">' . $lower_mature . '</span>';
 		}
-        elsif ($mode eq "ascii"){
+        elsif ($mode eq 'ascii'){
 			$bottom_mature = uc $bottom_mature;
 			$lower_mature  = uc $lower_mature;
 		}
@@ -685,11 +686,11 @@ sub make_hairpin_with_mature {
 		  compute_mature_boundaries( $left, $pseudo_size, $top );
 	    my $top_mature = substr( $top, $true_left, $size );
 		my $upper_mature = substr( $upper, $true_left, $size );
-        if ($mode eq "html"){
+        if ($mode eq 'html'){
 			$top_mature   = '<span class="mature">' . $top_mature . '</span>';
 			$upper_mature = '<span class="mature">' . $upper_mature . '</span>';
 		}
-        elsif ($mode eq "ascii"){
+        elsif ($mode eq 'ascii'){
 			$top_mature   = uc $top_mature;
 			$upper_mature = uc $upper_mature;
 		}
@@ -786,7 +787,7 @@ sub restrict_num_decimal_digits {
 
 		# there are $digs_to_cut or
 		# more digits after the decimal point
-		$num = sprintf( "%." . ( $digs_to_cut - 1 ) . "f", $num );
+		$num = sprintf( '%.' . ( $digs_to_cut - 1 ) . 'f', $num );
 	}
 	return $num;
 }
@@ -930,14 +931,14 @@ sub make_Vienna_viz {
 sub create_mirbase_tag {
     my @args = @_;
     my $start_a = shift @args;
-    my $end_a = shift @args;    
+    my $end_a = shift @args;
 
     my $i;
-    my $msg = "";    
+    my $msg = '';
 
     my $length = $end_a - $start_a - 9;
     my ($space_left, $space_right);
-    
+
     if ($length % 2 == 0 ){
         $space_left = $length / 2;
     }
@@ -945,28 +946,28 @@ sub create_mirbase_tag {
         $space_left = int ( $length / 2 ) +1;
     }
     $space_right = $length - $space_left;
-    
-    $msg .= "<";
+
+    $msg .= '<';
     for ($i = 0; $i < $space_left ; $i++){
-        $msg .= "-";
+        $msg .= '-';
     }
-    $msg .= "miRBase";
+    $msg .= 'miRBase';
     for ($i = 0; $i < $space_right +1 ; $i++){
-        $msg .= "-";
+        $msg .= '-';
     }
-    $msg .= ">";
-    
-    return $msg;   
-    
+    $msg .= '>';
+
+    return $msg;
+
 }
 
 sub mirbase_tags_overlapping {
 
     my ($first_alignment, $second_alignment) = @_;
-    
+
     my $end_first_tag    = get_element_of_split( $first_alignment, '-', 1);
-    my $start_second_tag = get_element_of_split( $second_alignment, '-', 0);   
-    
+    my $start_second_tag = get_element_of_split( $second_alignment, '-', 0);
+
     if ( $end_first_tag < $start_second_tag ){
         return 0;
     }
@@ -990,7 +991,7 @@ sub truncate_reads_out_of_candidate {
     my ( $reads, $start_candidate, $end_candidate ) = @_;
     my $truncated_reads = {};
 
-    foreach my $position ( keys %$reads ){
+    foreach my $position ( keys %{$reads} ){
         my $start_read = get_element_of_split( $position, '-', 0);
         my $end_read   = get_element_of_split( $position, '-', 1);
 

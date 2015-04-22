@@ -61,7 +61,7 @@ sub run_pipeline {
 
     # Look for new miRNAs
     debug( 'Treat new miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
-  
+
     $self->list_chrom_in_bed();
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
@@ -330,7 +330,7 @@ sub store_known_mirnas_as_candidate_objects {
     if ( ! -r $self->{'mirna_bed'} or ! -s $self->{'mirna_bed'} ){
         debug( "No reads corresponding to known miRNAs for $species", miRkwood->DEBUG() );
         return;
-    }    
+    }
     if ( ! -r $gff_file ){
         debug("No miRBase file for $species.", miRkwood->DEBUG() );
         return;
