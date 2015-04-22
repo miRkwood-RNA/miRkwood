@@ -35,33 +35,6 @@ sub get_parsed_bed {
 	return $this->{'parsed_bed'};
 }
 
-sub build_loci {
-	my $this = shift;
-    my $average_coverage = shift;
-	my ($reads, $parsed_bed) = $this->get_read_distribution_from_bed($this->{'bed_file'});
-	$this->{'parsed_bed'} = $parsed_bed;
-	my $trains_hash = $this->get_trains($reads);
-
-	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
-	$cluster_job->init_from_clustering($this);
-	my $spikes = $cluster_job->extract_spike_train($trains_hash);
-
-	undef $trains_hash;
-
-	my $putative_miRna = $cluster_job->process_spikes($spikes);
-
-	undef $spikes;
-
-	my $loci = $cluster_job->compute_candidate_precursors_from_miRnaPos($putative_miRna, $average_coverage, $this->{'loci_read_coverage_threshold'},
-                $this->{'peak_padding'}, $parsed_bed);
-
-	undef $putative_miRna;
-
-	miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterBuilder : build_loci' );
-
-	return $loci;
-}
-
 
 sub build_loci_per_chr {
     my ($this, @args) = @_;
@@ -208,7 +181,7 @@ sub __get_read_distribution_from_bam_for_chr {
 }
 
 
-=method get_read_distribution_from_bed
+=method get_read_distribution_per_chr_from_bed
 
 Retrieve the reads from a miRkwood-normalized bed file. The bed file must have the following columns (tab-separated):
 # 0: chromosome name,
@@ -218,80 +191,17 @@ Retrieve the reads from a miRkwood-normalized bed file. The bed file must have t
 # 4: depth (integer)
 # 5: strand ('+' or '-')
 
- Usage : my $reads = $self->get_read_distribution_from_bed('reads.bed'),
+ Usage : my $reads = $self->get_read_distribution_per_chr_from_bed('reads.bed', $chr),
  Input : The bed file path
- Return: A hash reference {chr => {
+ Return: A hash reference {
 					begin_pos => {
 						read_count => read depth,
 						end => maximum end coordinates of all reads starting at begin_pos,
 						forward_read_count => read depth of reads mapped onto forward strand
 						}
 					}
-				}
 
 =cut
-sub get_read_distribution_from_bed {
-    my ($this, $bed_file) = @_;
-    my %reads = ();
-    my %parsed_reads = ();
-    foreach my $chr (keys %{$this->{chr_info}}) {
-		$reads{$chr} = [];
-		$parsed_reads{$chr} = {'+' => [], '-' => []};
-    }
-    open( my $HANDLE, '<', $bed_file) or die "Can't open '$bed_file': $!";
-    while (<$HANDLE>) {
-		# First data structure
-        chomp;
-        my @fields = split( /\t/ );
-        if (scalar @fields != 6) {
-			next;
-        }
-        my $pos = $fields[1];
-        my $strand = $fields[5];
-        if ($strand ne '+' && $strand ne '-') {
-			die ("Error while parsing bed: Incorrect strand, expected '+' or '-', got '$strand'.");
-		}
-        my $end = $fields[2];
-        my $chr = $fields[0];
-        my $depth = $fields[4];
-        if (scalar @{$reads{$chr}} && $reads{$chr}[-1]{'begin'} == $pos) {
-			my $locus = $reads{$chr}[-1];
-			if ($locus->{'begin'} == $pos) {
-				$locus->{'read_count'} += $depth;
-				$locus->{'end'} = $end if $end > $locus->{'end'};
-				$locus->{'forward_read_count'} += $depth if $strand eq '+';
-			}
-        }
-        else {
-			push @{$reads{$chr}}, { 'begin' => $pos,
-									'read_count' => $depth,
-									'end' => $end,
-									'forward_read_count' => ($strand eq '+') ? $depth : 0};
-        }
-        # Second data structure
-        my $added = 0;
-        if (scalar @{$parsed_reads{$chr}{$strand}}) {
-			my $read_ref = $parsed_reads{$chr}{$strand}[-1];
-			if ($read_ref->{'begin'} == $pos) {
-				$read_ref->{'depth'} += $depth;
-				if (defined $read_ref->{'ends'}{$end}) {
-					$read_ref->{'ends'}{$end}+=$depth;
-				}
-				else {
-					$read_ref->{'ends'}{$end} = $depth;
-				}
-				$added = 1;
-			}
-        }
-        if ($added == 0) {
-			push @{$parsed_reads{$chr}{$strand}}, {'begin' => $pos, 'depth' => $depth, 'ends' => {$end => $depth}};
-        }
-    }
-    close $HANDLE;
-    return (\%reads, \%parsed_reads);
-}
-
-
 sub get_read_distribution_per_chr_from_bed {
     my ($this, $bed_file, $chromosome) = @_;
     my $reads = [];

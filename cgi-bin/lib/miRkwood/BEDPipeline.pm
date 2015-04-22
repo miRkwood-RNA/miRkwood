@@ -25,7 +25,6 @@ Constructor
 sub new {
     my ( $class, @args ) = @_;
     my ($job_dir, $bed_file, $genome_file) = @args;
-    #~ my %genome_db = miRkwood::Utils::multifasta_to_hash( $genome_file );
     my $self = {
         job_dir     => $job_dir,
         initial_bed => $bed_file,       # this is for the non filtered BED provided by the user
@@ -62,9 +61,7 @@ sub run_pipeline {
 
     # Look for new miRNAs
     debug( 'Treat new miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
-    
-# Start new way of doing (chromosome by chromosome)
-# Comment out the following lines to go back to the previous version    
+  
     $self->list_chrom_in_bed();
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
@@ -72,11 +69,6 @@ sub run_pipeline {
         $self->init_sequences_per_chr( $chromosome );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
     }
-# End new way of doing
-
-# Un-comment out the two following lines to go back to previous version
-    #~ $self->init_sequences();
-    #~ $self->run_pipeline_on_sequences();
 
     $self->mark_job_as_finished();
 
@@ -204,29 +196,13 @@ sub list_chrom_in_bed {
     my @sorted_list = sort( keys( %list_chromosomes ) );
     $self->{'chromosomes_in_bed'} = \@sorted_list;
 
-}
-
-
-=method init_sequences
-
-=cut
-# SEB BEGIN
-sub init_sequences {
-    my ($self, @args) = @_;
-    debug( 'Extracting sequences from genome using BED clusters', miRkwood->DEBUG() );
-    my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});   
-    $self->{'sequences'} = $clustering->build_loci( $self->{'average_coverage'} );
-    $self->{'parsed_reads'} = $clustering->get_parsed_bed();
-    miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : init_sequences()');
     return;
 }
-# SEB END
 
 
 =method init_sequences_per_chr
 
 =cut
-# SEB BEGIN
 sub init_sequences_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
@@ -237,7 +213,6 @@ sub init_sequences_per_chr {
     miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : init_sequences_per_chr()');
     return;
 }
-# SEB END
 
 
 sub run_pipeline_on_sequences_per_chr {
@@ -253,57 +228,6 @@ sub run_pipeline_on_sequences_per_chr {
     $self->compute_candidates_per_chr( $chromosome );
 
     $self->serialize_basic_candidates( 'basic_candidates' );
-
-    return;
-}
-
-
-=method compute_candidates
-
-=cut
-
-sub compute_candidates {
-    my ($self, @args) = @_;
-
-    my $sequence_identifier = 0;
-
-    # Look for new miRNAs
-    foreach my $chr (keys %{ $self->{'sequences'} }) {
-        debug( "- Considering chromosome $chr", miRkwood->DEBUG() );
-        my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
-        my $loci_for_chr = $self->{'sequences'}->{$chr};
-        my @hairpin_candidates_for_chr = ();
-        foreach my $locus (@{$loci_for_chr}) {
-            debug( "  - Considering sequence $sequence_identifier", miRkwood->DEBUG() );
-            $sequence_identifier++;
-            push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
-
-            #~ miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)' );  # /!\ WARNING : comment this line for web pipeline
-        }
-        undef $hairpinBuilder;
-
-        my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
-
-        undef @hairpin_candidates_for_chr;
-
-        if ( scalar(@sorted_hairpin_candidates_for_chr) ){
-            my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chr, $chr );
-
-            # Merge candidates
-            my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
-
-            # Posteriori tests and update candidate information
-            my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
-
-            undef $candidates_hash;
-
-            $self->serialize_candidates($final_candidates_hash);
-
-            miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (sort candidates)' );
-
-            undef $final_candidates_hash;
-        }
-    }
 
     return;
 }
@@ -359,11 +283,8 @@ sub serialize_candidates {
     my @candidates_array = @{$candidates};
 
     foreach my $candidate (@candidates_array ) {
-
-        #~ $candidate = $candidate->get_reads_from_bed_file($self->{'bed_file'});
         miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
         miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
-
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
     return;

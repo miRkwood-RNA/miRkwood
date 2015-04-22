@@ -43,10 +43,8 @@ Constructor
 
 sub new {
     my ( $class,
-    #~ $workspace_dir, 
     $genome_db ) = @_;
     my $self = bless {
-        #~ workspace_dir => $workspace_dir,
         genome_db => $genome_db
     }, $class;
     return $self;
@@ -55,7 +53,6 @@ sub new {
 
 sub init_from_clustering {
 	my ($this, $clustering) = @_;
-	#~ $this->{genome_file} = $clustering->{'genome_file'};
 	$this->{chr_info} = $clustering->{'chr_info'};
 	$this->{accepting_time} = $clustering->{'accepting_time'};
     return;
@@ -65,9 +62,7 @@ sub init_from_clustering {
 # gets the sequence. start starts at 0. end is excluded
 sub get_sub_sequence {
 	my ($this, $chr, $start, $end) = @_;
-	# Chr1, 1, 1
 	return $this->{'genome_db'}->seq($chr, $start+1, $end, 1);
-	#~ return substr($this->{'genome_db'}{$chr}, $start, $end-$start);
 }
 
 
@@ -76,18 +71,6 @@ sub display_chr_coordinatees {
 	return $chr. ':' . ($begin+1) . '-' . $end;
 }
 
-
-sub extract_spike_train {
-	my $this = shift;
-	my $trains_per_chr = shift;
-
-	my %spikes = ();
-
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		$spikes{$chr} = $this->extract_spike_train_per_chr($trains_per_chr->{$chr});
-	}
-	return \%spikes;
-}
 
 sub extract_spike_train_per_chr {
 	my $this = shift;
@@ -411,7 +394,7 @@ sub process_spikes_for_chr {
 	#~ , $stats
 	#~ STAT END
 	) = @_;
-	$this->{detector} = MiRnaDuplexDetector::MiRnaDetector->new(5000);  #VOIE2    # Comment out to go back to the previous version
+	$this->{detector} = MiRnaDuplexDetector::MiRnaDetector->new(5000);
 	my $accepting_time = $this->{accepting_time};
 	my @miRnaPos = (); # Array of [5p, 3p]
 	my $genome = $this->{'genome_db'};
@@ -424,7 +407,6 @@ sub process_spikes_for_chr {
 	my $enlarging = max($window_length, $accepting_time);
 	#~ my $min_error_for_single_spike = $detector->miRnaHigherScoreThreshold();
 	#~ my $min_error_for_two_spikes = $detector->miRnaLowerScoreThreshold();
-
 
 	foreach my $current_spike_entry (@{$spikes_for_chr}) {
 		my $current_spike = $current_spike_entry->{'spike'};
@@ -489,41 +471,6 @@ sub process_spikes_for_chr {
 	#~ $detector->setMiRnaMinErrorsThreshold($min_error_for_single_spike);
     miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterJobSebastien : process_spikes_for_chr' );
 	return \@miRnaPos;
-}
-
-
-=method compute_candidate_precursors_from_miRnaPos
-
-Computes candidate precursors based miRNA candidates. This is made by adding 100 nt on both sides of the miRna couple.
-Regions that overlap by more than 60% are merged together.
-
- Usage : my $candidate_precursors = $self->compute_candidate_precursors_from_miRnaPos($miRnas);
- Input : The miRNAs returned by process_window_spikes
- Return: A hash ref {
-			chr => [array of precursors {
-				begin => start position (1-based)
-				end => end position (excluded)
-				strand => '+' or '-'
-				miRnas => [] Array reference of miRNA candidates contained in the precursor. Picked from $miRnas.
-				}]
-			}
-
-=cut
-sub compute_candidate_precursors_from_miRnaPos {
-	my $this = shift;
-	my $miRnaPosPerChr = shift;
-    my $average_coverage = shift;
-	my $read_coverage_threshold = shift;
-	my $peak_padding = shift;
-	my $parsed_bed = shift;
-	my %candidate_region = ();
-
-	foreach my $chr (keys %{ $this->{chr_info} }) {
-		my $miRnaPos = $miRnaPosPerChr->{$chr};
-		$candidate_region{$chr} = compute_candidate_precursors_from_miRnaPos_for_chr($chr, $miRnaPos, $this->{chr_info}{$chr}, $average_coverage,
-		$read_coverage_threshold, $peak_padding, $parsed_bed);
-	}
-	return \%candidate_region;
 }
 
 
@@ -624,9 +571,23 @@ sub merge_overlapping_regions {
 
 Static private helper function. You shouldnt use this function.
 
+Computes candidate precursors based miRNA candidates. This is made by adding 100 nt on both sides of the miRna couple.
+Regions that overlap by more than 60% are merged together.
+
+ Usage : my $candidate_precursors = $self->compute_candidate_precursors_from_miRnaPos($miRnas);
+ Input : The miRNAs returned by process_window_spikes
+ Return: A hash ref {
+			chr => [array of precursors {
+				begin => start position (1-based)
+				end => end position (excluded)
+				strand => '+' or '-'
+				miRnas => [] Array reference of miRNA candidates contained in the precursor. Picked from $miRnas.
+				}]
+			}
+
 =cut
 sub compute_candidate_precursors_from_miRnaPos_for_chr {
-	my $this = shift;   #VOIE2    # Comment out to go back to the previous version
+	my $this = shift;
 	my $chr = shift;
 	my $miRnaPos = shift;
 	my $chr_length = shift;
@@ -645,8 +606,7 @@ sub compute_candidate_precursors_from_miRnaPos_for_chr {
 		my $region_begin = max(0, $current_miRna->{first}{'begin'}-$peak_padding);
 		my $region_end = min($chr_length, $current_miRna->{second}{'end'}+$peak_padding);
 		my $threshold = ( $region_end - $region_begin - 19 ) / $average_coverage;
-		my $final_threshold = max( $read_coverage_threshold, $threshold );   # Un-comment out to come back to variable threshold
-		#~ my $final_threshold = 10;;   # Comment out to come back to variable threshold
+		my $final_threshold = max( $read_coverage_threshold, $threshold );
 		if (miRkwood::HairpinBuilder::get_contained_read_coverage($parsed_bed, $chr, $region_begin, $region_end, $current_miRna->{'strand'})
 		< $final_threshold) {
 			next;

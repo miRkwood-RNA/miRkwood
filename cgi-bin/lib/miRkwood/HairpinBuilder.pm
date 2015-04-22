@@ -168,8 +168,7 @@ sub process_RNAstemloop_on_filenames {
 
 sub get_contained_read_coverage {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
-	#~ my $reads = $parsed_bed->{$chr}{$strand};    # Un-comment out to go back to the previous version
-	my $reads = $parsed_bed->{$strand}; #VOIE2    # Comment out to go back to the previous version
+	my $reads = $parsed_bed->{$strand};
 
 	my $low = miRkwood::CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
 	if ($low == scalar @{$reads}) {
@@ -194,8 +193,7 @@ sub get_contained_read_coverage {
 
 sub get_contained_reads {
 	my ($parsed_bed, $chr, $region_begin, $region_end, $strand) = @_;
-	#~ my $reads = $parsed_bed->{$chr}{$strand};    # Un-comment out to go back to the previous version
-	my $reads = $parsed_bed->{$strand}; #VOIE2    # Comment out to go back to the previous version
+	my $reads = $parsed_bed->{$strand};
 
 	my $low = miRkwood::CppBinarySearch::lower_bound($reads, 0, scalar @{$reads}, $region_begin);
 	if ($low == scalar @{$reads}) {
