@@ -327,6 +327,10 @@ sub store_known_mirnas_as_candidate_objects {
     my $mature_reads;
     my $data;
 
+    if ( ! -r $self->{'mirna_bed'} or ! -s $self->{'mirna_bed'} ){
+        debug( "No reads corresponding to known miRNAs for $species", miRkwood->DEBUG() );
+        return;
+    }    
     if ( ! -r $gff_file ){
         debug("No miRBase file for $species.", miRkwood->DEBUG() );
         return;
