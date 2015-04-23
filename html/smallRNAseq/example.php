@@ -89,7 +89,7 @@
                     </li>
 
                     <li> 
-                        <i> Novel miRNAs: </i> 31 <br> <br>
+                        <i> Novel miRNAs: </i> 21 <br> <br>
                         miRkwood finds 31 new miRNAs that have not
                         been previously  reported in miRbase and that are supported by a significant
                         read coverage  and a stemloop secondary structure. <br> <br> 
