@@ -41,12 +41,15 @@ if ( $valid ){
 
     my $results_page  = 'nonImplemented.pl';
     my $res_arguments = '?run_id=' . $jobId;
+    my $mode = '';
 
     if ( $jobId =~ /BAM/ ){
-        $results_page  = 'BAMresults.pl'
+        $results_page  = 'BAMresults.pl';
+        $mode = 'WebBAM';
     }
     else {
         $results_page  = 'resultsWithID.pl';
+        $mode = 'fasta';
     }
 
     my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);
@@ -56,7 +59,7 @@ if ( $valid ){
 
     if ( miRkwood::Results->is_job_finished($jobId) ) {
         if ( $mail ne q{} ) {
-            miRkwood::WebTemplate::send_email($mail, $jobId, $nameJob);
+            miRkwood::WebTemplate::send_email($mode, $mail, $jobId, $nameJob);
         }
         print $html->redirect( -uri => $results_url )
           or die("Error when redirecting: $!");

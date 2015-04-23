@@ -273,6 +273,7 @@ END_TXT
 
 sub send_email {
     my @args  = @_;
+    my $mode  = shift @args;    # should be 'fasta' or 'WebBAM'
     my $to    = shift @args;
     my $jobId = shift @args;
     my $title = ' ';
@@ -281,7 +282,13 @@ sub send_email {
     }
     require MIME::Lite;
 
-    my $results_page  = 'resultsWithID.pl';
+    my $results_page  = '';
+    if ( $mode eq 'WebBAM' ){
+        $results_page = 'BAMresults.pl';
+    }
+    else{
+        $results_page  = 'resultsWithID.pl';
+    }
     my $results_baseurl = get_cgi_url($results_page);
 
     my $from = 'mirkwood@univ-lille1.fr';
