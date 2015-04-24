@@ -8,6 +8,7 @@ use warnings;
 use parent 'miRkwood::ResultsExporter::ResultsExporter';
 
 use miRkwood::Candidate;
+use miRkwood::Utils;
 
 sub get_headers {
     my ( $self, @args ) = @_;
@@ -19,8 +20,18 @@ sub get_headers {
 
 sub get_header {
     my ( $self, @args ) = @_;
-    my $output .= "<tr>";
-    for my $header ( ('name'), $self->get_headers() ) {
+    my $type = shift @args;
+    my @headers = $self->get_headers();
+    if ( $type eq 'Known' ){
+        @headers = miRkwood::Utils::delete_element_in_array( 'alignment', \@headers );
+        @headers = miRkwood::Utils::delete_element_in_array( 'shuffles', \@headers );
+        @headers = miRkwood::Utils::delete_element_in_array( 'mfe', \@headers );
+        @headers = miRkwood::Utils::delete_element_in_array( 'mfei', \@headers );
+        @headers = miRkwood::Utils::delete_element_in_array( 'amfe', \@headers );
+        push @headers, 'precursor_name';
+    }    
+    my $output .= '<tr>';
+    for my $header ( ('name'), @headers ) {
 
         $output .= "<th>$header</th>\n";
     }
@@ -35,16 +46,22 @@ sub export_candidate {
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
     $output .= "<td>$contents</td>\n";
-    for my $header ($self->get_headers()) {
-        my $td_content = "";
+    my @headers = $self->get_headers();
+    if ( defined( $candidate->{'precursor_name'} ) ){
+        @headers = miRkwood::Utils::delete_element_in_array( 'alignment', \@headers );
+        @headers = miRkwood::Utils::delete_element_in_array( 'shuffles', \@headers );
+        push @headers, 'precursor_name';
+    }
+    for my $header ( @headers ) {
+        my $td_content = '';
         my $contents   = ${$candidate}{$header};
-        if ($header eq "reads"){
+        if ($header eq 'reads'){
             $contents = 0;
             foreach my $key (keys( %{$candidate->{'reads'}} )){
                 $contents += $candidate->{'reads'}{$key};
             }
         }
-        elsif ($header eq "quality"){
+        elsif ($header eq 'quality'){
             $contents = '<center><font color="#FF8000">';
             for (my $i = 0; $i < ${$candidate}{"quality"}; $i++){
                 $contents .= "*";
@@ -71,7 +88,11 @@ sub perform_export{
 
     $output .= "<table>\n<tbody>";
 
-    $output .= $self->get_header();
+    my $type = 'New';
+    if ( defined( $results{$keys[0]}->{'precursor_name'} ) ){
+        $type = 'Known';
+    }
+    $output .= $self->get_header( $type );
 
     foreach my $key (@keys) {
         if ( $self->is_sequence_to_export($key)){
