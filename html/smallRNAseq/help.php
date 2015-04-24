@@ -210,7 +210,7 @@ finished. The email contains a link to access the results for 2 weeks.</p>
 	    by a significant read coverage  and the presence of a stem-loop secondary structure.</p> 
 
             <br />
-            <img style='width:660px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
+            <img style='width:660px; display: block; margin: 0 auto;'src='../style/novelmirna.png' alt='results table' />
             <br />
       
             <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
