@@ -21,7 +21,9 @@ do
     p)  PATH=1
         ROOT_PATH="$OPTARG"
         ;;
-    ?)  printf "Usage : %s <-c> [-p mirkwood_path]\n" "$0" >&2
+    ?)  printf "Usage : %s [-c] -p <mirkwood_path>\n" "$0"
+        printf "   -c : install only requirements for CLI version\n"
+        printf "   -p <mirkwood_path> : path to miRkwood directory\n" 
         exit 2
         ;;
     esac
@@ -30,7 +32,9 @@ done
 if [ ! "$PATH" ]
 then
     echo "No path supplied"
-	printf "Usage : %s <-c> [-p mirkwood_path]\n" "$0"
+	printf "Usage : %s [-c] -p <mirkwood_path>\n" "$0"
+    printf "   -c : install only requirements for CLI version\n"
+    printf "   -p <mirkwood_path> : path to miRkwood directory\n" 
 	exit 1   
 fi
 
