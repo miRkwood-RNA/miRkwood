@@ -6,83 +6,156 @@
 # You need to run this script in super-user mode.
 
 
-if [ -z "$1" ]
-  then
-    echo "No argument supplied"
-	echo "Usage: `basename $0` <PATH>"
-	exit 1
+
+########## Get options ###################################################################
+WEB_ONLY=
+CLI_ONLY=
+PATH=
+ROOT_PATH=
+
+while getopts 'cp:' OPTION
+do
+    case $OPTION in
+    c)  CLI_ONLY=1
+        ;;
+    p)  PATH=1
+        ROOT_PATH="$OPTARG"
+        ;;
+    ?)  printf "Usage : %s <-c> [-p mirkwood_path]\n" "$0" >&2
+        exit 2
+        ;;
+    esac
+done
+
+if [ ! "$PATH" ]
+then
+    echo "No path supplied"
+	printf "Usage : %s <-c> [-p mirkwood_path]\n" "$0"
+	exit 1   
 fi
-ROOT_PATH=$(readlink -f $1)
+
+
 cd $ROOT_PATH
 
-### Look for the architecture
+
+########## Look for the architecture #####################################################
 ARCH=`uname -m`
 
 
 
-##### Prerequisites
+########## Prerequisites #################################################################
 
-### Make sure 'make' is installed
+echo "Check prerequisites"
+
+##### Make sure 'make' is installed
 MAKE=/usr/bin/make
 if [ ! -e $MAKE ]
 then
+    echo "... Install make"
     sudo apt-get install make
 else
-    echo "make is already installed"
+    echo "... make is already installed"
 fi
 
 
-### Make sure compiler 'g++' is installed
+##### Make sure compiler 'g++' is installed
 GCOMP=/usr/bin/g++
 if [ ! -e $GCOMP ]
 then
+    echo "... Install g++"
     sudo apt-get install g++
 else
-    echo "g++ is already installed"
+    echo "... g++ is already installed"
 fi
 
 
-### Make sure 'unzip' is installed
+##### Make sure 'unzip' is installed
 UNZIP=/usr/bin/unzip
 if [ ! -e $UNZIP ]
 then
+    echo "... Install unzip"
     sudo apt-get install unzip
 else
-    echo "unzip is already installed"
+    echo "... unzip is already installed"
 fi
 
 
 
-##### Install dependencies for both web version and CLI version of miRkwood
+########## Create directories ############################################################
 
-### Install Vienna package
+echo "Create directories"
+
+##### Create results directory
+echo "... Create results directory "
+mkdir /home/vagrant/results
+chmod -R +w ~/results
+
+
+##### Create cgi-bin directory
+echo "... Create cgi-bin directory"
+mkdir -p /bio1/www/cgi-bin/
+
+
+##### Link it to vagrant cgi-bin directory
+echo "... Link it to vagrant cgi-bin directory"
+ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
+
+
+##### Create html directory
+echo "... Create html directory"
+mkdir -p /bio1/www/html/
+
+
+##### Link it to vagrant html directory
+echo "... Link it to vagrant html directory"
+ln -s /vagrant/html /bio1/www/html/mirkwood/
+
+
+##### Link results directory
+echo "... Link results directory"
+ln -s /home/vagrant/ /bio1/www/html/mirkwood/results/
+
+
+
+########## Install dependencies for both web version and CLI version of miRkwood #########
+
+echo "Install dependencies for both web version and CLI version of miRkwood"
+
+##### Install Vienna package
+echo "... Install Vienna package"
 cp provisioning/roles/mirkwood-software/files/vienna-rna_2.1.6-1_amd64.deb /tmp/vienna-rna_2.1.6-1_amd64.deb
 dpkg -i /tmp/vienna-rna_2.1.6-1_amd64.deb
 ln -s /usr/share/ViennaRNA/bin/b2ct /usr/bin/b2ct
 
 
-### Install build-essential
+##### Install build-essential
+echo "... Install build-essential"
 sudo apt-get install build-essential
 
 
-### Install samtools
+##### Install samtools
+echo "... Install samtools"
 sudo apt-get install samtools
 
 
-### Install bedtools
+##### Install bedtools
+echo "... Install bedtools"
 sudo apt-get install bedtools
 
 
-### Install NCBI Blast+
+##### Install NCBI Blast+
+echo "... Install ncbi-blast+"
 sudo apt-get install ncbi-blast+
 
 
-### Install miRdup
+##### Install miRdup
+echo "... Install miRdup"
 wget --directory-prefix=/tmp/ http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.2.zip
 unzip -qq /tmp/miRdup_1.2.zip -d /opt/miRdup
 
 
-### Install VARNA
+##### Install VARNA
+echo "... Install VARNA"
 # Ensure the Java Runtime Environment is installed
 sudo apt-get install default-jre
 
@@ -90,7 +163,8 @@ sudo apt-get install default-jre
 wget --directory-prefix=/opt/ http://varna.lri.fr/bin/VARNAv3-91.jar
 
 
-### Install tRNAscan-SE (only needed for ab initio pipeline)
+##### Install tRNAscan-SE (only needed for ab initio pipeline)
+echo "... Install tRNAscan-SE"
 # Download and extract tRNAscan-SE archive
 wget --directory-prefix=/tmp/ http://lowelab.ucsc.edu/software/tRNAscan-SE.tar.gz
 tar xf /tmp/tRNAscan-SE.tar.gz --directory /tmp
@@ -106,7 +180,8 @@ make install --directory=/tmp/tRNAscan-SE-1.3.1/
 chown -R www-data:www-data "/opt/tRNAscan-SE"
 
 
-### Install RNAmmer (only needed for ab initio pipeline)
+##### Install RNAmmer (only needed for ab initio pipeline)
+echo "... Install RNAmmer"
 # Install hmmer
 wget --directory-prefix=/tmp/  http://selab.janelia.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
 cd /opt/hmmer-2.3.2/
@@ -140,7 +215,8 @@ sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/
 chown -R www-data:www-data "/opt/RNAmmer"
 
 
-### Install RNAshuffles
+##### Install RNAshuffles
+echo "... Install RNAshuffles"
 # Ensure Python pip is installed
 sudo apt-get install python-pip
 
@@ -151,7 +227,8 @@ cp -r $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnashuffles /opt/
 pip /opt/rnashuffles
 
 
-### Install Perl dependencies
+##### Install Perl dependencies
+echo "... Install Perl dependencies via apt"
 sudo apt-get install libtest-file-perl
 sudo apt-get install libtest-exception-perl
 sudo apt-get install libtap-formatter-junit-perl
@@ -166,109 +243,103 @@ sudo apt-get install libfile-slurp-perl
 sudo apt-get install libarchive-zip-perl
 
 # Ensure cpanm is available
+echo "... Install cpanm"
 sudo apt-get install cpanminus
 
 # Install Perl dependencies from CPAN
+echo "... Install Perl dependencies from CPAN"
 sudo cpanm ODF::lpOD
 sudo cpanm Inline::CPP
 sudo cpanm Bio::DB::Fasta
 
 
-### Instal local RNAstemloop
+##### Instal local RNAstemloop
+echo "... Install local RNAstemloop"
 RNAstemloop=$ROOT_PATH"/cgi-bin/programs/RNAstemloop"
 ln -s $RNAstemloop"-"$ARCH $RNAstemloop
 
 
-### Create symbolic links for programs
+##### Create symbolic links for programs
+echo "... Install Create symbolic links for programs"
 ln -s "/opt/VARNAv3-91.jar" $ROOT_PATH"/cgi-bin/programs/VARNA.jar"
 ln -s "/opt/miRdup" $ROOT_PATH"/cgi-bin/programs/miRdup-1.2"
 ln -s "/opt/tRNAscan-SE" $ROOT_PATH"/cgi-bin/programs/tRNAscan-SE"
 ln -s "/opt/RNAmmer" $ROOT_PATH"/cgi-bin/programs/rnammer"
 
 
-### Deploy miRkwood data
+##### Deploy miRkwood data
+echo "... Deploy miRkwood data"
 sh $ROOT_PATH/cgi-bin/install-data.sh $ROOT_PATH/cgi-bin/data
 
 
-### Create results directory
-mkdir /home/vagrant/results
-chmod -R +w ~/results
+
+########## Requirements to run miRkwood web-service locally ##############################
+
+if [ ! "$CLI_ONLY" ]
+then
+    echo "Requirements to run miRkwood web-service locally"
+
+    ##### Install Apache (only needed for the Web service)
+    echo "... Install Apache"
+    sudo apt-get install apache2
 
 
-
-##### Requirements to run miRkwood web-service locally
-
-### Install Apache (only needed for the Web service)
-sudo apt-get install apache2
+    ##### Install PHP (only needed for the Web service)
+    echo "... Install PHP"
+    sudo apt-get install libapache2-mod-php5
 
 
-### Install PHP (only needed for the Web service)
-sudo apt-get install libapache2-mod-php5
+    ##### BioInfo virtual host
+    echo "... BioInfo virtual host"
+    cp $ROOT_PATH/provisioning/roles/bioinfo/files/bioinfo.conf /etc/apache2/sites-available/bioinfo.conf
+    sudo service apache2 restart
 
 
-### BioInfo virtual host
-cp $ROOT_PATH/provisioning/roles/bioinfo/files/bioinfo.conf /etc/apache2/sites-available/bioinfo.conf
-sudo service apache2 restart
+    ##### Enable BioInfo virtualhost
+    echo "... Enable BioInfo virtualhost"
+    ln -s /etc/apache2/sites-available/bioinfo.conf /etc/apache2/sites-enabled/bioinfo
+    sudo service apache2 restart
 
 
-### Enable BioInfo virtualhost
-ln -s /etc/apache2/sites-available/bioinfo.conf /etc/apache2/sites-enabled/bioinfo
-sudo service apache2 restart
+    ##### Disable default Apache virtualhost
+    echo "... Disable default Apache virtualhost"
+    sudo rm -Rf /etc/apache2/sites-enabled/000-default
+    sudo service apache2 restart
 
 
-### Disable default Apache virtualhost
-sudo rm -Rf /etc/apache2/sites-enabled/000-default
-sudo service apache2 restart
+    ##### Make style directory
+    echo "... Make style directory"
+    mkdir /bio1/www/html/Style
 
 
-### Create cgi-bin directory
-mkdir -p /bio1/www/cgi-bin/
+    ##### Get BioInfo CSS
+    echo "... Get BioInfo CSS"
+    wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/bioinfo.css
 
 
-### Link it to vagrant cgi-bin directory
-ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
+    ##### Get Bonsai logo
+    echo "... Get Bonsai logo"
+    wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/logo.png
 
 
-### Create html directory
-mkdir -p /bio1/www/html/
+    ##### Make style sub directory
+    echo "... Make style sub directory"
+    mkdir /bio1/www/html/Style/css
 
 
-### Link it to vagrant cgi-bin directory
-ln -s /vagrant/html /bio1/www/html/mirkwood/
+    ##### Get BioInfo CSS
+    echo "... Get BioInfo CSS"
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/box_homepage.css
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/divers.css
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/footer.css
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/header.css
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_left.css
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/page_theme.css
+    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/table.css
 
 
-### Link results directory
-ln -s /home/vagrant/ /bio1/www/html/mirkwood/results/
+    ##### Get BioInfo main page
+    echo "... Get BioInfo main page"
+    wget --directory-prefix=/bio1/www/html/ http://bioinfo.lifl.fr/index.php
 
-
-### Make style directory
-mkdir /bio1/www/html/Style
-
-
-### Get BioInfo CSS
-wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/bioinfo.css
-
-
-### Get Bonsai logo
-wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/logo.png
-
-
-### Make style sub directory
-mkdir /bio1/www/html/Style/css
-
-
-### Get BioInfo CSS
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/box_homepage.css
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/divers.css
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/footer.css
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/header.css
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_left.css
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/page_theme.css
-wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/table.css
-
-
-### Get BioInfo main page
-wget --directory-prefix=/bio1/www/html/ http://bioinfo.lifl.fr/index.php
-
-
-
+fi
