@@ -356,9 +356,11 @@ sub process_RNAstemloop {
 					if ($self->eval_single_stemloop($chr, $strand, $stemloop, $sequence_miRnas) == 1) {
                         if ( ($cfg->param('options.mfei') and $mfei < MFEI_THRESHOLD ) or ! $cfg->param('options.mfei') ) {
                             my $cluster_position = ($seq_begin+1). '-' . ($seq_begin+$seq_len);
+                            my $compressed_sequence = miRkwood::Utils::compress_sequence( $dna, $structure_stemloop, $structure_optimal);
                             my $res = {
                                 'name' => $chr. '__' .($stemloop->{'begin'}+1).'-'.$stemloop->{'end'} . $strand,
                                 'strand' => $strand,
+                                'compressed_sequence' => $compressed_sequence,
                                 'sequence' => $dna,
                                 'start_position' => $stemloop->{'begin'}+1, # 1-based
                                 'end_position' => $stemloop->{'end'}, # excludes the end
