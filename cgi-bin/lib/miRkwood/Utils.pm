@@ -1030,6 +1030,81 @@ sub delete_element_in_array {
 
 }
 
+=method
+
+  Method to compress the sequence, stemloop structure 
+  and optimal structure into only one string.
+  
+  Usage : my $compressed_seq = compress_sequence( $sequence, $stemloop_structure, $optimal_structure);
+
+=cut
+sub compress_sequence {
+
+    my (@args) = @_;
+    my $sequence = shift @args;
+    my $stemloop = shift @args;
+    my $optimale = shift @args;
+    
+    if ( length($sequence) != length($stemloop) or
+         length($sequence) != length($optimale) or
+         length($stemloop) != length($optimale) ){
+             debug( 'Sequence, stemloop structure and optimal structure must have the same length.', miRkwood->DEBUG() );
+             return;
+    }
+
+    my $code = { 'A(' => 'A',
+                 'C(' => 'B',
+                 'G(' => 'C',
+                 'U(' => 'D',
+                 'N(' => 'E',
+                 'A)' => 'F',
+                 'C)' => 'G',
+                 'G)' => 'H',
+                 'U)' => 'I',
+                 'N)' => 'J',
+                 'A.' => 'K',
+                 'C.' => 'L',
+                 'G.' => 'M',
+                 'U.' => 'N',
+                 'N.' => 'O',
+                 'A[' => 'P',
+                 'C[' => 'Q',
+                 'G[' => 'R',
+                 'U[' => 'S',
+                 'N[' => 'T',
+                 'A]' => 'U',
+                 'C]' => 'V',
+                 'G]' => 'W',
+                 'U]' => 'X',
+                 'N]' => 'Y'
+             };
+
+    my $compressed_structure = '';
+    my $compressed_seq = '';
+    my $compressed_char = '';
+    my @sequence = split ('', $sequence);
+    my @stemloop = split ('', $stemloop);
+    my @optimale = split ('', $optimale);
+
+    for (my $i = 0; $i < scalar(@sequence); $i++){
+        if ( $stemloop[$i] eq $optimale[$i] ){
+            $compressed_char = $stemloop[$i];
+        }
+        elsif ( $optimale[$i] eq '(' ){
+            $compressed_char = '[';
+        }
+        elsif ( $optimale[$i] eq ')' ){
+            $compressed_char = ']';
+        }
+        $compressed_structure .= $compressed_char;
+        $compressed_seq .= $code->{ $sequence[$i] . $compressed_char };
+    }
+
+    return $compressed_seq;
+
+}
+
+
 =method display_var_sizes_in_log_file
 
   Method to track the memory use
