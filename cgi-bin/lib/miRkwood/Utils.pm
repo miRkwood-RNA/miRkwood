@@ -1030,7 +1030,7 @@ sub delete_element_in_array {
 
 }
 
-=method
+=method compress_sequence
 
   Method to compress the sequence, stemloop structure 
   and optimal structure into only one string.
@@ -1044,7 +1044,7 @@ sub compress_sequence {
     my $sequence = shift @args;
     my $stemloop = shift @args;
     my $optimale = shift @args;
-    
+
     if ( length($sequence) != length($stemloop) or
          length($sequence) != length($optimale) or
          length($stemloop) != length($optimale) ){
@@ -1082,9 +1082,9 @@ sub compress_sequence {
     my $compressed_structure = '';
     my $compressed_seq = '';
     my $compressed_char = '';
-    my @sequence = split ('', $sequence);
-    my @stemloop = split ('', $stemloop);
-    my @optimale = split ('', $optimale);
+    my @sequence = split (//, $sequence);
+    my @stemloop = split (//, $stemloop);
+    my @optimale = split (//, $optimale);
 
     for (my $i = 0; $i < scalar(@sequence); $i++){
         if ( $stemloop[$i] eq $optimale[$i] ){
@@ -1101,6 +1101,78 @@ sub compress_sequence {
     }
 
     return $compressed_seq;
+
+}
+
+=method decompress_sequence
+
+  Method to extract the sequence, stemloop structure and optimal
+  structure from the compressed sequence
+  
+  Usage : my ($sequence, $compressed_structure, $stemloop_structure, $optimal_structure) = decompress_sequence( $compressed_seq );
+
+=cut
+sub decompress_sequence {
+    my (@args) = @_;
+    my $compressed_seq = shift @args;
+    my @compressed_seq = split (//, $compressed_seq);
+
+    my $decompressed_seq  = '';
+    my $decompressed_struc = '';
+    my $decompressed_stem = '';
+    my $decompressed_opt  = '';
+
+    my $code = {   'A' => ['A', '('],
+                   'B' => ['C', '('],
+                   'C' => ['G', '('],
+                   'D' => ['U', '('],
+                   'E' => ['N', '('],
+                   'F' => ['A', ')'],
+                   'G' => ['C', ')'],
+                   'H' => ['G', ')'],
+                   'I' => ['U', ')'],
+                   'J' => ['N', ')'],
+                   'K' => ['A', '.'],
+                   'L' => ['C', '.'],
+                   'M' => ['G', '.'],
+                   'N' => ['U', '.'],
+                   'O' => ['N', '.'],
+                   'P' => ['A', '['],
+                   'Q' => ['C', '['],
+                   'R' => ['G', '['],
+                   'S' => ['U', '['],
+                   'T' => ['N', '['],
+                   'U' => ['A', ']'],
+                   'V' => ['C', ']'],
+                   'W' => ['G', ']'],
+                   'X' => ['U', ']'],
+                   'Y' => ['N', ']']
+             };
+
+    for (my $i = 0; $i < scalar(@compressed_seq); $i++){
+        $decompressed_seq   .= $code->{ $compressed_seq[$i] }[0];
+        $decompressed_struc .= $code->{ $compressed_seq[$i] }[1];
+    }
+
+    my @decompressed_struc = split(//, $decompressed_struc);
+
+    for (my $i = 0; $i < scalar(@decompressed_struc); $i++){
+        if ( $decompressed_struc[$i] eq '[' ){
+            $decompressed_stem .= '.';
+            $decompressed_opt  .= '(';
+        }
+        elsif ( $decompressed_struc[$i] eq ']' ){
+            $decompressed_stem .= '.';
+            $decompressed_opt  .= ')';
+        }
+        else {
+            $decompressed_stem .= $decompressed_struc[$i];
+            $decompressed_opt  .= $decompressed_struc[$i];
+        }
+
+    }
+
+    return ($decompressed_seq, $decompressed_struc, $decompressed_stem, $decompressed_opt);
 
 }
 
