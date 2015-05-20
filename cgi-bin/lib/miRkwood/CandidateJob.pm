@@ -158,7 +158,6 @@ sub get_stemloop_structure_from_optimal {
         my $nb_brackets_in_stemloop = $nb_open_brackets - $nb_closed_brackets;
         my $nb_characters = 0;
         my $nb_brackets = 0;
-        $i = 0;
         while ( $nb_brackets < $nb_brackets_in_stemloop) {
             $stemloop .= $optimal[$nb_characters];
             if ( $optimal[$nb_characters] eq '(' ){
@@ -166,16 +165,24 @@ sub get_stemloop_structure_from_optimal {
             }
             $nb_characters++;
         }
-        my $nb_dots_in_middle = $length_structure - (2 * $nb_characters);
-        while ( $i < $nb_dots_in_middle ){
-            $i++;
+
+        $nb_characters = scalar(@optimal);
+        $nb_brackets = 0;
+        my $right_arm = '';
+        while ( $nb_brackets < $nb_brackets_in_stemloop) {
+            $right_arm .= $optimal[$nb_characters];
+            if ( $optimal[$nb_characters] eq ')' ){
+                $nb_brackets++;
+            }
+            $nb_characters--;
+        }
+
+        my $nb_dots_in_middle = length($optimal) - length($stemloop) - length($right_arm);
+        for (my $i = 0; $i < $nb_dots_in_middle; $i++){
             $stemloop .= '.';
         }
-        $i = 0;
-        while ( $i < $nb_characters ){
-            $stemloop .= $optimal[$nb_characters+$nb_dots_in_middle+$i];
-            $i++;
-        }
+        $stemloop .= reverse $right_arm;
+
     }
 
     return $stemloop;
