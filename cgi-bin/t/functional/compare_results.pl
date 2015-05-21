@@ -117,38 +117,87 @@ sub list_files_and_folders {
 
   Compares 2 hash tables given by reference.
   If the values are hash, recursive call to compare_2_hash
+  If the values are arrays, call to compare_2_arrays
 
 =cut
 sub compare_2_hash {
     my ($hash1, $hash2, $file) = @_;
-
-    my $keys_1 = join(" ", sort (keys%{$hash1}) );
-    my $keys_2 = join(" ", sort (keys%{$hash2}) );
-
+    
+    my $keys_1 = join(' ', sort (keys%$hash1) );
+    my $keys_2 = join(' ', sort (keys%$hash2) );
+    
     if ( $keys_1 ne $keys_2 ){
         print "(File $file) Hash tables don't have the same features.\n";
         print "--- $keys_1\n";
-        print "--- $keys_2\n";
+        print "--- $keys_2\n";        
     }
     else{
         foreach ( sort (keys%$hash1) ) {
-            if ( $_ ne "image" ){
-                if ( eval { scalar(keys%{$hash1->{$_}}) >= 0 } ){   # value is a hash
+            if ( $_ ne 'image' ){
+                if ( whatIsIt( $hash1->{$_} ) eq 'hash' ){   # value is a hash
                     compare_2_hash( $hash1->{$_}, $hash2->{$_}, $file );
                 }
-                elsif ( eval { scalar(keys@{$hash1->{$_}}) >= 0 } ){    # value is an array
-                    my $value_1 = join(" ", sort( keys@{$hash1->{$_}} ) );
-                    my $value_2 = join(" ", sort( keys@{$hash2->{$_}} ) );
-                    if ( $value_1 ne $value_2 ){
-                        print "(File $file) Arrays don't have the same contents.\n";
-                        print "--- $value_1\n";
-                        print "--- $value_2\n";
-                    }
+                elsif ( whatIsIt( $hash1->{$_} ) eq 'array' ){    # value is an array
+                    compare_2_arrays( $hash1->{$_}, $hash2->{$_}, $file );                    
                 }
-                elsif ( $$hash1{$_} ne $$hash2{$_} ){   # value is a scalar
-                    print "(File $file) Different values for key $_.\n";
+                else {
+                    if ( $$hash1{$_} ne $$hash2{$_} ){   # value is a scalar
+                        print "(File $file) Different values for key $_($$hash1{$_} vs $$hash2{$_}).\n";
+                    }
                 }
             }
         }
+    }  
+}
+
+=method compare_2_arrays
+
+  Compares 2 hash tables given by reference.
+  If the values are hash, call to compare_2_hash
+  If the values are arrays, recursive call to compare_2_arrays
+
+=cut
+sub compare_2_arrays {
+    my ($array1, $array2, $file) = @_;
+    my @array1 = @{$array1};
+    my @array2 = @{$array2};
+
+    my $length_array1 = scalar( @array1 );
+    my $length_array2 = scalar( @array2 );
+    if ( $length_array1 ne $length_array2 ){
+        print "(File $file) Arrays don't have the same number of elements ($length_array1 vs $length_array2).\n";
+    }
+    else{
+        for (my $i = 0; $i < scalar( @array1 ); $i++){
+            if ( whatIsIt( $array1[$i] ) eq 'hash' ){
+                #~ compare_2_hash( $array1[$i], $array2[$i], $file );
+            }
+            elsif ( whatIsIt( $array1[$i] ) eq 'array' ){
+                compare_2_arrays( $array1[$i], $array2[$i], $file );
+            }
+            else{
+                my $value_1 = join(" ", sort( keys@array1 ) );
+                my $value_2 = join(" ", sort( keys@array2 ) );
+                if ( $value_1 ne $value_2 ){
+                    print "(File $file) Arrays don't have the same contents.\n";
+                    print "--- $value_1\n";
+                    print "--- $value_2\n";
+                }
+            }
+        }
+    }
+}
+
+sub whatIsIt {
+    my ($ref) = @_;
+    
+    if ( eval { scalar(keys%$ref) >= 0 } ){
+        return 'hash';
+    }
+    elsif ( eval { scalar(keys@$ref) >= 0 } ){
+        return 'array';
+    }
+    else {
+        return 'scalar';
     }
 }
