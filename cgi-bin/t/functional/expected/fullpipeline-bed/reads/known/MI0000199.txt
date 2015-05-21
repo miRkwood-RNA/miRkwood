@@ -2,7 +2,7 @@ ath-MIR165a
 Locus  : 1:78927-79037
 Strand : -
 
-GTTGGGGGGGATGAAGCCTGGTCCGAGGATACTCTCTATGATCACTTGAATCATTAACATACACATGTATATATCTATAATATCCTCGATCCAGACAACATTCCCCTCAAC
+GUUGGGGGGGAUGAAGCCUGGUCCGAGGAUACUCUCUAUGAUCACUUGAAUCAUUAACAUACACAUGUAUAUAUCUAUAAUAUCCUCGAUCCAGACAACAUUCCCCUCAAC
 (((((((((((((..(.((((..((((((((.................................................))))))))..)))).)..)))))))))))))
      <------miRBase------>                                                         <------miRBase------>
 .....*********************..................................................................................... length=21 depth=229

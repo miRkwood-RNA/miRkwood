@@ -2,7 +2,7 @@ ath-MIR847
 Locus  : 1:2165517-2165746
 Strand : +
 
-CATTTTCTTGTATTCAAAGTATCTTAAGTTAAGAAGAGAATAAGATTCTTACATCTTGATGAAGAGGAATGGGAAGCCGAAATCTAAACTGAAACAGAGGCGTCACCCAATTATCAATTGGTAAGTGATATCTATGTTTCGATCTGTATCTCGGCCTTTCACTCCTCTTCTTCTTGATGTAAGAATTTGTTATTCGACACATTAGATGGAGTGAAAAATCTGTTAGATAT
+CAUUUUCUUGUAUUCAAAGUAUCUUAAGUUAAGAAGAGAAUAAGAUUCUUACAUCUUGAUGAAGAGGAAUGGGAAGCCGAAAUCUAAACUGAAACAGAGGCGUCACCCAAUUAUCAAUUGGUAAGUGAUAUCUAUGUUUCGAUCUGUAUCUCGGCCUUUCACUCCUCUUCUUCUUGAUGUAAGAAUUUGUUAUUCGACACAUUAGAUGGAGUGAAAAAUCUGUUAGAUAU
 ..((((((((...................))))))))((((((((((((((((((..((.((((((((.(((((.(((((.........(((((((.(((.(((((((((((...))))))...))))).))).))))))).........))))).))))).)))))))).))..))))))))))))..)))))).....(((.((((((........)))))).)))..
                                                                                                                                                               <------miRBase------>
 ....................................................*********************............................................................................................................................................................. length=21 depth=1
