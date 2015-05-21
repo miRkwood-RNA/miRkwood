@@ -99,7 +99,7 @@ sub filterBEDfile_for_model_organism {
             debug( 'Other RNA have been filtered out from BED.', 1 );
         }
         else{
-            debug( "WARNING : no rRNA/rRNA file found for $species.", 1 );
+            debug( "WARNING : no rRNA/tRNA/snoRNA file found for $species.", 1 );
             system("cp $tmp_2 $tmp_3");
         }
     }
