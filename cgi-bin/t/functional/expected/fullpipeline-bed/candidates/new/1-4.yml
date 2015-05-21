@@ -27,11 +27,11 @@
 --- alignments
 ---
 221-241:
-- alignment: 'agaugugaccauguggaaaug
+- alignment: 'AGAUGUGACCAUGUGGAAAUG
 
     ||| |||||||| |||| |||
 
-    agaggugaccau-uggagaug
+    AGAGGUGACCAU-UGGAGAUG
 
 '
   begin_query: 1

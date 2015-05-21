@@ -34,11 +34,11 @@
 --- alignments
 ---
 114-129:
-- alignment: 'ggcaagcccaugu-aua
+- alignment: 'GGCAAGCCCAUGU-AUA
 
     ||||| ||||||| | |
 
-    ggcaaucccaugucaaa
+    GGCAAUCCCAUGUCAAA
 
 '
   begin_query: 1
