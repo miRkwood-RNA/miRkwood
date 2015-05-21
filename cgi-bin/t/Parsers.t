@@ -192,9 +192,9 @@ A a match
 A a match
 U U match
 - - none',
-'g-uccugccuugcaucaacugaau
+'G-UCCUGCCUUGCAUCAACUGAAU
 | ||| ||||||||||||||||||
-gaucccgccuugcaucaacugaau
+GAUCCCGCCUUGCAUCAACUGAAU
 '],
 ['- - none
 C c match
@@ -219,9 +219,9 @@ A a match
 A a match
 U U match
 - - none',
-'ccugccuugcaucaacugaau
+'CCUGCCUUGCAUCAACUGAAU
 || ||||||||||||||||||
-cccgccuugcaucaacugaau
+CCCGCCUUGCAUCAACUGAAU
 '],
 ['- - none
 A U match
@@ -246,9 +246,9 @@ G g match
 A a match
 A a match
 - - none
-','ucgcuuggugcaggucgggaa
+','UCGCUUGGUGCAGGUCGGGAA
   ||||||||||| |||||||
-aggcuuggugcagcucgggaa
+AGGCUUGGUGCAGCUCGGGAA
 '],
 ['- - none
 U U match
@@ -273,9 +273,9 @@ G g match
 C c match
 C c match
 - - none
-','uguagccaaggaugaauugcc
+','UGUAGCCAAGGAUGAAUUGCC
 ||||||||||||  | |||||
-uguagccaaggacaacuugcc
+UGUAGCCAAGGACAACUUGCC
 '],
 ['- - none
 U U match
@@ -303,9 +303,9 @@ C c match
 G - gap
 - - none
 - - none
-','uguagccaaggaugaauugcc-
+','UGUAGCCAAGGAUGAAUUGCC-
 || |||||||||||| ||||| 
-ug-agccaaggaugacuugccg
+UG-AGCCAAGGAUGACUUGCCG
 ']
 );
 
@@ -323,9 +323,9 @@ file_exists_ok($exonerate_output_file);
 my %exonerate_expected = (
     '38-58' => [
         {
-            'alignment' => 'uguagccaaggaugaauugcc
+            'alignment' => 'UGUAGCCAAGGAUGAAUUGCC
 ||||||||||||  | |||||
-uguagccaaggacaacuugcc
+UGUAGCCAAGGACAACUUGCC
 ',
             'name'  => 'aly-miR169a*',
             'begin_target' => '38',
@@ -338,9 +338,9 @@ uguagccaaggacaacuugcc
             'seq' => 'TGTAGCCAAGGACAACTTGCC'
         },
         {
-            'alignment' => 'uguagccaaggaugaauugcc-
+            'alignment' => 'UGUAGCCAAGGAUGAAUUGCC-
 || |||||||||||| ||||| 
-ug-agccaaggaugacuugccg
+UG-AGCCAAGGAUGACUUGCCG
 ',
             'name'  => 'aly-miR169d',
             'begin_target' => '38',
@@ -355,9 +355,9 @@ ug-agccaaggaugacuugccg
     ],
     '40-60' => [
         {
-            'alignment' => 'uagccaaggaugaauugccua
+            'alignment' => 'UAGCCAAGGAUGAAUUGCCUA
  |||||||||||| ||||| |
-cagccaaggaugacuugccga
+CAGCCAAGGAUGACUUGCCGA
 ',
             'name'  => 'aly-miR169a',
             'begin_target' => '40',
