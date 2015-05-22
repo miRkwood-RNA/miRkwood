@@ -8,6 +8,7 @@ use warnings;
 use feature 'switch';
 use Time::gmtime;
 use File::Spec;
+use YAML::XS;
 
 use miRkwood;
 use miRkwood::Paths;
@@ -279,6 +280,28 @@ sub number_of_results_bis {
 	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 	my $size    = scalar @{$results};
 	return $size;
+}
+
+sub count_reads_in_basic_yaml_file {
+    my ( $self, @args ) = @_;
+    my $yaml = shift @args;
+    my $nb_reads = 0;
+    my $nb_reads_unq = 0;
+
+    my @attributes = YAML::XS::LoadFile($yaml);
+    my $reads;
+
+    for (my $i = 0; $i < scalar(@{$attributes[0]}); $i++){
+        foreach my $positions ( keys%{$attributes[0][$i]{'reads'}} ){
+            $reads->{ $positions } = $attributes[0][$i]{'reads'}{$positions};
+        }
+    }
+    foreach my $positions (keys%{$reads}){
+        $nb_reads += $reads->{$positions};
+    }
+    $nb_reads_unq = scalar (keys%{$reads});
+
+    return ($nb_reads, $nb_reads_unq);
 }
 
 1;
