@@ -191,9 +191,12 @@ if ( $valid ){
                 $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
             }
         }
+        
+        my ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $mirna_bed );
+        my ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $final_bed );
 
-        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) (<a href=$known_url>see results</a>)</li>";
-        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
+        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
         $HTML_results .= "</ul></div>";
 
     }
