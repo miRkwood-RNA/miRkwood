@@ -265,8 +265,10 @@ sub count_reads_in_bed_file {
     open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
     while ( <$BED> ){
         @tab = split ( /\t/ );
-        $reads->{"$tab[1]-$tab[2]"} = 1;
-        $nb_total_reads += $tab[4];
+        $reads->{"$tab[1]-$tab[2]"} = $tab[4];
+    }
+    foreach ( keys%{$reads} ){
+        $nb_total_reads += $reads->{$_};
     }
 
     return ($nb_total_reads, scalar keys%{$reads});
