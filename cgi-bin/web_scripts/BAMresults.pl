@@ -191,9 +191,11 @@ if ( $valid ){
                 $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
             }
         }
-        
-        my ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $mirna_bed );
-        my ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $final_bed );
+
+        my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
+        my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
+        my ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
+        my ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
 
         $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
         $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
