@@ -194,7 +194,19 @@ sub list_chrom_in_bed {
     }
     close $BED;
     my @sorted_list = sort( keys( %list_chromosomes ) );
-    $self->{'chromosomes_in_bed'} = \@sorted_list;
+
+    my @list_chrom_in_genome = $self->{'genome_db'}->get_all_primary_ids;
+    my %hash_chrom_in_genome;
+    @hash_chrom_in_genome{@list_chrom_in_genome} = 0..$#list_chrom_in_genome;
+
+    my @final_list;
+    foreach my $key ( @sorted_list ){
+        if ( exists $hash_chrom_in_genome{$key} ){
+            push @final_list, $key;
+        }
+    }
+
+    $self->{'chromosomes_in_bed'} = \@final_list;
 
     return;
 }
