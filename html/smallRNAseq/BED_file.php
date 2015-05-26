@@ -44,7 +44,7 @@
                 
                 <p>The goal of this step is to generate a BAM file that contains the alignments of the expressed reads with the reference genome.</p>
                 
-                <p>We recommend to perform exact matching. For that, you can use <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie2</a> with the following parameters. Any other read mapper can also do the job.</p>
+                <p>We recommend to perform exact matching. For that, you can use <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a> with the following parameters. Any other read mapper can also do the job.</p>
                 
                 <pre class='code'>bowtie -v 0 -f --all --best --strata -S &lt;genome&gt; &lt;reads&gt;   </pre>
                 
