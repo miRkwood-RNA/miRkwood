@@ -66,16 +66,21 @@ if ( $valid ){
     my $cds_bed         = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
     my $multimapped_bed = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
 
-    my $nb_new_results   = 0;
-    my $nb_known_results = 0;
-    my $nb_total_reads   = 0;
-    my $nb_CDS_reads     = 0;
-    my $nb_other_reads   = 0;
-    my $nb_multi_reads   = 0;
-    my $nb_total_reads_unq = 0;
-    my $nb_CDS_reads_unq   = 0;
-    my $nb_other_reads_unq = 0;
-    my $nb_multi_reads_unq = 0;
+    my $nb_new_results            = 0;
+    my $nb_known_results          = 0;
+    my $nb_total_reads            = 0;
+    my $nb_CDS_reads              = 0;
+    my $nb_other_reads            = 0;
+    my $nb_multi_reads            = 0;
+    my $nb_total_reads_unq        = 0;
+    my $nb_CDS_reads_unq          = 0;
+    my $nb_other_reads_unq        = 0;
+    my $nb_multi_reads_unq        = 0;
+    my $nb_reads_known_miRNAs     = 0;
+    my $nb_reads_known_miRNAs_unq = 0;
+    my $nb_reads_new_miRNAs       = 0;
+    my $nb_reads_new_miRNAs_unq   = 0;
+    my $useless_reads             = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -194,8 +199,9 @@ if ( $valid ){
 
         my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
         my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
-        my ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
-        my ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
+        ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
+        ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
+        $useless_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
 
         $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
         $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
