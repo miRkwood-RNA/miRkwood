@@ -1,5 +1,6 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 use strict;
+use warnings;
 use Getopt::Long;
 
 
@@ -48,6 +49,10 @@ GetOptions ('bam=s' => \$bam_file,
 if ( $help or ! -r $bam_file or ! $output_directory ){
     print $help_message;
     exit;
+}
+
+if (! -d $output_directory){
+	mkdir $output_directory, 0777;
 }
 
 
