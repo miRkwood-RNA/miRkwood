@@ -80,7 +80,7 @@ if ( $valid ){
     my $nb_reads_known_miRNAs_unq = 0;
     my $nb_reads_new_miRNAs       = 0;
     my $nb_reads_new_miRNAs_unq   = 0;
-    my $useless_reads             = 0;
+    my $orphans_reads             = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -201,10 +201,47 @@ if ( $valid ){
         my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
         ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
         ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
-        $useless_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+        $orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+
+        my $total_witdh = 650;
+        my $width_CDS_reads = int($nb_CDS_reads / $nb_total_reads * $total_witdh + 0.5);
+        my $width_other_reads = int($nb_other_reads / $nb_total_reads * $total_witdh + 0.5);
+        my $width_multi_reads = int($nb_multi_reads / $nb_total_reads * $total_witdh + 0.5);
+        my $width_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * $total_witdh + 0.5);
+        my $width_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * $total_witdh + 0.5);
+        my $width_orphans_reads = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads;
+
+        my $barchart = <<"END_TXT";
+Reads repartition:
+<div style='width:${total_witdh}px'>
+    <table id="barchart_table">
+        <tr>
+            <td id="CDS" style="width:$width_CDS_reads%"></td>
+            <td id="other" style="width:$width_other_reads%"></td>
+            <td id="multimapped" style="width:$width_multi_reads%;"></td>
+            <td id="known_miRNAs" style="width:$width_known_miRNAs_reads%;"></td>
+            <td id="new_miRNAs" style="width:$width_new_miRNAs_reads%;"></td>
+            <td id="orphans" style="width:$width_orphans_reads%;"></td>
+        </tr>
+    </table>
+
+    <table id="barchart_legend">
+        <tr>
+            <td><span id="CDS">&nbsp;&nbsp;&nbsp;</span> CDS</td>
+            <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
+            <td><span id="multimapped">&nbsp;&nbsp;&nbsp;</span> multiply mapped reads</td>
+        </tr><tr>
+            <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> knowns miRNAs</td>
+            <td><span id="new_miRNAs">&nbsp;&nbsp;&nbsp;</span> new miRNAs</td>
+            <td><span id="orphans">&nbsp;&nbsp;&nbsp;</span> orphans reads</td>
+        </tr>  
+    </table>
+</div>
+END_TXT
 
         $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
         $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "<li>$barchart</li>";
         $HTML_results .= "</ul></div>";
 
     }

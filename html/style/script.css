@@ -450,3 +450,48 @@ span.urlbox {
     margin: 10px;
 }
 
+
+/* =barchart
+----------------------------------------------- */
+#barchart_table{
+    border-collapse: collapse;
+    height: 20px;
+}
+
+#barchart_legend td{
+    padding: 4px;
+    width: 200px;
+}
+
+#CDS {
+    background-color: #FF0000;
+    border: 1px solid;
+}
+
+#other {
+    background-color: #FFFF00;
+    border: 1px solid;
+}
+
+#multimapped {
+    background-color: #00FF00;
+    border: 1px solid;
+}
+
+#known_miRNAs {
+    background-color: #00FFFF;
+    border: 1px solid;
+}
+
+#new_miRNAs {
+    background-color: #0000FF;
+    border: 1px solid;
+}
+
+#orphans {
+    background-color: #FF00FF;
+    border: 1px solid;
+}
+
+
+
