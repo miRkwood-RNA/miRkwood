@@ -236,12 +236,12 @@ Reads repartition:
 <div style='width:${total_witdh}px'>
     <table id="barchart_table">
         <tr>
-            <td id="CDS" style="width:$width_CDS_reads%"></td>
-            <td id="other" style="width:$width_other_reads%"></td>
-            <td id="multimapped" style="width:$width_multi_reads%;"></td>
-            <td id="known_miRNAs" style="width:$width_known_miRNAs_reads%;"></td>
-            <td id="new_miRNAs" style="width:$width_new_miRNAs_reads%;"></td>
-            <td id="orphans" style="width:$width_orphans_reads%;"></td>
+            <td id="CDS" style="width:${width_CDS_reads}px"></td>
+            <td id="other" style="width:${width_other_reads}px"></td>
+            <td id="multimapped" style="width:${width_multi_reads}px;"></td>
+            <td id="known_miRNAs" style="width:${width_known_miRNAs_reads}px;"></td>
+            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
+            <td id="orphans" style="width:${width_orphans_reads}px;"></td>
         </tr>
     </table>
 
