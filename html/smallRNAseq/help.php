@@ -79,7 +79,7 @@
             <a href="./BED_file.php">detailed instructions</a> on how
             to build this file, or grab a sample file below.</p>
 
-	     <ul><li> <a href="sample.bed" target="_blank">Download the sample BED file</a> </li></ul> 
+	     <ul><li> <a href="sample.bed" download>Download the sample BED file</a> </li></ul> 
 
 	    <p>You will find more information on this sample file in our 
             <a href="./example.php">quick start</a> guide.</p>
