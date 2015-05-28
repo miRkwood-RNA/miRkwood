@@ -46,6 +46,7 @@ my $valid = miRkwood::Results->is_valid_jobID($id_job);
 my $html = '';
 my $HTML_additional = '';
 my $HTML_results = '';
+my $HTML_reads_stats = '';
 my $page = '';
 
 
@@ -218,8 +219,16 @@ if ( $valid ){
         $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
         $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
 
-        my $total_witdh = 650;
-        my $barchart = miRkwood::Results->make_reads_barchart( $total_witdh,
+
+
+        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
+        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "</ul></div>";
+
+
+        ##### Reads stats
+        my $total_width = 650;
+        my $barchart = miRkwood::Results->make_reads_barchart( $total_width,
                                                                $percentage_CDS_reads,
                                                                $percentage_other_reads,
                                                                $percentage_multi_reads,
@@ -227,12 +236,15 @@ if ( $valid ){
                                                                $percentage_new_miRNAs_reads );
 
         my $reads_length_diagramm = miRkwood::BEDHandler::make_reads_length_diagramm( $initial_bed );
-
-        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
-        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
-        $HTML_results .= "<li>Reads length: <br />$reads_length_diagramm</li>";
-        $HTML_results .= "<li>Reads repartition: <br />$barchart</li>";
-        $HTML_results .= "</ul></div>";
+        
+        $HTML_reads_stats .= "<div class='results_summary'><ul>";
+        $HTML_reads_stats .= '<h2>Reads statistics:</h2>';
+        $HTML_reads_stats .= '<br />';        
+        $HTML_reads_stats .= "<li><em>Reads length:</em> <br />$reads_length_diagramm</li>";
+        $HTML_reads_stats .= '<br />';
+        $HTML_reads_stats .= "<li><em>Reads distribution:</em> <br />$barchart</li>";
+        $HTML_reads_stats .= '<br />';
+        $HTML_reads_stats .= "</ul></div>";
 
     }
 
@@ -249,6 +261,8 @@ if ( $valid ){
             $HTML_additional
             
             $HTML_results
+            
+            $HTML_reads_stats
         </div><!-- main -->
     </div><!-- bloc droit-->
     $footer
