@@ -226,9 +226,11 @@ if ( $valid ){
                                                                $percentage_known_miRNAs_reads,
                                                                $percentage_new_miRNAs_reads );
 
+        my $reads_length_diagramm = miRkwood::BEDHandler::make_reads_length_diagramm( $initial_bed );
 
         $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
         $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "<li>Reads length: <br />$reads_length_diagramm</li>";
         $HTML_results .= "<li>Reads repartition: <br />$barchart</li>";
         $HTML_results .= "</ul></div>";
 
