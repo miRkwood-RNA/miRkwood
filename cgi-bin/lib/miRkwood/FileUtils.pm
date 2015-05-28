@@ -55,4 +55,20 @@ sub slurp_file {
     return $contents;
 }
 
+=method slurp_bin_file
+
+Return the contents of a binary file
+
+=cut
+
+sub slurp_bin_file {
+    my @args = @_;
+    my $file = shift @args;
+    open my $fh, '<', $file or die $!;
+    binmode $fh;
+    my $contents = do { local $/; <$fh> };
+    close $fh or die $!;
+    return $contents;
+}
+
 1;
