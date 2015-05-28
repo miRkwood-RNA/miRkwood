@@ -181,7 +181,7 @@ if ( $valid ){
             ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
             $percentage_CDS_reads = int($nb_CDS_reads / $nb_total_reads * 100 + 0.5);
             if ( $nb_CDS_reads > 0 ){
-                $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS'>download</a>)</li>";
             }
             else {
                 $HTML_results .= '<li><em>CoDing Sequences:</em> 0 reads</li>';
@@ -191,7 +191,7 @@ if ( $valid ){
             ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
             $percentage_other_reads = int($nb_other_reads / $nb_total_reads * 100 + 0.5);
             if ( $nb_other_reads > 0 ){
-                $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</li>";
             }
             else {
                 $HTML_results .= '<li><em>tRNA/rRNA/snoRNA:</em> 0 reads</li>';
@@ -201,7 +201,7 @@ if ( $valid ){
             ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
             $percentage_multi_reads = int($nb_multi_reads / $nb_total_reads * 100 + 0.5);
             if ( $nb_multi_reads > 0 ){
-                $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
+                $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</li>";
             }
             else {
                 $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
