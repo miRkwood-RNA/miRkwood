@@ -345,4 +345,13 @@ END_TXT
 
 }
 
+sub create_reads_archive {
+ 	my ( $self, @args ) = @_;
+	my $jobDir   = shift @args;
+    my $reads_path = miRkwood::Paths::get_dir_reads_path_from_job_dir( $jobDir );
+    my $archive_path = "$jobDir/reads.tar.gz";
+    system("tar cf $archive_path $reads_path");
+    return $archive_path;
+}
+
 1;
