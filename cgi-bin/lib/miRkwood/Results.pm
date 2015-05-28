@@ -313,7 +313,7 @@ sub make_reads_barchart {
     my $width_known_miRNAs_reads = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
     my $width_new_miRNAs_reads   = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
     my $width_orphans_reads      = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
-    
+
     my $barchart = <<"END_TXT";
 <div style='width:${total_witdh}px'>
     <table id="barchart_table">
@@ -340,10 +340,9 @@ sub make_reads_barchart {
     </table>
 </div>
 END_TXT
-    
+
     return $barchart;
-    
-    
+
 }
 
 1;
