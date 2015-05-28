@@ -66,21 +66,33 @@ if ( $valid ){
     my $cds_bed         = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
     my $multimapped_bed = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
 
-    my $nb_new_results            = 0;
-    my $nb_known_results          = 0;
-    my $nb_total_reads            = 0;
-    my $nb_CDS_reads              = 0;
-    my $nb_other_reads            = 0;
-    my $nb_multi_reads            = 0;
-    my $nb_total_reads_unq        = 0;
-    my $nb_CDS_reads_unq          = 0;
-    my $nb_other_reads_unq        = 0;
-    my $nb_multi_reads_unq        = 0;
-    my $nb_reads_known_miRNAs     = 0;
-    my $nb_reads_known_miRNAs_unq = 0;
-    my $nb_reads_new_miRNAs       = 0;
-    my $nb_reads_new_miRNAs_unq   = 0;
-    my $orphans_reads             = 0;
+    my $nb_new_results                = 0;
+    my $nb_known_results              = 0;
+    my $nb_total_reads                = 0;
+    my $nb_CDS_reads                  = 0;
+    my $nb_other_reads                = 0;
+    my $nb_multi_reads                = 0;
+    my $nb_total_reads_unq            = 0;
+    my $nb_CDS_reads_unq              = 0;
+    my $nb_other_reads_unq            = 0;
+    my $nb_multi_reads_unq            = 0;
+    my $nb_reads_known_miRNAs         = 0;
+    my $nb_reads_known_miRNAs_unq     = 0;
+    my $nb_reads_new_miRNAs           = 0;
+    my $nb_reads_new_miRNAs_unq       = 0;
+    my $nb_orphans_reads              = 0;
+    my $width_CDS_reads               = 0;
+    my $width_other_reads             = 0;
+    my $width_multi_reads             = 0;
+    my $width_known_miRNAs_reads      = 0;
+    my $width_new_miRNAs_reads        = 0;
+    my $width_orphans_reads           = 0;    
+    my $percentage_CDS_reads          = 0;
+    my $percentage_other_reads        = 0;
+    my $percentage_multi_reads        = 0;
+    my $percentage_known_miRNAs_reads = 0;
+    my $percentage_new_miRNAs_reads   = 0;
+    my $percentage_orphans_reads      = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -171,6 +183,7 @@ if ( $valid ){
 
         if ( $cfg->param('options.filter_CDS') ){
             ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
+            $percentage_CDS_reads = int($nb_CDS_reads / $nb_total_reads * 100 + 0.5);
             if ( $nb_CDS_reads > 0 ){
                 $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS' target='_blank'>download</a>)</li>";
             }
@@ -180,6 +193,7 @@ if ( $valid ){
         }
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
             ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
+            $percentage_other_reads = int($nb_other_reads / $nb_total_reads * 100 + 0.5);
             if ( $nb_other_reads > 0 ){
                 $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA' target='_blank'>download</a>)</li>";
             }
@@ -189,6 +203,7 @@ if ( $valid ){
         }
         if ( $cfg->param('options.filter_multimapped') ){
             ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
+            $percentage_multi_reads = int($nb_multi_reads / $nb_total_reads * 100 + 0.5);
             if ( $nb_multi_reads > 0 ){
                 $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped' target='_blank'>download</a>)</li>";
             }
@@ -200,16 +215,21 @@ if ( $valid ){
         my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
         my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
         ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
+        $percentage_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * 100 + 0.5);
+
         ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
-        $orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+        $percentage_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * 100 + 0.5);
+
+        $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+        $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
 
         my $total_witdh = 650;
-        my $width_CDS_reads = int($nb_CDS_reads / $nb_total_reads * $total_witdh + 0.5);
-        my $width_other_reads = int($nb_other_reads / $nb_total_reads * $total_witdh + 0.5);
-        my $width_multi_reads = int($nb_multi_reads / $nb_total_reads * $total_witdh + 0.5);
-        my $width_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * $total_witdh + 0.5);
-        my $width_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * $total_witdh + 0.5);
-        my $width_orphans_reads = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads;
+        $width_CDS_reads = int($nb_CDS_reads / $nb_total_reads * $total_witdh + 0.5);
+        $width_other_reads = int($nb_other_reads / $nb_total_reads * $total_witdh + 0.5);
+        $width_multi_reads = int($nb_multi_reads / $nb_total_reads * $total_witdh + 0.5);
+        $width_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * $total_witdh + 0.5);
+        $width_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * $total_witdh + 0.5);
+        $width_orphans_reads = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads;
 
         my $barchart = <<"END_TXT";
 Reads repartition:
