@@ -277,5 +277,54 @@ sub count_reads_in_bed_file {
 
 }
 
+=method make_reads_length_diagramm
+
+  Method to draw a diagramm of reads length in raw text.
+  Takes a BED(-like) in parameter.
+
+=cut
+sub make_reads_length_diagramm {
+    my @args = @_;
+    my $bed_file = shift @args;
+    my $max_width = 80;
+
+    my $diagramm = '<pre style="font-size:11px;">';
+    my %reads_length;
+
+    open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
+    while ( <$BED> ){
+        my @tab = split ( /\t/ );
+        my $length = $tab[2] - $tab[1];
+        if ( !defined( $reads_length{ $length } ) ){
+            $reads_length{ $length } = 0;
+        }
+        $reads_length{ $length }++;
+    }
+    close $BED;
+
+    my $max = 0;
+    foreach my $key ( keys%reads_length ){
+        if ( $reads_length{$key} > $max ){
+            $max = $reads_length{$key};
+        }
+    }
+
+    my %reads_width;
+    foreach my $key ( sort( keys%reads_length ) ){
+        my $width = int( $reads_length{$key} * $max_width / $max + 0.5 );
+        $reads_width{$key} = $width;
+        $diagramm .= "$key nt | ";
+        my $i = 0;
+        while ( $i < $width ){
+            $diagramm .= '*';
+            $i++;
+        }
+        $diagramm .= "\n";
+    }
+    $diagramm .= '</pre>';
+
+    return $diagramm;
+}
+
 
 1;
