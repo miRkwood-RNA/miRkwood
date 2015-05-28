@@ -81,12 +81,6 @@ if ( $valid ){
     my $nb_reads_new_miRNAs           = 0;
     my $nb_reads_new_miRNAs_unq       = 0;
     my $nb_orphans_reads              = 0;
-    my $width_CDS_reads               = 0;
-    my $width_other_reads             = 0;
-    my $width_multi_reads             = 0;
-    my $width_known_miRNAs_reads      = 0;
-    my $width_new_miRNAs_reads        = 0;
-    my $width_orphans_reads           = 0;    
     my $percentage_CDS_reads          = 0;
     my $percentage_other_reads        = 0;
     my $percentage_multi_reads        = 0;
@@ -166,6 +160,7 @@ if ( $valid ){
 
         $HTML_additional .= '</ul></div>';
 
+
         ##### Summary of results
         $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'New' );
         $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'Known' );
@@ -224,44 +219,17 @@ if ( $valid ){
         $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
 
         my $total_witdh = 650;
-        $width_CDS_reads = int($nb_CDS_reads / $nb_total_reads * $total_witdh + 0.5);
-        $width_other_reads = int($nb_other_reads / $nb_total_reads * $total_witdh + 0.5);
-        $width_multi_reads = int($nb_multi_reads / $nb_total_reads * $total_witdh + 0.5);
-        $width_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * $total_witdh + 0.5);
-        $width_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * $total_witdh + 0.5);
-        $width_orphans_reads = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads;
+        my $barchart = miRkwood::Results->make_reads_barchart( $total_witdh,
+                                                               $percentage_CDS_reads,
+                                                               $percentage_other_reads,
+                                                               $percentage_multi_reads,
+                                                               $percentage_known_miRNAs_reads,
+                                                               $percentage_new_miRNAs_reads );
 
-        my $barchart = <<"END_TXT";
-Reads repartition:
-<div style='width:${total_witdh}px'>
-    <table id="barchart_table">
-        <tr>
-            <td id="CDS" style="width:${width_CDS_reads}px"></td>
-            <td id="other" style="width:${width_other_reads}px"></td>
-            <td id="multimapped" style="width:${width_multi_reads}px;"></td>
-            <td id="known_miRNAs" style="width:${width_known_miRNAs_reads}px;"></td>
-            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
-            <td id="orphans" style="width:${width_orphans_reads}px;"></td>
-        </tr>
-    </table>
-
-    <table id="barchart_legend">
-        <tr>
-            <td><span id="CDS">&nbsp;&nbsp;&nbsp;</span> CDS</td>
-            <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
-            <td><span id="multimapped">&nbsp;&nbsp;&nbsp;</span> multiply mapped reads</td>
-        </tr><tr>
-            <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> knowns miRNAs</td>
-            <td><span id="new_miRNAs">&nbsp;&nbsp;&nbsp;</span> new miRNAs</td>
-            <td><span id="orphans">&nbsp;&nbsp;&nbsp;</span> orphans reads</td>
-        </tr>  
-    </table>
-</div>
-END_TXT
 
         $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
         $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
-        $HTML_results .= "<li>$barchart</li>";
+        $HTML_results .= "<li>Reads repartition: <br />$barchart</li>";
         $HTML_results .= "</ul></div>";
 
     }
