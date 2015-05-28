@@ -267,6 +267,8 @@ sub count_reads_in_bed_file {
         @tab = split ( /\t/ );
         $reads->{"$tab[1]-$tab[2]"} = $tab[4];
     }
+    close $BED;
+
     foreach ( keys%{$reads} ){
         $nb_total_reads += $reads->{$_};
     }
