@@ -304,4 +304,46 @@ sub count_reads_in_basic_yaml_file {
     return ($nb_reads, $nb_reads_unq);
 }
 
+sub make_reads_barchart {
+    my ( $self, $total_witdh, $percentage_CDS_reads, $percentage_other_reads, $percentage_multi_reads, $percentage_known_miRNAs_reads, $percentage_new_miRNAs_reads ) = @_;
+
+    my $width_CDS_reads          = int($percentage_CDS_reads * $total_witdh / 100 + 0.5 );
+    my $width_other_reads        = int($percentage_other_reads * $total_witdh / 100 + 0.5 );
+    my $width_multi_reads        = int($percentage_multi_reads * $total_witdh / 100 + 0.5 );
+    my $width_known_miRNAs_reads = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
+    my $width_new_miRNAs_reads   = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
+    my $width_orphans_reads      = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
+    
+    my $barchart = <<"END_TXT";
+<div style='width:${total_witdh}px'>
+    <table id="barchart_table">
+        <tr>
+            <td id="CDS" style="width:${width_CDS_reads}px"></td>
+            <td id="other" style="width:${width_other_reads}px"></td>
+            <td id="multimapped" style="width:${width_multi_reads}px;"></td>
+            <td id="known_miRNAs" style="width:${width_known_miRNAs_reads}px;"></td>
+            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
+            <td id="orphans" style="width:${width_orphans_reads}px;"></td>
+        </tr>
+    </table>
+
+    <table id="barchart_legend">
+        <tr>
+            <td><span id="CDS">&nbsp;&nbsp;&nbsp;</span> CDS</td>
+            <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
+            <td><span id="multimapped">&nbsp;&nbsp;&nbsp;</span> multiply mapped reads</td>
+        </tr><tr>
+            <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> knowns miRNAs</td>
+            <td><span id="new_miRNAs">&nbsp;&nbsp;&nbsp;</span> new miRNAs</td>
+            <td><span id="orphans">&nbsp;&nbsp;&nbsp;</span> orphans reads</td>
+        </tr>  
+    </table>
+</div>
+END_TXT
+    
+    return $barchart;
+    
+    
+}
+
 1;
