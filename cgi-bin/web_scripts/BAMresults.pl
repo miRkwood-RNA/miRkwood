@@ -219,8 +219,6 @@ if ( $valid ){
         $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
         $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
 
-
-
         $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
         $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
         $HTML_results .= "</ul></div>";
@@ -237,9 +235,13 @@ if ( $valid ){
 
         my $reads_length_diagramm = miRkwood::BEDHandler::make_reads_length_diagramm( $initial_bed );
         
+        my $exportTarLink = miRkwood::WebTemplate::get_cgi_url('getReadsTar.pl') . '?jobId=' . $id_job;
+        
         $HTML_reads_stats .= "<div class='results_summary'><ul>";
         $HTML_reads_stats .= '<h2>Reads statistics:</h2>';
-        $HTML_reads_stats .= '<br />';        
+        $HTML_reads_stats .= '<br />';
+        $HTML_reads_stats .= "<li><em>Download reads clouds:</em> <a href='$exportTarLink'>download</a></li>";
+        $HTML_reads_stats .= '<br />';
         $HTML_reads_stats .= "<li><em>Reads length:</em> <br />$reads_length_diagramm</li>";
         $HTML_reads_stats .= '<br />';
         $HTML_reads_stats .= "<li><em>Reads distribution:</em> <br />$barchart</li>";
