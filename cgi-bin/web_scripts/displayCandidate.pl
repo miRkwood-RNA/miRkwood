@@ -63,6 +63,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkViennaOptimal = $linkVienna . '&optimal=1';
     my $linkReadsCloud = "$export_link&type=reads";
     my $htmlReadsCloud = '';
+    my $reads_length_diagramm = $candidate->create_reads_length_diagramm();
     if ( $cfg->param('job.mode') ne 'fasta' ){
         my $nb_reads = 0;
         foreach my $key (keys( %{$candidate->{'reads'}} )){
@@ -72,6 +73,9 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
         <h2>Reads</h2>
         <ul>
             <li><b>Number of reads:</b> $nb_reads</li>
+            <li><b>Reads length distribution:</b> <br />
+                $reads_length_diagramm
+            </li>
             <li><b>Reads cloud : </b><a href='$linkReadsCloud'>download</a>
         </ul>    
 END_TXT
