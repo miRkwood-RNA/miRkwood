@@ -734,5 +734,48 @@ sub store_attribute_ct {
 
 }
 
+=method create_reads_length_diagramm
+
+  Method to draw a diagramm of reads length in raw text.
+  
+=cut
+sub create_reads_length_diagramm {
+    my ($self, @args) = @_;
+    my $max_width = 100;
+
+    my $diagramm = '<pre>';
+    my %reads_length;
+
+    foreach ( keys%{$self->{'reads'}} ){
+        my @tab = split ( /-/ );
+        my $length = $tab[1] - $tab[0];
+        if ( !defined( $reads_length{ $length } ) ){
+            $reads_length{ $length } = 0;
+        }
+        $reads_length{ $length } += $self->{'reads'}{$_};        
+    }
+
+    my $max = 0;
+    foreach my $key ( keys%reads_length ){
+        if ( $reads_length{$key} > $max ){
+            $max = $reads_length{$key};
+        }
+    }
+
+    foreach my $key ( sort( keys%reads_length ) ){
+        my $width = int( $reads_length{$key} * $max_width / $max + 0.5 );
+        $diagramm .= "$key nt ($reads_length{$key})\t| ";
+        my $i = 0;
+        while ( $i < $width ){
+            $diagramm .= '*';
+            $i++;
+        }
+        $diagramm .= "\n";
+    }
+    $diagramm .= '</pre>';
+
+    return $diagramm;
+}
+
 
 1;
