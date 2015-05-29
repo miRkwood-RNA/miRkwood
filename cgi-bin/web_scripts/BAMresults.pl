@@ -46,7 +46,6 @@ my $valid = miRkwood::Results->is_valid_jobID($id_job);
 my $html = '';
 my $HTML_additional = '';
 my $HTML_results = '';
-my $HTML_reads_stats = '';
 my $page = '';
 
 
@@ -59,6 +58,9 @@ if ( $valid ){
     my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg = miRkwood->CONFIG();
+
+    my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
+    my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
 
     my $initial_bed     = miRkwood::Paths::get_bed_file ( $id_job, '' );
     my $mirna_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_miRNAs' );
@@ -143,7 +145,7 @@ if ( $valid ){
             $HTML_additional .= '<li><em>Filter CoDing Sequences:</em> No</li>';
         }
 
-        # tRNA and rRNA
+        # tRNA/rRNA/snoRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
             $HTML_additional .= '<li><em>Filter tRNA/rRNA/snoRNA:</em> Yes</li>';
         }
@@ -163,68 +165,52 @@ if ( $valid ){
 
 
         ##### Summary of results
+
+        ### Count the number of results
         $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'New' );
         $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'Known' );
+
+        ### Count the number and percentage of reads in each category
         ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed );
 
+        # CDS
+        if ( $cfg->param('options.filter_CDS') ){
+            ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
+            $percentage_CDS_reads = int($nb_CDS_reads / $nb_total_reads * 100 + 0.5);
+        }
+
+        # tRNA/rRNA/snoRNA
+        if ( $cfg->param('options.filter_tRNA_rRNA') ){
+            ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
+            $percentage_other_reads = int($nb_other_reads / $nb_total_reads * 100 + 0.5);
+        }
+
+        # Multimapped reads
+        if ( $cfg->param('options.filter_multimapped') ){
+            ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
+            $percentage_multi_reads = int($nb_multi_reads / $nb_total_reads * 100 + 0.5);
+        }
+
+        # Known miRNAs
+        ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
+        $percentage_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * 100 + 0.5);
+
+        # New miRNAs
+        ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
+        $percentage_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * 100 + 0.5);
+
+        # Orphan reads
+        $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+        $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
+
+
+        ### Create HTML
         my $arguments = '?jobID=' . $id_job;
         my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=Known';
         my $new_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=New';
         my $exportFileLink = miRkwood::WebTemplate::get_cgi_url('getBEDFile.pl') . '?jobId=' . $id_job;
 
-        $HTML_results .= "<div class='results_summary'><ul>";
-        $HTML_results .= '<h2>Results summary:</h2>';
-        $HTML_results .= '<br />';
-        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
-
-        if ( $cfg->param('options.filter_CDS') ){
-            ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
-            $percentage_CDS_reads = int($nb_CDS_reads / $nb_total_reads * 100 + 0.5);
-            if ( $nb_CDS_reads > 0 ){
-                $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS'>download</a>)</li>";
-            }
-            else {
-                $HTML_results .= '<li><em>CoDing Sequences:</em> 0 reads</li>';
-            }
-        }
-        if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
-            $percentage_other_reads = int($nb_other_reads / $nb_total_reads * 100 + 0.5);
-            if ( $nb_other_reads > 0 ){
-                $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</li>";
-            }
-            else {
-                $HTML_results .= '<li><em>tRNA/rRNA/snoRNA:</em> 0 reads</li>';
-            }
-        }
-        if ( $cfg->param('options.filter_multimapped') ){
-            ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
-            $percentage_multi_reads = int($nb_multi_reads / $nb_total_reads * 100 + 0.5);
-            if ( $nb_multi_reads > 0 ){
-                $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</li>";
-            }
-            else {
-                $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
-            }
-        }
-
-        my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
-        my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
-        ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
-        $percentage_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * 100 + 0.5);
-
-        ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
-        $percentage_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * 100 + 0.5);
-
-        $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
-        $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
-
-        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
-        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
-        $HTML_results .= "</ul></div>";
-
-
-        ##### Reads stats
+        # Create reads barchart
         my $total_width = 650;
         my $barchart = miRkwood::Results->make_reads_barchart( $total_width,
                                                                $percentage_CDS_reads,
@@ -233,20 +219,36 @@ if ( $valid ){
                                                                $percentage_known_miRNAs_reads,
                                                                $percentage_new_miRNAs_reads );
 
-        my $reads_length_diagramm = miRkwood::BEDHandler::make_reads_length_diagramm( $initial_bed );
-        
-        my $exportTarLink = miRkwood::WebTemplate::get_cgi_url('getReadsTar.pl') . '?jobId=' . $id_job;
-        
-        $HTML_reads_stats .= "<div class='results_summary'><ul>";
-        $HTML_reads_stats .= '<h2>Reads statistics:</h2>';
-        $HTML_reads_stats .= '<br />';
-        $HTML_reads_stats .= "<li><em>Download reads clouds:</em> <a href='$exportTarLink'>download</a></li>";
-        $HTML_reads_stats .= '<br />';
-        $HTML_reads_stats .= "<li><em>Reads length:</em> <br />$reads_length_diagramm</li>";
-        $HTML_reads_stats .= '<br />';
-        $HTML_reads_stats .= "<li><em>Reads distribution:</em> <br />$barchart</li>";
-        $HTML_reads_stats .= '<br />';
-        $HTML_reads_stats .= "</ul></div>";
+        $HTML_results .= "<div class='results_summary'><ul>";
+        $HTML_results .= '<h2>Results summary:</h2>';
+        $HTML_results .= '<br />';
+        $HTML_results .= "<em>Reads distribution:</em> <br /><br />$barchart<br />";
+        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
+
+        if ( $nb_CDS_reads > 0 ){
+            $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS'>download</a>)</li>";
+        }
+        else {
+            $HTML_results .= '<li><em>CoDing Sequences:</em> 0 reads</li>';
+        }
+
+        if ( $nb_other_reads > 0 ){
+            $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</li>";
+        }
+        else {
+            $HTML_results .= '<li><em>tRNA/rRNA/snoRNA:</em> 0 reads</li>';
+        }
+
+        if ( $nb_multi_reads > 0 ){
+            $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</li>";
+        }
+        else {
+            $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
+        }
+
+        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
+        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+        $HTML_results .= "</ul></div>";
 
     }
 
@@ -263,8 +265,7 @@ if ( $valid ){
             $HTML_additional
             
             $HTML_results
-            
-            $HTML_reads_stats
+
         </div><!-- main -->
     </div><!-- bloc droit-->
     $footer
