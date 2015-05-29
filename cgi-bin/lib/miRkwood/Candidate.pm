@@ -748,7 +748,7 @@ sub create_reads_length_diagramm {
 
     foreach ( keys%{$self->{'reads'}} ){
         my @tab = split ( /-/ );
-        my $length = $tab[1] - $tab[0];
+        my $length = $tab[1] - $tab[0] + 1;
         if ( !defined( $reads_length{ $length } ) ){
             $reads_length{ $length } = 0;
         }
