@@ -14,7 +14,7 @@ my $cgi = CGI->new();
 
 my $id_job = $cgi->param('jobId');
 my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($id_job);
-my $path_to_reads_clouds_archive = miRkwood::Results->create_reads_archive( $absolute_job_dir );
+my $path_to_reads_clouds_archive = miRkwood::Results->create_all_reads_archive( $absolute_job_dir );
 
 
 
