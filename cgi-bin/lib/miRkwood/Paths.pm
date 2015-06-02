@@ -266,6 +266,25 @@ sub get_known_reads_dir_from_job_dir {
     return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'known');
 }
 
+=method get_dir_reads_path_from_job_dir_and_mirna_type
+
+Return the path to the 'new' or 'known' reads directory
+Parameters : - job dir
+             - mirna type ('New' or 'Known')
+
+=cut
+sub get_dir_reads_path_from_job_dir_and_mirna_type{
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    my $mirna_type = shift @args;
+    if ( $mirna_type eq 'Known' ){
+        return get_known_reads_dir_from_job_dir( $job_dir );
+    }
+    else{
+        return get_new_reads_dir_from_job_dir( $job_dir );
+    }
+}
+
 =method get_bed_file
 
 Return the path to the BED file corresponding to given type
