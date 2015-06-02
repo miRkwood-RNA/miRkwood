@@ -36,7 +36,7 @@ my $page = '';
 my $html_text = '';
 
 my $valid = miRkwood::Results->is_valid_jobID($jobId);
-
+my $retrieve_results_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'id.php');
 
 ##### Create page
 if ( $valid ){
@@ -88,6 +88,10 @@ else{
 <div class="main">
     $HTML_additional
     <p>No results available for the given job identifier $jobId.</p>
+
+    <br />
+
+    <input type="button" name="nom" value="Submit another ID" onclick="window.location.href='$retrieve_results_page'" />
 </div><!-- main -->
 END_TXT
 
