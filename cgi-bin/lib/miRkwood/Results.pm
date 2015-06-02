@@ -345,12 +345,29 @@ END_TXT
 
 }
 
-sub create_reads_archive {
+sub create_all_reads_archive {
  	my ( $self, @args ) = @_;
 	my $jobDir   = shift @args;
     my $reads_path = miRkwood::Paths::get_dir_reads_path_from_job_dir( $jobDir );
-    my $archive_path = "$jobDir/reads.tar.gz";
+    my $archive_path = "$jobDir/all_reads.tar.gz";
     system("tar cf $archive_path $reads_path");
+    return $archive_path;
+}
+
+sub create_reads_archive {
+ 	my ( $self, @args ) = @_;
+	my $job_id   = shift @args;
+    my $mirna_type = shift @args;
+    my $id_results = shift @args;
+    my $job_dir = miRkwood::Results->jobId_to_jobPath($job_id);
+    my $reads_path = miRkwood::Paths::get_dir_reads_path_from_job_dir_and_mirna_type( $job_dir, $mirna_type );
+    my $list_reads_files = '';
+    foreach my $id ( @$id_results ){
+        $list_reads_files .= $id.'.txt ';
+    }
+    my $archive_path = "$job_dir/reads.tar.gz";
+    my $cmd = "tar cf $archive_path -C $reads_path $list_reads_files";
+    system("$cmd");
     return $archive_path;
 }
 
