@@ -46,6 +46,9 @@ given ($export_type) {
     when (/dot/) {
         $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter();
     }
+    when (/reads/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_reads_clouds_results_exporter( $mirna_type );
+    }    
     default { miRkwood::WebTemplate::web_die("The export type '$export_type' is not supported"); }
 }
 $exporter->initialize($id_job, \%myResults, \@sequences_to_export);

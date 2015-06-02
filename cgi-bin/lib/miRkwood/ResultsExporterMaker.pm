@@ -40,4 +40,13 @@ sub make_html_results_exporter {
     return miRkwood::ResultsExporter::HTMLExporter->new();
 }
 
+sub make_reads_clouds_results_exporter {
+    my ($self, @args) = @_;
+    my $mirna_type = shift @args;
+    require miRkwood::ResultsExporter::ReadsExporter;
+    return miRkwood::ResultsExporter::ReadsExporter->new( $mirna_type );
+}
+
+
+
 1;
