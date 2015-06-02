@@ -246,8 +246,19 @@ if ( $valid ){
             $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
         }
 
-        $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
-        $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+        if ( $nb_known_results > 0 ){
+            $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
+        }
+        else {
+            $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads</li>";
+        }
+        
+        if ( $nb_new_results > 0 ){
+            $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+        }
+        else {
+            $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads</li>";
+        }
         $HTML_results .= "</ul></div>";
 
     }
