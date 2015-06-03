@@ -64,12 +64,14 @@ sub run_pipeline {
 
     $self->list_chrom_in_bed();
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
+    $self->{'basic_candidates'} = [];
+
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
         debug( "- Considering chromosome $chromosome" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
     }
-
+    $self->serialize_basic_candidates( 'basic_candidates' );
     $self->mark_job_as_finished();
 
     debug( 'Writing finish file' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
@@ -231,15 +233,11 @@ sub run_pipeline_on_sequences_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
 
-    $self->{'basic_candidates'} = [];
-
     my $sequences_count = scalar( @{$self->{'sequences'}} );
 
     debug( "   $sequences_count sequences to process", miRkwood->DEBUG() );
 
     $self->compute_candidates_per_chr( $chromosome );
-
-    $self->serialize_basic_candidates( 'basic_candidates' );
 
     return;
 }
