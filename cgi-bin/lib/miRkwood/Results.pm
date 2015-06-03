@@ -312,14 +312,14 @@ sub make_reads_barchart {
     my $width_multi_reads        = int($percentage_multi_reads * $total_witdh / 100 + 0.5 );
     my $width_known_miRNAs_reads = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
     my $width_new_miRNAs_reads   = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
-    my $width_orphans_reads      = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
+    my $width_orphans_reads      = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads;
 
     my $barchart = <<"END_TXT";
 <div style='width:${total_witdh}px'>
     <table id="barchart_table">
         <tr>
             <td id="known_miRNAs" style="width:${width_known_miRNAs_reads}px;"></td>
-            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>        
+            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
             <td id="CDS" style="width:${width_CDS_reads}px"></td>
             <td id="other" style="width:${width_other_reads}px"></td>
             <td id="multimapped" style="width:${width_multi_reads}px;"></td>
