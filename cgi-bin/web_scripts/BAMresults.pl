@@ -176,28 +176,28 @@ if ( $valid ){
         # CDS
         if ( $cfg->param('options.filter_CDS') ){
             ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
-            $percentage_CDS_reads = int($nb_CDS_reads / $nb_total_reads * 100 + 0.5);
+            $percentage_CDS_reads = $nb_CDS_reads / $nb_total_reads * 100;
         }
 
         # tRNA/rRNA/snoRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
             ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
-            $percentage_other_reads = int($nb_other_reads / $nb_total_reads * 100 + 0.5);
+            $percentage_other_reads = $nb_other_reads / $nb_total_reads * 100;
         }
 
         # Multimapped reads
         if ( $cfg->param('options.filter_multimapped') ){
             ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
-            $percentage_multi_reads = int($nb_multi_reads / $nb_total_reads * 100 + 0.5);
+            $percentage_multi_reads = $nb_multi_reads / $nb_total_reads * 100;
         }
 
         # Known miRNAs
         ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
-        $percentage_known_miRNAs_reads = int($nb_reads_known_miRNAs / $nb_total_reads * 100 + 0.5);
+        $percentage_known_miRNAs_reads = $nb_reads_known_miRNAs / $nb_total_reads * 100;
 
         # New miRNAs
         ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
-        $percentage_new_miRNAs_reads = int($nb_reads_new_miRNAs / $nb_total_reads * 100 + 0.5);
+        $percentage_new_miRNAs_reads = $nb_reads_new_miRNAs / $nb_total_reads * 100;
 
         # Orphan reads
         $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
