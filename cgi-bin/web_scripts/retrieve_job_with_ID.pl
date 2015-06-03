@@ -74,6 +74,10 @@ if ( $valid ){
     $HTML_additional
     <p>Sorry, something went wrong with miRkwood. Your job is not finished or it has crashed. <br />
     No results available for the given job identifier $jobId.</p>
+
+    <br />
+
+    <input type="button" name="nom" value="Submit another ID" onclick="window.location.href='$retrieve_results_page'" />    
 </div><!-- main -->
 END_TXT
 
