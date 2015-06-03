@@ -83,13 +83,11 @@ if ( $valid ){
     my $nb_reads_known_miRNAs_unq     = 0;
     my $nb_reads_new_miRNAs           = 0;
     my $nb_reads_new_miRNAs_unq       = 0;
-    my $nb_orphans_reads              = 0;
     my $percentage_CDS_reads          = 0;
     my $percentage_other_reads        = 0;
     my $percentage_multi_reads        = 0;
     my $percentage_known_miRNAs_reads = 0;
     my $percentage_new_miRNAs_reads   = 0;
-    my $percentage_orphans_reads      = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -198,10 +196,6 @@ if ( $valid ){
         # New miRNAs
         ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
         $percentage_new_miRNAs_reads = $nb_reads_new_miRNAs / $nb_total_reads * 100;
-
-        # Orphan reads
-        $nb_orphans_reads = $nb_total_reads - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
-        $percentage_orphans_reads = 100 - $percentage_CDS_reads - $percentage_other_reads - $percentage_multi_reads - $percentage_known_miRNAs_reads - $percentage_new_miRNAs_reads;
 
 
         ### Create HTML
