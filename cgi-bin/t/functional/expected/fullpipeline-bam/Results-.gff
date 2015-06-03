@@ -1,6 +1,0 @@
-##gff-version 3
-# miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
-# Note, these sequences do not represent the full primary transcript,
-# rather a predicted stem-loop portion that includes the precursor.
-
-ChrC	miRkwood	miRNA_primary_transcript	287	356	.	+	.	Name=preMir_ChrC__287-356	
