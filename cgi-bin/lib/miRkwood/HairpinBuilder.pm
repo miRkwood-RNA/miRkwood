@@ -11,7 +11,7 @@ use miRkwood::Paths;
 use miRkwood::Parsers;
 use miRkwood::Programs;
 use miRkwood::Utils;
-use miRkwood::ClusterJobSebastien;
+use miRkwood::ClusterJob;
 use miRkwood::CppBinarySearch;
 
 use File::Spec;
@@ -248,7 +248,7 @@ sub test_miRna_intersection {
 	}
 
 	foreach my $miRnas ( @{$miRnaPos} ) {
-		if ($miRnas->{source} == miRkwood::ClusterJobSebastien->DUE_TO_TWO_SPIKES ) {
+		if ($miRnas->{source} == miRkwood::ClusterJob->DUE_TO_TWO_SPIKES ) {
 			if (raw_regions_intertect($stemloop, $miRnas->{first}) && raw_regions_intertect($stemloop, $miRnas->{second})) {
 				return 1;
 			}
@@ -429,7 +429,7 @@ sub run_rnalfold {
 	#~ my $sequence_miRnas = shift;
 	#~ 
 	#~ foreach my $miRnas ( @{$sequence_miRnas} ) {
-		#~ if ($miRnas->{source} == miRkwood::ClusterJobSebastien::DUE_TO_TWO_SPIKES) {
+		#~ if ($miRnas->{source} == miRkwood::ClusterJob::DUE_TO_TWO_SPIKES) {
 			#~ $this->{'stats'}{'COUPLE_DISCARDED'}++;
 		#~ }
 		#~ else {

@@ -1,6 +1,6 @@
 # ABSTRACT: Handling the cluster making from a BAM file.
 
-package KMeanSebastien;
+package KMean;
 
 use strict;
 use warnings;

@@ -9,8 +9,8 @@ use parent 'miRkwood::LociBuilder';
 
 use miRkwood::Utils;
 use miRkwood::HairpinBuilder;
-use miRkwood::ClusterJobSebastien;
-use miRkwood::KMeanSebastien;
+use miRkwood::ClusterJob;
+use miRkwood::KMean;
 use List::Util qw(max min);
 use Log::Message::Simple qw[msg error debug];
 
@@ -48,7 +48,7 @@ sub build_loci_per_chr {
     debug( '    - Get trains...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 	my $trains_hash_per_chr = $this->__get_trains_for_chr( $reads_per_chr );
 
-	my $cluster_job = miRkwood::ClusterJobSebastien->new($this->{'genome_db'});
+	my $cluster_job = miRkwood::ClusterJob->new($this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
 
     debug( '    - Get spikes...' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
@@ -370,7 +370,7 @@ sub __get_trains_for_chr {
 
 	my %current_train = (begin => $read_distribution->[0]{'begin'},
 		end => $read_distribution->[0]{'end'}, read_count => 0, forward_read_count => 0,
-		spikes => [], classifier => KMeanSebastien->new());
+		spikes => [], classifier => KMean->new());
 	$current_train{'classifier'}->add_point(0);
 
 	my $last_read_count = 0;
@@ -443,7 +443,7 @@ sub static__get_trains__maintain_read_count {
 			my $trigger = $end_reads->[0]{'end'};
 			shift @{$end_reads};
 			my $added = $current_train->{'classifier'}->add_point($$total_read_count);
-			if ($added == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
+			if ($added == KMean::ASSIGNED_FIRST_CLASS) {
 				$last_spike->{'end'} = $trigger;
 				$last_spike->{'strand'} = get_strand $last_spike->{'forward_read_count'}, $last_spike->{'read_count'};
 				$current_train->{'classifier'}->clear_points();
@@ -501,11 +501,11 @@ sub static__get_trains__process_train_spikes {
 	@{$end_reads} = sort {$a->{'end'} <=> $b->{'end'}} @{$end_reads};
 	# Looking for spikes
 	my $added = $current_train->{'classifier'}->add_point($$total_read_count);
-	if ($added == KMeanSebastien::ASSIGNED_SECOND_CLASS) {
+	if ($added == KMean::ASSIGNED_SECOND_CLASS) {
 		if (scalar @{$spikes}) {
 			my $last_spike = $spikes->[-1];
 			if ($last_spike->{'end'} == -1) {
-				if ($current_train->{'classifier'}->class_of($last_spike->{'trigger'}) == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
+				if ($current_train->{'classifier'}->class_of($last_spike->{'trigger'}) == KMean::ASSIGNED_FIRST_CLASS) {
 					$last_spike->{'begin'} = $position;
 					$last_spike->{'trigger'} = $$total_read_count;
 					$last_spike->{'read_count'} = $read_locus->{'read_count'};
@@ -517,7 +517,7 @@ sub static__get_trains__process_train_spikes {
 		push @{$spikes}, {begin => $position, end => -1, trigger => $$total_read_count, read_count => $read_locus->{'read_count'},
 		forward_read_count => $read_locus->{'forward_read_count'}};
 	}
-	elsif ($added == KMeanSebastien::ASSIGNED_FIRST_CLASS) {
+	elsif ($added == KMean::ASSIGNED_FIRST_CLASS) {
 		my $last_spike = $spikes->[-1];
 		if ($last_spike->{'end'} == -1) {
 			$last_spike->{'end'} = $position;

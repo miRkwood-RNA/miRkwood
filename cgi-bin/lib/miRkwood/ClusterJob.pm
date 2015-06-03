@@ -1,4 +1,4 @@
-package miRkwood::ClusterJobSebastien;
+package miRkwood::ClusterJob;
 
 use strict;
 use warnings;
@@ -469,7 +469,7 @@ sub process_spikes_for_chr {
 		#~ STATS END
 	}
 	#~ $detector->setMiRnaMinErrorsThreshold($min_error_for_single_spike);
-    miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterJobSebastien : process_spikes_for_chr' );
+    miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterJob : process_spikes_for_chr' );
 	return \@miRnaPos;
 }
 
