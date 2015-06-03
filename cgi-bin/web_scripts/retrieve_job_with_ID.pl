@@ -77,11 +77,11 @@ if ( $valid ){
 
     <br />
 
-    <input type="button" name="nom" value="Submit another ID" onclick="window.location.href='$retrieve_results_page'" />    
+    <input type="button" name="nom" value="Submit another ID" onclick="window.location.href='$retrieve_results_page'" />
 </div><!-- main -->
 END_TXT
 
-        $html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, 1 );        
+        $html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, 1 );
     }
 
 
