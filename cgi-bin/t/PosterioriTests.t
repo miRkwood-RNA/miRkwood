@@ -85,6 +85,7 @@ my $mask_CT_file_output = slurp_file($output_file);
 my $mask_CT_file_expected = slurp_file(input_file('workspace', '1', '1', 'seqWithN.txt' ));
 is( $mask_CT_file_output, $mask_CT_file_expected,
     'mask_CT_file ok' );
+unlink $output_file;
 
 my $candidate_ct_file = input_file('workspace', '1', '1', 'outB2ct_optimal.ct' );
     
