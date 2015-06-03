@@ -205,7 +205,7 @@ if ( $valid ){
         my $exportFileLink = miRkwood::WebTemplate::get_cgi_url('getBEDFile.pl') . '?jobId=' . $id_job;
 
         # Create reads barchart
-        my $total_width = 650;
+        my $total_width = 600;
         my $barchart = miRkwood::Results->make_reads_barchart( $total_width,
                                                                $percentage_CDS_reads,
                                                                $percentage_other_reads,
