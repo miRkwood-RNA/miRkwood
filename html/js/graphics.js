@@ -237,7 +237,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			}
 			if ((i==0)&&(j==0))
 			{
-				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')">CHROMOSOME</h3>';
+				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')">CHR</h3>';
 			}
 			
 			tr.appendChild(td); // ajoute colonne à la ligne
