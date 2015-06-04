@@ -70,6 +70,7 @@ sub run_pipeline {
         debug( "- Considering chromosome $chromosome" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
+        $self->clean_workspace_per_chr( $chromosome );
     }
     $self->serialize_basic_candidates( 'basic_candidates' );
     $self->mark_job_as_finished();
@@ -461,6 +462,29 @@ sub store_known_mirnas_as_candidate_objects {
 
     return;
 
+}
+
+sub clean_workspace_per_chr {
+    my ($self, @args) = @_;
+    my $chromosome = shift @args;
+
+    my $workspace_chr_path = miRkwood::Paths::get_workspace_chromosome_dir( $self->get_workspace_path(), $chromosome );
+    my @list_clusters = glob "$workspace_chr_path/*";
+
+    foreach my $cluster ( @list_clusters ){
+        my $candidate_directory_found = 0;
+        my @content = glob "$cluster/*";
+        foreach my $file ( @content ){
+            if ( -d $file ){
+                $candidate_directory_found = 1;
+            }
+        }
+        if ( ! $candidate_directory_found ){
+            system( "rm -Rf $cluster" );
+        }
+    }
+
+    return;
 }
 
 
