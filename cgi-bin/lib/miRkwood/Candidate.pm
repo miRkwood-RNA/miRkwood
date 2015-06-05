@@ -777,5 +777,37 @@ sub create_reads_length_diagramm {
     return $diagramm;
 }
 
+=method find_mirna
+
+  Method to find the majority read, which is considered
+  as the more likely miRNA.
+  
+=cut
+sub find_mirna {
+    my ($self, @args) = @_;
+    my $max = 0;
+    my $mirna = '';
+    my $total_reads = 0;
+    my $threshold = 0.2;
+
+    foreach ( keys%{$self->{'reads'}} ){
+        $total_reads += $self->{'reads'}{$_};
+        if ( $self->{'reads'}{$_} > $max ){
+            $max = $self->{'reads'}{$_};
+            $mirna = $_;
+        }
+    }
+
+    my $percentage_majority_read = $max / $total_reads;
+    if ( $percentage_majority_read >= $threshold ){
+        $self->{'mirna_position'} = $mirna;
+    }
+    else {
+        $self->{'mirna_position'} = '';
+    }
+    debug( $self->{'identifier'}." : $percentage_majority_read ($max over $total_reads reads), ".$self->{'mirna_position'} , 1);
+    return $self;
+}
+
 
 1;
