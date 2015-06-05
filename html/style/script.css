@@ -463,27 +463,32 @@ span.urlbox {
     width: 200px;
 }
 
-#CDS {
+#known_miRNAs {
     background-color: #FF0000;
     border: 1px solid;
 }
 
-#other {
+#new_miRNAs {
+    background-color: #FFA500;
+    border: 1px solid;
+}
+
+#CDS {
     background-color: #FFFF00;
     border: 1px solid;
 }
 
-#multimapped {
+#other {
     background-color: #00FF00;
     border: 1px solid;
 }
 
-#known_miRNAs {
+#multimapped {
     background-color: #00FFFF;
     border: 1px solid;
 }
 
-#new_miRNAs {
+#orphan_clusters {
     background-color: #0000FF;
     border: 1px solid;
 }
