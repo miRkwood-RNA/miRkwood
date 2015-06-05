@@ -197,9 +197,6 @@ if ( $valid ){
         # Orphan clusters
         ($nb_orphan_clusters_reads, $nb_orphan_clusters_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $orphan_clusters_bed, -1, -1 );
         $percentage_orphan_clusters_reads = $nb_orphan_clusters_reads / $nb_total_reads * 100;
-        
-        # Orphan reads
-        $nb_orphan_reads = $nb_total_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_orphan_clusters_reads;        
 
         # Known miRNAs
         ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
@@ -209,6 +206,8 @@ if ( $valid ){
         ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
         $percentage_new_miRNAs_reads = $nb_reads_new_miRNAs / $nb_total_reads * 100;
 
+        # Orphan reads
+        $nb_orphan_reads = $nb_total_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_orphan_clusters_reads;
 
         ### Create HTML
         my $arguments = '?jobID=' . $id_job;
@@ -223,12 +222,14 @@ if ( $valid ){
                                                                $percentage_other_reads,
                                                                $percentage_multi_reads,
                                                                $percentage_known_miRNAs_reads,
-                                                               $percentage_new_miRNAs_reads );
+                                                               $percentage_new_miRNAs_reads,
+                                                               $percentage_orphan_clusters_reads );
 
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary:</h2>';
         $HTML_results .= '<br />';
         $HTML_results .= "<em>Reads distribution:</em> <br /><br />$barchart<br />";
+
         $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
 
         if ( $nb_CDS_reads > 0 ){
