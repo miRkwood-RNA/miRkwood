@@ -257,6 +257,8 @@ Returns first the nb total and then the nb of unique reads.
 sub count_reads_in_bed_file {
     my @args = @_;
     my $bed_file = shift @args;
+    my $start = shift @args;
+    my $end = shift @args;    
 
     my @tab;
     my $reads = {};
@@ -265,7 +267,9 @@ sub count_reads_in_bed_file {
     open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
     while ( <$BED> ){
         @tab = split ( /\t/ );
-        $reads->{"$tab[1]-$tab[2]"} = $tab[4];
+        if ( ( $start == -1 && $end == -1 ) || ( $tab[1] >= $start  && $tab[2] <= $end ) ) {
+            $reads->{"$tab[1]-$tab[2]"} = $tab[4];
+        }
     }
     close $BED;
 
