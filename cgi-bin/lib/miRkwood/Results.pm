@@ -305,14 +305,15 @@ sub count_reads_in_basic_yaml_file {
 }
 
 sub make_reads_barchart {
-    my ( $self, $total_witdh, $percentage_CDS_reads, $percentage_other_reads, $percentage_multi_reads, $percentage_known_miRNAs_reads, $percentage_new_miRNAs_reads ) = @_;
+    my ( $self, $total_witdh, $percentage_CDS_reads, $percentage_other_reads, $percentage_multi_reads, $percentage_known_miRNAs_reads, $percentage_new_miRNAs_reads, $percentage_orphan_clusters_reads ) = @_;
 
-    my $width_CDS_reads          = int($percentage_CDS_reads * $total_witdh / 100 + 0.5 );
-    my $width_other_reads        = int($percentage_other_reads * $total_witdh / 100 + 0.5 );
-    my $width_multi_reads        = int($percentage_multi_reads * $total_witdh / 100 + 0.5 );
-    my $width_known_miRNAs_reads = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
-    my $width_new_miRNAs_reads   = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
-    my $width_orphans_reads      = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads;
+    my $width_CDS_reads             = int($percentage_CDS_reads * $total_witdh / 100 + 0.5 );
+    my $width_other_reads           = int($percentage_other_reads * $total_witdh / 100 + 0.5 );
+    my $width_multi_reads           = int($percentage_multi_reads * $total_witdh / 100 + 0.5 );
+    my $width_orphan_clusters_reads = int($percentage_orphan_clusters_reads * $total_witdh / 100 + 0.5 );
+    my $width_known_miRNAs_reads    = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
+    my $width_new_miRNAs_reads      = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
+    my $width_orphans_reads         = $total_witdh - $width_CDS_reads - $width_other_reads - $width_multi_reads - $width_known_miRNAs_reads - $width_new_miRNAs_reads - $width_orphan_clusters_reads;
 
     my $barchart = <<"END_TXT";
 <div style='width:${total_witdh}px'>
@@ -323,6 +324,7 @@ sub make_reads_barchart {
             <td id="CDS" style="width:${width_CDS_reads}px"></td>
             <td id="other" style="width:${width_other_reads}px"></td>
             <td id="multimapped" style="width:${width_multi_reads}px;"></td>
+            <td id="orphan_clusters" style="width:${width_orphan_clusters_reads}px;"></td>
             <td id="orphans" style="width:${width_orphans_reads}px;"></td>
         </tr>
     </table>
@@ -332,10 +334,11 @@ sub make_reads_barchart {
             <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> knowns miRNAs</td>
             <td><span id="CDS">&nbsp;&nbsp;&nbsp;</span> CDS</td>
             <td><span id="multimapped">&nbsp;&nbsp;&nbsp;</span> multiply mapped reads</td>
+            <td><span id="orphans">&nbsp;&nbsp;&nbsp;</span> non classified reads</td>
         </tr><tr>
             <td><span id="new_miRNAs">&nbsp;&nbsp;&nbsp;</span> new miRNAs</td>
             <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
-            <td><span id="orphans">&nbsp;&nbsp;&nbsp;</span> orphan reads</td>
+            <td><span id="orphan_clusters">&nbsp;&nbsp;&nbsp;</span> orphan clusters reads</td>
         </tr>
     </table>
 </div>
