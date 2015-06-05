@@ -496,7 +496,7 @@ sub clean_workspace_per_chr {
             }
 
             my ($nb_reads, $nb_unique_reads) = miRkwood::BEDHandler::count_reads_in_bed_file( $self->{'bed_file'}, $cluster_start, $cluster_end );
-            $orphan_clusters{ "$cluster_start\t$cluster_end\t$name\t$nb_reads\t$strand" } = 1;
+            $orphan_clusters{ $cluster_start } = "$cluster_end\t$name\t$nb_reads\t$strand";
 
             system( "rm -Rf $cluster" );
         }
@@ -504,7 +504,7 @@ sub clean_workspace_per_chr {
     
     open ( my $FILE, '>>', $self->{'orphan_clusters'} ) or die "ERROR while opening $self->{'orphan_clusters'} : $!";
     foreach ( sort {$a <=> $b} keys%orphan_clusters ){
-        print $FILE "$chromosome\t$_\n";
+        print $FILE "$chromosome\t$_\t$orphan_clusters{$_}\n";
     }
     close $FILE;
 
