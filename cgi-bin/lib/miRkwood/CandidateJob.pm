@@ -44,6 +44,7 @@ sub get_directory {
 
 sub run{
     my ( $self, @args ) = @_;
+    my $cfg = miRkwood->CONFIG();
     my $candidate_test_info = $self->process_tests_for_candidate();
     my $candidate_information = $self->get_candidate_information();
 
@@ -51,6 +52,9 @@ sub run{
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
     $candidate->compute_alignment_quality();
     $candidate->compute_quality();
+    if ( $cfg->param('job.mode') eq 'WebBAM' ) {
+        $candidate->find_mirna();
+    }
     return $candidate;
 }
 
