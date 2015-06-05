@@ -169,23 +169,23 @@ if ( $valid ){
         $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'Known' );
 
         ### Count the number and percentage of reads in each category
-        ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed );
+        ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed, -1, -1 );
 
         # CDS
         if ( $cfg->param('options.filter_CDS') ){
-            ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed );
+            ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed, -1, -1 );
             $percentage_CDS_reads = $nb_CDS_reads / $nb_total_reads * 100;
         }
 
         # tRNA/rRNA/snoRNA
         if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed );
+            ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed, -1, -1 );
             $percentage_other_reads = $nb_other_reads / $nb_total_reads * 100;
         }
 
         # Multimapped reads
         if ( $cfg->param('options.filter_multimapped') ){
-            ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed );
+            ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed, -1, -1 );
             $percentage_multi_reads = $nb_multi_reads / $nb_total_reads * 100;
         }
 
