@@ -62,32 +62,37 @@ if ( $valid ){
     my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
     my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
 
-    my $initial_bed     = miRkwood::Paths::get_bed_file ( $id_job, '' );
-    my $mirna_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_miRNAs' );
-    my $final_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_filtered' );
-    my $other_bed       = miRkwood::Paths::get_bed_file ( $id_job, '_otherRNA' );
-    my $cds_bed         = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
-    my $multimapped_bed = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
+    my $initial_bed         = miRkwood::Paths::get_bed_file ( $id_job, '' );
+    my $mirna_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_miRNAs' );
+    my $final_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_filtered' );
+    my $other_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_otherRNA' );
+    my $cds_bed             = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
+    my $multimapped_bed     = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
+    my $orphan_clusters_bed = miRkwood::Paths::get_bed_file ( $id_job, '_orphan_clusters' );
 
-    my $nb_new_results                = 0;
-    my $nb_known_results              = 0;
-    my $nb_total_reads                = 0;
-    my $nb_CDS_reads                  = 0;
-    my $nb_other_reads                = 0;
-    my $nb_multi_reads                = 0;
-    my $nb_total_reads_unq            = 0;
-    my $nb_CDS_reads_unq              = 0;
-    my $nb_other_reads_unq            = 0;
-    my $nb_multi_reads_unq            = 0;
-    my $nb_reads_known_miRNAs         = 0;
-    my $nb_reads_known_miRNAs_unq     = 0;
-    my $nb_reads_new_miRNAs           = 0;
-    my $nb_reads_new_miRNAs_unq       = 0;
-    my $percentage_CDS_reads          = 0;
-    my $percentage_other_reads        = 0;
-    my $percentage_multi_reads        = 0;
-    my $percentage_known_miRNAs_reads = 0;
-    my $percentage_new_miRNAs_reads   = 0;
+    my $nb_new_results                   = 0;
+    my $nb_known_results                 = 0;
+    my $nb_total_reads                   = 0;
+    my $nb_CDS_reads                     = 0;
+    my $nb_other_reads                   = 0;
+    my $nb_multi_reads                   = 0;
+    my $nb_total_reads_unq               = 0;
+    my $nb_CDS_reads_unq                 = 0;
+    my $nb_other_reads_unq               = 0;
+    my $nb_multi_reads_unq               = 0;
+    my $nb_reads_known_miRNAs            = 0;
+    my $nb_reads_known_miRNAs_unq        = 0;
+    my $nb_reads_new_miRNAs              = 0;
+    my $nb_reads_new_miRNAs_unq          = 0;
+    my $nb_orphan_clusters_reads         = 0;
+    my $nb_orphan_clusters_reads_unq     = 0;
+    my $nb_orphan_reads                  = 0;
+    my $percentage_CDS_reads             = 0;
+    my $percentage_other_reads           = 0;
+    my $percentage_multi_reads           = 0;
+    my $percentage_known_miRNAs_reads    = 0;
+    my $percentage_new_miRNAs_reads      = 0;
+    my $percentage_orphan_clusters_reads = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -189,6 +194,13 @@ if ( $valid ){
             $percentage_multi_reads = $nb_multi_reads / $nb_total_reads * 100;
         }
 
+        # Orphan clusters
+        ($nb_orphan_clusters_reads, $nb_orphan_clusters_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $orphan_clusters_bed, -1, -1 );
+        $percentage_orphan_clusters_reads = $nb_orphan_clusters_reads / $nb_total_reads * 100;
+        
+        # Orphan reads
+        $nb_orphan_reads = $nb_total_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_orphan_clusters_reads;        
+
         # Known miRNAs
         ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
         $percentage_known_miRNAs_reads = $nb_reads_known_miRNAs / $nb_total_reads * 100;
@@ -205,7 +217,7 @@ if ( $valid ){
         my $exportFileLink = miRkwood::WebTemplate::get_cgi_url('getBEDFile.pl') . '?jobId=' . $id_job;
 
         # Create reads barchart
-        my $total_width = 600;
+        my $total_width = 625;
         my $barchart = miRkwood::Results->make_reads_barchart( $total_width,
                                                                $percentage_CDS_reads,
                                                                $percentage_other_reads,
@@ -239,6 +251,15 @@ if ( $valid ){
         else {
             $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
         }
+
+        if ( $nb_orphan_clusters_reads > 0 ){
+            $HTML_results .= "<li><em>Orphan clusters reads:</em> $nb_orphan_clusters_reads reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</li>";
+        }
+        else {
+            $HTML_results .= '<li><em>Orphan clusters reads:</em> 0 reads</li>';
+        }
+
+        $HTML_results .= "<li><em>Non classified reads:</em> $nb_orphan_reads reads</li>";
 
         if ( $nb_known_results > 0 ){
             $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
