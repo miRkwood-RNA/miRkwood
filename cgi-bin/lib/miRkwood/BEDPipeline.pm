@@ -487,14 +487,16 @@ sub clean_workspace_per_chr {
             my $cluster_start = 0;
             my $cluster_end = 0;
             my $strand = '';
+            my $name = '';
             if ( $cluster =~ /.*\/(\d+)-(\d+)([+-])/ ){
                 $cluster_start = $1;
                 $cluster_end = $2;
                 $strand = $3;
+                $name = "$cluster_start-$cluster_end$strand";
             }
 
             my ($nb_reads, $nb_unique_reads) = miRkwood::BEDHandler::count_reads_in_bed_file( $self->{'bed_file'}, $cluster_start, $cluster_end );
-            $orphan_clusters{ "$cluster_start\t$cluster_end\t$nb_reads\t$strand" } = 1;
+            $orphan_clusters{ "$cluster_start\t$cluster_end\t$name\t$nb_reads\t$strand" } = 1;
 
             system( "rm -Rf $cluster" );
         }
