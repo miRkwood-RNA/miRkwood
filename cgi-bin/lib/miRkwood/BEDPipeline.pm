@@ -65,6 +65,9 @@ sub run_pipeline {
     $self->list_chrom_in_bed();
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
     $self->{'basic_candidates'} = [];
+    my $cfg      = miRkwood->CONFIG();
+    my $bed_name = $cfg->param('job.bed');
+    $self->{'orphan_clusters'}  = File::Spec->catfile( $self->{'job_dir'}, "${bed_name}_orphan_clusters.bed" );
 
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
         debug( "- Considering chromosome $chromosome" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
@@ -467,6 +470,7 @@ sub store_known_mirnas_as_candidate_objects {
 sub clean_workspace_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
+    my %orphan_clusters;
 
     my $workspace_chr_path = miRkwood::Paths::get_workspace_chromosome_dir( $self->get_workspace_path(), $chromosome );
     my @list_clusters = glob "$workspace_chr_path/*";
@@ -480,9 +484,27 @@ sub clean_workspace_per_chr {
             }
         }
         if ( ! $candidate_directory_found ){
+            my $cluster_start = 0;
+            my $cluster_end = 0;
+            my $strand = '';
+            if ( $cluster =~ /.*\/(\d+)-(\d+)([+-])/ ){
+                $cluster_start = $1;
+                $cluster_end = $2;
+                $strand = $3;
+            }
+
+            my ($nb_reads, $nb_unique_reads) = miRkwood::BEDHandler::count_reads_in_bed_file( $self->{'bed_file'}, $cluster_start, $cluster_end );
+            $orphan_clusters{ "$cluster_start\t$cluster_end\t$nb_reads\t$strand" } = 1;
+
             system( "rm -Rf $cluster" );
         }
     }
+    
+    open ( my $FILE, '>>', $self->{'orphan_clusters'} ) or die "ERROR while opening $self->{'orphan_clusters'} : $!";
+    foreach ( sort {$a <=> $b} keys%orphan_clusters ){
+        print $FILE "$chromosome\t$_\n";
+    }
+    close $FILE;
 
     return;
 }
