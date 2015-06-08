@@ -10,29 +10,11 @@ use parent 'miRkwood::ResultsExporter::ResultsExporter';
 use miRkwood::Candidate;
 use miRkwood::Utils;
 
-sub get_headers {
-    my ( $self, @args ) = @_;
-    my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
-    my @headers =
-      ( 'identifier', 'position', 'length', 'strand', 'quality', @optional_fields );
-    return @headers;
-}
 
 sub get_header {
     my ( $self, @args ) = @_;
-    my $type = shift @args;
-    my @headers = $self->get_headers();
-    if ( $type eq 'Known' ){
-        @headers = miRkwood::Utils::delete_element_in_array( 'alignment', \@headers );
-        @headers = miRkwood::Utils::delete_element_in_array( 'shuffles', \@headers );
-        @headers = miRkwood::Utils::delete_element_in_array( 'mfe', \@headers );
-        @headers = miRkwood::Utils::delete_element_in_array( 'mfei', \@headers );
-        @headers = miRkwood::Utils::delete_element_in_array( 'amfe', \@headers );
-        push @headers, 'precursor_name';
-    }    
-    my $output .= '<tr>';
-    for my $header ( ('name'), @headers ) {
-
+    my $output .= "<tr>";
+    for my $header ( ('name'), $self->get_headers() ) {
         $output .= "<th>$header</th>\n";
     }
     $output .= "</tr>\n";
@@ -47,11 +29,6 @@ sub export_candidate {
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
     $output .= "<td>$contents</td>\n";
     my @headers = $self->get_headers();
-    if ( defined( $candidate->{'precursor_name'} ) ){
-        @headers = miRkwood::Utils::delete_element_in_array( 'alignment', \@headers );
-        @headers = miRkwood::Utils::delete_element_in_array( 'shuffles', \@headers );
-        push @headers, 'precursor_name';
-    }
     for my $header ( @headers ) {
         my $td_content = '';
         my $contents   = ${$candidate}{$header};
@@ -88,11 +65,7 @@ sub perform_export{
 
     $output .= "<table>\n<tbody>";
 
-    my $type = 'New';
-    if ( defined( $results{$keys[0]}->{'precursor_name'} ) ){
-        $type = 'Known';
-    }
-    $output .= $self->get_header( $type );
+    $output .= $self->get_header();
 
     foreach my $key (@keys) {
         if ( $self->is_sequence_to_export($key)){

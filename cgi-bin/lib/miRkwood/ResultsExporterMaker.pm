@@ -21,8 +21,21 @@ sub make_gff_results_exporter {
 }
 
 sub make_csv_results_exporter {
+    my ($self, @args) = @_;
+    my $html_exporter = shift @args;
     require miRkwood::ResultsExporter::CSVExporter;
-    return miRkwood::ResultsExporter::CSVExporter->new();
+    require miRkwood::ResultsExporter::CSVExporterGenomic;
+    require miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown;
+    require miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew;
+    if ( $html_exporter eq 'smallRNAseqKnown' ){
+       return miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown->new();
+    }
+    elsif( $html_exporter eq 'smallRNAseqNew' ){
+        return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new();
+    }
+    else{
+        return miRkwood::ResultsExporter::CSVExporterGenomic->new();
+    }
 }
 
 sub make_opendocument_results_exporter {
@@ -36,8 +49,21 @@ sub make_pseudoxml_results_exporter {
 }
 
 sub make_html_results_exporter {
+    my ($self, @args) = @_;
+    my $html_exporter = shift @args;
     require miRkwood::ResultsExporter::HTMLExporter;
-    return miRkwood::ResultsExporter::HTMLExporter->new();
+    require miRkwood::ResultsExporter::HTMLExporterGenomic;
+    require miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown;
+    require miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew;
+    if ( $html_exporter eq 'smallRNAseqKnown' ){
+       return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown->new();
+    }
+    elsif( $html_exporter eq 'smallRNAseqNew' ){
+        return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new();
+    }
+    else{
+        return miRkwood::ResultsExporter::HTMLExporterGenomic->new();
+    }
 }
 
 sub make_reads_clouds_results_exporter {
