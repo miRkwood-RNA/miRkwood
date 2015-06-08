@@ -404,13 +404,13 @@ sub get_optional_candidate_fields {
     my @fields = ();
     my $cfg    = miRkwood->CONFIG();
 
-    if ( defined($cfg->param('job.mode')) and $cfg->param('job.mode') eq 'fasta' ){
-        push @fields, qw{mfe mfei amfe};
-    }
-    elsif ( defined($cfg->param('job.mode')) and $cfg->param('job.mode') eq 'WebBAM' ){
-        push @fields, ('mfei');
-        push @fields, ('reads');
-    }
+    #~ if ( defined($cfg->param('job.mode')) and $cfg->param('job.mode') eq 'fasta' ){
+        #~ push @fields, qw{mfe mfei amfe};
+    #~ }
+    #~ elsif ( defined($cfg->param('job.mode')) and $cfg->param('job.mode') eq 'WebBAM' ){
+        #~ push @fields, ('mfei');
+        #~ push @fields, ('reads');
+    #~ }
 
     if ( $cfg->param('options.randfold') ) {
         push @fields, ('shuffles');
@@ -477,7 +477,7 @@ sub get_basic_informations {
     if ( defined( $self->{'precursor_name'} ) ){
         push @headers, 'precursor_name';
     }
-    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', @optional_fields );
+    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
 
 	foreach (@headers){
