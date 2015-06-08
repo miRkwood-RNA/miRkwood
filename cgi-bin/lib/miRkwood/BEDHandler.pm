@@ -58,7 +58,8 @@ sub filterBEDfile_for_model_organism {
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
 
         # Delete reads corresponding to known miRNAs from the BED
-        store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1);
+        #~ store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1);  # un-comment when tests are done
+        system("cp $bed_file $tmp_1");  # un-comment when tests are done
         debug( 'Known miRNAS have been filtered out from BED.', 1 );
     }
     else{
