@@ -403,16 +403,22 @@ sub get_optional_candidate_fields {
     my ( $self, @args ) = @_;
     my @fields = ();
     my $cfg    = miRkwood->CONFIG();
-    push @fields, qw{mfe mfei amfe};
+
+    if ( defined($cfg->param('job.mode')) and $cfg->param('job.mode') eq 'fasta' ){
+        push @fields, qw{mfe mfei amfe};
+    }
+    elsif ( defined($cfg->param('job.mode')) and $cfg->param('job.mode') eq 'WebBAM' ){
+        push @fields, ('mfei');
+        push @fields, ('reads');
+    }
+
     if ( $cfg->param('options.randfold') ) {
         push @fields, ('shuffles');
     }
     if ( $cfg->param('options.align') ) {
         push @fields, ('alignment');
     }
-    if ( defined($cfg->param('job.mode')) and ($cfg->param('job.mode') eq 'bam' or $cfg->param('job.mode') eq 'WebBAM') ){
-        push @fields, ('reads');
-    }
+
     return @fields;
 }
 
