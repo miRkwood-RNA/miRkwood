@@ -72,8 +72,7 @@ sub build_hairpins {
 
     my $working_dir = miRkwood::Paths::get_workspace_candidate_dir( $this->{'workspace'},
                                                                     $chr,
-                                                                    ($locus->{begin}+1) . '-' . ($locus->{end}),
-                                                                    $locus->{strand} );
+                                                                    ($locus->{begin}+1) . '-' . ($locus->{end}) . $locus->{strand} );
 	mkdir $working_dir;
 
 	my $rnalfold_output_filename = 'rnalfold_out';
@@ -371,7 +370,7 @@ sub process_RNAstemloop {
                                 'structure_stemloop' => $structure_stemloop,
                                 'energy_stemloop' => $energy_stemloop,
                                 'reads' => get_contained_reads($parsed_bed, $chr, $stemloop->{'begin'}, $stemloop->{'end'}, $strand),
-                                'cluster' => $cluster_position
+                                'cluster' => $cluster_position.$strand
                             };
                             my $nb_reads = 0;
                             foreach my $key (keys( %{$res->{'reads'}} )){

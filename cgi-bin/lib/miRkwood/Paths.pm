@@ -336,10 +336,9 @@ sub get_workspace_candidate_dir {
     my $workspace_dir = shift @args;
     my $chromosome = shift @args;
     my $cluster = shift @args;
-    my $strand = shift @args;
 
     my $chromosome_dir = get_workspace_chromosome_dir( $workspace_dir, $chromosome );
-    return File::Spec->catdir( $chromosome_dir, $cluster . $strand );
+    return File::Spec->catdir( $chromosome_dir, $cluster );
 }
 
 =method create_folder

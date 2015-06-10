@@ -196,8 +196,7 @@ sub create_candidate_directory {
 
     my $cluster_directory = miRkwood::Paths::get_workspace_candidate_dir( $self->{'workspace_dir'},
                                                                           $self->{'chromosome_id'},
-                                                                          $candidate->{'max'}{'cluster'},
-                                                                          $candidate->{'max'}{'strand'} ); # TO CHECK : ok for WebBAM but for genomic... ?
+                                                                          $candidate->{'max'}{'cluster'} ); # TO CHECK : ok for WebBAM but for genomic... ?
 
     my $candidate_dir = File::Spec->catdir( $cluster_directory, $candidate_identifier );
     mkdir $candidate_dir;
