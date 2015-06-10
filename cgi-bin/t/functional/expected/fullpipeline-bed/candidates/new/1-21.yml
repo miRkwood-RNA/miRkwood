@@ -307,10 +307,14 @@
 --- 0
 --- quality
 --- 0
+--- mirna_position
+--- ''
 --- alternatives
 --- {}
 --- cluster
---- 56385-56643
+--- 56385-56643+
+--- mirna_length
+--- ''
 --- name
 --- '1'
 --- energy_optimal
@@ -325,3 +329,5 @@
 --- -0.732967032967033
 --- mfe
 --- '-15.12'
+--- mirna_sequence
+--- ''
