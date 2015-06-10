@@ -479,7 +479,10 @@ sub get_basic_informations {
     }
     if ( defined( $self->{'mirna_sequence'} ) ){
         push @headers, 'mirna_sequence';
-    }    
+    }
+    if ( defined( $self->{'cluster'} ) ){
+        push @headers, 'cluster';
+    }
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
 
