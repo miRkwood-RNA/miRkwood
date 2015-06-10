@@ -177,7 +177,7 @@ sub convert_basic_to_pseudoXML {
             push @headers, ( 'name', 'precursor_name', 'position', 'strand', 'quality', 'length', 'reads', 'identifier', 'image' );
         }
         else {
-            push @headers, ( 'name', 'position', 'strand', 'quality', 'length', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
+            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'quality', 'length', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
         }
     }
     else {

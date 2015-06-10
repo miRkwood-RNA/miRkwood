@@ -477,6 +477,9 @@ sub get_basic_informations {
     if ( defined( $self->{'precursor_name'} ) ){
         push @headers, 'precursor_name';
     }
+    if ( defined( $self->{'mirna_sequence'} ) ){
+        push @headers, 'mirna_sequence';
+    }    
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
 
