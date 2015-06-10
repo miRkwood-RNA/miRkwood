@@ -128,9 +128,10 @@ sub get_basic_structure_for_jobID {
 sub get_basic_pseudoXML_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
+    my $pipeline_type = shift @args;    # should be 'abinitio' or 'smallRNAseq'
     my $type    = shift @args;  # $type should be 'New' or 'Known'
 
-	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
+	my $results = $self->get_basic_structure_for_jobID($jobId, $type);   
 
 	my $output = '';
 
@@ -142,7 +143,7 @@ sub get_basic_pseudoXML_for_jobID {
     } @{$results};
 
     foreach my $candidate (@candidates) {
-        $output .= $self->convert_basic_to_pseudoXML($candidate, $type) . "\n";
+        $output .= $self->convert_basic_to_pseudoXML($candidate, $pipeline_type, $type) . "\n";
     }
     $output .= "</results>\n";
 
@@ -153,7 +154,7 @@ sub get_basic_pseudoXML_for_jobID {
             $a->{'start_position'} <=> $b->{'start_position'} )
     } @candidates;
     foreach my $candidate (@candidates) {
-        $output .= $self->convert_basic_to_pseudoXML($candidate, $type) . "\n";
+        $output .= $self->convert_basic_to_pseudoXML($candidate, $pipeline_type, $type) . "\n";
     }
     $output .= '</results>';
 
@@ -164,22 +165,26 @@ sub convert_basic_to_pseudoXML {
 	my ( $self, @args ) = @_;
 	my $candidate = shift @args;
 	my %candidate = %{$candidate};
+    my $pipeline_type = shift @args;    # should be 'abinitio' or 'smallRNAseq'
     my $type      = shift @args;  # $type should be 'New' or 'Known'
 
 	my @headers;
     my @fields_to_truncate = qw{mfe mfei amfe};
-    my $result = '<Sequence';
 	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
 
-    if ( $type eq 'Known' ){
-        push @headers, 'precursor_name';
-        @optional_fields = miRkwood::Utils::delete_element_in_array( 'alignment', \@optional_fields );
-        @optional_fields = miRkwood::Utils::delete_element_in_array( 'mfe', \@optional_fields );
-        @optional_fields = miRkwood::Utils::delete_element_in_array( 'mfei', \@optional_fields );
+    if ( $pipeline_type eq 'smallRNAseq' ){
+        if ( $type eq 'Known' ){
+            push @headers, ( 'name', 'position', 'strand', 'quality', 'length', 'reads', 'identifier', 'image' );
+        }
+        else {
+            push @headers, ( 'name', 'position', 'strand', 'quality', 'length', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
+        }
+    }
+    else {
+       push @headers, ( 'name', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'image', 'identifier' );
     }
 
-    push @headers, ( 'name', 'position', 'length', 'strand', 'quality', @optional_fields, 'image', 'identifier' );
-
+    my $result = '<Sequence';
     for my $header (@headers) {
         my $contents = $candidate->{$header};
         if (grep { $header eq $_ } @fields_to_truncate){
