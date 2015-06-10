@@ -480,9 +480,13 @@ sub get_basic_informations {
     if ( defined( $self->{'mirna_sequence'} ) ){
         push @headers, 'mirna_sequence';
     }
+    if ( defined( $self->{'mirna_length'} ) ){
+        push @headers, 'mirna_length';
+    }
     if ( defined( $self->{'cluster'} ) ){
         push @headers, 'cluster';
     }
+
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
 
@@ -817,10 +821,12 @@ sub find_mirna {
         $self->{'mirna_position'} = "$mirna_start-$mirna_end";
         $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
         $self->{'mirna_sequence'} =~ s/T/U/g;
+        $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
     }
     else {
         $self->{'mirna_position'} = '';
         $self->{'mirna_sequence'} = '';
+        $self->{'mirna_length'}   = '';
     }
 
     return $self;
