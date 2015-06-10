@@ -431,7 +431,7 @@ my $xml_element = $candidate->candidate_as_pseudoXML();
 
 =cut
 
-sub candidate_as_pseudoXML {
+sub candidate_as_pseudoXML {    # not used anymore ?
     my ( $self, @args ) = @_;
 
     my $name = $self->get_shortened_sequence_name();
