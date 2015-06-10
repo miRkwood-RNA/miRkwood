@@ -57,7 +57,7 @@ sub run{
     $candidate->compute_alignment_quality();
     $candidate->compute_quality();
     if ( $cfg->param('job.mode') eq 'WebBAM' ) {
-        $candidate->find_mirna();
+        $candidate->find_mirna( $self->{'genome_db'} );
     }
     return $candidate;
 }

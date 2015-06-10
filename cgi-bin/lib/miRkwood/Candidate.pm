@@ -791,8 +791,10 @@ sub create_reads_length_diagramm {
 =cut
 sub find_mirna {
     my ($self, @args) = @_;
+    my $genome_db = shift @args;
     my $max = 0;
-    my $mirna = '';
+    my $mirna_start = 0;
+    my $mirna_end = 0;
     my $total_reads = 0;
     my $threshold = 0.2;
 
@@ -800,18 +802,21 @@ sub find_mirna {
         $total_reads += $self->{'reads'}{$_};
         if ( $self->{'reads'}{$_} > $max ){
             $max = $self->{'reads'}{$_};
-            $mirna = $_;
+            ($mirna_start, $mirna_end) = split( /-/, $_ );
         }
     }
 
     my $percentage_majority_read = $max / $total_reads;
     if ( $percentage_majority_read >= $threshold ){
-        $self->{'mirna_position'} = $mirna;
+        $self->{'mirna_position'} = "$mirna_start-$mirna_end";
+        $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
+        $self->{'mirna_sequence'} =~ s/T/U/g;
     }
     else {
         $self->{'mirna_position'} = '';
+        $self->{'mirna_sequence'} = '';
     }
-    debug( $self->{'identifier'}." : $percentage_majority_read ($max over $total_reads reads), ".$self->{'mirna_position'} , 1);
+
     return $self;
 }
 
