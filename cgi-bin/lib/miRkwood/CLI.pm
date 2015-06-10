@@ -22,6 +22,7 @@ sub process_results_dir_for_offline {
     my @args           = @_;
     my $candidates_dir = shift @args;
     my $output_folder  = shift @args;
+    my $html_exporter  = shift @args;
 
 # In debug mode (without executing the pipeline), we need to set the config file
 #miRkwood->CONFIG_FILE(miRkwood::Paths->get_job_config_path( $output_folder ));
@@ -33,7 +34,7 @@ sub process_results_dir_for_offline {
 
     my %results = miRkwood::Results->deserialize_results($candidates_dir);
 
-    my $html = make_html_from_results( \%results, $output_folder );
+    my $html = make_html_from_results( \%results, $output_folder, $html_exporter );
 
     my $html_page = File::Spec->catfile( $output_folder, 'results.html' );
     open( my $HTML, '>', $html_page )
@@ -58,15 +59,16 @@ sub make_html_from_results {
     my $results = shift @args;
     my %results = %{$results};
     my $output_folder = shift @args;
+    my $html_exporter = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
 
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
-    my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter();
+    my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $html_exporter );
     $exporter->initialize('', \%results);
     $page .= $exporter->perform_export();
 
-    $page .= make_all_exports( \%results, $output_folder );
+    $page .= make_all_exports( \%results, $output_folder, $html_exporter );
     while ( my ( $key, $value ) = each %results ) {
         my $candidate_html =
           make_candidate_page( $value, $pieces_folder, $output_folder );
@@ -91,6 +93,7 @@ sub make_all_exports {
     my (@args)        = @_;
     my $results_ref   = shift @args;
     my $output_folder = shift @args;
+    my $html_exporter = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
     my $id_job = '';
 
@@ -109,7 +112,7 @@ sub make_all_exports {
     $exporter->export_on_disk( $output_folder );
     my $gff_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
-    $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter();
+    $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( $html_exporter );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
     my $csv_file = File::Spec->catfile($output_folder, $exporter->get_filename());
