@@ -70,7 +70,7 @@ if ( $valid ){
 	} else {
         $nb_results = miRkwood::Results->number_of_results_bis( $id_job, $mirnas_type );
 
-        $mirnas_results .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, $mirnas_type);
+        $mirnas_results .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'smallRNAseq', $mirnas_type);
     }
 
     if ( $nb_results != 0 ) {
@@ -100,7 +100,7 @@ if ( $valid ){
                             <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
                             <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/>
                             <input type="radio" name="export" id="export-reads" value="reads" />&#160;<label for='export-reads'>Reads cloud format</label>
-                            <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "$mirnas_type")'/>
+                            <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "smallRNAseq", "$mirnas_type")'/>
                         </form>
                     </div>
                         <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>

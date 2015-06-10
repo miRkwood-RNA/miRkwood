@@ -17,6 +17,7 @@ my $cgi = CGI->new;
 my $id_job = $cgi->param('run_id');    # récupération id job
 my $export_type = $cgi->param('type');
 my $data= $cgi->param('data');  # identifiant des candidats sélectionnés
+my $header_type = $cgi->param('header_type');
 my $mirna_type = $cgi->param('mirna_type');
 my @sequences_to_export =  split( ',',$data  );
 
@@ -38,7 +39,7 @@ given ($export_type) {
         $exporter->{'cgi'} = $cgi;
     }
     when (/csv/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter();
+        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter($header_type$mirna_type);
     }
     when (/fas/) {
         $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
