@@ -174,7 +174,7 @@ sub convert_basic_to_pseudoXML {
 
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $type eq 'Known' ){
-            push @headers, ( 'name', 'position', 'strand', 'quality', 'length', 'reads', 'identifier', 'image' );
+            push @headers, ( 'name', 'precursor_name', 'position', 'strand', 'quality', 'length', 'reads', 'identifier', 'image' );
         }
         else {
             push @headers, ( 'name', 'position', 'strand', 'quality', 'length', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
