@@ -158,6 +158,18 @@ function createGrid(id,rowsNumber,columnsNumber)
 				{
 					td.innerHTML = '<h3>miRbase name</h3>' ;
 				}
+                else if (value.toString() == 'cluster') 
+				{
+					td.innerHTML = '<h3>POSITION</h3>' ;
+				}
+                else if (value.toString() == 'mirna_sequence') 
+				{
+					td.innerHTML = '<h3>MIRNA </h3>' ;
+				}
+                else if (value.toString() == 'mirna_length') 
+				{
+					td.innerHTML = '<h3>MIRNA LENGTH</h3>' ;
+				}
 				else if (value.toString() == 'strand')
 				{
 					td.innerHTML = '<h3>+/-</h3>' ;
@@ -165,7 +177,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				else if (value.toString() == 'quality') 
 				{
 					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
-				}else if (value.toString() == 'alignment') 
+				}else if (value.toString() == 'alignment')
 				{
 					td.innerHTML = '<h3 >conserved<br>miRNA</h3>';
 				}else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
@@ -175,7 +187,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				else 
 				{
 					td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
-				}			
+				}
 				
 			}
 			if ((i!=0)&&(j==0)) // ajouter nom séquence 
