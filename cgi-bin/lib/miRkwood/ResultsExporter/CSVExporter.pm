@@ -28,12 +28,12 @@ sub export_candidate {
     my $result;
     for my $header ($self->get_csv_headers()) {
         my $contents = ${$candidate}{$header};
-        if ($header eq "reads"){
+        if ($header eq 'reads'){
             $contents = 0;
             foreach my $key (keys( %{$candidate->{'reads'}} )){
                 $contents += $candidate->{'reads'}{$key};
             }
-        }        
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
