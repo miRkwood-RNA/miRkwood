@@ -20,11 +20,12 @@ use miRkwood::Paths;
 =cut
 sub new {
     my ( $class, @args ) = @_;
-    my ( $workspace_dir, $chromosome_id, $chromosome_name ) = @args;
+    my ( $workspace_dir, $genome_db, $chromosome_id, $chromosome_name ) = @args;
     my $self = {
-        workspace_dir => $workspace_dir,
-        chromosome_id => $chromosome_id,
-        chromosome_name => $chromosome_name,
+        'workspace_dir'   => $workspace_dir,
+        'genome_db'       => $genome_db,
+        'chromosome_id'   => $chromosome_id,
+        'chromosome_name' => $chromosome_name,
     };
     bless $self, $class;
     return $self;
@@ -179,7 +180,8 @@ sub run_pipeline_on_candidate {
                                                    $self->{'chromosome_name'},
                                                    $candidate_full_identifier,
                                                    $candidate_ref,
-                                                   $alternatives);
+                                                   $alternatives,
+                                                   $self->{'genome_db'});
 
     miRkwood::Utils::display_var_sizes_in_log_file( '..... PrecursorBuilder : run_pipeline_on_candidate' );
 

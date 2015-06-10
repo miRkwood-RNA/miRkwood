@@ -270,7 +270,7 @@ sub compute_candidates_per_chr {
     undef @hairpin_candidates_for_chr;
 
     if ( scalar(@sorted_hairpin_candidates_for_chr) ){
-        my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $chromosome, $chromosome );
+        my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $self->{'genome_db'}, $chromosome, $chromosome );
 
         # Merge candidates
         my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );

@@ -25,13 +25,17 @@ Usage:
 
 sub new {
     my ( $class, @args ) = @_;
-    my ($directory, $sequence_name, $identifier, $candidate_ref, $alternatives) = @args;
+    my ($directory, $sequence_name, $identifier, $candidate_ref, $alternatives, $genome_db) = @args;
+    if ( ! defined( $genome_db ) ){
+        $genome_db = '';
+    }
     my $self = {
-        sequence_name => $sequence_name,
-        directory => $directory,
-        identifier => $identifier,
-        candidate => $candidate_ref,
-        alternatives => $alternatives,
+        'sequence_name' => $sequence_name,
+        'directory'     => $directory,
+        'identifier'    => $identifier,
+        'candidate'     => $candidate_ref,
+        'alternatives'  => $alternatives,
+        'genome_db'     => $genome_db,
     };
     bless $self, $class;
     return $self;
