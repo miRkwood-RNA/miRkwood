@@ -191,7 +191,7 @@ sub make_candidate_page {
       or die("Cannot close file $alternatives_file: $!");
 
     my $reads_file = File::Spec->catfile(
-        $output_folder ."/clusters/", $candidate->{'identifier'} . '.txt' );
+        $output_folder . '/clusters/', $candidate->{'identifier'} . '.txt' );
 
     my $linkFasta         = "$candidate_fasta_file";
     my $linkVienna        = "$vienna_file";
@@ -219,12 +219,19 @@ sub make_candidate_page {
     }
 
     my $alignmentHTML = q{};
-    if ( $candidate->{'alignment'} ) {
-        $alignmentHTML =
-          $candidate->make_alignments_HTML();
-    }
-    else {
-        $alignmentHTML = 'No alignment has been found.';
+    if ( $cfg->param('options.align') ){
+        if ( defined( $candidate->{'precursor_name'} ) ) {
+            $alignmentHTML = q{};
+        }
+        else {
+            $alignmentHTML = "<h3>miRBase alignments</h3>\n";
+            if ( $candidate->{'alignment'} ) {
+                $alignmentHTML .= $candidate->make_alignments_HTML();
+            }
+            else {
+                $alignmentHTML .= 'No alignment has been found.';
+            }
+        }
     }
 
     my $html = <<"END_TXT";
@@ -263,17 +270,9 @@ sub make_candidate_page {
       <b>MFEI:</b> $candidate->{'mfei'}
     </li>
     </ul>
+    $alignmentHTML
 END_TXT
 
-    if ( $cfg->param('options.align') ){
-
-        $html .=  <<"END_TXT";
-<h3>miRBase alignments</h3>
-
-$alignmentHTML
-END_TXT
-
-    }
 
     return $html;
 }
