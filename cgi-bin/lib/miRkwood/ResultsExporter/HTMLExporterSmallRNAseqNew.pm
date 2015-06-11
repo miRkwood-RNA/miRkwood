@@ -18,5 +18,26 @@ sub get_headers {
     return @headers;
 }
 
+sub get_header {
+    my ( $self, @args ) = @_;
+    my $output .= "<tr>";
+    for my $header ( ('chromosome'), $self->get_headers() ) {
+        if ( $header eq 'cluster' ){
+            $output .= "<th>position</th>\n";
+        }
+        elsif ( $header eq 'mirna_sequence' ){
+            $output .= "<th>miRNA</th>\n";
+        }
+        elsif ( $header eq 'mirna_length' ){
+            $output .= "<th>miRNA length</th>\n";
+        }
+        else {
+            $output .= "<th>$header</th>\n";
+        }
+    }
+    $output .= "</tr>\n";
+    return $output;
+}
+
 
 1;
