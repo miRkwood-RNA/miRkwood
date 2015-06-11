@@ -131,7 +131,7 @@ sub get_basic_pseudoXML_for_jobID {
     my $pipeline_type = shift @args;    # should be 'abinitio' or 'smallRNAseq'
     my $type    = shift @args;  # $type should be 'New' or 'Known'
 
-	my $results = $self->get_basic_structure_for_jobID($jobId, $type);   
+	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 
 	my $output = '';
 
@@ -173,14 +173,14 @@ sub convert_basic_to_pseudoXML {
 	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
 
     if ( $pipeline_type eq 'smallRNAseq' ){
-        if ( $type eq 'Known' ){
-            push @headers, ( 'name', 'precursor_name', 'position', 'strand', 'quality', 'length', 'reads', 'identifier', 'image' );
+        if ( $type eq 'Known' ){  # known miRNAs for pipeline smallRNAseq
+            @headers = qw{name precursor_name position strand quality length reads identifier image};
         }
-        else {
+        else {  # new miRNAs for pipeline smallRNAseq
             push @headers, ( 'name', 'cluster', 'mirna_sequence', 'mirna_length', 'quality', 'length', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
         }
     }
-    else {
+    else {  # pipeline ab initio
        push @headers, ( 'name', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'image', 'identifier' );
     }
 
@@ -370,7 +370,7 @@ sub create_reads_archive {
     my $job_dir = miRkwood::Results->jobId_to_jobPath($job_id);
     my $reads_path = miRkwood::Paths::get_dir_reads_path_from_job_dir_and_mirna_type( $job_dir, $mirna_type );
     my $list_reads_files = '';
-    foreach my $id ( @$id_results ){
+    foreach my $id ( @{$id_results} ){
         $list_reads_files .= $id.'.txt ';
     }
     my $archive_path = "$job_dir/reads.tar.gz";
