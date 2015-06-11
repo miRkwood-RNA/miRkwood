@@ -20,7 +20,7 @@ sub get_headers {
 
 sub get_header {
     my ( $self, @args ) = @_;
-    my $output .= "<tr>";
+    my $output = '<tr>';
     for my $header ( ('chromosome'), $self->get_headers() ) {
         if ( $header eq 'precursor_name' ){
             $output .= "<th>miRBase name</th>\n";
