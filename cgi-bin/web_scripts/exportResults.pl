@@ -39,7 +39,7 @@ given ($export_type) {
         $exporter->{'cgi'} = $cgi;
     }
     when (/csv/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter($header_type$mirna_type);
+        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter($header_type . $mirna_type);
     }
     when (/fas/) {
         $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
