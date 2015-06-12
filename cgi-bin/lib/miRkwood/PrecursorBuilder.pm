@@ -173,7 +173,7 @@ sub run_pipeline_on_candidate {
     my $candidate_dir = $self->create_candidate_directory( $candidate, $candidate_identifier );
 
     # Run CandidateJob on the Candidate
-    my $candidate_full_identifier = "$self->{'chromosome_id'}-$candidate_identifier";
+    my $candidate_full_identifier = "$self->{'chromosome_id'}__$candidate->{'max'}{'cluster'}$candidate_identifier";
     my $candidate_ref = $candidate->{'max'};
     my $alternatives = $candidate->{'alternatives'};
     my $candidatejob = miRkwood::CandidateJob->new($candidate_dir,
