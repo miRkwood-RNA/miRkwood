@@ -13,7 +13,6 @@ sub get_csv_headers {
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @csv_headers     = (
         'name',
-        'identifier',
         'start_position',
         'end_position',
         'strand',
