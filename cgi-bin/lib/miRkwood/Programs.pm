@@ -305,7 +305,7 @@ sub run_RNAcomp {
     my $mirbase_file = miRkwood::Data::get_mirbase_file();
 
     my $cmd = "$programs_paths{'RNAcomp'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
-    debug( '        ' . $cmd, miRkwood->DEBUG());
+    debug( '          ' . $cmd, miRkwood->DEBUG());
     system($cmd);
     return ( -e $output );
 
