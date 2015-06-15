@@ -214,7 +214,7 @@ sub write_VARNA_if_needed {
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.varna') ) {
         my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
-        debug( "        Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
+        debug( "          Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
         miRkwood::Programs::run_varna_on_structure( $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, $varna_image )
           or carp('Problem during image generation using VARNA');
       return $varna_image
@@ -268,7 +268,7 @@ sub process_tests_for_candidate {
     $posteriori_tests->{'sequence_name'} = $self->{'sequence_name'};
     $posteriori_tests->{'candidate'} = $self->{'candidate'};
     my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
-    debug( "        Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
+    debug( "          Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
     my ($mirdup_results, $alignments) =
         $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
 
