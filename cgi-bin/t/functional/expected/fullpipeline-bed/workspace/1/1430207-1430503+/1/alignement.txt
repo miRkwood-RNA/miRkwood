@@ -1,0 +1,28 @@
+- name : aly-miR848-5p
+  begin_target  : 113
+  end_target    : 129
+  strand_target : +
+  begin_query   : 0
+  end_query     : 17
+  def_query     : MIMAT0017689 Arabidopsis lyrata miR848-5p | 
+  seq_query     : GGCAAUCCCAUGUCAAA
+
+  score: -3
+  alignment: |
+    G G match
+    G G match
+    C C match
+    A A match
+    A A match
+    U G match
+    C C match
+    C C match
+    C C match
+    A A match
+    U U match
+    G G match
+    U U match
+    C - gap
+    A A match
+    A U match
+    A A match

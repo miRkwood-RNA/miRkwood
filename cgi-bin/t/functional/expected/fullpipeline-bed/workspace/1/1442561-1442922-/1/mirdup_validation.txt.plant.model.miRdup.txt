@@ -1,0 +1,11 @@
+
+--------
+#ID	1__221-241
+#WE	
+#PR	Prediction	true
+#SC	Score	0.606338492870694
+#PM	UUUGUCAUGUUUCACCAUUACUCCACAUGUUAAAGUUUAAUUGGACAAGUUAUAAUGGAUACAAACUAUCAUUAACUAAUUGGAUUUUGAGUGUUGCUAUUUGAAAGCAAUGUCUACAUAUUGUUCUUGGGGCUUGGAGACCUAUAGGAUUAUUAGUUUAUACAUAAUGAAAUCGUGUUGGAUGCUUUGAUAGUUUGUGUCCAUGAAAACUUGUCCAACAAGAUGUGACCAUGUGGAAAUGAUGUAUUCUCAUGUGCGAA
+#SS	(((((((((......(((((.(((((((((((..((((..(((((((((((...(((((((((((((((((....(((((..(((((((.(((.....................................................................)))..)))))))..)))))......)))))))))))))))))...)))))))))))..)))).))).))))))))..)))))......)))).)))))
+#MM	                                                                                                                                                                                                                             GAUGUGACCAUGUGGAAAUG
+
+

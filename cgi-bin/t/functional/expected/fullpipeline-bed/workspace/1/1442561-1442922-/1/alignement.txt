@@ -1,0 +1,32 @@
+- name : ath-miR5662
+  begin_target  : 220
+  end_target    : 241
+  strand_target : +
+  begin_query   : 0
+  end_query     : 20
+  def_query     : MIMAT0022439 Arabidopsis thaliana miR5662 | 
+  seq_query     : AGAGGUGACCAUUGGAGAUG
+
+  score: -3
+  alignment: |
+    A A match
+    G G match
+    A A match
+    G U match
+    G G match
+    U U match
+    G G match
+    A A match
+    C C match
+    C C match
+    A A match
+    U U match
+    - G gap
+    U U match
+    G G match
+    G G match
+    A A match
+    G A match
+    A A match
+    U U match
+    G G match
