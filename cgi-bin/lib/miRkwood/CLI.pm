@@ -69,10 +69,15 @@ sub make_html_from_results {
     $page .= $exporter->perform_export();
 
     $page .= make_all_exports( \%results, $output_folder, $html_exporter );
-    while ( my ( $key, $value ) = each %results ) {
-        my $candidate_html =
-          make_candidate_page( $value, $pieces_folder, $output_folder );
-        $page .= $candidate_html;
+
+    my @keys = sort {
+        ( $results{$a}->{'name'} cmp $results{$b}->{'name'} )
+          || (
+            $results{$a}->{'start_position'} <=> $results{$b}->{'start_position'} )
+    } keys %results;
+
+    foreach my $key ( @keys ){
+        $page .= make_candidate_page( $results{ $key }, $pieces_folder, $output_folder );
     }
     my $html = get_simple_results_page( $page, $css );
 
