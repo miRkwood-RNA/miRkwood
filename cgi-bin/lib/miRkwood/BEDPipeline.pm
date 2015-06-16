@@ -8,7 +8,7 @@ use warnings;
 use parent 'miRkwood::Pipeline';
 
 use Log::Message::Simple qw[msg error debug];
-
+use Data::Dumper;
 use miRkwood::Utils;
 use miRkwood::ClusterBuilder;
 use miRkwood::HairpinBuilder;
@@ -63,7 +63,9 @@ sub run_pipeline {
     debug( 'Treat new miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 
     $self->list_chrom_in_bed();
+
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
+
     $self->{'basic_candidates'} = [];
     my $cfg      = miRkwood->CONFIG();
     my $bed_name = $cfg->param('job.bed');
@@ -246,27 +248,67 @@ sub run_pipeline_on_sequences_per_chr {
     return;
 }
 
-
 sub compute_candidates_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
+    my $distance_min = 10000;
 
     my $sequence_identifier = 0;
 
-    # Look for new miRNAs
     my $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
     my @hairpin_candidates_for_chr = ();
+    my $previous_end = 0;
+
     foreach my $locus ( @{$self->{'sequences'}} ) {
+
         debug( "  - Considering sequence $sequence_identifier" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
         $sequence_identifier++;
-        push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
 
-        #~ miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (boucle sur chrom and sequences)' );  # /!\ WARNING : comment this line for web pipeline
-    }
-    undef $hairpinBuilder;
+        if ( ( $locus->{'begin'} - $previous_end ) < $distance_min ){
+            debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in same bunch than previous one", miRkwood->DEBUG());
+            push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
+        }
+        else {
+            debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in a new bunch", miRkwood->DEBUG());
 
+            # Treat previous bunch
+            debug( '    * Treat previous bunch', miRkwood->DEBUG());
+            undef $hairpinBuilder;
+            my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
+            undef @hairpin_candidates_for_chr;
+
+            if ( scalar(@sorted_hairpin_candidates_for_chr) ){
+                my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $self->{'genome_db'}, $chromosome, $chromosome );
+
+                # Merge candidates
+                my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
+                undef @sorted_hairpin_candidates_for_chr;
+
+                # Posteriori tests and update candidate information
+                my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
+                undef $candidates_hash;
+
+                $self->serialize_candidates($final_candidates_hash);
+
+            }
+
+            # Re-initialize some variables
+            @hairpin_candidates_for_chr = ();
+            $hairpinBuilder = miRkwood::HairpinBuilder->new($self->{'genome_db'}, $self->get_workspace_path(), $self->{'parsed_reads'});
+
+            # Treat current locus
+            debug( '    * Treat current locus', miRkwood->DEBUG());
+            push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
+        }
+
+        $previous_end = $locus->{'end'};
+        miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates_per_chr_new() (boucle sur loci)' );
+
+    }   # end foreach locus
+
+    # Treat last bunch
+    debug( '    * Treat last bunch', miRkwood->DEBUG());
     my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
-
     undef @hairpin_candidates_for_chr;
 
     if ( scalar(@sorted_hairpin_candidates_for_chr) ){
@@ -274,20 +316,19 @@ sub compute_candidates_per_chr {
 
         # Merge candidates
         my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
+        undef @sorted_hairpin_candidates_for_chr;
 
         # Posteriori tests and update candidate information
         my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
-
         undef $candidates_hash;
 
         $self->serialize_candidates($final_candidates_hash);
+        miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates_per_chr_new() (boucle sur loci)' );
 
-        miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates() (sort candidates)' );
-
-        undef $final_candidates_hash;
     }
 
     return;
+
 }
 
 
