@@ -54,11 +54,11 @@ sub run{
 
     my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
-    $candidate->compute_alignment_quality();
-    $candidate->compute_quality();
     if ( $cfg->param('job.mode') eq 'WebBAM' ) {
         $candidate->find_mirna( $self->{'genome_db'} );
     }
+    $candidate->compute_alignment_quality();
+    $candidate->compute_quality();
     return $candidate;
 }
 
