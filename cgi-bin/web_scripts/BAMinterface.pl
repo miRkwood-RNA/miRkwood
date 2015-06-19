@@ -42,8 +42,12 @@ my $page = <<"END_TXT";
                     <option value="Brassica_rapa">Brassica rapa (Brapa_1.1)</option>
                     <option value="Glycine_max">Glycine max (v1.0.23)</option>
                     <option value="Lotus_japonicus">Lotus japonicus (Lj2.5)</option>
+                    <option value="Medicago_truncatula">Medicago truncatula (JCVI_Mt3.5.2)</option>
                     <option value="Oryza_sativa">Oryza sativa (MSU7)</option>
+                    <option value="Populus_trichocarpa">Populus trichocarpa (JGI_Poptr2.0)</option>
                     <option value="Solanum_lycopersicum">Solanum_lycopersicum (SL2.4)</option>
+                    <option value="Sorghum_bicolor">Sorghum bicolor (Sorbi1)</option>
+                    <option value="Vitis_vinifera">Vitis vinifera (Genoscope-20100122)</option>
                 </select>  </p>
                 <!-- <br /><br />
                 <label for='seqArea'>Or paste your reference sequence in FASTA format &nbsp;[<a href="$help_page">?</a>]</label>

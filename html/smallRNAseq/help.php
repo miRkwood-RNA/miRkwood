@@ -95,8 +95,12 @@
                 <li><em>Brassica rapa</em> - Brapa 1.1 - GFF: <a href="http://brassicadb.org/brad/">brassicadb</a></li>
                 <li><em>Glycine max</em> - v1.0.23 - GFF: <a href="http://www.ensembl.org/index.html">Ensembl</a></li>
                 <li><em>Lotus japonicus</em> - Lj2.5 - GFF: <a href="http://www.kazusa.or.jp/lotus/">kazusa.or.jp</a></li>
+                <li><em>Medicago truncatula</em> - JCVI_Mt3.5.2 - GFF: <a href="http://www.jcvi.org/cms/home/">JCVI</a></li>
                 <li><em>Oryza sativa</em> - MSU7 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
+                <li><em>Populus trichocarpa</em> - JGI_Poptr2.0 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
                 <li><em>Solanum lycopersicum</em> - SL2.4 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
+                <li><em>Sorghum bicolor</em> - Sorbi1 - GFF: <a href="http://www.plantgdb.org/">PlantGDB</a></li>
+                <li><em>Vitis vinifera</em> - Genoscope-20100122 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
             </ul>
             
             <p>Each assembly is supplemented by two GFF format files. The first one contains the genome coordinates of  annotated mRNAs, CDS, tRNAs, rRNAs and snoRNAs,  and is used to apply masking options described in <a href="#parameters">Section 1.3 - Parameters</a>.  The source of this file is indicated above, case by case. The other GFF file compiles all miRNAs and pre-miRNAs available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
