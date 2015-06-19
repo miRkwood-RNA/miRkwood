@@ -241,6 +241,18 @@ function createGrid(id,rowsNumber,columnsNumber)
 					
 					}
 				}
+                else if( factor =='mfei')
+                {
+                    var value = myResults.getValueByFactor(i-1,'mfei');
+                    if( value <= -0.8 )
+                    {
+                        td.innerHTML = "<font color='blue'>"+value+"</font>";
+                    }
+                    else
+                    {
+                        td.innerHTML = value;
+                    } 
+                }
 				else
 				{
 					var value = document.createTextNode(myResults.getValueByFactor(i-1,factor)); // appel fonction qui définit la valeur à partir des indices 
