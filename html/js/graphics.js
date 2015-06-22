@@ -158,7 +158,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				{
 					td.innerHTML = '<h3>miRbase name</h3>' ;
 				}
-                else if (value.toString() == 'cluster') 
+                else if (value.toString() == 'full_position') 
 				{
 					td.innerHTML = '<h3>POSITION</h3>' ;
 				}
@@ -168,7 +168,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 				}
                 else if (value.toString() == 'mirna_length') 
 				{
-					td.innerHTML = '<h3>MIRNA LENGTH</h3>' ;
+					td.innerHTML = '<h3>miRNA LENGTH</h3>' ;
 				}
 				else if (value.toString() == 'strand')
 				{

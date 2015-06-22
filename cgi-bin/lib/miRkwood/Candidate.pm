@@ -474,8 +474,8 @@ sub get_basic_informations {
     if ( defined( $self->{'mirna_length'} ) ){
         push @headers, 'mirna_length';
     }
-    if ( defined( $self->{'cluster'} ) ){
-        push @headers, 'cluster';
+    if ( defined( $self->{'full_position'} ) ){
+        push @headers, 'full_position';
     }
 
     push @headers, ( 'identifier', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
