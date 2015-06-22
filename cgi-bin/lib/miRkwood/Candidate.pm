@@ -478,7 +478,7 @@ sub get_basic_informations {
         push @headers, 'full_position';
     }
 
-    push @headers, ( 'identifier', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
+    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
 
 	foreach (@headers){
