@@ -177,7 +177,7 @@ END_TXT
 
 my $body  = <<"END_TXT";
     <body>
-       <h1>Results for $candidate->{'name'}, $candidate->{'position'}</h1>
+       <h1>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'})</h1>
         $return_html
         $html_contents
         $return_html
