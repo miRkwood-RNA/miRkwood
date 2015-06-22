@@ -99,7 +99,7 @@ if ( $valid ){
                             <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
                             <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
                             <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/>
-                            <input type="radio" name="export" id="export-reads" value="reads" />&#160;<label for='export-reads'>Reads cloud format</label>
+                            <input type="radio" name="export" id="export-reads" value="reads" />&#160;<label for='export-reads'>read cloud format</label>
                             <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "smallRNAseq", "$mirnas_type")'/>
                         </form>
                     </div>

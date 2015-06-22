@@ -76,7 +76,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
             <li><b>Reads length distribution:</b> <br />
                 $reads_length_diagramm
             </li>
-            <li><b>Reads cloud : </b><a href='$linkReadsCloud'>download</a>
+            <li><b>Read cloud : </b><a href='$linkReadsCloud'>download</a>
         </ul>    
 END_TXT
     }

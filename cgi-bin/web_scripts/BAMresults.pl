@@ -228,7 +228,7 @@ if ( $valid ){
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary:</h2>';
         $HTML_results .= '<br />';
-        $HTML_results .= "<em>Reads distribution:</em> <br /><br />$barchart<br />";
+        $HTML_results .= "$barchart<br />";
 
         $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
 
@@ -254,10 +254,10 @@ if ( $valid ){
         }
 
         if ( $nb_orphan_clusters_reads > 0 ){
-            $HTML_results .= "<li><em>Orphan clusters reads:</em> $nb_orphan_clusters_reads reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</li>";
+            $HTML_results .= "<li><em>Orphan clusters of reads:</em> $nb_orphan_clusters_reads reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</li>";
         }
         else {
-            $HTML_results .= '<li><em>Orphan clusters reads:</em> 0 reads</li>';
+            $HTML_results .= '<li><em>Orphan clusters of reads:</em> 0 reads</li>';
         }
 
         $HTML_results .= "<li><em>Non classified reads:</em> $nb_orphan_reads reads</li>";
