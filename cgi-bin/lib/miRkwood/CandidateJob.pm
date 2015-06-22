@@ -93,7 +93,7 @@ sub update_candidate_information_from_run{
     $candidate_structure->{'image'} = $self->write_VARNA_if_needed();
 
     $candidate_structure->{'position'} = $self->make_full_position($candidate_structure);
-    $candidate_structure->{'full_position'} = $candidate_structure->{'position'} . $candidate_structure->{'strand'};
+    $candidate_structure->{'full_position'} = $candidate_structure->{'position'} . '&nbsp;' . $candidate_structure->{'strand'};
     $candidate_structure->{'length'} = $candidate_structure->{'end_position'} - $candidate_structure->{'start_position'} + 1;
     $candidate_structure->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
                             miRkwood::Utils::compute_gc_content($candidate_structure->{'sequence'}),
