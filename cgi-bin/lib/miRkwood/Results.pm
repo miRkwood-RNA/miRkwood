@@ -330,7 +330,7 @@ sub make_reads_barchart {
             <td id="orphan_clusters" style="width:${width_orphan_clusters_reads}px;"></td>
             <td id="orphans" style="width:${width_orphans_reads}px;"></td>
             <td id="known_miRNAs" style="width:${width_known_miRNAs_reads}px;"></td>
-            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>            
+            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
         </tr>
     </table>
 
@@ -344,7 +344,7 @@ sub make_reads_barchart {
             <td><span id="new_miRNAs">&nbsp;&nbsp;&nbsp;</span> novel miRNAs</td>
         </tr><tr>
             <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
-            <td><span id="orphan_clusters">&nbsp;&nbsp;&nbsp;</span> orphan clusters reads</td>
+            <td><span id="orphan_clusters">&nbsp;&nbsp;&nbsp;</span> orphan clusters of reads</td>
             <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> knowns miRNAs</td>
         </tr>
     </table>
