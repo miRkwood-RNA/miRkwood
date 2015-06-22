@@ -164,11 +164,11 @@ function createGrid(id,rowsNumber,columnsNumber)
 				}
                 else if (value.toString() == 'mirna_sequence') 
 				{
-					td.innerHTML = '<h3>MIRNA </h3>' ;
+					td.innerHTML = '<h3>miRNA </h3>' ;
 				}
                 else if (value.toString() == 'mirna_length') 
 				{
-					td.innerHTML = '<h3>miRNA LENGTH</h3>' ;
+					td.innerHTML = '<h3>LENGTH</h3>' ;
 				}
 				else if (value.toString() == 'strand')
 				{
@@ -261,7 +261,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 			}
 			if ((i==0)&&(j==0))
 			{
-				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')">CHR</h3>';
+				td.innerHTML = '<h3 onclick ="sortingTable(\'all\')">Chr</h3>';
 			}
 			
 			tr.appendChild(td); // ajoute colonne à la ligne
