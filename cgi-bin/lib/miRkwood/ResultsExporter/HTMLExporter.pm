@@ -58,6 +58,9 @@ sub export_candidate {
                 $contents = '<font color="#5F04B4">' . $contents . '</font>';
             }
         }
+        elsif ($header eq 'mfe' or $header eq 'amfe'){
+            $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
