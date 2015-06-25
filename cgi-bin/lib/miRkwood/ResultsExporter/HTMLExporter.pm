@@ -52,6 +52,12 @@ sub export_candidate {
             }
             $contents .= '</font></center>';
         }
+        elsif ($header eq 'mfei'){
+            $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
+            if ( $contents < -0.8 ){
+                $contents = '<font color="#5F04B4">' . $contents . '</font>';
+            }
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
