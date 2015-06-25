@@ -33,6 +33,10 @@
 --- '-'
 --- quality
 --- 2
+--- mirna_position
+--- 78932-78952
+--- mirna_length
+--- 21
 --- name
 --- '1'
 --- matures
@@ -60,3 +64,5 @@ MIMAT0031879:
 --- -0.872340425531915
 --- mfe
 --- '-41.00'
+--- mirna_sequence
+--- GGGGGAUGAAGCCUGGUCCGA

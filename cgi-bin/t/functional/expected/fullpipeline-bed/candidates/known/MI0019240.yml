@@ -25,6 +25,10 @@
 --- +
 --- quality
 --- 0
+--- mirna_position
+--- ''
+--- mirna_length
+--- ''
 --- name
 --- '1'
 --- matures
@@ -39,3 +43,5 @@
 --- -1.41833333333333
 --- mfe
 --- '-85.10'
+--- mirna_sequence
+--- ''
