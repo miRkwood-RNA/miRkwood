@@ -11,11 +11,11 @@
 --- alignments
 ---
 102-122:
-- alignment: 'ccugccuugcaucaacugaa
+- alignment: 'CCUGCCUUGCAUCAACUGAA
 
     || |||||||| ||| ||||
 
-    cccgccuugcaccaagugaa
+    CCCGCCUUGCACCAAGUGAA
 
 '
   begin_query: 1
@@ -25,13 +25,13 @@
   end_target: 121
   name: zma-miR168a-3p
   score: -3
-  seq: CCCGCCTTGCACCAAGTGAA
+  seq: CCCGCCUUGCACCAAGUGAA
   strand_target: +
-- alignment: 'ccugccuugcaucaacugaa
+- alignment: 'CCUGCCUUGCAUCAACUGAA
 
     || |||||||||||| ||||
 
-    cccgccuugcaucaagugaa
+    CCCGCCUUGCAUCAAGUGAA
 
 '
   begin_query: 1
@@ -41,29 +41,13 @@
   end_target: 121
   name: zma-miR168b-3p
   score: -2
-  seq: CCCGCCTTGCATCAAGTGAA
+  seq: CCCGCCUUGCAUCAAGUGAA
   strand_target: +
-- alignment: 'ccugccuugcaucaacugaau
-
-    || | |||| |||||||||||
-
-    cccgucuuguaucaacugaau
-
-'
-  begin_query: 1
-  begin_target: 102
-  def_query: MIMAT0017484 Arabidopsis lyrata miR168b-3p |
-  end_query: 21
-  end_target: 122
-  name: aly-miR168b-3p
-  score: -3
-  seq: CCCGTCTTGTATCAACTGAAT
-  strand_target: +
-- alignment: 'ccugccuugcaucaacugaau
+- alignment: 'CCUGCCUUGCAUCAACUGAAU
 
     || |||||||| ||| |||||
 
-    cccgccuugcaccaagugaau
+    CCCGCCUUGCACCAAGUGAAU
 
 '
   begin_query: 1
@@ -73,13 +57,13 @@
   end_target: 122
   name: bdi-miR168-3p
   score: -3
-  seq: CCCGCCTTGCACCAAGTGAAT
+  seq: CCCGCCUUGCACCAAGUGAAU
   strand_target: +
-- alignment: 'ccugccuugcaucaacugaau
+- alignment: 'CCUGCCUUGCAUCAACUGAAU
 
     || ||||||||||||||||||
 
-    cccgccuugcaucaacugaau
+    CCCGCCUUGCAUCAACUGAAU
 
 '
   begin_query: 1
@@ -92,13 +76,29 @@
   end_target: 122
   name: ptc-miR168a-3p
   score: -1
-  seq: CCCGCCTTGCATCAACTGAAT
+  seq: CCCGCCUUGCAUCAACUGAAU
   strand_target: +
-- alignment: 'ccugccuugcaucaacugaau
+- alignment: 'CCUGCCUUGCAUCAACUGAAU
+
+    || | |||| |||||||||||
+
+    CCCGUCUUGUAUCAACUGAAU
+
+'
+  begin_query: 1
+  begin_target: 102
+  def_query: MIMAT0017484 Arabidopsis lyrata miR168b-3p |
+  end_query: 21
+  end_target: 122
+  name: aly-miR168b-3p
+  score: -3
+  seq: CCCGUCUUGUAUCAACUGAAU
+  strand_target: +
+- alignment: 'CCUGCCUUGCAUCAACUGAAU
 
     |||||||||||||||||||||
 
-    ccugccuugcaucaacugaau
+    CCUGCCUUGCAUCAACUGAAU
 
 '
   begin_query: 1
@@ -108,14 +108,14 @@
   end_target: 122
   name: sly-miR168a-3p
   score: 0
-  seq: CCTGCCTTGCATCAACTGAAT
+  seq: CCUGCCUUGCAUCAACUGAAU
   strand_target: +
 19-38:
-- alignment: 'ucgcuuggugcaggucggg
+- alignment: 'UCGCUUGGUGCAGGUCGGG
 
     |||||||||||||||||||
 
-    ucgcuuggugcaggucggg
+    UCGCUUGGUGCAGGUCGGG
 
 '
   begin_query: 1
@@ -125,38 +125,19 @@
   end_target: 37
   name: gma-miR168b
   score: 0
-  seq: TCGCTTGGTGCAGGTCGGG
+  seq: UCGCUUGGUGCAGGUCGGG
   strand_target: +
-- alignment: 'ucgcuuggugcaggucggga
-
-    ||||||||||||||||||||
-
-    ucgcuuggugcaggucggga
-
-'
+- alignment: "UCGCUUGGUGCAGGUCGGGA-\n|||||||| |||| |||||| \nUCGCUUGG-GCAGAUCGGGAC\n"
   begin_query: 1
   begin_target: 19
-  def_query: MIMAT0022751 Cucumis melo miR168 |
+  def_query: MIMAT0001666 Saccharum officinarum miR168b |
   end_query: 20
   end_target: 38
-  name: cme-miR168
-  score: 0
-  seq: TCGCTTGGTGCAGGTCGGGA
+  name: sof-miR168b
+  score: -3
+  seq: UCGCUUGGGCAGAUCGGGAC
   strand_target: +
-- alignment: "ucgcuuggugcaggucggga-\n|||||||||||||||||||| \nucgcuuggugcaggucgggac\n"
-  begin_query: 1
-  begin_target: 19
-  def_query: MIMAT0024662 Nicotiana tabacum miR168a | nta-miR168b MIMAT0024663 Nicotiana
-    tabacum miR168b | nta-miR168c MIMAT0024664 Nicotiana tabacum miR168c | sly-miR168a-5p
-    MIMAT0031129 Solanum lycopersicum miR168a-5p | sly-miR168b-5p MIMAT0031131 Solanum
-    lycopersicum miR168b-5p |
-  end_query: 21
-  end_target: 38
-  name: nta-miR168a
-  score: -1
-  seq: TCGCTTGGTGCAGGTCGGGAC
-  strand_target: +
-- alignment: "ucgcuuggugcaggucggga-\n||||||||||||| |||||| \nucgcuuggugcagaucgggac\n"
+- alignment: "UCGCUUGGUGCAGGUCGGGA-\n||||||||||||| |||||| \nUCGCUUGGUGCAGAUCGGGAC\n"
   begin_query: 1
   begin_target: 19
   def_query: MIMAT0001045 Oryza sativa miR168a-5p | sbi-miR168 MIMAT0001452 Sorghum
@@ -169,23 +150,58 @@
   end_target: 38
   name: osa-miR168a-5p
   score: -2
-  seq: TCGCTTGGTGCAGATCGGGAC
+  seq: UCGCUUGGUGCAGAUCGGGAC
   strand_target: +
-- alignment: "ucgcuuggugcaggucggga-\n|||||||| |||| |||||| \nucgcuugg-gcagaucgggac\n"
+- alignment: 'UCGCUUGGUGCAGGUCGGGA
+
+    ||||||||||||||||||||
+
+    UCGCUUGGUGCAGGUCGGGA
+
+'
   begin_query: 1
   begin_target: 19
-  def_query: MIMAT0001666 Saccharum officinarum miR168b |
+  def_query: MIMAT0022751 Cucumis melo miR168 |
   end_query: 20
   end_target: 38
-  name: sof-miR168b
-  score: -3
-  seq: TCGCTTGGGCAGATCGGGAC
+  name: cme-miR168
+  score: 0
+  seq: UCGCUUGGUGCAGGUCGGGA
   strand_target: +
-- alignment: 'ucgcuuggugcaggucgggaa
+- alignment: "UCGCUUGGUGCAGGUCGGGA-\n|||||||||||||||||||| \nUCGCUUGGUGCAGGUCGGGAC\n"
+  begin_query: 1
+  begin_target: 19
+  def_query: MIMAT0024662 Nicotiana tabacum miR168a | nta-miR168b MIMAT0024663 Nicotiana
+    tabacum miR168b | nta-miR168c MIMAT0024664 Nicotiana tabacum miR168c | sly-miR168a-5p
+    MIMAT0031129 Solanum lycopersicum miR168a-5p | sly-miR168b-5p MIMAT0031131 Solanum
+    lycopersicum miR168b-5p |
+  end_query: 21
+  end_target: 38
+  name: nta-miR168a
+  score: -1
+  seq: UCGCUUGGUGCAGGUCGGGAC
+  strand_target: +
+- alignment: 'UCGCUUGGUGCAGGUCGGGAA
+
+    ||||||||||||||||| |||
+
+    UCGCUUGGUGCAGGUCGAGAA
+
+'
+  begin_query: 1
+  begin_target: 19
+  def_query: MIMAT0023628 Brassica napus miR168b |
+  end_query: 21
+  end_target: 39
+  name: bna-miR168b
+  score: -1
+  seq: UCGCUUGGUGCAGGUCGAGAA
+  strand_target: +
+- alignment: 'UCGCUUGGUGCAGGUCGGGAA
 
     |||||||||||||||||||||
 
-    ucgcuuggugcaggucgggaa
+    UCGCUUGGUGCAGGUCGGGAA
 
 '
   begin_query: 1
@@ -211,29 +227,13 @@
   end_target: 39
   name: ath-miR168a
   score: 0
-  seq: TCGCTTGGTGCAGGTCGGGAA
+  seq: UCGCUUGGUGCAGGUCGGGAA
   strand_target: +
-- alignment: 'ucgcuuggugcaggucgggaa
-
-    ||||||||||||||||| |||
-
-    ucgcuuggugcaggucgagaa
-
-'
-  begin_query: 1
-  begin_target: 19
-  def_query: MIMAT0023628 Brassica napus miR168b |
-  end_query: 21
-  end_target: 39
-  name: bna-miR168b
-  score: -1
-  seq: TCGCTTGGTGCAGGTCGAGAA
-  strand_target: +
-- alignment: 'ucgcuuggugcaggucgggaa
+- alignment: 'UCGCUUGGUGCAGGUCGGGAA
 
     | ||||||||| |||||||||
 
-    uugcuuggugcuggucgggaa
+    UUGCUUGGUGCUGGUCGGGAA
 
 '
   begin_query: 1
@@ -243,17 +243,17 @@
   end_target: 39
   name: mtr-miR168a
   score: -2
-  seq: TTGCTTGGTGCTGGTCGGGAA
+  seq: UUGCUUGGUGCUGGUCGGGAA
   strand_target: +
-- alignment: "ucgcuuggugcaggucgggaa\n  ||||||||||| |||||||\naggcuuggugcagcucgggaa\n"
+- alignment: "-G-CUUGGUGCAGGUCGGGAA\n | |||||||||| |||||||\nAGGCUUGGUGCAGCUCGGGAA\n"
   begin_query: 1
-  begin_target: 19
+  begin_target: 21
   def_query: MIMAT0001046 Oryza sativa miR168b |
   end_query: 21
   end_target: 39
   name: osa-miR168b
   score: -3
-  seq: AGGCTTGGTGCAGCTCGGGAA
+  seq: AGGCUUGGUGCAGCUCGGGAA
   strand_target: +
 --- alignment_existence
 --- 1
@@ -473,6 +473,8 @@ contig15916__198-313:
 --- -0.842647058823529
 --- mfe
 --- '-57.30'
+--- full_position
+--- 187-322&nbsp;+
 --- mirdup_validation
 ---
 contig15916__102-122: 1

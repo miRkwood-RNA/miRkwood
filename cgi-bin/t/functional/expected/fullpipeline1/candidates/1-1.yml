@@ -11,9 +11,104 @@
 --- alignments
 ---
 40-59:
-- alignment: "uguagccaaggaugaauugcc-\n|| |||||||||||| ||||| \nug-agccaaggaugacuugccg\n"
+- alignment: "UAGCCAAGGAUGAAUUGCC--\n|||||||||||||||||||  \nUAGCCAAGGAUGAAUUGCCAG\n"
   begin_query: 1
-  begin_target: 38
+  begin_target: 40
+  def_query: MIMAT0018217 Aegilops tauschii miR169 |
+  end_query: 21
+  end_target: 58
+  name: ata-miR169
+  score: -2
+  seq: UAGCCAAGGAUGAAUUGCCAG
+  strand_target: +
+- alignment: "UAGCCAAGGAUGAAUUGCC--\n|||||||||||||||||||  \nUAGCCAAGGAUGAAUUGCCGG\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001049 Oryza sativa miR169d |
+  end_query: 21
+  end_target: 58
+  name: osa-miR169d
+  score: -2
+  seq: UAGCCAAGGAUGAAUUGCCGG
+  strand_target: +
+- alignment: "UAGCCAAGGAUGAAUUG-CC-\n||||||||||||| ||| || \nUAGCCAAGGAUGACUUGCCCG\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0025936 Malus domestica miR169c | mdm-miR169d MIMAT0025937 Malus
+    domestica miR169d | mes-miR169r MIMAT0029226 Manihot esculenta miR169r | mes-miR169t
+    MIMAT0029228 Manihot esculenta miR169t | mes-miR169v MIMAT0029230 Manihot esculenta
+    miR169v | mes-miR169x MIMAT0029232 Manihot esculenta miR169x | mes-miR169z MIMAT0029234
+    Manihot esculenta miR169z |
+  end_query: 21
+  end_target: 58
+  name: mdm-miR169c
+  score: -3
+  seq: UAGCCAAGGAUGACUUGCCCG
+  strand_target: +
+- alignment: "UAGCCAAGGAUGAAUUGCC--\n||||||||||||| |||||  \nUAGCCAAGGAUGACUUGCCGG\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001050 Oryza sativa miR169e | sbi-miR169e MIMAT0011333 Sorghum
+    bicolor miR169e | sbi-miR169j MIMAT0011335 Sorghum bicolor miR169j | bdi-miR169b
+    MIMAT0012189 Brachypodium distachyon miR169b | zma-miR169p-5p MIMAT0013992 Zea
+    mays miR169p-5p | ssp-miR169 MIMAT0020278 Saccharum ssp. miR169 | mes-miR169f
+    MIMAT0029214 Manihot esculenta miR169f |
+  end_query: 21
+  end_target: 58
+  name: osa-miR169e
+  score: -3
+  seq: UAGCCAAGGAUGACUUGCCGG
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGC--C
+
+    ||||||||||||| ||||  |
+
+    UAGCCAAGGAUGACUUGCUAC
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0024519 Cynara cardunculus miR169b |
+  end_query: 21
+  end_target: 58
+  name: cca-miR169b
+  score: -3
+  seq: UAGCCAAGGAUGACUUGCUAC
+  strand_target: +
+- alignment: "UAGCCAAGGAUGAAUUGC-C-\n||||||||||||| |||| | \nUAGCCAAGGAUGACUUGCUCG\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001980 Populus trichocarpa miR169x |
+  end_query: 21
+  end_target: 58
+  name: ptc-miR169x
+  score: -3
+  seq: UAGCCAAGGAUGACUUGCUCG
+  strand_target: +
+- alignment: "U-AGCCAAGGAUGAAUUGCC-\n| |||||||||||| ||||| \nUCAGCCAAGGAUGACUUGCCG\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001975 Populus trichocarpa miR169s |
+  end_query: 21
+  end_target: 58
+  name: ptc-miR169s
+  score: -3
+  seq: UCAGCCAAGGAUGACUUGCCG
+  strand_target: +
+- alignment: "U-AGCCAAGGAUGAAUUGCC-\n| |||||||||||| ||||| \nUGAGCCAAGGAUGACUUGCCA\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0031172 Prunus persica miR169e-5p | ppe-miR169d MIMAT0031458 Prunus
+    persica miR169d |
+  end_query: 21
+  end_target: 58
+  name: ppe-miR169e-5p
+  score: -3
+  seq: UGAGCCAAGGAUGACUUGCCA
+  strand_target: +
+- alignment: "U-AGCCAAGGAUGAAUUGCC-\n| |||||||||||| ||||| \nUGAGCCAAGGAUGACUUGCCG\n"
+  begin_query: 1
+  begin_target: 40
   def_query: MIMAT0000908 Arabidopsis thaliana miR169d | ath-miR169e MIMAT0000909
     Arabidopsis thaliana miR169e | ath-miR169f MIMAT0000910 Arabidopsis thaliana miR169f
     | ath-miR169g-5p MIMAT0000911 Arabidopsis thaliana miR169g-5p | ptc-miR169n-5p
@@ -29,169 +124,9 @@
   end_target: 58
   name: ath-miR169d
   score: -3
-  seq: TGAGCCAAGGATGACTTGCCG
+  seq: UGAGCCAAGGAUGACUUGCCG
   strand_target: +
-- alignment: "uguagccaaggaugaauugcc-\n|| |||||||||||| ||||| \nug-agccaaggaugacuugcca\n"
-  begin_query: 1
-  begin_target: 38
-  def_query: MIMAT0031172 Prunus persica miR169e-5p | ppe-miR169d MIMAT0031458 Prunus
-    persica miR169d |
-  end_query: 21
-  end_target: 58
-  name: ppe-miR169e-5p
-  score: -3
-  seq: TGAGCCAAGGATGACTTGCCA
-  strand_target: +
-- alignment: 'uguagccaaggaugaauugccu
-
-    || |||||||||||| ||||||
-
-    ug-agccaaggaugacuugccu
-
-'
-  begin_query: 1
-  begin_target: 38
-  def_query: MIMAT0026079 Cucumis melo miR169k |
-  end_query: 21
-  end_target: 59
-  name: cme-miR169k
-  score: -2
-  seq: TGAGCCAAGGATGACTTGCCT
-  strand_target: +
-- alignment: 'uguagccaaggaugaauugccu
-
-    || |||||| ||||| ||||||
-
-    ug-agccaaagaugacuugccu
-
-'
-  begin_query: 1
-  begin_target: 38
-  def_query: MIMAT0026073 Cucumis melo miR169q | cme-miR169s MIMAT0026074 Cucumis
-    melo miR169s | cme-miR169p MIMAT0026075 Cucumis melo miR169p |
-  end_query: 21
-  end_target: 59
-  name: cme-miR169q
-  score: -3
-  seq: TGAGCCAAAGATGACTTGCCT
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc--\n|||||||||||||||||||  \nuagccaaggaugaauugccag\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0018217 Aegilops tauschii miR169 |
-  end_query: 21
-  end_target: 58
-  name: ata-miR169
-  score: -2
-  seq: TAGCCAAGGATGAATTGCCAG
-  strand_target: +
-- alignment: 'uagccaaggaugaauugc--c
-
-    ||||||||||||| ||||  |
-
-    uagccaaggaugacuugcuac
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0024519 Cynara cardunculus miR169b |
-  end_query: 21
-  end_target: 58
-  name: cca-miR169b
-  score: -3
-  seq: TAGCCAAGGATGACTTGCTAC
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc\n |||||||||||| |||||\ncagccaaggaugacuugcc\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0024905 Glycine max miR169v |
-  end_query: 19
-  end_target: 58
-  name: gma-miR169v
-  score: -2
-  seq: CAGCCAAGGATGACTTGCC
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc--\n||||||||||||| |||||  \nuagccaaggaugacuugcccg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0025936 Malus domestica miR169c | mdm-miR169d MIMAT0025937 Malus
-    domestica miR169d | mes-miR169r MIMAT0029226 Manihot esculenta miR169r | mes-miR169t
-    MIMAT0029228 Manihot esculenta miR169t | mes-miR169v MIMAT0029230 Manihot esculenta
-    miR169v | mes-miR169x MIMAT0029232 Manihot esculenta miR169x | mes-miR169z MIMAT0029234
-    Manihot esculenta miR169z |
-  end_query: 21
-  end_target: 58
-  name: mdm-miR169c
-  score: -3
-  seq: TAGCCAAGGATGACTTGCCCG
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc--\n|||||||||||||||||||  \nuagccaaggaugaauugccgg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001049 Oryza sativa miR169d |
-  end_query: 21
-  end_target: 58
-  name: osa-miR169d
-  score: -2
-  seq: TAGCCAAGGATGAATTGCCGG
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc--\n||||||||||||| |||||  \nuagccaaggaugacuugccgg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001050 Oryza sativa miR169e | sbi-miR169e MIMAT0011333 Sorghum
-    bicolor miR169e | sbi-miR169j MIMAT0011335 Sorghum bicolor miR169j | bdi-miR169b
-    MIMAT0012189 Brachypodium distachyon miR169b | zma-miR169p-5p MIMAT0013992 Zea
-    mays miR169p-5p | ssp-miR169 MIMAT0020278 Saccharum ssp. miR169 | mes-miR169f
-    MIMAT0029214 Manihot esculenta miR169f |
-  end_query: 21
-  end_target: 58
-  name: osa-miR169e
-  score: -3
-  seq: TAGCCAAGGATGACTTGCCGG
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc--\n ||||||||||||||||||  \ngagccaaggaugaauugccgg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0031464 Prunus persica miR169k | ppe-miR169l MIMAT0031465 Prunus
-    persica miR169l |
-  end_query: 21
-  end_target: 58
-  name: ppe-miR169k
-  score: -3
-  seq: GAGCCAAGGATGAATTGCCGG
-  strand_target: +
-- alignment: "u-agccaaggaugaauugcc-\n| |||||||||||| ||||| \nucagccaaggaugacuugccg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001975 Populus trichocarpa miR169s |
-  end_query: 21
-  end_target: 58
-  name: ptc-miR169s
-  score: -3
-  seq: TCAGCCAAGGATGACTTGCCG
-  strand_target: +
-- alignment: "uagccaaggaugaauugc-c-\n||||||||||||| |||| | \nuagccaaggaugacuugcucg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001980 Populus trichocarpa miR169x |
-  end_query: 21
-  end_target: 58
-  name: ptc-miR169x
-  score: -3
-  seq: TAGCCAAGGATGACTTGCTCG
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc--\n ||||||||||||||||||  \naagccaaggaugaauugccgg\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0006552 Vitis vinifera miR169v | cme-miR169g MIMAT0026172 Cucumis
-    melo miR169g |
-  end_query: 21
-  end_target: 58
-  name: vvi-miR169v
-  score: -3
-  seq: AAGCCAAGGATGAATTGCCGG
-  strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n||||||| ||||| |||||| \nuagccaaagaugacuugccug\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n||||||| ||||| |||||| \nUAGCCAAAGAUGACUUGCCUG\n"
   begin_query: 1
   begin_target: 40
   def_query: MIMAT0017511 Arabidopsis lyrata miR169n-5p | cme-miR169o MIMAT0026076
@@ -201,9 +136,41 @@
   end_target: 59
   name: aly-miR169n-5p
   score: -3
-  seq: TAGCCAAAGATGACTTGCCTG
+  seq: UAGCCAAAGAUGACUUGCCUG
   strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n||||||||||||| |||||| \nuagccaaggaugacuugccug\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n|||||||||| || |||||| \nUAGCCAAGGACGACUUGCCUG\n"
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001973 Populus trichocarpa miR169q |
+  end_query: 21
+  end_target: 59
+  name: ptc-miR169q
+  score: -3
+  seq: UAGCCAAGGACGACUUGCCUG
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCU
+
+    ||||||||||||| ||||||
+
+    UAGCCAAGGAUGACUUGCCU
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001454 Sorghum bicolor miR169d-5p | stu-miR169a-5p MIMAT0031359
+    Solanum tuberosum miR169a-5p | stu-miR169b-5p MIMAT0031361 Solanum tuberosum miR169b-5p
+    | stu-miR169c-5p MIMAT0031363 Solanum tuberosum miR169c-5p | stu-miR169d-5p MIMAT0031365
+    Solanum tuberosum miR169d-5p | stu-miR169e-5p MIMAT0031367 Solanum tuberosum miR169e-5p
+    | stu-miR169f-5p MIMAT0031369 Solanum tuberosum miR169f-5p | stu-miR169g MIMAT0031371
+    Solanum tuberosum miR169g | stu-miR169h MIMAT0031372 Solanum tuberosum miR169h
+    |
+  end_query: 20
+  end_target: 59
+  name: sbi-miR169d-5p
+  score: -1
+  seq: UAGCCAAGGAUGACUUGCCU
+  strand_target: +
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n||||||||||||| |||||| \nUAGCCAAGGAUGACUUGCCUG\n"
   begin_query: 1
   begin_target: 40
   def_query: MIMAT0000913 Arabidopsis thaliana miR169h | ath-miR169i MIMAT0000914
@@ -243,25 +210,9 @@
   end_target: 59
   name: ath-miR169h
   score: -2
-  seq: TAGCCAAGGATGACTTGCCTG
+  seq: UAGCCAAGGAUGACUUGCCUG
   strand_target: +
-- alignment: 'uagccaaggaugaauugcc--u
-
-    ||||||||||||| |||||  |
-
-    uagccaaggaugauuugccugu
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0020672 Brachypodium distachyon miR169k-5p |
-  end_query: 22
-  end_target: 59
-  name: bdi-miR169k-5p
-  score: -3
-  seq: TAGCCAAGGATGATTTGCCTGT
-  strand_target: +
-- alignment: "uagccaaggaugaauugccu--\n||||||||||||| ||||||  \nuagccaaggaugacuugccugc\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU--\n||||||||||||| ||||||  \nUAGCCAAGGAUGACUUGCCUGC\n"
   begin_query: 1
   begin_target: 40
   def_query: MIMAT0005618 Brassica napus miR169g | bna-miR169h MIMAT0005619 Brassica
@@ -276,13 +227,13 @@
   end_target: 59
   name: bna-miR169g
   score: -3
-  seq: TAGCCAAGGATGACTTGCCTGC
+  seq: UAGCCAAGGAUGACUUGCCUGC
   strand_target: +
-- alignment: 'uagccaaggaugaauugcc-u
+- alignment: 'UAGCCAAGGAUGAAUUGCC-U
 
     ||||||||||||| ||||| |
 
-    uagccaaggaugacuugccuu
+    UAGCCAAGGAUGACUUGCCUU
 
 '
   begin_query: 1
@@ -293,39 +244,19 @@
   end_target: 59
   name: cca-miR169a
   score: -2
-  seq: TAGCCAAGGATGACTTGCCTT
+  seq: UAGCCAAGGAUGACUUGCCUU
   strand_target: +
-- alignment: "uagccaaggaugaauugcc-u\n |||||||||||| ||||| |\ncagccaaggaugacuugccgu\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n||||||||||||| |||||| \nUAGCCAAGGAUGAGUUGCCUG\n"
   begin_query: 1
   begin_target: 40
-  def_query: MIMAT0023249 Glycine max miR169u |
+  def_query: MIMAT0020399 Theobroma cacao miR169i |
   end_query: 21
   end_target: 59
-  name: gma-miR169u
-  score: -3
-  seq: CAGCCAAGGATGACTTGCCGT
+  name: tcc-miR169i
+  score: -2
+  seq: UAGCCAAGGAUGAGUUGCCUG
   strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n |||||||||||| |||||| \naagccaaggaugaguugccug\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0018218 Hordeum vulgare miR169 |
-  end_query: 21
-  end_target: 59
-  name: hvu-miR169
-  score: -3
-  seq: AAGCCAAGGATGAGTTGCCTG
-  strand_target: +
-- alignment: "uagccaaggaugaauugccu--\n||||||||||||| ||||||  \nuagccaaggaugauuugccugc\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0025935 Malus domestica miR169b |
-  end_query: 22
-  end_target: 59
-  name: mdm-miR169b
-  score: -3
-  seq: TAGCCAAGGATGATTTGCCTGC
-  strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n||||||||||||| |||||| \nuagccaaggaugauuugccug\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n||||||||||||| |||||| \nUAGCCAAGGAUGAUUUGCCUG\n"
   begin_query: 1
   begin_target: 40
   def_query: MIMAT0026762 Oryza sativa miR169r-5p | sbi-miR169o MIMAT0014042 Sorghum
@@ -334,81 +265,35 @@
   end_target: 59
   name: osa-miR169r-5p
   score: -2
-  seq: TAGCCAAGGATGATTTGCCTG
+  seq: UAGCCAAGGAUGAUUUGCCUG
   strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n |||||||||||| |||||| \naagccaaggaugacuugccug\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU--\n||||||||||||| ||||||  \nUAGCCAAGGAUGAUUUGCCUGC\n"
   begin_query: 1
   begin_target: 40
-  def_query: MIMAT0001971 Populus trichocarpa miR169o |
-  end_query: 21
+  def_query: MIMAT0025935 Malus domestica miR169b |
+  end_query: 22
   end_target: 59
-  name: ptc-miR169o
+  name: mdm-miR169b
   score: -3
-  seq: AAGCCAAGGATGACTTGCCTG
+  seq: UAGCCAAGGAUGAUUUGCCUGC
   strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n|||||||||| || |||||| \nuagccaaggacgacuugccug\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001973 Populus trichocarpa miR169q |
-  end_query: 21
-  end_target: 59
-  name: ptc-miR169q
-  score: -3
-  seq: TAGCCAAGGACGACTTGCCTG
-  strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n|||||| ||||||||||||| \nuagccauggaugaauugccug\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001981 Populus trichocarpa miR169y |
-  end_query: 21
-  end_target: 59
-  name: ptc-miR169y
-  score: -2
-  seq: TAGCCATGGATGAATTGCCTG
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccu
+- alignment: 'UAGCCAAGGAUGAAUUGCC--U
 
-    ||||||||||||| ||||||
+    ||||||||||||| |||||  |
 
-    uagccaaggaugacuugccu
+    UAGCCAAGGAUGAUUUGCCUGU
 
 '
   begin_query: 1
   begin_target: 40
-  def_query: MIMAT0001454 Sorghum bicolor miR169d-5p | stu-miR169a-5p MIMAT0031359
-    Solanum tuberosum miR169a-5p | stu-miR169b-5p MIMAT0031361 Solanum tuberosum miR169b-5p
-    | stu-miR169c-5p MIMAT0031363 Solanum tuberosum miR169c-5p | stu-miR169d-5p MIMAT0031365
-    Solanum tuberosum miR169d-5p | stu-miR169e-5p MIMAT0031367 Solanum tuberosum miR169e-5p
-    | stu-miR169f-5p MIMAT0031369 Solanum tuberosum miR169f-5p | stu-miR169g MIMAT0031371
-    Solanum tuberosum miR169g | stu-miR169h MIMAT0031372 Solanum tuberosum miR169h
-    |
-  end_query: 20
+  def_query: MIMAT0020672 Brachypodium distachyon miR169k-5p |
+  end_query: 22
   end_target: 59
-  name: sbi-miR169d-5p
-  score: -1
-  seq: TAGCCAAGGATGACTTGCCT
-  strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n||||||||||||| |||||| \nuagccaaggaugaguugccug\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0020399 Theobroma cacao miR169i |
-  end_query: 21
-  end_target: 59
-  name: tcc-miR169i
-  score: -2
-  seq: TAGCCAAGGATGAGTTGCCTG
-  strand_target: +
-- alignment: "uagccaaggaugaauugcc-u\n |||||||||||| ||||| |\ngagccaaggaugacuugccgu\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0006548 Vitis vinifera miR169l |
-  end_query: 21
-  end_target: 59
-  name: vvi-miR169l
+  name: bdi-miR169k-5p
   score: -3
-  seq: GAGCCAAGGATGACTTGCCGT
+  seq: UAGCCAAGGAUGAUUUGCCUGU
   strand_target: +
-- alignment: "uagccaaggaugaauugccu-\n|||||| |||||| |||||| \nuagccagggaugauuugccug\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n|||||| |||||| |||||| \nUAGCCAGGGAUGAUUUGCCUG\n"
   begin_query: 1
   begin_target: 40
   def_query: MIMAT0013988 Zea mays miR169l-5p |
@@ -416,11 +301,335 @@
   end_target: 59
   name: zma-miR169l-5p
   score: -3
-  seq: TAGCCAGGGATGATTTGCCTG
+  seq: UAGCCAGGGAUGAUUUGCCUG
   strand_target: +
-- alignment: "uagccaaggaugaauugccua\n |||||||||||| ||||| |\ncagccaaggaugacuugccga\n"
+- alignment: "UAGCCAAGGAUGAAUUGCCU-\n|||||| ||||||||||||| \nUAGCCAUGGAUGAAUUGCCUG\n"
   begin_query: 1
   begin_target: 40
+  def_query: MIMAT0001981 Populus trichocarpa miR169y |
+  end_query: 21
+  end_target: 59
+  name: ptc-miR169y
+  score: -2
+  seq: UAGCCAUGGAUGAAUUGCCUG
+  strand_target: +
+- alignment: 'U-AGCCAAGGAUGAAUUGCCU
+
+    | |||||| ||||| ||||||
+
+    UGAGCCAAAGAUGACUUGCCU
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0026073 Cucumis melo miR169q | cme-miR169s MIMAT0026074 Cucumis
+    melo miR169s | cme-miR169p MIMAT0026075 Cucumis melo miR169p |
+  end_query: 21
+  end_target: 59
+  name: cme-miR169q
+  score: -3
+  seq: UGAGCCAAAGAUGACUUGCCU
+  strand_target: +
+- alignment: 'U-AGCCAAGGAUGAAUUGCCU
+
+    | |||||||||||| ||||||
+
+    UGAGCCAAGGAUGACUUGCCU
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0026079 Cucumis melo miR169k |
+  end_query: 21
+  end_target: 59
+  name: cme-miR169k
+  score: -2
+  seq: UGAGCCAAGGAUGACUUGCCU
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    |||||||| |||| |||||||
+
+    UAGCCAAGAAUGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001059 Oryza sativa miR169n | osa-miR169o MIMAT0001060 Oryza sativa
+    miR169o | sbi-miR169i MIMAT0001459 Sorghum bicolor miR169i | zma-miR169o-5p MIMAT0013991
+    Zea mays miR169o-5p | bdi-miR169d MIMAT0020654 Brachypodium distachyon miR169d
+    |
+  end_query: 21
+  end_target: 60
+  name: osa-miR169n
+  score: -2
+  seq: UAGCCAAGAAUGACUUGCCUA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    |||||||| |||  |||||||
+
+    UAGCCAAGAAUGGCUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0013989 Zea mays miR169m-5p | zma-miR169n-5p MIMAT0013990 Zea mays
+    miR169n-5p | zma-miR169q-5p MIMAT0013993 Zea mays miR169q-5p | sbi-miR169p MIMAT0014043
+    Sorghum bicolor miR169p | sbi-miR169q MIMAT0014044 Sorghum bicolor miR169q |
+  end_query: 21
+  end_target: 60
+  name: zma-miR169m-5p
+  score: -3
+  seq: UAGCCAAGAAUGGCUUGCCUA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    |||||||||| || ||||| |
+
+    UAGCCAAGGACGACUUGCCCA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001954 Populus trichocarpa miR169ac | ptc-miR169ad MIMAT0001955
+    Populus trichocarpa miR169ad | ptc-miR169ae MIMAT0001956 Populus trichocarpa miR169ae
+    | ptc-miR169af MIMAT0001957 Populus trichocarpa miR169af |
+  end_query: 21
+  end_target: 60
+  name: ptc-miR169ac
+  score: -3
+  seq: UAGCCAAGGACGACUUGCCCA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    |||||||||| || |||||||
+
+    UAGCCAAGGACGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001977 Populus trichocarpa miR169u-5p |
+  end_query: 21
+  end_target: 60
+  name: ptc-miR169u-5p
+  score: -2
+  seq: UAGCCAAGGACGACUUGCCUA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    ||||||||||||| ||||| |
+
+    UAGCCAAGGAUGACUUGCCCA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001978 Populus trichocarpa miR169v | ptc-miR169w MIMAT0001979 Populus
+    trichocarpa miR169w | lus-miR169a MIMAT0027125 Linum usitatissimum miR169a | lus-miR169d
+    MIMAT0027128 Linum usitatissimum miR169d |
+  end_query: 21
+  end_target: 60
+  name: ptc-miR169v
+  score: -2
+  seq: UAGCCAAGGAUGACUUGCCCA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    ||||||||||||| |||||||
+
+    UAGCCAAGGAUGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0001051 Oryza sativa miR169f.1 | osa-miR169g MIMAT0001052 Oryza
+    sativa miR169g | sbi-miR169c MIMAT0001453 Sorghum bicolor miR169c | zma-miR169f-5p
+    MIMAT0001729 Zea mays miR169f-5p | zma-miR169g MIMAT0001730 Zea mays miR169g |
+    zma-miR169h MIMAT0001731 Zea mays miR169h | ptc-miR169r MIMAT0001974 Populus trichocarpa
+    miR169r | bna-miR169c MIMAT0005614 Brassica napus miR169c | bna-miR169d MIMAT0005615
+    Brassica napus miR169d | bna-miR169e MIMAT0005616 Brassica napus miR169e | bna-miR169f
+    MIMAT0005617 Brassica napus miR169f | vvi-miR169x MIMAT0006554 Vitis vinifera
+    miR169x | sly-miR169d MIMAT0007921 Solanum lycopersicum miR169d | sbi-miR169h
+    MIMAT0011334 Sorghum bicolor miR169h | sbi-miR169m MIMAT0011338 Sorghum bicolor
+    miR169m | sbi-miR169n MIMAT0011339 Sorghum bicolor miR169n | aqc-miR169a MIMAT0012563
+    Aquilegia caerulea miR169a | far-miR169 MIMAT0018371 Festuca arundinacea miR169
+    | tcc-miR169d MIMAT0020394 Theobroma cacao miR169d | bdi-miR169h-5p MIMAT0020699
+    Brachypodium distachyon miR169h-5p | ssl-miR169 MIMAT0022511 Salvia sclarea miR169
+    | mes-miR169ab MIMAT0029236 Manihot esculenta miR169ab | mes-miR169ac MIMAT0029237
+    Manihot esculenta miR169ac |
+  end_query: 21
+  end_target: 60
+  name: osa-miR169f.1
+  score: -1
+  seq: UAGCCAAGGAUGACUUGCCUA
+  strand_target: +
+- alignment: 'UAGCCAAGGAU-GAAUUGCCUA
+
+    ||||||||||| || |||||||
+
+    UAGCCAAGGAUGGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0023233 Glycine max miR169t |
+  end_query: 22
+  end_target: 60
+  name: gma-miR169t
+  score: -2
+  seq: UAGCCAAGGAUGGACUUGCCUA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    |||||| |||||| |||||||
+
+    UAGCCAGGGAUGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0020397 Theobroma cacao miR169g |
+  end_query: 21
+  end_target: 60
+  name: tcc-miR169g
+  score: -2
+  seq: UAGCCAGGGAUGACUUGCCUA
+  strand_target: +
+- alignment: 'UAGCCAAGGAUGAAUUGCCUA
+
+    |||| |||||||| |||||||
+
+    UAGCGAAGGAUGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 40
+  def_query: MIMAT0005677 Vitis vinifera miR169y |
+  end_query: 21
+  end_target: 60
+  name: vvi-miR169y
+  score: -2
+  seq: UAGCGAAGGAUGACUUGCCUA
+  strand_target: +
+- alignment: "A-GCCAAGGAUGAAUUGCC--\n| |||||||||||||||||  \nAAGCCAAGGAUGAAUUGCCGG\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0006552 Vitis vinifera miR169v | cme-miR169g MIMAT0026172 Cucumis
+    melo miR169g |
+  end_query: 21
+  end_target: 58
+  name: vvi-miR169v
+  score: -3
+  seq: AAGCCAAGGAUGAAUUGCCGG
+  strand_target: +
+- alignment: "AGCCAAGGAUGAAUUGCC--\n|||||||||||| |||||  \nAGCCAAGGAUGACUUGCCGG\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0018335 Glycine max miR169e |
+  end_query: 20
+  end_target: 58
+  name: gma-miR169e
+  score: -3
+  seq: AGCCAAGGAUGACUUGCCGG
+  strand_target: +
+- alignment: "-AGCCAAGGAUGAAUUGCC\n |||||||||||| |||||\nCAGCCAAGGAUGACUUGCC\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0024905 Glycine max miR169v |
+  end_query: 19
+  end_target: 58
+  name: gma-miR169v
+  score: -2
+  seq: CAGCCAAGGAUGACUUGCC
+  strand_target: +
+- alignment: "-AGCCAAGGAUGAAUUGCC--\n ||||||||||||||||||  \nGAGCCAAGGAUGAAUUGCCGG\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0031464 Prunus persica miR169k | ppe-miR169l MIMAT0031465 Prunus
+    persica miR169l |
+  end_query: 21
+  end_target: 58
+  name: ppe-miR169k
+  score: -3
+  seq: GAGCCAAGGAUGAAUUGCCGG
+  strand_target: +
+- alignment: "A-GCCAAGGAUGAAUUGCCU-\n| ||||||||||| |||||| \nAAGCCAAGGAUGACUUGCCUG\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0001971 Populus trichocarpa miR169o |
+  end_query: 21
+  end_target: 59
+  name: ptc-miR169o
+  score: -3
+  seq: AAGCCAAGGAUGACUUGCCUG
+  strand_target: +
+- alignment: "A-GCCAAGGAUGAAUUGCCU-\n| ||||||||||| |||||| \nAAGCCAAGGAUGAGUUGCCUG\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0018218 Hordeum vulgare miR169 |
+  end_query: 21
+  end_target: 59
+  name: hvu-miR169
+  score: -3
+  seq: AAGCCAAGGAUGAGUUGCCUG
+  strand_target: +
+- alignment: "-AGCCAAGGAUGAAUUGCC-U\n |||||||||||| ||||| |\nCAGCCAAGGAUGACUUGCCGU\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0023249 Glycine max miR169u |
+  end_query: 21
+  end_target: 59
+  name: gma-miR169u
+  score: -3
+  seq: CAGCCAAGGAUGACUUGCCGU
+  strand_target: +
+- alignment: "-AGCCAAGGAUGAAUUGCC-U\n |||||||||||| ||||| |\nGAGCCAAGGAUGACUUGCCGU\n"
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0006548 Vitis vinifera miR169l |
+  end_query: 21
+  end_target: 59
+  name: vvi-miR169l
+  score: -3
+  seq: GAGCCAAGGAUGACUUGCCGU
+  strand_target: +
+- alignment: 'A-GCCAAGGAUGAAUUGCCUA
+
+    | ||||||||||| ||||| |
+
+    AAGCCAAGGAUGACUUGCCGA
+
+'
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0007357 Glycine max miR169c |
+  end_query: 21
+  end_target: 60
+  name: gma-miR169c
+  score: -3
+  seq: AAGCCAAGGAUGACUUGCCGA
+  strand_target: +
+- alignment: 'A-GCCAAGGAUGAAUUGCCUA
+
+    | ||||||||||| |||||||
+
+    AAGCCAAGGAUGACUUGCCUA
+
+'
+  begin_query: 1
+  begin_target: 41
+  def_query: MIMAT0011069 Medicago truncatula miR169f |
+  end_query: 21
+  end_target: 60
+  name: mtr-miR169f
+  score: -2
+  seq: AAGCCAAGGAUGACUUGCCUA
+  strand_target: +
+- alignment: "-AGCCAAGGAUGAAUUGCCUA\n |||||||||||| ||||| |\nCAGCCAAGGAUGACUUGCCGA\n"
+  begin_query: 1
+  begin_target: 41
   def_query: MIMAT0000200 Arabidopsis thaliana miR169a | osa-miR169a MIMAT0000644
     Oryza sativa miR169a | zma-miR169a-5p MIMAT0001368 Zea mays miR169a-5p | zma-miR169b-5p
     MIMAT0001369 Zea mays miR169b-5p | sbi-miR169a MIMAT0001410 Sorghum bicolor miR169a
@@ -450,214 +659,17 @@
   end_target: 60
   name: ath-miR169a
   score: -3
-  seq: CAGCCAAGGATGACTTGCCGA
+  seq: CAGCCAAGGAUGACUUGCCGA
   strand_target: +
-- alignment: "uagccaaggaugaauugccua\n |||||||||||| ||||| |\naagccaaggaugacuugccga\n"
+- alignment: "-AGCCAAGGAUGAAUUGCCUA\n |||||||||||| |||||||\nCAGCCAAGGAUGACUUGCCUA\n"
   begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0007357 Glycine max miR169c |
-  end_query: 21
-  end_target: 60
-  name: gma-miR169c
-  score: -3
-  seq: AAGCCAAGGATGACTTGCCGA
-  strand_target: +
-- alignment: 'uagccaaggau-gaauugccua
-
-    ||||||||||| || |||||||
-
-    uagccaaggauggacuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0023233 Glycine max miR169t |
-  end_query: 22
-  end_target: 60
-  name: gma-miR169t
-  score: -2
-  seq: TAGCCAAGGATGGACTTGCCTA
-  strand_target: +
-- alignment: "uagccaaggaugaauugccua\n |||||||||||| |||||||\naagccaaggaugacuugccua\n"
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0011069 Medicago truncatula miR169f |
-  end_query: 21
-  end_target: 60
-  name: mtr-miR169f
-  score: -2
-  seq: AAGCCAAGGATGACTTGCCTA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    ||||||||||||| |||||||
-
-    uagccaaggaugacuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001051 Oryza sativa miR169f.1 | osa-miR169g MIMAT0001052 Oryza
-    sativa miR169g | sbi-miR169c MIMAT0001453 Sorghum bicolor miR169c | zma-miR169f-5p
-    MIMAT0001729 Zea mays miR169f-5p | zma-miR169g MIMAT0001730 Zea mays miR169g |
-    zma-miR169h MIMAT0001731 Zea mays miR169h | ptc-miR169r MIMAT0001974 Populus trichocarpa
-    miR169r | bna-miR169c MIMAT0005614 Brassica napus miR169c | bna-miR169d MIMAT0005615
-    Brassica napus miR169d | bna-miR169e MIMAT0005616 Brassica napus miR169e | bna-miR169f
-    MIMAT0005617 Brassica napus miR169f | vvi-miR169x MIMAT0006554 Vitis vinifera
-    miR169x | sly-miR169d MIMAT0007921 Solanum lycopersicum miR169d | sbi-miR169h
-    MIMAT0011334 Sorghum bicolor miR169h | sbi-miR169m MIMAT0011338 Sorghum bicolor
-    miR169m | sbi-miR169n MIMAT0011339 Sorghum bicolor miR169n | aqc-miR169a MIMAT0012563
-    Aquilegia caerulea miR169a | far-miR169 MIMAT0018371 Festuca arundinacea miR169
-    | tcc-miR169d MIMAT0020394 Theobroma cacao miR169d | bdi-miR169h-5p MIMAT0020699
-    Brachypodium distachyon miR169h-5p | ssl-miR169 MIMAT0022511 Salvia sclarea miR169
-    | mes-miR169ab MIMAT0029236 Manihot esculenta miR169ab | mes-miR169ac MIMAT0029237
-    Manihot esculenta miR169ac |
-  end_query: 21
-  end_target: 60
-  name: osa-miR169f.1
-  score: -1
-  seq: TAGCCAAGGATGACTTGCCTA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    |||||||| |||| |||||||
-
-    uagccaagaaugacuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001059 Oryza sativa miR169n | osa-miR169o MIMAT0001060 Oryza sativa
-    miR169o | sbi-miR169i MIMAT0001459 Sorghum bicolor miR169i | zma-miR169o-5p MIMAT0013991
-    Zea mays miR169o-5p | bdi-miR169d MIMAT0020654 Brachypodium distachyon miR169d
-    |
-  end_query: 21
-  end_target: 60
-  name: osa-miR169n
-  score: -2
-  seq: TAGCCAAGAATGACTTGCCTA
-  strand_target: +
-- alignment: "uagccaaggaugaauugccua\n |||||||||||| |||||||\ncagccaaggaugacuugccua\n"
-  begin_query: 1
-  begin_target: 40
+  begin_target: 41
   def_query: MIMAT0025329 Pinus densata miR169 |
   end_query: 21
   end_target: 60
   name: pde-miR169
   score: -2
-  seq: CAGCCAAGGATGACTTGCCTA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    |||||||||| || ||||| |
-
-    uagccaaggacgacuugccca
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001954 Populus trichocarpa miR169ac | ptc-miR169ad MIMAT0001955
-    Populus trichocarpa miR169ad | ptc-miR169ae MIMAT0001956 Populus trichocarpa miR169ae
-    | ptc-miR169af MIMAT0001957 Populus trichocarpa miR169af |
-  end_query: 21
-  end_target: 60
-  name: ptc-miR169ac
-  score: -3
-  seq: TAGCCAAGGACGACTTGCCCA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    |||||||||| || |||||||
-
-    uagccaaggacgacuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001977 Populus trichocarpa miR169u-5p |
-  end_query: 21
-  end_target: 60
-  name: ptc-miR169u-5p
-  score: -2
-  seq: TAGCCAAGGACGACTTGCCTA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    ||||||||||||| ||||| |
-
-    uagccaaggaugacuugccca
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0001978 Populus trichocarpa miR169v | ptc-miR169w MIMAT0001979 Populus
-    trichocarpa miR169w | lus-miR169a MIMAT0027125 Linum usitatissimum miR169a | lus-miR169d
-    MIMAT0027128 Linum usitatissimum miR169d |
-  end_query: 21
-  end_target: 60
-  name: ptc-miR169v
-  score: -2
-  seq: TAGCCAAGGATGACTTGCCCA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    |||||| |||||| |||||||
-
-    uagccagggaugacuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0020397 Theobroma cacao miR169g |
-  end_query: 21
-  end_target: 60
-  name: tcc-miR169g
-  score: -2
-  seq: TAGCCAGGGATGACTTGCCTA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    |||| |||||||| |||||||
-
-    uagcgaaggaugacuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0005677 Vitis vinifera miR169y |
-  end_query: 21
-  end_target: 60
-  name: vvi-miR169y
-  score: -2
-  seq: TAGCGAAGGATGACTTGCCTA
-  strand_target: +
-- alignment: 'uagccaaggaugaauugccua
-
-    |||||||| |||  |||||||
-
-    uagccaagaauggcuugccua
-
-'
-  begin_query: 1
-  begin_target: 40
-  def_query: MIMAT0013989 Zea mays miR169m-5p | zma-miR169n-5p MIMAT0013990 Zea mays
-    miR169n-5p | zma-miR169q-5p MIMAT0013993 Zea mays miR169q-5p | sbi-miR169p MIMAT0014043
-    Sorghum bicolor miR169p | sbi-miR169q MIMAT0014044 Sorghum bicolor miR169q |
-  end_query: 21
-  end_target: 60
-  name: zma-miR169m-5p
-  score: -3
-  seq: TAGCCAAGAATGGCTTGCCTA
-  strand_target: +
-- alignment: "agccaaggaugaauugcc--\n|||||||||||| |||||  \nagccaaggaugacuugccgg\n"
-  begin_query: 1
-  begin_target: 41
-  def_query: MIMAT0018335 Glycine max miR169e |
-  end_query: 20
-  end_target: 58
-  name: gma-miR169e
-  score: -3
-  seq: AGCCAAGGATGACTTGCCGG
+  seq: CAGCCAAGGAUGACUUGCCUA
   strand_target: +
 --- structure_optimal
 --- ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
@@ -904,6 +916,8 @@ contig15750__80-150:
 --- -1.00166666666667
 --- mfe
 --- '-60.10'
+--- full_position
+--- 34-195&nbsp;+
 --- mirdup_validation
 ---
 contig15750__40-59: 0
