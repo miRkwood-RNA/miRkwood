@@ -14,7 +14,7 @@ sub get_headers {
     my ( $self, @args ) = @_;
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @headers =
-      ( 'cluster', 'length', 'mirna_sequence', 'mirna_length', 'quality', 'mfei', @optional_fields, 'reads' );
+      ( 'full_position', 'mirna_sequence', 'mirna_length', 'quality', 'mfei', @optional_fields, 'reads' );
     return @headers;
 }
 
@@ -22,14 +22,14 @@ sub get_header {
     my ( $self, @args ) = @_;
     my $output = '<tr>';
     for my $header ( ('chromosome'), $self->get_headers() ) {
-        if ( $header eq 'cluster' ){
+        if ( $header eq 'full_position' ){
             $output .= "<th>position</th>\n";
         }
         elsif ( $header eq 'mirna_sequence' ){
             $output .= "<th>miRNA</th>\n";
         }
         elsif ( $header eq 'mirna_length' ){
-            $output .= "<th>miRNA length</th>\n";
+            $output .= "<th>length</th>\n";
         }
         else {
             $output .= "<th>$header</th>\n";
