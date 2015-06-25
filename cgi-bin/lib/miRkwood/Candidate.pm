@@ -865,4 +865,51 @@ sub find_mirna {
 }
 
 
+=method find_mirna_for_known_candidate
+  
+=cut
+
+sub find_mirna_for_known_candidate {
+    my ($self, @args) = @_;
+    my $genome_db = shift @args;
+    my $mirna_start = 0;
+    my $mirna_end = 0;
+
+    $self->{'mirna_position'} = '';
+    $self->{'mirna_sequence'} = '';
+    $self->{'mirna_length'}   = '';
+
+    if ( defined( $self->{'matures'} ) and ( scalar(keys%{$self->{'matures'}}) > 0 ) ){
+        my @matures_id = keys%{$self->{'matures'}};
+        if ( scalar( @matures_id ) == 1 ){
+            $mirna_start = $self->{'matures'}{$matures_id[0]}{'mature_start'};
+            $mirna_end = $self->{'matures'}{$matures_id[0]}{'mature_end'};
+        }
+        else {
+            my $max = 0;
+            my $mirna_max = '';
+            foreach my $mature_id ( @matures_id ){
+                my $nb_reads = 0;
+                foreach ( keys%{ $self->{'matures'}{$mature_id}{'mature_reads'} } ){
+                    $nb_reads = $self->{'matures'}{$mature_id}{'mature_reads'}{$_};
+                }
+                if ( $nb_reads > $max ){
+                    $max = $nb_reads;
+                    $mirna_max = $mature_id;
+                }
+            }
+            $mirna_start = $self->{'matures'}{$mirna_max}{'mature_start'};
+            $mirna_end = $self->{'matures'}{$mirna_max}{'mature_end'};
+        }
+        $self->{'mirna_position'} = "$mirna_start-$mirna_end";
+        $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
+        $self->{'mirna_sequence'} =~ s/T/U/g;
+        $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
+    }
+
+    return $self;
+
+}
+
+
 1;
