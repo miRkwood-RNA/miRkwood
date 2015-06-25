@@ -345,7 +345,7 @@ sub make_reads_barchart {
         </tr><tr>
             <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
             <td><span id="orphan_clusters">&nbsp;&nbsp;&nbsp;</span> orphan clusters of reads</td>
-            <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> knowns miRNAs</td>
+            <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> known miRNAs</td>
         </tr>
     </table>
 </div>
