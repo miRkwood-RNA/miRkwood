@@ -17,12 +17,12 @@
 <td>34-195</td>
 <td>162</td>
 <td>+</td>
-<td><center><font color="#FF8000">**</font></center></td>
+<td><center><font color="#FF8000">&#x2605;&#x2605;</font></center></td>
 <td>-60.10</td>
-<td>-1.00166666666667</td>
-<td>-37.0987654320988</td>
+<td><font color="#5F04B4">-1.00</font></td>
+<td>-37.10</td>
 <td>0.125000</td>
-<td>1</td>
+<td><center><font color="#008000">&#x2713;</font></center></td>
 
 </tr>
 </tbody>
