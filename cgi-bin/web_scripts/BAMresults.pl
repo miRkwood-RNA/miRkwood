@@ -35,6 +35,8 @@ my @js = (
 
 );
 
+my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
+
 ##### Parameters
 my $cgi = CGI->new();
 my $id_job = $cgi->param('run_id');    # get id job
@@ -107,7 +109,7 @@ if ( $valid ){
             $basename_bed = $2;
         }
         $HTML_additional .= "<div class='results_summary'><ul>";
-        $HTML_additional .= '<h2>Options summary:</h2>';
+        $HTML_additional .= '<h2>Options summary</h2>';
         $HTML_additional .= '<br />';
         $HTML_additional .= "<li><em>BED file:</em> $basename_bed</li>";
 
@@ -226,7 +228,7 @@ if ( $valid ){
                                                                $percentage_orphan_clusters_reads );
 
         $HTML_results .= "<div class='results_summary'><ul>";
-        $HTML_results .= '<h2>Results summary:</h2>';
+        $HTML_results .= '<h2>Results summary</h2>';
         $HTML_results .= '<br />';
         $HTML_results .= "$barchart<br />";
 
@@ -260,7 +262,7 @@ if ( $valid ){
             $HTML_results .= '<li><em>Orphan clusters of reads:</em> 0 reads</li>';
         }
 
-        $HTML_results .= "<li><em>Non classified reads:</em> $nb_orphan_reads reads</li>";
+        $HTML_results .= "<li><em>Unclassified reads:</em> $nb_orphan_reads reads</li>";
 
         if ( $nb_known_results > 0 ){
             $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
@@ -275,7 +277,9 @@ if ( $valid ){
         else {
             $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads</li>";
         }
-        $HTML_results .= "</ul></div>";
+        $HTML_results .= "</ul>";
+        $HTML_results .= '<p style="margin-left: 625px;"><a href="' . $help_page . '#overview">help</a></p>';
+        $HTML_results .= "</div>";
 
     }
 
