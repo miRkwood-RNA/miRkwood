@@ -22,13 +22,13 @@
                 <p>The input of miRkwood is a set of reads produced by
                 deep sequencing of small RNAs and mapped to a
                 reference genome. Typically, length of the reads
-                should range between 16nt and 35nt. The user is
+                should range between 15nt and 35nt. The user is
                 required to upload a BED file that contains all
                 positions of mapped sequence tags. This file can be
                 obtained from the raw sequencing data by taking three
                 easy steps on your computer. If you are new to
-                miRkwood, you might also want to test it with a sample
-                BED file.</p>
+                miRkwood, you might also want to test it with the sample
+                BED file provided below.</p>
                 
                 <ul><li> <a href="sample.bed">Download the sample BED file</a> </li></ul>
 
@@ -39,8 +39,23 @@
                 
                 <pre class='code'>cutadapt -a AACCGGTT -o output.fastq input.fastq</pre>
                 
-                
-                <h2 id='map'>Map the trimmed reads onto the reference genome</h2>
+		<h2 id='prinseq'>Run quality control</h2>
+
+		<p>The aim of this step is to filter too short or too
+		long sequences and to remove or to trim the low
+		quality sequences. This can be achieved using prinseq,
+		with this command line as example.</p>
+
+<pre class='code'> prinseq-lite.pl -fastq <short_reads_file.fatsq> -min_len 18 -max_len 25 -noniupac -min_qual_mean 25 -trim_qual_right 20 -ns_max_n 0</pre>
+
+		<p>Are conserved only the sequences between 18 and 25 NT with a mean
+		quality of at least 25 (phred score) and composed of nucleotides ACGT
+		only. The sequences are trimmed by quality score from the 3'-end with
+		a value of 20 as threshold.</p>
+
+		
+		
+                <h2 id='map'>Map the trimmed reads on the reference genome</h2>
                 
                 <p>The goal of this step is to generate a BAM file that contains the alignments of the expressed reads with the reference genome.</p>
                 
@@ -80,7 +95,10 @@
                 
                 <p><b>You are now ready to use miRkwood small RNA-seq
                 on your data. </b></p>
-            
+
+<!-- Isa: attention au lien !! -->
+<p> <a href="../cgi-bin/mirkwood/web_scripts/BAMinterface.pl">run miRkwood</a></p> 
+
             </div> <!-- main full -->
         
         </div><!-- bloc droit-->
