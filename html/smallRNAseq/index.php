@@ -24,7 +24,7 @@
 <h2> Web server</h2>
 	      
                 <ul>
-		  <li> click <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>here</a></li>
+		  <li> <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>click here</a></li>
 </ul>
 
 <h2> Documentation </h2>
@@ -36,10 +36,11 @@
 		</ul>
 
 
-		<br /><br /><br /><br /><br />
+		<br /><br /><br />
 
-<img style='width:660px; display: block; margin: 0 auto;' src='../style/pipeline_smallrnaseq.jpg' alt='' />
+<img style='width:660px; display: block; margin: 0 auto;' src='../style/tree_smallrnaseq.jpg' alt='' />
 		
+        <br /><br />
             </div><!-- main-->
         </div><!-- bloc droit-->
         <? include("../static/footer.txt") ?>

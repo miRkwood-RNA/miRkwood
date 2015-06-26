@@ -49,7 +49,7 @@
 
 		<p>The top of the page displays the job ID, that can
 		be saved for future usage (with the link <i>retrieve a
-		result with an ID, on the main menu).</p> 
+		result with an ID</i>, on the main menu).</p> 
 		
                 <p>The result page has then two main parts. The first one
                 (<i>Options summary</i>) is simply a summary of your
@@ -106,12 +106,12 @@
 		    can obtain the list of the corresponding orphan clusters by clicking on
                     the <i>download</i> link (BED file).
 		    </li>
-
+            <br />
 		    <li><i> Unclassified reads:</i> 2464 reads<br><br>
 		    2464 reads do not belong to any cluster, or do not
 		    fall in any annotated region.
 		    </li>
-		    
+		    <br />
                     <li> 
                         <i>Known miRNAs:</i> 5 <br> <br>
                         5 precursors of miRNA present in miRbase
@@ -148,7 +148,6 @@
 
                 </ul>
 
-<br />
 
  <p>If you want to know more about all parameter options, export
  formats, visualisation tools,  please visit our  main <a

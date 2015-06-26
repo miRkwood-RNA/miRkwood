@@ -4,6 +4,7 @@
         <link type='text/css' rel='stylesheet' href='../../Style/bioinfo.css' />
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
+        <link type='text/css' rel='stylesheet' href='../style/script.css' />
         <script type='text/javascript' src='/js/miARN.js'></script>
         <title>miRkwood - MicroRNA identification - Help</title>
     </head>
@@ -46,9 +47,10 @@
 		quality sequences. This can be achieved using prinseq,
 		with this command line as example.</p>
 
-<pre class='code'> prinseq-lite.pl -fastq <short_reads_file.fatsq> -min_len 18 -max_len 25 -noniupac -min_qual_mean 25 -trim_qual_right 20 -ns_max_n 0</pre>
+<pre class='code'> prinseq-lite.pl -fastq <short_reads_file.fatsq>-min_len 18 -max_len 25 -noniupac -min_qual_mean 25 
+    -trim_qual_right 20 -ns_max_n 0</pre>
 
-		<p>Are conserved only the sequences between 18 and 25 NT with a mean
+		<p>Are conserved only the sequences between 18 and 25 nt with a mean
 		quality of at least 25 (phred score) and composed of nucleotides ACGT
 		only. The sequences are trimmed by quality score from the 3'-end with
 		a value of 20 as threshold.</p>
@@ -93,11 +95,12 @@
                 
                 <br />
                 
-                <p><b>You are now ready to use miRkwood small RNA-seq
-                on your data. </b></p>
+                <p>You are now ready to use miRkwood small RNA-seq
+                on your data. </p>
 
-<!-- Isa: attention au lien !! -->
-<p> <a href="../cgi-bin/mirkwood/web_scripts/BAMinterface.pl">run miRkwood</a></p> 
+<br />
+
+<a href="../../cgi-bin/mirkwood/web_scripts/BAMinterface.pl"><span class="urlbox">Run miRkwood</span></a> 
 
             </div> <!-- main full -->
         
