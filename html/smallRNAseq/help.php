@@ -107,7 +107,7 @@
             
             <p>Each assembly is supplemented by two GFF format
             files. The first one contains the genome coordinates of
-            annotated mRNAs, CDS, tRNAs, rRNAs and snoRNAs,  and is
+            annotated  CDS, tRNAs, rRNAs and snoRNAs,  and is
             used to apply masking options described in <a
             href="#parameters">Section 1.3 - Parameters</a>.  The
             source of this file is indicated above, case by case. The
