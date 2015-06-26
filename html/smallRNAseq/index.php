@@ -21,15 +21,19 @@
 
                 <p>miRkwood small RNA-seq is a web application that allows to analyse small RNA deep sequencing data in plants. It takes as input a set of short expressed reads (from 15 to 35 nt) that have been previously mapped on a reference genome, and searches for all expressed microRNAs.</p>
 
+<h2> Web server</h2>
+	      
                 <ul>
-                    <li><a href='example.php'>quick start with an example</a></li>
-                                        
-                    <li><a href='help.php'>read user manual</a></li>
-                    
-                    <li><a href='BED_file.php'>how to prepare my files</a></li>
-                    
-                    <li><a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>use web server</a></li>
-                </ul>
+		  <li> click <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>here</a></li>
+</ul>
+
+<h2> Documentation </h2>
+
+<ul>
+		  <li><a href='example.php'>quick start with an example</a></li>
+		  <li><a href='BED_file.php'>how to prepare the input file</a></li>
+		  <li><a href='help.php'>user manual</a></li>  
+		</ul>
 
 
 		<br /><br /><br /><br /><br />
