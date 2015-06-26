@@ -45,6 +45,7 @@
                     </li>
                     <li><a href="#results_page"> Results page</a>
                         <ol>
+			    <li><a href="#overview"> Overview</a></li> 
                             <li><a href="#known_mirnas"> Known miRNAs</a></li>
                             <li><a href="#novel_mirnas"> Novel miRNAs</a></li>
                         </ol>
@@ -56,7 +57,8 @@
                             <li><a href="#dot_bracket"> Dot-bracket format</a></li>
                             <li><a href="#csv"> Tabular format (CSV) </a></li>
                             <li><a href="#odf"> Full report in document format (ODF)</a></li>
-                            
+                            <li><a href="#read_cloud">Reads
+                cloud</a></li> 
                         </ol>
                     </li> 
                     <li><a href="#html_report"> HTML report</a>
@@ -103,7 +105,13 @@
                 <li><em>Vitis vinifera</em> - Genoscope-20100122 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
             </ul>
             
-            <p>Each assembly is supplemented by two GFF format files. The first one contains the genome coordinates of  annotated mRNAs, CDS, tRNAs, rRNAs and snoRNAs,  and is used to apply masking options described in <a href="#parameters">Section 1.3 - Parameters</a>.  The source of this file is indicated above, case by case. The other GFF file compiles all miRNAs and pre-miRNAs available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
+            <p>Each assembly is supplemented by two GFF format
+            files. The first one contains the genome coordinates of
+            annotated mRNAs, CDS, tRNAs, rRNAs and snoRNAs,  and is
+            used to apply masking options described in <a
+            href="#parameters">Section 1.3 - Parameters</a>.  The
+            source of this file is indicated above, case by case. The
+            other GFF file compiles all miRNAs and precursors of miRNAs available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
             
             
             <h3 id='parameters'>Parameters</h3>
@@ -113,7 +121,11 @@
             
             <h4 id='reads_distribution'>Parameters for the processing of the read data</h4>
             
-            <p>The first step of miRkwood is to locate signals into the set of mapped reads.  This is performed by scanning the set of reads and detecting statistically significant peaks. To this end, it is advised to filter out the data beforehand. </p>
+            <p>The first step of miRkwood is to locate signals into
+            the set of mapped reads.  This is performed by scanning
+            the set of reads and detecting statistically significant
+            clusters of reads. To this end, it is advised to filter out the data
+            beforehand with the following options. </p>
 
 
 	    
@@ -126,9 +138,13 @@
             
             <h4 id='secondary_structure'>Parameters for the secondary structure of the hairpin precursor</h4>
             
-            <p>After peak detection,  miRkwood aims at determining which sequences can fold into a MIR stem-loop structure. This gives a set of candidate pre-miRNAs. For each candidate pre-miRNA, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins. </p>
+            <p>After cluster detection,  miRkwood aims at determining
+            which sequences can fold into a stem-loop structure. This
+            gives a set of candidate precursors of miRNAs. For each candidate, it is possible to calculate additional criteria that help to bring further evidence to the quality of the prediction and to distinguish accurate miRNA precursors from pseudo-hairpins. </p>
             
-            <p id='filter_mfei'><b>Select only sequences with MFEI &lt; -0.6:</b> MFEI is the minimum folding free energy index. It is calculated by the following equation: </p>
+            <p id='filter_mfei'><b>Select only sequences with MFEI
+            &lt; -0.6:</b> MFEI is the minimum folding free energy
+            index, and expresses the thermodynamic stability of the precursor. It is calculated by the following equation: </p>
             
             <p class='equation'>MFEI = [MFE / sequence length x 100] / (G+C%)</p>
             
@@ -151,9 +167,14 @@ finished. The email contains a link to access the results for 2 weeks.</p>
             
 <h2 id='results_page'>Results page</h2>
 
-<h3>Summary</h3> 
-<p>The result page has two main parts. The first one is simply a summary of your job parameters. The other one provides the detailed results.</p> 
-                
+<h3 id="overview">Results overview</h3> 
+<p>This page has two main parts. The first one (<i>Options
+summary</i>) is simply a summary of your job parameters. The other one
+(<i>Results summary</i>) provides the detailed results.</p> 
+
+
+
+
 <p><b>Total number of reads (unique reads):</b> This is the total number of reads in your initial file. The number of unique reads (obtained after merging identical reads) is indicated in parentheses. </p> 
                     
  <p> <b>CoDing Sequences:</b> This is the number of reads that have been discarded by the option <i>Mask coding regions</i>.  You can list them by clicking on
@@ -165,7 +186,25 @@ finished. The email contains a link to access the results for 2 weeks.</p>
 		    
 <p><b>Multiply mapped reads:</b> This is the number of reads that have been discarded by the option <i> Remove multiply mapped reads</i>.   You can list them by clicking on
                         the <i>download</i> link.</p>
-                    
+
+
+ 
+		    <p><b>Orphan cluster of reads:</b>    A cluster of reads is a short region in the genome
+		    that has been enriched with aligned reads. Here we
+		    report the number of reads that are not classified as
+		    miRNA by miRkwood, but that nevertheless occur in
+		    a cluster.  You
+		    can obtain the list of  orphan clusters by clicking on
+                    the <i>download</i> link (BED file).
+		    </p>
+
+		    <p><b> Unclassified reads:</b> Unclassified reads
+		    are isolated reads, that do not belong to any
+		    cluster, or do not
+		    fall in any annotated region.
+		    </p>
+
+
 		    <p><b>Known miRNAs:</b> This is the number of loci annotated as microRNA precursors
 		    in miRBase that intersect with reads from the BED file.    
 		    You can display detailed results by clicking on the link <i>see results</i>.
@@ -180,7 +219,11 @@ finished. The email contains a link to access the results for 2 weeks.</p>
                 
            <h3 id="known_mirnas">Known miRNAs</h3>
             
-            <p>Known miRNAs are miRNAs that are already present in the miRBase database (version 21). We consider that a known microRNA is found in the data as soon as there is at least one read  on the precursor sequence.</p>
+            <p>Known miRNAs are miRNAs that are already present in the
+            miRBase database (version 21). We consider that a known
+            microRNA is found in the data as soon as there is at least
+            one read  on the precursor sequence. The quality score
+            helps to determine which are the best candidates.</p>
 
             <br />
             <img style='width:660px; display: block; margin: 0 auto;'src='../style/results_knownmirna.png' alt='results table' />
@@ -188,12 +231,16 @@ finished. The email contains a link to access the results for 2 weeks.</p>
         
             <p>The list of all known miRNAs found is displayed in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p> 
             
-            <p><b>Chromosome:</b> Number of the chromosome.</p>           
+            <p><b>Chr:</b> Number of the chromosome.</p>           
             
-            <p><b>Position:</b> Start and end positions of the pre-miRNA, as documented in miRBase.</p>
+            <p><b>Position:</b> Start and end positions of the miRNA precursor, as documented in miRBase.</p>
             
             <p><b>+/- :</b> Strand, forward (+) or reverse (-).</p>
-            
+
+           <p><b>miRNA:</b> Sequence of the miRNA.</p>
+
+<p><b>Length:</b> Length of the miRNA.
+
             <p><b>Quality:</b> This score measures the consistency between the distribution of reads along the locus and the annotation provided in miRbase. It ranges between 0 and 2 stars, and  is calculated as follows. </p>
             
             <ul>
@@ -217,19 +264,25 @@ finished. The email contains a link to access the results for 2 weeks.</p>
             <img style='width:660px; display: block; margin: 0 auto;'src='../style/novelmirna.png' alt='results table' />
             <br />
       
-            <p>Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
+            <p>Each row corresponds to miRNA precursor, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
             
-            <p><b>Chromosome:</b> Number of the chromosome.</p>
+            <p><b>Chr:</b> Number of the chromosome.</p>
             
-            <p><b>Position:</b> Start and end positions of the putative pre-miRNA in the original sequence in 1 based notation (consistently to the GFF format).</p>
+            <p><b>Position:</b> Start and end positions of the
+            putative miRNA precursor in the original sequence in 1 based notation (consistently to the GFF format).</p>
             
             <p><b>+/-:</b> Strand, forward (+) or reverse (-). </p>
-            
-            <p><b>Quality:</b> It is a combination of all other criteria described afterwards, and allows to rank the predictions according to the significance, from zero- to five- stars. It is calculated as follows.</p>
+
+	    <p><b>miRNA:</b> Sequence of the miRNA.</p>
+	    
+	    <p><b>Length:</b> Length of the miRNA.
+	    
+            <p><b>Quality:</b> This scores allows to rank the
+            predictions according to the distribution of reads ammped
+            along the the precursor. It ranges from zero- to four-
+            stars and is calculated as follows.</p>
             
              <ul>
-                <li><em>Thermodynamic stability of the hairpin precursor: MFEI &lt; -0.8.</em>  This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins.</li>
-		
                 <li><em>Number of reads:</em> The  sequence has either at least 10 reads mapping to each arm, or  at least 5 reads mapping to each arm *and* at least 100 reads mapping in total. </li>
                 <li><em>Presence of the miRNA:miRNA* duplex:</em> The most abundant reads from each arm of the precursor pair in the mature microRNA duplex with 0-4 nt overhang at their 3' ends.</li>
                 <li><em>Precision of the precursor processing:</em>  At least 50% of reads mapping to each arm of the hairpin precursor have the same 5' end.</li>
@@ -238,11 +291,19 @@ finished. The email contains a link to access the results for 2 weeks.</p>
             
             <p>Each criterion contributes equally to the overall ranking, and adds one star. Criteria on the number of reads, the presence of the miRNA:miRNA* duplex  and the precision of the precursor processing  are taken from miRBase 21, where they are used to select "high quality" sequences (see <a href="http://nar.oxfordjournals.org/content/39/suppl_1/D152">http://nar.oxfordjournals.org/content/39/suppl_1/D152</a> and <a href="http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/">http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/</a>).</p>
             
-          
+	    <p><b>MFEI:</b> This is the minimum folding free energy
+            index. This value expresses the thermodynamic stability of
+            the precursor and is calculated by the following equation: </p>
             
-            <p><b>MFE:</b> Value of the minimum free energy of the secondary structure (computed with <a href="http://www.tbi.univie.ac.at/RNA/RNAeval.html">RNAeval</a>).</p>
-            
-            <p><b>MFEI:</b> value of the MFEI, as defined <a href="">here.</a></p>
+            <p class='equation'>MFEI = [MFE / sequence length x 100] / (G+C%)</p>
+
+	    <p>where MFE is the  minimum free energy of the secondary structure (computed with <a href="http://www.tbi.univie.ac.at/RNA/RNAeval.html">RNAeval</a>)
+	    When the MFEI is  &lt; -0.8, then the value is displayed
+	    in purple, indicating a significantly stable hairpin. This
+	    MFEI threshold covers 83% of miRBase miRNA precursors,
+	    whereas it is observed in less than 13% of pseudo
+	    hairpins.</p>
+
             
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (see <a href="">Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</p>
 
@@ -268,6 +329,12 @@ finished. The email contains a link to access the results for 2 weeks.</p>
 
             <p id='odf'><b>ODF:</b> This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. This document format is compatible with Word or OpenOffice. </p>    
                         
+
+<p id='read_cloud'><b> Reads cloud:</b>  This archive is a
+compilation of all reads clouds. Each reads cloud is a text file that
+summarizes all information available for a potential precursor:
+positions, sequence, secondary structure, existence of an alignment
+with miRbase, distribution of mapped reads. It can easily be parsed.</p> 
 
             <h2 id='html_export'>HTML report </h2>
             
