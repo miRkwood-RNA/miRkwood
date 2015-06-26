@@ -461,6 +461,7 @@ span.urlbox {
 #barchart_legend td{
     padding: 4px;
     width: 200px;
+    font-size:0.8em;
 }
 
 #CDS {
