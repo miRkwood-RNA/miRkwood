@@ -230,52 +230,53 @@ if ( $valid ){
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary</h2>';
         $HTML_results .= '<br />';
+        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
+        $HTML_results .= '<br />';
         $HTML_results .= "$barchart<br />";
 
-        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
 
         if ( $nb_CDS_reads > 0 ){
-            $HTML_results .= "<li><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS'>download</a>)</li>";
+            $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS'>download</a>)</span></li>";
         }
         else {
-            $HTML_results .= '<li><em>CoDing Sequences:</em> 0 reads</li>';
+            $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> 0 reads</span></li>";
         }
 
         if ( $nb_other_reads > 0 ){
-            $HTML_results .= "<li><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</li>";
+            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</span></li>";
         }
         else {
-            $HTML_results .= '<li><em>tRNA/rRNA/snoRNA:</em> 0 reads</li>';
+            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> 0 reads</span></li>";
         }
 
         if ( $nb_multi_reads > 0 ){
-            $HTML_results .= "<li><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</li>";
+            $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</span></li>";
         }
         else {
-            $HTML_results .= '<li><em>Multiply mapped reads:</em> 0 reads</li>';
+            $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> 0 reads</span></li>";
         }
 
         if ( $nb_orphan_clusters_reads > 0 ){
-            $HTML_results .= "<li><em>Orphan clusters of reads:</em> $nb_orphan_clusters_reads reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</li>";
+            $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> $nb_orphan_clusters_reads reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</span></li>";
         }
         else {
-            $HTML_results .= '<li><em>Orphan clusters of reads:</em> 0 reads</li>';
+            $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> 0 reads</span></li>";
         }
 
-        $HTML_results .= "<li><em>Unclassified reads:</em> $nb_orphan_reads reads</li>";
+        $HTML_results .= "<li id='li_orphans'><span id='normal'><em>Unclassified reads:</em> $nb_orphan_reads reads</span></li>";
 
         if ( $nb_known_results > 0 ){
-            $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</li>";
+            $HTML_results .= "<li id='li_known_miRNAs'><span id='normal'><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</span></li>";
         }
         else {
-            $HTML_results .= "<li><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads</li>";
+            $HTML_results .= "<li id='li_known_miRNAs'><span id='normal'><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads</span></li>";
         }
         
         if ( $nb_new_results > 0 ){
-            $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</li>";
+            $HTML_results .= "<li id='li_new_miRNAs'><span id='normal'><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</span></li>";
         }
         else {
-            $HTML_results .= "<li><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads</li>";
+            $HTML_results .= "<li id='li_new_miRNAs'><span id='normal'><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads</span></li>";
         }
         $HTML_results .= "</ul>";
         $HTML_results .= '<p style="margin-left: 625px;"><a href="' . $help_page . '#overview">help</a></p>';

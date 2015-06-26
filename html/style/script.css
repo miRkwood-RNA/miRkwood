@@ -444,9 +444,11 @@ span.mature {
 
 /*index pages */
 span.urlbox {
-    background-color: #fae0a2;
-    border-radius: 10px;
-    padding: 20px;
+    background-color: darkorange;
+    color:white;
+    font-size:1.2em;
+    font-weight:bold;
+    padding: 10px;
     margin: 10px;
 }
 
@@ -499,3 +501,37 @@ span.urlbox {
     border: 1px solid;
 }
 
+
+
+#li_CDS {
+    color: #FF0000;
+}
+
+#li_other {
+    color: #FFA500;
+}
+
+#li_multimapped {
+    color: #FFFF00;
+}
+
+#li_orphan_clusters {
+    color: #00FF00;
+}
+
+#li_orphans {
+    color: #00FFFF;
+}
+
+#li_known_miRNAs {
+    color: #0000FF;
+}
+
+#li_new_miRNAs {
+    color: #FF00FF;
+}
+
+#normal {
+    color:black;
+    font-size:1em;
+}
