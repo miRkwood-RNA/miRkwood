@@ -21,23 +21,20 @@
 	  
             <p>miRkwood is a web application that allows for the fast and easy identification of microRNAs. It is specifically designed for plant microRNAs. It offers an user-friendly interface to navigate in the data, as well as many export options to allow the user to conduct further analyses on a local computer.</p>
 
-            <p>miRkwood comes in two versions: </p>
-
-
-            <ul>
-                <li><b>mirkwood ab initio</b>, for the analysis of raw genomic sequence,</li>
-
-                <li><b>mirkwood small RNA-seq</b>, for the analysis of deep sequencing data.</li>
-            </ul>
-
             <br /><br />
 
-	    <center>
+	    
             <div>
-                <a href="./abinitio/index.php"><span class="urlbox">Use miRkwood <i>ab initio</i></span></a>
-                <a href="./smallRNAseq/index.php"><span class="urlbox">Use miRkwood small RNA-seq</span></a>
-            </div>
-            </center>
+	      <a href="./abinitio/index.php"><span class="urlbox">miRkwood <i>ab initio</i></span></a>
+	      <p>for the analysis of raw genomic sequence (<a href="./abinitio/index.php">go</a>)</p>
+	    </div>
+	    <br />
+	    <br />	    
+	    <div>
+                <a href="./smallRNAseq/index.php"><span class="urlbox">miRkwood small RNA-seq</span></a>
+	      <p>for the analysis of deep sequencing data (<a href="./smallRNAseq/index.php">go</a>)</p>
+	    </div>
+            
             <br /><br /><br />
 
 	    <h2> Where does the name come from ? </h2> 
