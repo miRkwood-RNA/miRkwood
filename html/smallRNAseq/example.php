@@ -19,7 +19,13 @@
         
                 <p class='title'>Quick start</p>
 	      
-                <p>This page covers the basics on how to get started with miRkwood small RNA-seq. The main input of miRkwood is a set of reads (ranging from 15 nt to 35 nt approximately) that have been previously mapped onto a reference genome and that are stored in a file in BED format. We advise you to first practice with a sample BED file. </p>
+                <p>This page covers the basics on how to get started
+                with miRkwood small RNA-seq. The main input of
+                miRkwood is a set of reads (ranging from 15 nt to 35
+                nt approximately) that have been previously mapped on
+                a reference genome and that are stored in a file in
+                BED format. We advise you to first practice with the
+                sample BED file below. </p>
                 
                 <ul><li> <a href="sample.bed">Download the sample BED file</a> </li></ul> 
                  
@@ -40,9 +46,24 @@
                 <p>Finally, click the <i>Run miRkwood</i> button. Results will be displayed in a couple of minutes. </p>
 
                 <h2> Results page </h2>
-                
-                <p>The result page has two main parts. The first one is simply a summary of your job parameters. The other one provides the detailed results.</p> 
-                
+
+		<p>The top of the page displays the job ID, that can
+		be saved for future usage (with the link <i>retrieve a
+		result with an ID, on the main menu).</p> 
+		
+                <p>The result page has then two main parts. The first one
+                (<i>Options summary</i>) is simply a summary of your
+                job parameters. The other one (<i>Results summary</i>)
+                provides the detailed results.</p> 
+
+
+	<img style='width:700px; display: block; margin: 0
+	auto;'src='../style/repartition.png' alt='read graphics' />
+
+		<p> This diagram indicates the proportion of reads
+		found for each category. This is a graphical
+		visualisation of the results displayed below
+		</p>	
                 <ul>
                     <li>
                         <i>Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
@@ -51,10 +72,10 @@
                     </li> 
 
                     <li>
-                        <i>CoDing Sequences:</i> 834 reads <br> <br>
-                        834 reads fall within a coding region (annotated as CDS) and are
+                        <i>CoDing Sequences:</i> 680 reads <br> <br>
+                        680 reads fall within a coding region (annotated as CDS) and are
                         discarded from the analysis.  You can list them by clicking on
-                        the <i>download</i> link.
+                        the <i>download</i> link (GFF file).
                         <br> <br>
                     </li>
                     
@@ -63,7 +84,7 @@
                         11568 reads fall within a region annotated either as ribosomal RNA, or
                         transfer RNA or snoRNA, and are discarded from the analysis. 
                         You can list them by clicking on
-                        the <i>download</i> link.
+                        the <i>download</i> link (GFF file).
                         <br> <br>
                     </li> 
 
@@ -71,18 +92,36 @@
                         <i>Multiply mapped reads:</i> 16 reads <br> <br> 
                         16 reads map to more than five locations, and are discarded from the
                         analysis.  You can list them by clicking on
-                        the <i>download</i> link.
+                        the <i>download</i> link (BED file).
                         <br> <br>
                     </li> 
 
+
+		    <li>
+		    <i>Orphan cluster of reads:</i> 3562 reads<br><br>
+		    A cluster of reads is a short region in the genome
+		    that has been enriched with aligned reads. Here we
+		    report the number of reads that occur in a cluster not classified as
+		    miRNA by miRkwood, due to the secondary structure.  You
+		    can obtain the list of the corresponding orphan clusters by clicking on
+                    the <i>download</i> link (BED file).
+		    </li>
+
+		    <li><i> Unclassified reads:</i> 2464 reads<br><br>
+		    2464 reads do not belong to any cluster, or do not
+		    fall in any annotated region.
+		    </li>
+		    
                     <li> 
                         <i>Known miRNAs:</i> 5 <br> <br>
-                        5 precursors of microRNA present in miRbase intersect with reads
-                        present in the BED file.    
+                        5 precursors of miRNA present in miRbase
+                        intersect with a total of 346 reads
+                        present in the input BED file.    
                         <br> <br> 
                         You can display detailed results by clicking on the link <i>see results</i>.
                         From this new page, you will be able to access a short report for each miRNA found :
-                        miRBase accession number, positions, secondary structure, read
+                        miRBase accession number, positions of the
+                        precursor, sequence of the miRNA, secondary structure, read
                         distribution. Further information can then be retrieved from
                         the miRBase website.
                         <br> <br>
@@ -90,15 +129,18 @@
 
                     <li> 
                         <i> Novel miRNAs: </i> 21 <br> <br>
-                        miRkwood finds 31 new miRNAs that have not
+                        miRkwood finds 21 new miRNAs that have not
                         been previously  reported in miRbase and that are supported by a significant
-                        read coverage  and a stemloop secondary structure. <br> <br> 
+                        read coverage  and a stemloop secondary
+                        structure. These 21 miRNAs represent a total
+                        of 1120 reads.<br> <br> 
                         You can display detailed results by clicking on the link <i>see results</i>.
                         From this new page, you will be able to access a comprehensive report
                         for each predicted miRNA :
-                        positions, secondary structure, read
+                        positions of the precursor, sequence of the
+                        miRNA, secondary structure, read
                         distribution, thermodynamic stability, precision of the duplex
-                        processing, conservation, ... <br />
+                        processing, conservation, ... 
                         Predictions are ranked according to a
                         quality score.
                         <br /> <br />
@@ -106,6 +148,12 @@
 
                 </ul>
 
+<br />
+
+ <p>If you want to know more about all parameter options, export
+ formats, visualisation tools,  please visit our  main <a
+ href="help.php">help page</a>.</p>
+		
 		<center>
 
 		<img style='width:700px; display: block; margin: 0 auto;'src='../style/novelmirna.png' alt='results table' />
@@ -131,7 +179,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 
 		</center>
 
-                <p>If you want to know more about all parameter options, export formats, visualisation tools,  please visit our  main <a href="help.php">help page</a>.</p>  
+               
 
                 <br />
 
