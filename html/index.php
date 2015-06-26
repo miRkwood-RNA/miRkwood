@@ -35,7 +35,7 @@
 	      <p>for the analysis of deep sequencing data (<a href="./smallRNAseq/index.php">go</a>)</p>
 	    </div>
             
-            <br /><br /><br />
+            <br /><br />
 
 	    <h2> Where does the name come from ? </h2> 
 
