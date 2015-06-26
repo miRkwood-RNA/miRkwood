@@ -333,21 +333,6 @@ sub make_reads_barchart {
             <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
         </tr>
     </table>
-
-    <br />
-
-    <table id="barchart_legend">
-        <tr>
-            <td><span id="CDS">&nbsp;&nbsp;&nbsp;</span> CDS</td>
-            <td><span id="multimapped">&nbsp;&nbsp;&nbsp;</span> multiply mapped reads</td>
-            <td><span id="orphans">&nbsp;&nbsp;&nbsp;</span> non classified reads</td>
-            <td><span id="new_miRNAs">&nbsp;&nbsp;&nbsp;</span> novel miRNAs</td>
-        </tr><tr>
-            <td><span id="other">&nbsp;&nbsp;&nbsp;</span> tRNA/rRNA/snoRNA</td>
-            <td><span id="orphan_clusters">&nbsp;&nbsp;&nbsp;</span> orphan clusters of reads</td>
-            <td><span id="known_miRNAs">&nbsp;&nbsp;&nbsp;</span> known miRNAs</td>
-        </tr>
-    </table>
 </div>
 END_TXT
 
