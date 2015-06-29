@@ -114,6 +114,9 @@ sub update_known_candidate_information {
 
     $candidate->find_mirna_for_known_candidate( $genome );
     $candidate->{'sequence'} = $genome->seq( $candidate->{'chromosome'}, $start => $end );
+    if ( $candidate->{'strand'} eq '-' ){
+        $candidate->{'sequence'} = miRkwood::Utils::reverse_complement( $candidate->{'sequence'} );
+    }
     $candidate->{'sequence'} =~ s/T/U/g;
     $candidate->{'%GC'} = miRkwood::Utils::restrict_num_decimal_digits(
                              miRkwood::Utils::compute_gc_content($candidate->{'sequence'}), 3);
