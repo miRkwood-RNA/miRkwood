@@ -838,7 +838,7 @@ sub find_mirna {
     my $mirna_start = 0;
     my $mirna_end = 0;
     my $total_reads = 0;
-    my $threshold = 0.2;
+    my $threshold = 0.33;
 
     foreach ( keys%{$self->{'reads'}} ){
         $total_reads += $self->{'reads'}{$_};
