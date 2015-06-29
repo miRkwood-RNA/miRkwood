@@ -55,7 +55,7 @@ sub export_candidate {
         elsif ($header eq 'mfei'){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
             if ( $contents < -0.8 ){
-                $contents = '<font color="#5F04B4">' . $contents . '</font>';
+                $contents = '<font color="#FF00FF">' . $contents . '</font>';
             }
         }
         elsif ($header eq 'mfe' or $header eq 'amfe'){

@@ -246,7 +246,7 @@ function createGrid(id,rowsNumber,columnsNumber)
                     var value = myResults.getValueByFactor(i-1,'mfei');
                     if( value <= -0.8 )
                     {
-                        td.innerHTML = "<font color='#5F04B4'>"+value+"</font>";
+                        td.innerHTML = "<font color='#FF00FF'>"+value+"</font>";
                     }
                     else
                     {
