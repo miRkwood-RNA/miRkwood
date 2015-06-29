@@ -851,7 +851,7 @@ sub find_mirna {
     my $percentage_majority_read = $max / $total_reads;
     if ( $percentage_majority_read >= $threshold ){
         $self->{'mirna_position'} = "$mirna_start-$mirna_end";
-        $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
+        $self->{'mirna_sequence'} = 'test'.$genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
         $self->{'mirna_sequence'} =~ s/T/U/g;
         $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
     }
