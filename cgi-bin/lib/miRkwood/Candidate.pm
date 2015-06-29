@@ -94,7 +94,7 @@ sub compute_quality {
     if ( $mode eq 'WebBAM' ){
         my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
         $quality += $self->compute_quality_from_reads( $end_arm_1, $start_arm_2 );
-        #~ $quality += $self->has_mirdup_validation();
+        $self->{'reads_distribution'} =  $quality;
     }
     else{
         if ( $self->{'mfei'} ) {
@@ -103,9 +103,9 @@ sub compute_quality {
             }
         }
         $quality += $self->{'alignment'};
+        $self->{'quality'} =  $quality;
     }
 
-    $self->{'quality'} =  $quality;
     return;
 }
 
@@ -477,6 +477,9 @@ sub get_basic_informations {
     if ( defined( $self->{'full_position'} ) ){
         push @headers, 'full_position';
     }
+    if ( defined( $self->{'reads_distribution'} ) ){
+        push @headers, 'reads_distribution';
+    }    
 
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
