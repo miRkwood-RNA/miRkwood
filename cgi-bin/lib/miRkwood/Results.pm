@@ -177,7 +177,7 @@ sub convert_basic_to_pseudoXML {
             @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality reads identifier image};
         }
         else {  # new miRNAs for pipeline smallRNAseq
-            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'quality', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
+            push @headers, ( 'name', 'full_position', 'mirna_sequence', 'mirna_length', 'quality', 'mfei', 'reads', @optional_fields, 'identifier', 'image' );
         }
     }
     else {  # pipeline ab initio
