@@ -174,6 +174,10 @@ function createGrid(id,rowsNumber,columnsNumber)
 				{
 					td.innerHTML = '<h3>+/-</h3>' ;
 				}
+				else if (value.toString() == 'reads_distribution')
+				{
+					td.innerHTML = '<h3>reads<br>distribution</h3>' ;
+				}
 				else if (value.toString() == 'quality') 
 				{
 					td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
@@ -204,9 +208,16 @@ function createGrid(id,rowsNumber,columnsNumber)
 				{	
 					var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices 				
 					var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
-				
+
 					td.innerHTML = string;
 				}
+                else if ( factor =='reads_distribution')
+                {
+					var value = myResults.getValueByFactor(i-1,'reads_distribution'); // appel fonction qui définit la valeur à partir des indices 				
+					var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
+
+					td.innerHTML = string;
+                }
 				else if ( factor =='image') //cas lien image
 				{	
 					var value = myResults.getValueByFactor(i-1,'image');

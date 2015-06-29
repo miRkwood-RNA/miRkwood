@@ -14,7 +14,7 @@ sub get_headers {
     my ( $self, @args ) = @_;
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @headers =
-      ( 'position', 'strand', 'mirna_sequence', 'mirna_length', 'quality', 'mfei', @optional_fields, 'reads' );
+      ( 'position', 'strand', 'mirna_sequence', 'mirna_length', 'reads', 'reads_distribution', 'mfei', @optional_fields );
     return @headers;
 }
 
@@ -31,6 +31,9 @@ sub get_header {
         elsif ( $header eq 'mirna_length' ){
             $output .= "<th>length</th>\n";
         }
+        elsif ( $header eq 'reads_distribution' ){
+            $output .= "<th>reads distribution</th>\n";
+        }        
         else {
             $output .= "<th>$header</th>\n";
         }

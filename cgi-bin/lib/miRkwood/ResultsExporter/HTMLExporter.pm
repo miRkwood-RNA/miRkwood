@@ -45,6 +45,13 @@ sub export_candidate {
             }
             $contents .= '</font></center>';
         }
+        elsif ($header eq 'reads_distribution'){
+            $contents = '<center><font color="#FF8000">';
+            for (my $i = 0; $i < ${$candidate}{"reads_distribution"}; $i++){
+                $contents .= "&#x2605;";
+            }
+            $contents .= '</font></center>';
+        }
         elsif ($header eq 'alignment'){
             $contents = '<center><font color="#008000">';
             for (my $i = 0; $i < ${$candidate}{"alignment"}; $i++){
