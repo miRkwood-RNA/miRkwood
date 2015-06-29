@@ -24,7 +24,7 @@
 --- 1__55821-56324-1
 --- CT
 ---
-'1': 92
+'1': '92'
 '10': '0'
 '11': '0'
 '12': '82'
@@ -127,14 +127,14 @@
 --- '-'
 --- alignment
 --- 0
---- quality
---- 0
 --- mirna_position
 --- 55915-55937
+--- quality
+--- 1
 --- alternatives
 --- {}
 --- cluster
---- 55821-56324-
+--- 55821-56324
 --- mirna_length
 --- 23
 --- name
@@ -153,3 +153,5 @@
 --- '-23.40'
 --- mirna_sequence
 --- UAAACCGCGAUUUAACAGUUUAC
+--- full_position
+--- 55915-56006&nbsp;-

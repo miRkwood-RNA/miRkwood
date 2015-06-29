@@ -189,14 +189,14 @@
 --- '-'
 --- alignment
 --- 0
---- quality
---- 1
 --- mirna_position
 --- 2165589-2165610
+--- quality
+--- 1
 --- alternatives
 --- {}
 --- cluster
---- 2165489-2165786-
+--- 2165489-2165786
 --- mirna_length
 --- 22
 --- name
@@ -215,3 +215,5 @@
 --- '-67.00'
 --- mirna_sequence
 --- GAAGCCGAAAUCUAAACUGAAA
+--- full_position
+--- 2165554-2165711&nbsp;-
