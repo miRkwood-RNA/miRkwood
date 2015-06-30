@@ -132,6 +132,9 @@ sub calculate_reads_coverage {
     my @fields = split( /\t/, $line);
     $size_genome += $fields[2];
     $self->{'average_coverage'} = int( $size_genome / $nb_tot_reads );
+    if ( $self->{'average_coverage'} == 0 ){
+        $self->{'average_coverage'} = 1;
+    }
     debug( "Average reads coverage for this BED file : 1 read every $self->{'average_coverage'} nt.", miRkwood->DEBUG() );
     return;
 }
