@@ -18,6 +18,7 @@ sub get_csv_headers {
         'strand',
         'mirna_sequence',
         'mirna_length',
+        'quality',
         'reads',
         'reads_distribution',
         '%GC',
