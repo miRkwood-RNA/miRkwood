@@ -95,6 +95,13 @@ sub compute_quality {
         my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
         $quality += $self->compute_quality_from_reads( $end_arm_1, $start_arm_2 );
         $self->{'reads_distribution'} =  $quality;
+        $self->{'quality'} = $quality;
+        if ( $self->{'mfei'} < -0.8 ){
+            $self->{'quality'} += 1;
+        }
+        if ( $self->{'mirna_sequence'} ne '' ){
+            $self->{'quality'} += 1;
+        }
     }
     else{
         if ( $self->{'mfei'} ) {
