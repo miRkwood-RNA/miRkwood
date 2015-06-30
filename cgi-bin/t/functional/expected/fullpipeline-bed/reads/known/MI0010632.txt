@@ -2,8 +2,8 @@ ath-MIR2112
 Locus  : 1:234006-234159
 Strand : -
 
-GUCAGAGAUGAUGCGCAAAUGCGGAUAUAAAGGUAUAUCAUGACCCCAAUGUUUCUGAUAAACCCUUUUCACAUUUUGUUGUUUUCGCUGAGCACCUCUAUUGGUUUGUUGUCCUGAUUUACAUUGAUAUCCGCAUUUGCGCAUCAUUUCAUAC
-....((((((((((((((((((((((((....(((.((((.(((............((((((((.............(.(((((.....))))).)......))))))))))).)))).)))....))))))))))))))))))))))))....
+GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGACAACAAACCAAUAGAGGUGCUCAGCGAAAACAACAAAAUGUGAAAAGGGUUUAUCAGAAACAUUGGGGUCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
+((..((.(((((((((((((((((((((.((.(((.((((.(((..(((.......((...((((.......(((......))).....))))...)).......)))..))).)))).))).)).))))))))))))))))))))).))..))
            <------miRBase------>
 ....*********************................................................................................................................................. length=21 depth=5
 ...........*********************.......................................................................................................................... length=21 depth=2
