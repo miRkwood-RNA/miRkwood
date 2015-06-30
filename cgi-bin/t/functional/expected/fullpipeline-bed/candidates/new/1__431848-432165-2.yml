@@ -155,8 +155,10 @@
 --- '-'
 --- alignment
 --- 0
+--- reads_distribution
+--- 0
 --- mirna_position
---- 432005-432028
+--- ''
 --- quality
 --- 1
 --- alternatives
@@ -266,7 +268,7 @@
 --- cluster
 --- 431848-432165
 --- mirna_length
---- 24
+--- ''
 --- energy_optimal
 --- '-49.00'
 --- name
@@ -282,6 +284,6 @@
 --- mfe
 --- '-49.00'
 --- mirna_sequence
---- UGACCCAUAAAAAGAAUUGUCCCU
+--- ''
 --- full_position
 --- 431927-432041&nbsp;-

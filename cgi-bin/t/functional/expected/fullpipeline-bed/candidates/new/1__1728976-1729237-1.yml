@@ -270,10 +270,12 @@
 --- '-'
 --- alignment
 --- 0
+--- reads_distribution
+--- 1
 --- mirna_position
 --- 1729074-1729097
 --- quality
---- 1
+--- 3
 --- alternatives
 ---
 1__1729029-1729148-:

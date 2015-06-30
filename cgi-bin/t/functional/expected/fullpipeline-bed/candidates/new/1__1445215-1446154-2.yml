@@ -345,10 +345,12 @@
 --- +
 --- alignment
 --- 0
+--- reads_distribution
+--- 1
 --- mirna_position
 --- ''
 --- quality
---- 1
+--- 2
 --- alternatives
 ---
 1__1445428-1445664+:

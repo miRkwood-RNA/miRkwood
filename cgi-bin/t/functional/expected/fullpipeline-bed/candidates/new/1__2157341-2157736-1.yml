@@ -269,10 +269,12 @@
 --- +
 --- alignment
 --- 0
+--- reads_distribution
+--- 1
 --- mirna_position
 --- 2157475-2157498
 --- quality
---- 1
+--- 2
 --- alternatives
 --- {}
 --- cluster

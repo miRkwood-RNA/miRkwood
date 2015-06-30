@@ -313,10 +313,12 @@
 --- +
 --- alignment
 --- 0
+--- reads_distribution
+--- 1
 --- mirna_position
 --- ''
 --- quality
---- 0
+--- 1
 --- alternatives
 --- {}
 --- cluster
