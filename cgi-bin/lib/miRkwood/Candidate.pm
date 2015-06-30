@@ -699,7 +699,7 @@ sub compute_quality_from_reads {
         foreach my $read_position (keys %{$self->{'reads'}}){
             my ($start_read, $end_read) = split(/-/, $read_position);
             if ( ($start_read >= ($start_mirna - 3) and  $start_read <= ($start_mirna + 3)) 
-                or ($start_read >= ($pairing_end_mirna - 5) and $start_read <= ($pairing_end_mirna + 5) ) ){
+                or ($end_read >= ($pairing_end_mirna - 5) and $end_read <= ($pairing_end_mirna + 5) ) ){
                 $reads_around_mirna += $self->{'reads'}{$read_position};
             }
         }
