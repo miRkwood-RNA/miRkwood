@@ -680,7 +680,7 @@ sub compute_quality_from_reads {
     if ( $count_arm_1 >= 10 and $count_arm_2 >= 10 ){
         $criteria_nb_reads = 1;
     }
-    if ( $count_arm_1 >= 5 and $count_arm_2 >= 5 and $total_reads >= 100 ){
+    if ( $total_reads >= 100 ){
         $criteria_nb_reads = 1;
     }
 
