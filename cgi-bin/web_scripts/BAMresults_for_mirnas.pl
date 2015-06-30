@@ -32,6 +32,8 @@ my @js = ( File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' 
 
 );
 
+my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
+
 ##### Parameters
 my $cgi = CGI->new();
 my $id_job = $cgi->param('jobID');    # get id job
@@ -104,7 +106,7 @@ if ( $valid ){
                         </form>
                     </div>
                         <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
-                        <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
+                        <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
                         </p>
                 </div> 
                           
