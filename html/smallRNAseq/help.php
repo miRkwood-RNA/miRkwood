@@ -241,14 +241,16 @@ summary</i>) is simply a summary of your job parameters. The other one
 
 <p><b>Length:</b> Length of the miRNA.
 
-            <p><b>Quality:</b> This score measures the consistency between the distribution of reads along the locus and the annotation provided in miRbase. It ranges between 0 and 2 stars, and  is calculated as follows. </p>
+            
+
+            <p><b>Reads:</b> Number of reads included in the locus.</p>
+
+<p><b>Quality:</b> This score measures the consistency between the distribution of reads along the locus and the annotation provided in miRbase. It ranges between 0 and 2 stars, and  is calculated as follows. </p>
             
             <ul>
                 <li>the locus contains more than 10 reads: add one star.</li>
                 <li>more than half of the reads intersect either with the miRNA or the miRNA*: add one star. </li>
             </ul>
-
-            <p><b>Reads:</b> Number of reads included in the locus.</p>
 
             <p><b>miRBAse name:</b> miRBase identifier.</p>
 	    
@@ -257,14 +259,23 @@ summary</i>) is simply a summary of your job parameters. The other one
                         
             <h3 id="novel_mirnas">Novel miRNAs</h3> 
             
-            <p>Novel miRNAs are miRNAS that are not reported in miRBase.  The prediction is supported both
-	    by a significant read coverage  and the presence of a stem-loop secondary structure.</p> 
+            <p>Novel miRNAs are miRNAS that are not reported in miRBase.  The prediction is supported 
+	    by the presence of a stem-loop secondary structure, a
+	    significant read coverage and read distribution.</p> 
 
             <br />
             <img style='width:660px; display: block; margin: 0 auto;'src='../style/novelmirna.png' alt='results table' />
             <br />
       
-            <p>Each row corresponds to miRNA precursor, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p>
+            <p>Each row corresponds to miRNA precursor, and each
+            column to a feature. By default, results are sorted by
+            sequence and then by position. It is possible to have them
+            sorted by <i>quality</i>. The quality is the sum of three
+            values: the existence of a miRNA sequence, the score of
+            reads distribution, the value of the MFEI (<-0.8) (see
+            definitions below). You can view all information related
+            to a given prediction by clicking on the row (see <a
+             href="#html_report">section HTML Report</a>).</p>
             
             <p><b>Chr:</b> Number of the chromosome.</p>
             
@@ -273,23 +284,34 @@ summary</i>) is simply a summary of your job parameters. The other one
             
             <p><b>+/-:</b> Strand, forward (+) or reverse (-). </p>
 
-	    <p><b>miRNA:</b> Sequence of the miRNA.</p>
+	    <p><b>miRNA:</b> Sequence of the miRNA. It is the sequence
+	    of the most common read, with a frequency of at least 33%.</p>
 	    
-	    <p><b>Length:</b> Length of the miRNA.
-	    
-            <p><b>Quality:</b> This scores allows to rank the
-            predictions according to the distribution of reads ammped
-            along the the precursor. It ranges from zero- to four-
-            stars and is calculated as follows.</p>
-            
+	    <p><b>Length:</b> Length of the miRNA.</p>
+
+	    <p><b>Reads:</b> The total number of reads included in the locus.</p>
+
+	    <p><b>Reads distribution:</b> This score, ranging from O
+	    to 3-stars, allows to qualify the pattern of reads mapping
+	    to a putative microRNA precursor. It aims at determining
+	    if this distribution of reads presents a typical 2-peaks
+	    profile, corresponding to the guide miRNA and the miRNA* respectively. </p>
+	               
              <ul>
-                <li><em>Number of reads:</em> The  sequence has either at least 10 reads mapping to each arm, or  at least 5 reads mapping to each arm *and* at least 100 reads mapping in total. </li>
-                <li><em>Presence of the miRNA:miRNA* duplex:</em> The most abundant reads from each arm of the precursor pair in the mature microRNA duplex with 0-4 nt overhang at their 3' ends.</li>
-                <li><em>Precision of the precursor processing:</em>  At least 50% of reads mapping to each arm of the hairpin precursor have the same 5' end.</li>
-                <li><em>Stability of the miRNA:miRNA* duplex:</em> The location of the mature miRNA is validated by miRdup.</li>
+                <li><em>Number of reads:</em> The  locus has either
+                at least 10 reads mapping to each arm,  at least 100
+                reads mapping in total. </li>
+		<li><em>Precision of the precursor processing :</em>
+                At least 75% of reads start in a window [-3,+3]
+                centered around the start position of the miRNA, or
+                [-5,+5] on the opposite arm of the stemloop.  </li> 
+                <li><em>Presence of the miRNA:miRNA* duplex:</em>
+                There is at least one read in the window [-5,+5] on
+                the strand of the miRNA*. </li>
+	
             </ul>           
             
-            <p>Each criterion contributes equally to the overall ranking, and adds one star. Criteria on the number of reads, the presence of the miRNA:miRNA* duplex  and the precision of the precursor processing  are taken from miRBase 21, where they are used to select "high quality" sequences (see <a href="http://nar.oxfordjournals.org/content/39/suppl_1/D152">http://nar.oxfordjournals.org/content/39/suppl_1/D152</a> and <a href="http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/">http://www.mirbase.org/blog/2014/03/high-confidence-micrornas/</a>).</p>
+            <p>Each criterion contributes equally to the overall ranking, and adds one star.</p>
             
 	    <p><b>MFEI:</b> This is the minimum folding free energy
             index. This value expresses the thermodynamic stability of
@@ -306,8 +328,6 @@ summary</i>) is simply a summary of your job parameters. The other one
 
             
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (see <a href="">Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</p>
-
-            <p><b>Reads:</b> Number of reads included in the locus</p>
 	    
             <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when an alignment between the candidate sequence and miRBase is found (see <a href="">Flag conserved mature miRNAs</a>). It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /><img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML or ODF report.</p>
             
