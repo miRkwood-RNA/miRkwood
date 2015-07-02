@@ -47,8 +47,8 @@
 		quality sequences. This can be achieved using prinseq,
 		with this command line as example.</p>
 
-<pre class='code'> prinseq-lite.pl -fastq <short_reads_file.fatsq>-min_len 18 -max_len 25 -noniupac -min_qual_mean 25 
-    -trim_qual_right 20 -ns_max_n 0</pre>
+<pre class='code'> prinseq-lite.pl -fastq &lt;short_reads_file.fastq&gt; -min_len 18 -max_len 25 -noniupac 
+-min_qual_mean 25 -trim_qual_right 20 -ns_max_n 0</pre>
 
 		<p>Are conserved only the sequences between 18 and 25 nt with a mean
 		quality of at least 25 (phred score) and composed of nucleotides ACGT
