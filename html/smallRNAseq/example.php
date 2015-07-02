@@ -155,7 +155,7 @@
 		
 		<center>
 
-		<img style='width:700px; display: block; margin: 0 auto;'src='../style/novelmirna.png' alt='results table' />
+		<img style='width:700px; display: block; margin: 0 auto;'src='../style/table_novelmirna.png' alt='results table' />
         
         <br />
 

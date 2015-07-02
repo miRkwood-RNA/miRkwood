@@ -226,7 +226,7 @@ summary</i>) is simply a summary of your job parameters. The other one
             helps to determine which are the best candidates.</p>
 
             <br />
-            <img style='width:660px; display: block; margin: 0 auto;'src='../style/results_knownmirna.png' alt='results table' />
+            <img style='width:660px; display: block; margin: 0 auto;'src='../style/table_knownmirna.png' alt='results table' />
             <br />
         
             <p>The list of all known miRNAs found is displayed in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (see definition below). You can view all information related to a given prediction by clicking on the row (see <a href="#html_report">section HTML Report</a>).</p> 
@@ -264,7 +264,7 @@ summary</i>) is simply a summary of your job parameters. The other one
 	    significant read coverage and read distribution.</p> 
 
             <br />
-            <img style='width:660px; display: block; margin: 0 auto;'src='../style/novelmirna.png' alt='results table' />
+            <img style='width:660px; display: block; margin: 0 auto;'src='../style/table_novelmirna.png' alt='results table' />
             <br />
       
             <p>Each row corresponds to miRNA precursor, and each
