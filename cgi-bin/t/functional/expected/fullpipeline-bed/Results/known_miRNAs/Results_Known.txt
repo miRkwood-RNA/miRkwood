@@ -1,0 +1,15 @@
+>1__28500-28706, stemloop structure
+UACUUUUCUAAUAUCACGAGGACUUACAUGGCCUCAAGUCACCUGUGGUGUUGUGCAAGAAGGAGAAGCAAAGUCUGUCUAUGUAUUAUGAGAUAGCUACUUCUAUGGCUAGGAUAUAUGUUGUACAAGACCGGCUUUUCUUCUACUUCUUGCACAACCUGAGGUUAUUGAGGCUAUACAAGUCUUCUUCUAUAAUGUUAUUUAUUA
+.................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................
+>1__78927-79037, stemloop structure
+GUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAAC
+((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).))))
+>1__234006-234159, stemloop structure
+GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGACAACAAACCAAUAGAGGUGCUCAGCGAAAACAACAAAAUGUGAAAAGGGUUUAUCAGAAACAUUGGGGUCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
+((..((.(((((((((((((((((((((.((.(((.((((.(((..(((.......((...((((.......(((......))).....))))...)).......)))..))).)))).))).)).))))))))))))))))))))).))..))
+>1__1727263-1727415, stemloop structure
+AUCUUUCUUGACAAAUCAUAACAACUUUGGUUAAAAGGUUUCGAAAACUCAACCUCUUCUUCAGUCUCUCUCUUUCCAAAAGGGAAAGACUGAAGUAGAGAUUGGGUUUCCGAUACCUUUUGGCCCAUGUCGUUAUGAUUUGUCGAGGAAGGU
+((((((((((((((((((((((.((...(((((((((((.(((.((((((((.((((.(((((((((.(((((((...))))))).))))))))).)))).)))))))).))).)))))))))))...)).))))))))))))))))))))))
+>1__2165517-2165746, stemloop structure
+CAUUUUCUUGUAUUCAAAGUAUCUUAAGUUAAGAAGAGAAUAAGAUUCUUACAUCUUGAUGAAGAGGAAUGGGAAGCCGAAAUCUAAACUGAAACAGAGGCGUCACCCAAUUAUCAAUUGGUAAGUGAUAUCUAUGUUUCGAUCUGUAUCUCGGCCUUUCACUCCUCUUCUUCUUGAUGUAAGAAUUUGUUAUUCGACACAUUAGAUGGAGUGAAAAAUCUGUUAGAUAU
+..((((((((...................))))))))((((((((((((((((((..((.((((((((.(((((.(((((.........(((((((.(((.(((((((((((...))))))...))))).))).))))))).........))))).))))).)))))))).))..))))))))))))..)))))).....(((.((((((........)))))).)))..
