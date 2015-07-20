@@ -17,7 +17,7 @@ my $cgi = CGI->new;
 my $id_job = $cgi->param('run_id');    # récupération id job
 my $export_type = $cgi->param('type');
 my $data= $cgi->param('data');  # identifiant des candidats sélectionnés
-my $header_type = $cgi->param('header_type');
+my $pipeline_type = $cgi->param('pipeline');
 my $mirna_type = $cgi->param('mirna_type');
 my @sequences_to_export =  split( ',',$data  );
 
@@ -32,20 +32,20 @@ my %myResults =  miRkwood::Results->get_structure_for_jobID($id_job, $mirna_type
 
 given ($export_type) {
     when (/gff/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter();
+        $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter( $mirna_type );
     }
     when (/odf/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_opendocument_results_exporter();
+        $exporter = miRkwood::ResultsExporterMaker->make_opendocument_results_exporter( $mirna_type );
         $exporter->{'cgi'} = $cgi;
     }
     when (/csv/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter($header_type . $mirna_type);
+        $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter($pipeline_type, $mirna_type );
     }
     when (/fas/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
+        $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter( $mirna_type );
     }
     when (/dot/) {
-        $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter();
+        $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter( $mirna_type );
     }
     when (/reads/) {
         $exporter = miRkwood::ResultsExporterMaker->make_reads_clouds_results_exporter( $mirna_type );

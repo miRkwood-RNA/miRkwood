@@ -22,7 +22,8 @@ sub process_results_dir_for_offline {
     my @args           = @_;
     my $candidates_dir = shift @args;
     my $output_folder  = shift @args;
-    my $html_exporter  = shift @args;
+    my $pipeline_type  = shift @args;
+    my $mirna_type     = shift @args;
 
 # In debug mode (without executing the pipeline), we need to set the config file
 #miRkwood->CONFIG_FILE(miRkwood::Paths->get_job_config_path( $output_folder ));
@@ -34,7 +35,7 @@ sub process_results_dir_for_offline {
 
     my %results = miRkwood::Results->deserialize_results($candidates_dir);
 
-    my $html = make_html_from_results( \%results, $output_folder, $html_exporter );
+    my $html = make_html_from_results( \%results, $output_folder, $pipeline_type, $mirna_type );
 
     my $html_page = File::Spec->catfile( $output_folder, 'results.html' );
     open( my $HTML, '>', $html_page )
@@ -59,16 +60,17 @@ sub make_html_from_results {
     my $results = shift @args;
     my %results = %{$results};
     my $output_folder = shift @args;
-    my $html_exporter = shift @args;
+    my $pipeline_type = shift @args;
+    my $mirna_type    = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
 
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
-    my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $html_exporter );
+    my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize('', \%results);
     $page .= $exporter->perform_export();
 
-    $page .= make_all_exports( \%results, $output_folder, $html_exporter );
+    $page .= make_all_exports( \%results, $output_folder, $pipeline_type, $mirna_type );
 
     my @keys = sort {
         ( $results{$a}->{'name'} cmp $results{$b}->{'name'} )
@@ -98,26 +100,27 @@ sub make_all_exports {
     my (@args)        = @_;
     my $results_ref   = shift @args;
     my $output_folder = shift @args;
-    my $html_exporter = shift @args;
+    my $pipeline_type = shift @args;
+    my $mirna_type    = shift @args;
     my $pieces_folder = File::Spec->catdir('pieces');
     my $id_job = '';
 
-    my $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter();
+    my $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
     my $fasta_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
-    $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter();
+    $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
     my $dotbracket_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
-    $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter();
+    $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
     my $gff_file = File::Spec->catfile($output_folder, $exporter->get_filename());
 
-    $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( $html_exporter );
+    $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $output_folder );
     my $csv_file = File::Spec->catfile($output_folder, $exporter->get_filename());

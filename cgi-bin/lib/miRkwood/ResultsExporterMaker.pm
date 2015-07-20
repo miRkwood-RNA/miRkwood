@@ -6,41 +6,64 @@ use strict;
 use warnings;
 
 sub make_fasta_results_exporter {
+    my ($self, @args) = @_;
+    my $mirna_type = shift @args;
     require miRkwood::ResultsExporter::FastaExporter;
-    return miRkwood::ResultsExporter::FastaExporter->new();
+    return miRkwood::ResultsExporter::FastaExporter->new( $mirna_type );
 }
 
 sub make_dotbracket_results_exporter {
+    my ($self, @args) = @_;
+    my $mirna_type = shift @args;
     require miRkwood::ResultsExporter::DotBracketExporter;
-    return miRkwood::ResultsExporter::DotBracketExporter->new();
+    return miRkwood::ResultsExporter::DotBracketExporter->new( $mirna_type );
 }
 
 sub make_gff_results_exporter {
+    my ($self, @args) = @_;
+    my $mirna_type = shift @args;
     require miRkwood::ResultsExporter::GFFExporter;
-    return miRkwood::ResultsExporter::GFFExporter->new();
+    return miRkwood::ResultsExporter::GFFExporter->new( $mirna_type );
 }
 
 sub make_csv_results_exporter {
     my ($self, @args) = @_;
-    my $html_exporter = shift @args;
+    my $pipeline_type = shift @args;
+    my $mirna_type    = shift @args;
     require miRkwood::ResultsExporter::CSVExporter;
     require miRkwood::ResultsExporter::CSVExporterGenomic;
     require miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown;
     require miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew;
-    if ( $html_exporter eq 'smallRNAseqKnown' ){
-       return miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown->new();
-    }
-    elsif( $html_exporter eq 'smallRNAseqNew' ){
-        return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new();
+    if ( $pipeline_type eq 'abinitio' ){
+        return miRkwood::ResultsExporter::CSVExporterGenomic->new( $mirna_type );
     }
     else{
-        return miRkwood::ResultsExporter::CSVExporterGenomic->new();
+        print STDERR "mirna type : $mirna_type\n";
+        if ( $mirna_type eq 'New' ){
+            return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new( $mirna_type );
+        }
+        else{
+            return miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown->new( $mirna_type );
+        }
     }
+    
+    
+    #~ if ( $html_exporter eq 'smallRNAseqKnown' ){
+       #~ return miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown->new( $mirna_type );
+    #~ }
+    #~ elsif( $html_exporter eq 'smallRNAseqNew' ){
+        #~ return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new( $mirna_type );
+    #~ }
+    #~ else{
+        #~ return miRkwood::ResultsExporter::CSVExporterGenomic->new( $mirna_type );
+    #~ }
 }
 
 sub make_opendocument_results_exporter {
+    my ($self, @args) = @_;
+    my $mirna_type = shift @args;
     require miRkwood::ResultsExporter::OpenDocumentExporter;
-    return miRkwood::ResultsExporter::OpenDocumentExporter->new();
+    return miRkwood::ResultsExporter::OpenDocumentExporter->new( $mirna_type );
 }
 
 sub make_pseudoxml_results_exporter {
@@ -50,20 +73,34 @@ sub make_pseudoxml_results_exporter {
 
 sub make_html_results_exporter {
     my ($self, @args) = @_;
-    my $html_exporter = shift @args;
+    my $pipeline_type = shift @args;
+    my $mirna_type    = shift @args;
     require miRkwood::ResultsExporter::HTMLExporter;
     require miRkwood::ResultsExporter::HTMLExporterGenomic;
     require miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown;
     require miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew;
-    if ( $html_exporter eq 'smallRNAseqKnown' ){
-       return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown->new();
-    }
-    elsif( $html_exporter eq 'smallRNAseqNew' ){
-        return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new();
+    if ( $pipeline_type eq 'abinitio' ){
+        return miRkwood::ResultsExporter::HTMLExporterGenomic->new( $mirna_type );
     }
     else{
-        return miRkwood::ResultsExporter::HTMLExporterGenomic->new();
+        print STDERR "mirna type : $mirna_type\n";
+        if ( $mirna_type eq 'New' ){
+            return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new( $mirna_type );
+        }
+        else{
+            return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown->new( $mirna_type );
+        }
     }
+
+    #~ if ( $html_exporter eq 'smallRNAseqKnown' ){
+       #~ return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown->new();
+    #~ }
+    #~ elsif( $html_exporter eq 'smallRNAseqNew' ){
+        #~ return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new();
+    #~ }
+    #~ else{
+        #~ return miRkwood::ResultsExporter::HTMLExporterGenomic->new();
+    #~ }
 }
 
 sub make_reads_clouds_results_exporter {

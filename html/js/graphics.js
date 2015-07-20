@@ -357,7 +357,7 @@ function getChecked()
  * Export the selected sequences
  * @param {String} id Identifier of the job
  */
-function exportTo(id, webroot, header_type, mirna_type)
+function exportTo(id, webroot, pipeline, mirna_type)
 {
 	var radios = document.getElementsByName('export');
 	for (var i = 0, length = radios.length; i < length; i++) {
@@ -383,7 +383,7 @@ function exportTo(id, webroot, header_type, mirna_type)
 		alert("Please select either all candidates, or less than 200 candidates.");
 		return;
 	}
-	window.location = "/"+webroot+"/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked + "&header_type=" + header_type + "&mirna_type=" + mirna_type;
+	window.location = "/"+webroot+"/exportResults.pl?" + "data=" + tab.join(',') + "&run_id=" + id + "&type=" + checked + "&pipeline=" + pipeline + "&mirna_type=" + mirna_type;
 }
 
 
