@@ -12,10 +12,9 @@ sub get_content_type {
     return 'text/gff';
 }
 
-sub get_filename {
+sub get_file_extension {
     my ( $self, @args ) = @_;
-    my $str = $self->get_identifier();
-    return "Results-$str.gff";
+    return 'gff';
 }
 
 sub get_header {
