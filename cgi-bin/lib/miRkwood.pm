@@ -202,16 +202,16 @@ Write the run options to the job configuration file.
 sub write_config {
     my ( $run_options_file, $strands, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, $mode ) = @_;
     my $run_options = miRkwood->CONFIG();
-    $run_options->param( "job.title",        $job_title );
-    $run_options->param( "job.plant",        $plant );
-    $run_options->param( "job.mode",         $mode );
-    $run_options->param( "options.strands",  $strands );
-    $run_options->param( "options.filter",   $filter );
-    $run_options->param( "options.mask-trna",$trna );
-    $run_options->param( "options.mask-rrna",$rrna );
-    $run_options->param( "options.mfei",     $mfei );
-    $run_options->param( "options.randfold", $randfold );
-    $run_options->param( "options.align",    $align );
+    $run_options->param( 'job.title',        $job_title );
+    $run_options->param( 'job.plant',        $plant );
+    $run_options->param( 'job.mode',         $mode );
+    $run_options->param( 'options.strands',  $strands );
+    $run_options->param( 'options.filter',   $filter );
+    $run_options->param( 'options.mask-trna',$trna );
+    $run_options->param( 'options.mask-rrna',$rrna );
+    $run_options->param( 'options.mfei',     $mfei );
+    $run_options->param( 'options.randfold', $randfold );
+    $run_options->param( 'options.align',    $align );
     $run_options->param( 'options.varna',    $varna );
     miRkwood->CONFIG($run_options);
 }
@@ -226,17 +226,17 @@ sub write_config_for_bam_pipeline {
     my ( $run_options_file, $job_title, $species, $mode, $bed, $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold, $varna) = @_;
     my $run_options = miRkwood->CONFIG();
 
-    $run_options->param( "job.title",        $job_title );
-    $run_options->param( "job.plant",        $species );
-    $run_options->param( "job.mode",         $mode );
-    $run_options->param( "job.bed",          $bed );
-    $run_options->param( "options.filter_CDS",            $filter_CDS );
-    $run_options->param( "options.filter_tRNA_rRNA",      $filter_tRNA_rRNA );
-    $run_options->param( "options.filter_multimapped",    $filter_multimapped );
-    $run_options->param( "options.align",    $align );
-    $run_options->param( "options.db",       $species_db );
-    $run_options->param( "options.mfei",     $mfei );
-    $run_options->param( "options.randfold", $randfold );
+    $run_options->param( 'job.title',        $job_title );
+    $run_options->param( 'job.plant',        $species );
+    $run_options->param( 'job.mode',         $mode );
+    $run_options->param( 'job.bed',          $bed );
+    $run_options->param( 'options.filter_CDS',            $filter_CDS );
+    $run_options->param( 'options.filter_tRNA_rRNA',      $filter_tRNA_rRNA );
+    $run_options->param( 'options.filter_multimapped',    $filter_multimapped );
+    $run_options->param( 'options.align',    $align );
+    $run_options->param( 'options.db',       $species_db );
+    $run_options->param( 'options.mfei',     $mfei );
+    $run_options->param( 'options.randfold', $randfold );
     $run_options->param( 'options.varna',    $varna );
 
     miRkwood->CONFIG($run_options);

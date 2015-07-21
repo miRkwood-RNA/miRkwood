@@ -41,7 +41,7 @@ sub export_candidate {
         elsif ($header eq 'quality'){
             $contents = '<center><font color="#FF8000">';
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
-                $contents .= "&#x2605;";
+                $contents .= '&#x2605;';
             }
             $contents .= '</font></center>';
         }

@@ -94,7 +94,7 @@ while ( <$bedFile> ){
     print $BED $_;
     if ( ! miRkwood::Utils::is_correct_BED_line($_) ){
         print $cgi->redirect($error_url . '?type=noBED');
-        exit;        
+        exit;
     }
 }
 close $BED;
@@ -108,7 +108,7 @@ if ( $localBED =~ /.*\/([^\/.]+)[.]bed/ ){
 ##### Get species or reference sequence
 $seqArea = $cgi->param('seqArea');
 my $genome = '';
-my $max_length = 100000;
+my $max_length = 100_000;
 if ( $species ne '' )    # case model organism
 {
     debug('Reference species is a model organism.', 1);
@@ -120,9 +120,9 @@ if ( $species ne '' )    # case model organism
     }
     else{
         print $cgi->redirect($error_url . '?type=noGenome');
-        exit;            
+        exit;
     }
-    
+
 }
 else {
     debug('Reference sequence is provided by the user.', 1);
@@ -132,7 +132,7 @@ else {
           or miRkwood::WebTemplate::web_die("Error when getting seqFile: $!");
         while ( my $ligne = <$upload> ) {
             $seqArea .= $ligne;
-        }        
+        }
     }
 
     # Check if genome is a valid fasta   
@@ -142,12 +142,12 @@ else {
     {
         print $cgi->redirect($error_url . '?type=noFasta');
         exit;
-    }    
+    }
     if ( ! miRkwood::Utils::check_nb_sequences($seqArea) )
     {
         print $cgi->redirect($error_url . '?type=severalSequences');
         exit;
-    }    
+    }
     if ( ! miRkwood::Utils::check_sequence_length($seqArea, $max_length) )
     {
         print $cgi->redirect($error_url . '?type=tooLongSequence');
@@ -157,8 +157,8 @@ else {
     $genome = $absolute_job_dir . '/genome.fa';
     open (my $GENOME, '>', $genome) or miRkwood::WebTemplate::web_die("Error when creating genome file: $!");
     print $GENOME $seqArea;
-    close $GENOME;    
-       
+    close $GENOME;
+
 }
 
 
@@ -186,6 +186,6 @@ my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
 my $cmd = "perl -I$dirLib $perl_script 'WebBAM' $absolute_job_dir $localBED $genome";
 debug("Running perl script $cmd", 1);
 system($cmd);
-debug("Getting back from Perl script", 1);
+debug('Getting back from Perl script', 1);
 
 close $log_file;
