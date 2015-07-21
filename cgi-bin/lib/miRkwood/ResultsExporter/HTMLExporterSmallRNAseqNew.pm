@@ -22,10 +22,7 @@ sub get_header {
     my ( $self, @args ) = @_;
     my $output = '<tr>';
     for my $header ( ('chromosome'), $self->get_headers() ) {
-        if ( $header eq 'full_position' ){
-            $output .= "<th>position</th>\n";
-        }
-        elsif ( $header eq 'mirna_sequence' ){
+        if ( $header eq 'mirna_sequence' ){
             $output .= "<th>miRNA</th>\n";
         }
         elsif ( $header eq 'mirna_length' ){
@@ -33,7 +30,7 @@ sub get_header {
         }
         elsif ( $header eq 'reads_distribution' ){
             $output .= "<th>reads distribution</th>\n";
-        }        
+        }
         else {
             $output .= "<th>$header</th>\n";
         }

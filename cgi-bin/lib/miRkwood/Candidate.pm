@@ -486,7 +486,7 @@ sub get_basic_informations {
     }
     if ( defined( $self->{'reads_distribution'} ) ){
         push @headers, 'reads_distribution';
-    }    
+    }
 
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
 	my $result = {};
@@ -699,13 +699,13 @@ sub compute_quality_from_reads {
     else {
         my ($start_mirna, $end_mirna) = split(/-/, $self->{'mirna_position'});
         my $pairing_start_mirna = $self->{'CT'}{ $start_mirna };
-        my $pairing_end_mirna = $self->{'CT'}{ $end_mirna }; 
+        my $pairing_end_mirna = $self->{'CT'}{ $end_mirna };
 
 
         # Criteria nb of reads in a window [-3; +3] around the mirna
         foreach my $read_position (keys %{$self->{'reads'}}){
             my ($start_read, $end_read) = split(/-/, $read_position);
-            if ( ($start_read >= ($start_mirna - 3) and  $start_read <= ($start_mirna + 3)) 
+            if ( ($start_read >= ($start_mirna - 3) and  $start_read <= ($start_mirna + 3))
                 or ($end_read >= ($pairing_end_mirna - 5) and $end_read <= ($pairing_end_mirna + 5) ) ){
                 $reads_around_mirna += $self->{'reads'}{$read_position};
             }
@@ -814,7 +814,7 @@ sub create_reads_length_diagramm {
         if ( !defined( $reads_length{ $length } ) ){
             $reads_length{ $length } = 0;
         }
-        $reads_length{ $length } += $self->{'reads'}{$_};        
+        $reads_length{ $length } += $self->{'reads'}{$_};
     }
 
     my $max = 0;

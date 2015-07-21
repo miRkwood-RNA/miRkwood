@@ -13,7 +13,7 @@ use miRkwood::Utils;
 
 sub get_header {
     my ( $self, @args ) = @_;
-    my $output .= "<tr>";
+    my $output = '<tr>';
     for my $header ( ('name'), $self->get_headers() ) {
         $output .= "<th>$header</th>\n";
     }
@@ -24,7 +24,7 @@ sub get_header {
 sub export_candidate {
     my ( $self, @args ) = @_;
     my $candidate = shift @args;
-    my $output .= '<tr>';
+    my $output   = '<tr>';
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
     $output .= "<td>$contents</td>\n";
@@ -40,22 +40,22 @@ sub export_candidate {
         }
         elsif ($header eq 'quality'){
             $contents = '<center><font color="#FF8000">';
-            for (my $i = 0; $i < ${$candidate}{"quality"}; $i++){
+            for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= "&#x2605;";
             }
             $contents .= '</font></center>';
         }
         elsif ($header eq 'reads_distribution'){
             $contents = '<center><font color="#FF8000">';
-            for (my $i = 0; $i < ${$candidate}{"reads_distribution"}; $i++){
-                $contents .= "&#x2605;";
+            for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
+                $contents .= '&#x2605;';
             }
             $contents .= '</font></center>';
         }
         elsif ($header eq 'alignment'){
             $contents = '<center><font color="#008000">';
-            for (my $i = 0; $i < ${$candidate}{"alignment"}; $i++){
-                $contents .= "&#x2713;";
+            for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
+                $contents .= '&#x2713;';
             }
             $contents .= '</font></center>';
         }
@@ -74,6 +74,7 @@ sub export_candidate {
         $output .= "<td>$contents</td>\n";
     }
     $output .= "\n</tr>\n";
+    return $output;
 }
 
 sub perform_export{
