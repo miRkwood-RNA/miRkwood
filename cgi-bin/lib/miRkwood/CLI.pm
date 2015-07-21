@@ -37,7 +37,12 @@ sub process_results_dir_for_offline {
 
     my $html = make_html_from_results( \%results, $output_folder, $pipeline_type, $mirna_type );
 
-    my $html_page = File::Spec->catfile( $output_folder, 'results.html' );
+    my $html_output = 'results.html';
+    if ( $pipeline_type ne 'abinitio' ){
+        $html_output = "Results_$mirna_type.html";
+    }
+
+    my $html_page = File::Spec->catfile( $output_folder, $html_output );
     open( my $HTML, '>', $html_page )
       or die("Cannot open $html_page: $!");
     print {$HTML} $html
