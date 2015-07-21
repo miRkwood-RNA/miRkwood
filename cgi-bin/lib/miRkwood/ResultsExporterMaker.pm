@@ -38,7 +38,6 @@ sub make_csv_results_exporter {
         return miRkwood::ResultsExporter::CSVExporterGenomic->new( $mirna_type );
     }
     else{
-        print STDERR "mirna type : $mirna_type\n";
         if ( $mirna_type eq 'New' ){
             return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new( $mirna_type );
         }
@@ -46,17 +45,7 @@ sub make_csv_results_exporter {
             return miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown->new( $mirna_type );
         }
     }
-    
-    
-    #~ if ( $html_exporter eq 'smallRNAseqKnown' ){
-       #~ return miRkwood::ResultsExporter::CSVExporterSmallRNAseqKnown->new( $mirna_type );
-    #~ }
-    #~ elsif( $html_exporter eq 'smallRNAseqNew' ){
-        #~ return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new( $mirna_type );
-    #~ }
-    #~ else{
-        #~ return miRkwood::ResultsExporter::CSVExporterGenomic->new( $mirna_type );
-    #~ }
+
 }
 
 sub make_opendocument_results_exporter {
@@ -83,7 +72,6 @@ sub make_html_results_exporter {
         return miRkwood::ResultsExporter::HTMLExporterGenomic->new( $mirna_type );
     }
     else{
-        print STDERR "mirna type : $mirna_type\n";
         if ( $mirna_type eq 'New' ){
             return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new( $mirna_type );
         }
@@ -92,15 +80,6 @@ sub make_html_results_exporter {
         }
     }
 
-    #~ if ( $html_exporter eq 'smallRNAseqKnown' ){
-       #~ return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqKnown->new();
-    #~ }
-    #~ elsif( $html_exporter eq 'smallRNAseqNew' ){
-        #~ return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new();
-    #~ }
-    #~ else{
-        #~ return miRkwood::ResultsExporter::HTMLExporterGenomic->new();
-    #~ }
 }
 
 sub make_reads_clouds_results_exporter {
