@@ -33,7 +33,7 @@ ok(
 
 ## CSV ##
 
-ok( my $csv_exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( '' ),
+ok( my $csv_exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( 'abinitio' ),
     'can call make_csv_results_exporter');
 isa_ok($csv_exporter, 'miRkwood::ResultsExporter::CSVExporter');
 ok($csv_exporter->initialize('', \%results, ['1-1']),
@@ -124,7 +124,7 @@ is( $output_gff, $expected_gff,
 
 ## HTML ##
 
-ok( my $html_exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( '' ),
+ok( my $html_exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( 'abinitio' ),
     'can call make_html_results_exporter');
 isa_ok($html_exporter, 'miRkwood::ResultsExporter::HTMLExporter');
 ok( $html_exporter->initialize('', \%results, ['1-1']),
