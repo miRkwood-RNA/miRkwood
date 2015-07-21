@@ -28,11 +28,13 @@ Constructor
 
 sub new {
     my ( $class, @args ) = @_;
+    my $mirna_type = shift @args;
     my $cgi = shift @args;
     my $self = $class->SUPER::new(@args);
-    $self->{cgi} = $cgi;
-    $self->{doc} = odf_document->create('text')
+    $self->{'cgi'} = $cgi;
+    $self->{'doc'} = odf_document->create('text')
       or die 'Error when initialising ODF document';
+    $self->{'mirna_type'} = $mirna_type;
     $self->prepare_document();
     return $self;
 }
@@ -40,7 +42,7 @@ sub new {
 sub export_for_web {
     my ( $self, @args ) = @_;
     my $odt = $self->get_report();
-    return $self->{cgi}->redirect(-url => $odt);
+    return $self->{'cgi'}->redirect(-url => $odt);
 }
 
 =method prepare_document
@@ -257,7 +259,7 @@ sub generate_report {
     my $images_dir = $self->get_images_dir();
     mkdir $images_dir;
 
-    my $doc = $self->{doc};
+    my $doc = $self->{'doc'};
 
     # Main context access
     my $context = $doc->body;
@@ -594,19 +596,19 @@ Return the absolute path to the ODF document
 sub get_ODF_absolute_path {
     my ( $self, @args ) = @_;
     my $jobPath = miRkwood::Results->jobId_to_jobPath($self->get_identifier());
-    my $ODT_filename = $self->get_ODF_filename();
+    my $ODT_filename = $self->get_filename();
     return File::Spec->catfile( $jobPath, $ODT_filename );
 }
 
-=method get_ODF_filename
+=method get_file_extension
 
-Return the document filename
+Return the extension for odt files
 
 =cut
 
-sub get_ODF_filename {
+sub get_file_extension {
     my ( $self, @args ) = @_;
-    return 'Prediction_report_' . $self->get_identifier() . '.odt';
+    return 'odt';
 }
 
 sub get_images_dir {
