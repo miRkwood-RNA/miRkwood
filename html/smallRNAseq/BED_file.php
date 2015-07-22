@@ -63,7 +63,7 @@
                 
                 <p>We recommend to perform exact matching. For that, you can use <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a> with the following parameters. Any other read mapper can also do the job.</p>
                 
-                <pre class='code'>bowtie -v 0 -f --all --best --strata -S &lt;genome&gt; &lt;reads&gt;   </pre>
+                <pre class='code'>bowtie -v 0 -f/q --all --best --strata -S &lt;genome&gt; &lt;reads&gt; > output.sam  </pre>
                 
                 <p>Reads file must be in FASTA, FASTQ, or colorspace-fasta format. Genome file must be in FASTA format.</p>
       
