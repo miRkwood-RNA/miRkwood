@@ -134,3 +134,13 @@ foreach my $chromosome ( sort (keys%$counts) ){
     }
 }
 close $BED;
+
+my $total_time = time() - $time;
+my $day  = int( $total_time / 86400 );
+my $hour = int( ($total_time % 86400 ) / 3600 );
+my $min  = int( ( ($total_time % 86400 ) % 3600 ) / 60 );
+my $sec  = int( ( ($total_time % 86400 ) % 3600 ) % 60 );
+
+print "Done in $day day $hour h $min min $sec sec.\n";
+
+
