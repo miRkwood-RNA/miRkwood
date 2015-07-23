@@ -20,6 +20,7 @@ my $candidate_id   = $cgi->param('id');
 
 my @css = (File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'results.css'));
 my @js  = (miRkwood::WebTemplate->get_js_file());
+my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
 
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 
@@ -64,6 +65,8 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $linkReadsCloud = "$export_link&type=reads";
     my $htmlReadsCloud = '';
     my $reads_length_diagramm = $candidate->create_reads_length_diagramm();
+    my $mirna = '';
+    my $quality = '';
     if ( $cfg->param('job.mode') ne 'fasta' ){
         my $nb_reads = 0;
         foreach my $key (keys( %{$candidate->{'reads'}} )){
@@ -77,8 +80,60 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
                 $reads_length_diagramm
             </li>
             <li><b>Read cloud : </b><a href='$linkReadsCloud'>download</a>
-        </ul>    
+        </ul>
 END_TXT
+
+        if ( $candidate->{'mirna_sequence'} ne '' ){
+            $mirna = <<"END_TXT";
+            <li>
+                <b>miRNA:</b> $candidate->{'mirna_sequence'}
+            </li>
+            <li>
+                <b>miRNA length:</b> $candidate->{'mirna_length'} nt
+            </li>
+END_TXT
+        }
+
+        $quality = <<"END_TXT";
+        <h2>Quality <a href="$help_page#quality">[?]</a> </h2>
+        <b>Quality:</b> $candidate->{'quality'}   <br /><ul>
+
+END_TXT
+
+        if ( $candidate->{'mirna_sequence'} ne '' ){
+            $quality .= "<li><b>Existence of a miRNA:</b> Yes</li>";
+        }
+        else{
+            $quality .= "<li><b>Existence of a miRNA:</b> No</li>";
+        }
+        if ( $candidate->{'mfei'} < -0.8 ){
+            $quality .= "<li><b>MFEI < -0.8:</b> Yes</li>";
+        }
+        else{
+            $quality .= "<li><b>MFEI < -0.8:</b> No</li>";
+        }
+        if ( $candidate->{'criteria_nb_reads'} ){
+            $quality .= "<li><b>Criteria number of reads:</b> Yes</li>";
+        }
+        else{
+            $quality .= "<li><b>Criteria number of reads:</b> No</li>";
+        }        
+        if ( $candidate->{'criteria_star'} ){
+            $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> Yes</li>";
+        }
+        else{
+            $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> No</li>";
+        }
+        if ( $candidate->{'criteria_reads_mirna'} ){
+            $quality .= "<li><b>Criteria precision of the precursor processing:</b> Yes</li>";
+        }
+        else{
+            $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
+        }        
+
+    
+        $quality .= "</ul>";
+
     }
 
     my $Vienna_HTML = "<li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -146,6 +201,7 @@ END_TXT
         <li>
           <b>G+C content:</b> $candidate->{'%GC'}%
         </li>
+        $mirna
         <li>
           <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
         </li>
@@ -155,6 +211,7 @@ END_TXT
         </li>
         </ul>
         $imgHTML
+        $quality
         $htmlReadsCloud
         <h2>Thermodynamics stability</h2>
         <ul>
