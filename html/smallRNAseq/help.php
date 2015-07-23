@@ -93,7 +93,8 @@
             
             <ul>
                 <li><em>Arabidopsis lyrata</em> - v1.0 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
-                <li><em>Arabidopsis thaliana</em> - TAIR 10 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li> 
+                <li><em>Arabidopsis thaliana</em> - TAIR 10 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
+                <li><em>Brassica napus</em> - Bnapus 4.1 - GFF: <a href="http://brassicadb.org/brad/">brassicadb</a></li>
                 <li><em>Brassica rapa</em> - Brapa 1.1 - GFF: <a href="http://brassicadb.org/brad/">brassicadb</a></li>
                 <li><em>Glycine max</em> - v1.0.23 - GFF: <a href="http://www.ensembl.org/index.html">Ensembl</a></li>
                 <li><em>Lotus japonicus</em> - Lj2.5 - GFF: <a href="http://www.kazusa.or.jp/lotus/">kazusa.or.jp</a></li>
