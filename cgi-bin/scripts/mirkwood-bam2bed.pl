@@ -29,7 +29,7 @@ mirkwood-bam2bed.pl
 ----------
 Script to convert a BAM into a BED file for use by miRkwood.
 
-Usage : ./mirkwood-bam2bed.pl -bam <input BAM file> -bed <output BED file> 
+Usage : ./mirkwood-bam2bed.pl -in <input BAM/SAM file> -bed <output BED file> 
 
 Dependancies : samtools
 Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.
@@ -49,14 +49,8 @@ if ( $help ){
     exit;
 }
 
-if ( ! -r $input_file ){
-    print "Missing input file!\n";
-    print $help_message;
-    exit;
-}
-
-if ( $bed_file eq '' ){
-    print "Missing output file!\n";
+if ( ( ! -r $input_file ) || ( $bed_file eq '' ) ){
+    print "Missing parameter!\n";
     print $help_message;
     exit;
 }
