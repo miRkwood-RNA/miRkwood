@@ -292,7 +292,7 @@ summary</i>) is simply a summary of your job parameters. The other one
 
 	    <p><b>Reads:</b> The total number of reads included in the locus.</p>
 
-	    <p><b>Reads distribution:</b> This score, ranging from O
+	    <p id='quality'><b>Reads distribution:</b> This score, ranging from O
 	    to 3-stars, allows to qualify the pattern of reads mapping
 	    to a putative microRNA precursor. It aims at determining
 	    if this distribution of reads presents a typical 2-peaks
