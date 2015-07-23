@@ -729,50 +729,13 @@ sub compute_quality_from_reads {
         else {  # mirna is on the loop => not really a mirna then
             debug( "Candidate $self->{'identifier'} : the major read is in the loop", miRkwood->DEBUG() );
         }
-debug( "Candidate $self->{'identifier'} : criteria nb reads : $criteria_nb_reads; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
+        debug( "Candidate $self->{'identifier'} : criteria nb reads : $criteria_nb_reads; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
     }
 
-    #~ # Criteria duplex
-    #~ if ( $max_read_arm_1 ne '' && $max_read_arm_2 ne '' ){
-#~ 
-        #~ my ($start_max_1, $end_max_1) = split(/-/, $max_read_arm_1);
-        #~ my ($start_max_2, $end_max_2) = split(/-/, $max_read_arm_2);
-        #~ my $relative_start_max_1 = $start_max_1 - $start_arm_1;
-        #~ my $relative_end_max_2   = $end_max_2 - $start_arm_1;
-#~ 
-        #~ if ( $self->{'CT'}{($relative_start_max_1)} ){
-            #~ if ( $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 >= 0
-             #~ and $self->{'CT'}{$relative_start_max_1} - $relative_end_max_2 <= 4 ){
-                #~ $criteria_duplex = 1;
-            #~ }
-        #~ }
-        #~ elsif ( $self->{'CT'}{($relative_start_max_1 +1 )} ) {
-            #~ if ( $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) >= 0
-             #~ and $self->{'CT'}{$relative_start_max_1 +1} - ($relative_end_max_2 -1) <= 4 ){
-                #~ $criteria_duplex = 1;
-            #~ }
-        #~ }
-        #~ elsif( $self->{'CT'}{($relative_start_max_1 -1 )} ) {
-            #~ if ( $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) >= 0
-             #~ and $self->{'CT'}{$relative_start_max_1 -1} - ($relative_end_max_2 +1) <= 4 ){
-                #~ $criteria_duplex = 1;
-            #~ }
-        #~ }
-    #~ }
-#~ 
-    #~ # Criteria precision
-    #~ foreach my $start_read ( keys %{$reads_arm_1} ){
-        #~ if ( $reads_arm_1->{$start_read} >= ( $count_arm_1 / 2 ) ){
-            #~ $criteria_precision_arm_1 = 1;
-        #~ }
-    #~ }
-    #~ foreach my $start_read ( keys %{$reads_arm_2} ){
-        #~ if ( $reads_arm_2->{$start_read} >= ( $count_arm_2 / 2 ) ){
-            #~ $criteria_precision_arm_2 = 1;
-        #~ }
-    #~ }
+    $self->{'criteria_nb_reads'} = $criteria_nb_reads;
+    $self->{'criteria_star'} = $criteria_star;
+    $self->{'criteria_reads_mirna'} = $criteria_reads_mirna;
 
-    #~ return $criteria_nb_reads + $criteria_duplex + ( $criteria_precision_arm_1 * $criteria_precision_arm_2 );
     return $criteria_nb_reads + $criteria_star + $criteria_reads_mirna;
 }
 
