@@ -264,6 +264,11 @@ function createGrid(id,rowsNumber,columnsNumber)
                         td.innerHTML = value;
                     } 
                 }
+                else if( factor =='mirna_sequence')
+                {
+                    var value = myResults.getValueByFactor(i-1,'mirna_sequence');
+                    td.innerHTML = "<span class='mirna_sequence'>"+value+"</span>";
+                }
 				else
 				{
 					var value = document.createTextNode(myResults.getValueByFactor(i-1,factor)); // appel fonction qui définit la valeur à partir des indices 

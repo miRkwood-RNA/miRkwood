@@ -412,6 +412,11 @@ span.mature {
 	color:blue;
 }
 
+
+span.mirna_sequence {
+	font-family:"Helvetica-Narrow",Helvetica,sans-serif;
+}
+
 /* CSS: (StyleSheet) plugin : imgPreviewWith*/
 
 #imgPreviewWithStyles {
