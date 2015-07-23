@@ -46,6 +46,8 @@ sub run_pipeline {
 
     debug( 'miRkwood : start processing.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
 
+    my $start_time = time();
+
     $self->calculate_reads_coverage();
 
     $self->filter_BED();
@@ -81,6 +83,14 @@ sub run_pipeline {
     $self->mark_job_as_finished();
 
     debug( 'Writing finish file' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+
+    my $total_time = time() - $start_time;
+    my $day  = int( $total_time / 86_400 );
+    my $hour = int( ($total_time % 86_400 ) / 3_600 );
+    my $min  = int( ( ($total_time % 86_400 ) % 3_600 ) / 60 );
+    my $sec  = int( ( ($total_time % 86_400 ) % 3_600 ) % 60 );
+
+    debug( "Done in $day day $hour h $min min $sec sec.", miRkwood->DEBUG() );
 
     return;
 }
