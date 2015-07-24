@@ -1,7 +1,35 @@
---- end_position
---- 2165711
 --- sequence
 --- GAAUAACAAAUUCUUACAUCAAGAAGAAGAGGAGUGAAAGGCCGAGAUACAGAUCGAAACAUAGAUAUCACUUACCAAUUGAUAAUUGGGUGACGCCUCUGUUUCAGUUUAGAUUUCGGCUUCCCAUUCCUCUUCAUCAAGAUGUAAGAAUCUUAUUC
+--- criteria_reads_mirna
+--- 1
+--- identifier
+--- 1__2165554-2165711-2
+--- hairpin
+--- "      CAA           AA  A           AA          AC    C      U  AUA    UUA      \nGAAUAA
+  \  AUUCUUACAUC  GA GAAGAGGAGUG  AGGCCGAGAU  AGAU GAAACA AG   UCAC   CCAAUUG\n||||||
+  \  |||||||||||  || |||||||||||  ||||||||||  |||| |||||| ||   ||||   |||||| A\nCUUAUU
+  \  UAAGAAUGUAG  CU CUUCUCCUUAC  UUCGGCUUUA  UUUG CUUUGU UC   AGUG   GGUUAAU\n      C--
+  \          AA  A           CC          GA    A      C  CGC    ---      \n"
+--- reads_distribution
+--- 1
+--- mirna_position
+--- 2165589-2165610
+--- alternatives
+--- {}
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- 22
+--- name
+--- '1'
+--- energy_optimal
+--- '-67.00'
+--- mfe
+--- '-67.00'
+--- mirna_sequence
+--- GAAGCCGAAAUCUAAACUGAAA
+--- end_position
+--- 2165711
 --- reads
 ---
 2165577-2165597: 1
@@ -15,8 +43,6 @@
 --- 2165554-2165711
 --- structure_optimal
 --- ((((((...(((((((((((..((.(((((((((((..((((((((((..((((.((((((.((...((((...((((((...))))))))))...)).)))))).))))..))))))))))..))))))))))).))..))))))))))).))))))
---- identifier
---- 1__2165554-2165711-2
 --- CT
 ---
 '1': '158'
@@ -179,32 +205,16 @@
 '99': '0'
 --- '%GC'
 --- '37.34'
---- hairpin
---- "      CAA           AA  A           AA          AC    C      U  AUA    UUA      \nGAAUAA
-  \  AUUCUUACAUC  GA GAAGAGGAGUG  AGGCCGAGAU  AGAU GAAACA AG   UCAC   CCAAUUG\n||||||
-  \  |||||||||||  || |||||||||||  ||||||||||  |||| |||||| ||   ||||   |||||| A\nCUUAUU
-  \  UAAGAAUGUAG  CU CUUCUCCUUAC  UUCGGCUUUA  UUUG CUUUGU UC   AGUG   GGUUAAU\n      C--
-  \          AA  A           CC          GA    A      C  CGC    ---      \n"
 --- strand
 --- '-'
 --- alignment
 --- 0
---- reads_distribution
---- 1
---- mirna_position
---- 2165589-2165610
 --- quality
 --- 3
---- alternatives
---- {}
 --- cluster
 --- 2165489-2165786
---- mirna_length
---- 22
---- name
---- '1'
---- energy_optimal
---- '-67.00'
+--- criteria_star
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2165489-2165786-/2/image.png
 --- amfe
@@ -213,9 +223,5 @@
 --- 158
 --- mfei
 --- -1.13559322033898
---- mfe
---- '-67.00'
---- mirna_sequence
---- GAAGCCGAAAUCUAAACUGAAA
 --- full_position
 --- 2165554-2165711&nbsp;-

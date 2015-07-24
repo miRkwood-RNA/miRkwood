@@ -1,3 +1,33 @@
+--- sequence
+--- UUGGAAUUCUAGAGAGAUCAAAGAGUGUGUUCUUGUGAUCUGCUCUUGUGUGUUUAAGGAAAUCUCAGGUGACAAGCUAAAGUAGUUUAGAUCUUGUGUAAAACCAAUUAAGGUAGUUGUAAACUUCUUAAUCAGAUUUCUAAUAAAGUGAUACUCAGUGGUUCUGAGUUUGGGGAAUACGAUUCUUGGUUCAUCCGGAAUUUCAA
+--- criteria_reads_mirna
+--- 0
+--- identifier
+--- 1__2157456-2157661-1
+--- hairpin
+--- "          A  GA      A    -        GUGA-  U--   C   U     UAAGGAAAUCUCAGGUGACAAGCUAAAGUAGUUUAGAUCUUGUGUA\nUUGGAAUUCU
+  GA  GAUCAA GAGU GUGUUCUU     UC   GCU UUG GUGUU                                              A\n||||||||||
+  ||  |||||| |||| ||||||||     ||   ||| ||| |||||                                              A\nAACUUUAAGG
+  CU  UUGGUU CUUA CAUAAGGG     AG   UGG GAC CAUAG                                              A\n
+  \         C  AC      -    G        GUUUG  UCU   U   U     UGAAAUAAUCUUUAGACUAAUUCUUCAAAUGUUGAUGGAAUUAACC\n"
+--- reads_distribution
+--- 1
+--- mirna_position
+--- 2157475-2157498
+--- alternatives
+--- {}
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- 24
+--- energy_optimal
+--- '-49.70'
+--- name
+--- '1'
+--- mfe
+--- '-31.46'
+--- mirna_sequence
+--- AAAGAGUGUGUUCUUGUGAUCUGC
 --- end_position
 --- 2157661
 --- reads
@@ -37,8 +67,6 @@
 2157621-2157644: 1
 2157624-2157647: 1
 2157630-2157645: 1
---- sequence
---- UUGGAAUUCUAGAGAGAUCAAAGAGUGUGUUCUUGUGAUCUGCUCUUGUGUGUUUAAGGAAAUCUCAGGUGACAAGCUAAAGUAGUUUAGAUCUUGUGUAAAACCAAUUAAGGUAGUUGUAAACUUCUUAAUCAGAUUUCUAAUAAAGUGAUACUCAGUGGUUCUGAGUUUGGGGAAUACGAUUCUUGGUUCAUCCGGAAUUUCAA
 --- start_position
 --- 2157456
 --- structure_stemloop
@@ -47,8 +75,6 @@
 --- 2157456-2157661
 --- structure_optimal
 --- ((((((((((.((..((((((.((((((((((((....((.(((.(((.(((((...((((((((..(((.((((((((((....)))))..))))).....))).(((((((.((((...))))))))))).))))))))........))))).))).)))...)).....)))))))).))))))))))..)).))))))))))
---- identifier
---- 1__2157456-2157661-1
 --- CT
 ---
 '1': '206'
@@ -259,32 +285,16 @@
 '99': '0'
 --- '%GC'
 --- '35.44'
---- hairpin
---- "          A  GA      A    -        GUGA-  U--   C   U     UAAGGAAAUCUCAGGUGACAAGCUAAAGUAGUUUAGAUCUUGUGUA\nUUGGAAUUCU
-  GA  GAUCAA GAGU GUGUUCUU     UC   GCU UUG GUGUU                                              A\n||||||||||
-  ||  |||||| |||| ||||||||     ||   ||| ||| |||||                                              A\nAACUUUAAGG
-  CU  UUGGUU CUUA CAUAAGGG     AG   UGG GAC CAUAG                                              A\n
-  \         C  AC      -    G        GUUUG  UCU   U   U     UGAAAUAAUCUUUAGACUAAUUCUUCAAAUGUUGAUGGAAUUAACC\n"
 --- strand
 --- +
 --- alignment
 --- 0
---- reads_distribution
---- 1
---- mirna_position
---- 2157475-2157498
 --- quality
 --- 2
---- alternatives
---- {}
 --- cluster
 --- 2157341-2157736
---- mirna_length
---- 24
---- energy_optimal
---- '-49.70'
---- name
---- '1'
+--- criteria_star
+--- 1
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/1/image.png
 --- amfe
@@ -293,9 +303,5 @@
 --- 206
 --- mfei
 --- -0.680821917808219
---- mfe
---- '-31.46'
---- mirna_sequence
---- AAAGAGUGUGUUCUUGUGAUCUGC
 --- full_position
 --- 2157456-2157661&nbsp;+

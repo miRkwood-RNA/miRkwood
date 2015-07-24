@@ -1,3 +1,101 @@
+--- sequence
+--- GGGACCAUUGGGCGUGUCCGUAUGGACAGUUUUUUUUAUGGGCCAAGUUGGACGGUCCAUAAUGGACAAUGGGCCGAAAAAUGUUCAUGCCCAAUAAAGACCAUGUCCAUAUGGGCAAGCCCAUGUAUAGCCC
+--- criteria_reads_mirna
+--- 0
+--- alignment_existence
+--- 1
+--- identifier
+--- 1__1430290-1430422-1
+--- hairpin
+--- "   ACCAU--     G              GUUU       -    CAA---   GGA        AAU\nGGG       UGGGC
+  UGUCCGUAUGGACA    UUUUUAU GGGC      GUU   CGGUCCAU   G\n|||       ||||| ||||||||||||||
+  \   ||||||| ||||      |||   ||||||||   \nCCC       ACCCG ACGGGUAUACCUGU    AGAAAUA
+  CCCG      UAA   GCCGGGUA   G\n   GAUAUGU     A              ACC-       A    UACUUG
+  \  AAA        ACA\n"
+--- reads_distribution
+--- 1
+--- mirna_position
+--- 1430311-1430334
+--- alternatives
+---
+1__1430295-1430414+:
+  amfe: -46.8333333333333
+  cluster: 1430207-1430503
+  end_position: 1430414
+  energy_optimal: '-56.20'
+  energy_stemloop: '-56.20'
+  mfei: -0.985964912280702
+  reads:
+    1430310-1430332: 1
+    1430310-1430333: 1
+    1430311-1430334: 27
+    1430312-1430334: 5
+    1430312-1430335: 1
+    1430317-1430340: 5
+    1430318-1430341: 3
+    1430319-1430341: 2
+    1430319-1430342: 2
+    1430320-1430341: 1
+    1430322-1430345: 1
+    1430331-1430352: 1
+    1430337-1430358: 1
+    1430345-1430367: 2
+    1430345-1430368: 1
+    1430350-1430371: 1
+    1430350-1430373: 5
+    1430352-1430374: 1
+    1430352-1430375: 3
+    1430356-1430379: 1
+  sequence: CAUUGGGCGUGUCCGUAUGGACAGUUUUUUUUAUGGGCCAAGUUGGACGGUCCAUAAUGGACAAUGGGCCGAAAAAUGUUCAUGCCCAAUAAAGACCAUGUCCAUAUGGGCAAGCCCAUG
+  start_position: 1430295
+  strand: +
+  structure_optimal: (((.((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))))
+  structure_stemloop: (((.((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))))
+1__1430298-1430412+:
+  amfe: -48.9565217391304
+  cluster: 1430207-1430503
+  end_position: 1430412
+  energy_optimal: '-56.30'
+  energy_stemloop: '-56.30'
+  mfei: -1.02363636363636
+  reads:
+    1430310-1430332: 1
+    1430310-1430333: 1
+    1430311-1430334: 27
+    1430312-1430334: 5
+    1430312-1430335: 1
+    1430317-1430340: 5
+    1430318-1430341: 3
+    1430319-1430341: 2
+    1430319-1430342: 2
+    1430320-1430341: 1
+    1430322-1430345: 1
+    1430331-1430352: 1
+    1430337-1430358: 1
+    1430345-1430367: 2
+    1430345-1430368: 1
+    1430350-1430371: 1
+    1430350-1430373: 5
+    1430352-1430374: 1
+    1430352-1430375: 3
+    1430356-1430379: 1
+  sequence: UGGGCGUGUCCGUAUGGACAGUUUUUUUUAUGGGCCAAGUUGGACGGUCCAUAAUGGACAAUGGGCCGAAAAAUGUUCAUGCCCAAUAAAGACCAUGUCCAUAUGGGCAAGCCCA
+  start_position: 1430298
+  strand: +
+  structure_optimal: (((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))
+  structure_stemloop: (((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- 24
+--- name
+--- '1'
+--- energy_optimal
+--- '-60.20'
+--- mfe
+--- '-60.20'
+--- mirna_sequence
+--- AUGGACAGUUUUUUUUAUGGGCCA
 --- end_position
 --- 1430422
 --- reads
@@ -23,8 +121,6 @@
 1430352-1430375: 3
 1430356-1430379: 1
 1430393-1430416: 1
---- sequence
---- GGGACCAUUGGGCGUGUCCGUAUGGACAGUUUUUUUUAUGGGCCAAGUUGGACGGUCCAUAAUGGACAAUGGGCCGAAAAAUGUUCAUGCCCAAUAAAGACCAUGUCCAUAUGGGCAAGCCCAUGUAUAGCCC
 --- start_position
 --- 1430290
 --- structure_stemloop
@@ -52,10 +148,6 @@
   strand_target: +
 --- structure_optimal
 --- (((.....(((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).))))).......)))
---- alignment_existence
---- 1
---- identifier
---- 1__1430290-1430422-1
 --- CT
 ---
 '1': '133'
@@ -193,98 +285,16 @@
 '99': '34'
 --- '%GC'
 --- '48.87'
---- hairpin
---- "   ACCAU--     G              GUUU       -    CAA---   GGA        AAU\nGGG       UGGGC
-  UGUCCGUAUGGACA    UUUUUAU GGGC      GUU   CGGUCCAU   G\n|||       ||||| ||||||||||||||
-  \   ||||||| ||||      |||   ||||||||   \nCCC       ACCCG ACGGGUAUACCUGU    AGAAAUA
-  CCCG      UAA   GCCGGGUA   G\n   GAUAUGU     A              ACC-       A    UACUUG
-  \  AAA        ACA\n"
 --- strand
 --- +
 --- alignment
 --- 1
---- reads_distribution
---- 1
---- mirna_position
---- 1430311-1430334
 --- quality
 --- 3
---- alternatives
----
-1__1430295-1430414+:
-  amfe: -46.8333333333333
-  cluster: 1430207-1430503
-  end_position: 1430414
-  energy_optimal: '-56.20'
-  energy_stemloop: '-56.20'
-  mfei: -0.985964912280702
-  reads:
-    1430310-1430332: 1
-    1430310-1430333: 1
-    1430311-1430334: 27
-    1430312-1430334: 5
-    1430312-1430335: 1
-    1430317-1430340: 5
-    1430318-1430341: 3
-    1430319-1430341: 2
-    1430319-1430342: 2
-    1430320-1430341: 1
-    1430322-1430345: 1
-    1430331-1430352: 1
-    1430337-1430358: 1
-    1430345-1430367: 2
-    1430345-1430368: 1
-    1430350-1430371: 1
-    1430350-1430373: 5
-    1430352-1430374: 1
-    1430352-1430375: 3
-    1430356-1430379: 1
-  sequence: CAUUGGGCGUGUCCGUAUGGACAGUUUUUUUUAUGGGCCAAGUUGGACGGUCCAUAAUGGACAAUGGGCCGAAAAAUGUUCAUGCCCAAUAAAGACCAUGUCCAUAUGGGCAAGCCCAUG
-  start_position: 1430295
-  strand: +
-  structure_optimal: (((.((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))))
-  structure_stemloop: (((.((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))))
-1__1430298-1430412+:
-  amfe: -48.9565217391304
-  cluster: 1430207-1430503
-  end_position: 1430412
-  energy_optimal: '-56.30'
-  energy_stemloop: '-56.30'
-  mfei: -1.02363636363636
-  reads:
-    1430310-1430332: 1
-    1430310-1430333: 1
-    1430311-1430334: 27
-    1430312-1430334: 5
-    1430312-1430335: 1
-    1430317-1430340: 5
-    1430318-1430341: 3
-    1430319-1430341: 2
-    1430319-1430342: 2
-    1430320-1430341: 1
-    1430322-1430345: 1
-    1430331-1430352: 1
-    1430337-1430358: 1
-    1430345-1430367: 2
-    1430345-1430368: 1
-    1430350-1430371: 1
-    1430350-1430373: 5
-    1430352-1430374: 1
-    1430352-1430375: 3
-    1430356-1430379: 1
-  sequence: UGGGCGUGUCCGUAUGGACAGUUUUUUUUAUGGGCCAAGUUGGACGGUCCAUAAUGGACAAUGGGCCGAAAAAUGUUCAUGCCCAAUAAAGACCAUGUCCAUAUGGGCAAGCCCA
-  start_position: 1430298
-  strand: +
-  structure_optimal: (((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))
-  structure_stemloop: (((((.((((((((((((((....(((((((((((...(((...((((((((........))))))))...)))......)))).)))))))...)))))))))))))).)))))
 --- cluster
 --- 1430207-1430503
---- mirna_length
---- 24
---- name
---- '1'
---- energy_optimal
---- '-60.20'
+--- criteria_star
+--- 1
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1430207-1430503+/1/image.png
 --- amfe
@@ -293,10 +303,6 @@
 --- 133
 --- mfei
 --- -0.926153846153846
---- mfe
---- '-60.20'
---- mirna_sequence
---- AUGGACAGUUUUUUUUAUGGGCCA
 --- full_position
 --- 1430290-1430422&nbsp;+
 --- mirdup_validation

@@ -1,3 +1,33 @@
+--- sequence
+--- UCCUUCUGUCCGAUAAAGAUAAAUUUUCUAGGAAAAAUAUUUGUCCCACAAAGAUAGAAGUUUUAUAUUUCCAAUGCAAAUUUUAAAACUGUUUUCCCGUUUUACCCUUACUAAAUAAUUAGAUAAAUAUUUAUUAUUGUUUUUAAAGUAUAUUAAGAGGUUAAAAUUGUCUUUAUACAAUAUUUCUUAAAGAAUGUGAAAUUUCUAAAAAUUUCAUCUUAGUGGGACGGAGGGA
+--- criteria_reads_mirna
+--- 0
+--- identifier
+--- 1__1476478-1476712-1
+--- hairpin
+--- "           G  A     -       CUAGGAAAAAUAUUUGUCCCACAAAGAUAGAAGUUUUAUAUUUCCAAUGCAAAUUUUAAAACUGUUUUCCCGUUUUACCCUUACUAAAU\nUCCUUCUGUCC
+  AU AAGAU AAAUUUU                                                                                         A\n|||||||||||
+  || ||||| |||||||                                                                                         \nAGGGAGGCAGG
+  UG UUCUA UUUAAAA                                                                                         A\n
+  \          G  A     C       AUCUUUAAAGUGUAAGAAAUUCUUUAUAACAUAUUUCUGUUAAAAUUGGAGAAUUAUAUGAAAUUUUUGUUAUUAUUUAUAAAUAGAUU\n"
+--- reads_distribution
+--- 0
+--- mirna_position
+--- ''
+--- alternatives
+--- {}
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- ''
+--- energy_optimal
+--- '-52.10'
+--- name
+--- '1'
+--- mfe
+--- '-22.77'
+--- mirna_sequence
+--- ''
 --- end_position
 --- 1476712
 --- reads
@@ -11,8 +41,6 @@
 1476681-1476704: 1
 1476683-1476705: 1
 1476688-1476708: 2
---- sequence
---- UCCUUCUGUCCGAUAAAGAUAAAUUUUCUAGGAAAAAUAUUUGUCCCACAAAGAUAGAAGUUUUAUAUUUCCAAUGCAAAUUUUAAAACUGUUUUCCCGUUUUACCCUUACUAAAUAAUUAGAUAAAUAUUUAUUAUUGUUUUUAAAGUAUAUUAAGAGGUUAAAAUUGUCUUUAUACAAUAUUUCUUAAAGAAUGUGAAAUUUCUAAAAAUUUCAUCUUAGUGGGACGGAGGGA
 --- start_position
 --- 1476478
 --- structure_stemloop
@@ -21,8 +49,6 @@
 --- 1476478-1476712
 --- structure_optimal
 --- (((((((((((.((.((((((((((((...(((.((....)).)))........((((((((((((((((.............((((((.........))))))....(((((((((((..(((((....))))))))))))....))))..(((((((((....(((((......)))))))))))))).))))))))))))))))))))))).))))).)).)))))))))))
---- identifier
---- 1__1476478-1476712-1
 --- CT
 ---
 '1': '235'
@@ -262,32 +288,16 @@
 '99': '0'
 --- '%GC'
 --- '25.11'
---- hairpin
---- "           G  A     -       CUAGGAAAAAUAUUUGUCCCACAAAGAUAGAAGUUUUAUAUUUCCAAUGCAAAUUUUAAAACUGUUUUCCCGUUUUACCCUUACUAAAU\nUCCUUCUGUCC
-  AU AAGAU AAAUUUU                                                                                         A\n|||||||||||
-  || ||||| |||||||                                                                                         \nAGGGAGGCAGG
-  UG UUCUA UUUAAAA                                                                                         A\n
-  \          G  A     C       AUCUUUAAAGUGUAAGAAAUUCUUUAUAACAUAUUUCUGUUAAAAUUGGAGAAUUAUAUGAAAUUUUUGUUAUUAUUUAUAAAUAGAUU\n"
 --- strand
 --- +
 --- alignment
 --- 0
---- reads_distribution
---- 0
---- mirna_position
---- ''
 --- quality
 --- 1
---- alternatives
---- {}
 --- cluster
 --- 1476379-1476810
---- mirna_length
---- ''
---- energy_optimal
---- '-52.10'
---- name
---- '1'
+--- criteria_star
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1476379-1476810+/1/image.png
 --- amfe
@@ -296,9 +306,5 @@
 --- 235
 --- mfei
 --- -0.883050847457627
---- mfe
---- '-22.77'
---- mirna_sequence
---- ''
 --- full_position
 --- 1476478-1476712&nbsp;+

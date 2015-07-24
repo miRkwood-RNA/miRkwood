@@ -1,3 +1,69 @@
+--- sequence
+--- AAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUUUGUUUUAGACUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUGUUUUAGCCUACAUUUACAAAAUGAUAUGAAAACUAACCGGACUU
+--- criteria_reads_mirna
+--- 1
+--- identifier
+--- 1__1876228-1876510-1
+--- hairpin
+--- "      AAUUU      UA      A       UUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUUUGUUUUAGACUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUU\nAAGUUC
+  \    GUUUUC  GUCGUU UGUAAAU                                                                                                           A\n||||||
+  \    ||||||  |||||| |||||||                                                                                                           G\nUUCAGG
+  \    CAAAAG  UAGUAA ACAUUUA                                                                                                           U\n
+  \     CCAAU      UA      A       CAUCCGAUUUUGUUUUUUUUUUUGAUUUUUGGAUUUUUUUGAUUUUACGAUUUAAAUGUAUUGCUGAUCUUUUGUUUAACUUGAACACUUUAGCGAUUACUAGUUAC\n"
+--- reads_distribution
+--- 1
+--- mirna_position
+--- 1876352-1876375
+--- alternatives
+---
+1__1876309-1876427-:
+  amfe: -21.9327731092437
+  cluster: 1875924-1876517
+  end_position: 1876427
+  energy_optimal: '-26.10'
+  energy_stemloop: '-26.10'
+  mfei: -0.686842105263158
+  reads:
+    1876352-1876375: 4
+    1876354-1876376: 2
+    1876354-1876377: 3
+    1876367-1876390: 1
+    1876376-1876400: 1
+  sequence: CUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAG
+  start_position: 1876309
+  strand: '-'
+  structure_optimal: (((.(((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).))))))).)))
+  structure_stemloop: (((.(((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).))))))).)))
+1__1876313-1876423-:
+  amfe: -21.7117117117117
+  cluster: 1875924-1876517
+  end_position: 1876423
+  energy_optimal: '-24.10'
+  energy_stemloop: '-24.10'
+  mfei: -0.688571428571429
+  reads:
+    1876352-1876375: 4
+    1876354-1876376: 2
+    1876354-1876377: 3
+    1876367-1876390: 1
+    1876376-1876400: 1
+  sequence: AUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAU
+  start_position: 1876313
+  strand: '-'
+  structure_optimal: (((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).)))))))
+  structure_stemloop: (((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).)))))))
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- 24
+--- energy_optimal
+--- '-50.80'
+--- name
+--- '1'
+--- mfe
+--- '-15.87'
+--- mirna_sequence
+--- UCGCUAAUGAUCAAUGACUAAGUC
 --- end_position
 --- 1876510
 --- reads
@@ -7,8 +73,6 @@
 1876354-1876377: 3
 1876367-1876390: 1
 1876376-1876400: 1
---- sequence
---- AAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUUUGUUUUAGACUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUGUUUUAGCCUACAUUUACAAAAUGAUAUGAAAACUAACCGGACUU
 --- start_position
 --- 1876228
 --- structure_stemloop
@@ -17,8 +81,6 @@
 --- 1876228-1876510
 --- structure_optimal
 --- ((((((.....((((((..((((((.(((((((..(((......)))............((((((...............)))))).(((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).)))))))..(((......)))....((((((.....................)))))).))))))).))))))..)))))).....))))))
---- identifier
---- 1__1876228-1876510-1
 --- CT
 ---
 '1': '283'
@@ -306,68 +368,16 @@
 '99': '0'
 --- '%GC'
 --- '25.80'
---- hairpin
---- "      AAUUU      UA      A       UUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUUUGUUUUAGACUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUU\nAAGUUC
-  \    GUUUUC  GUCGUU UGUAAAU                                                                                                           A\n||||||
-  \    ||||||  |||||| |||||||                                                                                                           G\nUUCAGG
-  \    CAAAAG  UAGUAA ACAUUUA                                                                                                           U\n
-  \     CCAAU      UA      A       CAUCCGAUUUUGUUUUUUUUUUUGAUUUUUGGAUUUUUUUGAUUUUACGAUUUAAAUGUAUUGCUGAUCUUUUGUUUAACUUGAACACUUUAGCGAUUACUAGUUAC\n"
 --- strand
 --- '-'
 --- alignment
 --- 0
---- reads_distribution
---- 1
---- mirna_position
---- 1876352-1876375
 --- quality
 --- 2
---- alternatives
----
-1__1876309-1876427-:
-  amfe: -21.9327731092437
-  cluster: 1875924-1876517
-  end_position: 1876427
-  energy_optimal: '-26.10'
-  energy_stemloop: '-26.10'
-  mfei: -0.686842105263158
-  reads:
-    1876352-1876375: 4
-    1876354-1876376: 2
-    1876354-1876377: 3
-    1876367-1876390: 1
-    1876376-1876400: 1
-  sequence: CUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAG
-  start_position: 1876309
-  strand: '-'
-  structure_optimal: (((.(((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).))))))).)))
-  structure_stemloop: (((.(((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).))))))).)))
-1__1876313-1876423-:
-  amfe: -21.7117117117117
-  cluster: 1875924-1876517
-  end_position: 1876423
-  energy_optimal: '-24.10'
-  energy_stemloop: '-24.10'
-  mfei: -0.688571428571429
-  reads:
-    1876352-1876375: 4
-    1876354-1876376: 2
-    1876354-1876377: 3
-    1876367-1876390: 1
-    1876376-1876400: 1
-  sequence: AUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAU
-  start_position: 1876313
-  strand: '-'
-  structure_optimal: (((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).)))))))
-  structure_stemloop: (((((((.((((((..((((((......(((((((((((.(((((..((((...)))).)))).....).)).)))).)))))......))))))..)))))).)))))))
 --- cluster
 --- 1875924-1876517
---- mirna_length
---- 24
---- energy_optimal
---- '-50.80'
---- name
---- '1'
+--- criteria_star
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1875924-1876517-/1/image.png
 --- amfe
@@ -376,9 +386,5 @@
 --- 283
 --- mfei
 --- -0.695890410958904
---- mfe
---- '-15.87'
---- mirna_sequence
---- UCGCUAAUGAUCAAUGACUAAGUC
 --- full_position
 --- 1876228-1876510&nbsp;-

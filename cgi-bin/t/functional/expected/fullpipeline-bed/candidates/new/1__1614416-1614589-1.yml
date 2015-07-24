@@ -1,3 +1,33 @@
+--- sequence
+--- GGUCAAAUGGGGUAGAAGGAGAUGGGUCAGGUUUUUAAUUUGGUUUAGGAUUGGUUUAAGUGGUUUAAUAUCGGUUUAUGUUAUAAACCAAUUAAUCAAACGUUUAUGUGUUUUGAGGUUUUGAACUUUCAAAUUAGGGAGAAAUAGGACUAGAACUUUCUAUUUGUGUAGACC
+--- criteria_reads_mirna
+--- 0
+--- identifier
+--- 1__1614416-1614589-1
+--- hairpin
+--- "    AAAUG          AGAUG    AGG----           ---         UGGUUUAAGUGGUUUAAUAUCGGUUUAUGUUA\nGGUC
+  \    GGGUAGAAGG     GGUC       UUUUUAAUUUG   GUUUAGGAU                                U\n||||
+  \    ||||||||||     ||||       |||||||||||   |||||||||                                \nCCAG
+  \    UUUAUCUUUC     UCAG       AGGGAUUAAAC   CAAGUUUUG                                A\n
+  \   AUGUG          AAGA-    GAUAAAG           UUU         GAGUUUUGUGUAUUUGCAAACUAAUUAACCAA\n"
+--- reads_distribution
+--- 0
+--- mirna_position
+--- ''
+--- alternatives
+--- {}
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- ''
+--- energy_optimal
+--- '-35.80'
+--- name
+--- '1'
+--- mfe
+--- '-25.25'
+--- mirna_sequence
+--- ''
 --- end_position
 --- 1614589
 --- reads
@@ -15,8 +45,6 @@
 1614521-1614544: 1
 1614526-1614548: 1
 1614561-1614584: 1
---- sequence
---- GGUCAAAUGGGGUAGAAGGAGAUGGGUCAGGUUUUUAAUUUGGUUUAGGAUUGGUUUAAGUGGUUUAAUAUCGGUUUAUGUUAUAAACCAAUUAAUCAAACGUUUAUGUGUUUUGAGGUUUUGAACUUUCAAAUUAGGGAGAAAUAGGACUAGAACUUUCUAUUUGUGUAGACC
 --- start_position
 --- 1614416
 --- structure_stemloop
@@ -25,8 +53,6 @@
 --- 1614416-1614589
 --- structure_optimal
 --- ((((.....((((((((((.....((((...(((((((((((((((((((((((((....(((((((.((.((.....)).)))))))))...)))))((((......)))).....)))))))))...))))))))))).......))))....)))))))))).....))))
---- identifier
---- 1__1614416-1614589-1
 --- CT
 ---
 '1': '174'
@@ -205,32 +231,16 @@
 '99': '0'
 --- '%GC'
 --- '33.33'
---- hairpin
---- "    AAAUG          AGAUG    AGG----           ---         UGGUUUAAGUGGUUUAAUAUCGGUUUAUGUUA\nGGUC
-  \    GGGUAGAAGG     GGUC       UUUUUAAUUUG   GUUUAGGAU                                U\n||||
-  \    ||||||||||     ||||       |||||||||||   |||||||||                                \nCCAG
-  \    UUUAUCUUUC     UCAG       AGGGAUUAAAC   CAAGUUUUG                                A\n
-  \   AUGUG          AAGA-    GAUAAAG           UUU         GAGUUUUGUGUAUUUGCAAACUAAUUAACCAA\n"
 --- strand
 --- +
 --- alignment
 --- 0
---- reads_distribution
---- 0
---- mirna_position
---- ''
 --- quality
 --- 0
---- alternatives
---- {}
 --- cluster
 --- 1614312-1614610
---- mirna_length
---- ''
---- energy_optimal
---- '-35.80'
---- name
---- '1'
+--- criteria_star
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1614312-1614610+/1/image.png
 --- amfe
@@ -239,9 +249,5 @@
 --- 174
 --- mfei
 --- -0.617241379310345
---- mfe
---- '-25.25'
---- mirna_sequence
---- ''
 --- full_position
 --- 1614416-1614589&nbsp;+

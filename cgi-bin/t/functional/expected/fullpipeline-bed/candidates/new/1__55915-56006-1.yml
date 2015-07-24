@@ -18,6 +18,8 @@
 --- (((((((((..((((((((.....(((.(((....(((((((......))))))).......))).))).....)))))))).)))))))))
 --- position
 --- 55915-56006
+--- criteria_reads_mirna
+--- 0
 --- structure_optimal
 --- (((((((((..((((((((.....(((.(((....(((((((......))))))).......))).))).....)))))))).)))))))))
 --- identifier
@@ -137,12 +139,16 @@
 --- {}
 --- cluster
 --- 55821-56324
+--- criteria_nb_reads
+--- 0
 --- mirna_length
 --- ''
 --- name
 --- '1'
 --- energy_optimal
 --- '-23.40'
+--- criteria_star
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/55821-56324-/1/image.png
 --- amfe
