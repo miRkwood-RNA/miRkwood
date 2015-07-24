@@ -180,7 +180,7 @@ sub get_stemloop_structure_from_optimal {
             $nb_characters++;
         }
 
-        $nb_characters = scalar(@optimal);
+        $nb_characters = scalar(@optimal) - 1;
         $nb_brackets = 0;
         my $right_arm = '';
         while ( $nb_brackets < $nb_brackets_in_stemloop) {
