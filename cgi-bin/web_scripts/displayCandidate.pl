@@ -28,31 +28,32 @@ my $html_contents;
 
 my $cfg_path = miRkwood::Paths->get_job_config_path($job);
 miRkwood->CONFIG_FILE($cfg_path);
-$candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);
 
 my $cfg = miRkwood->CONFIG();
 
 my $returnlink = '';
+my $return_html = '';
 my $help_page = '';
-if ( $cfg->param('job.mode') eq 'WebBAM' ){
-    if ( defined($candidate->{'precursor_name'}) ){
-        $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
-    }
-    else{
-        $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_new_results($jobId);
-    }
-    $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
-}
-else {
-    $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
-    $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'abinitio'), 'help.php');
-}
-my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
 if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $candidate_id);}) {
     # Catching exception
     $html_contents = 'No results for the given identifiers';
 }else{
+
+    if ( $cfg->param('job.mode') eq 'WebBAM' ){
+        if ( defined($candidate->{'precursor_name'}) ){
+            $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
+        }
+        else{
+            $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_new_results($jobId);
+        }
+        $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
+    }
+    else {
+        $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
+        $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'abinitio'), 'help.php');
+    }
+    $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
     my $image_url = $candidate->get_relative_image();
 
