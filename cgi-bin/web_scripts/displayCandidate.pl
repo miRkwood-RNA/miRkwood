@@ -20,7 +20,6 @@ my $candidate_id   = $cgi->param('id');
 
 my @css = (File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'results.css'));
 my @js  = (miRkwood::WebTemplate->get_js_file());
-my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
 
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 
@@ -34,16 +33,19 @@ $candidate = miRkwood::CandidateHandler->retrieve_candidate_information($job, $c
 my $cfg = miRkwood->CONFIG();
 
 my $returnlink = '';
+my $help_page = '';
 if ( $cfg->param('job.mode') eq 'WebBAM' ){
     if ( defined($candidate->{'precursor_name'}) ){
         $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
     }
     else{
         $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_new_results($jobId);
-    }    
+    }
+    $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
 }
 else {
     $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
+    $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'abinitio'), 'help.php');
 }
 my $return_html = "<a class='returnlink' href='$returnlink'>Back to main results page</a>";
 
@@ -117,7 +119,7 @@ END_TXT
         }
         else{
             $quality .= "<li><b>Criteria number of reads:</b> No</li>";
-        }        
+        }
         if ( $candidate->{'criteria_star'} ){
             $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> Yes</li>";
         }
@@ -129,9 +131,8 @@ END_TXT
         }
         else{
             $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
-        }        
+        }
 
-    
         $quality .= "</ul>";
 
     }
@@ -152,7 +153,7 @@ END_TXT
 
     my $alignmentHTML;
 
-    if ( !$cfg->param('options.align') or defined($candidate->{'precursor_name'}) ) {
+    if ( !$cfg->param('options.align') || defined($candidate->{'precursor_name'}) ) {
         $alignmentHTML = qw{};
     }
     else {
