@@ -698,9 +698,8 @@ sub compute_quality_from_reads {
     }
     else {
         my ($start_mirna, $end_mirna) = split(/-/, $self->{'mirna_position'});
-        my $pairing_start_mirna = $self->{'CT'}{ $start_mirna };
-        my $pairing_end_mirna = $self->{'CT'}{ $end_mirna };
-
+        my $pairing_start_mirna = $self->{'end_position'} - ($start_mirna - $self->{'start_position'} + 2);
+        my $pairing_end_mirna = $self->{'end_position'} - ($end_mirna - $self->{'start_position'} + 2);
 
         # Criteria nb of reads in a window [-3; +3] around the mirna
         foreach my $read_position (keys %{$self->{'reads'}}){
