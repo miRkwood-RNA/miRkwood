@@ -86,7 +86,6 @@ while ( <$SAM> ){
 
     if ( $line[1] ne '0x4' && $line[1] ne '4' ){
 
-        my $id = $line[0];
         my $chromosome = $line[2];
         my $start = $line[3] - 1;
         my $sequence = $line[9];
@@ -100,7 +99,7 @@ while ( <$SAM> ){
         }
         $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'}++;
 
-        $counts->{$chromosome}{$start}{$sequence}{$strand}{'id'} = $id;
+        $counts->{$chromosome}{$start}{$sequence}{$strand}{'sequence'} = $line[9];
 
     }
 
@@ -120,7 +119,7 @@ foreach my $chromosome ( sort ( keys%{$counts} ) ){
                 print $BED "$chromosome\t";
                 print $BED "$start\t";
                 print $BED "$end\t";
-                print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}{'id'}\t";
+                print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}{'sequence'}\t";
                 print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}{'count'}\t";
                 print $BED "$strand\n";
             }
