@@ -26,13 +26,18 @@
 --- quality
 --- 0
 --- mirna_position
---- ''
+--- 1727351-1727371
 --- mirna_length
---- ''
+--- 21
 --- name
 --- '1'
 --- matures
---- {}
+---
+MIMAT0022429:
+  mature_end: '1727371'
+  mature_name: ath-miR5656
+  mature_reads: {}
+  mature_start: '1727351'
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0019240/image.png
 --- length
@@ -44,4 +49,4 @@
 --- mfe
 --- '-85.10'
 --- mirna_sequence
---- ''
+--- ACUGAAGUAGAGAUUGGGUUU
