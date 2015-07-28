@@ -390,8 +390,8 @@ sub store_known_mirnas_as_candidate_objects {
 
     my @field;
     my ($id, $name);
+    my $mature_informations_for_precursor;
     my $precursor_reads;
-    my $precursor_of_mature;
     my $mature_reads;
     my $data;
 
@@ -405,7 +405,6 @@ sub store_known_mirnas_as_candidate_objects {
     }
 
     ##### Read the GFF and links each precursor with its mature
-
     open (my $GFF, '<', $gff_file) or die "ERROR while opening $gff_file : $!";
 
     while ( <$GFF> ){
@@ -414,8 +413,11 @@ sub store_known_mirnas_as_candidate_objects {
 
             @field = split( /\t/xms );
 
-            if ( $field[2] eq 'miRNA' and $field[8] =~ /ID=([^;]+).*Derives_from=([^;]+)/ ){
-                $precursor_of_mature->{ $1 } = $2;
+            if ( $field[2] eq 'miRNA' and $field[8] =~ /ID=([^;]+).*Name=([^;]+).*Derives_from=([^;]+)/ ){
+                $mature_informations_for_precursor->{$3}{'mature_id'} = $1;
+                $mature_informations_for_precursor->{$3}{'mature_name'} = $2;
+                $mature_informations_for_precursor->{$3}{'mature_start'} = $field[3];
+                $mature_informations_for_precursor->{$3}{'mature_end'} = $field[4];
             }
         }
     }
@@ -433,7 +435,7 @@ sub store_known_mirnas_as_candidate_objects {
         @field = split( /\t/xms );
         my $precursor_id = '';
         my $read_start = $field[1] + 1; # 1-based
-        my $read_end   = $field[2];     # 1-based       
+        my $read_end   = $field[2];     # 1-based
 
         if ($field[14] =~ /ID=([^;]+).*Name=([^;]+)/ ){
             $id = $1;
@@ -451,13 +453,21 @@ sub store_known_mirnas_as_candidate_objects {
             $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};
             $data->{$precursor_id}{'reads'}{"$read_start-$read_end"} = $field[4];
+            
+            my $mature_id = $mature_informations_for_precursor->{$precursor_id}{'mature_id'};
+            $data->{$precursor_id}{'matures'}{$mature_id}{'mature_name'}  = $mature_informations_for_precursor->{$precursor_id}{'mature_name'};
+            $data->{$precursor_id}{'matures'}{$mature_id}{'mature_start'} = $mature_informations_for_precursor->{$precursor_id}{'mature_start'};
+            $data->{$precursor_id}{'matures'}{$mature_id}{'mature_end'}   = $mature_informations_for_precursor->{$precursor_id}{'mature_end'};
         }
         elsif ( $field[8] eq 'miRNA' ){
-            $precursor_id = $precursor_of_mature->{$id};
-            $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
-            $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
-            $data->{$precursor_id}{'matures'}{$id}{'mature_end'}   = $field[10];
-            $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$read_start-$read_end"} = $field[4];
+            if ( $field[14] =~ /Derives_from=([^;]+)/ ){
+                $precursor_id = $1;
+                $data->{$precursor_id}{'matures'}{$id}{'mature_name'}  = $name;
+                $data->{$precursor_id}{'matures'}{$id}{'mature_start'} = $field[9];
+                $data->{$precursor_id}{'matures'}{$id}{'mature_end'}   = $field[10];
+                $data->{$precursor_id}{'matures'}{$id}{'mature_reads'}{"$read_start-$read_end"} = $field[4];
+            }
+
         }
 
         $data->{$precursor_id}{'chromosome'} = $field[0];
