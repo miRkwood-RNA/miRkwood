@@ -186,7 +186,7 @@ sub filter_BED {
                                                                                            $filter_multimapped );
     }
 
-    if ( ! defined($filteredBED) or $filteredBED eq '' ){
+    if ( ! defined($filteredBED) || $filteredBED eq '' ){
         $self->{'bed_file'} = $self->{'initial_bed'};
         $self->{'mirna_bed'} = '';
     }
@@ -264,7 +264,7 @@ sub run_pipeline_on_sequences_per_chr {
 sub compute_candidates_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
-    my $distance_min = 10000;
+    my $distance_min = 10_000;
 
     my $sequence_identifier = 0;
 
@@ -395,7 +395,7 @@ sub store_known_mirnas_as_candidate_objects {
     my $mature_reads;
     my $data;
 
-    if ( ! -r $self->{'mirna_bed'} or ! -s $self->{'mirna_bed'} ){
+    if ( ! -r $self->{'mirna_bed'} || ( ! -s $self->{'mirna_bed'} ) ){
         debug( "No reads corresponding to known miRNAs for $species", miRkwood->DEBUG() );
         return;
     }
@@ -453,7 +453,7 @@ sub store_known_mirnas_as_candidate_objects {
             $data->{$precursor_id}{'end_position'}   = $field[10];
             $data->{$precursor_id}{'position'} = $data->{$precursor_id}{'start_position'} . '-' . $data->{$precursor_id}{'end_position'};
             $data->{$precursor_id}{'reads'}{"$read_start-$read_end"} = $field[4];
-            
+
             my $mature_id = $mature_informations_for_precursor->{$precursor_id}{'mature_id'};
             $data->{$precursor_id}{'matures'}{$mature_id}{'mature_name'}  = $mature_informations_for_precursor->{$precursor_id}{'mature_name'};
             $data->{$precursor_id}{'matures'}{$mature_id}{'mature_start'} = $mature_informations_for_precursor->{$precursor_id}{'mature_start'};
@@ -565,7 +565,7 @@ sub clean_workspace_per_chr {
             system( "rm -Rf $cluster" );
         }
     }
-    
+
     open ( my $FILE, '>>', $self->{'orphan_clusters'} ) or die "ERROR while opening $self->{'orphan_clusters'} : $!";
     foreach ( sort {$a <=> $b} keys%orphan_clusters ){
         print $FILE "$chromosome\t$_\t$orphan_clusters{$_}\n";
