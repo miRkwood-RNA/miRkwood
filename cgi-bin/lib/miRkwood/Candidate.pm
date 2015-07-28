@@ -867,7 +867,7 @@ sub find_mirna_for_known_candidate {
             foreach my $mature_id ( @matures_id ){
                 my $nb_reads = 0;
                 foreach ( keys%{ $self->{'matures'}{$mature_id}{'mature_reads'} } ){
-                    $nb_reads = $self->{'matures'}{$mature_id}{'mature_reads'}{$_};
+                    $nb_reads += $self->{'matures'}{$mature_id}{'mature_reads'}{$_};
                 }
                 if ( $nb_reads > $max ){
                     $max = $nb_reads;
