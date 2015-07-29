@@ -830,6 +830,9 @@ sub find_mirna {
         $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
         $self->{'mirna_sequence'} =~ s/T/U/g;
         $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
+        if ( $self->{'strand'} eq '-' ){
+            $self->{'mirna_sequence'} = miRkwood::Utils::reverse_complement( $self->{'mirna_sequence'} );
+        }        
     }
     else {
         $self->{'mirna_position'} = '';
