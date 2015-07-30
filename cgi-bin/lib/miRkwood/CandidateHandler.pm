@@ -117,6 +117,7 @@ sub print_reads_clouds {
     my $i;
     my $mature_id;
     my @positions_tags = ();
+    my $output = '';
 
     my $precursor_id    = $mirna->{'identifier'};
     my $strand          = $mirna->{'strand'};
@@ -126,7 +127,7 @@ sub print_reads_clouds {
     my $reads           = $mirna->{'reads'};
     my $structure       = $mirna->{'structure_stemloop'};
 
-    if ( !defined($reads) or $reads eq {} ){
+    if ( (! defined($reads)) || $reads eq {} ){
         debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
         return;
     }
@@ -139,17 +140,15 @@ sub print_reads_clouds {
 
     my $reference = $mirna->{'sequence'};
 
-    my $cloud_file = "$output_dir/$precursor_id.txt";
-    open (my $OUT, '>', $cloud_file) or die "ERROR while creating $cloud_file : $!";
-
     ### Print the header
     if ( defined($mirna->{'precursor_name'}) ){
-        print $OUT $mirna->{'precursor_name'}."\n";
+        $output .= $mirna->{'precursor_name'}."\n";
     }
-    print $OUT "Locus  : $chromosome:$precursor_start-$precursor_end\n";
-    print $OUT "Strand : $strand\n";
-    print $OUT "\n$reference\n";
-    print $OUT "$structure\n";
+
+    $output .= "Locus  : $chromosome:$precursor_start-$precursor_end\n";
+    $output .= "Strand : $strand\n";
+    $output .= "\n$reference\n";
+    $output .= "$structure\n";
 
     ### Print miRBase tags
 
@@ -227,7 +226,11 @@ sub print_reads_clouds {
                         miRkwood::Utils::get_element_of_split( $line->[$i], '-', 0),
                         miRkwood::Utils::get_element_of_split( $line->[$i], '-', 1) );
             }
-            print $OUT "$tag\n";
+            my $length = length($tag);
+            for ($i = 0; $i < ($precursor_end - $precursor_start - $length) + 1; $i++){
+                $tag .= ' ';
+            }
+            $output .= "$tag\n";
 
         }
 
@@ -246,18 +249,20 @@ sub print_reads_clouds {
         my $read_length = $read_end - $read_start + 1;
 
         for ($i = 0; $i < $read_start - $precursor_start; $i++){
-            print $OUT '.';
+            $output .= '.';
         }
         for ($i = 0; $i < $read_length; $i++){
-            print $OUT '*';
+            $output .= '*';
         }
         for ($i = 0; $i < $precursor_end - $read_end; $i++){
-            print $OUT '.';
+            $output .= '.';
         }
-        print $OUT " length=$read_length depth=$reads->{$position}\n";
-
+        $output .= " length=$read_length depth=$reads->{$position}\n";
     }
 
+    my $cloud_file = "$output_dir/$precursor_id.txt";
+    open (my $OUT, '>', $cloud_file) or die "ERROR while creating $cloud_file : $!";
+    print $OUT $output;
     close $OUT;
     return;
 
