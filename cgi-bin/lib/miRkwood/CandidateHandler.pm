@@ -124,11 +124,10 @@ sub print_reads_clouds {
     my $precursor_start  = $mirna->{'start_position'};
     my $precursor_end    = $mirna->{'end_position'};
     my $chromosome       = $mirna->{'name'};
-    my $reads            = $mirna->{'reads'};
     my $structure        = $mirna->{'structure_stemloop'};
     my $precursor_length = $precursor_end - $precursor_start + 1;
 
-    if ( (! defined($reads)) || $reads eq {} ){
+    if ( (! defined( $mirna->{'reads'} )) || $mirna->{'reads'} eq {} ){
         debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
         return;
     }
@@ -136,8 +135,6 @@ sub print_reads_clouds {
     if ( $mirna->{'name'} =~ /([^_]+)__(\d+)-(\d+)/ ){
         $chromosome = $1;
     }
-
-    $reads = miRkwood::Utils::truncate_reads_out_of_candidate( $reads, $precursor_start, $precursor_end );
 
     my $reference = $mirna->{'sequence'};
 
@@ -250,24 +247,36 @@ sub print_reads_clouds {
     }
 
     ### Print the reads
-    my @sorted_positions = sort { miRkwood::Utils::get_element_of_split( $a, '-', 0 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 )
+    my @sorted_relative_positions = ();
+    my $reads = {};
+
+    foreach my $position ( keys %{ $mirna->{'reads'} }){
+        my $read_start = miRkwood::Utils::get_element_of_split( $position, '-', 0 );
+        my $read_end = miRkwood::Utils::get_element_of_split( $position, '-', 1 );
+        my $relative_read_start = $read_start - $precursor_start + 1;
+        my $relative_read_end = $relative_read_start + $read_end - $read_start;
+        push @sorted_relative_positions, "$relative_read_start-$relative_read_end";
+        $reads->{ "$relative_read_start-$relative_read_end" } = $mirna->{'reads'}->{$position};
+    }
+
+    @sorted_relative_positions = sort { miRkwood::Utils::get_element_of_split( $a, '-', 0 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 )
                                     ||
                                   miRkwood::Utils::get_element_of_split( $a, '-', 1 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 )
-                              } (keys %{$reads});
+                              } @sorted_relative_positions;
 
-    foreach my $position (@sorted_positions){
+    foreach my $position (@sorted_relative_positions){
 
         my $read_start = miRkwood::Utils::get_element_of_split( $position, '-', 0 );
         my $read_end = miRkwood::Utils::get_element_of_split( $position, '-', 1 );
         my $read_length = $read_end - $read_start + 1;
 
-        for ($i = 0; $i < $read_start - $precursor_start; $i++){
+        for ($i = 0; $i < $read_start - 1; $i++){
             $output .= '.';
         }
         for ($i = 0; $i < $read_length; $i++){
             $output .= '*';
         }
-        for ($i = 0; $i < $precursor_end - $read_end; $i++){
+        for ($i = 0; $i < $precursor_end - $precursor_start - $read_end + 1; $i++){
             $output .= '.';
         }
         $output .= " length=$read_length depth=$reads->{$position}\n";
