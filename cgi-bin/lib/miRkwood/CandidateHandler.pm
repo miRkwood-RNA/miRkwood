@@ -119,13 +119,14 @@ sub print_reads_clouds {
     my @positions_tags = ();
     my $output = '';
 
-    my $precursor_id    = $mirna->{'identifier'};
-    my $strand          = $mirna->{'strand'};
-    my $precursor_start = $mirna->{'start_position'};
-    my $precursor_end   = $mirna->{'end_position'};
-    my $chromosome      = $mirna->{'name'};
-    my $reads           = $mirna->{'reads'};
-    my $structure       = $mirna->{'structure_stemloop'};
+    my $precursor_id     = $mirna->{'identifier'};
+    my $strand           = $mirna->{'strand'};
+    my $precursor_start  = $mirna->{'start_position'};
+    my $precursor_end    = $mirna->{'end_position'};
+    my $chromosome       = $mirna->{'name'};
+    my $reads            = $mirna->{'reads'};
+    my $structure        = $mirna->{'structure_stemloop'};
+    my $precursor_length = $precursor_end - $precursor_start + 1;
 
     if ( (! defined($reads)) || $reads eq {} ){
         debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
@@ -173,14 +174,26 @@ sub print_reads_clouds {
             push @positions_tags, "$relative_tag_start-$relative_tag_end";
         }
 
+    }
+
+    if ( @positions_tags ){
+
+        if ( $strand eq '-' ){  # "reverse" the tags in case of strand '-'
+            my @new_positions_tags = ();
+            foreach my $position (@positions_tags){
+                my $tag_start = miRkwood::Utils::get_element_of_split( $position, '-', 0);
+                my $tag_end   = miRkwood::Utils::get_element_of_split( $position, '-', 1);
+                my $new_tag_start = $precursor_length - $tag_end + 1;
+                my $new_tag_end   = $precursor_length - $tag_start + 1;
+                push @new_positions_tags, "$new_tag_start-$new_tag_end";
+            }
+            @positions_tags = @new_positions_tags;
+        }
+
         @positions_tags = sort { miRkwood::Utils::get_element_of_split($a, '-', 0) <=> miRkwood::Utils::get_element_of_split($b, '-', 0)
                                 ||
                                  miRkwood::Utils::get_element_of_split($a, '-', 1) <=> miRkwood::Utils::get_element_of_split($b, '-', 1)
                                 } @positions_tags;
-
-    }
-
-    if ( @positions_tags ){
 
         my $placed = [];
         my $is_placed;
