@@ -193,7 +193,7 @@ sub make_candidate_page {
       or die("Cannot close file $vienna_file_optimal: $!");
 
     my $alternatives_file = File::Spec->catfile( $pieces_folder,
-        $candidate_name . '__alternatives.txt' );
+        $candidate_name . '_alternatives.txt' );
     open( my $ALT_FILE, '>',
         File::Spec->catfile( $output_folder, $alternatives_file ) )
       or die("Cannot open $alternatives_file: $!");
