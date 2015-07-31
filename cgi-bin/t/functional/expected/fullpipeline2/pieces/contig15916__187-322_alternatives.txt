@@ -1,0 +1,12 @@
+>contig15916__123-364 (MFEI: -0.748543689320388)
+cagcagauauauauuauuuauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguug
+((((((........((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....))))))))))))))))
+>contig15916__133-362 (MFEI: -0.771428571428571)
+auauuauuuauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauugu
+(((.((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....)))))))))).)))
+>contig15916__141-358 (MFEI: -0.742268041237113)
+uauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaaua
+(((((((....((...((....((((((....(((.....(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).))))))))))))....))))))...))..))...)))))))
+>contig15916__198-313 (MFEI: -0.841379310344827)
+uucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaa
+(((.((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))
