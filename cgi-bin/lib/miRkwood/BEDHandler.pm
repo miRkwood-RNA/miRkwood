@@ -45,7 +45,7 @@ sub filterBEDfile_for_model_organism {
 
     my $mirna_reads       = "${basename}_miRNAs.bed";
     my $CDS_reads         = "${basename}_CDS.bed";
-    my $otherRNA_reads    = "${basename}_otherRNA.bed";
+    my $otherRNA_reads    = "${basename}_tRNA_rRNA_snoRNA.bed";
     my $multimapped_reads = "${basename}_multimapped.bed";
     my $filtered_bed      = "${basename}_filtered.bed";
     my $tmp_1 = "${basename}_tmp_1.bed";
