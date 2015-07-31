@@ -259,6 +259,22 @@ sub print_reads_clouds {
         $reads->{ "$relative_read_start-$relative_read_end" } = $mirna->{'reads'}->{$position};
     }
 
+    if ( $strand eq '-' ){  # "reverse" the tags in case of strand '-'
+        my @new_sorted_relative_positions = ();
+        my $new_reads = {};
+        foreach my $position (@sorted_relative_positions){
+            my $read_start = miRkwood::Utils::get_element_of_split( $position, '-', 0);
+            my $read_end   = miRkwood::Utils::get_element_of_split( $position, '-', 1);
+            my $new_read_start = $precursor_length - $read_end + 1;
+            my $new_read_end   = $precursor_length - $read_start + 1;
+            push @new_sorted_relative_positions, "$new_read_start-$new_read_end";
+            $new_reads->{ "$new_read_start-$new_read_end" } = $reads->{ "$read_start-$read_end" };
+        }
+        @sorted_relative_positions = @new_sorted_relative_positions;
+        $reads = $new_reads;
+
+    }
+
     @sorted_relative_positions = sort { miRkwood::Utils::get_element_of_split( $a, '-', 0 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 )
                                     ||
                                   miRkwood::Utils::get_element_of_split( $a, '-', 1 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 )
