@@ -46,7 +46,7 @@ This includes parsing, and masking if option selected.
 
 sub init_sequences {
     my ($self, @args) = @_;
-    debug( "Getting sequences", miRkwood->DEBUG() );
+    debug( 'Getting sequences', miRkwood->DEBUG() );
     my %filter = $self->get_masking_information();
     my $sequence_uploaded = $self->get_uploaded_sequences_file();
 

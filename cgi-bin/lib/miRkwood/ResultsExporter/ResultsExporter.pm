@@ -32,6 +32,7 @@ sub initialize {
     $self->{'identifier'} = $identifier;
     $self->{'results'} = $results;
     $self->{'sequences_to_export'} = $sequences_to_export;
+    return;
 }
 
 sub get_identifier {
@@ -148,7 +149,7 @@ sub perform_export{
     my ( $self, @args ) = @_;
 
     my %results = %{$self->{'results'}};
-    my $output = "";
+    my $output = '';
     $output .= $self->get_header();
     my @keys = $self->get_sorted_keys();
     foreach my $key (@keys) {

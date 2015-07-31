@@ -19,11 +19,13 @@ sub get_file_extension {
 
 sub get_header {
     my ( $self, @args ) = @_;
-    my $gff_header = "##gff-version 3
+    my $gff_header = <<"END_TXT";
+##gff-version 3
 # miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
 # Note, these sequences do not represent the full primary transcript,
 # rather a predicted stem-loop portion that includes the precursor.
-";
+END_TXT
+
     return $gff_header . "\n";
 }
 

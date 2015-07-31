@@ -43,7 +43,7 @@ my $cfg = miRkwood->CONFIG();
 
 my $html = '';
 
-my $HTML_additional = "";
+my $HTML_additional = '';
 $HTML_additional .=
   "<p class='header-results' id='job_id'><b>Job ID:</b> " . $id_job . '</p>';
 if ( $cfg->param('job.title') ) {
@@ -66,7 +66,7 @@ if ($valid) {
 	  . $nb_results
 	  . "  miRNA precursor(s) found</b></p>";
 	}
-	my $body = "";
+	my $body = '';
 	if ( $nb_results != 0 ) {
 		$body = <<"END_TXT";
 <body onload="main('all');">

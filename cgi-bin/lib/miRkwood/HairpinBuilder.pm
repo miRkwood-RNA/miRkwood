@@ -135,8 +135,8 @@ sub run_RNAeval_on_RNAstemloop_output {
     my $rnaeval_out = File::Spec->catfile( $current_sequence_dir, "rnaeval_$suffix.out" );
 
     debug( "     Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
-    
-    miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or 
+
+    miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out ) or
         die("Problem when running RNAeval [Input file: '$rnastemloop_out' Output file: '$rnaeval_out'");
 
     return $rnaeval_out;
@@ -382,12 +382,12 @@ sub process_RNAstemloop {
                             }
                         }
 					}
-					
+
     #STATS BEG
 					#~ else {
 						#~ $self->update_stats_for_discarded_miRNA($sequence_miRnas);
 					#~ }
-    
+
     #STATS END
 				}
 			}
@@ -423,7 +423,7 @@ sub run_rnalfold {
 
 
 #STATS BEG
-    
+
 #~ sub update_stats_for_discarded_miRNA {
 	#~ my $this = shift;
 	#~ my $sequence_miRnas = shift;
@@ -437,6 +437,6 @@ sub run_rnalfold {
 		#~ }
 	#~ }
 #~ }
-    
+
 #STATS END
 1;

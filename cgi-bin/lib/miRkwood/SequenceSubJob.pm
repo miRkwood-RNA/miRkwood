@@ -134,7 +134,7 @@ sub run_RNAstemloop_on_rnalfold_output {
     debug( "Running RNAstemloop on $rnalfold_output", miRkwood->DEBUG() );
     miRkwood::Programs::run_rnastemloop( $rnalfold_output,
         $rnastemloop_out_stemloop, $rnastemloop_out_optimal )
-      or die("Problem when running RNAstemloop");
+      or die('Problem when running RNAstemloop');
     return ($rnastemloop_out_stemloop, $rnastemloop_out_optimal);
 }
 
@@ -173,7 +173,7 @@ sub run_RNAeval_on_RNAstemloop_output {
 
     debug( "Running RNAeval in $rnaeval_out", miRkwood->DEBUG() );
     miRkwood::Programs::run_rnaeval( $rnastemloop_out, $rnaeval_out )
-      or die("Problem when running RNAeval");
+      or die('Problem when running RNAeval');
 
     return $rnaeval_out;
 }
@@ -266,17 +266,17 @@ sub process_RNAstemloop {
                         ( $start, $end ) = ( $1, $2 );
                     }
                     my $res = {
-                        "name" => $nameSeq,
-                        "strand" => $self->get_strand(),
-                        "sequence" => $dna,
-                        "start_position" => $start,
-                        "end_position" => $end,
-                        "mfei" => $mfei,
-                        "amfe" => $amfe,
-                        "structure_optimal" => $structure_optimal,
-                        "energy_optimal" => $energy_optimal,
-                        "structure_stemloop" => $structure_stemloop,
-                        "energy_stemloop" => $energy_stemloop
+                        'name' => $nameSeq,
+                        'strand' => $self->get_strand(),
+                        'sequence' => $dna,
+                        'start_position' => $start,
+                        'end_position' => $end,
+                        'mfei' => $mfei,
+                        'amfe' => $amfe,
+                        'structure_optimal' => $structure_optimal,
+                        'energy_optimal' => $energy_optimal,
+                        'structure_stemloop' => $structure_stemloop,
+                        'energy_stemloop' => $energy_stemloop
                     };
                     push @candidates_array, $res;
 
@@ -287,7 +287,7 @@ sub process_RNAstemloop {
             }    # if $line2
         }
         else {
-            warn( "Unrecognized line " );
+            warn( 'Unrecognized line ' );
         }    #if $line1
     }    #while $line=<IN>
     return \@candidates_array;

@@ -100,7 +100,7 @@ sub post_process_alignments {
     else {
         %alignments = $self->merge_alignments( \%alignments );
         my $tmp_file =
-          File::Spec->catfile( $self->get_directory(), "mirdup_validation.txt" );
+          File::Spec->catfile( $self->get_directory(), 'mirdup_validation.txt' );
         my %mirdup_results =
           miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
             $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
@@ -221,9 +221,9 @@ sub mask_CT_file {
             $tab3 = [];
         }
         else {
-            push( @$tab1, $nbSeq );   # remplissage du tableau temporaire tab1
-            push( @$tab2, $numSeq );  # remplissage du tableau temporaire   tab2
-            push( @$tab3, $base );
+            push( @{$tab1}, $nbSeq );   # remplissage du tableau temporaire tab1
+            push( @{$tab2}, $numSeq );  # remplissage du tableau temporaire   tab2
+            push( @{$tab3}, $base );
             if ( $longueur == $variable[1]
               ) # tester si la longueur actuelle est égale à la longueur de la séquence
             {

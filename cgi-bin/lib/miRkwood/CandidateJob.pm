@@ -137,7 +137,7 @@ sub update_known_candidate_information {
 sub get_stemloop_structure_from_optimal {
     my (@args) = @_;
     my $optimal = shift @args;
-    my @optimal = split( '', $optimal );
+    my @optimal = split( //, $optimal );
     my $length_structure = length( $optimal );
 
     my $stemloop = '';

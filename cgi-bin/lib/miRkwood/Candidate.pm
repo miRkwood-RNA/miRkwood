@@ -611,7 +611,7 @@ sub determine_precursor_arms {
 
     my $start_arm_2 = 0;
     my $end_arm_1 = 0;
-    my @structure_array = split('', $self->{'structure_stemloop'});
+    my @structure_array = split(//, $self->{'structure_stemloop'});
     my $stop = 0;
 
     my $index = 0;
@@ -832,7 +832,7 @@ sub find_mirna {
         $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
         if ( $self->{'strand'} eq '-' ){
             $self->{'mirna_sequence'} = miRkwood::Utils::reverse_complement( $self->{'mirna_sequence'} );
-        }        
+        }
     }
     else {
         $self->{'mirna_position'} = '';

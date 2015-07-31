@@ -8,11 +8,11 @@ use warnings;
 use Log::Message::Simple qw[msg error debug];
 
 sub new {
-	die ("LociBuilder::new: Unimplemented method.");
+	die ('LociBuilder::new: Unimplemented method.');
 }
 
 sub build_loci {
-	die ("LociBuilder::build_loci: Unimplemented method.");
+	die ('LociBuilder::build_loci: Unimplemented method.');
 }
 
 1;

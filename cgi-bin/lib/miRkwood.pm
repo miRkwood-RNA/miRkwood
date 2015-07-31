@@ -214,6 +214,7 @@ sub write_config {
     $run_options->param( 'options.align',    $align );
     $run_options->param( 'options.varna',    $varna );
     miRkwood->CONFIG($run_options);
+    return;
 }
 
 =method write_config_for_bam_pipeline
@@ -240,6 +241,7 @@ sub write_config_for_bam_pipeline {
     $run_options->param( 'options.varna',    $varna );
 
     miRkwood->CONFIG($run_options);
+    return;
 }
 
 our $mirkwood_path = Cwd::fast_abs_path( File::Spec->catdir(File::Basename::dirname(__FILE__), '..'));

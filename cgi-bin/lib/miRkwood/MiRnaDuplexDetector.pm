@@ -480,7 +480,7 @@ END_OF_C_CODE
 sub generate_string {
 	my ($length) = @_;
 	my $str = '';
-	my @alph = ('A', 'U', 'C', 'G');
+	my @alph = qw{A U C G};
 	for (my $i = 0; $i < $length; $i++) {
 		$str .= $alph[int(rand(4))];
 	}

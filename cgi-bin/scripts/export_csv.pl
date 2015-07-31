@@ -15,7 +15,7 @@ BEGIN {
     use miRkwood::Results;
 }
 
-pod2usage("$0: No job identifier given.") if ( @ARGV == 0 );
+if ( @ARGV == 0 ) { pod2usage("$0: No job identifier given.") };
 
 my ($jobId) = @ARGV;
 
@@ -39,4 +39,4 @@ export_csv.pl [JOB ID]
 
 Export the CSV for a given miRkwood job
 
-=cut]
+=cut

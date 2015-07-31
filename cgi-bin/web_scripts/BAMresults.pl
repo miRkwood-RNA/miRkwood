@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 use strict;
 use warnings;
 use CGI;
@@ -271,7 +271,7 @@ if ( $valid ){
         else {
             $HTML_results .= "<li id='li_known_miRNAs'><span id='normal'><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads</span></li>";
         }
-        
+
         if ( $nb_new_results > 0 ){
             $HTML_results .= "<li id='li_new_miRNAs'><span id='normal'><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</span></li>";
         }
@@ -303,7 +303,7 @@ if ( $valid ){
     $footer
 </body>
 END_TXT
-    
+
     $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js);
 
 }   # end if valid

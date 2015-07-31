@@ -19,7 +19,7 @@ my $export_type = $cgi->param('type');
 my $data= $cgi->param('data');  # identifiant des candidats sélectionnés
 my $pipeline_type = $cgi->param('pipeline');
 my $mirna_type = $cgi->param('mirna_type');
-my @sequences_to_export =  split( ',',$data  );
+my @sequences_to_export =  split( /,/,$data  );
 
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
 
@@ -49,7 +49,7 @@ given ($export_type) {
     }
     when (/reads/) {
         $exporter = miRkwood::ResultsExporterMaker->make_reads_clouds_results_exporter( $mirna_type );
-    }    
+    }
     default { miRkwood::WebTemplate::web_die("The export type '$export_type' is not supported"); }
 }
 $exporter->initialize($id_job, \%myResults, \@sequences_to_export);

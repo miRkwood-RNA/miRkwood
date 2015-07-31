@@ -17,7 +17,7 @@ sub perform_export{
     my ( $self, @args ) = @_;
 
     my %results = %{$self->{'results'}};
-    my $output = "";
+    my $output = '';
 
     $output .= "<results id='all'>\n";
     my @keys = $self->get_sorted_keys();

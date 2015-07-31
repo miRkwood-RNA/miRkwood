@@ -163,7 +163,7 @@ sub store_overlapping_reads {
     my $referenceFile = shift @args;
     my $outputFile = shift @args;
     my $additionalArgs = shift @args;
-    
+
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -wa -wb $additionalArgs > $outputFile";
     system($job);
 
@@ -260,7 +260,7 @@ sub count_reads_in_bed_file {
     my @args = @_;
     my $bed_file = shift @args;
     my $start = shift @args;
-    my $end = shift @args;    
+    my $end = shift @args;
 
     my @tab;
     my $reads = {};

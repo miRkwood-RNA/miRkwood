@@ -16,8 +16,8 @@ my $index_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'inde
 my $cgi    = CGI->new();
 my $errorType   = $cgi->param('type');
 
-my $errorMessage = "Unknown error";
-if ( $errorType eq "noFasta" ){
+my $errorMessage = 'Unknown error';
+if ( $errorType eq 'noFasta' ){
     $errorMessage = <<"END_MSG";
     <p>An error occured when processing your data: miRkwood could not recognize the format of one or more sequences.</p>
     <p> Sequences should be in <b>FASTA</b> format. Lower-case and upper-case letters are both accepted.
@@ -25,7 +25,7 @@ if ( $errorType eq "noFasta" ){
     <br /><br />
 END_MSG
 }
-elsif ( $errorType eq "severalSequences" ){
+elsif ( $errorType eq 'severalSequences' ){
     $errorMessage = <<"END_MSG";
     <p>An error occured when processing your data:</p>
     <p> You must type only one sequence, in <b>FASTA</b> format. </p>
@@ -34,7 +34,7 @@ elsif ( $errorType eq "severalSequences" ){
     
 END_MSG
 }
-elsif ( $errorType eq "tooLongSequence" ){
+elsif ( $errorType eq 'tooLongSequence' ){
     $errorMessage = <<"END_MSG";
     <p>An error occured when processing your data:</p>
     <p>Your sequence must be shorter than 100000 nucleotides. </p>
@@ -43,7 +43,7 @@ elsif ( $errorType eq "tooLongSequence" ){
     
 END_MSG
 }
-elsif ( $errorType eq "noBED" ){
+elsif ( $errorType eq 'noBED' ){
     $errorMessage = <<"END_MSG";
     <p>An error occured when processing your data:</p>
     <p>Your BED file is not valid. Make sure you correctly used our provided script to convert BAM into BED file.</p>
@@ -52,7 +52,7 @@ elsif ( $errorType eq "noBED" ){
     
 END_MSG
 }
-elsif ( $errorType eq "noGenome" ){
+elsif ( $errorType eq 'noGenome' ){
     $errorMessage = <<"END_MSG";
     <p>An error occured when processing your data:</p>
     <p>No genome file were found for the chosen species.</p>
@@ -61,7 +61,7 @@ elsif ( $errorType eq "noGenome" ){
     
 END_MSG
 }
-   
+
 my $page = <<"END_TXT";
 <div class="main">
   <div id="page">

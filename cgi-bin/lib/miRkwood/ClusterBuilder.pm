@@ -217,7 +217,7 @@ sub get_read_distribution_per_chr_from_bed {
         my $chr = $fields[0];
         my $pos = $fields[1];
         my $end = $fields[2];
-        my $depth = $fields[4];        
+        my $depth = $fields[4];
         my $strand = $fields[5];
         if ($strand ne '+' && $strand ne '-') {
 			die ("Error while parsing bed: Incorrect strand, expected '+' or '-', got '$strand'.");
@@ -438,24 +438,24 @@ sub static__get_trains__maintain_read_count {
 	if (scalar @{$spikes} && $spikes->[-1]{'end'} == -1) {
 		my $last_spike = $spikes->[-1];
 		while (scalar @{$end_reads} && $end_reads->[0]{'end'} <= $position) {
-			$$last_read_count = $$total_read_count;
-			$$total_read_count -= $end_reads->[0]{'read_count'};
+			${$last_read_count} = ${$total_read_count};
+			${$total_read_count} -= $end_reads->[0]{'read_count'};
 			my $trigger = $end_reads->[0]{'end'};
 			shift @{$end_reads};
-			my $added = $current_train->{'classifier'}->add_point($$total_read_count);
+			my $added = $current_train->{'classifier'}->add_point(${$total_read_count});
 			if ($added == KMean::ASSIGNED_FIRST_CLASS) {
 				$last_spike->{'end'} = $trigger;
 				$last_spike->{'strand'} = get_strand $last_spike->{'forward_read_count'}, $last_spike->{'read_count'};
 				$current_train->{'classifier'}->clear_points();
-				$current_train->{'classifier'}->add_point($$total_read_count);
+				$current_train->{'classifier'}->add_point(${$total_read_count});
 				last;
 			}
 		}
 	}
 	while (scalar @{$end_reads} && $end_reads->[0]{'end'} <= $position) {
-		$$last_read_count = $$total_read_count;
-		$$total_read_count -= $end_reads->[0]{'read_count'};
-		shift @$end_reads;
+		${$last_read_count} = ${$total_read_count};
+		${$total_read_count} -= $end_reads->[0]{'read_count'};
+		shift @{$end_reads};
 	}
     return;
 }
@@ -496,25 +496,25 @@ sub static__get_trains__process_train_spikes {
 
 	# Maintaining read count
 	static__get_trains__maintain_read_count($current_train, $position, $total_read_count, $last_read_count, $end_reads, $spike_detection);
-	$$total_read_count += $read_locus->{'read_count'};
+	${$total_read_count} += $read_locus->{'read_count'};
 	push @{$end_reads}, {end => $read_locus->{'end'}, read_count => $read_locus->{'read_count'}};
 	@{$end_reads} = sort {$a->{'end'} <=> $b->{'end'}} @{$end_reads};
 	# Looking for spikes
-	my $added = $current_train->{'classifier'}->add_point($$total_read_count);
+	my $added = $current_train->{'classifier'}->add_point(${$total_read_count});
 	if ($added == KMean::ASSIGNED_SECOND_CLASS) {
 		if (scalar @{$spikes}) {
 			my $last_spike = $spikes->[-1];
 			if ($last_spike->{'end'} == -1) {
 				if ($current_train->{'classifier'}->class_of($last_spike->{'trigger'}) == KMean::ASSIGNED_FIRST_CLASS) {
 					$last_spike->{'begin'} = $position;
-					$last_spike->{'trigger'} = $$total_read_count;
+					$last_spike->{'trigger'} = ${$total_read_count};
 					$last_spike->{'read_count'} = $read_locus->{'read_count'};
 					$last_spike->{'forward_read_count'} = $read_locus->{'forward_read_count'};
 				}
 				return;
 			}
 		}
-		push @{$spikes}, {begin => $position, end => -1, trigger => $$total_read_count, read_count => $read_locus->{'read_count'},
+		push @{$spikes}, {begin => $position, end => -1, trigger => ${$total_read_count}, read_count => $read_locus->{'read_count'},
 		forward_read_count => $read_locus->{'forward_read_count'}};
 	}
 	elsif ($added == KMean::ASSIGNED_FIRST_CLASS) {
@@ -524,7 +524,7 @@ sub static__get_trains__process_train_spikes {
 			$last_spike->{'strand'} = get_strand $last_spike->{'forward_read_count'}, $last_spike->{'read_count'};
 		}
 		$current_train->{'classifier'}->clear_points();
-		$current_train->{'classifier'}->add_point($$total_read_count);
+		$current_train->{'classifier'}->add_point(${$total_read_count});
 	}
 	elsif (scalar @{$spikes} && $spikes->[-1]{'end'} == -1) {
 		my $last_spike = $spikes->[-1];

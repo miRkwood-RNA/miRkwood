@@ -17,7 +17,7 @@ use miRkwood::Results;
 use miRkwood::Utils;
 use miRkwood::WebTemplate;
 
-my $cgi = new CGI;
+my $cgi = CGI->new();
 my $mail = $cgi->param('mail');
 my $filter   = $cgi->param('CDS');
 my $filter_tRNA_rRNA = $cgi->param('filter-tRNA-rRNA');
@@ -28,7 +28,7 @@ my $plant    = $cgi->param('db');
 my $strand   = $cgi->param('strand');
 my $job_title=  $cgi->param('job');
 if ( !$plant ) {
-    $plant = "NonePlant";
+    $plant = 'NonePlant';
 }
 
 my $local_dir = dirname( abs_path($0) );
@@ -70,7 +70,7 @@ my $seqArea = $cgi->param('seqArea');
 my $seq = q{};
 if ( $seqArea eq q{} )    # cas upload fichier
 {
-    debug("Sequences are a FASTA file uploaded", 1);
+    debug('Sequences are a FASTA file uploaded', 1);
     my $upload = $cgi->upload('seqFile')
       or miRkwood::WebTemplate::web_die("Error when getting seqFile: $!");
     while ( my $ligne = <$upload> ) {
@@ -85,7 +85,7 @@ $seq = miRkwood::Utils::cleanup_fasta_sequence($seq);
 
 if ( ! miRkwood::Utils::is_fasta($seq) )
 {
-    print $cgi->redirect($error_url . "?type=noFasta");
+    print $cgi->redirect($error_url . '?type=noFasta');
     exit;
 }
 
@@ -100,7 +100,7 @@ foreach my $line (@lines) {
     else {
         my $cleaned_line = miRkwood::Utils::mask_sequence_nucleotide($line);
         print $OUTPUT $name . "\n" . $cleaned_line . "\n";
-        $name = "";
+        $name = '';
     }
 }
 close $OUTPUT or die("Error when closing $sequence_upload: $!");
@@ -139,6 +139,6 @@ my $cmd =
 "perl -I$dirLib $perl_script 'fasta' $absolute_job_dir";
 debug("Running perl script $cmd", 1);
 system($cmd);
-debug("Getting back from Perl script", 1);
+debug('Getting back from Perl script', 1);
 
 close $log_file;

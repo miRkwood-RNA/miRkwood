@@ -349,7 +349,7 @@ sub add_candidate {
 
 
     # Copying the image
-    
+
     my $new_img_path = $self->copy_image($candidate, $key);
     my ( $lien_image, $taille_image ) =
       $self->{doc}->add_image_file($new_img_path);

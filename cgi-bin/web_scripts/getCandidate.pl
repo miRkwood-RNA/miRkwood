@@ -91,7 +91,7 @@ sub exportAsDotBracket {
     my $vienna =
       $candidate->candidateAsVienna( $optimal );
     if ($optimal) {
-        $filename .= "_optimal";
+        $filename .= '_optimal';
     }
     return ( "$filename.txt", $vienna, 'attachment' );
 }

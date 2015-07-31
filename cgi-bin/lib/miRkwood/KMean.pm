@@ -55,7 +55,7 @@ sub __binary_insert {
 			}
 		}
     }
-    splice @$ary, $middle, 0, $val;
+    splice @{$ary}, $middle, 0, $val;
     return $middle;
 }
 
@@ -98,7 +98,7 @@ sub __recompute_avg {
 					$assigned_upstream--;
 					$this->{class_0_total} -= $this->{points}[$i];
 					$this->{class_1_total} += $this->{points}[$i];
-					
+
 # 					$this->{class_0_count}--;
 # 					$this->{class_1_count}++;
 # 
@@ -121,6 +121,7 @@ sub __recompute_avg {
 		$this->{class_1_avg} = $this->{class_1_total}/$this->{class_1_count};
 		$this->{class_border} = $this->{class_0_count};
     }
+    return;
 }
 
 
@@ -201,6 +202,7 @@ sub clear_points {
 	$this->{class_border} = 0;
 	$this->{has_different_values} = 0;
 	$this->{points} = [];
+    return;
 }
 
 1;
