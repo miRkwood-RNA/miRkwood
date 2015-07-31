@@ -32,7 +32,7 @@ sub initialize {
     $self->{'identifier'} = $identifier;
     $self->{'results'} = $results;
     $self->{'sequences_to_export'} = $sequences_to_export;
-    return;
+    return $self;
 }
 
 sub get_identifier {
