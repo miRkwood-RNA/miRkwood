@@ -50,12 +50,9 @@ sub get_file_extension {
 
 sub get_type {
     my ( $self, @args ) = @_;
-    if ( $self->{'mirna_type'} eq 'novel_miRNA' ) {
-        return '_novel_miRNA';
-    }
-    elsif ( $self->{'mirna_type'} eq 'known_miRNA' ) {
-        return '_known_miRNA';
-    }
+    if ( $self->{'mirna_type'} ne '' ) {
+        return "_$self->{'mirna_type'}";
+    }    
     else {
         return '';
     }
