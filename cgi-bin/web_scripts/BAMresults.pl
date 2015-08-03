@@ -67,7 +67,7 @@ if ( $valid ){
     my $initial_bed         = miRkwood::Paths::get_bed_file ( $id_job, '' );
     my $mirna_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_miRNAs' );
     my $final_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_filtered' );
-    my $other_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_otherRNA' );
+    my $other_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_tRNA_rRNA_snoRNA' );
     my $cds_bed             = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
     my $multimapped_bed     = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
     my $orphan_clusters_bed = miRkwood::Paths::get_bed_file ( $id_job, '_orphan_clusters' );
