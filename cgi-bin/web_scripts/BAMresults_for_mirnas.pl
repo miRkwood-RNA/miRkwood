@@ -145,7 +145,9 @@ END_TXT
 END_TXT
     }
 
-    $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js);
+    my $title = "miRkwood - $mirnas_type candidates";
+    $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js, $title);
+
 }   # end if valid
 else{   # job id is not a valid ID
     $HTML_additional .= '</div>';

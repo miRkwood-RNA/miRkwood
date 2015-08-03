@@ -243,7 +243,8 @@ my $body  = <<"END_TXT";
     </body>
 END_TXT
 
-my $html = miRkwood::WebTemplate::get_HTML_page_for_body($body, \@css, \@js);
+my $title = "miRkwood - $candidate->{'name'}, $candidate->{'position'}";
+my $html = miRkwood::WebTemplate::get_HTML_page_for_body($body, \@css, \@js, $title);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

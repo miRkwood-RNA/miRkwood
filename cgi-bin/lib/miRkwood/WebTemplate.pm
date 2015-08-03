@@ -245,6 +245,11 @@ sub get_HTML_page_for_body {
     my $body      = shift @args;
     my @css_files = @{shift @args};
     my @js_files  = @{shift @args};
+    my $title     = shift @args;
+
+    if ( ( ! defined($title) ) || $title eq '' ){
+        $title = 'miRkwood - MicroRNA identification';
+    }
 
     my $css_html = '';
     foreach my $css (@css_files){
@@ -262,7 +267,7 @@ sub get_HTML_page_for_body {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="keywords" content="microRNA, miRNA, premir, plant, arabidopsis thaliana, mirkwood, RNAfold" />
-        <title>miRkwood - MicroRNA identification</title>
+        <title>$title</title>
         $css_html        $js_html    </head>
     $body
 </html>

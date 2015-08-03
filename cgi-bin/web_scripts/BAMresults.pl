@@ -304,7 +304,8 @@ if ( $valid ){
 </body>
 END_TXT
 
-    $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js);
+    my $title = 'miRkwood - Summary of results';
+    $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js, $title);
 
 }   # end if valid
 else{   # job id is not a valid ID
