@@ -217,11 +217,12 @@ Test whether one candidate is overlapping with the other
 
 sub is_overlapping {
     my @args      = @_;
+    my $nb_args   = scalar(@args);
     my $start     = shift @args;
     my $end       = shift @args;
     my $ref_start = shift @args;
     my $ref_end   = shift @args;
-    ( $start ne '' && $end ne '' && $ref_start ne '' && $ref_end ne '' ) or die('Not enough values provided');
+    ( $nb_args == 4 && $start ne '' && $end ne '' && $ref_start ne '' && $ref_end ne '' ) or die('Not enough values provided');
     $ref_start <= $start or die("Positions should be ordered : $ref_start <= $start");
     return ( $start < ( $ref_start + $ref_end ) / 2 );
 }
@@ -235,11 +236,12 @@ Test whether one candidate is included into the other
 
 sub is_included {
     my @args      = @_;
+    my $nb_args   = scalar(@args);
     my $start     = shift @args;
     my $end       = shift @args;
     my $ref_start = shift @args;
     my $ref_end   = shift @args;
-    ( $start ne '' && $end ne '' && $ref_start ne '' && $ref_end ne '' ) or die('Not enough values provided');
+    ( $nb_args == 4 && $start ne '' && $end ne '' && $ref_start ne '' && $ref_end ne '' ) or die('Not enough values provided');
     $ref_start <= $start or die("Positions should be ordered : $ref_start <= $start");
     return ( $end <= $ref_end );
 }
