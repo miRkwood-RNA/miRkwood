@@ -50,11 +50,11 @@ sub get_file_extension {
 
 sub get_type {
     my ( $self, @args ) = @_;
-    if ( $self->{'mirna_type'} eq 'New' ) {
-        return '_New';
+    if ( $self->{'mirna_type'} eq 'novel_miRNA' ) {
+        return '_novel_miRNA';
     }
-    elsif ( $self->{'mirna_type'} eq 'Known' ) {
-        return '_Known';
+    elsif ( $self->{'mirna_type'} eq 'known_miRNA' ) {
+        return '_known_miRNA';
     }
     else {
         return '';
@@ -64,10 +64,10 @@ sub get_type {
 sub get_filename {
     my ( $self, @args ) = @_;
     if ( $self->get_identifier() ne '' ){
-        return 'Results-' . $self->get_identifier() . $self->get_type() . '.' . $self->get_file_extension();
+        return 'results-' . $self->get_identifier() . $self->get_type() . '.' . $self->get_file_extension();
     }
     else {
-        return 'Results' . $self->get_identifier() . $self->get_type() . '.' . $self->get_file_extension();
+        return 'results' . $self->get_identifier() . $self->get_type() . '.' . $self->get_file_extension();
     }
 }
 

@@ -38,7 +38,7 @@ sub make_csv_results_exporter {
         return miRkwood::ResultsExporter::CSVExporterGenomic->new( $mirna_type );
     }
     else{
-        if ( $mirna_type eq 'New' ){
+        if ( $mirna_type eq 'novel_miRNA' ){
             return miRkwood::ResultsExporter::CSVExporterSmallRNAseqNew->new( $mirna_type );
         }
         else{
@@ -72,7 +72,7 @@ sub make_html_results_exporter {
         return miRkwood::ResultsExporter::HTMLExporterGenomic->new( $mirna_type );
     }
     else{
-        if ( $mirna_type eq 'New' ){
+        if ( $mirna_type eq 'novel_miRNA' ){
             return miRkwood::ResultsExporter::HTMLExporterSmallRNAseqNew->new( $mirna_type );
         }
         else{

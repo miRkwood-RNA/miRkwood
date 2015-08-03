@@ -37,7 +37,7 @@ my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get
 ##### Parameters
 my $cgi = CGI->new();
 my $id_job = $cgi->param('jobID');    # get id job
-my $mirnas_type = $cgi->param('type');      # 'Known' or 'New'
+my $mirnas_type = $cgi->param('type');      # 'known_miRNA' or 'novel_miRNA'
 my $returnlink = miRkwood::WebTemplate::get_link_back_to_BAM_results($id_job);
 my $return_html = "<p><a class='returnlink' href='$returnlink'>Back to main results page</a></p>";
 
@@ -49,6 +49,13 @@ my $HTML_additional = '';
 my $page = '';
 
 my $mirnas_results = '';
+my $mirna = '';
+if ( $mirnas_type eq 'novel_miRNA' ){
+    $mirna = 'Novel';
+}
+elsif ( $mirnas_type eq 'known_miRNA' ){
+    $mirna = 'Known';
+}
 
 
 $HTML_additional .= '<p class="header-results" id="job_id"><b>Job ID:</b> ' . $id_job . '</p>';
@@ -89,7 +96,7 @@ if ( $valid ){
 
             <div id='new_mirnas'>
                 <p class='header-results' id='precursors_count' style='font-size: 150%;'>
-                    <b>$mirnas_type miRNAs : $nb_results miRNA precursor(s) found</b>
+                    <b>$mirna miRNAs : $nb_results miRNA precursor(s) found</b>
                 </p> 
                             
                 <div id="select" >
@@ -145,7 +152,7 @@ END_TXT
 END_TXT
     }
 
-    my $title = "miRkwood - $mirnas_type candidates";
+    my $title = "miRkwood - ". lc($mirna)." candidates";
     $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js, $title);
 
 }   # end if valid

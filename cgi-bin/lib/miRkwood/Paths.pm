@@ -270,14 +270,14 @@ sub get_known_reads_dir_from_job_dir {
 
 Return the path to the 'new' or 'known' reads directory
 Parameters : - job dir
-             - mirna type ('New' or 'Known')
+             - mirna type ('novel_miRNA' or 'known_miRNA')
 
 =cut
 sub get_dir_reads_path_from_job_dir_and_mirna_type{
     my (@args) = @_;
     my $job_dir = shift @args;
     my $mirna_type = shift @args;
-    if ( $mirna_type eq 'Known' ){
+    if ( $mirna_type eq 'known_miRNA' ){
         return get_known_reads_dir_from_job_dir( $job_dir );
     }
     else{

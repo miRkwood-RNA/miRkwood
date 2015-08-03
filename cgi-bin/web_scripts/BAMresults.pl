@@ -172,8 +172,8 @@ if ( $valid ){
         ##### Summary of results
 
         ### Count the number of results
-        $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'New' );
-        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'Known' );
+        $nb_new_results   = miRkwood::Results->number_of_results_bis( $id_job, 'novel_miRNA' );
+        $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'known_miRNA' );
 
         ### Count the number and percentage of reads in each category
         ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed, -1, -1 );
@@ -213,8 +213,8 @@ if ( $valid ){
 
         ### Create HTML
         my $arguments = '?jobID=' . $id_job;
-        my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=Known';
-        my $new_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=New';
+        my $known_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=known_miRNA';
+        my $new_url = miRkwood::WebTemplate::get_cgi_url('BAMresults_for_mirnas.pl') . $arguments . '&type=novel_miRNA';
         my $exportFileLink = miRkwood::WebTemplate::get_cgi_url('getBEDFile.pl') . '?jobId=' . $id_job;
 
         # Create reads barchart

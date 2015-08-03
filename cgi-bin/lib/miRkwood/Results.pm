@@ -79,22 +79,22 @@ Get the results structure of a given job identifier
 
 Usage:
 my %results = miRkwood::Results->get_structure_for_jobID($jobId, $type);
-$type should be 'Known', 'New' (for BEDPipeline) or '' (for other pipelines)
+$type should be 'known_miRNA', 'novel_miRNA' (for BEDPipeline) or '' (for other pipelines)
 
 =cut
 
 sub get_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-	my $mirna_type = shift @args;   # should be 'Known', 'New' (for BEDPipeline) or '' (for other pipelines)
+	my $mirna_type = shift @args;   # should be 'known_miRNA', 'novel_miRNA' (for BEDPipeline) or '' (for other pipelines)
 	my $job_dir = $self->jobId_to_jobPath($jobId);
 	miRkwood->CONFIG_FILE(
 		miRkwood::Paths->get_job_config_path($job_dir) );
 	my $candidates_dir = '';
-    if ( $mirna_type eq 'Known' ){
+    if ( $mirna_type eq 'known_miRNA' ){
         $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir($job_dir);
     }
-    elsif ($mirna_type eq 'New' ){
+    elsif ($mirna_type eq 'novel_miRNA' ){
         $candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir($job_dir);
     }
     else{
@@ -110,10 +110,10 @@ sub get_structure_for_jobID {
 sub get_basic_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-    my $type    = shift @args;  # $type should be 'New' or 'Known'
+    my $type    = shift @args;  # $type should be 'novel_miRNA' or 'known_miRNA'
 	my $job_dir = $self->jobId_to_jobPath($jobId);
     my $yml_file = '';
-    if ( $type eq 'Known' ){
+    if ( $type eq 'known_miRNA' ){
         $yml_file = 'basic_known_candidates.yml';
     }
     else{
@@ -129,7 +129,7 @@ sub get_basic_pseudoXML_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
     my $pipeline_type = shift @args;    # should be 'abinitio' or 'smallRNAseq'
-    my $type    = shift @args;  # $type should be 'New' or 'Known'
+    my $type    = shift @args;  # $type should be 'novel_miRNA' or 'known_miRNA'
 
 	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 
@@ -166,14 +166,14 @@ sub convert_basic_to_pseudoXML {
 	my $candidate = shift @args;
 	my %candidate = %{$candidate};
     my $pipeline_type = shift @args;    # should be 'abinitio' or 'smallRNAseq'
-    my $type      = shift @args;  # $type should be 'New' or 'Known'
+    my $type      = shift @args;  # $type should be 'novel_miRNA' or 'known_miRNA'
 
 	my @headers;
     my @fields_to_truncate = qw{mfe mfei amfe};
 	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
 
     if ( $pipeline_type eq 'smallRNAseq' ){
-        if ( $type eq 'Known' ){  # known miRNAs for pipeline smallRNAseq
+        if ( $type eq 'known_miRNA' ){  # known miRNAs for pipeline smallRNAseq
             @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality reads identifier image};
         }
         else {  # new miRNAs for pipeline smallRNAseq
@@ -281,7 +281,7 @@ sub number_of_results {
 sub number_of_results_bis {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-    my $type    = shift @args;  # $type should be 'New' or 'Known'
+    my $type    = shift @args;  # $type should be 'novel_miRNA' or 'known_miRNA'
 	my $results = $self->get_basic_structure_for_jobID($jobId, $type);
 	my $size    = scalar @{$results};
 	return $size;
