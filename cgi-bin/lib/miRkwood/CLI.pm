@@ -39,7 +39,7 @@ sub process_results_dir_for_offline {
 
     my $html_output = 'results.html';
     if ( $pipeline_type ne 'abinitio' ){
-        $html_output = "Results_$mirna_type.html";
+        $html_output = "results_$mirna_type.html";
     }
 
     my $html_page = File::Spec->catfile( $output_folder, $html_output );
