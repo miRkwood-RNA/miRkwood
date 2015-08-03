@@ -5,7 +5,7 @@
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
         <script type='text/javascript' src='../js/miARN.js'></script>
-        <title>miRkwood small RNAseq - Run an example</title>
+        <title>miRkwood small RNA-seq - Run an example</title>
     </head>
     <body>
         <div class="theme-border"></div>

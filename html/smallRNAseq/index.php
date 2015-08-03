@@ -5,7 +5,7 @@
         <link type='text/css' rel='stylesheet' href='../style/script.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
         <script type='text/javascript' src='/js/miARN.js'></script>
-        <title>miRkwood - MicroRNA identification</title>
+        <title>miRkwood small RNA-seq</title>
     </head>
     <body>
         <div class="theme-border"></div>
