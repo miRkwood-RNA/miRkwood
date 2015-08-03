@@ -143,8 +143,9 @@ sub print_reads_clouds {
         $output .= $mirna->{'precursor_name'}."\n";
     }
 
-    $output .= "Locus  : $chromosome:$precursor_start-$precursor_end\n";
-    $output .= "Strand : $strand\n";
+    $output .= "Chromosome : $chromosome\n";
+    $output .= "Position   : $precursor_start-$precursor_end\n";
+    $output .= "Strand     : $strand\n";
     $output .= "\n$reference\n";
     $output .= "$structure\n";
 
