@@ -1,5 +1,6 @@
-Locus  : 1:1445466-1445743
-Strand : +
+Chromosome : 1
+Position   : 1445466-1445743
+Strand     : +
 
 CUAGAUUUACAAAACGAUAGGAAAACUAACCGGACUUUGAAUCCUGUCACUUGACUUAGUCAUUGAUCGUUAGCGAUUUCACAAGUUCAACUUGUUUUCAGAUCGUUAUGUGAAUUUAGCACUUUAGUGUUUUAGUCUUUUUUUUUUGUUUUGUUUUAGACUAGAUUUACAAAACGAUAGAAAACUAACUGGACUUUGGAUCCUGUCACUUGACUUAGUCAUUGAUCGUUAGCGAUUUCACAAGUUCAACUUGUUUUCUGAUCAUUAUGUGAAUUUAG
 (((((((((((.((.(((.(((((((.....((((((((((((((((((..(((((.(((((.((((....((.((((.((.(((((((....((((((..((((((.((((((((...............................................)))))))).)))))).))))))....)))))))))))))))))))..))))).))))).))))....)).)).)))).)))))).....))))))).))).)).)))))))))))

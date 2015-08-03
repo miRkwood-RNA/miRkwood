@@ -1,6 +1,7 @@
 ath-MIR2112
-Locus  : 1:234006-234159
-Strand : -
+Chromosome : 1
+Position   : 234006-234159
+Strand     : -
 
 GUAUGAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGACAACAAACCAAUAGAGGUGCUCAGCGAAAACAACAAAAUGUGAAAAGGGUUUAUCAGAAACAUUGGGGUCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCUGAC
 ((..((.(((((((((((((((((((((.((.(((.((((.(((..(((.......((...((((.......(((......))).....))))...)).......)))..))).)))).))).)).))))))))))))))))))))).))..))

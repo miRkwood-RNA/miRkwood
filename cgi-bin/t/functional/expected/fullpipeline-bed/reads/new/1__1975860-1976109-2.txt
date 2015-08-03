@@ -1,5 +1,6 @@
-Locus  : 1:1975860-1976109
-Strand : -
+Chromosome : 1
+Position   : 1975860-1976109
+Strand     : -
 
 GCAAAACAUAUGUUUUUUUGGGAGUUUUUAGAUAAUUAAAUCAGAGAAUAGGGCUGGGCAUAUGAGUAAUCUAUUCGAGUUCGGGUAGAACCAUUCGGGUUUGGGAUUAAUGGGUAUAUGAUUUACUACCCAAUAGAAUAAUUCUAAAUAUUCGGUUCUGGUUCGGGUCGGGUCCAGUUGGAUUCGGGUCAGUUUUGAUAAAAAGUUUCAGGCCCUAAAAAUACCCAAAAAAAUAGAAACGGUAUUUUGU
 (((((((...((((((((((((.((((((((.......................................................................................................................................................................................)))))))).))))))))))))......))..)))))

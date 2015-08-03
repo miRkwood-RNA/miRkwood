@@ -1,6 +1,7 @@
 ath-MIR5656
-Locus  : 1:1727263-1727415
-Strand : +
+Chromosome : 1
+Position   : 1727263-1727415
+Strand     : +
 
 AUCUUUCUUGACAAAUCAUAACAACUUUGGUUAAAAGGUUUCGAAAACUCAACCUCUUCUUCAGUCUCUCUCUUUCCAAAAGGGAAAGACUGAAGUAGAGAUUGGGUUUCCGAUACCUUUUGGCCCAUGUCGUUAUGAUUUGUCGAGGAAGGU
 ((((((((((((((((((((((.((...(((((((((((.(((.((((((((.((((.(((((((((.(((((((...))))))).))))))))).)))).)))))))).))).)))))))))))...)).))))))))))))))))))))))

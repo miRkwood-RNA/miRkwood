@@ -1,6 +1,7 @@
 ath-MIR165a
-Locus  : 1:78927-79037
-Strand : -
+Chromosome : 1
+Position   : 78927-79037
+Strand     : -
 
 GUUGAGGGGAAUGUUGUCUGGAUCGAGGAUAUUAUAGAUAUAUACAUGUGUAUGUUAAUGAUUCAAGUGAUCAUAGAGAGUAUCCUCGGACCAGGCUUCAUCCCCCCCAAC
 ((((.((((.(((..((((((.(((((((((((.............................................))))))))))).))))))..))).)))).))))

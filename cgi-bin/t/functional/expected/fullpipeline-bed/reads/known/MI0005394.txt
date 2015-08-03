@@ -1,6 +1,7 @@
 ath-MIR838
-Locus  : 1:28500-28706
-Strand : +
+Chromosome : 1
+Position   : 28500-28706
+Strand     : +
 
 UACUUUUCUAAUAUCACGAGGACUUACAUGGCCUCAAGUCACCUGUGGUGUUGUGCAAGAAGGAGAAGCAAAGUCUGUCUAUGUAUUAUGAGAUAGCUACUUCUAUGGCUAGGAUAUAUGUUGUACAAGACCGGCUUUUCUUCUACUUCUUGCACAACCUGAGGUUAUUGAGGCUAUACAAGUCUUCUUCUAUAAUGUUAUUUAUUA
 .................((((((((..((((((((((...((((..((.(((((((((((((.(((((.((((((.((((.(((((((((...((((((......))))))...))))....))))))))).)))))).))))).))))))))))))))).))))..))))))))))..))))))))....................
