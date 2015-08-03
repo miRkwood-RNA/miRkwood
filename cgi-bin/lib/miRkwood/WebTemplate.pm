@@ -166,7 +166,8 @@ sub get_error_page {
     my $explanation = 'The error which occured is:';
     my $footer = 'Please send this to the miRkwood team, at the address in the footer.';
     my $contents = "<br/><br/>$header<br/><br/>$explanation<br/><br/>$error_message<br/><br/><br/>$footer";
-    my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $contents, \@css, \@js);
+    my $title = 'miRkwood - Error';
+    my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $contents, \@css, \@js, $title);
     my $res = <<"HTML";
 Content-type: text/html
 
@@ -212,6 +213,7 @@ sub get_HTML_page_for_content {
     my $page      = shift @args;
     my $css_files = shift @args;
     my $js_files  = shift @args;
+    my $title     = shift @args;
     my $no_menu   = shift @args;
 
     my $bioinfo_menu = '';
@@ -236,7 +238,7 @@ sub get_HTML_page_for_content {
         $footer
     </body>
 END_TXT
-    my $HTML = get_HTML_page_for_body($body, $css_files, $js_files);
+    my $HTML = get_HTML_page_for_body($body, $css_files, $js_files, $title);
     return $HTML;
 }
 

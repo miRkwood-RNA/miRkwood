@@ -81,7 +81,8 @@ if ( $valid ){
 </div><!-- main -->
 END_TXT
 
-        $html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, 1 );
+        my $title = 'miRkwood - No results';
+        $html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, $title, 1 );
     }
 
 
@@ -99,7 +100,8 @@ else{
 </div><!-- main -->
 END_TXT
 
-	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, 1 );
+    my $title = 'miRkwood - No results';
+	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, $title, 1 );
 
 }
 

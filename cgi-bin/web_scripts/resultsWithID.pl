@@ -123,8 +123,8 @@ $footer
 </body>
 END_TXT
 	}
-	$html =
-	  miRkwood::WebTemplate::get_HTML_page_for_body( $body, \@css, \@js );
+    my $title = 'miRkwood ab initio - Summary of results';
+	$html = miRkwood::WebTemplate::get_HTML_page_for_body( $body, \@css, \@js, $title );
 
 }
 else {
@@ -135,9 +135,8 @@ else {
 </div><!-- main -->
 END_TXT
 
-	$html =
-	  miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js,
-		1 );
+    my $title = 'miRkwood - No results';
+	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js, $title, 1 );
 }
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

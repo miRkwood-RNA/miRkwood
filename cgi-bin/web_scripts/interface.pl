@@ -71,7 +71,8 @@ my $page = <<"END_TXT";
 </div><!-- main -->
 END_TXT
 
-my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js);
+my $title = 'miRkwood ab initio';
+my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js, $title);
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 

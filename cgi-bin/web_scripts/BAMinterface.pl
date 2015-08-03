@@ -117,7 +117,8 @@ my $page = <<"END_TXT";
 </div><!-- main -->
 END_TXT
 
-my $html = miRkwood::WebTemplate::get_HTML_page_for_content('smallrnaseq', $page, \@css, \@js);
+my $title = 'miRkwood small RNA-seq';
+my $html = miRkwood::WebTemplate::get_HTML_page_for_content('smallrnaseq', $page, \@css, \@js, $title);
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
 

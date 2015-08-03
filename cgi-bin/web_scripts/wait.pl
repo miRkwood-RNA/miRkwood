@@ -42,14 +42,17 @@ if ( $valid ){
     my $results_page  = 'nonImplemented.pl';
     my $res_arguments = '?run_id=' . $jobId;
     my $mode = '';
+    my $title = '';
 
     if ( $jobId =~ /BAM/ ){
         $results_page  = 'BAMresults.pl';
         $mode = 'WebBAM';
+        $title = 'miRkwood small RNA-seq - Running...';
     }
     else {
         $results_page  = 'resultsWithID.pl';
         $mode = 'fasta';
+        $title = 'miRkwood ab initio - Running...';
     }
 
     my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);
@@ -88,7 +91,7 @@ if ( $valid ){
 </div><!-- main -->
 END_TXT
 
-    $html_text = miRkwood::WebTemplate::get_HTML_page_for_content('static/', $page, \@css, \@js);
+    $html_text = miRkwood::WebTemplate::get_HTML_page_for_content('static/', $page, \@css, \@js, $title);
 
     $html_text =~ s/<meta/<meta http-equiv='Refresh' content='10;URL=$waiting_url'><meta/;
 
@@ -102,7 +105,8 @@ else{
 </div><!-- main -->
 END_TXT
 
-	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, 1 );
+    my $title = 'miRkwood - No results';
+	$html_text = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $page, \@css, \@js, $title, 1 );
 
 }
 
