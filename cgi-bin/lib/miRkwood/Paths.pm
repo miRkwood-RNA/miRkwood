@@ -126,7 +126,7 @@ Return the basename for candidates directory
 
 sub get_candidate_dir_name {
     my (@args) = @_;
-    return 'candidates';
+    return 'YML';
 }
 
 =method get_dir_candidates_path
