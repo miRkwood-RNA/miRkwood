@@ -141,7 +141,7 @@ $pipeline->run_pipeline();
 
 ##### Write results
 my $results_folder       = miRkwood::Paths::create_folder( File::Spec->catdir( $abs_output_folder, 'results' ) );
-my $new_results_folder   = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'new_miRNA' ) );
+my $new_results_folder   = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'novel_miRNA' ) );
 my $known_results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'known_miRNA' ) );
 
 my $new_candidates_dir   = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $abs_output_folder );
