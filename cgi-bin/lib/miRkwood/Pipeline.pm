@@ -348,7 +348,7 @@ Return the path to the job workspace
 
 sub get_workspace_path {
     my ($self, @args) = @_;
-    return File::Spec->catdir($self->get_job_dir(), 'workspace');
+    return miRkwood::Paths->get_workspace_path( $self->get_job_dir() );
 }
 
 =method mark_job_as_finished
