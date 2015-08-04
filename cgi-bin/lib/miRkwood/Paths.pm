@@ -164,7 +164,7 @@ Return the basename for new candidates directory
 
 sub get_basename_for_novel_miRNA {
     my (@args) = @_;
-    return 'new';
+    return 'novel_miRNA';
 }
 
 =method get_new_candidates_dir_from_job_dir
@@ -200,7 +200,7 @@ Return the basename for known candidates directory
 
 sub get_basename_for_known_miRNA {
     my (@args) = @_;
-    return 'known';
+    return 'known_miRNA';
 }
 
 =method get_known_candidates_dir
@@ -235,7 +235,7 @@ Return the basename for reads clouds directory
 
 sub get_reads_dir_name {
     my (@args) = @_;
-    return 'reads';
+    return 'read_clouds';
 }
 
 =method get_dir_reads_path
