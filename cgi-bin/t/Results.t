@@ -15,7 +15,7 @@ BEGIN {
 }
 require_ok('miRkwood::Results');
 
-my $candidates_dir = input_file('candidates');
+my $candidates_dir = input_file('YML');
 
 ok(
     my %results = miRkwood::Results->deserialize_results($candidates_dir),

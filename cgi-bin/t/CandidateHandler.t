@@ -40,7 +40,7 @@ is( $candidate_filename, 'id.yml',
 
 ok( my $candidate_filepath = miRkwood::CandidateHandler->get_candidate_filepath('a', 'b'),
     'Can call get_candidate_filepath');
-is( $candidate_filepath, 'a/candidates/b.yml',
+is( $candidate_filepath, 'a/YML/b.yml',
     'get_candidate_filepath returns the expected value');
 
 my $tmp_dir = File::Temp::tempdir();

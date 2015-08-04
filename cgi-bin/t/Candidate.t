@@ -23,7 +23,7 @@ my $config_file = input_file('run_options.cfg');
 miRkwood->CONFIG_FILE($config_file);
 
 #new_from_serialized
-my $candidate_file = input_file('candidates', '1-1.yml');
+my $candidate_file = input_file('YML', '1-1.yml');
 file_exists_ok($candidate_file);
 
 my $empty_candidate = miRkwood::Candidate->new();
