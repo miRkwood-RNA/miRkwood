@@ -1,0 +1,52 @@
+--- end_position
+--- 1727415
+--- reads
+---
+1727382-1727402: 1
+--- sequence
+--- AUCUUUCUUGACAAAUCAUAACAACUUUGGUUAAAAGGUUUCGAAAACUCAACCUCUUCUUCAGUCUCUCUCUUUCCAAAAGGGAAAGACUGAAGUAGAGAUUGGGUUUCCGAUACCUUUUGGCCCAUGUCGUUAUGAUUUGUCGAGGAAGGU
+--- start_position
+--- 1727263
+--- position
+--- 1727263-1727415
+--- structure_stemloop
+--- ((((((((((((((((((((((.((...(((((((((((.(((.((((((((.((((.(((((((((.(((((((...))))))).))))))))).)))).)))))))).))).)))))))))))...)).))))))))))))))))))))))
+--- precursor_name
+--- ath-MIR5656
+--- structure_optimal
+--- ((((((((((((((((((((((.((...(((((((((((.(((.((((((((.((((.(((((((((.(((((((...))))))).))))))))).)))).)))))))).))).)))))))))))...)).))))))))))))))))))))))
+--- identifier
+--- MI0019240
+--- chromosome
+--- '1'
+--- '%GC'
+--- '39.22'
+--- strand
+--- +
+--- quality
+--- 0
+--- mirna_position
+--- 1727351-1727371
+--- mirna_length
+--- 21
+--- name
+--- '1'
+--- matures
+---
+MIMAT0022429:
+  mature_end: '1727371'
+  mature_name: ath-miR5656
+  mature_reads: {}
+  mature_start: '1727351'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0019240/image.png
+--- length
+--- 153
+--- amfe
+--- -55.6209150326797
+--- mfei
+--- -1.41833333333333
+--- mfe
+--- '-85.10'
+--- mirna_sequence
+--- ACUGAAGUAGAGAUUGGGUUU
