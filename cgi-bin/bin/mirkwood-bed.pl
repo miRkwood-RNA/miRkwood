@@ -140,12 +140,12 @@ $pipeline->run_pipeline();
 
 
 ##### Write results
-my $results_folder       = miRkwood::Paths::create_folder( File::Spec->catdir( $abs_output_folder, 'Results' ) );
-my $new_results_folder   = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'new_miRNAs' ) );
-my $known_results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'known_miRNAs' ) );
+my $results_folder       = miRkwood::Paths::create_folder( File::Spec->catdir( $abs_output_folder, 'results' ) );
+my $new_results_folder   = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'new_miRNA' ) );
+my $known_results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'known_miRNA' ) );
 
 my $new_candidates_dir   = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $abs_output_folder );
 my $known_candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $abs_output_folder );
 
-miRkwood::CLI::process_results_dir_for_offline($new_candidates_dir, $new_results_folder, 'smallRNAseq', 'New');
-miRkwood::CLI::process_results_dir_for_offline($known_candidates_dir, $known_results_folder, 'smallRNAseq', 'Known');
+miRkwood::CLI::process_results_dir_for_offline($new_candidates_dir, $new_results_folder, 'smallRNAseq', 'novel_miRNA');
+miRkwood::CLI::process_results_dir_for_offline($known_candidates_dir, $known_results_folder, 'smallRNAseq', 'known_miRNA');
