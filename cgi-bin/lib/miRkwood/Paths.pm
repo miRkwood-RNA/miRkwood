@@ -117,6 +117,18 @@ sub get_candidate_paths {
     return $candidate_dir;
 }
 
+=method get_candidate_dir_name
+
+Return the basename for candidates directory
+(containing YAML files)
+
+=cut
+
+sub get_candidate_dir_name {
+    my (@args) = @_;
+    return 'candidates';
+}
+
 =method get_dir_candidates_path
 
 Return the path to the candidates directory
@@ -128,7 +140,7 @@ sub get_dir_candidates_path {
     my (@args) = @_;
     my $job_id = shift @args;
     my $job_dir = miRkwood::Results->jobId_to_jobPath( $job_id );
-    return File::Spec->catdir($job_dir, 'candidates');
+    return File::Spec->catdir( $job_dir, get_candidate_dir_name() );
 }
 
 =method get_dir_candidates_path
@@ -140,7 +152,19 @@ Parameter : job directory
 sub get_dir_candidates_path_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
-    return File::Spec->catdir($job_dir, 'candidates');
+    return File::Spec->catdir( $job_dir, get_candidate_dir_name() );
+}
+
+=method get_basename_for_novel_miRNA
+
+Return the basename for new candidates directory
+(used for candidates directory and reads directory)
+
+=cut
+
+sub get_basename_for_novel_miRNA {
+    my (@args) = @_;
+    return 'new';
 }
 
 =method get_new_candidates_dir_from_job_dir
@@ -152,7 +176,7 @@ Parameter : job id
 sub get_new_candidates_dir {
     my (@args) = @_;
     my $job_id = shift @args;
-    return File::Spec->catdir( get_dir_candidates_path($job_id), 'new');
+    return File::Spec->catdir( get_dir_candidates_path($job_id), get_basename_for_novel_miRNA() );
 }
 
 =method get_new_candidates_dir_from_job_dir
@@ -164,7 +188,19 @@ Parameter : job directory
 sub get_new_candidates_dir_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
-    return File::Spec->catdir( get_dir_candidates_path_from_job_dir($job_dir), 'new');
+    return File::Spec->catdir( get_dir_candidates_path_from_job_dir($job_dir), get_basename_for_novel_miRNA() );
+}
+
+=method get_basename_for_known_miRNA
+
+Return the basename for known candidates directory
+(used for candidates directory and reads directory)
+
+=cut
+
+sub get_basename_for_known_miRNA {
+    my (@args) = @_;
+    return 'known';
 }
 
 =method get_known_candidates_dir
@@ -176,7 +212,7 @@ Parameter : job id
 sub get_known_candidates_dir {
     my (@args) = @_;
     my $job_id = shift @args;
-    return File::Spec->catdir( get_dir_candidates_path($job_id), 'known');
+    return File::Spec->catdir( get_dir_candidates_path($job_id), get_basename_for_known_miRNA() );
 }
 
 =method get_known_candidates_dir_from_job_dir
@@ -188,7 +224,18 @@ Parameter : job directory
 sub get_known_candidates_dir_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
-    return File::Spec->catdir( get_dir_candidates_path_from_job_dir($job_dir), 'known');
+    return File::Spec->catdir( get_dir_candidates_path_from_job_dir($job_dir), get_basename_for_known_miRNA() );
+}
+
+=method get_reads_dir_name
+
+Return the basename for reads clouds directory
+
+=cut
+
+sub get_reads_dir_name {
+    my (@args) = @_;
+    return 'reads';
 }
 
 =method get_dir_reads_path
@@ -202,7 +249,7 @@ sub get_dir_reads_path {
     my (@args) = @_;
     my $job_id = shift @args;
     my $job_dir = miRkwood::Results->jobId_to_jobPath( $job_id );
-    return File::Spec->catdir($job_dir, 'reads');
+    return File::Spec->catdir($job_dir, get_reads_dir_name() );
 }
 
 =method get_dir_reads_path_from_job_dir
@@ -215,60 +262,61 @@ Parameter : job directory
 sub get_dir_reads_path_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
-    return File::Spec->catdir($job_dir, 'reads');
+    return File::Spec->catdir($job_dir, get_reads_dir_name() );
 }
 
 =method get_new_reads_dir
 
-Return the path to the new reads directory
+Return the path to the novel miRNAs reads directory
 Parameter : job id
 
 =cut
 sub get_new_reads_dir {
     my (@args) = @_;
     my $job_id = shift @args;
-    return File::Spec->catdir( get_dir_reads_path($job_id), 'new');
+    return File::Spec->catdir( get_dir_reads_path($job_id), get_basename_for_novel_miRNA() );
 }
 
 =method get_new_reads_dir_from_job_dir
 
-Return the path to the new reads directory
+Return the path to the novel miRNAs reads directory
 Parameter : job directory
 
 =cut
 sub get_new_reads_dir_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
-    return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'new');
+    return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), get_basename_for_novel_miRNA() );
 }
 
 =method get_known_reads_dir
 
-Return the path to the new reads directory
+Return the path to the known miRNAs reads directory
 Parameter : job id
 
 =cut
 sub get_known_reads_dir {
     my (@args) = @_;
     my $job_id = shift @args;
-    return File::Spec->catdir( get_dir_reads_path($job_id), 'known');
+    return File::Spec->catdir( get_dir_reads_path($job_id), get_basename_for_known_miRNA() );
 }
 
 =method get_known_reads_dir_from_job_dir
 
-Return the path to the new reads directory
+Return the path to the known miRNAs reads directory
 Parameter : job id
 
 =cut
 sub get_known_reads_dir_from_job_dir {
     my (@args) = @_;
     my $job_dir = shift @args;
-    return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), 'known');
+    return File::Spec->catdir( get_dir_reads_path_from_job_dir($job_dir), get_basename_for_known_miRNA() );
 }
 
 =method get_dir_reads_path_from_job_dir_and_mirna_type
 
-Return the path to the 'new' or 'known' reads directory
+Return the path to the reads directory for novel or known
+candidates.
 Parameters : - job dir
              - mirna type ('novel_miRNA' or 'known_miRNA')
 
