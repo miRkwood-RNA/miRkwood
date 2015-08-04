@@ -238,7 +238,7 @@ sub deserialize_results {
 	my ( $self, @args ) = @_;
 	my $candidates_dir = shift @args;
 	my %myResults      = ();
-	opendir DIR, $candidates_dir;    #ouverture répertoire job
+	opendir (DIR, $candidates_dir) or die "ERROR while opening $candidates_dir:$!";    #ouverture répertoire job
 	my @files;
 	@files = readdir DIR;
 	closedir DIR;
