@@ -71,7 +71,7 @@ sub init_pipeline {
     miRkwood->CONFIG_FILE($run_options_file);
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
-    mkdir $self->get_candidates_dir();
+    mkdir miRkwood::Paths::get_dir_candidates_path_from_job_dir( $self->get_job_dir() );
     $self->create_additional_directories();
     return;
 }
@@ -153,20 +153,6 @@ sub get_job_dir {
     return $self->{'job_dir'};
 }
 
-=method get_candidates_dir
-
-Return the path to the candidates directory
-
- Usage : $self->get_candidates_dir();
-
-=cut
-
-sub get_candidates_dir {
-    my ($self, @args) = @_;
-    my $candidates_dir = File::Spec->catdir( $self->get_job_dir(), 'candidates' );
-    return $candidates_dir;
-}
-
 =method get_known_candidates_dir
 
 Return the path to the known candidates directory
@@ -177,7 +163,7 @@ Return the path to the known candidates directory
 =cut
 sub get_known_candidates_dir {
     my ($self, @args) = @_;
-    my $known_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'known' );
+    my $known_candidates_dir = File::Spec->catdir( miRkwood::Paths::get_dir_candidates_path_from_job_dir( $self->get_job_dir() ), 'known' );
     return $known_candidates_dir;
 }
 
@@ -190,7 +176,7 @@ Return the path to the new candidates directory
 =cut
 sub get_new_candidates_dir {
     my ($self, @args) = @_;
-    my $new_candidates_dir = File::Spec->catdir( $self->get_candidates_dir(), 'new' );
+    my $new_candidates_dir = File::Spec->catdir( miRkwood::Paths::get_dir_candidates_path_from_job_dir( $self->get_job_dir() ), 'new' );
     return $new_candidates_dir;
 }
 
@@ -336,7 +322,7 @@ sub serialize_candidates {
     my @candidates_array = @{$candidates};
 
     foreach my $candidate (@candidates_array ) {
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler->serialize_candidate_information( miRkwood::Paths::get_dir_candidates_path_from_job_dir( $self->get_job_dir() ), $candidate );
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
     return;
