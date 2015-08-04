@@ -45,13 +45,25 @@ sub get_candidate_filepath {
     my ( $self, @args ) = @_;
     my $job = shift @args;
     my $id = shift @args;
-    if ( -e File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id)) ) {
-        return File::Spec->catfile($job, 'candidates/known', $self->make_candidate_filename($id));
+    my $candidate_file = File::Spec->catfile(
+        miRkwood::Paths::get_dir_candidates_path_from_job_dir( $job ),
+        $self->make_candidate_filename($id));
+
+    my $novel_candidate_file = File::Spec->catfile(
+        miRkwood::Paths::get_new_candidates_dir_from_job_dir( $job ),
+        $self->make_candidate_filename($id));
+
+    my $known_candidate_file = File::Spec->catfile(
+        miRkwood::Paths::get_known_candidates_dir_from_job_dir( $job ),
+        $self->make_candidate_filename($id));
+
+    if ( -e $known_candidate_file ) {
+        return $known_candidate_file;
     }
-    elsif ( -e File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id)) ) {
-        return File::Spec->catfile($job, 'candidates/new', $self->make_candidate_filename($id));
+    elsif ( -e $novel_candidate_file ) {
+        return $novel_candidate_file;
     }
-    return File::Spec->catfile($job, 'candidates', $self->make_candidate_filename($id));
+    return $candidate_file;
 }
 
 sub get_candidate_reads_cloud_file {
