@@ -1,0 +1,6 @@
+>contig15750__34-195, stemloop structure
+gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
+((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))
+>contig15916__187-322, stemloop structure
+uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaa
+(((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))
