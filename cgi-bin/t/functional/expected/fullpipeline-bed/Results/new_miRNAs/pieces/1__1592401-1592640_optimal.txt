@@ -1,3 +1,0 @@
->1__1592401-1592640, MFE structure
-CGUAAGAGAAAUAAUAAGCAGAGUUGGUUGGAUGAUCUCGAUAAUCGACUAGGGGUUUCUAAAUCACUUAUUGAAUACAUACGCCGAUGUUUCCCGCCCGCAAAGAAAUUUAUAUUAUUAGGUGGGGCUGAGAAUGGGCUUCGCUUUAAUGCGCUUAGAUUUAAAGGCCUUUGCAGUUUCUAUGAAUCGGCCUUCUCUGUGCACCAAUCCUACUUUUUUUGUUUUUUUGUUUUUUUUGGG
-(.((((((((((((.(((((((((.(((((((((...(((((((..((.((((....))))..))..)))))))...)))..(((.((.((((...(((((..((.(((....))).))..)))))...)))))).)))..........(((((..(((.....(((((....((.......))....))))))))..)))))))))))..))))....)))))..)))))))))))).)
