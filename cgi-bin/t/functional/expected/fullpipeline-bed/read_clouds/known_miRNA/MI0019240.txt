@@ -1,0 +1,9 @@
+ath-MIR5656
+Chromosome : 1
+Position   : 1727263-1727415
+Strand     : +
+
+AUCUUUCUUGACAAAUCAUAACAACUUUGGUUAAAAGGUUUCGAAAACUCAACCUCUUCUUCAGUCUCUCUCUUUCCAAAAGGGAAAGACUGAAGUAGAGAUUGGGUUUCCGAUACCUUUUGGCCCAUGUCGUUAUGAUUUGUCGAGGAAGGU
+((((((((((((((((((((((.((...(((((((((((.(((.((((((((.((((.(((((((((.(((((((...))))))).))))))))).)))).)))))))).))).)))))))))))...)).))))))))))))))))))))))
+                                                                                        <------miRBase------>                                            
+.......................................................................................................................*********************............. length=21 depth=1

@@ -1,0 +1,60 @@
+--- end_position
+--- 2165746
+--- reads
+---
+2165569-2165589: 1
+2165570-2165589: 1
+2165570-2165590: 4
+2165672-2165695: 1
+2165675-2165694: 1
+2165675-2165695: 25
+2165677-2165697: 3
+--- sequence
+--- CAUUUUCUUGUAUUCAAAGUAUCUUAAGUUAAGAAGAGAAUAAGAUUCUUACAUCUUGAUGAAGAGGAAUGGGAAGCCGAAAUCUAAACUGAAACAGAGGCGUCACCCAAUUAUCAAUUGGUAAGUGAUAUCUAUGUUUCGAUCUGUAUCUCGGCCUUUCACUCCUCUUCUUCUUGAUGUAAGAAUUUGUUAUUCGACACAUUAGAUGGAGUGAAAAAUCUGUUAGAUAU
+--- start_position
+--- 2165517
+--- position
+--- 2165517-2165746
+--- structure_stemloop
+--- ..((((((((...................))))))))((((((((((((((((((..((.((((((((.(((((.(((((.........(((((((.(((.(((((((((((...))))))...))))).))).))))))).........))))).))))).)))))))).))..))))))))))))..)))))).....(((.((((((........)))))).)))..
+--- precursor_name
+--- ath-MIR847
+--- structure_optimal
+--- ..((((((((...................))))))))((((((((((((((((((..((.((((((((.(((((.(((((.........(((((((.(((.(((((((((((...))))))...))))).))).))))))).........))))).))))).)))))))).))..))))))))))))..)))))).....(((.((((((........)))))).)))..
+--- identifier
+--- MI0005410
+--- chromosome
+--- '1'
+--- '%GC'
+--- '34.35'
+--- strand
+--- +
+--- quality
+--- 2
+--- mirna_position
+--- 2165675-2165695
+--- mirna_length
+--- 21
+--- name
+--- '1'
+--- matures
+---
+MIMAT0004278:
+  mature_end: '2165695'
+  mature_name: ath-miR847
+  mature_reads:
+    2165675-2165694: 1
+    2165675-2165695: 25
+  mature_start: '2165675'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/MI0005410/image.png
+--- length
+--- 230
+--- amfe
+--- -31.5652173913043
+--- mfei
+--- -0.918987341772152
+--- mfe
+--- '-72.60'
+--- mirna_sequence
+--- UCACUCCUCUUCUUCUUGAUG
