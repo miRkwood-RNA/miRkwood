@@ -1,3 +1,0 @@
->1__1430865-1431005, stemloop structure
-GCCCAUGGGCUUGCCCAGUCCAAAUGCAUAUGGACAGGCUAUAUUCUGGACUAUAAAACAAAUGGUCCAAUUGGGCAUAUGACCAGUUUUGUCCGCGGAUAAUAUGGGCUUGACCAUAUGGACAAUGGGCUGCCCAUGGGC
-((((((((((..((((((((((......(((((.((((((((((.........................................................)))).)))))).))))))))))..))))).))))))))))
