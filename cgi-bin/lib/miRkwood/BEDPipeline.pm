@@ -101,11 +101,11 @@ sub run_pipeline {
 =cut
 sub create_additional_directories {
     my ($self, @args) = @_;
-    mkdir $self->get_new_candidates_dir();
-    mkdir $self->get_known_candidates_dir();
-    mkdir $self->get_reads_dir();
-    mkdir $self->get_known_reads_dir();
-    mkdir $self->get_new_reads_dir();
+    mkdir miRkwood::Paths::get_new_candidates_dir_from_job_dir( $self->{'job_dir'} );
+    mkdir miRkwood::Paths::get_known_candidates_dir_from_job_dir( $self->{'job_dir'} );
+    mkdir miRkwood::Paths::get_dir_reads_path_from_job_dir( $self->{'job_dir'} );
+    mkdir miRkwood::Paths::get_new_reads_dir_from_job_dir( $self->{'job_dir'} );
+    mkdir miRkwood::Paths::get_known_reads_dir_from_job_dir( $self->{'job_dir'} );
     return;
 }
 
@@ -351,8 +351,8 @@ sub serialize_candidates {
     my @candidates_array = @{$candidates};
 
     foreach my $candidate (@candidates_array ) {
-        miRkwood::CandidateHandler::print_reads_clouds( $candidate, $self->get_new_reads_dir() );
-        miRkwood::CandidateHandler->serialize_candidate_information( $self->get_new_candidates_dir(), $candidate );
+        miRkwood::CandidateHandler::print_reads_clouds( $candidate, miRkwood::Paths::get_new_reads_dir_from_job_dir( $self->{'job_dir'} ) );
+        miRkwood::CandidateHandler->serialize_candidate_information( miRkwood::Paths::get_new_candidates_dir_from_job_dir( $self->{'job_dir'} ), $candidate );
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
     return;
