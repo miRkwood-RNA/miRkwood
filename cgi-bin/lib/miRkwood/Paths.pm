@@ -360,14 +360,14 @@ sub get_results_folder_for_CLI_from_job_dir {
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
 
-    my $results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $job_dir, get_results_folder_basename_for_CLI() ) );
+    my $results_folder = create_folder( File::Spec->catdir( $job_dir, get_results_folder_basename_for_CLI() ) );
 
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $mirna_type eq 'known_miRNA' ){
-            return miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, get_basename_for_known_miRNA() ) );
+            return create_folder( File::Spec->catdir( $results_folder, get_basename_for_known_miRNA() ) );
         }
         else{
-            return miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, get_basename_for_novel_miRNA() ) );
+            return create_folder( File::Spec->catdir( $results_folder, get_basename_for_novel_miRNA() ) );
         }
     }
     else{
