@@ -51,9 +51,7 @@ if ($output_folder eq ''){
     die("You must indicate an empty directory with the --output option.");
 }
 
-if (! -d $output_folder){
-	mkdir $output_folder, 0777;
-}
+$output_folder = miRkwood::Paths::create_folder( $output_folder );
 
 if( my @files = glob("$output_folder/*") ) {
      die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
@@ -71,10 +69,8 @@ if ($no_varna) {
 my $fasta_file = $ARGV[0];
 ( -e $fasta_file ) or die("$fasta_file is not a file");
 
-my $abs_output_folder = File::Spec->rel2abs($output_folder);
-if ( !-e $abs_output_folder ) {
-    mkdir $abs_output_folder or die("Error when creating $abs_output_folder");
-}
+my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($output_folder) );
+
 
 # Importing modules after directory creation
 use miRkwood;

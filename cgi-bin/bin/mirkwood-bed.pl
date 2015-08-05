@@ -77,25 +77,21 @@ if ($output_folder eq ''){
     die("You must indicate an empty directory with the --output option.");
 }
 
-if (! -d $output_folder){
-	mkdir $output_folder, 0777;
-}
+$output_folder = miRkwood::Paths::create_folder( $output_folder );
 
 if( my @files = glob("$output_folder/*") ) {
     if ( $force ){
         print "Directory $output_folder is not empty. It will be cleared out.\n";
         system("rm -Rf $output_folder");
-        mkdir $output_folder, 0777;
+        $output_folder = miRkwood::Paths::create_folder( $output_folder );
     }
     else{
         die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
     }
 } 
 
-my $abs_output_folder = File::Spec->rel2abs($output_folder);
-if ( !-e $abs_output_folder ) {
-    mkdir $output_folder or die("Error when creating $abs_output_folder");
-}
+my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($output_folder) );
+
 
 # Image
 if ( $no_varna ){

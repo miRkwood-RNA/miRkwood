@@ -67,14 +67,12 @@ sub build_hairpins {
 
 	my $chr = $locus->{'chr'};
 
-    my $working_chr_dir = miRkwood::Paths::get_workspace_chromosome_dir( $this->{'workspace'}, $chr );
-	mkdir $working_chr_dir;
+    my $working_chr_dir = miRkwood::Paths::create_folder( miRkwood::Paths::get_workspace_chromosome_dir( $this->{'workspace'}, $chr ) );
 
-    my $working_dir = miRkwood::Paths::get_workspace_candidate_dir( $this->{'workspace'},
+    my $working_dir = miRkwood::Paths::create_folder( miRkwood::Paths::get_workspace_candidate_dir( $this->{'workspace'},
                                                                     $chr,
                                                                     ($locus->{begin}+1) . '-' . ($locus->{end}),
-                                                                    $locus->{strand} );
-	mkdir $working_dir;
+                                                                    $locus->{strand} ) );
 
 	my $rnalfold_output_filename = 'rnalfold_out';
 

@@ -199,8 +199,7 @@ sub create_candidate_directory {
                                                                           $candidate->{'max'}{'cluster'},
                                                                           $candidate->{'max'}{'strand'} ); # TO CHECK : ok for WebBAM but for genomic... ?
 
-    my $candidate_dir = File::Spec->catdir( $cluster_directory, $candidate_identifier );
-    mkdir $candidate_dir;
+    my $candidate_dir = miRkwood::Paths::create_folder(File::Spec->catdir( $cluster_directory, $candidate_identifier ) );
     return $candidate_dir;
 }
 

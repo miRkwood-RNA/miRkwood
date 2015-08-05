@@ -239,8 +239,7 @@ based on its identifier and returns the name
 sub make_sequence_workspace_directory {
     my ($self, @args) = @_;
     my $sequence_identifier = shift @args;
-    my $sequence_dir = File::Spec->catdir( $self->get_workspace_path(), $sequence_identifier );
-    mkdir $sequence_dir;
+    my $sequence_dir = miRkwood::Paths::create_folder( File::Spec->catdir( $self->get_workspace_path(), $sequence_identifier ) );
     return $sequence_dir;
 }
 

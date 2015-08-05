@@ -43,10 +43,9 @@ sub process_results_dir_for_offline {
         $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
     }
 
-    my $tmp_pieces_folder = File::Spec->catdir( $final_results_folder, miRkwood::Paths::get_pieces_folder_basename_for_CLI() );
-    if ( !-e $tmp_pieces_folder ) {
-        mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
-    }
+    my $tmp_pieces_folder = miRkwood::Paths::create_folder(
+            File::Spec->catdir( $final_results_folder, miRkwood::Paths::get_pieces_folder_basename_for_CLI() )
+        );
 
     my %results = miRkwood::Results->deserialize_results($candidates_dir);
 

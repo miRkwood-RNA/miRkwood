@@ -15,6 +15,7 @@ use warnings;
 use File::Spec;
 use File::Copy;
 use miRkwood::Utils;
+use miRkwood::Paths;
 use miRkwood::WebPaths;
 use miRkwood::Results;
 use miRkwood::Candidate;
@@ -256,8 +257,7 @@ sub generate_report {
     my ( $self, @args ) = @_;
     my %results = %{$self->{'results'}};
 
-    my $images_dir = $self->get_images_dir();
-    mkdir $images_dir;
+    my $images_dir = miRkwood::Paths::create_folder($self->get_images_dir() );
 
     my $doc = $self->{'doc'};
 

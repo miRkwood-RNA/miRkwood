@@ -284,9 +284,8 @@ sub run_pipeline_on_candidate {
 sub create_candidate_directory {
     my ($self, @args) = @_;
     my $candidate_identifier = shift @args;
-    my $candidate_dir =
-          File::Spec->catdir( $self->get_directory(), $candidate_identifier );
-    mkdir $candidate_dir;
+    my $candidate_dir = miRkwood::Paths::create_folder(
+          File::Spec->catdir( $self->get_directory(), $candidate_identifier ) );
     return $candidate_dir;
 }
 

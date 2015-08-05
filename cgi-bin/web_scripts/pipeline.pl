@@ -57,8 +57,7 @@ if (@unavailable){
 }
 
 my $jobId = miRkwood::Results->make_job_id( 'Fasta' );
-my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobId);
-mkdir $absolute_job_dir;
+my $absolute_job_dir = miRkwood::Paths::create_folder( miRkwood::Results->jobId_to_jobPath($jobId) );
 
 my $log_file = File::Spec->catfile( $absolute_job_dir, 'log.log' );
 local $Log::Message::Simple::DEBUG_FH = miRkwood->LOGFH($log_file);

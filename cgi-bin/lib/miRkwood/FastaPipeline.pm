@@ -80,8 +80,7 @@ sub get_masking_information {
     my ($self, @args) = @_;
     my %filter;
     my $cfg = miRkwood->CONFIG();
-    my $masking_folder = File::Spec->catdir($self->get_job_dir(), 'masks');
-    mkdir $masking_folder;
+    my $masking_folder = miRkwood::Paths::create_folder( File::Spec->catdir($self->get_job_dir(), 'masks') );
     my $sequences = $self->get_uploaded_sequences_file();
 
     if ($cfg->param('options.filter')) {

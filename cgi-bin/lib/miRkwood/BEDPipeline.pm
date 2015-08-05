@@ -8,7 +8,7 @@ use warnings;
 use parent 'miRkwood::Pipeline';
 
 use Log::Message::Simple qw[msg error debug];
-use Data::Dumper;
+use miRkwood::Paths;
 use miRkwood::Utils;
 use miRkwood::ClusterBuilder;
 use miRkwood::HairpinBuilder;
@@ -504,8 +504,7 @@ sub store_known_mirnas_as_candidate_objects {
 
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );
-        my $candidate_dir = File::Spec->catdir( $self->get_workspace_path, $precursor_id );
-        mkdir $candidate_dir;
+        my $candidate_dir = miRkwood::Paths::create_folder( File::Spec->catdir( $self->get_workspace_path, $precursor_id ) );
 
         my $candidatejob = miRkwood::CandidateJob->new( $candidate_dir,
                                                         $candidate->{'name'},

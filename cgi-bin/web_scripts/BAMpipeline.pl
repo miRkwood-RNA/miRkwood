@@ -24,8 +24,7 @@ my $dirLib    = miRkwood::Paths->get_lib_path();
 
 ##### Create job id and job directory
 my $jobId = miRkwood::Results->make_job_id( 'BAM' );
-my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobId);
-mkdir $absolute_job_dir;
+my $absolute_job_dir = miRkwood::Paths::create_folder( miRkwood::Results->jobId_to_jobPath($jobId) );
 
 
 ##### Create log file
