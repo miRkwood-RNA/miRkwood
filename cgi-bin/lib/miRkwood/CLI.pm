@@ -123,35 +123,35 @@ sub make_all_exports {
     my $pipeline_type     = shift @args;
     my $mirna_type        = shift @args;
     my $id_job = '';
+    my $exporter;
+    my $html = '<h3>Get results as</h3> <ul>';
 
     my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
-
-    my $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter( $mirna_type );
-    $exporter->initialize($id_job, $results_ref);
-    $exporter->export_on_disk( $final_results_folder );
-    my $fasta_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-
-    $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter( $mirna_type );
-    $exporter->initialize($id_job, $results_ref);
-    $exporter->export_on_disk( $final_results_folder );
-    my $dotbracket_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-
-    $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter( $mirna_type );
-    $exporter->initialize($id_job, $results_ref);
-    $exporter->export_on_disk( $final_results_folder );
-    my $gff_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
 
     $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
     my $csv_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
+    $html .= "<li><a href='" . $exporter->get_filename() . "'>tab-delimited format (csv)</a></li>";
 
-    my $html = '<h3>Get results as</h3> <ul>';
-    $html .= "<li><a href='$csv_file'>tab-delimited format (csv)</a></li>";
-    $html .= "<li><a href='$fasta_file'>Fasta</a></li>";
-    $html .=
-"<li><a href='$dotbracket_file'>dot-bracket format (plain sequence + secondary structure)</a></li>";
-    $html .= "<li><a href='$gff_file'>gff format</a></li>";
+    $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter( $mirna_type );
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $final_results_folder );
+    my $fasta_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
+    $html .= "<li><a href='" . $exporter->get_filename() . "'>Fasta</a></li>";
+
+    $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter( $mirna_type );
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $final_results_folder );
+    my $dotbracket_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
+    $html .= "<li><a href='" . $exporter->get_filename() . "'>dot-bracket format (plain sequence + secondary structure)</a></li>";
+
+    $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter( $mirna_type );
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $final_results_folder );
+    my $gff_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
+    $html .= "<li><a href='" . $exporter->get_filename() . "'>gff format</a></li>";
+
     $html .= '</ul>';
     return $html;
 }
@@ -177,9 +177,10 @@ sub make_candidate_page {
     my $reads_html = '';
 
     if ( $pipeline_type eq 'smallRNAseq' ){
-        my $reads_file = File::Spec->catfile( $output_folder . '/clusters/', $candidate->{'identifier'} . '.txt' );
-        my $linkReads = "$reads_file"; 
-        $reads_html = "<li><b>Reads:</b> <a href='$linkReads'>download<a/></li>";
+        # this is not very robust. be cautious if you change the tree view
+        my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
+        my $reads_file = File::Spec->catfile( $reads_path, $candidate->{'identifier'} . '.txt' );
+        $reads_html = "<li><b>Reads:</b> <a href='$reads_file'>download<a/></li>";
     }
 
     my $size = length $candidate->{'sequence'};
