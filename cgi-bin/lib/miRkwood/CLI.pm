@@ -77,20 +77,20 @@ Usage:
 
 sub make_html_from_results {
     my @args    = @_;
-    my $results = shift @args;
-    my %results = %{$results};
+    my $results           = shift @args;
     my $abs_output_folder = shift @args;
-    my $pipeline_type = shift @args;
-    my $mirna_type    = shift @args;
+    my $pipeline_type     = shift @args;
+    my $mirna_type        = shift @args;
     my $pieces_folder = miRkwood::Paths::get_pieces_folder_basename_for_CLI();
 
+    my %results = %{$results};
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize('', \%results);
     $page .= $exporter->perform_export();
 
-    $page .= make_all_exports( \%results, $abs_output_folder, $pipeline_type, $mirna_type );
+    $page .= make_all_exports( \%results, $abs_output_folder, $pieces_folder, $pipeline_type, $mirna_type );
 
     my @keys = sort {
         ( $results{$a}->{'name'} cmp $results{$b}->{'name'} )
@@ -118,11 +118,11 @@ Usage:
 
 sub make_all_exports {
     my (@args)        = @_;
-    my $results_ref   = shift @args;
+    my $results_ref       = shift @args;
     my $abs_output_folder = shift @args;
-    my $pipeline_type = shift @args;
-    my $mirna_type    = shift @args;
-    my $pieces_folder = miRkwood::Paths::get_pieces_folder_basename_for_CLI();
+    my $pieces_folder     = shift @args;
+    my $pipeline_type     = shift @args;
+    my $mirna_type        = shift @args;
     my $id_job = '';
 
     my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
