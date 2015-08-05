@@ -27,22 +27,19 @@ sub process_results_dir_for_offline {
 # In debug mode (without executing the pipeline), we need to set the config file
 #miRkwood->CONFIG_FILE(miRkwood::Paths->get_job_config_path( $output_folder )); -> not sure this is still working...
 
-    my $results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $abs_output_folder, 'results' ) );
-    my $final_results_folder = '';
     my $candidates_dir = '';
+
+    my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
 
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $mirna_type eq 'known_miRNA' ){
-            $final_results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'known_miRNA' ) );
             $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $abs_output_folder );
         }
         else{
-            $final_results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, 'novel_miRNA' ) );
             $candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $abs_output_folder );
         }
     }
     else{
-        $final_results_folder = $results_folder;
         $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
     }
 
@@ -128,19 +125,7 @@ sub make_all_exports {
     my $pieces_folder = File::Spec->catdir('pieces');
     my $id_job = '';
 
-    my $results_folder = File::Spec->catdir( $abs_output_folder, 'results' );   # a changer ulterieurement
-    my $final_results_folder = '';
-    if ( $pipeline_type eq 'smallRNAseq' ){
-        if ( $mirna_type eq 'known_miRNA' ){
-            $final_results_folder = File::Spec->catdir( $results_folder, 'known_miRNA' );   # a changer ulterieurement
-        }
-        else{
-            $final_results_folder = File::Spec->catdir( $results_folder, 'novel_miRNA' );   # a changer ulterieurement
-        }
-    }
-    else{
-        $final_results_folder = $results_folder;
-    }
+    my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
 
     my $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);

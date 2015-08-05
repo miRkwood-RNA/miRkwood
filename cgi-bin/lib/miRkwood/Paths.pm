@@ -333,6 +333,47 @@ sub get_dir_reads_path_from_job_dir_and_mirna_type{
     }
 }
 
+=method get_results_folder_basename_for_CLI
+
+  Return the basename for results directory
+  (CLI pipeline)
+
+=cut
+sub get_results_folder_basename_for_CLI {
+    my (@args) = @_;
+    return 'results';
+}
+
+=method get_results_folder_for_CLI_from_job_dir
+
+  Return the directory in which the results will
+  be stored (CLI pipeline), either :
+  - jobDir/results
+  - jobDir/results/known_miRNA
+  - jobDir/results/novel_miRNA
+
+=cut
+sub get_results_folder_for_CLI_from_job_dir {
+    my (@args) = @_;
+    my $job_dir       = shift@args;
+    my $pipeline_type = shift @args;
+    my $mirna_type    = shift @args;
+
+    my $results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $job_dir, get_results_folder_basename_for_CLI() ) );
+
+    if ( $pipeline_type eq 'smallRNAseq' ){
+        if ( $mirna_type eq 'known_miRNA' ){
+            return miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, get_basename_for_known_miRNA() ) );
+        }
+        else{
+            return miRkwood::Paths::create_folder( File::Spec->catdir( $results_folder, get_basename_for_novel_miRNA() ) );
+        }
+    }
+    else{
+        return $results_folder;
+    }
+}
+
 =method get_bed_file
 
 Return the path to the BED file corresponding to given type
