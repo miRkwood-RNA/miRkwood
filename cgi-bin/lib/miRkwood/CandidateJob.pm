@@ -112,6 +112,7 @@ sub update_known_candidate_information {
     my $start = $candidate->{'start_position'};
     my $end   = $candidate->{'end_position'};
 
+    $candidate->compute_quality_for_known_miRNAs();
     $candidate->find_mirna_for_known_candidate( $genome );
     $candidate->{'sequence'} = $genome->seq( $candidate->{'chromosome'}, $start => $end );
     if ( $candidate->{'strand'} eq '-' ){

@@ -391,8 +391,6 @@ sub store_known_mirnas_as_candidate_objects {
     my @field;
     my ($id, $name);
     my $mature_informations_for_precursor;
-    my $precursor_reads;
-    my $mature_reads;
     my $data;
 
     if ( ! -r $self->{'mirna_bed'} || ( ! -s $self->{'mirna_bed'} ) ){
@@ -479,28 +477,6 @@ sub store_known_mirnas_as_candidate_objects {
 
     ##### Treat data by precursor
     foreach my $precursor_id ( keys%{$data} ){
-
-        $precursor_reads = 0;
-        $mature_reads = 0;
-
-        ##### Count number of reads
-        foreach (keys %{$data->{$precursor_id}{'reads'}}){
-            $precursor_reads += $data->{$precursor_id}{'reads'}{$_};
-        }
-        foreach my $mature_id ( keys %{$data->{$precursor_id}{'matures'}} ){
-            foreach my $read ( keys %{$data->{$precursor_id}{'matures'}{$mature_id}{'mature_reads'}} ){
-                $mature_reads += $data->{$precursor_id}{'matures'}{$mature_id}{'mature_reads'}{$read};
-            }
-        }
-
-        ##### Calculate score
-        $data->{$precursor_id}{'quality'} = 0;
-        if ( $precursor_reads >= 10 ){
-           $data->{$precursor_id}{'quality'}++;
-        }
-        if ( $mature_reads >= ( $precursor_reads / 2 ) ){
-            $data->{$precursor_id}{'quality'}++;
-        }
 
         ### Create a Candidate object
         my $candidate = miRkwood::Candidate->new( $data->{$precursor_id} );

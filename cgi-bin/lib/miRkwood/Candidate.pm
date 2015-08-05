@@ -116,6 +116,40 @@ sub compute_quality {
     return;
 }
 
+=method compute_quality_for_known_miRNAs
+
+Compute a general quality score for known miRNAs
+
+=cut
+sub compute_quality_for_known_miRNAs {
+    my ( $self, @args ) = @_;
+    my $quality = 0;
+
+    my $precursor_reads = 0;
+    my $mature_reads = 0;
+
+    ##### Count number of reads
+    foreach (keys %{$self->{'reads'}}){
+        $precursor_reads += $self->{'reads'}{$_};
+    }
+    foreach my $mature_id ( keys %{$self->{'matures'}} ){
+        foreach my $read ( keys %{$self->{'matures'}{$mature_id}{'mature_reads'}} ){
+            $mature_reads += $self->{'matures'}{$mature_id}{'mature_reads'}{$read};
+        }
+    }
+
+    ##### Calculate score
+    $self->{'quality'} = 0;
+    if ( $precursor_reads >= 10 ){
+       $self->{'quality'}++;
+    }
+    if ( $mature_reads >= ( $precursor_reads / 2 ) ){
+        $self->{'quality'}++;
+    }
+
+    return $self;    
+}
+
 =method compute_alignment_quality
 
 Compute the alignment quality score
