@@ -138,13 +138,18 @@ sub compute_quality_for_known_miRNAs {
         }
     }
 
+    $self->{'criteria_nb_reads'} = 0;
+    $self->{'criteria_reads_mirna'} = 0;
+
     ##### Calculate score
     $self->{'quality'} = 0;
     if ( $precursor_reads >= 10 ){
-       $self->{'quality'}++;
+        $self->{'quality'}++;
+        $self->{'criteria_nb_reads'} = 1;
     }
     if ( $mature_reads >= ( $precursor_reads / 2 ) ){
         $self->{'quality'}++;
+        $self->{'criteria_reads_mirna'} = 1;
     }
 
     return $self;    
