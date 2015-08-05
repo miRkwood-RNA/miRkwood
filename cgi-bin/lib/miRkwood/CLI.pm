@@ -173,23 +173,13 @@ sub make_candidate_page {
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
 
-    my $results_folder = File::Spec->catdir( $abs_output_folder, 'results' );   # a changer ulterieurement
-    my $output_folder = '';
+    my $output_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
     my $reads_html = '';
 
     if ( $pipeline_type eq 'smallRNAseq' ){
-        if ( $mirna_type eq 'known_miRNA' ){
-            $output_folder = File::Spec->catdir( $results_folder, 'known_miRNA' );   # a changer ulterieurement
-        }
-        else{
-            $output_folder = File::Spec->catdir( $results_folder, 'novel_miRNA' );   # a changer ulterieurement
-        }
         my $reads_file = File::Spec->catfile( $output_folder . '/clusters/', $candidate->{'identifier'} . '.txt' );
-        my $linkReads = "$reads_file";        
+        my $linkReads = "$reads_file"; 
         $reads_html = "<li><b>Reads:</b> <a href='$linkReads'>download<a/></li>";
-    }
-    else{
-        $output_folder = $results_folder;
     }
 
     my $size = length $candidate->{'sequence'};
