@@ -41,15 +41,15 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
 }else{
 
     if ( $cfg->param('job.mode') eq 'WebBAM' ){
-        if ( defined($candidate->{'precursor_name'}) ){
+        if ( defined($candidate->{'precursor_name'}) ){ # smallRNA-seq pipeline, known candidate
             $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
         }
-        else{
+        else{ # smallRNA-seq pipeline, new candidate
             $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_new_results($jobId);
         }
         $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
     }
-    else {
+    else {  # ab initio pipeline
         $returnlink = miRkwood::WebTemplate::get_link_back_to_results($jobId);
         $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'abinitio'), 'help.php');
     }
@@ -70,7 +70,8 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $reads_length_diagramm = $candidate->create_reads_length_diagramm();
     my $mirna = '';
     my $quality = '';
-    if ( $cfg->param('job.mode') ne 'fasta' ){
+    if ( $cfg->param('job.mode') eq 'WebBAM' ){
+        # reads
         my $nb_reads = 0;
         foreach my $key (keys( %{$candidate->{'reads'}} )){
             $nb_reads += $candidate->{'reads'}{$key};
@@ -86,6 +87,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
         </ul>
 END_TXT
 
+        # display miRNA
         if ( $candidate->{'mirna_sequence'} ne '' ){
             $mirna = <<"END_TXT";
             <li>
@@ -97,41 +99,58 @@ END_TXT
 END_TXT
         }
 
+        # quality
         $quality = <<"END_TXT";
         <h2>Quality <a href="$help_page#quality">[?]</a> </h2>
         <b>Quality:</b> $candidate->{'quality'}   <br /><ul>
 
 END_TXT
 
-        if ( $candidate->{'mirna_sequence'} ne '' ){
-            $quality .= "<li><b>Existence of a miRNA:</b> Yes</li>";
+        if ( defined($candidate->{'precursor_name'}) ){
+            if ( $candidate->{'criteria_nb_reads'} ){
+                $quality .= "<li><b>Criteria number of reads:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>Criteria number of reads:</b> No</li>";
+            }
+            if ( $candidate->{'criteria_reads_mirna'} ){
+                $quality .= "<li><b>Criteria precision of the precursor processing:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
+            }            
         }
-        else{
-            $quality .= "<li><b>Existence of a miRNA:</b> No</li>";
-        }
-        if ( $candidate->{'mfei'} < -0.8 ){
-            $quality .= "<li><b>MFEI < -0.8:</b> Yes</li>";
-        }
-        else{
-            $quality .= "<li><b>MFEI < -0.8:</b> No</li>";
-        }
-        if ( $candidate->{'criteria_nb_reads'} ){
-            $quality .= "<li><b>Criteria number of reads:</b> Yes</li>";
-        }
-        else{
-            $quality .= "<li><b>Criteria number of reads:</b> No</li>";
-        }
-        if ( $candidate->{'criteria_star'} ){
-            $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> Yes</li>";
-        }
-        else{
-            $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> No</li>";
-        }
-        if ( $candidate->{'criteria_reads_mirna'} ){
-            $quality .= "<li><b>Criteria precision of the precursor processing:</b> Yes</li>";
-        }
-        else{
-            $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
+        else {
+            if ( $candidate->{'mirna_sequence'} ne '' ){
+                $quality .= "<li><b>Existence of a miRNA:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>Existence of a miRNA:</b> No</li>";
+            }
+            if ( $candidate->{'mfei'} < -0.8 ){
+                $quality .= "<li><b>MFEI < -0.8:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>MFEI < -0.8:</b> No</li>";
+            }
+            if ( $candidate->{'criteria_nb_reads'} ){
+                $quality .= "<li><b>Criteria number of reads:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>Criteria number of reads:</b> No</li>";
+            }
+            if ( $candidate->{'criteria_star'} ){
+                $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> No</li>";
+            }
+            if ( $candidate->{'criteria_reads_mirna'} ){
+                $quality .= "<li><b>Criteria precision of the precursor processing:</b> Yes</li>";
+            }
+            else{
+                $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
+            }
         }
 
         $quality .= "</ul>";
