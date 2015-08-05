@@ -73,7 +73,7 @@ my $fasta_file = $ARGV[0];
 
 my $abs_output_folder = File::Spec->rel2abs($output_folder);
 if ( !-e $abs_output_folder ) {
-    mkdir $output_folder or die("Error when creating $abs_output_folder");
+    mkdir $abs_output_folder or die("Error when creating $abs_output_folder");
 }
 
 # Importing modules after directory creation
