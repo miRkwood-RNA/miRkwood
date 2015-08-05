@@ -152,7 +152,7 @@ END_TXT
 END_TXT
     }
 
-    my $title = "miRkwood - ". lc($mirna)." candidates";
+    my $title = 'miRkwood - '. lc($mirna).' candidates';
     $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js, $title);
 
 }   # end if valid

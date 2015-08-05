@@ -52,7 +52,7 @@ sub get_type {
     my ( $self, @args ) = @_;
     if ( defined($self->{'mirna_type'}) && $self->{'mirna_type'} ne '' ) {
         return "_$self->{'mirna_type'}";
-    }    
+    }
     else {
         return '';
     }
