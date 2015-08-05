@@ -175,6 +175,8 @@ sub make_candidate_page {
 
     my $results_folder = File::Spec->catdir( $abs_output_folder, 'results' );   # a changer ulterieurement
     my $output_folder = '';
+    my $reads_html = '';
+
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $mirna_type eq 'known_miRNA' ){
             $output_folder = File::Spec->catdir( $results_folder, 'known_miRNA' );   # a changer ulterieurement
@@ -182,6 +184,9 @@ sub make_candidate_page {
         else{
             $output_folder = File::Spec->catdir( $results_folder, 'novel_miRNA' );   # a changer ulterieurement
         }
+        my $reads_file = File::Spec->catfile( $output_folder . '/clusters/', $candidate->{'identifier'} . '.txt' );
+        my $linkReads = "$reads_file";        
+        $reads_html = "<li><b>Reads:</b> <a href='$linkReads'>download<a/></li>";
     }
     else{
         $output_folder = $results_folder;
@@ -235,14 +240,11 @@ sub make_candidate_page {
     close($ALT_FILE)
       or die("Cannot close file $alternatives_file: $!");
 
-    my $reads_file = File::Spec->catfile(
-        $output_folder . '/clusters/', $candidate->{'identifier'} . '.txt' );
 
     my $linkFasta         = "$candidate_fasta_file";
     my $linkVienna        = "$vienna_file";
     my $linkAlternatives  = "$alternatives_file";
     my $linkViennaOptimal = "$vienna_file_optimal";
-    my $linkReads         = "$reads_file";
 
     my $Vienna_HTML =
 "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
@@ -297,9 +299,7 @@ sub make_candidate_page {
     <li>
       $alternatives_HTML
     </li>
-    <li>
-      <b>Reads:</b> <a href='$linkReads'>download<a/>
-    </li>
+    $reads_html
     </ul>
 <h3>Secondary structure</h3>
     $Vienna_HTML
