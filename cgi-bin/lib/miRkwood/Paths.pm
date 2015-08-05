@@ -375,6 +375,17 @@ sub get_results_folder_for_CLI_from_job_dir {
     }
 }
 
+=method get_pieces_folder_basename_for_CLI
+
+  Return the basename for results directory
+  (CLI pipeline)
+
+=cut
+sub get_pieces_folder_basename_for_CLI {
+    my (@args) = @_;
+    return 'pieces';
+}
+
 =method get_bed_file
 
 Return the path to the BED file corresponding to given type

@@ -43,7 +43,7 @@ sub process_results_dir_for_offline {
         $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
     }
 
-    my $tmp_pieces_folder = File::Spec->catdir( $final_results_folder, 'pieces' );
+    my $tmp_pieces_folder = File::Spec->catdir( $final_results_folder, miRkwood::Paths::get_pieces_folder_basename_for_CLI() );
     if ( !-e $tmp_pieces_folder ) {
         mkdir $tmp_pieces_folder or die("Error when creating $tmp_pieces_folder");
     }
@@ -82,7 +82,7 @@ sub make_html_from_results {
     my $abs_output_folder = shift @args;
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
-    my $pieces_folder = File::Spec->catdir('pieces');
+    my $pieces_folder = miRkwood::Paths::get_pieces_folder_basename_for_CLI();
 
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
@@ -122,7 +122,7 @@ sub make_all_exports {
     my $abs_output_folder = shift @args;
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
-    my $pieces_folder = File::Spec->catdir('pieces');
+    my $pieces_folder = miRkwood::Paths::get_pieces_folder_basename_for_CLI();
     my $id_job = '';
 
     my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
