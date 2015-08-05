@@ -106,6 +106,7 @@ sub get_workspace_path {
 =method get_candidate_paths
 
 Return the path for a given candidate
+in the workspace directory
 
 =cut
 
@@ -143,7 +144,7 @@ sub get_dir_candidates_path {
     return File::Spec->catdir( $job_dir, get_candidate_dir_name() );
 }
 
-=method get_dir_candidates_path
+=method get_dir_candidates_path_from_job_dir
 
 Return the path to the candidates directory
 Parameter : job directory
@@ -167,7 +168,7 @@ sub get_basename_for_novel_miRNA {
     return 'novel_miRNA';
 }
 
-=method get_new_candidates_dir_from_job_dir
+=method get_new_candidates_dir
 
 Return the path to the new candidates directory
 Parameter : job id
