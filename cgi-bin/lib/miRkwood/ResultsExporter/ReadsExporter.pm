@@ -39,7 +39,7 @@ sub perform_export {
 
     my %results = %{$self->{'results'}};
 
-    my @keys = $self->get_sorted_keys();
+    my @keys = @{$self->get_sequences_to_export()};
     my $archive = miRkwood::Results->create_reads_archive( $self->{'identifier'}, $self->{'mirna_type'}, \@keys );
 
     my $contents = miRkwood::FileUtils::slurp_bin_file ( $archive );
