@@ -263,24 +263,24 @@ sub count_reads_in_bed_file {
     my $end = shift @args;
 
     my @tab;
-    my $reads = {};
     my $nb_total_reads = 0;
+    my $nb_read_unq = 0;
 
     if ( -e $bed_file ){
         open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
         while ( <$BED> ){
             @tab = split ( /\t/ );
             if ( ( $start == -1 && $end == -1 ) || ( $tab[1] >= $start  && $tab[2] <= $end ) ) {
-                $reads->{"$tab[1]-$tab[2]"} = $tab[4];
+                $nb_total_reads += $tab[4];
             }
         }
         close $BED;
-
-        foreach ( keys%{$reads} ){
-            $nb_total_reads += $reads->{$_};
+        $nb_read_unq = `wc -l $bed_file`;
+        if ( $nb_read_unq =~ /(\d+) .*/ ){
+            $nb_read_unq = $1;
         }
 
-        return ($nb_total_reads, scalar keys%{$reads});
+        return ($nb_total_reads, $nb_read_unq);
     }
     else {
         return (0, 0);
