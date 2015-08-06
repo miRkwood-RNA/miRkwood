@@ -767,12 +767,14 @@ sub compute_quality_from_reads {
         else {  # mirna is on the loop => not really a mirna then
             debug( "Candidate $self->{'identifier'} : the major read is in the loop", miRkwood->DEBUG() );
         }
-        debug( "Candidate $self->{'identifier'} : criteria nb reads : $criteria_nb_reads; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
+
     }
 
     $self->{'criteria_nb_reads'} = $criteria_nb_reads;
     $self->{'criteria_star'} = $criteria_star;
     $self->{'criteria_reads_mirna'} = $criteria_reads_mirna;
+
+    debug( "Candidate $self->{'identifier'} : criteria nb reads : $criteria_nb_reads; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
 
     return $criteria_nb_reads + $criteria_star + $criteria_reads_mirna;
 }
