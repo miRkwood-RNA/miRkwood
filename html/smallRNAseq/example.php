@@ -72,8 +72,8 @@
                     </li> 
 
                     <li>
-                        <i>CoDing Sequences:</i> 680 reads <br> <br>
-                        680 reads fall within a coding region (annotated as CDS) and are
+                        <i>CoDing Sequences:</i> 834 reads <br> <br>
+                        834 reads fall within a coding region (annotated as CDS) and are
                         discarded from the analysis.  You can list them by clicking on
                         the <i>download</i> link (GFF file).
                         <br> <br>
@@ -98,7 +98,7 @@
 
 
 		    <li>
-		    <i>Orphan cluster of reads:</i> 3562 reads<br><br>
+		    <i>Orphan cluster of reads:</i> 3506 reads<br><br>
 		    A cluster of reads is a short region in the genome
 		    that has been enriched with aligned reads. Here we
 		    report the number of reads that occur in a cluster not classified as
@@ -107,8 +107,8 @@
                     the <i>download</i> link (BED file).
 		    </li>
             <br />
-		    <li><i> Unclassified reads:</i> 2464 reads<br><br>
-		    2464 reads do not belong to any cluster, or do not
+		    <li><i> Unclassified reads:</i> 2632 reads<br><br>
+		    2632 reads do not belong to any cluster, or do not
 		    fall in any annotated region.
 		    </li>
 		    <br />
