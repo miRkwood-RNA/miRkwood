@@ -340,15 +340,6 @@ END_TXT
 
 }
 
-sub create_all_reads_archive {
- 	my ( $self, @args ) = @_;
-	my $jobDir   = shift @args;
-    my $reads_path = miRkwood::Paths::get_dir_reads_path_from_job_dir( $jobDir );
-    my $archive_path = "$jobDir/all_reads.tar.gz";
-    system("tar cf $archive_path $reads_path");
-    return $archive_path;
-}
-
 sub create_reads_archive {
  	my ( $self, @args ) = @_;
 	my $job_id   = shift @args;
