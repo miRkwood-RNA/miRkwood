@@ -152,7 +152,7 @@ sub compute_quality_for_known_miRNAs {
         $self->{'criteria_reads_mirna'} = 1;
     }
 
-    return $self;    
+    return $self;
 }
 
 =method compute_alignment_quality
@@ -527,7 +527,7 @@ sub get_basic_informations {
         push @headers, 'reads_distribution';
     }
 
-    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads' );
+    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads', 'criteria_nb_reads' );
 	my $result = {};
 
 	foreach (@headers){

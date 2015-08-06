@@ -118,7 +118,7 @@ END_TXT
             }
             else{
                 $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
-            }            
+            }
         }
         else {
             if ( $candidate->{'mirna_sequence'} ne '' ){
