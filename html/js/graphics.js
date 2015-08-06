@@ -264,6 +264,19 @@ function createGrid(id,rowsNumber,columnsNumber)
                         td.innerHTML = value;
                     } 
                 }
+                else if( factor =='reads')
+                {
+                    var color = myResults.getValueByFactor(i-1,'criteria_nb_reads');
+                    var value = myResults.getValueByFactor(i-1,'reads');
+                    if ( color == 1)
+                    {
+                        td.innerHTML = "<font color='#FF00FF'>"+value+"</font>";
+                    }
+                    else
+                    {
+                        td.innerHTML = value;
+                    }
+                }
                 else if( factor =='mirna_sequence')
                 {
                     var value = myResults.getValueByFactor(i-1,'mirna_sequence');
