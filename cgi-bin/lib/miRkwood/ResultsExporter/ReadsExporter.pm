@@ -40,6 +40,11 @@ sub perform_export {
     my %results = %{$self->{'results'}};
 
     my @keys = @{$self->get_sequences_to_export()};
+    # if all candidates are selected we sent an empty tab
+    # so now we have to get all candidates
+    if ( scalar(@keys) == 0 ){
+        @keys = $self->get_sorted_keys();
+    }
     my $archive = miRkwood::Results->create_reads_archive( $self->{'identifier'}, $self->{'mirna_type'}, \@keys );
 
     my $contents = miRkwood::FileUtils::slurp_bin_file ( $archive );
