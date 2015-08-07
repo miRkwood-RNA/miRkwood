@@ -288,6 +288,24 @@ sub count_reads_in_bed_file {
 
 }
 
+=method store_reads_nb_in_BED_file
+
+=cut
+sub store_reads_nb_in_BED_file {
+    my @args = @_;
+    my $BED_file = shift @args;
+    my $log_file = shift @args;
+
+    my $basename_bed = '';
+    if ( $BED_file =~ /.*[\/\\]([^\/\\]+)/ ){
+        $basename_bed = $1;
+    }
+    my ($nb_reads, $nb_unique_reads) = count_reads_in_bed_file( $BED_file, -1, -1 );
+    open (my $FH, '>>', $log_file) or die "ERROR while opening $log_file : $!";
+    print $FH "$basename_bed\t$nb_reads\t$nb_unique_reads\n";
+    close $FH;
+}
+
 =method make_reads_length_diagramm
 
   Method to draw a diagramm of reads length in raw text.

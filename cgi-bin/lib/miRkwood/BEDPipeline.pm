@@ -52,6 +52,22 @@ sub run_pipeline {
 
     $self->filter_BED();
 
+    my @list_of_BED_files = qw{_miRNAs _tRNA_rRNA_snoRNA _CDS _multimapped};
+
+    my $bed_sizes_file = File::Spec->catfile( $self->get_job_dir(), miRkwood::Paths::get_bed_size_file_name() );
+    open (my $FH, '>', $bed_sizes_file) or die "ERROR while creating $bed_sizes_file : $!";
+    print $FH "#file\treads\tunique reads\n";
+    close $FH;
+
+    miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'initial_bed'}, $bed_sizes_file );
+
+    foreach my $BED_type ( @list_of_BED_files ){
+        my $BED_file = miRkwood::Paths::get_bed_file ( $self->get_job_dir(), $BED_type );
+        miRkwood::BEDHandler::store_reads_nb_in_BED_file( $BED_file, $bed_sizes_file );
+        #~ miRkwood::BEDHandler::zipBEDfile();
+    }
+
+
     # Look for known miRNAs
     if ( $self->{'mirna_bed'} ne '' ){
         debug( 'Treat known miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
@@ -79,6 +95,7 @@ sub run_pipeline {
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
         $self->clean_workspace_per_chr( $chromosome );
     }
+    miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );
     $self->serialize_basic_candidates( 'basic_candidates' );
     $self->mark_job_as_finished();
 

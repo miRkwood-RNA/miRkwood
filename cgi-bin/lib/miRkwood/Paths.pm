@@ -442,6 +442,18 @@ sub get_workspace_candidate_dir {
     return File::Spec->catdir( $chromosome_dir, $cluster . $strand );
 }
 
+=method get_bed_size_file_name
+
+  Return the name of the text file
+  which contains the number of reads
+  in each BED file.
+
+=cut
+sub get_bed_size_file_name {
+    my (@args) = @_;
+    return 'bed_sizes.txt';
+}
+
 =method create_folder
 
   Method to create a folder if it not already exists

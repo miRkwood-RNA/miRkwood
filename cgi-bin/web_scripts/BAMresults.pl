@@ -65,29 +65,14 @@ if ( $valid ){
     my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
 
     my $initial_bed         = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '' );
-    my $mirna_bed           = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_miRNAs' );
-    my $final_bed           = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_filtered' );
-    my $other_bed           = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_tRNA_rRNA_snoRNA' );
-    my $cds_bed             = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_CDS' );
-    my $multimapped_bed     = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_multimapped' );
-    my $orphan_clusters_bed = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_orphan_clusters' );
 
+    my $bed_sizes;
     my $nb_new_results                   = 0;
     my $nb_known_results                 = 0;
-    my $nb_total_reads                   = 0;
-    my $nb_CDS_reads                     = 0;
-    my $nb_other_reads                   = 0;
-    my $nb_multi_reads                   = 0;
-    my $nb_total_reads_unq               = 0;
-    my $nb_CDS_reads_unq                 = 0;
-    my $nb_other_reads_unq               = 0;
-    my $nb_multi_reads_unq               = 0;
     my $nb_reads_known_miRNAs            = 0;
     my $nb_reads_known_miRNAs_unq        = 0;
     my $nb_reads_new_miRNAs              = 0;
     my $nb_reads_new_miRNAs_unq          = 0;
-    my $nb_orphan_clusters_reads         = 0;
-    my $nb_orphan_clusters_reads_unq     = 0;
     my $nb_orphan_reads                  = 0;
     my $percentage_CDS_reads             = 0;
     my $percentage_other_reads           = 0;
@@ -105,13 +90,13 @@ if ( $valid ){
 	} else {
         ##### Summary of options
         my $basename_bed = '';
-        if ( $initial_bed =~ /.*(\/|\\)([^\/]+)/ ){
-            $basename_bed = $2;
+        if ( $initial_bed =~ /.*[\/\\]([^\/]+)\.bed/ ){
+            $basename_bed = $1;
         }
         $HTML_additional .= "<div class='results_summary'><ul>";
         $HTML_additional .= '<h2>Options summary</h2>';
         $HTML_additional .= '<br />';
-        $HTML_additional .= "<li><em>BED file:</em> $basename_bed</li>";
+        $HTML_additional .= "<li><em>BED file:</em> $basename_bed.bed</li>";
 
         # Reference species
         if ( $cfg->param('job.plant') ){
@@ -176,40 +161,45 @@ if ( $valid ){
         $nb_known_results = miRkwood::Results->number_of_results_bis( $id_job, 'known_miRNA' );
 
         ### Count the number and percentage of reads in each category
-        ($nb_total_reads, $nb_total_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $initial_bed, -1, -1 );
-
-        # CDS
-        if ( $cfg->param('options.filter_CDS') ){
-            ($nb_CDS_reads, $nb_CDS_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $cds_bed, -1, -1 );
-            $percentage_CDS_reads = $nb_CDS_reads / $nb_total_reads * 100;
+        my $bed_sizes_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_bed_size_file_name() );
+        open (my $FH, '<', $bed_sizes_file) or die "ERROR while opening $bed_sizes_file: $!";
+        while ( <$FH> ){
+            if ( $_ !~ /^#/ ){
+                chomp;
+                my @line = split(/\t/);
+                my $name = '';
+                if ( $line[0] eq "$basename_bed.bed" ){
+                    $name = $basename_bed;
+                }
+                elsif ( $line[0] =~ /${basename_bed}_(.*)\.bed/ ){
+                    $name = $1;
+                }
+                $bed_sizes->{$name}{'reads'} = $line[1];
+                $bed_sizes->{$name}{'unique_reads'} = $line[2];
+            }
         }
 
-        # tRNA/rRNA/snoRNA
-        if ( $cfg->param('options.filter_tRNA_rRNA') ){
-            ($nb_other_reads, $nb_other_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $other_bed, -1, -1 );
-            $percentage_other_reads = $nb_other_reads / $nb_total_reads * 100;
-        }
-
-        # Multimapped reads
-        if ( $cfg->param('options.filter_multimapped') ){
-            ($nb_multi_reads, $nb_multi_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $multimapped_bed, -1, -1 );
-            $percentage_multi_reads = $nb_multi_reads / $nb_total_reads * 100;
-        }
-
-        # Orphan clusters
-        ($nb_orphan_clusters_reads, $nb_orphan_clusters_reads_unq) = miRkwood::BEDHandler::count_reads_in_bed_file( $orphan_clusters_bed, -1, -1 );
-        $percentage_orphan_clusters_reads = $nb_orphan_clusters_reads / $nb_total_reads * 100;
+        $percentage_CDS_reads = $bed_sizes->{'CDS'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
+        $percentage_other_reads = $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
+        $percentage_multi_reads = $bed_sizes->{'multimapped'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
+        $percentage_orphan_clusters_reads = $bed_sizes->{'orphan_clusters'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # Known miRNAs
         ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
-        $percentage_known_miRNAs_reads = $nb_reads_known_miRNAs / $nb_total_reads * 100;
+        $percentage_known_miRNAs_reads = $nb_reads_known_miRNAs / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # New miRNAs
         ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
-        $percentage_new_miRNAs_reads = $nb_reads_new_miRNAs / $nb_total_reads * 100;
+        $percentage_new_miRNAs_reads = $nb_reads_new_miRNAs / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # Orphan reads
-        $nb_orphan_reads = $nb_total_reads - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs - $nb_CDS_reads - $nb_other_reads - $nb_multi_reads - $nb_orphan_clusters_reads;
+        $nb_orphan_reads = $bed_sizes->{$basename_bed}{'reads'}
+                            - $nb_reads_known_miRNAs
+                            - $nb_reads_new_miRNAs
+                            - $bed_sizes->{'CDS'}{'reads'}
+                            - $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'}
+                            - $bed_sizes->{'multimapped'}{'reads'}
+                            - $bed_sizes->{'orphan_clusters'}{'reads'};
 
         ### Create HTML
         my $arguments = '?jobID=' . $id_job;
@@ -230,34 +220,34 @@ if ( $valid ){
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary</h2>';
         $HTML_results .= '<br />';
-        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_reads_unq unique reads)</li>";
+        $HTML_results .= "<li><em>Total number of reads:</em> $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)</li>";
         $HTML_results .= '<br />';
         $HTML_results .= "$barchart<br />";
 
 
-        if ( $nb_CDS_reads > 0 ){
-            $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> $nb_CDS_reads reads (<a href='$exportFileLink&type=_CDS'>download</a>)</span></li>";
+        if ( $bed_sizes->{'CDS'}{'reads'} > 0 ){
+            $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> $bed_sizes->{'CDS'}{'reads'} reads (<a href='$exportFileLink&type=_CDS'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> 0 reads</span></li>";
         }
 
-        if ( $nb_other_reads > 0 ){
-            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $nb_other_reads reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</span></li>";
+        if ( $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} > 0 ){
+            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> 0 reads</span></li>";
         }
 
-        if ( $nb_multi_reads > 0 ){
-            $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> $nb_multi_reads reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</span></li>";
+        if ( $bed_sizes->{'multimapped'}{'reads'} > 0 ){
+            $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> $bed_sizes->{'multimapped'}{'reads'} reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> 0 reads</span></li>";
         }
 
-        if ( $nb_orphan_clusters_reads > 0 ){
-            $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> $nb_orphan_clusters_reads reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</span></li>";
+        if ( $bed_sizes->{'orphan_clusters'}{'reads'} > 0 ){
+            $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> $bed_sizes->{'orphan_clusters'}{'reads'} reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> 0 reads</span></li>";

@@ -1,0 +1,7 @@
+#file	reads	unique reads
+sample.bed	19756	4075
+sample_miRNAs.bed	624	31
+sample_tRNA_rRNA_snoRNA.bed	11568	207
+sample_CDS.bed	834	479
+sample_multimapped.bed	16	12
+sample_orphan_clusters.bed	3506	46
