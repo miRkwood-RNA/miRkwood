@@ -352,8 +352,8 @@ sub create_reads_archive {
         $list_reads_files .= $id.'.txt ';
     }
     my $archive_path = "$job_dir/reads.tar.gz";
-    my $cmd = "tar cf $archive_path -C $reads_path $list_reads_files";
-    system("$cmd");
+    my $cmd = "tar zcf $archive_path -C $reads_path $list_reads_files";
+    system($cmd);
     return $archive_path;
 }
 
