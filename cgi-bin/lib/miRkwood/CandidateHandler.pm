@@ -137,7 +137,22 @@ sub print_reads_clouds {
     my $precursor_end    = $candidate->{'end_position'};
     my $chromosome       = $candidate->{'name'};
     my $structure        = $candidate->{'structure_stemloop'};
+    my $mirna_sequence   = $candidate->{'mirna_sequence'};
+    my $mirna_position   = $candidate->{'mirna_position'};
     my $precursor_length = $precursor_end - $precursor_start + 1;
+
+    my $mirna_start = miRkwood::Utils::get_element_of_split( $mirna_position, '-', 0);
+    my $mirna_end   = miRkwood::Utils::get_element_of_split( $mirna_position, '-', 1);
+    my $relative_mirna_start = 0;
+    my $relative_mirna_end   = 0;
+    if ( $strand eq '-' ){
+        $relative_mirna_start = $precursor_length + $precursor_start - $mirna_end;  # vive les maths
+    }
+    else {
+        $relative_mirna_start = $mirna_start - $precursor_start + 1;
+    }
+    $relative_mirna_end   = $relative_mirna_start + $mirna_end - $mirna_start;
+
 
     if ( (! defined( $candidate->{'reads'} )) || $candidate->{'reads'} eq {} ){
         debug( "Cannot print the reads cloud for candidate $candidate->{'identifier'}", miRkwood->DEBUG() );
@@ -285,7 +300,6 @@ sub print_reads_clouds {
         }
         @sorted_relative_positions = @new_sorted_relative_positions;
         $reads = $new_reads;
-
     }
 
     @sorted_relative_positions = sort { miRkwood::Utils::get_element_of_split( $a, '-', 0 ) <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 )
@@ -302,8 +316,13 @@ sub print_reads_clouds {
         for ($i = 0; $i < $read_start - 1; $i++){
             $output .= '.';
         }
-        for ($i = 0; $i < $read_length; $i++){
-            $output .= '*';
+        if ( $read_start == $relative_mirna_start && $read_end == $relative_mirna_end ){
+            $output .= $mirna_sequence;
+        }
+        else{
+            for ($i = 0; $i < $read_length; $i++){
+                $output .= '*';
+            }
         }
         for ($i = 0; $i < $precursor_end - $precursor_start - $read_end + 1; $i++){
             $output .= '.';
