@@ -396,9 +396,8 @@ Parameter : job id and bed type
 =cut
 sub get_bed_file {
     my (@args) = @_;
-    my $jobID    = shift @args;
+    my $absolute_job_dir = shift @args;
     my $bed_type = shift @args; # should be '', '_filtered', '_CDS, '_miRNAs', '_otherRNA', '_multimapped'
-    my $absolute_job_dir = miRkwood::Results->jobId_to_jobPath($jobID);
     my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg      = miRkwood->CONFIG();

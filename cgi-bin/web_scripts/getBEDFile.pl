@@ -15,7 +15,9 @@ my $cgi = CGI->new();
 my $id_job = $cgi->param('jobId');
 my $type   = $cgi->param('type');
 
-my $bed_file = miRkwood::Paths::get_bed_file ( $id_job, $type );
+my $jobDir = miRkwood::Results->jobId_to_jobPath($id_job);
+
+my $bed_file = miRkwood::Paths::get_bed_file ( $jobDir, $type );
 
 my ( $filename, $contents, $disposition );
 

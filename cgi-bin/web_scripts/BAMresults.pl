@@ -64,13 +64,13 @@ if ( $valid ){
     my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
     my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
 
-    my $initial_bed         = miRkwood::Paths::get_bed_file ( $id_job, '' );
-    my $mirna_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_miRNAs' );
-    my $final_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_filtered' );
-    my $other_bed           = miRkwood::Paths::get_bed_file ( $id_job, '_tRNA_rRNA_snoRNA' );
-    my $cds_bed             = miRkwood::Paths::get_bed_file ( $id_job, '_CDS' );
-    my $multimapped_bed     = miRkwood::Paths::get_bed_file ( $id_job, '_multimapped' );
-    my $orphan_clusters_bed = miRkwood::Paths::get_bed_file ( $id_job, '_orphan_clusters' );
+    my $initial_bed         = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '' );
+    my $mirna_bed           = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_miRNAs' );
+    my $final_bed           = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_filtered' );
+    my $other_bed           = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_tRNA_rRNA_snoRNA' );
+    my $cds_bed             = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_CDS' );
+    my $multimapped_bed     = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_multimapped' );
+    my $orphan_clusters_bed = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '_orphan_clusters' );
 
     my $nb_new_results                   = 0;
     my $nb_known_results                 = 0;
