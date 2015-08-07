@@ -17,7 +17,7 @@ my $type   = $cgi->param('type');
 
 my $jobDir = miRkwood::Results->jobId_to_jobPath($id_job);
 
-my $bed_file = miRkwood::Paths::get_bed_file ( $jobDir, $type );
+my $bed_file = miRkwood::Paths::get_bed_file ( $jobDir, $type, 'tar.gz' );
 
 my ( $filename, $contents, $disposition );
 
