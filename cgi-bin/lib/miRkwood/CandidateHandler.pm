@@ -123,7 +123,7 @@ Display miRBase tags :
 sub print_reads_clouds {
 
     my @args = @_;
-    my $mirna = shift @args;
+    my $candidate = shift @args;
     my $output_dir = shift @args;
 
     my $i;
@@ -131,28 +131,28 @@ sub print_reads_clouds {
     my @positions_tags = ();
     my $output = '';
 
-    my $precursor_id     = $mirna->{'identifier'};
-    my $strand           = $mirna->{'strand'};
-    my $precursor_start  = $mirna->{'start_position'};
-    my $precursor_end    = $mirna->{'end_position'};
-    my $chromosome       = $mirna->{'name'};
-    my $structure        = $mirna->{'structure_stemloop'};
+    my $precursor_id     = $candidate->{'identifier'};
+    my $strand           = $candidate->{'strand'};
+    my $precursor_start  = $candidate->{'start_position'};
+    my $precursor_end    = $candidate->{'end_position'};
+    my $chromosome       = $candidate->{'name'};
+    my $structure        = $candidate->{'structure_stemloop'};
     my $precursor_length = $precursor_end - $precursor_start + 1;
 
-    if ( (! defined( $mirna->{'reads'} )) || $mirna->{'reads'} eq {} ){
-        debug( "Cannot print the reads cloud for candidate $mirna->{'identifier'}", miRkwood->DEBUG() );
+    if ( (! defined( $candidate->{'reads'} )) || $candidate->{'reads'} eq {} ){
+        debug( "Cannot print the reads cloud for candidate $candidate->{'identifier'}", miRkwood->DEBUG() );
         return;
     }
 
-    if ( $mirna->{'name'} =~ /([^_]+)__(\d+)-(\d+)/ ){
+    if ( $candidate->{'name'} =~ /([^_]+)__(\d+)-(\d+)/ ){
         $chromosome = $1;
     }
 
-    my $reference = $mirna->{'sequence'};
+    my $reference = $candidate->{'sequence'};
 
     ### Print the header
-    if ( defined($mirna->{'precursor_name'}) ){
-        $output .= $mirna->{'precursor_name'}."\n";
+    if ( defined($candidate->{'precursor_name'}) ){
+        $output .= $candidate->{'precursor_name'}."\n";
     }
 
     $output .= "Chromosome : $chromosome\n";
@@ -163,22 +163,22 @@ sub print_reads_clouds {
 
     ### Print miRBase tags
 
-    if ( defined($mirna->{'alignment'}) and $mirna->{'alignment'} > 0  ){   # case cli bam pipeline with alignment to mirbase
+    if ( defined($candidate->{'alignment'}) and $candidate->{'alignment'} > 0  ){   # case cli bam pipeline with alignment to mirbase
 
         @positions_tags = sort {
             ( miRkwood::Utils::get_element_of_split( $a, '-', 0 )
                   <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 ) )
               || ( miRkwood::Utils::get_element_of_split( $a, '-', 1 )
                 <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 ) )
-        } keys %{$mirna->{'alignments'}};
+        } keys %{$candidate->{'alignments'}};
 
     }
 
-    elsif ( exists( $mirna->{'matures'} ) ){    # case bedpipeline for known mirnas
+    elsif ( exists( $candidate->{'matures'} ) ){    # case bedpipeline for known mirnas
 
-        foreach $mature_id (keys %{$mirna->{'matures'}}){
-            my $mature_start = $mirna->{'matures'}{$mature_id}{'mature_start'};
-            my $mature_end = $mirna->{'matures'}{$mature_id}{'mature_end'};
+        foreach $mature_id (keys %{$candidate->{'matures'}}){
+            my $mature_start = $candidate->{'matures'}{$mature_id}{'mature_start'};
+            my $mature_end = $candidate->{'matures'}{$mature_id}{'mature_end'};
             my $relative_tag_start = $mature_start - $precursor_start +1;
             my $relative_tag_end = $relative_tag_start + $mature_end - $mature_start;
             push @positions_tags, "$relative_tag_start-$relative_tag_end";
@@ -263,13 +263,13 @@ sub print_reads_clouds {
     my @sorted_relative_positions = ();
     my $reads = {};
 
-    foreach my $position ( keys %{ $mirna->{'reads'} }){
+    foreach my $position ( keys %{ $candidate->{'reads'} }){
         my $read_start = miRkwood::Utils::get_element_of_split( $position, '-', 0 );
         my $read_end = miRkwood::Utils::get_element_of_split( $position, '-', 1 );
         my $relative_read_start = $read_start - $precursor_start + 1;
         my $relative_read_end = $relative_read_start + $read_end - $read_start;
         push @sorted_relative_positions, "$relative_read_start-$relative_read_end";
-        $reads->{ "$relative_read_start-$relative_read_end" } = $mirna->{'reads'}->{$position};
+        $reads->{ "$relative_read_start-$relative_read_end" } = $candidate->{'reads'}->{$position};
     }
 
     if ( $strand eq '-' ){  # "reverse" the tags in case of strand '-'
