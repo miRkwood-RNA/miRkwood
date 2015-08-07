@@ -398,12 +398,13 @@ sub get_bed_file {
     my (@args) = @_;
     my $absolute_job_dir = shift @args;
     my $bed_type = shift @args; # should be '', '_filtered', '_CDS, '_miRNAs', '_otherRNA', '_multimapped'
+    my $extension = shift @args;
     my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg      = miRkwood->CONFIG();
     my $bed_name = $cfg->param('job.bed');
 
-    return File::Spec->catdir( $absolute_job_dir, $bed_name. $bed_type . '.bed');
+    return File::Spec->catdir( $absolute_job_dir, $bed_name. $bed_type . ".$extension");
 }
 
 =method get_workspace_chromosome_dir
