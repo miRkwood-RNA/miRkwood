@@ -64,7 +64,7 @@ if ( $valid ){
     my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
     my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
 
-    my $initial_bed         = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '' );
+    my $initial_bed         = miRkwood::Paths::get_bed_file ( $absolute_job_dir, '', 'bed' );
 
     my $bed_sizes;
     my $nb_new_results                   = 0;
@@ -162,21 +162,27 @@ if ( $valid ){
 
         ### Count the number and percentage of reads in each category
         my $bed_sizes_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_bed_size_file_name() );
-        open (my $FH, '<', $bed_sizes_file) or die "ERROR while opening $bed_sizes_file: $!";
-        while ( <$FH> ){
-            if ( $_ !~ /^#/ ){
-                chomp;
-                my @line = split(/\t/);
-                my $name = '';
-                if ( $line[0] eq "$basename_bed.bed" ){
-                    $name = $basename_bed;
+        if ( -e $bed_sizes_file ){
+            open (my $FH, '<', $bed_sizes_file) or die "ERROR while opening $bed_sizes_file: $!";
+            while ( <$FH> ){
+                if ( $_ !~ /^#/ ){
+                    chomp;
+                    my @line = split(/\t/);
+                    my $name = '';
+                    if ( $line[0] eq "$basename_bed.bed" ){
+                        $name = $basename_bed;
+                    }
+                    elsif ( $line[0] =~ /${basename_bed}_(.*)\.bed/ ){
+                        $name = $1;
+                    }
+                    $bed_sizes->{$name}{'reads'} = $line[1];
+                    $bed_sizes->{$name}{'unique_reads'} = $line[2];
                 }
-                elsif ( $line[0] =~ /${basename_bed}_(.*)\.bed/ ){
-                    $name = $1;
-                }
-                $bed_sizes->{$name}{'reads'} = $line[1];
-                $bed_sizes->{$name}{'unique_reads'} = $line[2];
             }
+        }
+
+        if ( $bed_sizes->{$basename_bed}{'reads'} == 0 ){
+            $bed_sizes->{$basename_bed}{'reads'} = 1;
         }
 
         $percentage_CDS_reads = $bed_sizes->{'CDS'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
@@ -233,7 +239,7 @@ if ( $valid ){
         }
 
         if ( $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} > 0 ){
-            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</span></li>";
+            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads (<a href='$exportFileLink&type=_tRNA_rRNA_snoRNA'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> 0 reads</span></li>";
