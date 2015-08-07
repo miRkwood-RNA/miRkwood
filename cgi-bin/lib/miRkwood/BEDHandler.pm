@@ -290,6 +290,10 @@ sub count_reads_in_bed_file {
 
 =method store_reads_nb_in_BED_file
 
+  Count the number of reads and unique
+  reads in a BED file and write it in
+  the given txt file.
+
 =cut
 sub store_reads_nb_in_BED_file {
     my @args = @_;
@@ -304,6 +308,25 @@ sub store_reads_nb_in_BED_file {
     open (my $FH, '>>', $log_file) or die "ERROR while opening $log_file : $!";
     print $FH "$basename_bed\t$nb_reads\t$nb_unique_reads\n";
     close $FH;
+    return;
+}
+
+=method zipBEDfile
+
+=cut
+sub zipBEDfile{
+    my @args = @_;
+    my $BED_file = shift @args;
+    my $jobDir = shift @args;
+    my $path = '';
+    my $basename = '';
+    if ( $BED_file =~ /(.*)\/([^\/]+)\.bed/ ){
+        $path = $1;
+        $basename = $2;
+    }
+    system("tar zcf $path/$basename.tar.gz -C $jobDir $basename.bed");
+    unlink "$BED_file";
+    return;
 }
 
 =method make_reads_length_diagramm
