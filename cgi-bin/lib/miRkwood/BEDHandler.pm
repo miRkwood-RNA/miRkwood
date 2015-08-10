@@ -320,12 +320,14 @@ sub zipBEDfile{
     my $jobDir = shift @args;
     my $path = '';
     my $basename = '';
-    if ( $BED_file =~ /(.*)\/([^\/]+)\.bed/ ){
-        $path = $1;
-        $basename = $2;
+    if ( -e $BED_file ){
+        if ( $BED_file =~ /(.*)\/([^\/]+)\.bed/ ){
+            $path = $1;
+            $basename = $2;
+        }
+        system("tar zcf $path/$basename.tar.gz -C $jobDir $basename.bed");
+        unlink "$BED_file";
     }
-    system("tar zcf $path/$basename.tar.gz -C $jobDir $basename.bed");
-    unlink "$BED_file";
     return;
 }
 
