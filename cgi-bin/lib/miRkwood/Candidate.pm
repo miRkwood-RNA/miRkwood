@@ -680,6 +680,7 @@ sub compute_quality_from_reads {
     my $end_arm_1 = shift @args;
     my $start_arm_2 = shift @args;
 
+    my $precursor_length = $self->{'end_position'} - $self->{'start_position'} + 1;
     my $start_arm_1 = $self->{'start_position'};
     my $end_arm_2   = $self->{'end_position'};
     my $reads_arm_1 = {};
@@ -730,6 +731,7 @@ sub compute_quality_from_reads {
         $criteria_nb_reads = 1;
     }
 
+    # The two other criteria need the existence of a miRNA
     if ( $self->{'mirna_sequence'} eq '' ){
         $criteria_star = 0;
         $criteria_reads_mirna = 0;
@@ -737,17 +739,59 @@ sub compute_quality_from_reads {
     }
     else {
         my ($start_mirna, $end_mirna) = split(/-/, $self->{'mirna_position'});
-        my $pairing_start_mirna = $self->{'end_position'} - ($start_mirna - $self->{'start_position'} + 2);
-        my $pairing_end_mirna = $self->{'end_position'} - ($end_mirna - $self->{'start_position'} + 2);
+        #~ my $pairing_start_mirna = $self->{'end_position'} - ($start_mirna - $self->{'start_position'} + 2);
+        #~ my $pairing_end_mirna = $self->{'end_position'} - ($end_mirna - $self->{'start_position'} + 2);
+        my $relative_pairing_start_mirna = 0;
+        my $relative_pairing_end_mirna = 0;
+        my $relative_start_mirna = 0;
+        my $relative_end_mirna = 0;
+        #~ if ( $self->{'strand'} eq '+' ){
+            $relative_start_mirna = $start_mirna - $self->{'start_position'} + 1;
+            $relative_end_mirna = $end_mirna - $self->{'start_position'} + 1;
+        #~ }
+        #~ else{
+            #~ my $new_start_mirna = $precursor_length - $start_mirna + 1;
+            #~ my $new_end_mirna = $precursor_length - $end_mirna + 1;
+#~ 
+            #~ my $relative_old_start_mirna = $start_mirna - $self->{'start_position'} + 1;
+            #~ my $relative_old_end_mirna = $end_mirna - $self->{'start_position'} + 1;
+#~ 
+            #~ $relative_start_mirna = $precursor_length + $self->{'start_position'} - $end_mirna;
+            #~ $relative_end_mirna   = $relative_start_mirna + $end_mirna - $start_mirna;
+#~ 
+            #~ debug( "Start : $start_mirna (relative $relative_old_start_mirna) becomes $new_start_mirna (relative $relative_start_mirna)", 1);
+            #~ debug( "End   : $end_mirna (relative $relative_old_end_mirna) becomes $new_end_mirna (relative $relative_end_mirna)", 1);
+#~ 
+        #~ }
 
-        # Criteria nb of reads in a window [-3; +3] around the mirna
+        $relative_pairing_start_mirna = $self->find_pairing_position( $relative_start_mirna );
+        $relative_pairing_end_mirna = $self->find_pairing_position( $relative_end_mirna );
+#~ 
+        #~ $relative_pairing_start_mirna = $self->find_pairing_position( $relative_end_mirna );
+        #~ $relative_pairing_end_mirna = $self->find_pairing_position( $relative_start_mirna );
+
+        my $pairing_start_mirna = $relative_pairing_start_mirna + $self->{'start_position'} - 1;
+        my $pairing_end_mirna = $relative_pairing_end_mirna + $self->{'start_position'} - 1;
+
+        #~ if ( $self->{'strand'} eq '-' ){
+            #~ my $tmp = $pairing_start_mirna;
+            #~ $pairing_start_mirna = $pairing_end_mirna;
+            #~ $pairing_end_mirna = $tmp;
+        #~ }
+
+        debug("Start = $start_mirna - relative start = $relative_start_mirna - paired with $pairing_start_mirna (relative $relative_pairing_start_mirna)", 1);
+        debug("End   = $end_mirna - relative end   = $relative_end_mirna - paired with $pairing_end_mirna (relative $relative_pairing_end_mirna)", 1);
+
+        # Criteria nb of reads in a window [-3; +3] around the mirna start
+        # or [-5; +5] around the "star" end
         foreach my $read_position (keys %{$self->{'reads'}}){
             my ($start_read, $end_read) = split(/-/, $read_position);
             if ( ($start_read >= ($start_mirna - 3) and  $start_read <= ($start_mirna + 3))
-                or ($end_read >= ($pairing_end_mirna - 5) and $end_read <= ($pairing_end_mirna + 5) ) ){
+                or ($end_read >= ($pairing_start_mirna - 5) and $end_read <= ($pairing_start_mirna + 5) ) ){
                 $reads_around_mirna += $self->{'reads'}{$read_position};
             }
         }
+        debug("$reads_around_mirna reads around the miRNA on a total of $total_reads", 1);
         if ( $reads_around_mirna / $total_reads >= 0.75 ){
             $criteria_reads_mirna = 1;
         }
@@ -932,6 +976,48 @@ sub find_mirna_for_known_candidate {
 
     return $self;
 
+}
+
+sub find_pairing_position {
+    my ($self, @args) = @_;
+    #~ my $position = shift @args;
+    my $pairing_position = 0;
+    #~ my $relative_position = $position - $self->{'start_position'} + 1;
+    my $relative_position =shift @args;
+    my $precursor_length = $self->{'end_position'} - $self->{'start_position'} + 1;
+    #~ print "$position (relative $relative_position)\n";
+    
+    #~ if ( $self->{'strand'} eq '+' ){
+        if ( $self->{'CT'}{$relative_position} ne '0' ){
+            $pairing_position = $self->{'CT'}{$relative_position};
+        }
+        else{
+            # if the position is not paired (CT value is 0), we look at the closest
+            # paired positions surronding the position, we look for the corresponding
+            # paired values and we take as the paired position a value in-between
+            # according to a pro-rata.
+            my $before = 0;
+            my $after = 0;
+            while ( $before < $relative_position && $self->{'CT'}{$relative_position - $before} eq '0' ){
+                $before++;
+            }
+            while ( $after < $precursor_length && $self->{'CT'}{$relative_position + $after} eq '0' ){
+                $after++;
+            }
+            #~ print "$before points before closest parenthesis before position.\n";
+            #~ print "$after points before closest parenthesis after position.\n";
+            #~ print (($relative_position - $before) . " is paired with " . $self->{'CT'}{$relative_position - $before} . "\n");
+            #~ print (($relative_position + $after) . " is paired with " . $self->{'CT'}{$relative_position + $after} . "\n");
+            
+            $pairing_position = int( $self->{'CT'}{$relative_position - $before} + ( $before / ( $before + $after ) ) * ( $self->{'CT'}{$relative_position + $after} - $self->{'CT'}{$relative_position - $before} ) );
+            
+            
+        }
+    #~ }
+    #~ else{
+        #~ 
+    #~ }
+    return $pairing_position;
 }
 
 
