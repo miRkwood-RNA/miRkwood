@@ -70,9 +70,7 @@ if ( $valid ){
     my $nb_new_results                   = 0;
     my $nb_known_results                 = 0;
     my $nb_reads_known_miRNAs            = 0;
-    my $nb_reads_known_miRNAs_unq        = 0;
     my $nb_reads_new_miRNAs              = 0;
-    my $nb_reads_new_miRNAs_unq          = 0;
     my $nb_orphan_reads                  = 0;
     my $percentage_CDS_reads             = 0;
     my $percentage_other_reads           = 0;
@@ -191,11 +189,11 @@ if ( $valid ){
         $percentage_orphan_clusters_reads = $bed_sizes->{'orphan_clusters'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # Known miRNAs
-        ($nb_reads_known_miRNAs, $nb_reads_known_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_known_yaml );
+        $nb_reads_known_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_known_yaml );
         $percentage_known_miRNAs_reads = $nb_reads_known_miRNAs / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # New miRNAs
-        ($nb_reads_new_miRNAs, $nb_reads_new_miRNAs_unq) = miRkwood::Results->count_reads_in_basic_yaml_file( $basic_yaml );
+        $nb_reads_new_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_yaml );
         $percentage_new_miRNAs_reads = $nb_reads_new_miRNAs / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # Orphan reads

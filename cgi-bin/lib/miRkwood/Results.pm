@@ -176,10 +176,10 @@ sub convert_basic_to_pseudoXML {
 
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $type eq 'known_miRNA' ){  # known miRNAs for pipeline smallRNAseq
-            @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality reads identifier image criteria_nb_reads};
+            @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality nb_reads identifier image criteria_nb_reads};
         }
         else {  # new miRNAs for pipeline smallRNAseq
-            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'reads_distribution', 'mfei', 'reads', @optional_fields, 'identifier', 'image', 'criteria_nb_reads' );
+            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'reads_distribution', 'mfei', 'nb_reads', @optional_fields, 'identifier', 'image', 'criteria_nb_reads' );
         }
     }
     else {  # pipeline ab initio
@@ -290,25 +290,17 @@ sub number_of_results_bis {
 }
 
 sub count_reads_in_basic_yaml_file {
-    my ( $self, @args ) = @_;
+    my ( @args ) = @_;
     my $yaml = shift @args;
     my $nb_reads = 0;
-    my $nb_reads_unq = 0;
 
     my @attributes = YAML::XS::LoadFile($yaml);
-    my $reads;
 
-    for (my $i = 0; $i < scalar(@{$attributes[0]}); $i++){
-        foreach my $positions ( keys%{$attributes[0][$i]{'reads'}} ){
-            $reads->{ $positions } = $attributes[0][$i]{'reads'}{$positions};
-        }
+    foreach my $data ( @{$attributes[0]} ){
+        $nb_reads += $data->{'nb_reads'};
     }
-    foreach my $positions (keys%{$reads}){
-        $nb_reads += $reads->{$positions};
-    }
-    $nb_reads_unq = scalar (keys%{$reads});
 
-    return ($nb_reads, $nb_reads_unq);
+    return $nb_reads;
 }
 
 sub make_reads_barchart {
