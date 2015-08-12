@@ -74,9 +74,8 @@ sub has_mirdup_validation{
         if (scalar (grep { /^1$/ } values %mirdup_results ) >= 1){
             return 1;
         }
-    }else{
-        return 0;
     }
+    return 0;
 }
 
 =method compute_quality
@@ -92,15 +91,16 @@ sub compute_quality {
     my $mode = $cfg->param('job.mode');
 
     if ( $mode eq 'WebBAM' ){
-        $quality += $self->compute_quality_from_reads();
-        $self->{'reads_distribution'} =  $quality;
-        $self->{'quality'} = $quality;
-        if ( $self->{'mfei'} < -0.8 ){
-            $self->{'quality'} += 1;
-        }
-        if ( $self->{'mirna_sequence'} ne '' ){
-            $self->{'quality'} += 1;
-        }
+        $self->compute_quality_from_reads();
+        #~ $quality += $self->compute_quality_from_reads();
+        #~ $self->{'reads_distribution'} =  $quality;
+        #~ $self->{'quality'} = $quality;
+        #~ if ( $self->{'mfei'} < -0.8 ){
+            #~ $self->{'quality'} += 1;
+        #~ }
+        #~ if ( $self->{'mirna_sequence'} ne '' ){
+            #~ $self->{'quality'} += 1;
+        #~ }
     }
     else{
         if ( $self->{'mfei'} ) {
@@ -790,9 +790,27 @@ sub compute_quality_from_reads {
     $self->{'criteria_star'} = $criteria_star;
     $self->{'criteria_reads_mirna'} = $criteria_reads_mirna;
 
-    debug( "Candidate $self->{'identifier'} : criteria nb reads : $criteria_nb_reads; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
+    # reads distribution takes into account the existence of a star, the
+    # precision of the processing (% of reads around the miRNA and/or its
+    # star) and the miRdup validation
+    $self->{'criteria_mirdup'} = $self->has_mirdup_validation();
+    $self->{'reads_distribution'} = $criteria_star + $criteria_reads_mirna + $self->{'criteria_mirdup'};
 
-    return $criteria_nb_reads + $criteria_star + $criteria_reads_mirna;
+    # quality takes into account the reads distribution quality, the
+    # number of reads, the existence of a miRNA and the MFEI value
+    $self->{'quality'} = $self->{'reads_distribution'};
+    $self->{'quality'} += $criteria_nb_reads;
+    if ( $self->{'mfei'} < -0.8 ){
+        $self->{'quality'} += 1;
+    }
+    if ( $self->{'mirna_sequence'} ne '' ){
+        $self->{'quality'} += 1;
+    }
+
+    debug( "Candidate $self->{'identifier'} ($self->{'quality'}): criteria nb reads : $criteria_nb_reads;  criteria mirdup : $self->{'criteria_mirdup'}; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
+
+    #~ return $criteria_nb_reads + $criteria_star + $criteria_reads_mirna;
+    return $self;
 }
 
 
