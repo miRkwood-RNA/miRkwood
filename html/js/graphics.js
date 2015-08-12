@@ -174,6 +174,10 @@ function createGrid(id,rowsNumber,columnsNumber)
 				{
 					td.innerHTML = '<h3>+/-</h3>' ;
 				}
+				else if (value.toString() == 'nb_reads')
+				{
+					td.innerHTML = '<h3>READS</h3>' ;
+				}
 				else if (value.toString() == 'reads_distribution')
 				{
 					td.innerHTML = '<h3>reads<br>distribution</h3>' ;

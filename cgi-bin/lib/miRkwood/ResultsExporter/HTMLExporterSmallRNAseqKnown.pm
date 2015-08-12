@@ -13,7 +13,7 @@ use miRkwood::Utils;
 sub get_headers {
     my ( $self, @args ) = @_;
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
-    my @headers = qw{identifier precursor_name position strand mirna_sequence mirna_length quality reads};
+    my @headers = qw{identifier precursor_name position strand mirna_sequence mirna_length quality nb_reads};
     return @headers;
 }
 
@@ -27,6 +27,9 @@ sub get_header {
         }
         elsif ( $header eq 'mirna_sequence' ){
             $output .= "<th>miRNA</th>\n";
+        }
+        elsif ( $header eq 'nb_reads' ){
+            $output .= "<th>reads</th>\n";
         }
         elsif ( $header eq 'mirna_length' ){
             $output .= "<th>miRNA length</th>\n";

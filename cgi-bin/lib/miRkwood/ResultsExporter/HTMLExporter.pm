@@ -32,13 +32,7 @@ sub export_candidate {
     for my $header ( @headers ) {
         my $td_content = '';
         my $contents   = ${$candidate}{$header};
-        if ($header eq 'reads'){
-            $contents = 0;
-            foreach my $key (keys( %{$candidate->{'reads'}} )){
-                $contents += $candidate->{'reads'}{$key};
-            }
-        }
-        elsif ($header eq 'quality'){
+        if ($header eq 'quality'){
             $contents = '<center><font color="#FF8000">';
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= '&#x2605;';

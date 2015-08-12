@@ -526,7 +526,7 @@ sub get_basic_informations {
         push @headers, 'reads_distribution';
     }
 
-    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'reads', 'criteria_nb_reads' );
+    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'nb_reads', 'criteria_nb_reads' );
 	my $result = {};
 
 	foreach (@headers){
