@@ -150,6 +150,8 @@ sub get_basic_pseudoXML_for_jobID {
     $output .= "<results id='all2'>\n";
     @candidates = sort {
         ( $b->{'quality'} cmp $a->{'quality'} )
+          ||
+        ( $a->{'name'} cmp  $b->{'name'} )
           || (
             $a->{'start_position'} <=> $b->{'start_position'} )
     } @candidates;
