@@ -16,7 +16,7 @@
   \    U    UCUUAU     AA        C   G-    AC           AAG                 UUCGUA
   \    UG       AA   AUAUUUGAUUAUUAGGAUAUCCAGAGGUUCGGG\n"
 --- reads_distribution
---- 1
+--- 2
 --- mirna_position
 --- 1442774-1442797
 --- alternatives
@@ -398,10 +398,12 @@
 --- strand
 --- '-'
 --- quality
---- 3
+--- 4
 --- cluster
 --- 1442561-1442922
 --- criteria_star
+--- 1
+--- criteria_mirdup
 --- 1
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/1442561-1442922-/1/image.png

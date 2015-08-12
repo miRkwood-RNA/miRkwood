@@ -520,6 +520,8 @@
 --- 512610-513217
 --- criteria_star
 --- 0
+--- criteria_mirdup
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/512610-513217-/1/image.png
 --- length

@@ -297,6 +297,8 @@
 --- 2157341-2157736
 --- criteria_star
 --- 1
+--- criteria_mirdup
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/2157341-2157736+/1/image.png
 --- length
