@@ -1,3 +1,32 @@
+--- sequence
+--- UAAAUUGCGUUUUUGACAGGAAAAUGUGAAAUCUUUUUGGCAGGAAAAUGUUGAAUGUCUUUUUUGGCGGUAAACUGUUAAAUCGCGGUUUA
+--- criteria_reads_mirna
+--- 0
+--- identifier
+--- 1__55915-56006-1
+--- hairpin
+--- "         UU        GAAAA   G   UCUU---       GG\nUAAAUUGCG  UUUGACAG     UGU
+  AAA       UUUGGCA  A\n|||||||||  ||||||||     ||| |||       |||||||  \nAUUUGGCGC
+  \ AAAUUGUC     GCG UUU       AAGUUGU  A\n         U-        AAAUG   G   UUUCUGU
+  \      AA\n"
+--- reads_distribution
+--- 0
+--- mirna_position
+--- ''
+--- alternatives
+--- {}
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- ''
+--- name
+--- '1'
+--- energy_optimal
+--- '-23.40'
+--- mfe
+--- '-23.40'
+--- mirna_sequence
+--- ''
 --- end_position
 --- 56006
 --- reads
@@ -10,20 +39,16 @@
 55935-55957: 1
 55942-55965: 2
 55966-55989: 2
---- sequence
---- UAAAUUGCGUUUUUGACAGGAAAAUGUGAAAUCUUUUUGGCAGGAAAAUGUUGAAUGUCUUUUUUGGCGGUAAACUGUUAAAUCGCGGUUUA
 --- start_position
 --- 55915
 --- structure_stemloop
 --- (((((((((..((((((((.....(((.(((....(((((((......))))))).......))).))).....)))))))).)))))))))
 --- position
 --- 55915-56006
---- criteria_reads_mirna
---- 0
+--- nb_reads
+--- 12
 --- structure_optimal
 --- (((((((((..((((((((.....(((.(((....(((((((......))))))).......))).))).....)))))))).)))))))))
---- identifier
---- 1__55915-56006-1
 --- CT
 ---
 '1': '92'
@@ -120,33 +145,14 @@
 '92': '1'
 --- '%GC'
 --- '33.70'
---- hairpin
---- "         UU        GAAAA   G   UCUU---       GG\nUAAAUUGCG  UUUGACAG     UGU
-  AAA       UUUGGCA  A\n|||||||||  ||||||||     ||| |||       |||||||  \nAUUUGGCGC
-  \ AAAUUGUC     GCG UUU       AAGUUGU  A\n         U-        AAAUG   G   UUUCUGU
-  \      AA\n"
 --- strand
 --- '-'
 --- alignment
 --- 0
---- reads_distribution
---- 0
---- mirna_position
---- ''
 --- quality
 --- 0
---- alternatives
---- {}
 --- cluster
 --- 55821-56324
---- criteria_nb_reads
---- 0
---- mirna_length
---- ''
---- name
---- '1'
---- energy_optimal
---- '-23.40'
 --- criteria_star
 --- 0
 --- image
@@ -157,9 +163,5 @@
 --- 92
 --- mfei
 --- -0.754838709677419
---- mfe
---- '-23.40'
---- mirna_sequence
---- ''
 --- full_position
 --- 55915-56006&nbsp;-

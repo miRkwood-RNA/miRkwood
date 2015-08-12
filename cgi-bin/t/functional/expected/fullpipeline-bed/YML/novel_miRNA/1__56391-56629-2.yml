@@ -1,7 +1,35 @@
---- end_position
---- 56629
 --- sequence
 --- AAACUCUAAGAAAACGAUAAAAACCAAGUUGGGUACCCACGAGUAGUCUCGGAAUAAUCAGGUUUUUUCGGGUUUUACCCACUUAUUCAAAAACCCAUCUGGGUUUUUUAAAGUUGGAUUUUUGGUGGACGGGUUUAUUUUGGGUUCAGGUCGGGCUGAGCUUUUUUACCCACCACAACAUCUCUAACUACUACAGACACUGACAAAUCUGACUUGGCUUUUUAUAAAACUUAAUGUUU
+--- criteria_reads_mirna
+--- 0
+--- identifier
+--- 1__56391-56629-2
+--- hairpin
+--- "    UC    AAAACG       -           ACCCACGAGUAGUCUCGGAAUAAUCAGGUUUUUUCGGGUUUUACCCACUUAUUCAAAAACCCAUCUGGGUUUUUUAAAGUUGGAU\nAAAC
+  \ UAAG      AUAAAAA CCAAGUUGGGU                                                                                     U\n||||
+  \ ||||      ||||||| |||||||||||                                                                                     \nUUUG
+  \ AUUC      UAUUUUU GGUUCAGUCUA                                                                                     U\n
+  \   UA    AAAA--       C           AACAGUCACAGACAUCAUCAAUCUCUACAACACCACCCAUUUUUUCGAGUCGGGCUGGACUUGGGUUUUAUUUGGGCAGGUGGUU\n"
+--- reads_distribution
+--- 0
+--- mirna_position
+--- ''
+--- alternatives
+--- {}
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- ''
+--- name
+--- '1'
+--- energy_optimal
+--- '-66.70'
+--- mfe
+--- '-15.12'
+--- mirna_sequence
+--- ''
+--- end_position
+--- 56629
 --- reads
 ---
 56416-56439: 2
@@ -44,16 +72,16 @@
 56532-56553: 2
 --- start_position
 --- 56391
---- structure_stemloop
---- ((((..((((......((((((((((((((((((............................................................................................................................................................................))))))))))).)))))))....))))..))))
 --- position
 --- 56391-56629
---- criteria_reads_mirna
---- 0
+--- structure_stemloop
+--- ((((..((((......((((((((((((((((((............................................................................................................................................................................))))))))))).)))))))....))))..))))
+--- nb_reads
+--- 76
 --- structure_optimal
 --- ((((..((((......((((((((((((((((((.....((((....))))......((((((((....((((...))))........((((((((....))))))))...(((((((......((((..((((.......((((((((......))))))))....)))).))))......))))))).....)))).))))...))))))))))).)))))))....))))..))))
---- identifier
---- 1__56391-56629-2
+--- '%GC'
+--- '38.08'
 --- CT
 ---
 '1': '239'
@@ -295,49 +323,23 @@
 '97': '0'
 '98': '0'
 '99': '0'
---- '%GC'
---- '38.08'
---- hairpin
---- "    UC    AAAACG       -           ACCCACGAGUAGUCUCGGAAUAAUCAGGUUUUUUCGGGUUUUACCCACUUAUUCAAAAACCCAUCUGGGUUUUUUAAAGUUGGAU\nAAAC
-  \ UAAG      AUAAAAA CCAAGUUGGGU                                                                                     U\n||||
-  \ ||||      ||||||| |||||||||||                                                                                     \nUUUG
-  \ AUUC      UAUUUUU GGUUCAGUCUA                                                                                     U\n
-  \   UA    AAAA--       C           AACAGUCACAGACAUCAUCAAUCUCUACAACACCACCCAUUUUUUCGAGUCGGGCUGGACUUGGGUUUUAUUUGGGCAGGUGGUU\n"
---- strand
---- +
 --- alignment
 --- 0
---- reads_distribution
---- 0
---- mirna_position
---- ''
+--- strand
+--- +
 --- quality
 --- 0
---- alternatives
---- {}
 --- cluster
 --- 56385-56643
---- criteria_nb_reads
---- 0
---- mirna_length
---- ''
---- name
---- '1'
---- energy_optimal
---- '-66.70'
 --- criteria_star
 --- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/workspace/1/56385-56643+/2/image.png
---- amfe
---- -27.907949790795
 --- length
 --- 239
+--- amfe
+--- -27.907949790795
 --- mfei
 --- -0.732967032967033
---- mfe
---- '-15.12'
---- mirna_sequence
---- ''
 --- full_position
 --- 56391-56629&nbsp;+

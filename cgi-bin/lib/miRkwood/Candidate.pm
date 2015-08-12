@@ -92,8 +92,7 @@ sub compute_quality {
     my $mode = $cfg->param('job.mode');
 
     if ( $mode eq 'WebBAM' ){
-        my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
-        $quality += $self->compute_quality_from_reads( $end_arm_1, $start_arm_2 );
+        $quality += $self->compute_quality_from_reads();
         $self->{'reads_distribution'} =  $quality;
         $self->{'quality'} = $quality;
         if ( $self->{'mfei'} < -0.8 ){
@@ -677,9 +676,7 @@ sub determine_precursor_arms {
 =cut
 sub compute_quality_from_reads {
     my ( $self, @args ) = @_;
-    my $end_arm_1 = shift @args;
-    my $start_arm_2 = shift @args;
-
+    my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
     my $precursor_length = $self->{'end_position'} - $self->{'start_position'} + 1;
     my $start_arm_1 = $self->{'start_position'};
     my $end_arm_2   = $self->{'end_position'};
@@ -687,7 +684,6 @@ sub compute_quality_from_reads {
     my $reads_arm_2 = {};
     my $count_arm_1 = 0;
     my $count_arm_2 = 0;
-    my $total_reads = 0;
     my $criteria_nb_reads = 0;
     my $criteria_star = 0;
     my $criteria_reads_mirna = 0;
@@ -721,7 +717,6 @@ sub compute_quality_from_reads {
                     $max_count_arm_2 = $self->{'reads'}{ $read_position };
                 }
             }
-            $total_reads += $self->{'reads'}{ $read_position };
         }
     }
 
@@ -729,7 +724,7 @@ sub compute_quality_from_reads {
     if ( $count_arm_1 >= 10 and $count_arm_2 >= 10 ){
         $criteria_nb_reads = 1;
     }
-    if ( $total_reads >= 100 ){
+    if ( $self->{'nb_reads'} >= 100 ){
         $criteria_nb_reads = 1;
     }
 
@@ -768,8 +763,8 @@ sub compute_quality_from_reads {
                 #~ debug("End of read ($read_position) is around pairing miRNA start ($pairing_start_mirna)", 1);                
             }
         }
-        debug("$reads_around_mirna reads around the miRNA on a total of $total_reads (" . ($reads_around_mirna / $total_reads) . " %)", 1);
-        if ( $reads_around_mirna / $total_reads >= 0.75 ){
+        debug("$reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ($reads_around_mirna / $self->{'nb_reads'}) . " %)", 1);
+        if ( $reads_around_mirna / $self->{'nb_reads'} >= 0.75 ){
             $criteria_reads_mirna = 1;
         }
 
@@ -983,6 +978,20 @@ sub find_pairing_position {
     }
 
     return $pairing_position;
+}
+
+
+
+sub count_total_nb_of_reads_for_candidate {
+    my ($self, @args) = @_;
+    my $total_reads = 0;
+    if ( scalar(keys %{$self->{'reads'}}) > 0 ){
+        foreach my $key (keys( %{$self->{'reads'}} )){
+            $total_reads += $self->{'reads'}{$key};
+        }
+    }
+    $self->{'nb_reads'} = $total_reads;
+    return $self;
 }
 
 

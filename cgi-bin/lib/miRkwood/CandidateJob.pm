@@ -56,6 +56,7 @@ sub run{
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
     if ( $cfg->param('job.mode') eq 'WebBAM' ) {
         $candidate->find_mirna( $self->{'genome_db'} );
+        $candidate->count_total_nb_of_reads_for_candidate();
     }
     $candidate->compute_alignment_quality();
     $candidate->compute_quality();
@@ -112,6 +113,7 @@ sub update_known_candidate_information {
     my $start = $candidate->{'start_position'};
     my $end   = $candidate->{'end_position'};
 
+    $candidate->count_total_nb_of_reads_for_candidate();
     $candidate->compute_quality_for_known_miRNAs();
     $candidate->find_mirna_for_known_candidate( $genome );
     $candidate->{'sequence'} = $genome->seq( $candidate->{'chromosome'}, $start => $end );
