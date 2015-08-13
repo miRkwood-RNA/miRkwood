@@ -55,6 +55,8 @@ Run the Alignment (RNAcomp) a posteriori test
 sub test_alignment {
     my ( $self, @args ) = @_;
     my $candidate_rnafold_stemploop_out = shift @args;
+    my $cfg = miRkwood->CONFIG();
+    my $mode = $cfg->param('job.mode');
 
     my $candidate_ct_stemloop_file =
       File::Spec->catfile( $self->get_directory(), 'outB2ct_stemloop.ct' );
@@ -63,7 +65,19 @@ sub test_alignment {
       or die('Problem when converting to CT format');
 
     my $seqN = File::Spec->catfile( $self->get_directory(), 'seqWithN.txt' );
-    $self->mask_CT_file($candidate_ct_stemloop_file, $seqN);
+    # Un-comment this to run RNAcomp on the sequence without N
+    #~ if ( $mode eq 'WebBAM' ){
+        #~ my $seqWithT = $self->{'candidate'}{'sequence'};
+        #~ $seqWithT =~ s/U/T/g;
+        #~ open(my $FILE, '>', $seqN) or die "ERROR while creating $seqN: $!";
+        #~ print $FILE ">$self->{'candidate'}{'name'}\n";
+        #~ print $FILE "$seqWithT\n";
+        #~ close $FILE;
+    #~ }
+    #~ else{
+        $self->mask_CT_file($candidate_ct_stemloop_file, $seqN);
+    #~ }
+    
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
     miRkwood::Programs::run_RNAcomp( $seqN, $exonerate_out )
       or die("Problem when running RNAcomp : $!");
