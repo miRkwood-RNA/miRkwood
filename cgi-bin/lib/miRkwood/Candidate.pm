@@ -883,7 +883,8 @@ sub create_reads_length_diagramm {
   
 =cut
 sub find_mirna {
-    my ($self, @args) = @_;
+    my (@args) = @_;
+    my $self = shift @args;
     my $genome_db = shift @args;
     my $max = 0;
     my $mirna_start = 0;
@@ -901,8 +902,12 @@ sub find_mirna {
 
     my $percentage_majority_read = $max / $total_reads;
     if ( $percentage_majority_read >= $threshold ){
+        my $chromosome = $self->{'name'};
+        if ( $self->{'name'} =~ /([^_]+)__.*/ ){
+            $chromosome = $1;
+        }
         $self->{'mirna_position'} = "$mirna_start-$mirna_end";
-        $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
+        $self->{'mirna_sequence'} = $genome_db->seq( $chromosome, $mirna_start => $mirna_end );
         $self->{'mirna_sequence'} =~ s/T/U/g;
         $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
         if ( $self->{'strand'} eq '-' ){
@@ -1001,7 +1006,8 @@ sub find_pairing_position {
 
 
 sub count_total_nb_of_reads_for_candidate {
-    my ($self, @args) = @_;
+    my (@args) = @_;
+    my $self = shift @args;
     my $total_reads = 0;
     if ( scalar(keys %{$self->{'reads'}}) > 0 ){
         foreach my $key (keys( %{$self->{'reads'}} )){

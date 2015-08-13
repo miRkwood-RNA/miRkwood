@@ -49,15 +49,18 @@ sub get_directory {
 sub run{
     my ( $self, @args ) = @_;
     my $cfg = miRkwood->CONFIG();
+
+    if ( $cfg->param('job.mode') eq 'WebBAM' ) {
+        $self->{'candidate'} = miRkwood::Candidate::find_mirna( $self->{'candidate'}, $self->{'genome_db'} );
+        $self->{'candidate'} = miRkwood::Candidate::count_total_nb_of_reads_for_candidate( $self->{'candidate'} );
+    }
+
     my $candidate_test_info = $self->process_tests_for_candidate();
     my $candidate_information = $self->get_candidate_information();
 
     my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
-    if ( $cfg->param('job.mode') eq 'WebBAM' ) {
-        $candidate->find_mirna( $self->{'genome_db'} );
-        $candidate->count_total_nb_of_reads_for_candidate();
-    }
+
     $candidate->compute_alignment_quality();
     $candidate->compute_quality();
     return $candidate;
