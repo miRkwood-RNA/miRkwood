@@ -51,8 +51,8 @@ sub run{
     my $cfg = miRkwood->CONFIG();
 
     if ( $cfg->param('job.mode') eq 'WebBAM' ) {
-        $self->{'candidate'} = miRkwood::Candidate::find_mirna( $self->{'candidate'}, $self->{'genome_db'} );
         $self->{'candidate'} = miRkwood::Candidate::count_total_nb_of_reads_for_candidate( $self->{'candidate'} );
+        $self->{'candidate'} = miRkwood::Candidate::find_mirna( $self->{'candidate'}, $self->{'genome_db'} );
     }
 
     my $candidate_test_info = $self->process_tests_for_candidate();
