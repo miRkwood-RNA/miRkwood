@@ -1176,6 +1176,25 @@ sub decompress_sequence {
 
 }
 
+=method is_read_overlapping
+
+  Method to tell if 2 reads are overlapping or not.
+  Reads positions should be given as "start_end".
+  Of course we assume that the reads are on the same chromosome...
+
+=cut
+sub is_read_overlapping {
+    my (@args) = @_;
+    my $read_position_1 = shift @args;
+    my $read_position_2 = shift @args;
+    my ($read_start_1, $read_end_1) = split( /-/, $read_position_1);
+    my ($read_start_2, $read_end_2) = split( /-/, $read_position_2);
+    if ( $read_end_1 < $read_start_2 || $read_end_2 < $read_start_1 ){
+        return 0;
+    }
+    return 1;
+}
+
 
 =method display_var_sizes_in_log_file
 
