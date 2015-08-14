@@ -280,8 +280,17 @@ sub process_tests_for_candidate {
     $posteriori_tests->{'candidate'} = $self->{'candidate'};
     my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
     debug( "          Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
+
     my ($mirdup_results, $alignments) =
         $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
+
+    if ( $cfg->param('job.mode') eq 'WebBAM' ){
+        $result->{'criteria_mirdup'} = 0;
+        if ( defined( $self->{'candidate'}{'mirna_sequence'} ) and $self->{'candidate'}{'mirna_sequence'} ne '' ){
+            my %mirdup_on_mirna = $posteriori_tests->validate_mirna_with_mirdup();
+            $result->{'criteria_mirdup'} = $mirdup_on_mirna{'mirna'};
+        }
+    }
 
     miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
 
