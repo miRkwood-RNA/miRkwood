@@ -885,21 +885,34 @@ sub find_mirna {
     my (@args) = @_;
     my $self = shift @args;
     my $genome_db = shift @args;
+    my $total_reads = $self->{'nb_reads'};
     my $max = 0;
+    my $position_max = 0;
+    my $same_start_reads = 0;
     my $mirna_start = 0;
     my $mirna_end = 0;
-    my $total_reads = 0;
-    my $threshold = 0.33;
+    my $threshold = 0.4;
 
+    # first browse to find the most abundant read
     foreach ( keys%{$self->{'reads'}} ){
-        $total_reads += $self->{'reads'}{$_};
         if ( $self->{'reads'}{$_} > $max ){
             $max = $self->{'reads'}{$_};
-            ($mirna_start, $mirna_end) = split( /-/, $_ );
+            $position_max = $_;
+        }
+    }
+    ($mirna_start, $mirna_end) = split( /-/, $position_max );
+
+    # second browse to count how many reads start at the same
+    # position than the most abundant read
+    foreach ( keys%{$self->{'reads'}} ){
+        my ($read_start, $read_end) = split( /-/, $_ );
+        if ( $read_start eq $mirna_start ){
+            $same_start_reads += $self->{'reads'}{$_};
         }
     }
 
-    my $percentage_majority_read = $max / $total_reads;
+    my $percentage_majority_read = $same_start_reads / $total_reads;
+    debug( "$percentage_majority_read % reads start at the same position than the major read.", 1);
     if ( $percentage_majority_read >= $threshold ){
         my $chromosome = $self->{'name'};
         if ( $self->{'name'} =~ /([^_]+)__.*/ ){
