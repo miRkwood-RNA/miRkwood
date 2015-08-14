@@ -314,6 +314,17 @@ sub mask_CT_file {
     return $boucleTermWithN_out;
 }
 
+sub validate_mirna_with_mirdup {
+    my ( $self, @args ) = @_;
 
+    my $input_file_for_mirdup = File::Spec->catfile( $self->get_directory(), 'mirdup_on_mirna.txt' );
+    open (my $FILE, '>', $input_file_for_mirdup) or die "ERROR while creating $input_file_for_mirdup : $!";
+    print $FILE 'mirna' . "\t" . $self->{'candidate'}{'mirna_sequence'} . "\t" . $self->{'candidate'}{'sequence'};
+    close $FILE or die "ERROR while closing $FILE : $!";
+
+    my $result_file = miRkwood::Programs::run_mirdup_validation_on_file($input_file_for_mirdup);
+
+    return miRkwood::MiRdup->parse_validation_output($result_file);
+}
 
 1;
