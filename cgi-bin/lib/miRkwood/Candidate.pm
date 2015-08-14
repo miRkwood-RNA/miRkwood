@@ -154,13 +154,17 @@ sub compute_quality_for_known_miRNAs {
     return $self;
 }
 
-=method compute_alignment_quality
+=method compute_alignment_quality_for_abinitio
 
-Compute the alignment quality score
+Compute the alignment quality score for abinitio pipeline.
+To calculate this score :
+* 1 point if there is at least one alignment with miRBase
+* + 1 point if at least one alignment is validated by miRdup 
+
 
 =cut
 
-sub compute_alignment_quality {
+sub compute_alignment_quality_for_abinitio {
     my ( $self, @args ) = @_;
     my $alignment_existence = 0;
     if ($self->{'alignment_existence'}){
@@ -171,6 +175,56 @@ sub compute_alignment_quality {
     my $has_mirdup_validation = $self->has_mirdup_validation();
     $self->{'alignment'} = $alignment_existence + $has_mirdup_validation;
     return;
+}
+
+=method compute_alignment_quality_for_smallRNAseq
+
+Compute the alignment quality score for smallRNAseq pipeline.
+To calculate this score :
+* 1 point if there is at least one alignment with miRBase
+* + 1 point if at least one alignment intersects with at least
+40 % of the reads.
+
+=cut
+
+sub compute_alignment_quality_for_smallRNAseq {
+    my ( $self, @args ) = @_;
+    my $threshold = 0.4;
+    my $alignment = 0;
+    my $nb_matching_reads = 0;
+
+    my $alignment_existence = 0;
+    my $validation = 0;
+
+    if ($self->{'alignment_existence'}){
+        $alignment_existence = $self->{'alignment_existence'};
+    }else{
+        $alignment_existence = 0;
+    }
+
+    foreach my $alignment_position (keys%{ $self->{'alignments'} }){
+        my ($alignment_start, $alignment_end) = split ( /-/, $alignment_position);
+        my $abs_alignment_start = 0;
+        my $abs_alignment_end = 0;
+        $abs_alignment_start = $self->{'start_position'} + $alignment_start - 1;
+        $abs_alignment_end = $self->{'start_position'} + $alignment_end - 1;
+
+        print STDERR "Alignment $alignment_position => $abs_alignment_start-$abs_alignment_end\n";
+        $nb_matching_reads = 0;
+        foreach my $read_position (keys%{ $self->{'reads'} }) {
+            if ( miRkwood::Utils::is_read_overlapping( "$abs_alignment_start-$abs_alignment_end", $read_position ) ){
+                $nb_matching_reads += $self->{'reads'}{$read_position};
+            }
+        }
+        my $ratio = $nb_matching_reads / $self->{'nb_reads'};
+        if ( $ratio >= $threshold ){
+            $validation = 1;
+        }
+        print STDERR ("     " . (100*$ratio) . " % reads match alignment $alignment_position.\n");
+    }
+
+    $self->{'alignment'} = $alignment_existence + $validation;
+    return $self;
 }
 
 =method get_absolute_image
@@ -763,7 +817,7 @@ sub compute_quality_from_reads {
                 #~ debug("End of read ($read_position) is around pairing miRNA start ($pairing_start_mirna)", 1);                
             }
         }
-        debug("$reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ($reads_around_mirna / $self->{'nb_reads'}) . " %)", 1);
+        debug("$reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . " %)", 1);
         if ( $reads_around_mirna / $self->{'nb_reads'} >= 0.75 ){
             $criteria_reads_mirna = 1;
         }
