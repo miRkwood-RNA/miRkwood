@@ -61,7 +61,12 @@ sub run{
     my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
 
-    $candidate->compute_alignment_quality();
+    if ( $cfg->param('job.mode') eq 'WebBAM' ) {
+        $candidate->compute_alignment_quality_for_smallRNAseq();
+    }
+    else{
+        $candidate->compute_alignment_quality_for_abinitio();
+    }
     $candidate->compute_quality();
     return $candidate;
 }
