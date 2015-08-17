@@ -258,7 +258,7 @@ sub make_candidate_page {
 
     my $alignmentHTML = q{};
     if ( $cfg->param('options.align') ){
-        if ( defined( $candidate->{'precursor_name'} ) ) {
+        if ( defined( $candidate->{'mirbase_id'} ) ) {
             $alignmentHTML = q{};
         }
         else {

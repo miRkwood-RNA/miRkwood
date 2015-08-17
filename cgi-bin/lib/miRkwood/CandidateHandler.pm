@@ -168,8 +168,8 @@ sub print_reads_clouds {
     my $reference = $candidate->{'sequence'};
 
     ### Print the header
-    if ( defined($candidate->{'precursor_name'}) ){
-        $output .= $candidate->{'precursor_name'}."\n";
+    if ( defined($candidate->{'mirbase_id'}) ){
+        $output .= $candidate->{'identifier'}."\n";
     }
 
     $output .= "Chromosome : $chromosome\n";

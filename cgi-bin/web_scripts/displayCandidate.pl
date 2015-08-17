@@ -41,7 +41,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
 }else{
 
     if ( $cfg->param('job.mode') eq 'WebBAM' ){
-        if ( defined($candidate->{'precursor_name'}) ){ # smallRNA-seq pipeline, known candidate
+        if ( defined($candidate->{'mirbase_id'}) ){ # smallRNA-seq pipeline, known candidate
             $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
         }
         else{ # smallRNA-seq pipeline, new candidate
@@ -106,7 +106,7 @@ END_TXT
 
 END_TXT
 
-        if ( defined($candidate->{'precursor_name'}) ){ # known miRNAs
+        if ( defined($candidate->{'mirbase_id'}) ){ # known miRNAs
             if ( $candidate->{'criteria_nb_reads'} ){
                 $quality .= '<li><b>Criteria number of reads:</b> Yes</li>';
             }
@@ -181,7 +181,7 @@ END_TXT
 
     my $alignmentHTML;
 
-    if ( !$cfg->param('options.align') || defined($candidate->{'precursor_name'}) ) {
+    if ( !$cfg->param('options.align') || defined($candidate->{'mirbase_id'}) ) {
         $alignmentHTML = qw{};
     }
     else {
@@ -207,9 +207,9 @@ END_TXT
     }
 
     my $name = '';
-    if ( defined($candidate->{'precursor_name'}) ){
-        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $candidate->{'identifier'} );
-        $name = "<li><b>miRbase name :</b> <a href='$mirbase_link'>$candidate->{'precursor_name'}</a></li>";
+    if ( defined($candidate->{'mirbase_id'}) ){
+        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $candidate->{'mirbase_id'} );
+        $name = "<li><b>miRbase name :</b> <a href='$mirbase_link'>$candidate->{'identifier'}</a></li>";
     }
 
     $html_contents = <<"END_TXT";

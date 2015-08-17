@@ -13,7 +13,7 @@ use miRkwood::Utils;
 sub get_headers {
     my ( $self, @args ) = @_;
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
-    my @headers = qw{identifier precursor_name position strand mirna_sequence mirna_length quality nb_reads};
+    my @headers = qw{identifier mirbase_id position strand mirna_sequence mirna_length quality nb_reads};
     return @headers;
 }
 
@@ -22,8 +22,8 @@ sub get_header {
     my ( $self, @args ) = @_;
     my $output = '<tr>';
     for my $header ( ('chromosome'), $self->get_headers() ) {
-        if ( $header eq 'precursor_name' ){
-            $output .= "<th>miRBase name</th>\n";
+        if ( $header eq 'mirbase_id' ){
+            $output .= "<th>miRBase identifier</th>\n";
         }
         elsif ( $header eq 'mirna_sequence' ){
             $output .= "<th>miRNA</th>\n";
