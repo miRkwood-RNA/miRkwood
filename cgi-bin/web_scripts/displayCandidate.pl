@@ -108,60 +108,60 @@ END_TXT
 
         if ( defined($candidate->{'precursor_name'}) ){ # known miRNAs
             if ( $candidate->{'criteria_nb_reads'} ){
-                $quality .= "<li><b>Criteria number of reads:</b> Yes</li>";
+                $quality .= '<li><b>Criteria number of reads:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>Criteria number of reads:</b> No</li>";
+                $quality .= '<li><b>Criteria number of reads:</b> No</li>';
             }
             if ( $candidate->{'criteria_reads_mirna'} ){
-                $quality .= "<li><b>Criteria precision of the precursor processing:</b> Yes</li>";
+                $quality .= '<li><b>Criteria precision of the precursor processing:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
+                $quality .= '<li><b>Criteria precision of the precursor processing:</b> No</li>';
             }
         }
         else {  # novel miRNAs
 
             if ( $candidate->{'mfei'} < -0.8 ){
-                $quality .= "<li><b>MFEI < -0.8:</b> Yes</li>";
+                $quality .= '<li><b>MFEI < -0.8:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>MFEI < -0.8:</b> No</li>";
+                $quality .= '<li><b>MFEI < -0.8:</b> No</li>';
             }
             if ( $candidate->{'criteria_nb_reads'} ){
-                $quality .= "<li><b>Criteria number of reads:</b> Yes</li>";
+                $quality .= '<li><b>Criteria number of reads:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>Criteria number of reads:</b> No</li>";
+                $quality .= '<li><b>Criteria number of reads:</b> No</li>';
             }
             if ( $candidate->{'mirna_sequence'} ne '' ){
-                $quality .= "<li><b>Existence of a miRNA:</b> Yes</li>";
+                $quality .= '<li><b>Existence of a miRNA:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>Existence of a miRNA:</b> No</li>";
+                $quality .= '<li><b>Existence of a miRNA:</b> No</li>';
             }
             if ( $candidate->{'criteria_mirdup'} ){
-                $quality .= "<li><b>The miRNA is validated by miRdup:</b> Yes</li>";
+                $quality .= '<li><b>The miRNA is validated by miRdup:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>The miRNA is validated by miRdup:</b> No</li>";
+                $quality .= '<li><b>The miRNA is validated by miRdup:</b> No</li>';
             }
             if ( $candidate->{'criteria_star'} ){
-                $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> Yes</li>";
+                $quality .= '<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> No</li>";
+                $quality .= '<li><b>Criteria presence of the miRNA:miRNA* duplex:</b> No</li>';
             }
             if ( $candidate->{'criteria_reads_mirna'} ){
-                $quality .= "<li><b>Criteria precision of the precursor processing:</b> Yes</li>";
+                $quality .= '<li><b>Criteria precision of the precursor processing:</b> Yes</li>';
             }
             else{
-                $quality .= "<li><b>Criteria precision of the precursor processing:</b> No</li>";
+                $quality .= '<li><b>Criteria precision of the precursor processing:</b> No</li>';
             }
 
         }
 
-        $quality .= "</ul>";
+        $quality .= '</ul>';
 
     }
 
@@ -203,9 +203,7 @@ END_TXT
 
     my $shufflesHTML = '';
     if ( $cfg->param('options.randfold') ) {
-        $shufflesHTML = "<li>
-          <b>Shuffles:</b> $candidate->{'shuffles'}
-        </li>"
+        $shufflesHTML = "<li><b>Shuffles:</b> $candidate->{'shuffles'}</li>";
     }
 
     my $name = '';

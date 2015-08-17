@@ -92,15 +92,6 @@ sub compute_quality {
 
     if ( $mode eq 'WebBAM' ){
         $self->compute_quality_from_reads();
-        #~ $quality += $self->compute_quality_from_reads();
-        #~ $self->{'reads_distribution'} =  $quality;
-        #~ $self->{'quality'} = $quality;
-        #~ if ( $self->{'mfei'} < -0.8 ){
-            #~ $self->{'quality'} += 1;
-        #~ }
-        #~ if ( $self->{'mirna_sequence'} ne '' ){
-            #~ $self->{'quality'} += 1;
-        #~ }
     }
     else{
         if ( $self->{'mfei'} ) {
@@ -209,7 +200,6 @@ sub compute_alignment_quality_for_smallRNAseq {
         $abs_alignment_start = $self->{'start_position'} + $alignment_start - 1;
         $abs_alignment_end = $self->{'start_position'} + $alignment_end - 1;
 
-        print STDERR "Alignment $alignment_position => $abs_alignment_start-$abs_alignment_end\n";
         $nb_matching_reads = 0;
         foreach my $read_position (keys%{ $self->{'reads'} }) {
             if ( miRkwood::Utils::is_read_overlapping( "$abs_alignment_start-$abs_alignment_end", $read_position ) ){
@@ -220,7 +210,6 @@ sub compute_alignment_quality_for_smallRNAseq {
         if ( $ratio >= $threshold ){
             $validation = 1;
         }
-        print STDERR ("     " . (100*$ratio) . " % reads match alignment $alignment_position.\n");
     }
 
     $self->{'alignment'} = $alignment_existence + $validation;
@@ -424,11 +413,12 @@ sub make_alignments_HTML {
         # Sorting the hit list by descending value of the 'score' element
         my @hits = sort { $b->{'score'} <=> $a->{'score'} } @{$alignments{$position}};
         my $title = "Prediction $predictionCounter: $position";
-        $contents .= "<h3 id='$position'>$title</h3>
+        $contents .= <<"END_TXT";
+        <h3 id='$position'>$title</h3>
         <pre style='height: 80px;'>$hairpin_with_mature</pre>
         $mirdup_prediction
         <h4>Alignments</h4>
-        ";
+END_TXT
 
         my $toc_element = "<a href='#$position'>$position</a>";
         push @TOC, $toc_element;
@@ -467,7 +457,7 @@ sub make_alignments_HTML {
                     push @sequences, $html_name;
                 }
             }
-            $additional_content = "<span class='others'>$mirbase_title" . join(', ', @sequences) . "</span>";
+            $additional_content = "<span class='others'>$mirbase_title" . join(', ', @sequences) . '</span>';
 
 
             $bottom = sprintf "%-${spacing}s %3s %s %s", $name,   $hit->{'begin_query'},  $bottom, $hit->{'end_query'};
@@ -532,7 +522,7 @@ sub candidate_as_pseudoXML {    # not used anymore ?
     my @headers1        =
       ( 'position', 'length', 'strand', 'quality', @optional_fields );
     my @headers2 = qw{structure_stemloop sequence identifier};
-    my $result = "<Sequence";
+    my $result = '<Sequence';
 
     $result .= " name='$name'";
     for my $header (@headers1) {
@@ -553,7 +543,7 @@ sub candidate_as_pseudoXML {    # not used anymore ?
     for my $header (@headers2) {
         $result .= " $header='$self->{$header}'";
     }
-    $result .= "></Sequence>";
+    $result .= '></Sequence>';
 
     return $result;
 }
@@ -708,7 +698,7 @@ sub determine_precursor_arms {
 
     my $index = 0;
 
-    while ( $index < scalar(@structure_array) and ! $stop ){
+    while ( $index < scalar(@structure_array) && ! $stop ){
         if ( $structure_array[$index] eq '(' ){
             $end_arm_1 = $index;
         }
@@ -817,7 +807,7 @@ sub compute_quality_from_reads {
                 #~ debug("End of read ($read_position) is around pairing miRNA start ($pairing_start_mirna)", 1);                
             }
         }
-        debug("$reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . " %)", 1);
+        debug("$reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . ' %)', 1);
         if ( $reads_around_mirna / $self->{'nb_reads'} >= 0.75 ){
             $criteria_reads_mirna = 1;
         }

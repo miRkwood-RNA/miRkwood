@@ -77,7 +77,7 @@ sub test_alignment {
     #~ else{
         $self->mask_CT_file($candidate_ct_stemloop_file, $seqN);
     #~ }
-    
+
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
     miRkwood::Programs::run_RNAcomp( $seqN, $exonerate_out )
       or die("Problem when running RNAcomp : $!");
