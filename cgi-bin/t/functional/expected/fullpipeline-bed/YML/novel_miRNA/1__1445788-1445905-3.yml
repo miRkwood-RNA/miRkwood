@@ -1,7 +1,7 @@
 --- sequence
 --- CUAGAUUUACGAAACGAUAGGAAAACUAACCGGACUUUGGAUCAUGUCACUUGACUUAGUCAUUGAUCGUUAGCGAUUUCACAAGUUCAACUUGUUUCCGAUCGUUAUGUGAAUUUAG
 --- criteria_reads_mirna
---- 1
+--- 0
 --- identifier
 --- 1__1445788-1445905-3
 --- hairpin
@@ -10,9 +10,9 @@
   |||| ||    ||| |||  |||| U\nGAUUUAAGUGU UUGCUA CCUUU       CUUGAA ACUU AG    UGC
   AGU  ACUGA\n           A      G     GUUCAA-      C    U  CGAU   U   U-    \n"
 --- reads_distribution
---- 2
+--- 0
 --- mirna_position
---- 1445838-1445861
+--- ''
 --- alternatives
 ---
 1__1445702-1445983+:
@@ -83,7 +83,7 @@
 --- criteria_nb_reads
 --- 0
 --- mirna_length
---- 24
+--- ''
 --- energy_optimal
 --- '-32.90'
 --- name
@@ -91,7 +91,7 @@
 --- mfe
 --- '-32.90'
 --- mirna_sequence
---- UUGACUUAGUCAUUGAUCGUUAGC
+--- ''
 --- end_position
 --- 1445905
 --- reads
@@ -246,11 +246,11 @@
 --- strand
 --- +
 --- quality
---- 3
+--- 0
 --- cluster
 --- 1445215-1446154
 --- criteria_star
---- 1
+--- 0
 --- criteria_mirdup
 --- 0
 --- image
@@ -263,3 +263,5 @@
 --- -0.747727272727273
 --- full_position
 --- 1445788-1445905&nbsp;+
+--- alignments
+--- {}

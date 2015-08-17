@@ -1,7 +1,7 @@
 --- sequence
 --- AAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUUUGUUUUAGACUACAUUUACAAAAUGAUAUGAAAACUAACCAGACUUUGGAUCCCGUCACUUGACUUAGUCAUUGAUCAUUAGCGAUUUCACAAGUUCAAUUUGUUUUCUAGUCGUUAUGUAAAUUUAGCAUUUUAGUUUUUUUAGGUUUUUAGUUUUUUUUUUUGUUUUAGCCUACAUUUACAAAAUGAUAUGAAAACUAACCGGACUU
 --- criteria_reads_mirna
---- 1
+--- 0
 --- identifier
 --- 1__1876228-1876510-1
 --- hairpin
@@ -11,9 +11,9 @@
   \    CAAAAG  UAGUAA ACAUUUA                                                                                                           U\n
   \     CCAAU      UA      A       CAUCCGAUUUUGUUUUUUUUUUUGAUUUUUGGAUUUUUUUGAUUUUACGAUUUAAAUGUAUUGCUGAUCUUUUGUUUAACUUGAACACUUUAGCGAUUACUAGUUAC\n"
 --- reads_distribution
---- 1
+--- 0
 --- mirna_position
---- 1876352-1876375
+--- ''
 --- alternatives
 ---
 1__1876309-1876427-:
@@ -55,7 +55,7 @@
 --- criteria_nb_reads
 --- 0
 --- mirna_length
---- 24
+--- ''
 --- energy_optimal
 --- '-50.80'
 --- name
@@ -63,7 +63,7 @@
 --- mfe
 --- '-15.87'
 --- mirna_sequence
---- GACUUAGUCAUUGAUCAUUAGCGA
+--- ''
 --- end_position
 --- 1876510
 --- reads
@@ -375,7 +375,7 @@
 --- strand
 --- '-'
 --- quality
---- 2
+--- 0
 --- cluster
 --- 1875924-1876517
 --- criteria_star
@@ -392,3 +392,5 @@
 --- -0.695890410958904
 --- full_position
 --- 1876228-1876510&nbsp;-
+--- alignments
+--- {}
