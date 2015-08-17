@@ -554,6 +554,9 @@ sub get_basic_informations {
 
 	my @optional_fields = $self->get_optional_candidate_fields();
     my @headers;
+    if ( defined( $self->{'precursor_name'} ) ){
+        push @headers, 'precursor_name';
+    }
     if ( defined( $self->{'mirna_sequence'} ) ){
         push @headers, 'mirna_sequence';
     }
