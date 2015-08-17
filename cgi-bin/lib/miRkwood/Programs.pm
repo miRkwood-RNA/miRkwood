@@ -474,6 +474,18 @@ sub run_mirdup_validation_on_file {
         . " > /dev/null 2>&1";
     system($run_mirdup_cmd);
 
+    my @useless_created_by_mirdup_files = ("$validation_source_file.arff",
+            "$validation_source_file.arff",
+            "$validation_source_file.folded",
+            "$validation_source_file.$miRdup_model_name.miRdup.txt",
+            "$validation_source_file.$miRdup_model_name.miRdupOutput.txt");
+
+    foreach my $file ( @useless_created_by_mirdup_files ){
+        if ( -e $file ){
+            unlink $file;
+        }
+    }
+
     my $output_file =
         $validation_source_file . '.' . $miRdup_model_name . '.' . 'miRdup.tab.txt';
     return $output_file;
