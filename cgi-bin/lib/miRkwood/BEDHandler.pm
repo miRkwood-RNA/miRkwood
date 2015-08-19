@@ -37,7 +37,7 @@ sub filterBEDfile_for_model_organism {
     my $data_path = miRkwood::Paths->get_data_path();
     my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
     my $CDS_file = File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" );
-    my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );
+    my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_tRNA_rRNA_snoRNA.gff" );
 
     if ( $bed_file =~ /[\/\\]([^\/\\]+)[.]bed/ ){
         $basename .= '/'.$1;
