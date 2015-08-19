@@ -42,18 +42,18 @@ my $force = 0;
 
 ##### Get options
 GetOptions(
-    'shuffles'           => \$randfold,
-    'no-mfei'            => \$no_mfei,
-    'align'              => \$align,
-    'no-filter_otherRNA' => \$no_filter_tRNA_rRNA,
-    'no-filter_CDS'      => \$no_filter_CDS,
-    'no-filter_multimapped' => \$no_filter_multimapped,
-    'no-varna'           => \$no_varna,
-    'output=s'           => \$output_folder,
-    'genome=s'           => \$genome_file,
-    'help|?'             => \$help,
-    'force'              => \$force,
-    man                  => \$man
+    'genome=s'              => \$genome_file,
+    'output=s'              => \$output_folder,
+    'shuffles'              => \$randfold,
+    'align'                 => \$align,
+    'no-filter-mfei'        => \$no_mfei,
+    'no-filter-CDS'         => \$no_filter_CDS,
+    'no-filter-r-t-snoRNA'  => \$no_filter_tRNA_rRNA,
+    'no-filter-multimapped' => \$no_filter_multimapped,
+    'no-varna'              => \$no_varna,
+    'help|?'                => \$help,
+    'force'                 => \$force,
+    man                     => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
@@ -168,29 +168,29 @@ Output directory. If non existing it will be created. The directory must be empt
 
 Compute thermodynamic stability (shuffled sequences)
 
-=item B<--no-mfei>
+=item B<--align>
+
+Flag conserved mature miRNAs (alignment with miRBase + miRdup)
+
+=item B<--no-filter-mfei>
 
 Don't filter out sequences with MFEI >= -0.6.
 Default : only keep sequences with MFEI < -0.6.
 
-=item B<--no-filter_CDS>
+=item B<--no-filter-CDS>
 
 Don't filter out CDS.
 Default: if an annotation GFF file is available CDS are filtered out.
 
-=item B<--no-filter_otherRNA>
+=item B<--no-filter-r-t-snoRNA>
 
 Don't filter out rRNA, tRNA, snoRNA.
 Default: if an annotation GFF file is available rRNA, tRNA, snoRNA are filtered out.
 
-=item B<--no-filter_multimapped>
+=item B<--no-filter-multimapped>
 
 Don't filter out multimapped reads.
 Default: reads that map at more than 5 positions are filtered out.
-
-=item B<--align>
-
-Flag conserved mature miRNAs (alignment with miRBase + miRdup)
 
 =item B<--no-varna>
 
