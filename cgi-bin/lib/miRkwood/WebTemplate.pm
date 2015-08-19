@@ -280,7 +280,7 @@ END_TXT
 
 sub send_email {
     my @args  = @_;
-    my $mode  = shift @args;    # should be 'fasta' or 'WebBAM'
+    my $mode  = shift @args;    # should be 'abinitio' or 'smallRNAseq'
     my $to    = shift @args;
     my $jobId = shift @args;
     my $title = ' ';
@@ -290,7 +290,7 @@ sub send_email {
     require MIME::Lite;
 
     my $results_page  = '';
-    if ( $mode eq 'WebBAM' ){
+    if ( $mode eq 'smallRNAseq' ){
         $results_page = 'BAMresults.pl';
     }
     else{

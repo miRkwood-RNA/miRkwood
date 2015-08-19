@@ -178,11 +178,11 @@ sub run_pipeline_on_sequences {
     my ($self, @args) = @_;
 
     my $cfg = miRkwood->CONFIG();
-    my $mode = $cfg->param('job.mode');
+    my $mode = $cfg->param('job.pipeline');
     $self->{'basic_candidates'} = [];
     my $sequences_count = 0;
 
-    if ( $mode eq 'WebBAM' ){
+    if ( $mode eq 'smallRNAseq' ){
         $sequences_count = $self->count_clusters();
     }
     else{

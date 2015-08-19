@@ -173,7 +173,7 @@ print "Location: $waiting_url \n\n";
 my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
 miRkwood->CONFIG_FILE($run_options_file);
 miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species,
-                                         'WebBAM', $basename_bed, $align, $species_db,
+                                         'smallRNAseq', $basename_bed, $align, $species_db,
                                          $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped,
                                          $mfei, $randfold, $varna);
 
@@ -182,7 +182,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file, $job_title, $species
 #~ my $pipeline = miRkwood::BEDPipeline->new($absolute_job_dir, $localBED, $genome);
 #~ $pipeline->run_pipeline();
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );
-my $cmd = "perl -I$dirLib $perl_script 'WebBAM' $absolute_job_dir $localBED $genome";
+my $cmd = "perl -I$dirLib $perl_script 'smallRNAseq' $absolute_job_dir $localBED $genome";
 debug("Running perl script $cmd", 1);
 system($cmd);
 debug('Getting back from Perl script', 1);

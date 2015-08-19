@@ -47,11 +47,11 @@ if ( $valid ){
 
     if ( $jobId =~ /BAM/ ){
         $results_page  = 'BAMresults.pl';
-        $mode = 'WebBAM';
+        $mode = 'smallRNAseq';
     }
     else {
         $results_page  = 'resultsWithID.pl';
-        $mode = 'fasta';
+        $mode = 'abinitio';
     }
 
     my $results_baseurl = miRkwood::WebTemplate::get_cgi_url($results_page);

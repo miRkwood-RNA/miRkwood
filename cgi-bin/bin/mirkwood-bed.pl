@@ -120,7 +120,7 @@ miRkwood->CONFIG_FILE($run_options_file);
 miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $job_title,
                                          $species,
-                                         'WebBAM',
+                                         'smallRNAseq',
                                          $basename_bed,
                                          $align,
                                          $species_db,

@@ -88,9 +88,9 @@ sub compute_quality {
     my ( $self, @args ) = @_;
     my $quality = 0;
     my $cfg = miRkwood->CONFIG();
-    my $mode = $cfg->param('job.mode');
+    my $mode = $cfg->param('job.pipeline');
 
-    if ( $mode eq 'WebBAM' ){
+    if ( $mode eq 'smallRNAseq' ){
         $self->compute_quality_from_reads();
     }
     else{

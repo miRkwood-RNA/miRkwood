@@ -50,7 +50,7 @@ sub run{
     my ( $self, @args ) = @_;
     my $cfg = miRkwood->CONFIG();
 
-    if ( $cfg->param('job.mode') eq 'WebBAM' ) {
+    if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
         $self->{'candidate'} = miRkwood::Candidate::count_total_nb_of_reads_for_candidate( $self->{'candidate'} );
         $self->{'candidate'} = miRkwood::Candidate::find_mirna( $self->{'candidate'}, $self->{'genome_db'} );
     }
@@ -61,7 +61,7 @@ sub run{
     my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
 
-    if ( $cfg->param('job.mode') eq 'WebBAM' ) {
+    if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
         $candidate->compute_alignment_quality_for_smallRNAseq();
     }
     else{
@@ -289,7 +289,7 @@ sub process_tests_for_candidate {
     my ($mirdup_results, $alignments) =
         $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
 
-    if ( $cfg->param('job.mode') eq 'WebBAM' ){
+    if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         $result->{'criteria_mirdup'} = 0;
         if ( defined( $self->{'candidate'}{'mirna_sequence'} ) and $self->{'candidate'}{'mirna_sequence'} ne '' ){
             my %mirdup_on_mirna = $posteriori_tests->validate_mirna_with_mirdup();

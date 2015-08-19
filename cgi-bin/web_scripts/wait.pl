@@ -46,12 +46,12 @@ if ( $valid ){
 
     if ( $jobId =~ /BAM/ ){
         $results_page  = 'BAMresults.pl';
-        $mode = 'WebBAM';
+        $mode = 'smallRNAseq';
         $title = 'miRkwood small RNA-seq - Running...';
     }
     else {
         $results_page  = 'resultsWithID.pl';
-        $mode = 'fasta';
+        $mode = 'abinitio';
         $title = 'miRkwood ab initio - Running...';
     }
 

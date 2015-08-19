@@ -40,7 +40,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     $html_contents = 'No results for the given identifiers';
 }else{
 
-    if ( $cfg->param('job.mode') eq 'WebBAM' ){
+    if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         if ( defined($candidate->{'mirbase_id'}) ){ # smallRNA-seq pipeline, known candidate
             $returnlink = miRkwood::WebTemplate::get_link_back_to_BED_known_results($jobId);
         }
@@ -70,7 +70,7 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $reads_length_diagramm = $candidate->create_reads_length_diagramm();
     my $mirna = '';
     my $quality = '';
-    if ( $cfg->param('job.mode') eq 'WebBAM' ){
+    if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         # reads
         my $nb_reads = 0;
         foreach my $key (keys( %{$candidate->{'reads'}} )){

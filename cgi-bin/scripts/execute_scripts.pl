@@ -17,7 +17,7 @@ my $mode = $ARGV[0];
 my $job_dir = $ARGV[1];
 my $pipeline;
 
-if ( $mode eq 'WebBAM' ){
+if ( $mode eq 'smallRNAseq' ){
     use miRkwood::BEDPipeline;
     my $localBED = $ARGV[2];
     my $genome   = $ARGV[3];
