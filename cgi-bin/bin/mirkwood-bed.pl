@@ -48,7 +48,7 @@ GetOptions(
     'align'                 => \$align,
     'no-filter-mfei'        => \$no_mfei,
     'no-filter-CDS'         => \$no_filter_CDS,
-    'no-filter-r-t-snoRNA'  => \$no_filter_tRNA_rRNA,
+    'no-filter-t-r-snoRNA'  => \$no_filter_tRNA_rRNA,
     'no-filter-multimapped' => \$no_filter_multimapped,
     'no-varna'              => \$no_varna,
     'help|?'                => \$help,
@@ -146,7 +146,7 @@ __END__
 
 =head1 SYNOPSIS
 
-mirkwood-bed [options] [BED file]
+./mirkwood-bed.pl [options] [BED file]
 
 =head1 OPTIONS
 
@@ -166,11 +166,11 @@ Output directory. If non existing it will be created. The directory must be empt
 
 =item B<--shuffles>
 
-Compute thermodynamic stability (shuffled sequences)
+Compute thermodynamic stability (shuffled sequences).
 
 =item B<--align>
 
-Flag conserved mature miRNAs (alignment with miRBase + miRdup)
+Flag conserved mature miRNAs (alignment with miRBase + miRdup).
 
 =item B<--no-filter-mfei>
 
@@ -182,7 +182,7 @@ Default : only keep sequences with MFEI < -0.6.
 Don't filter out CDS.
 Default: if an annotation GFF file is available CDS are filtered out.
 
-=item B<--no-filter-r-t-snoRNA>
+=item B<--no-filter-t-r-snoRNA>
 
 Don't filter out rRNA, tRNA, snoRNA.
 Default: if an annotation GFF file is available rRNA, tRNA, snoRNA are filtered out.
@@ -194,7 +194,7 @@ Default: reads that map at more than 5 positions are filtered out.
 
 =item B<--no-varna>
 
-Disable the structure generation using Varna
+Disable the structure generation using Varna.
 
 =item B<-help>
 

@@ -105,7 +105,7 @@ __END__
 
 =head1 SYNOPSIS
 
-mirkwood [options] [FASTA files]
+./mirkwood.pl [options] [FASTA files]
 
 =head1 OPTIONS
 
@@ -117,35 +117,35 @@ Output directory. If non existing it will be created. The directory must be empt
 
 =item B<--both-strands>
 
-Scan both strands
+Scan both strands.
 
 =item B<--species-mask>
 
-Mask coding regions against the given organism
+Mask coding regions against the given organism.
 
 =item B<--shuffles>
 
-Compute thermodynamic stability (shuffled sequences)
+Compute thermodynamic stability (shuffled sequences).
 
 =item B<--filter-mfei>
 
-Select only sequences with MFEI < -0.6
+Select only sequences with MFEI < -0.6.
 
 =item B<--filter-rrna>
 
-Filter out ribosomal RNAs (using RNAmmer)
+Filter out ribosomal RNAs (using RNAmmer).
 
 =item B<--filter-trna>
 
-Filter out tRNAs (using tRNAscan-SE)
+Filter out tRNAs (using tRNAscan-SE).
 
 =item B<--align>
 
-Flag conserved mature miRNAs (alignment with miRBase + miRdup)
+Flag conserved mature miRNAs (alignment with miRBase + miRdup).
 
 =item B<--no-varna>
 
-Disable the structure generation using Varna
+Disable the structure generation using Varna.
 
 =item B<-help>
 
