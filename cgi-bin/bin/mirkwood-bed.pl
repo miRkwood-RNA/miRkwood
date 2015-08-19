@@ -3,6 +3,8 @@
 # PODNAME: mirkwood-bed.pl
 # ABSTRACT: miRkwood - A micro-RNA analysis pipeline for sRNAseq analysis
 
+use lib '/vagrant/cgi-bin/lib/';
+
 use warnings;
 use strict;
 
