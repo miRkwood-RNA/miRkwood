@@ -140,3 +140,70 @@ $pipeline->run_pipeline();
 ##### Write results
 miRkwood::CLI::process_results_dir_for_offline($abs_output_folder, 'smallRNAseq', 'novel_miRNA');
 miRkwood::CLI::process_results_dir_for_offline($abs_output_folder, 'smallRNAseq', 'known_miRNA');
+
+
+__END__
+
+=head1 SYNOPSIS
+
+mirkwood-bed [options] [BED file]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--genome>
+
+Path to the genome (fasta format).
+
+=item B<--output>
+
+Output directory. If non existing it will be created. The directory must be empty.
+
+=item B<--shuffles>
+
+Compute thermodynamic stability (shuffled sequences)
+
+=item B<--no-mfei>
+
+Don't filter out sequences with MFEI >= -0.6.
+Default : only keep sequences with MFEI < -0.6.
+
+=item B<--no-filter_CDS>
+
+Don't filter out CDS.
+Default: if an annotation GFF file is available CDS are filtered out.
+
+=item B<--no-filter_otherRNA>
+
+Don't filter out rRNA, tRNA, snoRNA.
+Default: if an annotation GFF file is available rRNA, tRNA, snoRNA are filtered out.
+
+=item B<--no-filter_multimapped>
+
+Don't filter out multimapped reads.
+Default: reads that map at more than 5 positions are filtered out.
+
+=item B<--align>
+
+Flag conserved mature miRNAs (alignment with miRBase + miRdup)
+
+=item B<--no-varna>
+
+Disable the structure generation using Varna
+
+=item B<-help>
+
+Print a brief help message and exits.
+
+=item B<-man>
+
+Prints the manual page and exits.
+
+=back
+
+=head1 DESCRIPTION
+
+B<miRkwood> is a micro-RNA analysis pipeline.
+
+=cut
