@@ -152,6 +152,8 @@ mirkwood-bed [options] [BED file]
 
 =over 8
 
+=head2 Mandatory options
+
 =item B<--genome>
 
 Path to the genome (fasta format).
@@ -159,6 +161,8 @@ Path to the genome (fasta format).
 =item B<--output>
 
 Output directory. If non existing it will be created. The directory must be empty.
+
+=head2 Additional options
 
 =item B<--shuffles>
 
