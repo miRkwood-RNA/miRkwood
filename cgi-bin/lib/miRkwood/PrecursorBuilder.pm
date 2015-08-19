@@ -149,11 +149,11 @@ sub process_mirna_candidates {
     my (%candidates_hash) = %{ shift @args };
     my @candidates_result;
     my $candidate_identifier = 0;
-    debug('     - Process miRNA candidates' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+    debug('     - Process miRNA candidates' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
-        debug( "       - Process candidate $candidate_identifier" . ' [' . gmtime() . ']', 1);
+        debug( "       - Process candidate $candidate_identifier" . ' [' . localtime() . ']', 1);
         my $candidate = $candidates_hash{$key};
         push @candidates_result, $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
     }

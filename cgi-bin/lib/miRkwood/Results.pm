@@ -6,7 +6,6 @@ use strict;
 use warnings;
 
 use feature 'switch';
-use Time::gmtime;
 use File::Spec;
 use YAML::XS;
 

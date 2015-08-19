@@ -44,7 +44,7 @@ sub run_pipeline {
 
     $self->init_pipeline();
 
-    debug( 'miRkwood : start processing.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+    debug( 'miRkwood : start processing.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     my $start_time = time();
 
@@ -55,7 +55,7 @@ sub run_pipeline {
 
     # Look for known miRNAs
     if ( $self->{'mirna_bed'} ne '' ){
-        debug( 'Treat known miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+        debug( 'Treat known miRNAs.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->treat_known_mirnas();
     }
     else{
@@ -81,7 +81,7 @@ sub run_pipeline {
 
 
     # Look for new miRNAs
-    debug( 'Treat new miRNAs.' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+    debug( 'Treat new miRNAs.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     $self->list_chrom_in_bed();
 
@@ -93,7 +93,7 @@ sub run_pipeline {
     $self->{'orphan_clusters'}  = File::Spec->catfile( $self->{'job_dir'}, "${bed_name}_orphan_clusters.bed" );
 
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
-        debug( "- Considering chromosome $chromosome" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+        debug( "- Considering chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
         $self->clean_workspace_per_chr( $chromosome );
@@ -104,7 +104,7 @@ sub run_pipeline {
     $self->serialize_basic_candidates( 'basic_candidates' );
     $self->mark_job_as_finished();
 
-    debug( 'Writing finish file' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+    debug( 'Writing finish file' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     my $total_time = time() - $start_time;
     my $day  = int( $total_time / 86_400 );
@@ -261,7 +261,7 @@ sub list_chrom_in_bed {
 sub init_sequences_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
-    debug( '   Constructing loci' . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+    debug( '   Constructing loci' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
     $self->{'sequences'} = $clustering->build_loci_per_chr( $chromosome, $self->{'average_coverage'} );
     $self->{'parsed_reads'} = $clustering->get_parsed_bed();
@@ -296,7 +296,7 @@ sub compute_candidates_per_chr {
 
     foreach my $locus ( @{$self->{'sequences'}} ) {
 
-        debug( "  - Considering sequence $sequence_identifier" . ' [' . gmtime() . ']', miRkwood->DEBUG() );
+        debug( "  - Considering sequence $sequence_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $sequence_identifier++;
 
         if ( ( $locus->{'begin'} - $previous_end ) < $distance_min ){
