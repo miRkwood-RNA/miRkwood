@@ -69,7 +69,7 @@ if ($valid) {
 	my $body = '';
 	if ( $nb_results != 0 ) {
 		$body = <<"END_TXT";
-<body onload="main('all');">
+<body onload="main('all',true);">
     <div class="theme-border"></div>
     <div class="logo"></div>
     <div class="bloc_droit">

@@ -85,7 +85,7 @@ if ( $valid ){
     if ( $nb_results != 0 ) {
 
         $page = <<"END_TXT";
-<body onload="main('all');">
+<body onload="main('all',false);">
     <div class="theme-border"></div>
     <div class="logo"></div>
     <div class="bloc_droit">
@@ -113,6 +113,8 @@ if ( $valid ){
                         </form>
                     </div>
                         <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
+                        <a id="displayAll" onclick='displayAllOrNot("true")' >Display all candidates </a> / <a id="dontDisplayOrphanHairpins" onclick='displayAllOrNot("false")'>Don't display orphan hairpins </a>
+                        <br />
                         <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
                         </p>
                 </div> 

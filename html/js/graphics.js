@@ -1,12 +1,12 @@
 /**
  * Instantiation  de classe results.js
  */
-function main(id)
+function main(id, displayOrphanHairpins)
 {
 	myResults = new results(id);
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
-	createGrid('table',rowsNumber+1,columnsNumber+1);// fonction permettant de créer le tableau par rapport au résultats
+	createGrid('table',rowsNumber+1,columnsNumber+1,displayOrphanHairpins);// fonction permettant de créer le tableau par rapport au résultats
 	//#######plugin imgPreview########
 	jQuery.noConflict();
 	(function($){  
@@ -80,12 +80,11 @@ function colorOut(a,b)
 /**
  * création du tableau avec les résultats
  */
-function createGrid(id,rowsNumber,columnsNumber)
+function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 {
 	var tar=document.getElementById(id); // div "table"
 	//tar.appendChild(div);
 	var table=document.createElement('table');
-
 	var tbdy=document.createElement('tbody');
 	tbdy.id = 'cases';
 	table.appendChild(tbdy); //ajouter au tableau table
@@ -95,7 +94,7 @@ function createGrid(id,rowsNumber,columnsNumber)
 		{
 			var discarded = myResults.getValueByFactor(i-1,'orphan_hairpin');
 		}
-		if (discarded!=1){       
+		if (displayOrphanHairpins == "true" || discarded!=1){       
 			var tr=document.createElement('tr'); 
 			tbdy.appendChild(tr); //ajouter ligne
 			if (i!=0) 	
@@ -154,10 +153,6 @@ function createGrid(id,rowsNumber,columnsNumber)
 					}else if (value.toString() == 'precursor_name') 
 					{
 						td.innerHTML = '<h3>miRbase name</h3>' ;
-					}
-					else if (value.toString() == 'full_position') 
-					{
-						td.innerHTML = '<h3>POSITION</h3>' ;
 					}
 					else if (value.toString() == 'mirna_sequence') 
 					{
@@ -400,7 +395,7 @@ function sortingTable(id)
 {
 	var table = document.getElementById('table');
 	table.innerHTML = "";
-	main(id);
+	main(id, "true");
 }
 
 
@@ -418,4 +413,24 @@ function sortBy(sortValue)
 		sortingTable('all2');
 	}
 	 	
+}
+
+function displayAllOrNot(displayOrphanHairpins)
+{
+	if (displayOrphanHairpins == "true")
+	{
+		document.getElementById('displayAll').style.color= 'black'
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue'
+		var table = document.getElementById('table');
+		table.innerHTML = "";
+		main('all', "true");
+	}
+	else
+	{
+		document.getElementById('displayAll').style.color= 'blue'
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black'
+		var table = document.getElementById('table');
+		table.innerHTML = "";
+		main('all', "false");
+	}
 }
