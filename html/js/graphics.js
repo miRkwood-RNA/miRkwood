@@ -348,18 +348,17 @@ function repeat(str, times) {
 function getChecked()
 {
 	var tab=new Array();
-	for (var i=1;i<=rowsNumber;i++)
-	{
-		if (document.getElementById('checkbox'+i).checked == true )
+	var checkboxes = document.getElementsByClassName('allCheckbox');
+	for (var i = 0, length = checkboxes.length; i < length; i++) {
+		if ( checkboxes[i].checked == true )
 		{
-			var identifier = myResults.getIdentifierByIndex(i-1);
-			// var nameTemp = myResults.getSequenceNameByIndex(i-1);
-			// var positions = myResults.getValuesByFactorName("position");
-			// var factorsTemp = myResults.getSequenceByNameFactors(nameTemp,positions[i-1]);
-			//tab.push(nameTemp+"__"+factorsTemp.position);
+			var re = /checkbox(\d+)/;
+			var index = re.exec(checkboxes[i].id)[1];
+			var identifier = myResults.getIdentifierByIndex(index-1);
 			tab.push(identifier);
 		}
 	}
+
 	return tab;
 }
 
