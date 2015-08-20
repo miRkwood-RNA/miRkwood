@@ -63,11 +63,14 @@ sub run{
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
         $candidate->compute_alignment_quality_for_smallRNAseq();
+        $candidate->compute_quality();
+        $candidate->tag_orphan_hairpins();
     }
     else{
         $candidate->compute_alignment_quality_for_abinitio();
+        $candidate->compute_quality();
     }
-    $candidate->compute_quality();
+
     return $candidate;
 }
 

@@ -569,7 +569,9 @@ sub get_basic_informations {
     if ( defined( $self->{'reads_distribution'} ) ){
         push @headers, 'reads_distribution';
     }
-
+    if ( defined( $self->{'orphan_hairpin'} ) ){
+        push @headers, 'orphan_hairpin';
+    }
     push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'nb_reads', 'criteria_nb_reads' );
 	my $result = {};
 
@@ -1071,6 +1073,26 @@ sub count_total_nb_of_reads_for_candidate {
         }
     }
     $self->{'nb_reads'} = $total_reads;
+    return $self;
+}
+
+=method tag_orphan_hairpins
+
+  Method to set an attribute
+  'orphan_hairpin' to 1 if the candidate has a global score
+  of 0 and no conservation.
+
+=cut
+sub tag_orphan_hairpins{
+    my (@args) = @_;
+    my $self = shift @args;
+    debug("quality: $self->{'quality'}, alignment: $self->{'alignment'}", 1);
+    if ( $self->{'quality'} eq '0' && $self->{'alignment'} eq '0'){
+        $self->{'orphan_hairpin'} = 1;
+    }
+    else{
+        $self->{'orphan_hairpin'} = 0;
+    }
     return $self;
 }
 
