@@ -563,9 +563,6 @@ sub get_basic_informations {
     if ( defined( $self->{'mirna_length'} ) ){
         push @headers, 'mirna_length';
     }
-    if ( defined( $self->{'full_position'} ) ){
-        push @headers, 'full_position';
-    }
     if ( defined( $self->{'reads_distribution'} ) ){
         push @headers, 'reads_distribution';
     }
