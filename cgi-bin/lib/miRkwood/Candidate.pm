@@ -958,7 +958,7 @@ sub find_mirna {
     debug( "$percentage_majority_read % reads start at the same position than the major read.", 1);
     if ( $percentage_majority_read >= $threshold ){
         my $chromosome = $self->{'name'};
-        if ( $self->{'name'} =~ /([^_]+)__.*/ ){
+        if ( $self->{'name'} =~ /(.*)__.*/ ){
             $chromosome = $1;
         }
         $self->{'mirna_position'} = "$mirna_start-$mirna_end";
