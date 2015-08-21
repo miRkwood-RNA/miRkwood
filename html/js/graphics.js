@@ -401,7 +401,7 @@ function sortingTable(id)
 
 function sortBy(sortValue)
 { 
-	if (sortValue == 'quality')
+	if (sortValue == 'position')
 	{	
 		document.getElementById('hrefquality').style.color= 'black';
 		document.getElementById('hrefquality').className='on';

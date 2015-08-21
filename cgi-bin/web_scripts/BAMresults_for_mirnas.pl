@@ -122,7 +122,7 @@ if ( $valid ){
 
                     <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
                     $displayAllCandidates
-                    <a id="hrefposition" class='on' onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" class='off' onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
+                    <a id="hrefposition" class='on' onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" class='off' onclick='sortBy("quality")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
                     </p>
                 </div> 
                           
