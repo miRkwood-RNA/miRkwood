@@ -125,23 +125,22 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 
             for (var j=0;j<columnsNumber;j++) // parcours nombre de colonnes
             {
-				if (i==0) 
+				if (i==0)
 				{
 					var td=document.createElement('th');
 					td.setAttribute("class" , "factors");
-				}else if (j==0) {
-					var td=document.createElement('td');
-					td.setAttribute("class" , "names");
 				}
 				else
 				{
-					var td=document.createElement('td'); 
+					var td=document.createElement('td');
+					if (j==0) {
+						td.setAttribute("class" , "names");
+					}
+ 					td.setAttribute('onclick',"showCellInfo("+i+","+j+")");
+					td.setAttribute('onmouseover',"colorOver("+i+","+j+")");
+					td.setAttribute('onmouseout',"colorOut("+i+","+j+")");
 				}
-				//var td=document.createElement('td');  //création colonne
 				td.setAttribute('id',"cell-"+i+"-"+j);
-				td.setAttribute('onclick',"showCellInfo("+i+","+j+")");
-				td.setAttribute('onmouseover',"colorOver("+i+","+j+")");
-				td.setAttribute('onmouseout',"colorOut("+i+","+j+")");
 				td.width='100';
 
 				if ((i==0)&&(j!=0))
