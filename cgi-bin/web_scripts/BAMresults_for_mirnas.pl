@@ -54,9 +54,9 @@ my $displayAllCandidates = '';
 if ( $mirnas_type eq 'novel_miRNA' ){
     $mirna = 'Novel';
     $displayAllCandidates = <<"END_TXT";
-<a id="displayAll" class='off' style="color:black;" onclick='displayAllOrNot(true)' >Display all candidates </a>
-/
 <a id="dontDisplayOrphanHairpins" class='on' style="color:blue;" onclick='displayAllOrNot(false)'>Don't display orphan hairpins </a>
+/
+<a id="displayAll" class='off' style="color:black;" onclick='displayAllOrNot(true)' >Display all candidates </a>
 <br />
 END_TXT
 }
