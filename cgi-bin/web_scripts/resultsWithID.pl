@@ -89,7 +89,7 @@ if ($valid) {
     		</form>
     	</div>
     		<p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
-  			<a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a>
+  			<a id="hrefposition" onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("quality")'  >sort by quality</a>
     		</p>
     </div>
     
