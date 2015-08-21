@@ -58,10 +58,10 @@ function showCellInfo(i,j)
  */
 function colorOver(a,b)
 {
+	document.getElementById('checkboxSelect'+a).setAttribute('bgcolor','#EDEDED');
 	for (var j=0;j<columnsNumber+1;j++)
 	{	
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','#EDEDED');
-		document.getElementById('checkboxSelect'+a).setAttribute('bgcolor','#EDEDED');
 	}
 }
 
@@ -70,10 +70,10 @@ function colorOver(a,b)
  */
 function colorOut(a,b)
 {
+	document.getElementById('checkboxSelect'+a).setAttribute('bgcolor','white');
 	for (var j=0;j<columnsNumber+1;j++)
 	{
 		document.getElementById('cell-'+a+'-'+j).setAttribute('bgcolor','white');
-		document.getElementById('checkboxSelect'+a).setAttribute('bgcolor','white');
 	}
 }
 
