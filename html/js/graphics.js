@@ -176,7 +176,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 					}
 					else if (value.toString() == 'quality') 
 					{
-						td.innerHTML = '<h3 onclick ="sortingTable(\'all2\')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
+						td.innerHTML = '<h3 onclick ="sortingTable(\'all2\',false)"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
 					}
                     else if (value.toString() == 'alignment')
 					{
@@ -278,7 +278,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 				}
 				if ((i==0)&&(j==0))
 				{
-					td.innerHTML = '<h3 onclick ="sortingTable(\'all\')">Chr</h3>';
+					td.innerHTML = '<h3 onclick ="sortingTable(\'all\',false)">Chr</h3>';
 				}
 
 				tr.appendChild(td); // ajoute colonne à la ligne
@@ -391,36 +391,47 @@ function exportTo(id, webroot, pipeline, mirna_type)
 }
 
 
-function sortingTable(id)
+function sortingTable(id, displayOrphanHairpins)
 {
 	var table = document.getElementById('table');
 	table.innerHTML = "";
-	main(id, true);
+	main(id, displayOrphanHairpins);
 }
 
 
 function sortBy(sortValue)
-{ 
+{
+	var displayOrphanHairpins = true;   // true by default because of abinitio pipeline
+	var element = document.getElementById('dontDisplayOrphanHairpins');
+	if (element != null && element.className == 'on')
+	{
+		displayOrphanHairpins = false;
+	}
 	if (sortValue == 'position')
 	{	
 		document.getElementById('hrefquality').style.color= 'black';
 		document.getElementById('hrefquality').className='off';
 		document.getElementById('hrefposition').style.color= 'blue';
 		document.getElementById('hrefposition').className='on';
-		sortingTable('all');
+		sortingTable('all',displayOrphanHairpins);
 	} else 
 	{	
 		document.getElementById('hrefposition').style.color= 'black';
 		document.getElementById('hrefposition').className='off';
 		document.getElementById('hrefquality').style.color= 'blue';
 		document.getElementById('hrefquality').className='on';
-		sortingTable('all2');
+		sortingTable('all2',displayOrphanHairpins);
 	}
 	 	
 }
 
 function displayAllOrNot(displayOrphanHairpins)
 {
+	var sortType = 'all';
+	if (document.getElementById('hrefquality').className == 'on')
+	{
+		sortType = 'all2';
+	}
 	if (displayOrphanHairpins)
 	{
 		document.getElementById('displayAll').style.color= 'black';
@@ -429,7 +440,7 @@ function displayAllOrNot(displayOrphanHairpins)
 		document.getElementById('dontDisplayOrphanHairpins').className='off';
 		var table = document.getElementById('table');
 		table.innerHTML = "";
-		main('all', true);
+		main(sortType, true);
 	}
 	else
 	{
@@ -439,6 +450,6 @@ function displayAllOrNot(displayOrphanHairpins)
 		document.getElementById('dontDisplayOrphanHairpins').className='on';
 		var table = document.getElementById('table');
 		table.innerHTML = "";
-		main('all', false);
+		main(sortType, false);
 	}
 }
