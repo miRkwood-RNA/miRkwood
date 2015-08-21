@@ -393,6 +393,23 @@ function exportTo(id, webroot, pipeline, mirna_type)
 
 function sortingTable(id, displayOrphanHairpins)
 {
+	document.getElementById('hrefposition').style.color= 'blue';
+	document.getElementById('hrefquality').style.color= 'black';
+	if (id == 'all2')
+	{
+		document.getElementById('hrefposition').style.color= 'black';
+		document.getElementById('hrefquality').style.color= 'blue';
+	}
+	if( document.getElementById('displayAll') != null & document.getElementById('dontDisplayOrphanHairpins') != null)
+	{
+		document.getElementById('displayAll').style.color= 'black';
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue';
+		if (displayOrphanHairpins)
+		{
+			document.getElementById('displayAll').style.color= 'blue';
+			document.getElementById('dontDisplayOrphanHairpins').style.color= 'black';
+		}
+	}
 	var table = document.getElementById('table');
 	table.innerHTML = "";
 	main(id, displayOrphanHairpins);
@@ -434,9 +451,9 @@ function displayAllOrNot(displayOrphanHairpins)
 	}
 	if (displayOrphanHairpins)
 	{
-		document.getElementById('displayAll').style.color= 'black';
+		document.getElementById('displayAll').style.color= 'blue';
 		document.getElementById('displayAll').className='on';
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue';
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black';
 		document.getElementById('dontDisplayOrphanHairpins').className='off';
 		var table = document.getElementById('table');
 		table.innerHTML = "";
@@ -444,9 +461,9 @@ function displayAllOrNot(displayOrphanHairpins)
 	}
 	else
 	{
-		document.getElementById('displayAll').style.color= 'blue';
+		document.getElementById('displayAll').style.color= 'black';
 		document.getElementById('displayAll').className='off';
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black';
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue';
 		document.getElementById('dontDisplayOrphanHairpins').className='on';
 		var table = document.getElementById('table');
 		table.innerHTML = "";
