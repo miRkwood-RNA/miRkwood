@@ -404,14 +404,16 @@ function sortBy(sortValue)
 	if (sortValue == 'position')
 	{	
 		document.getElementById('hrefquality').style.color= 'black';
-		document.getElementById('hrefquality').className='on';
+		document.getElementById('hrefquality').className='off';
 		document.getElementById('hrefposition').style.color= 'blue';
+		document.getElementById('hrefposition').className='on';
 		sortingTable('all');
 	} else 
 	{	
 		document.getElementById('hrefposition').style.color= 'black';
-		document.getElementById('hrefposition').className='on';
+		document.getElementById('hrefposition').className='off';
 		document.getElementById('hrefquality').style.color= 'blue';
+		document.getElementById('hrefquality').className='on';
 		sortingTable('all2');
 	}
 	 	
