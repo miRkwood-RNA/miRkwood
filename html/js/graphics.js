@@ -94,7 +94,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 		{
 			var discarded = myResults.getValueByFactor(i-1,'orphan_hairpin');
 		}
-		if (displayOrphanHairpins == "true" || discarded!=1){       
+		if (displayOrphanHairpins || discarded!=1){       
 			var tr=document.createElement('tr'); 
 			tbdy.appendChild(tr); //ajouter ligne
 			if (i!=0) 	
@@ -395,7 +395,7 @@ function sortingTable(id)
 {
 	var table = document.getElementById('table');
 	table.innerHTML = "";
-	main(id, "true");
+	main(id, true);
 }
 
 
@@ -417,13 +417,13 @@ function sortBy(sortValue)
 
 function displayAllOrNot(displayOrphanHairpins)
 {
-	if (displayOrphanHairpins == "true")
+	if (displayOrphanHairpins)
 	{
 		document.getElementById('displayAll').style.color= 'black'
 		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue'
 		var table = document.getElementById('table');
 		table.innerHTML = "";
-		main('all', "true");
+		main('all', true);
 	}
 	else
 	{
@@ -431,6 +431,6 @@ function displayAllOrNot(displayOrphanHairpins)
 		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black'
 		var table = document.getElementById('table');
 		table.innerHTML = "";
-		main('all', "false");
+		main('all', false);
 	}
 }
