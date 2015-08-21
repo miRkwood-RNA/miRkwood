@@ -53,7 +53,12 @@ my $mirna = '';
 my $displayAllCandidates = '';
 if ( $mirnas_type eq 'novel_miRNA' ){
     $mirna = 'Novel';
-    $displayAllCandidates = "<a id=\"displayAll\" onclick='displayAllOrNot(true)' >Display all candidates </a> / <a id=\"dontDisplayOrphanHairpins\" onclick='displayAllOrNot(false)'>Don't display orphan hairpins </a> <br />";
+    $displayAllCandidates = <<"END_TXT";
+<a id="displayAll" onclick='displayAllOrNot(true)' >Display all candidates </a>
+/
+<a id="dontDisplayOrphanHairpins" onclick='displayAllOrNot(false)'>Don't display orphan hairpins </a>
+<br />
+END_TXT
 }
 elsif ( $mirnas_type eq 'known_miRNA' ){
     $mirna = 'Known';
