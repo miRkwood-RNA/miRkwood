@@ -54,9 +54,9 @@ my $displayAllCandidates = '';
 if ( $mirnas_type eq 'novel_miRNA' ){
     $mirna = 'Novel';
     $displayAllCandidates = <<"END_TXT";
-<a id="displayAll" onclick='displayAllOrNot(true)' >Display all candidates </a>
+<a id="displayAll" class='off' onclick='displayAllOrNot(true)' >Display all candidates </a>
 /
-<a id="dontDisplayOrphanHairpins" onclick='displayAllOrNot(false)'>Don't display orphan hairpins </a>
+<a id="dontDisplayOrphanHairpins" class='on' onclick='displayAllOrNot(false)'>Don't display orphan hairpins </a>
 <br />
 END_TXT
 }
@@ -122,7 +122,7 @@ if ( $valid ){
 
                     <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
                     $displayAllCandidates
-                    <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
+                    <a id="hrefposition" class='on' onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" class='off' onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
                     </p>
                 </div> 
                           

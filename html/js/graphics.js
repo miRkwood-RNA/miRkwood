@@ -403,13 +403,15 @@ function sortBy(sortValue)
 { 
 	if (sortValue == 'quality')
 	{	
-		document.getElementById('hrefquality').style.color= 'black'
-		document.getElementById('hrefposition').style.color= 'blue'
+		document.getElementById('hrefquality').style.color= 'black';
+		document.getElementById('hrefquality').className='on';
+		document.getElementById('hrefposition').style.color= 'blue';
 		sortingTable('all');
 	} else 
 	{	
-		document.getElementById('hrefposition').style.color= 'black'
-		document.getElementById('hrefquality').style.color= 'blue'
+		document.getElementById('hrefposition').style.color= 'black';
+		document.getElementById('hrefposition').className='on';
+		document.getElementById('hrefquality').style.color= 'blue';
 		sortingTable('all2');
 	}
 	 	
@@ -419,16 +421,20 @@ function displayAllOrNot(displayOrphanHairpins)
 {
 	if (displayOrphanHairpins)
 	{
-		document.getElementById('displayAll').style.color= 'black'
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue'
+		document.getElementById('displayAll').style.color= 'black';
+		document.getElementById('displayAll').className='on';
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue';
+		document.getElementById('dontDisplayOrphanHairpins').className='off';
 		var table = document.getElementById('table');
 		table.innerHTML = "";
 		main('all', true);
 	}
 	else
 	{
-		document.getElementById('displayAll').style.color= 'blue'
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black'
+		document.getElementById('displayAll').style.color= 'blue';
+		document.getElementById('displayAll').className='off';
+		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black';
+		document.getElementById('dontDisplayOrphanHairpins').className='on';
 		var table = document.getElementById('table');
 		table.innerHTML = "";
 		main('all', false);
