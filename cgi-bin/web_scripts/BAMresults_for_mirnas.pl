@@ -50,8 +50,10 @@ my $page = '';
 
 my $mirnas_results = '';
 my $mirna = '';
+my $displayAllCandidates = '';
 if ( $mirnas_type eq 'novel_miRNA' ){
     $mirna = 'Novel';
+    $displayAllCandidates = "<a id=\"displayAll\" onclick='displayAllOrNot(\"true\")' >Display all candidates </a> / <a id=\"dontDisplayOrphanHairpins\" onclick='displayAllOrNot(\"false\")'>Don't display orphan hairpins </a> <br />";
 }
 elsif ( $mirnas_type eq 'known_miRNA' ){
     $mirna = 'Known';
@@ -112,11 +114,11 @@ if ( $valid ){
                             <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "smallRNAseq", "$mirnas_type")'/>
                         </form>
                     </div>
-                        <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
-                        <a id="displayAll" onclick='displayAllOrNot("true")' >Display all candidates </a> / <a id="dontDisplayOrphanHairpins" onclick='displayAllOrNot("false")'>Don't display orphan hairpins </a>
-                        <br />
-                        <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
-                        </p>
+
+                    <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
+                    $displayAllCandidates
+                    <a id="hrefposition" onclick='sortBy("quality")' >Sort by position <\/a> /  <a id="hrefquality" onclick='sortBy("position")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
+                    </p>
                 </div> 
                           
                 <div id="table" > </div>    
