@@ -1,0 +1,30 @@
+- name : gma-miR5368
+  begin_target  : 57
+  end_target    : 74
+  strand_target : +
+  begin_query   : 0
+  end_query     : 19
+  def_query     : MIMAT0021602 Glycine max miR5368 | 
+  seq_query     : GGACAGUCUCAGGUAGACA
+
+  score: -3
+  alignment: |
+    G G match
+    G G match
+    A A match
+    C A match
+    A A match
+    G - gap
+    U U match
+    C C match
+    U U match
+    C C match
+    A A match
+    G G match
+    G G match
+    U U match
+    A - gap
+    G G match
+    A A match
+    C C match
+    A A match

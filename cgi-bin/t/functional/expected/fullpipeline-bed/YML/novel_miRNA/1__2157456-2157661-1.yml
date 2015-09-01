@@ -2,6 +2,8 @@
 --- UUGGAAUUCUAGAGAGAUCAAAGAGUGUGUUCUUGUGAUCUGCUCUUGUGUGUUUAAGGAAAUCUCAGGUGACAAGCUAAAGUAGUUUAGAUCUUGUGUAAAACCAAUUAAGGUAGUUGUAAACUUCUUAAUCAGAUUUCUAAUAAAGUGAUACUCAGUGGUUCUGAGUUUGGGGAAUACGAUUCUUGGUUCAUCCGGAAUUUCAA
 --- criteria_reads_mirna
 --- 0
+--- alignment_existence
+--- 1
 --- identifier
 --- 1__2157456-2157661-1
 --- hairpin
@@ -70,7 +72,24 @@
 --- start_position
 --- 2157456
 --- alignments
---- {}
+---
+58-74:
+- alignment: 'GGAAA-UCUCAGGU-GACA
+
+    ||| | |||||||| ||||
+
+    GGACAGUCUCAGGUAGACA
+
+'
+  begin_query: 1
+  begin_target: 58
+  def_query: MIMAT0021602 Glycine max miR5368 |
+  end_query: 19
+  end_target: 74
+  name: gma-miR5368
+  score: -3
+  seq: GGACAGUCUCAGGUAGACA
+  strand_target: +
 --- position
 --- 2157456-2157661
 --- structure_stemloop
@@ -292,7 +311,7 @@
 '98': '0'
 '99': '0'
 --- alignment
---- 0
+--- 1
 --- strand
 --- +
 --- quality
@@ -311,3 +330,6 @@
 --- -24.126213592233
 --- mfei
 --- -0.680821917808219
+--- mirdup_validation
+---
+1__58-74: 0

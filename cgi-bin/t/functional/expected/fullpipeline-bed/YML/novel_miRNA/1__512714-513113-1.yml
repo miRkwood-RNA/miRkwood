@@ -2,6 +2,8 @@
 --- GAACUUUCAAAAAAUGGUCAAAUUAACCGUAAACUCUUGAAAUUGUCGUUUUAUACCUCAACAAAAAAUUGACUUCUAAUUUAACCUAUACUUUAUCGUUGACUUCUAAUUUAACCUAUAAUUUAUCGUUGACUCGGCCAAAUCGACUCACCGUUAACACUUCUUAAUAGCGCUCCUAACAACCAUUACAAAACAUGGCCUAACAGCCGUUGUCGUUGGUUUAAGGACGAAAACAAUUGUUAGUUACGCUAUUAGGAGAGCUGUUAAGAAGUGUUAAUGGUGAGUCGAUUUGGCCGAAUCAACGAUAAUUUAUAGGUUAAAUUAGAAAUCAACUAUUUGUUGAGGUAUAAAACGGUCAUUUCAAGAAUUCACGGUUAAUUUGACCAUUUUUUGAAAGUUC
 --- criteria_reads_mirna
 --- 0
+--- alignment_existence
+--- 1
 --- identifier
 --- 1__512714-513113-1
 --- hairpin
@@ -99,7 +101,26 @@
 --- start_position
 --- 512714
 --- alignments
---- {}
+---
+262-282:
+- alignment: 'UGUUAAGAAGUGUUAAUGGUG
+
+    ||||||| |||||||| ||||
+
+    UGUUAAGGAGUGUUAACGGUG
+
+'
+  begin_query: 1
+  begin_target: 262
+  def_query: MIMAT0022395 Arabidopsis thaliana miR5635a | ath-miR5635d MIMAT0022405
+    Arabidopsis thaliana miR5635d | ath-miR5635b MIMAT0022418 Arabidopsis thaliana
+    miR5635b | ath-miR5635c MIMAT0022428 Arabidopsis thaliana miR5635c |
+  end_query: 21
+  end_target: 282
+  name: ath-miR5635a
+  score: -2
+  seq: UGUUAAGGAGUGUUAACGGUG
+  strand_target: +
 --- position
 --- 512714-513113
 --- structure_stemloop
@@ -515,7 +536,7 @@
 '98': '0'
 '99': '0'
 --- alignment
---- 0
+--- 1
 --- strand
 --- '-'
 --- quality
@@ -534,3 +555,6 @@
 --- -54.2
 --- mfei
 --- -1.61791044776119
+--- mirdup_validation
+---
+1__262-282: 0
