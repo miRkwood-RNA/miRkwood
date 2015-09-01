@@ -66,17 +66,17 @@ sub test_alignment {
 
     my $seqN = File::Spec->catfile( $self->get_directory(), 'seqWithN.txt' );
     # Un-comment this to run RNAcomp on the sequence without N
-    #~ if ( $mode eq 'smallRNAseq' ){
-        #~ my $seqWithT = $self->{'candidate'}{'sequence'};
-        #~ $seqWithT =~ s/U/T/g;
-        #~ open(my $FILE, '>', $seqN) or die "ERROR while creating $seqN: $!";
-        #~ print $FILE ">$self->{'candidate'}{'name'}\n";
-        #~ print $FILE "$seqWithT\n";
-        #~ close $FILE;
-    #~ }
-    #~ else{
+    if ( $mode eq 'smallRNAseq' ){
+        my $seqWithT = $self->{'candidate'}{'sequence'};
+        $seqWithT =~ s/U/T/g;
+        open(my $FILE, '>', $seqN) or die "ERROR while creating $seqN: $!";
+        print $FILE ">$self->{'candidate'}{'name'}\n";
+        print $FILE "$seqWithT\n";
+        close $FILE;
+    }
+    else{
         $self->mask_CT_file($candidate_ct_stemloop_file, $seqN);
-    #~ }
+    }
 
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
     miRkwood::Programs::run_RNAcomp( $seqN, $exonerate_out )
