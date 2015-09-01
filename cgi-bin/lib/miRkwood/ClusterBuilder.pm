@@ -69,7 +69,7 @@ sub build_loci_per_chr {
                                                                                         $this->{'loci_read_coverage_threshold'},
                                                                                         $this->{'peak_padding'},
                                                                                         $parsed_bed);
-
+    debug( '    - End of get loci...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	undef $putative_miRna;
 
 	miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterBuilder : build_loci' );

@@ -132,7 +132,8 @@ sub run_rnalfold_on_file {
     my ( $input, $output ) = @_;
     my $options = '-L 400';
     my $rnalfold_cmd = "$programs_paths{'rnalfold'} $options < $input > $output";
-    debug( '     ' . $rnalfold_cmd, miRkwood->DEBUG());
+    #~ debug( '     ' . $rnalfold_cmd, miRkwood->DEBUG());
+    debug( "       Running RNAlfold on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     system($rnalfold_cmd);
     return ( -e $output );
 }
@@ -305,8 +306,10 @@ sub run_RNAcomp {
     my $mirbase_file = miRkwood::Data::get_mirbase_file();
 
     my $cmd = "$programs_paths{'RNAcomp'} -r $mirbase_file -i $input --all > $output 2> /dev/null";
-    debug( '          ' . $cmd, miRkwood->DEBUG());
+    #~ debug( '          ' . $cmd, miRkwood->DEBUG());
+    debug( "          Running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     system($cmd);
+    debug( "          End of running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     return ( -e $output );
 
 }
@@ -321,7 +324,8 @@ Return whether the output files exist.
 sub run_rnastemloop {
     my ( $input, $output_stemloop, $output_optimal ) = @_;
     my $rnastemloop_cmd = "$programs_paths{'rnastemloop'} -i $input -s $output_stemloop -o $output_optimal";
-    debug( '     ' . $rnastemloop_cmd, miRkwood->DEBUG());
+    #~ debug( '     ' . $rnastemloop_cmd, miRkwood->DEBUG());
+    debug( "       Running RNAstemloop on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     system($rnastemloop_cmd);
     return ( -e $output_stemloop && -e $output_optimal);
 }

@@ -90,6 +90,7 @@ sub compute_quality {
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.pipeline');
 
+    debug( "          Compute quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( $mode eq 'smallRNAseq' ){
         $self->compute_quality_from_reads();
     }
@@ -102,6 +103,7 @@ sub compute_quality {
         $quality += $self->{'alignment'};
         $self->{'quality'} =  $quality;
     }
+    debug( "          End of compute_quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     return;
 }
@@ -775,7 +777,7 @@ sub compute_quality_from_reads {
     if ( $self->{'mirna_sequence'} eq '' ){
         $criteria_star = 0;
         $criteria_reads_mirna = 0;
-        debug( "Candidate $self->{'identifier'} : no mirna", miRkwood->DEBUG() );
+        debug( "             Candidate $self->{'identifier'} : no mirna", miRkwood->DEBUG() );
     }
     else {
         my ($start_mirna, $end_mirna) = split(/-/, $self->{'mirna_position'});
@@ -806,7 +808,7 @@ sub compute_quality_from_reads {
                 #~ debug("End of read ($read_position) is around pairing miRNA start ($pairing_start_mirna)", 1);                
             }
         }
-        debug("$reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . ' %)', 1);
+        debug("             $reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . ' %)', 1);
         if ( $reads_around_mirna / $self->{'nb_reads'} >= 0.75 ){
             $criteria_reads_mirna = 1;
         }
@@ -824,7 +826,7 @@ sub compute_quality_from_reads {
             }
         }
         else {  # mirna is on the loop => not really a mirna then
-            debug( "Candidate $self->{'identifier'} : the major read is in the loop", miRkwood->DEBUG() );
+            debug( "             Candidate $self->{'identifier'} : the major read is in the loop", miRkwood->DEBUG() );
         }
 
     }
@@ -849,7 +851,7 @@ sub compute_quality_from_reads {
         $self->{'quality'} += 1;
     }
 
-    debug( "Candidate $self->{'identifier'} ($self->{'quality'}): criteria nb reads : $criteria_nb_reads;  criteria mirdup : $self->{'criteria_mirdup'}; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
+    debug( "             Candidate $self->{'identifier'} ($self->{'quality'}): criteria nb reads : $criteria_nb_reads;  criteria mirdup : $self->{'criteria_mirdup'}; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
 
     #~ return $criteria_nb_reads + $criteria_star + $criteria_reads_mirna;
     return $self;
@@ -955,7 +957,7 @@ sub find_mirna {
     }
 
     my $percentage_majority_read = $same_start_reads / $total_reads;
-    debug( "$percentage_majority_read % reads start at the same position than the major read.", 1);
+    #~ debug( "             $percentage_majority_read % reads start at the same position than the major read.", 1);
     if ( $percentage_majority_read >= $threshold ){
         my $chromosome = $self->{'name'};
         if ( $self->{'name'} =~ /(.*)__.*/ ){
@@ -1083,7 +1085,7 @@ sub count_total_nb_of_reads_for_candidate {
 sub tag_orphan_hairpins{
     my (@args) = @_;
     my $self = shift @args;
-    debug("quality: $self->{'quality'}, alignment: $self->{'alignment'}", 1);
+    #~ debug("quality: $self->{'quality'}, alignment: $self->{'alignment'}", 1);
     if ( $self->{'quality'} eq '0' && $self->{'alignment'} eq '0'){
         $self->{'orphan_hairpin'} = 1;
     }

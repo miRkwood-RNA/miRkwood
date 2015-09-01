@@ -54,6 +54,8 @@ sub filterBEDfile_for_model_organism {
 
     ### Filter out known miRNAs
     if ( -r $mirbase_file ) {
+        debug( 'Filter out known miRNAS...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
         # Create a file with known miRNAs
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
 
@@ -61,7 +63,7 @@ sub filterBEDfile_for_model_organism {
         # what's happening here???
         store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1);  # un-comment when tests are done
         #~ system("cp $bed_file $tmp_1");  # comment when tests are done
-        debug( 'Known miRNAS have been filtered out from BED.', 1 );
+        debug( 'Known miRNAS have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         debug( "WARNING : no miRNA file found for $species.", 1 );
@@ -71,13 +73,15 @@ sub filterBEDfile_for_model_organism {
     ### Filter out CDS
     if ( $filter_CDS ){
         if ( -r $CDS_file ){
+            debug( 'Filter out CDS...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
             # Create a file with CDS
             store_overlapping_reads( $tmp_1, $CDS_file, $CDS_reads, '');
 
             # Delete reads corresponding to CDS from the BED
             store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2);
 
-            debug( 'CDS have been filtered out from BED.', 1 );
+            debug( 'CDS have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         }
         else{
             debug( "WARNING : no CDS file found for $species.", 1 );
@@ -92,13 +96,15 @@ sub filterBEDfile_for_model_organism {
     ### Filter out rRNA, tRNA, snoRNA
     if ( $filter_tRNA_rRNA ){
         if ( -r $otherRNA_file ){
+            debug( 'Filter out t/r/snoRNA...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
             # Create a file with CDS
             store_overlapping_reads( $tmp_2, $otherRNA_file, $otherRNA_reads, '');
 
             # Delete reads corresponding to CDS from the BED
             store_non_overlapping_reads( $tmp_2, $otherRNA_file, $tmp_3);
 
-            debug( 'Other RNA have been filtered out from BED.', 1 );
+            debug( 't/r/snoRNA have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         }
         else{
             debug( "WARNING : no rRNA/tRNA/snoRNA file found for $species.", 1 );
@@ -111,8 +117,9 @@ sub filterBEDfile_for_model_organism {
 
     ### Filter out multimapped reads
     if ( $filter_multimapped ){
+        debug( 'Filter out multimapped reads...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         filter_multimapped_reads( $tmp_3, $filtered_bed, $multimapped_reads );
-        debug( 'Multi_mapped reads have been filtered out from BED.', 1 );
+        debug( 'Multimapped reads have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         rename $tmp_3, $filtered_bed;

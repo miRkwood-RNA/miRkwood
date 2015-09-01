@@ -94,8 +94,15 @@ sub run_pipeline {
 
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
         debug( "- Considering chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
+        debug( "  init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
+        debug( "  End of init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
+        debug( "  run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
+        debug( "  End of run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
         $self->clean_workspace_per_chr( $chromosome );
     }
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );

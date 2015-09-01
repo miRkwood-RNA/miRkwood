@@ -232,9 +232,10 @@ sub write_VARNA_if_needed {
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.varna') ) {
         my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
-        debug( "          Generating image using VARNA in $varna_image", miRkwood->DEBUG() );
+        debug( "          Running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         miRkwood::Programs::run_varna_on_structure( $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, $varna_image )
           or carp('Problem during image generation using VARNA');
+        debug( "          End of running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
       return $varna_image
     }
     return '';

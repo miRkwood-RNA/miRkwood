@@ -153,9 +153,10 @@ sub process_mirna_candidates {
 
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
-        debug( "       - Process candidate $candidate_identifier" . ' [' . localtime() . ']', 1);
+        debug( "       - Process candidate $candidate_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG());
         my $candidate = $candidates_hash{$key};
         push @candidates_result, $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
+        debug( "       - End of process candidate $candidate_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG());
     }
 
     miRkwood::Utils::display_var_sizes_in_log_file( '..... PrecursorBuilder : process_mirna_candidates' );
