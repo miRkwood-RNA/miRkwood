@@ -655,6 +655,9 @@ make an hairpin with the mature standing out in HTML.
 sub make_hairpin_with_mature {
 	my (@args) = @_;
 	my ( $hairpin, $left, $right, $length, $mode ) = @args;
+    if ( $mode eq 'ascii' ){
+        $hairpin = lc($hairpin);
+    }
 	my ( $top, $upper, $middle, $lower, $bottom )  = split( /\n/, $hairpin );
 	my $hairpin_with_mature;
 	my $pseudo_size = $right - $left;
