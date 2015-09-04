@@ -665,7 +665,7 @@ sub make_hairpin_with_mature {
     if (!$mode){
         $mode = 'ascii';
     }
-	if ( $right >= $l ) {
+	if ( $right > $l ) {
 
 		#on the other side
 		my $converted_left = $length - $right + 1;
