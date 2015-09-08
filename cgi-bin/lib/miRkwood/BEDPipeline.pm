@@ -156,26 +156,23 @@ sub calculate_reads_coverage {
     my $line;
     my $size_genome = 0;
     my $nb_tot_reads = 0;
-    my $chromosome = '';
-    my $end_position = 0;
+    my $start_position = '';
     open (my $BED, $self->{'initial_bed'}) or die "ERROR while opening $self->{'initial_bed'} : $!";
     while( <$BED> ){
         chomp;
         if ( $_ ne '' ){
             my @fields = split( /\t/);
-            $nb_tot_reads += $fields[4];
-            if ( $chromosome ne '' and $chromosome ne $fields[0] ){
-                $size_genome += $end_position;
+            if ( $start_position eq '' ){
+                $start_position = $fields[1];
             }
-            $chromosome = $fields[0];
-            $end_position = $fields[2];
+            $nb_tot_reads += $fields[4];
             $line = $_;
         }
     }
     close $BED;
     chomp $line;
     my @fields = split( /\t/, $line);
-    $size_genome += $fields[2];
+    $size_genome = $fields[2] - $start_position;
     $self->{'average_coverage'} = int( $size_genome / $nb_tot_reads );
     if ( $self->{'average_coverage'} == 0 ){
         $self->{'average_coverage'} = 1;
