@@ -115,9 +115,11 @@ Return whether the output file exists.
 
 sub convert_to_ct {
     my ( $rnafold_out, $ct_file ) = @_;
+    debug( "                Start convert_to_ct for $rnafold_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $b2ct_cmd = "$programs_paths{'b2ct'} < $rnafold_out > $ct_file";
     system($b2ct_cmd);
     chmod 0777, $ct_file;
+    debug( "                End of convert_to_ct for $rnafold_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     return ( -e $ct_file );
 }
 
@@ -307,9 +309,9 @@ sub run_RNAcomp {
 
     my $cmd = "$programs_paths{'RNAcomp'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
     #~ debug( '          ' . $cmd, miRkwood->DEBUG());
-    debug( "          Running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
+    debug( "                Running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     system($cmd);
-    debug( "          End of running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
+    debug( "                End of running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     return ( -e $output );
 
 }

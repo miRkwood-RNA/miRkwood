@@ -9,6 +9,8 @@ use File::Spec;
 use File::Basename;
 use miRkwood::Programs;
 
+use Log::Message::Simple qw[msg error debug];
+
 =method make_prediction_source_file
 
 Given a set of sequences, write on disk a file appropriately
@@ -151,7 +153,7 @@ sub validate_with_mirdup {
     my $mature_seq  = shift @args;
     my $structure   = shift @args;
     my @alignments  = @args;
-
+    debug( "                  Start validate_with_mirdup for $output_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     open( my $FOut, '>', $output_file )
       or die "Error when opening $output_file: $!";
     print {$FOut}
@@ -161,7 +163,9 @@ sub validate_with_mirdup {
     close $FOut or die "Error when closing $output_file: $!";
     my $result_file =
       miRkwood::Programs::run_mirdup_validation_on_file($output_file);
+    debug( "                  End of validate_with_mirdup for $output_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     return $self->parse_validation_output($result_file);
+
 }
 
 =method parse_validation_output

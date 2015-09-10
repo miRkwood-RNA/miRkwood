@@ -95,17 +95,17 @@ sub run_pipeline {
     $self->{'orphan_clusters'}  = File::Spec->catfile( $self->{'job_dir'}, "${bed_name}_orphan_clusters.bed" );
 
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
-        debug( "- Considering chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "- Start chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
-        debug( "  init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "  Start init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
         debug( "  End of init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
-        debug( "  run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "  Start run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
         debug( "  End of run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
-        debug( "  clean_workspace_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "  Start clean_workspace_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->clean_workspace_per_chr( $chromosome );
         debug( "  End of clean_workspace_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
@@ -306,15 +306,15 @@ sub compute_candidates_per_chr {
 
     foreach my $locus ( @{$self->{'sequences'}} ) {
 
-        debug( "  - Considering sequence $sequence_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "    Start sequence $sequence_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $sequence_identifier++;
 
         if ( ( $locus->{'begin'} - $previous_end ) < $distance_min ){
-            debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in same bunch than previous one", miRkwood->DEBUG());
+            #~ debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in same bunch than previous one", miRkwood->DEBUG());
             push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
         }
         else {
-            debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in a new bunch", miRkwood->DEBUG());
+            #~ debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in a new bunch", miRkwood->DEBUG());
 
             # Treat previous bunch
             debug( '    * Treat previous bunch', miRkwood->DEBUG());
@@ -355,7 +355,7 @@ sub compute_candidates_per_chr {
         $previous_end = $locus->{'end'};
         miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates_per_chr_new() (boucle sur loci)' );
 
-        debug( "  - End of sequence $sequence_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "    End of sequence ".($sequence_identifier-1) . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     }   # end foreach locus
 

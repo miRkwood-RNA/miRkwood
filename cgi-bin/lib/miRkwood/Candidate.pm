@@ -90,7 +90,7 @@ sub compute_quality {
     my $cfg = miRkwood->CONFIG();
     my $mode = $cfg->param('job.pipeline');
 
-    debug( "          Compute quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    debug( "            Compute quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( $mode eq 'smallRNAseq' ){
         $self->compute_quality_from_reads();
     }
@@ -103,7 +103,7 @@ sub compute_quality {
         $quality += $self->{'alignment'};
         $self->{'quality'} =  $quality;
     }
-    debug( "          End of compute_quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    debug( "            End of compute_quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     return;
 }

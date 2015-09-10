@@ -49,13 +49,15 @@ sub get_directory {
 sub run{
     my ( $self, @args ) = @_;
     my $cfg = miRkwood->CONFIG();
-
+    debug( "          Start CandidateJob->run for candidate $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
         $self->{'candidate'} = miRkwood::Candidate::count_total_nb_of_reads_for_candidate( $self->{'candidate'} );
         $self->{'candidate'} = miRkwood::Candidate::find_mirna( $self->{'candidate'}, $self->{'genome_db'} );
     }
 
+    debug( "            Start process_tests_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $candidate_test_info = $self->process_tests_for_candidate();
+    debug( "            End of process_tests_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $candidate_information = $self->get_candidate_information();
 
     my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
@@ -70,7 +72,7 @@ sub run{
         $candidate->compute_alignment_quality_for_abinitio();
         $candidate->compute_quality();
     }
-
+    debug( "          End of CandidateJob->run for candidate $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     return $candidate;
 }
 
@@ -232,10 +234,10 @@ sub write_VARNA_if_needed {
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.varna') ) {
         my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
-        debug( "          Running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "            Start running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         miRkwood::Programs::run_varna_on_structure( $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, $varna_image )
           or carp('Problem during image generation using VARNA');
-        debug( "          End of running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "            End of running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
       return $varna_image
     }
     return '';
@@ -280,17 +282,18 @@ sub process_tests_for_candidate {
 
     if ( $cfg->param('options.randfold') ) {
         my $seq_file = $self->write_sequence_file();
-        debug( "        Running test_randfold on $seq_file", miRkwood->DEBUG() );
+        debug( "              Running test_randfold on $seq_file", miRkwood->DEBUG() );
         $result->{'shuffles'} = $posteriori_tests->test_randfold( $seq_file );
     }
 
     $posteriori_tests->{'sequence_name'} = $self->{'sequence_name'};
     $posteriori_tests->{'candidate'} = $self->{'candidate'};
     my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
-    debug( "          Running test_alignment on $candidate_rnafold_stemploop_out", miRkwood->DEBUG() );
 
+    debug( "              Start test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my ($mirdup_results, $alignments) =
         $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
+    debug( "              End of test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         $result->{'criteria_mirdup'} = 0;

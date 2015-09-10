@@ -10,6 +10,8 @@ use miRkwood::Parsers;
 use miRkwood::Programs;
 use miRkwood::Utils;
 
+use Log::Message::Simple qw[msg error debug];
+
 use File::Spec;
 use Carp;
 use Class::Struct;
@@ -93,7 +95,7 @@ sub test_alignment {
 sub post_process_alignments {
     my ( $self, @args ) = @_;
     my $file_alignement = shift @args;
-
+    debug( "                Start post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my %alignments;
 
     if (-z $file_alignement){
@@ -118,6 +120,7 @@ sub post_process_alignments {
         my %mirdup_results =
           miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
             $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
+            debug( "                End of post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         return (\%mirdup_results, \%alignments);
     }
 }
