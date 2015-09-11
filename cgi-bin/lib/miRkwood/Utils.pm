@@ -665,41 +665,61 @@ sub make_hairpin_with_mature {
     if (!$mode){
         $mode = 'ascii';
     }
-	if ( $right > $l ) {
-
+	if ( $right > $l + 2 ) {
 		#on the other side
 		my $converted_left = $length - $right + 1;
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $converted_left, $pseudo_size, $bottom );
+		my $middle_mature = '';
+		my $color_middle = 0;
+		if ( $left == ( $l + 2 ) ){
+			$color_middle = 1;
+			$middle_mature = substr( $middle, -1);
+		}
 		my $bottom_mature = substr( $bottom, $true_left, $size );
 		my $lower_mature = substr( $lower, $true_left, $size );
         if ($mode eq 'html'){
 			$bottom_mature = '<span class="mature">' . $bottom_mature . '</span>';
 			$lower_mature  = '<span class="mature">' . $lower_mature . '</span>';
+			$middle_mature = '<span class="mature">' . $middle_mature . '</span>';
 		}
         elsif ($mode eq 'ascii'){
 			$bottom_mature = uc $bottom_mature;
 			$lower_mature  = uc $lower_mature;
+			$middle_mature = uc $middle_mature;
 		}
 		substr( $bottom, $true_left, $size ) = $bottom_mature;
 		substr( $lower, $true_left, $size )  = $lower_mature;
+		if ( $color_middle == 1 ){
+			substr( $middle, -1) = $middle_mature;
+		}
 	}
 	else {
 		my ( $true_left, $size ) =
 		  compute_mature_boundaries( $left, $pseudo_size, $top );
+		my $middle_mature = '';
+		my $color_middle = 0;
 	    my $top_mature = substr( $top, $true_left, $size );
 		my $upper_mature = substr( $upper, $true_left, $size );
+		if ( $true_left + $size == length($upper) + 1 ){
+			$color_middle = 1;
+			$middle_mature = substr( $middle, -1);
+		}
         if ($mode eq 'html'){
 			$top_mature   = '<span class="mature">' . $top_mature . '</span>';
 			$upper_mature = '<span class="mature">' . $upper_mature . '</span>';
+			$middle_mature = '<span class="mature">' . $middle_mature . '</span>';
 		}
         elsif ($mode eq 'ascii'){
 			$top_mature   = uc $top_mature;
 			$upper_mature = uc $upper_mature;
+			$middle_mature = uc $middle_mature;
 		}
 		substr( $top, $true_left, $size) = $top_mature;
 		substr( $upper, $true_left, $size ) = $upper_mature;
-
+		if ( $color_middle == 1 ){
+			substr( $middle, -1) = $middle_mature;
+		}
 	}
 	$hairpin_with_mature = <<"END";
 $top
