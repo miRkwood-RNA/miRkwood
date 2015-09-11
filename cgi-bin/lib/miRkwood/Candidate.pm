@@ -405,11 +405,18 @@ sub make_alignments_HTML {
         }
 
         # Hairpin
-        my $hairpin_with_mature =
-            miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
-                                                           $left, $right,
-                                                           length $self->{'sequence'},
-                                                           'html');
+        my $hairpin_with_mature = '';
+        if ( !eval { 
+            $hairpin_with_mature =
+              miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
+                                                        $left, $right,
+                                                        length $self->{'sequence'},
+                                                        'html');
+            }
+        ){
+            $hairpin_with_mature = $self->{'hairpin'};
+        }
+
         $predictionCounter += 1;
 
         # Sorting the hit list by descending value of the 'score' element
