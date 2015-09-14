@@ -18,6 +18,8 @@ use Getopt::Long;
 ########## Variables
 my $input_file = '';
 my $bed_file   = '';
+my $min_length = 18;
+my $max_length = 25;
 my $time = time();
 my $sorted_bam_file = "/tmp/mirkwood_bam2bed_${time}_sorted";
 my $sorted_sam_file = "/tmp/mirkwood_bam2bed_${time}_sorted.sam";
@@ -27,9 +29,16 @@ my $help;
 my $help_message = <<'EOF';
 mirkwood-bam2bed.pl
 ----------
-Script to convert a BAM into a BED file for use by miRkwood.
+Script to convert a BAM/SAM file into a BED file for use by miRkwood.
 
-Usage : ./mirkwood-bam2bed.pl -in <input BAM/SAM file> -bed <output BED file> 
+Usage : ./mirkwood-bam2bed.pl -in <input BAM/SAM file> -bed <output BED file>
+
+Options :
+    -in   : input BAM or SAM
+    -bed  : output BED
+    -min  : keep only reads with length >= min (default 18)
+    -max  : keep only reads with length <= max (default 25)
+    -help : display this message and quit
 
 Dependancies : samtools
 Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.
@@ -40,6 +49,8 @@ EOF
 ########## Get options
 GetOptions ('in=s'  => \$input_file,
             'bed=s' => \$bed_file,
+            'min=s' => \$min_length,
+            'max=s' => \$max_length,
 	        'help'  => \$help);
 
 
@@ -55,6 +66,12 @@ if ( ( ! -r $input_file ) || ( $bed_file eq '' ) ){
     exit;
 }
 
+
+if ( $min_length >= $max_length ){
+    print "--min should be strictly lower than --max\n";
+    print $help_message;
+    exit;
+}
 
 
 ########## Create sorted SAM file
@@ -84,24 +101,27 @@ while ( <$SAM> ){
 
     my @line = split ( /\t/smx );
 
-    if ( $line[1] ne '0x4' && $line[1] ne '4' ){
-
-        my $chromosome = $line[2];
-        my $start = $line[3] - 1;
-        my $sequence = $line[9];
-        my $strand = '+';
-        if ( $line[1] eq '16' or $line[1] eq '0x10' ){
-            $strand = '-';
-        }
-
-        if ( ! exists( $counts->{$chromosome}{$start}{$sequence}{$strand} ) ){
-            $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'} = 0;
-        }
-        $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'}++;
-
-        $counts->{$chromosome}{$start}{$sequence}{$strand}{'sequence'} = $line[9];
-
+    if ( $line[1] eq '0x4' || $line[1] eq '4' ){
+        next;
     }
+    if ( length($line[9]) < $min_length || length($line[9]) > $max_length ){
+        next;
+    }
+
+    my $chromosome = $line[2];
+    my $start = $line[3] - 1;
+    my $sequence = $line[9];
+    my $strand = '+';
+    if ( $line[1] eq '16' or $line[1] eq '0x10' ){
+        $strand = '-';
+    }
+
+    if ( ! exists( $counts->{$chromosome}{$start}{$sequence}{$strand} ) ){
+        $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'} = 0;
+    }
+    $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'}++;
+
+    $counts->{$chromosome}{$start}{$sequence}{$strand}{'sequence'} = $line[9];
 
 }
 
