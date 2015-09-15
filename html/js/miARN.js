@@ -3,9 +3,8 @@
  */
 function showHideBlock() 
 {
-    var species = document.getElementById('species').value;
-    if((document.getElementById('CDS').checked) && (species == ''))
-    { 
+    if(document.getElementById('CDS').checked)
+    {
         document.getElementById('menuDb').style.visibility='visible';
         document.getElementById('menuDb').style.display='block';
     }
@@ -19,7 +18,7 @@ function showHideBlock()
 /**
  * 
  */
-function ResetForm() 
+function ResetForm()
 { 
 	document.forms.form.reset();
 	document.getElementById('menuDb').style.visibility='hidden';
