@@ -579,7 +579,11 @@ sub clean_workspace_per_chr {
                 $name = "$cluster_start-$cluster_end$strand";
             }
 
-            my ($nb_reads, $nb_unique_reads) = miRkwood::BEDHandler::count_reads_in_bed_file( $self->{'bed_file'}, $cluster_start, $cluster_end );
+            my $reads = miRkwood::HairpinBuilder::get_contained_reads( $self->{'parsed_reads'}, $chromosome, $cluster_start, $cluster_end, $strand);
+            my $nb_reads = 0;
+            foreach my $key ( keys%{$reads} ){
+                $nb_reads += $reads->{$key};
+            }
             $orphan_clusters{ $cluster_start } = "$cluster_end\t$name\t$nb_reads\t$strand";
 
             system( "rm -Rf $cluster" );
