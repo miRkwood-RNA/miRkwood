@@ -68,17 +68,9 @@ my $page = <<"END_TXT";
                     </p>
                     <div id='listParam'> 
                     <p>
-                        <input class="checkbox" type="checkbox" checked="checked" name='CDS' id ="CDS" onclick="showHideBlock()"/>
+                        <input class="checkbox" type="checkbox" checked="checked" name='CDS' id ="CDS"/>
                         &#160;<label for='CDS'>Mask coding regions</label>  [<a href="$help_page#mask_coding_regions">?</a>]
                     </p>
-                    <div id="menuDb">
-                        <label class="choixDiv selectdb" for="db">Choose organism database:</label>
-                        <select class="db" name="db" id='db'>
-                            <option class="db" selected="selected">Arabidopsis_thaliana</option>
-                            <option class="db">Oryza_sativa</option>
-                            <option class="db">Medicago_truncatula</option> 
-                        </select>
-                    </div>
                     <p>
                         <input class="checkbox" type="checkbox" checked="checked" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
                         &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA/snoRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
