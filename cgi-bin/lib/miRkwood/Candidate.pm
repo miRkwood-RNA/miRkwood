@@ -406,7 +406,7 @@ sub make_alignments_HTML {
 
         # Hairpin
         my $hairpin_with_mature = '';
-        if ( !eval { 
+        if ( !eval {
             $hairpin_with_mature =
               miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
                                                         $left, $right,

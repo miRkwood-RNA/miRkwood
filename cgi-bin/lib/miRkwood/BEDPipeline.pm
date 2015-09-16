@@ -355,12 +355,12 @@ sub compute_candidates_per_chr {
         $previous_end = $locus->{'end'};
         miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates_per_chr_new() (boucle sur loci)' );
 
-        debug( "    End of sequence ".($sequence_identifier-1) . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( '    End of sequence '.($sequence_identifier-1) . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     }   # end foreach locus
 
     # Treat last bunch
-    debug( '    * Treat last bunch', miRkwood->DEBUG());
+    #~ debug( '    * Treat last bunch', miRkwood->DEBUG());
     my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
     undef @hairpin_candidates_for_chr;
 
@@ -368,15 +368,15 @@ sub compute_candidates_per_chr {
         my $precursorBuilderJob = miRkwood::PrecursorBuilder->new( $self->get_workspace_path(), $self->{'genome_db'}, $chromosome, $chromosome );
 
         # Merge candidates
-        debug( "     - Merge candidates (current locus : last one)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( '     - Merge candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
-        debug( "     - End of merge candidates (current locus : last one)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( '     - End of merge candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         undef @sorted_hairpin_candidates_for_chr;
 
         # Posteriori tests and update candidate information
-        debug("     - Process miRNA candidates (current locus : last one)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug('     - Process miRNA candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
-        debug("     - End of process miRNA candidates (current locus : last one)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug('     - End of process miRNA candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         undef $candidates_hash;
 
         $self->serialize_candidates($final_candidates_hash);
