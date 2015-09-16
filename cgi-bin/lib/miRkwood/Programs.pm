@@ -477,7 +477,7 @@ sub run_mirdup_validation_on_file {
         . " -r $programs_paths{'vienna_progs'}/"
         . " -c $miRdup_model_name"
         . " -v $validation_source_file"
-        . " > /dev/null 2>&1";
+        . " > /dev/null";
     system($run_mirdup_cmd);
 
     my @useless_created_by_mirdup_files = ("$validation_source_file.arff",
