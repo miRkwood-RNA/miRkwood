@@ -164,6 +164,9 @@ sub validate_with_mirdup {
     my $result_file =
       miRkwood::Programs::run_mirdup_validation_on_file($output_file);
     debug( "                  End of validate_with_mirdup for $output_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    if ( ! -e $result_file || ! -r $result_file ){
+        return $self->parse_validation_output($output_file);
+    }
     return $self->parse_validation_output($result_file);
 
 }
@@ -188,6 +191,9 @@ sub parse_validation_output {
     while ( my $line = <$FH> ) {
         my ( $name, $mature, $precursor, $structure, $validation, $confidence )
           = split( /\t/xms, $line );
+        if ( ! defined($validation) || $validation eq '' ){
+            $validation = 'false';
+        }
         $validation = $boolean_mapping{$validation};
         $results{$name} = $validation;
     }

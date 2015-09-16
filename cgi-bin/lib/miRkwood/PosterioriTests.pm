@@ -326,7 +326,9 @@ sub validate_mirna_with_mirdup {
     close $FILE or die "ERROR while closing $FILE : $!";
 
     my $result_file = miRkwood::Programs::run_mirdup_validation_on_file($input_file_for_mirdup);
-
+    if ( ! -e $result_file || ! -r $result_file ){
+        return miRkwood::MiRdup->parse_validation_output($input_file_for_mirdup);
+    }
     return miRkwood::MiRdup->parse_validation_output($result_file);
 }
 
