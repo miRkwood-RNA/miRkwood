@@ -378,7 +378,10 @@ sub make_alignments_HTML {
     # Alignments
 
     my %alignments = %{$self->{'alignments'}};
-    my %mirdup_results = %{$self->{'mirdup_validation'}};
+    my %mirdup_results;
+    if ( defined( $self->{'mirdup_validation'} ) ){
+        %mirdup_results = %{$self->{'mirdup_validation'}};
+    }
 
     my $contents = '';
     my @TOC;
@@ -394,14 +397,17 @@ sub make_alignments_HTML {
 
     foreach my $position (@keys) {
         my ($left, $right) = split(/-/, $position);
+        my $mirdup_prediction = '';
 
         # MiRdup
-        my $mirdup_key = $self->{'name'} . '__' . $position;
-        my $mirdup_prediction;
-        if ( $mirdup_results{$mirdup_key} ){
-            $mirdup_prediction = 'This prediction is validated by miRdup.';
-        } else {
-            $mirdup_prediction = 'This prediction is not validated by miRdup.';
+        if ( defined( $self->{'mirdup_validation'} ) ){
+            my $mirdup_key = $self->{'name'} . '__' . $position;
+            
+            if ( $mirdup_results{$mirdup_key} ){
+                $mirdup_prediction = 'This prediction is validated by miRdup.';
+            } else {
+                $mirdup_prediction = 'This prediction is not validated by miRdup.';
+            }
         }
 
         # Hairpin
