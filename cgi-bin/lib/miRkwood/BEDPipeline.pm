@@ -154,31 +154,35 @@ sub create_additional_directories {
 sub calculate_reads_coverage {
     my ($self, @args) = @_;
     my $line;
-    my $size_genome = 0;
-    my $nb_tot_reads = 0;
-    my $start_position = '';
+    my $data = {};
     open (my $BED, $self->{'initial_bed'}) or die "ERROR while opening $self->{'initial_bed'} : $!";
     while( <$BED> ){
         chomp;
         if ( $_ ne '' ){
             my @fields = split( /\t/);
-            if ( $start_position eq '' ){
-                $start_position = $fields[1];
+            if ( ! defined($data->{ $fields[0] }{'start_position'}) || $data->{ $fields[0] }{'start_position'} eq '' ){
+                $data->{ $fields[0] }{'start_position'} = $fields[1];
             }
-            $nb_tot_reads += $fields[4];
+            $data->{ $fields[0] }{'end_position'} = $fields[2];
+            $data->{ $fields[0] }{'nb_tot_reads'} += $fields[4];
             $line = $_;
         }
     }
     close $BED;
     chomp $line;
     my @fields = split( /\t/, $line);
-    $size_genome = $fields[2] - $start_position;
-    $self->{'average_coverage'} = int( $size_genome / $nb_tot_reads );
-    if ( $self->{'average_coverage'} == 0 ){
-        $self->{'average_coverage'} = 1;
+    $data->{ $fields[0] }{'end_position'} = $fields[2];
+
+    foreach my $chromosome ( sort (keys%{ $data })){
+        $data->{$chromosome}{'size_genome'} = $data->{$chromosome}{'end_position'} - $data->{$chromosome}{'start_position'};
+        $self->{'average_coverage'}{$chromosome} = int( $data->{$chromosome}{'size_genome'} / $data->{$chromosome}{'nb_tot_reads'} );
+        if ( $self->{'average_coverage'}{$chromosome} == 0 ){
+            $self->{'average_coverage'}{$chromosome} = 1;
+        }
+        debug( "Average reads coverage for chromosome $chromosome : 1 read every $self->{'average_coverage'}{$chromosome} nt.", miRkwood->DEBUG() );
     }
-    debug( "Average reads coverage for this BED file : 1 read every $self->{'average_coverage'} nt.", miRkwood->DEBUG() );
-    return;
+
+    return $self;
 }
 
 
