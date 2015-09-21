@@ -51,8 +51,12 @@ sub run{
     my $cfg = miRkwood->CONFIG();
     debug( "          Start CandidateJob->run for candidate $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
+        debug( "            Start count_total_nb_of_reads_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->{'candidate'} = miRkwood::Candidate::count_total_nb_of_reads_for_candidate( $self->{'candidate'} );
+        debug( "            End of count_total_nb_of_reads_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "            Start find_mirna for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->{'candidate'} = miRkwood::Candidate::find_mirna( $self->{'candidate'}, $self->{'genome_db'} );
+        debug( "            End of find_mirna for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
 
     debug( "            Start process_tests_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
@@ -64,9 +68,15 @@ sub run{
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
+        debug( "            Start compute_alignment_quality_for_smallRNAseq for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $candidate->compute_alignment_quality_for_smallRNAseq();
+        debug( "            End of compute_alignment_quality_for_smallRNAseq for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "            Start compute_quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $candidate->compute_quality();
+        debug( "            End of compute_quality for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "            Start tag_orphan_hairpins for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $candidate->tag_orphan_hairpins();
+        debug( "            End of tag_orphan_hairpins for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         $candidate->compute_alignment_quality_for_abinitio();
@@ -302,9 +312,9 @@ sub process_tests_for_candidate {
             $result->{'criteria_mirdup'} = $mirdup_on_mirna{'mirna'};
         }
     }
-
+    debug( "              Start store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
-
+    debug( "              End of store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( $cfg->param('options.align') ) {
         if ($alignments) {
             $result->{'alignment_existence'} = 1;
