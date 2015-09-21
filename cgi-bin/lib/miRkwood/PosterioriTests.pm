@@ -83,8 +83,8 @@ sub test_alignment {
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
     miRkwood::Programs::run_RNAcomp( $seqN, $exonerate_out )
       or die("Problem when running RNAcomp : $!");
-    my ($mirdup_results, $alignments) = $self->post_process_alignments($exonerate_out );
-    return ($mirdup_results, $alignments);
+    my $alignments = $self->post_process_alignments($exonerate_out );
+    return $alignments;
 }
 
 =method post_process_alignments
@@ -115,14 +115,24 @@ sub post_process_alignments {
     }
     else {
         %alignments = $self->merge_alignments( \%alignments );
-        my $tmp_file =
-          File::Spec->catfile( $self->get_directory(), 'mirdup_validation.txt' );
-        my %mirdup_results =
-          miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
-            $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
+        #~ my $tmp_file =
+          #~ File::Spec->catfile( $self->get_directory(), 'mirdup_validation.txt' );
+        #~ my %mirdup_results =
+          #~ miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
+            #~ $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
             debug( "                End of post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
-        return (\%mirdup_results, \%alignments);
+        return \%alignments;
     }
+}
+
+sub validate_alignments_with_mirdup {
+    my ( $self, @args ) = @_;
+    my $alignments = shift @args;
+    my $tmp_file = File::Spec->catfile( $self->get_directory(), 'mirdup_validation.txt' );
+    my %mirdup_results =
+      miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
+        $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %{$alignments} );
+    return \%mirdup_results;
 }
 
 

@@ -287,6 +287,7 @@ sub process_tests_for_candidate {
 
     my $cfg = miRkwood->CONFIG();
     my $result = {};
+    my $mirdup_results;
 
     my $posteriori_tests = miRkwood::PosterioriTests->new($self->get_directory());
 
@@ -301,8 +302,7 @@ sub process_tests_for_candidate {
     my $candidate_rnafold_stemploop_out = $self->write_RNAFold_stemloop_output();
 
     debug( "              Start test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
-    my ($mirdup_results, $alignments) =
-        $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
+    my $alignments = $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
     debug( "              End of test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
@@ -312,6 +312,10 @@ sub process_tests_for_candidate {
             $result->{'criteria_mirdup'} = $mirdup_on_mirna{'mirna'};
         }
     }
+    else {
+        $mirdup_results = $posteriori_tests->validate_alignments_with_mirdup( $alignments );
+    }
+
     debug( "              Start store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
     debug( "              End of store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
@@ -319,7 +323,9 @@ sub process_tests_for_candidate {
         if ($alignments) {
             $result->{'alignment_existence'} = 1;
             $result->{'alignments'} = $alignments;
-            $result->{'mirdup_validation'} = $mirdup_results;
+            if ( $cfg->param('job.pipeline') eq 'abinitio' ){
+                $result->{'mirdup_validation'} = $mirdup_results;
+            }
         }
     } else {
         $result->{'alignment_existence'} = 0;
