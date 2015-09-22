@@ -85,11 +85,11 @@ sub make_html_from_results {
     my %results = %{$results};
     my ($css) = get_page_css();
     my $page = '<h2>Overview of results</h2>';
+    $page .= make_all_exports( \%results, $abs_output_folder, $pieces_folder, $pipeline_type, $mirna_type );
+
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize('', \%results);
     $page .= $exporter->perform_export();
-
-    $page .= make_all_exports( \%results, $abs_output_folder, $pieces_folder, $pipeline_type, $mirna_type );
 
     my @keys = sort {
         ( $results{$a}->{'name'} cmp $results{$b}->{'name'} )
