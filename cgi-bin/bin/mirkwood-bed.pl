@@ -141,6 +141,8 @@ $pipeline->run_pipeline();
 miRkwood::CLI::process_results_dir_for_offline($abs_output_folder, 'smallRNAseq', 'novel_miRNA');
 miRkwood::CLI::process_results_dir_for_offline($abs_output_folder, 'smallRNAseq', 'known_miRNA');
 
+my $summary_page = File::Spec->catfile( $abs_output_folder, 'summary.txt' );
+miRkwood::Results::create_summary_page( $abs_output_folder, $summary_page );
 
 __END__
 

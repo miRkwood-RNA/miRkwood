@@ -1,0 +1,23 @@
+OPTIONS SUMMARY
+===============
+
+BED file: sample.bed
+Reference species: Arabidopsis_thaliana
+Flag conserved mature miRNAs: Yes
+Select only sequences with MFEI < -0.6: Yes
+Compute thermodynamic stability: No
+Filter CoDing Sequences:Yes
+Filter tRNA/rRNA/snoRNA: Yes
+Filter multiply mapped reads: Yes
+
+RESULTS SUMMARY
+===============
+
+Total number of reads: 19756 (4075 unique reads)
+CoDing Sequences: 834 reads
+tRNA/rRNA/snoRNA: 11568 reads
+Multiply mapped reads:: 16 reads
+Orphan clusters of reads: 2532 reads
+Unclassified reads: 3606 reads
+Known miRNAs: 5 sequence(s) - 346 reads
+Novel miRNAs: 21 sequence(s) - 854 reads

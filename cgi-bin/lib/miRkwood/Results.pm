@@ -351,4 +351,88 @@ sub create_reads_archive {
     return $archive_path;
 }
 
+=method
+
+  Create a page with a summary of options
+  and results (number of reads...)
+
+=cut
+sub create_summary_page {
+    my (@args) = @_;
+    my $absolute_job_dir = shift @args;
+    my $output_file = shift @args;
+    my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
+    miRkwood->CONFIG_FILE($run_options_file);
+    my $cfg = miRkwood->CONFIG();
+    my %boolean_mapping = ( 0 => 'No', 1 => 'Yes', '' => 'No' );
+    my $bed_sizes;
+    my $basename_bed = $cfg->param('job.bed');
+    my $basic_known_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_known_candidates.yml');
+    my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
+    my $nb_reads_known_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_known_yaml );
+    my $nb_reads_new_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_yaml );
+
+    my $known_candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $absolute_job_dir );
+    my $novel_candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $absolute_job_dir );
+    my %known_results = miRkwood::Results->deserialize_results($known_candidates_dir);
+    my %novel_results = miRkwood::Results->deserialize_results($novel_candidates_dir);
+
+    my $nb_results_known_miRNAs = miRkwood::Results->number_of_results( \%known_results );
+    my $nb_results_new_miRNAs = miRkwood::Results->number_of_results( \%novel_results );
+
+    my $bed_sizes_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_bed_size_file_name() );
+    open (my $FH, '<', $bed_sizes_file) or die "ERROR while opening $bed_sizes_file : $!";
+    while ( <$FH> ){
+        if ( $_ !~ /^#/ ){
+            chomp;
+            my @line = split(/\t/);
+            my $name = '';
+            if ( $line[0] eq "$basename_bed.bed" ){
+                $name = $basename_bed;
+            }
+            elsif ( $line[0] =~ /${basename_bed}_(.*)\.bed/ ){
+                $name = $1;
+            }
+            $bed_sizes->{$name}{'reads'} = $line[1];
+            $bed_sizes->{$name}{'unique_reads'} = $line[2];
+        }
+    }
+    close $FH;
+    my $nb_orphan_reads = $bed_sizes->{$basename_bed}{'reads'}
+                    - $nb_reads_known_miRNAs
+                    - $nb_reads_new_miRNAs
+                    - $bed_sizes->{'CDS'}{'reads'}
+                    - $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'}
+                    - $bed_sizes->{'multimapped'}{'reads'}
+                    - $bed_sizes->{'orphan_clusters'}{'reads'};
+
+    my $output_txt = '';
+    $output_txt .= "OPTIONS SUMMARY\n";
+    $output_txt .= "===============\n\n";
+    $output_txt .= 'BED file: ' . $basename_bed . ".bed\n";
+    $output_txt .= 'Reference species: ' . $cfg->param('job.plant') . "\n";
+    $output_txt .= 'Flag conserved mature miRNAs: ' . $boolean_mapping{ $cfg->param('options.align') } . "\n";
+    $output_txt .= 'Select only sequences with MFEI < -0.6: ' . $boolean_mapping{ $cfg->param('options.mfei') } . "\n";
+    $output_txt .= 'Compute thermodynamic stability: ' . $boolean_mapping{ $cfg->param('options.randfold') } . "\n";
+    $output_txt .= 'Filter CoDing Sequences:' . $boolean_mapping{ $cfg->param('options.filter_CDS') } . "\n";
+    $output_txt .= 'Filter tRNA/rRNA/snoRNA: ' . $boolean_mapping{ $cfg->param('options.filter_tRNA_rRNA') } . "\n";
+    $output_txt .= 'Filter multiply mapped reads: ' . $boolean_mapping{ $cfg->param('options.filter_multimapped') } . "\n";
+
+    $output_txt .= "\nRESULTS SUMMARY\n";
+    $output_txt .= "===============\n\n";
+    $output_txt .= "Total number of reads: $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
+    $output_txt .= "CoDing Sequences: $bed_sizes->{'CDS'}{'reads'} reads\n";
+    $output_txt .= "tRNA/rRNA/snoRNA: $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads\n";
+    $output_txt .= "Multiply mapped reads:: $bed_sizes->{'multimapped'}{'reads'} reads\n";
+    $output_txt .= "Orphan clusters of reads: $bed_sizes->{'orphan_clusters'}{'reads'} reads\n";
+    $output_txt .= "Unclassified reads: $nb_orphan_reads reads\n";
+    $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
+    $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
+
+    open (my $OUT, '>', $output_file) or die "ERROR while creating $output_file : $!";
+    print $OUT $output_txt;
+    close $OUT;
+
+}
+
 1;
