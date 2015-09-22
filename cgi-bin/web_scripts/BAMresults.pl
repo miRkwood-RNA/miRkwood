@@ -177,6 +177,7 @@ if ( $valid ){
                     $bed_sizes->{$name}{'unique_reads'} = $line[2];
                 }
             }
+            close $FH;
         }
 
         if ( $bed_sizes->{$basename_bed}{'reads'} == 0 ){
