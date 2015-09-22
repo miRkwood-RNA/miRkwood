@@ -115,12 +115,7 @@ sub post_process_alignments {
     }
     else {
         %alignments = $self->merge_alignments( \%alignments );
-        #~ my $tmp_file =
-          #~ File::Spec->catfile( $self->get_directory(), 'mirdup_validation.txt' );
-        #~ my %mirdup_results =
-          #~ miRkwood::MiRdup->validate_with_mirdup( $tmp_file, $self->{'sequence_name'},
-            #~ $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, keys %alignments );
-            debug( "                End of post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "                End of post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         return \%alignments;
     }
 }
