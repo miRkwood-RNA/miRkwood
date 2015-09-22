@@ -62,6 +62,9 @@ sub export_candidate {
         elsif ($header eq 'mfe' or $header eq 'amfe'){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
         }
+        elsif ( $header eq 'position'){
+            $contents = "<a href='#$anchor'>${$candidate}{$header}</a>\n";
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
