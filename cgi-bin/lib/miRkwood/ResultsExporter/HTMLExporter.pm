@@ -27,7 +27,7 @@ sub export_candidate {
     my $output   = '<tr>';
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
-    $output .= "<td>$contents</td>\n";
+    $output .= "<td id='table_$anchor'>$contents</td>\n";
     my @headers = $self->get_headers();
     for my $header ( @headers ) {
         my $td_content = '';

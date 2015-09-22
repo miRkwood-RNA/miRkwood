@@ -273,7 +273,7 @@ sub make_candidate_page {
     }
 
     my $html = <<"END_TXT";
-<h2 id='$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'}</h2>
+<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'}</a></h2>
     <ul>
     <li>
       <b>Name: </b>$candidate->{'name'}
