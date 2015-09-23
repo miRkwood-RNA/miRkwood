@@ -130,7 +130,7 @@ if ( !$job_title ) {
 my $varna = 1;
 my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
 miRkwood->CONFIG_FILE($run_options_file);
-miRkwood::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta' );
+miRkwood::write_config( $run_options_file, $strand, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, 'fasta', $absolute_job_dir );
 
 # execution de tous les scripts de traitements
 my $perl_script = File::Spec->catfile( $dirScript, 'execute_scripts.pl' );

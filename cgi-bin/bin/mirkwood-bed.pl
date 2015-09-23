@@ -129,7 +129,8 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $filter_multimapped,
                                          $mfei,
                                          $randfold,
-                                         $varna);
+                                         $varna,
+                                         $abs_output_folder);
 
 
 ##### Launch pipeline

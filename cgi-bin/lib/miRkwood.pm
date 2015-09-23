@@ -200,11 +200,12 @@ Write the run options to the job configuration file.
 =cut
 
 sub write_config {
-    my ( $run_options_file, $strands, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, $mode ) = @_;
+    my ( $run_options_file, $strands, $filter, $trna, $rrna, $mfei, $randfold, $align, $job_title, $plant, $varna, $mode, $job_dir ) = @_;
     my $run_options = miRkwood->CONFIG();
     $run_options->param( 'job.title',        $job_title );
     $run_options->param( 'job.plant',        $plant );
     $run_options->param( 'job.pipeline',     $mode );
+    $run_options->param( 'job.directory',    $job_dir );
     $run_options->param( 'options.strands',  $strands );
     $run_options->param( 'options.filter',   $filter );
     $run_options->param( 'options.mask-trna',$trna );
@@ -224,13 +225,14 @@ Write the run options for Web BAM pipeline to the job configuration file.
 =cut
 
 sub write_config_for_bam_pipeline {
-    my ( $run_options_file, $job_title, $species, $mode, $bed, $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold, $varna) = @_;
+    my ( $run_options_file, $job_title, $species, $mode, $bed, $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold, $varna, $job_dir) = @_;
     my $run_options = miRkwood->CONFIG();
 
     $run_options->param( 'job.title',        $job_title );
     $run_options->param( 'job.plant',        $species );
     $run_options->param( 'job.pipeline',     $mode );
     $run_options->param( 'job.bed',          $bed );
+    $run_options->param( 'job.directory',    $job_dir );
     $run_options->param( 'options.filter_CDS',            $filter_CDS );
     $run_options->param( 'options.filter_tRNA_rRNA',      $filter_tRNA_rRNA );
     $run_options->param( 'options.filter_multimapped',    $filter_multimapped );

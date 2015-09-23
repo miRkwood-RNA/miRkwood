@@ -89,7 +89,7 @@ my $run_options_file =
   miRkwood::Paths->get_job_config_path($abs_output_folder);
 miRkwood->CONFIG_FILE($run_options_file);
 miRkwood::write_config( $run_options_file, $both_strands, $mask, $trna, $rrna, $mfei, $shuffles,
-    $align, "", $species_mask, $varna, 'abinitio' );
+    $align, '', $species_mask, $varna, 'abinitio', $abs_output_folder );
 
 my $pipeline = miRkwood::FastaPipeline->new($abs_output_folder);
 $pipeline->run_pipeline();
