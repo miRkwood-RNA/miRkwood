@@ -46,25 +46,6 @@ my $expected_csv = slurp_file( input_file('ResultsExporter.csv.output') );
 is( $output_csv, $expected_csv, 'CSVExporter returns the correct value' );
 
 
-## XML ##
-
-ok( my $xml_exporter = miRkwood::ResultsExporterMaker->make_pseudoxml_results_exporter(),
-    'can call make_pseudoxml_results_exporter');
-isa_ok($xml_exporter, 'miRkwood::ResultsExporter::PseudoXMLExporter');
-ok( $xml_exporter->initialize('', \%results, ['1-1']),
-    'can initialize PseudoXMLExporter');
-ok(
-    my $output_xml = $xml_exporter->perform_export(),
-    'can export with PseudoXMLExporter'
-);
-
-my $expected_xml =
-  slurp_file( input_file('ResultsExporter.pseudoxml.output') );
-chomp $expected_xml;
-is( $output_xml, $expected_xml,
-    'PseudoXMLExporter returns the correct value' );
-
-
 ## FASTA ##
 
 ok( my $fasta_exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter(),

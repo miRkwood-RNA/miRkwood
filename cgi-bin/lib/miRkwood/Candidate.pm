@@ -515,51 +515,6 @@ sub get_optional_candidate_fields {
     return @fields;
 }
 
-=method candidate_as_pseudoXML
-
-Convert a given candidate to a pseudo XML
-
-Usage:
-my $xml_element = $candidate->candidate_as_pseudoXML();
-
-=cut
-
-sub candidate_as_pseudoXML {    # not used anymore ?
-    my ( $self, @args ) = @_;
-
-    my $name = $self->get_shortened_sequence_name();
-
-    my @fields_to_truncate = qw{mfe mfei amfe};
-
-    my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers1        =
-      ( 'position', 'length', 'strand', 'quality', @optional_fields );
-    my @headers2 = qw{structure_stemloop sequence identifier};
-    my $result = '<Sequence';
-
-    $result .= " name='$name'";
-    for my $header (@headers1) {
-        my $contents = $self->{$header};
-        if (grep { $header eq $_ } @fields_to_truncate){
-            $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
-        }
-        if ( !defined $contents ) {
-            $contents = q{};
-        }
-        if ( $header eq 'shuffles' && $contents == 1){
-            $contents = q{};
-        }
-        $result .= " $header='$contents'";
-    }
-    my $img = $self->get_relative_image();
-    $result .= " image='$img'";
-    for my $header (@headers2) {
-        $result .= " $header='$self->{$header}'";
-    }
-    $result .= '></Sequence>';
-
-    return $result;
-}
 
 sub get_basic_informations {
 

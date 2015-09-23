@@ -37,7 +37,7 @@ can_ok($candidate, qw[get_identifier has_mirdup_validation get_absolute_image
                       get_relative_image get_name get_shortened_sequence_name
                       get_shortened_name candidateAsVienna candidateAsFasta
                       candidate_as_gff alternativeCandidatesAsVienna
-                      make_alignments_HTML candidate_as_pseudoXML]);
+                      make_alignments_HTML]);
 
 is($candidate->get_identifier(), '1-1',
    'get_identifier returns the expected value');
@@ -83,13 +83,6 @@ my $expected_file_gff = input_file('Candidate.candidate_as_gff.out');
 file_exists_ok($expected_file_gff);
 my $expected_gff = slurp_file($expected_file_gff);
 is( $result_gff, $expected_gff, 'candidate_as_gff returns the expected value' );
-
-ok( my $result_pseudoXML = $candidate->candidate_as_pseudoXML() . "\n",
-    'can call candidate_as_pseudoXML()' );
-my $expected_file_pseudoXML = input_file('Candidate.candidate_as_pseudoXML.out');
-file_exists_ok($expected_file_pseudoXML);
-my $expected_pseudoXML = slurp_file($expected_file_pseudoXML);
-is( $result_pseudoXML, $expected_pseudoXML, 'candidate_as_pseudoXML returns the expected value' );
 
 ok(
     my $result6 =
