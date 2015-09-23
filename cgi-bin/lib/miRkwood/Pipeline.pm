@@ -72,6 +72,7 @@ sub init_pipeline {
     miRkwood::Programs::init_programs();
     mkdir $self->get_workspace_path();
     mkdir miRkwood::Paths::get_dir_candidates_path_from_job_dir( $self->get_job_dir() );
+    mkdir miRkwood::Paths::get_dir_images_path_from_job_dir( $self->get_job_dir() );
     $self->create_additional_directories();
     return;
 }

@@ -247,7 +247,8 @@ sub write_VARNA_if_needed {
     my ( $self, @args ) = @_;
     my $cfg = miRkwood->CONFIG();
     if ( $cfg->param('options.varna') ) {
-        my $varna_image = File::Spec->catfile( $self->get_directory(), 'image.png' );
+        my $varna_image = File::Spec->catfile( miRkwood::Paths::get_dir_images_path_from_job_dir( $cfg->param('job.directory') ),
+                                                $self->{'identifier'} . '.png' );
         debug( "              Start running VARNA in $varna_image" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         miRkwood::Programs::run_varna_on_structure( $self->{'candidate'}{'sequence'}, $self->{'candidate'}{'structure_stemloop'}, $varna_image )
           or carp('Problem during image generation using VARNA');

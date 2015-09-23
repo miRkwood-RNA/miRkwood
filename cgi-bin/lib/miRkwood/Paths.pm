@@ -334,6 +334,31 @@ sub get_dir_reads_path_from_job_dir_and_mirna_type{
     }
 }
 
+
+=method get_images_dir_name
+
+  Return the basename for images directory
+  (images created by VARNA)
+
+=cut
+sub get_images_dir_name{
+    my (@args) = @_;
+    return 'images';
+}
+
+=method get_dir_images_path_from_job_dir
+
+Return the path to the images directory.
+Parameters :  job dir
+
+=cut
+sub get_dir_images_path_from_job_dir{
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir($job_dir, get_images_dir_name() );
+}
+
+
 =method get_results_folder_basename_for_CLI
 
   Return the basename for results directory
