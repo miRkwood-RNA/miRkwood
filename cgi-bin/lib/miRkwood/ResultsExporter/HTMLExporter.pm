@@ -65,6 +65,15 @@ sub export_candidate {
         elsif ( $header eq 'position'){
             $contents = "<a href='#$anchor'>${$candidate}{$header}</a>\n";
         }
+        elsif ( $header eq 'nb_reads' ){
+            my $mirna_type = 'novel_miRNA';
+            if ( defined(${$candidate}{'mirbase_id'}) ){
+                $mirna_type = 'known_miRNA';
+            }
+            my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
+            my $reads_file = File::Spec->catfile( $reads_path, ${$candidate}{'identifier'} . '.txt' );
+            $contents = "<a href='$reads_file'>${$candidate}{$header}</a>";           
+        }
         if ( !defined $contents ) {
             $contents = q{};
         }
