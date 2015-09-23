@@ -12,9 +12,10 @@
 <th>shuffles</th>
 <th>alignment</th>
 </tr>
-<tr><td><a href='#contig15750-34-195'>contig15750</a></td>
+<tr><td id='table_contig15750-34-195'><a href='#contig15750-34-195'>contig15750</a></td>
 <td>1-1</td>
-<td>34-195</td>
+<td><a href='#contig15750-34-195'>34-195</a>
+</td>
 <td>162</td>
 <td>+</td>
 <td><center><font color="#FF8000">&#x2605;&#x2605;</font></center></td>
