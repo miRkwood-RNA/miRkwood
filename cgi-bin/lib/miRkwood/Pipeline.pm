@@ -198,6 +198,10 @@ sub run_pipeline_on_sequences {
 
     $self->serialize_basic_candidates( 'basic_candidates' );
 
+    # Delete workspace
+    my $workspace_path = miRkwood::Paths->get_workspace_path( $cfg->param('job.directory') );
+    system("rm -Rf $workspace_path");
+
     $self->mark_job_as_finished();
 
     debug('Writing finish file', miRkwood->DEBUG() );
