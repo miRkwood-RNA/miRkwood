@@ -390,7 +390,7 @@ sub create_summary_page {
             if ( $line[0] eq "$basename_bed.bed" ){
                 $name = $basename_bed;
             }
-            elsif ( $line[0] =~ /${basename_bed}_(.*)\.bed/ ){
+            elsif ( $line[0] =~ /${basename_bed}_(.*)[.]bed/ ){
                 $name = $1;
             }
             $bed_sizes->{$name}{'reads'} = $line[1];
@@ -432,7 +432,7 @@ sub create_summary_page {
     open (my $OUT, '>', $output_file) or die "ERROR while creating $output_file : $!";
     print $OUT $output_txt;
     close $OUT;
-
+    return;
 }
 
 1;

@@ -31,7 +31,7 @@ sub export_candidate {
     my @headers = $self->get_headers();
     for my $header ( @headers ) {
         my $td_content = '';
-        my $contents   = ${$candidate}{$header};
+        $contents = ${$candidate}{$header};
         if ($header eq 'quality'){
             $contents = '<center><font color="#FF8000">';
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
@@ -72,7 +72,7 @@ sub export_candidate {
             }
             my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
             my $reads_file = File::Spec->catfile( $reads_path, ${$candidate}{'identifier'} . '.txt' );
-            $contents = "<a href='$reads_file'>${$candidate}{$header}</a>";           
+            $contents = "<a href='$reads_file'>${$candidate}{$header}</a>";
         }
         if ( !defined $contents ) {
             $contents = q{};
