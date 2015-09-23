@@ -88,7 +88,7 @@ if ( $valid ){
 	} else {
         ##### Summary of options
         my $basename_bed = '';
-        if ( $initial_bed =~ /.*[\/\\]([^\/]+)\.bed/ ){
+        if ( $initial_bed =~ /.*[\/\\]([^\/]+)[.]bed/ ){
             $basename_bed = $1;
         }
         $HTML_additional .= "<div class='results_summary'><ul>";
@@ -170,7 +170,7 @@ if ( $valid ){
                     if ( $line[0] eq "$basename_bed.bed" ){
                         $name = $basename_bed;
                     }
-                    elsif ( $line[0] =~ /${basename_bed}_(.*)\.bed/ ){
+                    elsif ( $line[0] =~ /${basename_bed}_(.*)[.]bed/ ){
                         $name = $1;
                     }
                     $bed_sizes->{$name}{'reads'} = $line[1];
