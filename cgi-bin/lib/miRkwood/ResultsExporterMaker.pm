@@ -5,6 +5,11 @@ package miRkwood::ResultsExporterMaker;
 use strict;
 use warnings;
 
+# A PseudoXMLExporter module was created (by Jean-Fred ?)
+# It was never used so this module, the function candidate_as_pseudoXML
+# and the corresponding tests are deleted in r13371.
+# If you want to use them, be aware that this code is out of date.
+
 sub make_fasta_results_exporter {
     my ($self, @args) = @_;
     my $mirna_type = shift @args;
