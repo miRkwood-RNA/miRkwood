@@ -72,7 +72,10 @@ sub export_candidate {
             }
             my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
             my $reads_file = File::Spec->catfile( $reads_path, ${$candidate}{'identifier'} . '.txt' );
-            $contents = "<a href='$reads_file'>${$candidate}{$header}</a>";
+            $contents = "<a href='$reads_file' class='nodecoration'>${$candidate}{$header}</a>";
+            if ( ${$candidate}{'criteria_nb_reads'} ){
+                $contents = "<a href='$reads_file' class='nodecoration'><font color='#FF00FF'>${$candidate}{$header}</font></a>";
+            }
         }
         if ( !defined $contents ) {
             $contents = q{};
