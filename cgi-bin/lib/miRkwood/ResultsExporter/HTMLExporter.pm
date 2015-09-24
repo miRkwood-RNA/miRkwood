@@ -28,59 +28,64 @@ sub export_candidate {
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
     $output .= "<td id='table_$anchor'>$contents</td>\n";
+
+    my $mirna_type = 'novel_miRNA';
+    if ( defined(${$candidate}{'mirbase_id'}) ){
+        $mirna_type = 'known_miRNA';
+    }
+    my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
+    my $reads_file = File::Spec->catfile( $reads_path, ${$candidate}{'identifier'} . '.txt' );
+
     my @headers = $self->get_headers();
     for my $header ( @headers ) {
-        my $td_content = '';
         $contents = ${$candidate}{$header};
         if ($header eq 'quality'){
-            $contents = '<center><font color="#FF8000">';
+            $contents = '<td><center><font color="#FF8000">';
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= '&#x2605;';
             }
-            $contents .= '</font></center>';
+            $contents .= '</font></center></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = '<center><font color="#FF8000">';
+            $contents = "<td onclick=\"location.href='$reads_file'\" style='cursor:pointer;'><center><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
                 $contents .= '&#x2605;';
             }
-            $contents .= '</font></center>';
+            $contents .= '</font></center></td>';
         }
         elsif ($header eq 'alignment'){
-            $contents = '<center><font color="#008000">';
+            $contents = '<td><center><font color="#008000">';
             for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
                 $contents .= '&#x2713;';
             }
-            $contents .= '</font></center>';
+            $contents .= '</font></center></td>';
         }
         elsif ($header eq 'mfei'){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
             if ( $contents < -0.8 ){
                 $contents = '<font color="#FF00FF">' . $contents . '</font>';
             }
+            $contents = "<td>$contents</td>";
         }
         elsif ($header eq 'mfe' or $header eq 'amfe'){
-            $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
+            $contents = '<td>' . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
         }
         elsif ( $header eq 'position'){
-            $contents = "<a href='#$anchor'>${$candidate}{$header}</a>\n";
+            $contents = "<td><a href='#$anchor'>${$candidate}{$header}</a></td>\n";
         }
         elsif ( $header eq 'nb_reads' ){
-            my $mirna_type = 'novel_miRNA';
-            if ( defined(${$candidate}{'mirbase_id'}) ){
-                $mirna_type = 'known_miRNA';
-            }
-            my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
-            my $reads_file = File::Spec->catfile( $reads_path, ${$candidate}{'identifier'} . '.txt' );
-            $contents = "<a href='$reads_file' class='nodecoration'>${$candidate}{$header}</a>";
             if ( ${$candidate}{'criteria_nb_reads'} ){
-                $contents = "<a href='$reads_file' class='nodecoration'><font color='#FF00FF'>${$candidate}{$header}</font></a>";
+                $contents = "<font color='#FF00FF'>${$candidate}{$header}</font>";
             }
+            $contents = "<td onclick=\"location.href='$reads_file'\" style='cursor:pointer;'>$contents</td>";
+        }
+        else {
+            $contents = "<td>$contents</td>";
         }
         if ( !defined $contents ) {
-            $contents = q{};
+            $contents = '<td></td>';
         }
-        $output .= "<td>$contents</td>\n";
+        $output .= "$contents\n";
     }
     $output .= "\n</tr>\n";
     return $output;
