@@ -10,6 +10,7 @@ use miRkwood::Candidate;
 use miRkwood::PosterioriTests;
 use miRkwood::Programs;
 use miRkwood::Utils;
+use miRkwood::MultiAlignments;
 
 use Carp;
 use Log::Message::Simple qw[msg error debug];
@@ -309,6 +310,10 @@ sub process_tests_for_candidate {
     debug( "              Start test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $alignments = $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
     debug( "              End of test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
+    if ( scalar(keys%{$alignments}) > 0 ){
+        miRkwood::MultiAlignments::fillTabTemp2D($alignments, $self->{'identifier'});
+    }
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         $result->{'criteria_mirdup'} = 0;
