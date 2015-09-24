@@ -27,7 +27,8 @@ sub export_candidate {
     my $output   = '<tr>';
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
-    $output .= "<td id='table_$anchor'>$contents</td>\n";
+    my $mouse_events = "onmouseover=\"style='background-color:#EDEDED'\" onmouseout=\"style='background-color:white'\"";
+    $output .= "<td $mouse_events id='table_$anchor'>$contents</td>\n";
 
     my $mirna_type = 'novel_miRNA';
     if ( defined(${$candidate}{'mirbase_id'}) ){
@@ -40,21 +41,21 @@ sub export_candidate {
     for my $header ( @headers ) {
         $contents = ${$candidate}{$header};
         if ($header eq 'quality'){
-            $contents = '<td><center><font color="#FF8000">';
+            $contents = "<td $mouse_events><center><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= '&#x2605;';
             }
             $contents .= '</font></center></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = "<td onclick=\"location.href='$reads_file'\" style='cursor:pointer;'><center><font color='#FF8000'>";
+            $contents = "<td $mouse_events onclick=\"location.href='$reads_file'\" style='cursor:pointer;'><center><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
                 $contents .= '&#x2605;';
             }
             $contents .= '</font></center></td>';
         }
         elsif ($header eq 'alignment'){
-            $contents = '<td><center><font color="#008000">';
+            $contents = "<td $mouse_events><center><font color='#008000'>";
             for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
                 $contents .= '&#x2713;';
             }
@@ -65,25 +66,25 @@ sub export_candidate {
             if ( $contents < -0.8 ){
                 $contents = '<font color="#FF00FF">' . $contents . '</font>';
             }
-            $contents = "<td>$contents</td>";
+            $contents = "<td $mouse_events>$contents</td>";
         }
         elsif ($header eq 'mfe' or $header eq 'amfe'){
-            $contents = '<td>' . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
+            $contents = "<td $mouse_events>" . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
         }
         elsif ( $header eq 'position'){
-            $contents = "<td><a href='#$anchor'>${$candidate}{$header}</a></td>";
+            $contents = "<td $mouse_events><a href='#$anchor'>${$candidate}{$header}</a></td>";
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){
                 $contents = "<font color='#FF00FF'>${$candidate}{$header}</font>";
             }
-            $contents = "<td onclick=\"location.href='$reads_file'\" style='cursor:pointer;'>$contents</td>";
+            $contents = "<td $mouse_events onclick=\"location.href='$reads_file'\" style='cursor:pointer;'>$contents</td>";
         }
         else {
-            $contents = "<td>$contents</td>";
+            $contents = "<td $mouse_events>$contents</td>";
         }
         if ( !defined $contents ) {
-            $contents = '<td></td>';
+            $contents = "<td $mouse_events></td>";
         }
         $output .= "$contents\n";
     }

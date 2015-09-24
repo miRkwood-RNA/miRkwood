@@ -12,17 +12,17 @@
 <th>shuffles</th>
 <th>alignment</th>
 </tr>
-<tr><td id='table_contig15750-34-195'><a href='#contig15750-34-195'>contig15750</a></td>
-<td>1-1</td>
-<td><a href='#contig15750-34-195'>34-195</a></td>
-<td>162</td>
-<td>+</td>
-<td><center><font color="#FF8000">&#x2605;&#x2605;</font></center></td>
+<tr><td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'" id='table_contig15750-34-195'><a href='#contig15750-34-195'>contig15750</a></td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'">1-1</td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'"><a href='#contig15750-34-195'>34-195</a></td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'">162</td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'">+</td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'"><center><font color='#FF8000'>&#x2605;&#x2605;</font></center></td>
 <td>-60.10</td>
-<td><font color="#FF00FF">-1.00</font></td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'"><font color="#FF00FF">-1.00</font></td>
 <td>-37.10</td>
-<td>0.125000</td>
-<td><center><font color="#008000">&#x2713;</font></center></td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'">0.125000</td>
+<td onmouseover="style='background-color:#EDEDED'" onmouseout="style='background-color:white'"><center><font color='#008000'>&#x2713;</font></center></td>
 
 </tr>
 </tbody>
