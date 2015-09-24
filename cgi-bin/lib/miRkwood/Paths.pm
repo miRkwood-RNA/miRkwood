@@ -359,6 +359,29 @@ sub get_dir_images_path_from_job_dir{
 }
 
 
+=method get_alignments_dir_name
+
+  Return the basename for alignments directory
+
+=cut
+sub get_alignments_dir_name{
+    my (@args) = @_;
+    return 'alignments';
+}
+
+=method get_dir_alignments_path_from_job_dir
+
+Return the path to the alignments directory.
+Parameters :  job dir
+
+=cut
+sub get_dir_alignments_path_from_job_dir{
+    my (@args) = @_;
+    my $job_dir = shift @args;
+    return File::Spec->catdir($job_dir, get_alignments_dir_name() );
+}
+
+
 =method get_results_folder_basename_for_CLI
 
   Return the basename for results directory
