@@ -71,7 +71,7 @@ sub export_candidate {
             $contents = '<td>' . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
         }
         elsif ( $header eq 'position'){
-            $contents = "<td><a href='#$anchor'>${$candidate}{$header}</a></td>\n";
+            $contents = "<td><a href='#$anchor'>${$candidate}{$header}</a></td>";
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){
