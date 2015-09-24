@@ -362,6 +362,11 @@ border:1px solid black;
 span.mature {
     color: blue;
 }
+a.nodecoration
+{ 
+ text-decoration:none;
+ color: black;
+}
 END_TXT
     return ($css);
 }
