@@ -1,1 +1,0 @@
-mirna	UUUCAGUUUAGAUUUCGGCUUC	GAAUAACAAAUUCUUACAUCAAGAAGAAGAGGAGUGAAAGGCCGAGAUACAGAUCGAAACAUAGAUAUCACUUACCAAUUGAUAAUUGGGUGACGCCUCUGUUUCAGUUUAGAUUUCGGCUUCCCAUUCCUCUUCAUCAAGAUGUAAGAAUCUUAUUC	((((((...(((((((((((..((.(((((((((((..((((((((((..((((.((((((.((...((((...((((((...))))))))))...)).)))))).))))..))))))))))..))))))))))).))..))))))))))).))))))	false	1
