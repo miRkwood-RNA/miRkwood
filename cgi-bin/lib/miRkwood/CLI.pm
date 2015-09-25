@@ -183,6 +183,7 @@ sub make_candidate_page {
     my $star = '<font color=\'#FF8000\'>&#x2605;</font>';
     my $coche = '<font color=\'#008000\'>&#x2713;</font>';
 
+
     ### make files in pieces folder
     my $candidate_fasta_file =
       File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );
@@ -237,41 +238,6 @@ sub make_candidate_page {
 
 
     ### HTML sections
-    #~ my $Vienna_HTML =
-#~ "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    #~ if ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'} ) {
-        #~ $Vienna_HTML .=
-#~ "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
-    #~ }
-    #~ else {
-        #~ $Vienna_HTML .=
-          #~ '<br/>This stem-loop structure is the MFE structure.</li></ul>';
-    #~ }
-    #~ my $alternatives_HTML =
-      #~ '<b>Alternative candidates (dot-bracket format):</b> ';
-    #~ if ( $candidate->{'alternatives'} ) {
-        #~ $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>";
-    #~ }
-    #~ else {
-        #~ $alternatives_HTML .= '<i>None</i>';
-    #~ }
-#~ 
-    #~ my $alignmentHTML = q{};
-    #~ if ( $cfg->param('options.align') ){
-        #~ if ( defined( $candidate->{'mirbase_id'} ) ) {
-            #~ $alignmentHTML = q{};
-        #~ }
-        #~ else {
-            #~ $alignmentHTML = "<h3>miRBase alignments</h3>\n";
-            #~ if ( $candidate->{'alignment'} ) {
-                #~ $alignmentHTML .= $candidate->make_alignments_HTML();
-            #~ }
-            #~ else {
-                #~ $alignmentHTML .= 'No alignment has been found.';
-            #~ }
-        #~ }
-    #~ }
-
     my $mfei = $candidate->{'mfei'};
     if ( $candidate->{'mfei'} < -0.8 ){
         $mfei = "<font color='#FF00FF'>$candidate->{'mfei'}</font>";
@@ -288,7 +254,11 @@ sub make_candidate_page {
         my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
         my $reads_file = File::Spec->catfile( $reads_path, $candidate->{'identifier'} . '.txt' );
         my $reads_score = '';
-        my $read_cloud  = '';
+        my $absolute_read_cloud_path = File::Spec->catfile(
+                miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
+                $mirna_type,
+                $candidate->{'identifier'}.'.txt');
+        my $read_cloud  = include_read_cloud_in_html( $absolute_read_cloud_path );
         my $read_duplex = '';
 
         my $nb_reads = $candidate->{'nb_reads'};
@@ -343,13 +313,15 @@ END_TXT
             }
             else {
                 $alignments_html .= 'none';
-            }           
-            #~ my $alignment_file = File::Spec->catfile( miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ), $candidate->{'identifier'}.'_aln.txt');          
+            }
             my $alignment_file = File::Spec->catfile( File::Spec->updir(),
                                                       File::Spec->updir(),
                                                       miRkwood::Paths::get_alignments_dir_name(),
                                                       $candidate->{'identifier'}. '_aln.txt' );
-            $alignments_html .= "\n<br /><object width='100%' type='text/plain' data=\"$alignment_file\" border='0' ></object>";
+            my $absolute_alignment_path = File::Spec->catfile(
+                miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
+                $candidate->{'identifier'}.'_aln.txt');
+            $alignments_html .= include_alignments_in_html( $absolute_alignment_path );
         }
         $alignments_html .= '</li>';
     }
@@ -389,6 +361,53 @@ END_TXT
 
     return $html;
 }
+
+=method include_read_cloud_in_html
+
+  Read contents of read cloud file and store it
+  in 'pre' tags, except the header.
+
+=cut
+sub include_read_cloud_in_html {
+    my @args = @_;
+    my $read_cloud_file = shift @args;
+    my $result = '<pre>';
+    open(my $IN, '<', $read_cloud_file) or die "ERROR while opening $read_cloud_file: $!";
+    my $line = <$IN>;
+    while ( <$IN> ){
+        chomp;
+        if ( $_ !~ /^Chromosome/ && $_ !~ /^Position/ && $_ !~ /^Strand/ && $_ ne '' ){
+            $result .= "$_\n";
+        }
+    }
+    close $IN;
+    $result .= '</pre>';
+    return $result;
+}
+
+=method include_alignments_in_html
+
+=cut
+sub include_alignments_in_html {
+    my @args = @_;
+    my $alignment_file = shift @args;
+    my $result = '<pre>';
+    open(my $IN, '<', $alignment_file) or die "ERROR while opening $alignment_file: $!";
+    my $line;
+    while ( $line = <$IN> ){
+        chomp $line;
+        if ( $line =~ /miRBase.*: ([^ ]*)/ ){
+            print STDERR "mirbase name = <$1>\n";
+            my $mirbase_link = '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a>';
+            $line =~ s/$1/$mirbase_link/;
+        }
+        $result .= "$line\n";
+    }
+    close $IN;    
+    $result .= '</pre>';
+    return $result;    
+}
+
 
 =method get_simple_results_page
 
