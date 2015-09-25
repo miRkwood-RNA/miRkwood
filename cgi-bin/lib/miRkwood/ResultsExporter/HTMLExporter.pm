@@ -27,8 +27,10 @@ sub export_candidate {
     my $output   = '<tr>';
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
-    my $mouse_events = "onmouseover=\"style='background-color:#EDEDED'\" onmouseout=\"style='background-color:white'\"";
-    $output .= "<td $mouse_events id='table_$anchor'>$contents</td>\n";
+    my $onmouseout  = "onmouseout=\"style='background-color:white'\"";
+    my $onmouseover = "onmouseover=\"style='background-color:#EDEDED;'\"";
+    my $onmouseover_with_cursor = "onmouseover=\"style='background-color:#EDEDED;cursor:pointer;'\"";
+    $output .= "<td $onmouseover $onmouseout id='table_$anchor'>$contents</td>\n";
 
     my $mirna_type = 'novel_miRNA';
     if ( defined(${$candidate}{'mirbase_id'}) ){
@@ -41,21 +43,34 @@ sub export_candidate {
     for my $header ( @headers ) {
         $contents = ${$candidate}{$header};
         if ($header eq 'quality'){
-            $contents = "<td $mouse_events><center><font color='#FF8000'>";
+            $contents = "<td $onmouseover $onmouseout><center><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= '&#x2605;';
             }
             $contents .= '</font></center></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = "<td $mouse_events onclick=\"location.href='$reads_file'\" style='cursor:pointer;'><center><font color='#FF8000'>";
+            $contents = "<td $onmouseover_with_cursor $onmouseout onclick=\"location.href='$reads_file'\"><center><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
                 $contents .= '&#x2605;';
             }
             $contents .= '</font></center></td>';
         }
         elsif ($header eq 'alignment'){
-            $contents = "<td $mouse_events><center><font color='#008000'>";
+            $contents = '<td ';
+            my $alignment_file = File::Spec->catdir( File::Spec->updir(),
+                                                     File::Spec->updir(),
+                                                     miRkwood::Paths::get_alignments_dir_name(),
+                                                     ${$candidate}{'identifier'}. '_aln.txt' );
+            my $alignment_link = '';
+            if ( ${$candidate}{'alignment'} > 0){
+                $alignment_link = "onclick=\"location.href='$alignment_file'\"";
+                $contents .= $onmouseover_with_cursor;
+            }
+            else {
+                $contents .= $onmouseover;
+            }
+            $contents .= " $onmouseout $alignment_link><center><font color='#008000'>";
             for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
                 $contents .= '&#x2713;';
             }
@@ -66,25 +81,25 @@ sub export_candidate {
             if ( $contents < -0.8 ){
                 $contents = '<font color="#FF00FF">' . $contents . '</font>';
             }
-            $contents = "<td $mouse_events>$contents</td>";
+            $contents = "<td $onmouseover $onmouseout>$contents</td>";
         }
         elsif ($header eq 'mfe' or $header eq 'amfe'){
-            $contents = "<td $mouse_events>" . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
+            $contents = "<td $onmouseover $onmouseout>" . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
         }
         elsif ( $header eq 'position'){
-            $contents = "<td $mouse_events><a href='#$anchor'>${$candidate}{$header}</a></td>";
+            $contents = "<td $onmouseover $onmouseout><a href='#$anchor'>${$candidate}{$header}</a></td>";
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){
                 $contents = "<font color='#FF00FF'>${$candidate}{$header}</font>";
             }
-            $contents = "<td $mouse_events onclick=\"location.href='$reads_file'\" style='cursor:pointer;'>$contents</td>";
+            $contents = "<td $onmouseover $onmouseout onclick=\"location.href='$reads_file'\">$contents</td>";
         }
         else {
-            $contents = "<td $mouse_events>$contents</td>";
+            $contents = "<td $onmouseover $onmouseout>$contents</td>";
         }
         if ( !defined $contents ) {
-            $contents = "<td $mouse_events></td>";
+            $contents = "<td $onmouseover $onmouseout></td>";
         }
         $output .= "$contents\n";
     }
