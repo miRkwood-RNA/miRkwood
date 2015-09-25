@@ -29,7 +29,7 @@ sub export_candidate {
     my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
     my $onmouseout  = "onmouseout=\"style='background-color:white'\"";
     my $onmouseover = "onmouseover=\"style='background-color:#EDEDED;'\"";
-    my $onmouseover_with_cursor = "onmouseover=\"style='background-color:#EDEDED;cursor:pointer;'\"";
+    my $onmouseover_with_cursor = "onmouseover=\"style='background-color:#CCFFFF;cursor:pointer;'\"";
     $output .= "<td $onmouseover $onmouseout id='table_$anchor'>$contents</td>\n";
 
     my $mirna_type = 'novel_miRNA';
@@ -58,7 +58,7 @@ sub export_candidate {
         }
         elsif ($header eq 'alignment'){
             $contents = '<td ';
-            my $alignment_file = File::Spec->catdir( File::Spec->updir(),
+            my $alignment_file = File::Spec->catfile( File::Spec->updir(),
                                                      File::Spec->updir(),
                                                      miRkwood::Paths::get_alignments_dir_name(),
                                                      ${$candidate}{'identifier'}. '_aln.txt' );
