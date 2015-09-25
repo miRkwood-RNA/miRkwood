@@ -174,19 +174,15 @@ sub make_candidate_page {
     my $mirna_type    = shift @args;
 
     my $output_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
-    my $reads_html = '';
-
-    if ( $pipeline_type eq 'smallRNAseq' ){
-        # this is not very robust. be cautious if you change the tree view
-        my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
-        my $reads_file = File::Spec->catfile( $reads_path, $candidate->{'identifier'} . '.txt' );
-        $reads_html = "<li><b>Reads:</b> <a href='$reads_file'>download<a/></li>";
-    }
 
     my $size = length $candidate->{'sequence'};
     my $cfg    = miRkwood->CONFIG();
     my $candidate_name = $candidate->get_shortened_name();
 
+    my $star = '<font color=\'#FF8000\'>&#x2605;</font>';
+    my $coche = '<font color=\'#008000\'>&#x2713;</font>';
+
+    ### make files in pieces folder
     my $candidate_fasta_file =
       File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );
     open( my $FASTA_FILE,
@@ -232,81 +228,145 @@ sub make_candidate_page {
       or die("Cannot close file $alternatives_file: $!");
 
 
+    ### links
     my $linkFasta         = "$candidate_fasta_file";
     my $linkVienna        = "$vienna_file";
     my $linkAlternatives  = "$alternatives_file";
     my $linkViennaOptimal = "$vienna_file_optimal";
 
-    my $Vienna_HTML =
-"<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
-    if ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'} ) {
-        $Vienna_HTML .=
-"</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
-    }
-    else {
-        $Vienna_HTML .=
-          '<br/>This stem-loop structure is the MFE structure.</li></ul>';
-    }
-    my $alternatives_HTML =
-      '<b>Alternative candidates (dot-bracket format):</b> ';
-    if ( $candidate->{'alternatives'} ) {
-        $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>";
-    }
-    else {
-        $alternatives_HTML .= '<i>None</i>';
+
+    ### HTML sections
+    #~ my $Vienna_HTML =
+#~ "<ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='$linkVienna'>download</a>";
+    #~ if ( $candidate->{'structure_stemloop'} ne $candidate->{'structure_optimal'} ) {
+        #~ $Vienna_HTML .=
+#~ "</li><li><b>Optimal MFE secondary structure (dot-bracket format):</b> <a href='$linkViennaOptimal'>download</a></li></ul>";
+    #~ }
+    #~ else {
+        #~ $Vienna_HTML .=
+          #~ '<br/>This stem-loop structure is the MFE structure.</li></ul>';
+    #~ }
+    #~ my $alternatives_HTML =
+      #~ '<b>Alternative candidates (dot-bracket format):</b> ';
+    #~ if ( $candidate->{'alternatives'} ) {
+        #~ $alternatives_HTML .= "<a href='$linkAlternatives'>download</a>";
+    #~ }
+    #~ else {
+        #~ $alternatives_HTML .= '<i>None</i>';
+    #~ }
+#~ 
+    #~ my $alignmentHTML = q{};
+    #~ if ( $cfg->param('options.align') ){
+        #~ if ( defined( $candidate->{'mirbase_id'} ) ) {
+            #~ $alignmentHTML = q{};
+        #~ }
+        #~ else {
+            #~ $alignmentHTML = "<h3>miRBase alignments</h3>\n";
+            #~ if ( $candidate->{'alignment'} ) {
+                #~ $alignmentHTML .= $candidate->make_alignments_HTML();
+            #~ }
+            #~ else {
+                #~ $alignmentHTML .= 'No alignment has been found.';
+            #~ }
+        #~ }
+    #~ }
+
+    my $mfei = $candidate->{'mfei'};
+    if ( $candidate->{'mfei'} < -0.8 ){
+        $mfei = "<font color='#FF00FF'>$candidate->{'mfei'}</font>";
     }
 
-    my $alignmentHTML = q{};
-    if ( $cfg->param('options.align') ){
-        if ( defined( $candidate->{'mirbase_id'} ) ) {
-            $alignmentHTML = q{};
+    my $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
+    if ( $candidate->{'mirna_length'} eq '' ||  $candidate->{'mirna_length'} eq '0' ){
+        $mirna_sequence = 'None';
+    }
+
+    my $reads_html = '';
+    if ( $pipeline_type eq 'smallRNAseq' ){
+        # this is not very robust. be cautious if you change the tree view
+        my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
+        my $reads_file = File::Spec->catfile( $reads_path, $candidate->{'identifier'} . '.txt' );
+        my $reads_score = '';
+        my $read_cloud  = '';
+        my $read_duplex = '';
+
+        my $nb_reads = $candidate->{'nb_reads'};
+        if ( $candidate->{'criteria_nb_reads'} eq 1 ){
+            $nb_reads = "<font color='#FF00FF'>$candidate->{'nb_reads'}</font>";
         }
-        else {
-            $alignmentHTML = "<h3>miRBase alignments</h3>\n";
-            if ( $candidate->{'alignment'} ) {
-                $alignmentHTML .= $candidate->make_alignments_HTML();
+
+        if ( ! defined( $candidate->{'mirbase_id'} ) ){
+            # reads distribution
+            if ( $candidate->{'reads_distribution'} eq 1 ){
+                $reads_score = "<li><b>Distribution of reads:</b> one island $star</li>";
+            }
+            elsif ( $candidate->{'reads_distribution'} >= 2 ){
+                $reads_score = "<li><b>Distribution of reads:</b> two islands $star$star</li>";
             }
             else {
-                $alignmentHTML .= 'No alignment has been found.';
+                $reads_score = '<li><b>Distribution of reads:</b> random</li>';
             }
+            # stability of duplex
+            $read_duplex = '<li><b>Stability of the miRNA duplex (mirdup):</b> ';
+            if ( $candidate->{'criteria_mirdup'} eq 1 ){
+                $read_duplex .= "yes $star</li>";
+            }
+            else {
+                $read_duplex .= 'no </li>';
+            }
+            # miRBase alignment :
+            $read_duplex .= '<li><b>miRBase alignment:</b> ';
+            if ( $candidate->{'alignment'} eq 2 ){
+                $read_duplex .= "$coche$coche presence of alignments that cover the miRNA locus (see reads cloud above)</li>";
+            }
+            elsif ( $candidate->{'alignment'} eq 1 ){
+                $read_duplex .= "$coche presence of alignments, which do not overlap the miRNA locus (see reads cloud above)</li>";
+            }
+            else {
+                $read_duplex .= 'none </li>';
+            }
+                
         }
+
+        $reads_html = <<"END_TXT";
+<li>
+    <b>Number of reads:</b> $nb_reads (<a href='$reads_file'>download<a/>)
+</li>
+$reads_score
+$read_cloud
+$read_duplex
+END_TXT
     }
 
+    ### make page
     my $html = <<"END_TXT";
-<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'}</a></h2>
+<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'})</a></h2>
     <ul>
-    <li>
-      <b>Name: </b>$candidate->{'name'}
-    </li>
-    <li>
-      <b>Position:</b> $candidate->{'position'} ($size nt)
-    </li>
-    <li>
-      <b>Strand:</b> $candidate->{'strand'} 
-    </li>
-    <li>
-      <b>Sequence (FASTA format):</b> <a href='$linkFasta'>download</a>
-    </li>
-    <li>
-      $alternatives_HTML
-    </li>
-    $reads_html
+        <li>
+            <b>Name: </b>$candidate->{'name'}
+        </li>
+        <li>
+            <b>Position:</b> $candidate->{'position'} ($size nt)
+        </li>
+        <li>
+            <b>Strand:</b> $candidate->{'strand'}
+        </li>
+        <li>
+            <b>miRNA sequence:</b> $mirna_sequence
+        </li>
+        <li>
+            <b>miRNA precursor:</b> [<a href='$linkFasta'>FASTA sequence</a>] 
+                                    [<a href='$linkVienna'>stem-loop structure</a>] 
+                                    [<a href='$linkViennaOptimal'>optimal MFE structure</a>] 
+                                    [<a href='$linkAlternatives'>optimal MFE structure</a>]
+        </li>
+        <li>
+            <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> $candidate->{'mfe'} kcal/mol | 
+                                                                          <i>AMFE</i> $candidate->{'amfe'} | 
+                                                                          <i>MFEI</i> $mfei
+        </li>
+        $reads_html
     </ul>
-<h3>Secondary structure</h3>
-    $Vienna_HTML
-<h3>Thermodynamics stability</h3>
-    <ul>
-    <li>
-      <b>MFE:</b> $candidate->{'mfe'} kcal/mol
-    </li>
-    <li>
-      <b>AMFE:</b> $candidate->{'amfe'}
-    </li>
-    <li>
-      <b>MFEI:</b> $candidate->{'mfei'}
-    </li>
-    </ul>
-    $alignmentHTML
 END_TXT
 
 
