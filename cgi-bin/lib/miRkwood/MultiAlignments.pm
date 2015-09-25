@@ -74,31 +74,63 @@ sub writeInFile{
     my $aln_dir = miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') );
     open(FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
     for(my $i=0; $i<@tabAlgtMult; $i++){
-	print FILE "\t";
-	if ($i==0){
-	    print FILE "query\t\t".$posBeginCdt."\t";
-	}
-	elsif ($i==@tabAlgtMult-1){
-	    print FILE  "\t\t\t";
-	}
-	else{
-	    print FILE  "miRBase ".$i."\t\t";
-	}
-	for(my $j=0; $j<@{$tabAlgtMult[0]}; $j++){
-	    print FILE $tabAlgtMult[$i][$j];
-	}
-	if ($i==0){
-	    print FILE "\t".$posEndCdt."\n";
-	}
-	else{
-	    print FILE "\n";
-	}
+		print FILE "\t";
+		if ($i==0){
+			print FILE "query       ".$posBeginCdt."  ";
+		}
+		elsif ($i==@tabAlgtMult-1){
+				if($posBeginCdt>9 && $posBeginCdt < 100){
+					print FILE  "                ";
+				}
+				elsif($posBeginCdt>99){
+					print FILE  "                 ";
+				}
+				else{
+					print FILE  "               ";
+				}
+		}	
+		else{
+			if($posBeginCdt>9 && $posBeginCdt < 100){
+				if($i>9){
+					print FILE  "miRBase ".$i."	     ";
+				}
+				else{
+					print FILE  "miRBase ".$i."       ";
+				}
+			}
+			elsif($posBeginCdt>99){
+				if($i>9){
+					print FILE  "miRBase ".$i."	    ";
+				}
+				else{
+					print FILE  "miRBase ".$i."	     ";
+				}
+			}
+			else{
+				if($i>9){
+					print FILE  "miRBase ".$i."	     ";
+				}
+				else{
+					print FILE  "miRBase ".$i."	      ";
+				}
+			}
+		}
+		for(my $j=0; $j<@{$tabAlgtMult[0]}; $j++){
+			print FILE $tabAlgtMult[$i][$j];
+		}
+		if ($i==0){
+			print FILE "  ".$posEndCdt."\n";
+		}
+		else{
+			print FILE "\n";
+		}
     }
     print FILE "\n";
     for(my $cpt=1; $cpt<@tabName; $cpt++){
 	print FILE "miRBase ".$cpt.":\t".$tabName[$cpt]."\n";
     }
     print FILE "\n\n\n";
+    close(FILE);
 }
 
 
