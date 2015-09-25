@@ -25,12 +25,13 @@ sub export_candidate {
     my ( $self, @args ) = @_;
     my $candidate = shift @args;
     my $output   = '<tr>';
-    my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
-    my $contents = "<a href='#$anchor'>${$candidate}{'name'}</a>";
     my $onmouseout  = "onmouseout=\"style='background-color:white'\"";
     my $onmouseover = "onmouseover=\"style='background-color:#EDEDED;'\"";
     my $onmouseover_with_cursor = "onmouseover=\"style='background-color:#CCFFFF;cursor:pointer;'\"";
-    $output .= "<td $onmouseover $onmouseout id='table_$anchor'>$contents</td>\n";
+    my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
+    my $contents = "<a href='#$anchor' class='nodecoration'>${$candidate}{'name'}</a>";
+
+    $output .= "<td $onmouseover_with_cursor $onmouseout id='table_$anchor'>$contents</td>\n";
 
     my $mirna_type = 'novel_miRNA';
     if ( defined(${$candidate}{'mirbase_id'}) ){
@@ -87,7 +88,7 @@ sub export_candidate {
             $contents = "<td $onmouseover $onmouseout>" . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
         }
         elsif ( $header eq 'position'){
-            $contents = "<td $onmouseover $onmouseout><a href='#$anchor'>${$candidate}{$header}</a></td>";
+            $contents = "<td $onmouseover_with_cursor $onmouseout><a href='#$anchor' class='nodecoration'>${$candidate}{$header}</a></td>";
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){

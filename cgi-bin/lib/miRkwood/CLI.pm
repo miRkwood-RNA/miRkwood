@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use miRkwood;
+use miRkwood::Paths;
 use miRkwood::Results;
 use miRkwood::ResultsExporterMaker;
 
@@ -314,18 +315,6 @@ sub make_candidate_page {
             else {
                 $read_duplex .= 'no </li>';
             }
-            # miRBase alignment :
-            $read_duplex .= '<li><b>miRBase alignment:</b> ';
-            if ( $candidate->{'alignment'} eq 2 ){
-                $read_duplex .= "$coche$coche presence of alignments that cover the miRNA locus (see reads cloud above)</li>";
-            }
-            elsif ( $candidate->{'alignment'} eq 1 ){
-                $read_duplex .= "$coche presence of alignments, which do not overlap the miRNA locus (see reads cloud above)</li>";
-            }
-            else {
-                $read_duplex .= 'none </li>';
-            }
-                
         }
 
         $reads_html = <<"END_TXT";
@@ -336,6 +325,33 @@ $reads_score
 $read_cloud
 $read_duplex
 END_TXT
+    }
+
+    # miRBase alignments
+    my $alignments_html = '';
+    if ( ! defined( $candidate->{'mirbase_id'} ) ){
+        $alignments_html .= '<li><b>miRBase alignment:</b> ';
+        if ( $candidate->{'alignment'} eq 0 ){
+             $alignments_html .= 'none </li>';
+        }
+        else {
+            if ( $candidate->{'alignment'} eq 2 ){
+                $alignments_html .= "$coche$coche presence of alignments that cover the miRNA locus (see reads cloud above)";
+            }
+            elsif ( $candidate->{'alignment'} eq 1 ){
+                $alignments_html .= "$coche presence of alignments, which do not overlap the miRNA locus (see reads cloud above)";
+            }
+            else {
+                $alignments_html .= 'none';
+            }           
+            #~ my $alignment_file = File::Spec->catfile( miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ), $candidate->{'identifier'}.'_aln.txt');          
+            my $alignment_file = File::Spec->catfile( File::Spec->updir(),
+                                                      File::Spec->updir(),
+                                                      miRkwood::Paths::get_alignments_dir_name(),
+                                                      $candidate->{'identifier'}. '_aln.txt' );
+            $alignments_html .= "\n<br /><object width='100%' type='text/plain' data=\"$alignment_file\" border='0' ></object>";
+        }
+        $alignments_html .= '</li>';
     }
 
     ### make page
@@ -366,6 +382,7 @@ END_TXT
                                                                           <i>MFEI</i> $mfei
         </li>
         $reads_html
+        $alignments_html
     </ul>
 END_TXT
 
@@ -421,6 +438,11 @@ border:1px solid black;
 }
 span.mature {
     color: blue;
+}
+a.nodecoration
+{ 
+    text-decoration:none;
+    color: black;
 }
 END_TXT
     return ($css);
