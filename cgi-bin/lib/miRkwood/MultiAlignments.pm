@@ -127,7 +127,7 @@ sub writeInFile{
     }
     print FILE "\n";
     for(my $cpt=1; $cpt<@tabName; $cpt++){
-	print FILE "miRBase ".$cpt.":\t".$tabName[$cpt]."\n";
+	print FILE "miRBase ".$cpt.": ".$tabName[$cpt]."\n";
     }
     print FILE "\n\n\n";
     close(FILE);
