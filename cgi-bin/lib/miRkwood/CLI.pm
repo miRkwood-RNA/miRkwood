@@ -4,6 +4,7 @@ package miRkwood::CLI;
 
 use strict;
 use warnings;
+use File::Spec;
 
 use miRkwood;
 use miRkwood::Paths;
@@ -182,7 +183,8 @@ sub make_candidate_page {
 
     my $star = '<font color=\'#FF8000\'>&#x2605;</font>';
     my $coche = '<font color=\'#008000\'>&#x2713;</font>';
-
+    my $arrow = '<font color=\'#008000\'>&#x25B2;</font>';
+    #~ my $arrow = '<font color=\'#008000\'>&uarr;</font>';
 
     ### make files in pieces folder
     my $candidate_fasta_file =
@@ -334,7 +336,8 @@ END_TXT
 
     ### make page
     my $html = <<"END_TXT";
-<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'})</a></h2>
+<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) $arrow</a></h2>
+
     <ul>
         <li>
             <b>Name: </b>$candidate->{'name'}
