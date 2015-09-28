@@ -33,6 +33,8 @@ sub export_candidate {
 
     $output .= "<td $onmouseover_with_cursor $onmouseout id='table_$anchor'>$contents</td>\n";
 
+    my $cfg    = miRkwood->CONFIG();
+
     my $mirna_type = 'novel_miRNA';
     if ( defined(${$candidate}{'mirbase_id'}) ){
         $mirna_type = 'known_miRNA';
@@ -59,10 +61,18 @@ sub export_candidate {
         }
         elsif ($header eq 'alignment'){
             $contents = '<td ';
-            my $alignment_file = File::Spec->catfile( File::Spec->updir(),
-                                                     File::Spec->updir(),
-                                                     miRkwood::Paths::get_alignments_dir_name(),
-                                                     ${$candidate}{'identifier'}. '_aln.txt' );
+            my $alignment_file = '';
+            if ( $cfg->param('job.pipeline') eq 'abinitio' ){
+                $alignment_file = File::Spec->catfile( File::Spec->updir(),
+                                                         miRkwood::Paths::get_alignments_dir_name(),
+                                                         ${$candidate}{'identifier'}. '_aln.txt' );
+            }
+            elsif ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
+                $alignment_file = File::Spec->catfile( File::Spec->updir(),
+                                                         File::Spec->updir(),
+                                                         miRkwood::Paths::get_alignments_dir_name(),
+                                                         ${$candidate}{'identifier'}. '_aln.txt' );
+            }
             my $alignment_link = '';
             if ( ${$candidate}{'alignment'} > 0){
                 $alignment_link = "onclick=\"location.href='$alignment_file'\"";
