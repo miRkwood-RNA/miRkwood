@@ -97,7 +97,7 @@ sub writeInFile{
 		else{
 			if($posBeginCdt>9 && $posBeginCdt < 100){
 				if($i>9){
-					$output .= 'miRBase '.$i.'	     ';
+					$output .= 'miRBase '.$i.'      ';
 				}
 				else{
 					$output .= 'miRBase '.$i.'       ';
@@ -105,18 +105,18 @@ sub writeInFile{
 			}
 			elsif($posBeginCdt>99){
 				if($i>9){
-					$output .= 'miRBase '.$i.'	    ';
+					$output .= 'miRBase '.$i.'      ';
 				}
 				else{
-					$output .= 'miRBase '.$i.'	     ';
+					$output .= 'miRBase '.$i.'        ';
 				}
 			}
 			else{
 				if($i>9){
-					$output .= 'miRBase '.$i.'	     ';
+					$output .= 'miRBase '.$i.'       ';
 				}
 				else{
-					$output .= 'miRBase '.$i.'	      ';
+					$output .= 'miRBase '.$i.'        ';
 				}
 			}
 		}
@@ -134,7 +134,6 @@ sub writeInFile{
     for(my $cpt=1; $cpt<@tabName; $cpt++){
         $output .= 'miRBase '.$cpt.': '.$tabName[$cpt]."\n";
     }
-    $output .= "\n\n\n";
     open(my $FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
     print $FILE $output;
     close($FILE);
@@ -252,7 +251,7 @@ sub setTabTemp{
 # Return @tabTemp2D and @tabAlgtMult
 sub addGapColumn{
     my ($col, $line, $posInMir, $hashMirSeqRef, $tabAlgtMultRef, $tabNameMirRef, $nbLine, $tabTemp2DRef, $colCurrent, $gapColumn) = @_;
-    my %hashMirSeq = %$hashMirSeqRef;
+    my %hashMirSeq = %{$hashMirSeqRef};
     my @tabAlgtMult = @{$tabAlgtMultRef};
     my @tabNameMir = @{$tabNameMirRef};
     my @tabTemp2D = @{$tabTemp2DRef};
