@@ -50,6 +50,7 @@ sub get_directory {
 sub run{
     my ( $self, @args ) = @_;
     my $cfg = miRkwood->CONFIG();
+
     debug( "          Start CandidateJob->run for candidate $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
         debug( "            Start count_total_nb_of_reads_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
@@ -62,15 +63,16 @@ sub run{
 
     debug( "            Start process_tests_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $candidate_test_info = $self->process_tests_for_candidate();
+
     debug( "            End of process_tests_for_candidate for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     debug( "            Start get_candidate_information for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $candidate_information = $self->get_candidate_information();
     debug( "            End of get_candidate_information for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
-debug( "            Start Candidate->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    debug( "            Start Candidate->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my %complete_candidate = (%{$candidate_test_info}, %{$candidate_information});
     my $candidate = miRkwood::Candidate->new(\%complete_candidate);
-debug( "            End of Candidate->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    debug( "            End of Candidate->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ) {
         debug( "            Start compute_alignment_quality_for_smallRNAseq for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
@@ -331,8 +333,9 @@ sub process_tests_for_candidate {
     debug( "              Start store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
     debug( "              End of store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+
     if ( $cfg->param('options.align') ) {
-        if ($alignments) {
+        if ( scalar(keys%{$alignments}) > 0) {
             $result->{'alignment_existence'} = 1;
             $result->{'alignments'} = $alignments;
             if ( $cfg->param('job.pipeline') eq 'abinitio' ){
@@ -342,6 +345,7 @@ sub process_tests_for_candidate {
     } else {
         $result->{'alignment_existence'} = 0;
     }
+
     return $result;
 }
 
