@@ -49,7 +49,8 @@ sub modifyAligt{
 #Parameter : @tabAlgtMult (multiple alignment)
 #return : @tabAlgtMult
 sub starInAlgt{
-    my $tabAlgtRef = $_[0];
+    my (@args) = @_;
+    my $tabAlgtRef = shift @args;
     my @tabAlgtMult = @{$tabAlgtRef};
     my $nbLine = scalar(@tabAlgtMult);
     for (my $col=0;$col<@{$tabAlgtMult[0]};$col++){
@@ -76,7 +77,7 @@ sub writeInFile{
     my $cfg = miRkwood->CONFIG();
     my $aln_dir = miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') );
     my $output = '';
-    
+
     for(my $i=0; $i<@tabAlgtMult; $i++){
 		$output .= "\t";
 		if ($i==0){
@@ -137,6 +138,7 @@ sub writeInFile{
     open(my $FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
     print $FILE $output;
     close($FILE);
+    return;
 }
 
 
@@ -187,7 +189,7 @@ sub fillTabTemp2D{
     my (@args) = @_;
     my $hashDataRef = shift @args;
     my $id_candidate = shift @args;
-    my %hashData = %$hashDataRef;
+    my %hashData = %{$hashDataRef};
     while (my ($key, $value) = each(%hashData)){
         my @tab = $value;
         my ($posBeginBase, $posEndBaseCurrent) = splitPosCdtAligt($key);
@@ -202,13 +204,13 @@ sub fillTabTemp2D{
             ($cdtBase, $posBaseEndFinal) = updateCdtBase($posEndBaseCurrent, $tab[0][$i]{'end_target'}, $cdtBase, $cdtSeq);
             $tabNameMir[$i+1] = $tab[0][$i]{'name'};
             ($cdtSeq, $mirSeq, my $tabTemp2DRef) = modifyAligt($cdtSeq, $mirSeq, $posBeginBase, $posEndBaseCurrent, \@tab, $i, \@tabTemp2D);
-            @tabTemp2D = @$tabTemp2DRef;
+            @tabTemp2D = @{$tabTemp2DRef};
             $hashMirSeq{$tab[0][$i]{'name'}}=$mirSeq;
             @tabTemp2D = setTabTemp($cdtSeq, $mirSeq, $i+1, \@tabTemp2D);
         }
         $hashMirSeq{'Query'}=$cdtBase;
         @tabTemp2D = setTabTemp($cdtBase, $cdtBase, 0, \@tabTemp2D);
-            my @tabAlgtMult = setAligtMultiple(\%hashMirSeq, \@tabTemp2D, \@tabNameMir);
+        my @tabAlgtMult = setAligtMultiple(\%hashMirSeq, \@tabTemp2D, \@tabNameMir);
         @tabAlgtMult = starInAlgt(\@tabAlgtMult);
         writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posBaseEndFinal, $id_candidate);
     }
@@ -223,15 +225,15 @@ sub setTabTemp{
     my ($cdtSeq, $miRSeq, $numMir, $tab2DRef) = @_;
     my $posMiR=0;
     my $posCandidate=0;
-    my @tab2D = @$tab2DRef;
+    my @tab2D = @{$tab2DRef};
     my $i=0;
-    
+
     while($posCandidate<length($cdtSeq)){
-        if(substr($miRSeq,$posMiR,1) eq "-"){
+        if(substr($miRSeq,$posMiR,1) eq '-'){
             $tab2D[$numMir][$i]=0;
             $i++;
         }
-        elsif(substr($cdtSeq, $posCandidate, 1) eq "-"){
+        elsif(substr($cdtSeq, $posCandidate, 1) eq '-'){
         }
         else{
             $tab2D[$numMir][$i]=$posCandidate+1;
@@ -251,10 +253,10 @@ sub setTabTemp{
 sub addGapColumn{
     my ($col, $line, $posInMir, $hashMirSeqRef, $tabAlgtMultRef, $tabNameMirRef, $nbLine, $tabTemp2DRef, $colCurrent, $gapColumn) = @_;
     my %hashMirSeq = %$hashMirSeqRef;
-    my @tabAlgtMult = @$tabAlgtMultRef;
-    my @tabNameMir = @$tabNameMirRef;
-    my @tabTemp2D = @$tabTemp2DRef;
-    
+    my @tabAlgtMult = @{$tabAlgtMultRef};
+    my @tabNameMir = @{$tabNameMirRef};
+    my @tabTemp2D = @{$tabTemp2DRef};
+
     for (my $i=0; $i<$nbLine; $i++){
         if($i==$line){
             @tabAlgtMult = addNuclAlgt($col, $line, $posInMir-1, $hashMirSeqRef, $tabAlgtMultRef, $tabNameMirRef);
@@ -269,7 +271,7 @@ sub addGapColumn{
             if( defined( $tabAlgtMult[$i][$col] ) ){
                 $tabAlgtMult[$i][$col+1]=$tabAlgtMult[$i][$col];
             }
-            $tabAlgtMult[$i][$col]="-";
+            $tabAlgtMult[$i][$col]='-';
         }
     }
     return (\@tabTemp2D, \@tabAlgtMult);
@@ -281,9 +283,9 @@ sub addGapColumn{
 #Return @tabAlgtMult : tab of the alignment multiple
 sub addNuclAlgt{
     my ($col, $line, $posInMiR, $hashMirSeqRef, $tabAlgtMultRef, $tabNameMirRef) = @_;
-    my %hashMirSeq = %$hashMirSeqRef;
-    my @tabAlgtMult = @$tabAlgtMultRef;
-    my @tabNameMir = @$tabNameMirRef;
+    my %hashMirSeq = %{$hashMirSeqRef};
+    my @tabAlgtMult = @{$tabAlgtMultRef};
+    my @tabNameMir = @{$tabNameMirRef};
     my $nameMiR = $tabNameMir[$line];
     my $seqMiR = $hashMirSeq{$nameMiR};
     $tabAlgtMult[$line][$col] = substr($seqMiR,$posInMiR-1,1);
@@ -295,9 +297,9 @@ sub addNuclAlgt{
 #Return matrix with Alignment Multiple : @tabAlgtMult
 sub setAligtMultiple{
     my ($hashMirSeqRef, $tabTemp2DRef, $tabNameMirRef) = @_;
-    my %hashMirSeq = %$hashMirSeqRef;
-    my @tabTemp2D = @$tabTemp2DRef;
-    my @tabNameMir = @$tabNameMirRef;
+    my %hashMirSeq = %{$hashMirSeqRef};
+    my @tabTemp2D = @{$tabTemp2DRef};
+    my @tabNameMir = @{$tabNameMirRef};
     my $nbLine = @tabTemp2D;
     my $nbCol = @{$tabTemp2D[0]};
     my @tabAlgtMult;
@@ -316,14 +318,14 @@ sub setAligtMultiple{
                 $diffCase = $tabTemp2D[$j][$i]-$tabTemp2D[$j][$i-1];
             }
             if ($diffCase<=0){
-                $tabAlgtMult[$j][$i+$gapColumn]="-";
+                $tabAlgtMult[$j][$i+$gapColumn]='-';
             }
             elsif ($diffCase>1 && $tabTemp2D[$j][$i-1]!=0 && $diffCase > $maxDiff){
                 my $gapAdd = $cptColInsert;
                 for(my $nbInsert=1; $nbInsert<$diffCase-$cptColInsert; $nbInsert++){
                     my ($tab2DRef,$tabAlgtRef) = addGapColumn($i+$gapColumn, $j, $tabTemp2D[$j][$i], \%hashMirSeq, \@tabAlgtMult, \@tabNameMir, $nbLine, \@tabTemp2D, $i, $gapAdd);
-                    @tabTemp2D=@$tab2DRef;
-                    @tabAlgtMult=@$tabAlgtRef;
+                    @tabTemp2D=@{$tab2DRef};
+                    @tabAlgtMult=@{$tabAlgtRef};
                     $gapColumn++;
                     $gapAdd++;
                 }
