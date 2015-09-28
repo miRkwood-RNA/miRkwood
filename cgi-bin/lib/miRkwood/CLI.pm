@@ -134,25 +134,25 @@ sub make_all_exports {
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
     my $csv_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-    $html .= "<li><a href='" . $exporter->get_filename() . "'>tab-delimited format (csv)</a></li>";
+    $html .= '<li><a href="' . $exporter->get_filename() . '">tab-delimited format (csv)</a></li>';
 
     $exporter = miRkwood::ResultsExporterMaker->make_fasta_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
     my $fasta_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-    $html .= "<li><a href='" . $exporter->get_filename() . "'>Fasta</a></li>";
+    $html .= '<li><a href="' . $exporter->get_filename() . '">Fasta</a></li>';
 
     $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
     my $dotbracket_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-    $html .= "<li><a href='" . $exporter->get_filename() . "'>dot-bracket format (plain sequence + secondary structure)</a></li>";
+    $html .= '<li><a href="' . $exporter->get_filename() . '">dot-bracket format (plain sequence + secondary structure)</a></li>';
 
     $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
     my $gff_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-    $html .= "<li><a href='" . $exporter->get_filename() . "'>gff format</a></li>";
+    $html .= '<li><a href="' . $exporter->get_filename() . '">gff format</a></li>';
 
     $html .= '</ul>';
     return $html;
@@ -264,13 +264,13 @@ sub make_candidate_page {
         my $read_duplex = '';
 
         my $nb_reads = $candidate->{'nb_reads'};
-        if ( $candidate->{'criteria_nb_reads'} eq 1 ){
+        if ( $candidate->{'criteria_nb_reads'} == 1 ){
             $nb_reads = "<font color='#FF00FF'>$candidate->{'nb_reads'}</font>";
         }
 
         if ( ! defined( $candidate->{'mirbase_id'} ) ){
             # reads distribution
-            if ( $candidate->{'reads_distribution'} eq 1 ){
+            if ( $candidate->{'reads_distribution'} == 1 ){
                 $reads_score = "<li><b>Distribution of reads:</b> one island $star</li>";
             }
             elsif ( $candidate->{'reads_distribution'} >= 2 ){
@@ -281,7 +281,7 @@ sub make_candidate_page {
             }
             # stability of duplex
             $read_duplex = '<li><b>Stability of the miRNA duplex (mirdup):</b> ';
-            if ( $candidate->{'criteria_mirdup'} eq 1 ){
+            if ( $candidate->{'criteria_mirdup'} == 1 ){
                 $read_duplex .= "yes $star</li>";
             }
             else {
@@ -303,14 +303,14 @@ END_TXT
     my $alignments_html = '';
     if ( ! defined( $candidate->{'mirbase_id'} ) ){
         $alignments_html .= '<li><b>miRBase alignment:</b> ';
-        if ( $candidate->{'alignment'} eq 0 ){
+        if ( $candidate->{'alignment'} == 0 ){
              $alignments_html .= 'none </li>';
         }
         else {
-            if ( $candidate->{'alignment'} eq 2 ){
+            if ( $candidate->{'alignment'} == 2 ){
                 $alignments_html .= "$coche$coche presence of alignments that cover the miRNA locus (see reads cloud above)";
             }
-            elsif ( $candidate->{'alignment'} eq 1 ){
+            elsif ( $candidate->{'alignment'} == 1 ){
                 $alignments_html .= "$coche presence of alignments, which do not overlap the miRNA locus (see reads cloud above)";
             }
             else {
@@ -413,7 +413,7 @@ sub include_alignments_in_html {
     }
     close $IN;    
     $result .= '</pre>';
-    return $result;    
+    return $result;
 }
 
 

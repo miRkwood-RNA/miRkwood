@@ -25,9 +25,9 @@ sub export_candidate {
     my ( $self, @args ) = @_;
     my $candidate = shift @args;
     my $output   = '<tr>';
-    my $onmouseout  = "onmouseout=\"style='background-color:white'\"";
-    my $onmouseover = "onmouseover=\"style='background-color:#EDEDED;'\"";
-    my $onmouseover_with_cursor = "onmouseover=\"style='background-color:#CCFFFF;cursor:pointer;'\"";
+    my $onmouseout  = 'onmouseout="style=\'background-color:white\'"';
+    my $onmouseover = 'onmouseover="style=\'background-color:#EDEDED;\'"';
+    my $onmouseover_with_cursor = 'onmouseover="style=\'background-color:#CCFFFF;cursor:pointer;\'"';
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor' class='nodecoration'>${$candidate}{'name'}</a>";
 
