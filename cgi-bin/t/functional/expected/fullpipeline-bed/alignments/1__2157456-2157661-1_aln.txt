@@ -1,0 +1,5 @@
+	query       58  GGAAA--UCUCAGG-U-GACA  74
+	miRBase 1       GGACAGUCUCAGGUAGACA--
+	                *** *       *     *  
+
+miRBase 1: gma-miR5368
