@@ -326,6 +326,12 @@ END_TXT
         $alignments_html .= '</li>';
     }
 
+    # Alternative sequences
+    my $alternatives_HTML = '';
+    if( $candidate->{'alternatives'} and scalar(keys%{ $candidate->{'alternatives'} }) ){
+        $alternatives_HTML = "[<a href='$linkAlternatives'>alternative sequences</a>]"
+    }
+
     ### make page
     my $html = <<"END_TXT";
 <h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'})</a></h2>
@@ -346,7 +352,7 @@ END_TXT
             <b>miRNA precursor:</b> [<a href='$linkFasta'>FASTA sequence</a>] 
                                     [<a href='$linkVienna'>stem-loop structure</a>] 
                                     [<a href='$linkViennaOptimal'>optimal MFE structure</a>] 
-                                    [<a href='$linkAlternatives'>optimal MFE structure</a>]
+                                    $alternatives_HTML
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> $candidate->{'mfe'} kcal/mol | 
@@ -372,7 +378,7 @@ sub include_read_cloud_in_html {
     my @args = @_;
     my $read_cloud_file = shift @args;
     my $result = '<pre>';
-    open(my $IN, '<', $read_cloud_file) or die "ERROR while opening $read_cloud_file: $!";
+    open(my $IN, '<', $read_cloud_file) or return '';
     my $line = <$IN>;
     while ( <$IN> ){
         chomp;
@@ -392,12 +398,11 @@ sub include_alignments_in_html {
     my @args = @_;
     my $alignment_file = shift @args;
     my $result = '<pre>';
-    open(my $IN, '<', $alignment_file) or die "ERROR while opening $alignment_file: $!";
+    open(my $IN, '<', $alignment_file) or return '';
     my $line;
     while ( $line = <$IN> ){
         chomp $line;
         if ( $line =~ /miRBase.*: ([^ ]*)/ ){
-            print STDERR "mirbase name = <$1>\n";
             my $mirbase_link = '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a>';
             $line =~ s/$1/$mirbase_link/;
         }
