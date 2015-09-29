@@ -1,5 +1,0 @@
-	query       262  UGUUAAGAAGUGUUAAUGGUG  282
-	miRBase 1        UGUUAAGGAGUGUUAACGGUG
-	                 ******* ******** ****
-
-miRBase 1: ath-miR5635a

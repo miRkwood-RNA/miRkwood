@@ -1,5 +1,0 @@
-	query       114  GGCAAGCCCAUGU--AUA  129
-	miRBase 1        GGCAAUCCCAUGUCAAA-
-	                 ***** *******  *  
-
-miRBase 1: aly-miR848-5p

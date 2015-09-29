@@ -1,5 +1,0 @@
-	query       221  AGAUGUGACCAUGUGGAAAUG  241
-	miRBase 1        AGAGGUGACCAU-UGGAGAUG
-	                 *** ******** **** ***
-
-miRBase 1: ath-miR5662
