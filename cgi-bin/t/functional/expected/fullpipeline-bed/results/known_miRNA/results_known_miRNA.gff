@@ -3,8 +3,8 @@
 # Note, these sequences do not represent the full primary transcript,
 # rather a predicted stem-loop portion that includes the precursor.
 
-1	miRkwood	miRNA_primary_transcript	28500	28706	.	+	.	Name=preMir_1__28500-28706	
-1	miRkwood	miRNA_primary_transcript	78927	79037	.	-	.	Name=preMir_1__78927-79037	
-1	miRkwood	miRNA_primary_transcript	234006	234159	.	-	.	Name=preMir_1__234006-234159	
-1	miRkwood	miRNA_primary_transcript	1727263	1727415	.	+	.	Name=preMir_1__1727263-1727415	
-1	miRkwood	miRNA_primary_transcript	2165517	2165746	.	+	.	Name=preMir_1__2165517-2165746	
+1	miRkwood	miRNA_primary_transcript	6520941	6521124	.	+	.	Name=preMir_1__6520941-6521124	
+1	miRkwood	miRNA_primary_transcript	6695420	6695609	.	-	.	Name=preMir_1__6695420-6695609	
+4	miRkwood	miRNA_primary_transcript	369831	370012	.	-	.	Name=preMir_4__369831-370012	
+4	miRkwood	miRNA_primary_transcript	1023912	1024149	.	+	.	Name=preMir_4__1023912-1024149	
+4	miRkwood	miRNA_primary_transcript	1046804	1046983	.	-	.	Name=preMir_4__1046804-1046983	
