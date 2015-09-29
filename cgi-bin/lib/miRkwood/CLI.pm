@@ -245,13 +245,21 @@ sub make_candidate_page {
         $mfei = "<font color='#FF00FF'>$candidate->{'mfei'}</font>";
     }
 
-    my $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
-    if ( $candidate->{'mirna_length'} eq '' ||  $candidate->{'mirna_length'} eq '0' ){
-        $mirna_sequence = 'None';
-    }
-
+    # Reads
+    my $mirna_html = '';
     my $reads_html = '';
     if ( $pipeline_type eq 'smallRNAseq' ){
+        # miRNA sequence
+        my $mirna_sequence = '';
+        if ( $candidate->{'mirna_length'} eq '' ||  $candidate->{'mirna_length'} eq '0' ){
+            $mirna_sequence = 'None';
+        }
+        else{
+            $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
+        }
+        $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>";
+
+        # Reads
         # this is not very robust. be cautious if you change the tree view
         my $reads_path = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), miRkwood::Paths::get_reads_dir_name(), $mirna_type);
         my $reads_file = File::Spec->catfile( $reads_path, $candidate->{'identifier'} . '.txt' );
@@ -348,9 +356,7 @@ END_TXT
         <li>
             <b>Strand:</b> $candidate->{'strand'}
         </li>
-        <li>
-            <b>miRNA sequence:</b> $mirna_sequence
-        </li>
+        $mirna_html
         <li>
             <b>miRNA precursor:</b> [<a href='$linkFasta'>FASTA sequence</a>] 
                                     [<a href='$linkVienna'>stem-loop structure</a>] 
