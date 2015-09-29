@@ -1,0 +1,5 @@
+	query       201  UGGGUUGAGUUGAAUUGAGUUGAC  224
+	miRBase 1        UGGGUUGAGUUGAGUUGAGUUGGC
+	                 ************* ******** *
+
+miRBase 1: ath-miR5653

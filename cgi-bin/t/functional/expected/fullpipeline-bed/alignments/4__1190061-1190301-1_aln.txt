@@ -1,0 +1,7 @@
+	query       221  -CUUUAUGGGACAGAGGGAGU-  241
+	miRBase 1        CAUUAUGGGACGGAGGGAGU--
+	miRBase 2        -UUUAUGGAACGGAGGGAGUA-
+	                   **   *       **    *
+
+miRBase 1: osa-miR1436
+miRBase 2: bdi-miR5174e-3p.2

@@ -1,0 +1,83 @@
+--- end_position
+--- 6695609
+--- reads
+---
+6695461-6695480: 9
+6695462-6695480: 26
+6695462-6695481: 1
+6695462-6695482: 2
+6695463-6695480: 8
+6695463-6695481: 1
+6695463-6695482: 2
+6695464-6695481: 1
+6695465-6695483: 2
+6695544-6695564: 245
+6695544-6695566: 7
+6695545-6695563: 1
+6695545-6695564: 44
+6695545-6695565: 2
+6695545-6695566: 8
+6695546-6695564: 4
+6695546-6695566: 7
+6695558-6695581: 1
+6695560-6695583: 1
+6695565-6695583: 17
+--- sequence
+--- UCAUAUAAGAGAAAAUGGUGACAUGAAGAAUGAGAACUUGUGUGGUAGCCAAGGAUGACUUGCCUGCGUUUUAGACCAUAUAUAUCAAAGACUCACUCGAUCGAUAGUCUUAGAGUUGGUUGGUCGUCAGGCAGUCUCCUUGGCUAUUCAAACAAUUCUCAUUCUCUUCAUUCACAUUUCUCUUUUUUGG
+--- start_position
+--- 6695420
+--- position
+--- 6695420-6695609
+--- structure_stemloop
+--- .((...((((((((...((((.((((((((((((((.((((.(((((((((((((.((((.(((((.......(((((..((..((.((((((...((....)).)))))).))..))..)))))..))))))))))))))))))).))).)))))))))))..))))))))))).))))))))...)).
+--- precursor_name
+--- ath-MIR169h
+--- nb_reads
+--- 389
+--- criteria_reads_mirna
+--- 1
+--- structure_optimal
+--- .((...((((((((...((((.((((((((((((((.((((.(((((((((((((.((((.(((((.......(((((..((..((.((((((...((....)).)))))).))..))..)))))..))))))))))))))))))).))).)))))))))))..))))))))))).))))))))...)).
+--- identifier
+--- ath-MIR169h
+--- chromosome
+--- '1'
+--- '%GC'
+--- '39.47'
+--- strand
+--- '-'
+--- quality
+--- 2
+--- mirna_position
+--- 6695544-6695564
+--- criteria_nb_reads
+--- 1
+--- mirna_length
+--- 21
+--- mirbase_id
+--- MI0000982
+--- name
+--- '1'
+--- matures
+---
+MIMAT0000913:
+  mature_end: '6695564'
+  mature_name: ath-miR169h
+  mature_reads:
+    6695544-6695564: 245
+    6695545-6695563: 1
+    6695545-6695564: 44
+    6695546-6695564: 4
+  mature_start: '6695544'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/MI0000982.png
+--- length
+--- 190
+--- amfe
+--- -41.5789473684211
+--- mfei
+--- -1.05333333333333
+--- mfe
+--- '-79.00'
+--- mirna_sequence
+--- UAGCCAAGGAUGACUUGCCUG

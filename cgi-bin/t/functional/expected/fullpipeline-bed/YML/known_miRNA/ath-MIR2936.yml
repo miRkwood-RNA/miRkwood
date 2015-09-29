@@ -1,0 +1,65 @@
+--- end_position
+--- 1046983
+--- reads
+---
+1046826-1046847: 1
+1046826-1046850: 1
+1046916-1046937: 1
+1046938-1046955: 1
+1046949-1046966: 1
+--- sequence
+--- CCAUUUUCGAAAGCCUUGAGAGAGAGAACACAGACGAUACCAACUUUCUUCAAUCUCGUUGCCGCAGUAUAAUUAUCUCAUUCCUCGGAUAUAUCUCUCCUUCUGCGGCGGCGACAAGAAGCUACAAGAAUAAAAAGUCUGUUUUCUCUCUUUUCAAGAAACCACUUACUUCGAAAAUGG
+--- start_position
+--- 1046804
+--- position
+--- 1046804-1046983
+--- structure_stemloop
+--- (((((((((((...((((((((((((((.((((((........(((.((((....((((((((((((..............((....)).............))))))))))))...))))....)))........)))))).))))))).)))))))...........)))))))))))
+--- precursor_name
+--- ath-MIR2936
+--- nb_reads
+--- 5
+--- criteria_reads_mirna
+--- 0
+--- structure_optimal
+--- (((((((((((...((((((((((((((.((((((........(((.((((....((((((((((((..............((....)).............))))))))))))...))))....)))........)))))).))))))).)))))))...........)))))))))))
+--- identifier
+--- ath-MIR2936
+--- chromosome
+--- '4'
+--- '%GC'
+--- '41.11'
+--- strand
+--- '-'
+--- quality
+--- 0
+--- mirna_position
+--- 1046948-1046969
+--- criteria_nb_reads
+--- 0
+--- mirna_length
+--- 22
+--- mirbase_id
+--- MI0013366
+--- name
+--- '4'
+--- matures
+---
+MIMAT0014140:
+  mature_end: '1046969'
+  mature_name: ath-miR2936
+  mature_reads:
+    1046949-1046966: 1
+  mature_start: '1046948'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/MI0013366.png
+--- length
+--- 180
+--- amfe
+--- -33.5555555555556
+--- mfei
+--- -0.816216216216216
+--- mfe
+--- '-60.40'
+--- mirna_sequence
+--- CUUGAGAGAGAGAACACAGACG

@@ -1,0 +1,82 @@
+--- end_position
+--- 370012
+--- reads
+---
+369854-369876: 2
+369855-369876: 424
+369856-369873: 1
+369856-369874: 5
+369856-369875: 17
+369856-369876: 221300
+369856-369877: 3
+369857-369876: 1251
+369857-369877: 5
+369858-369875: 1
+369858-369876: 194
+369859-369876: 128
+369859-369879: 2
+369967-369987: 1
+369969-369989: 4
+--- sequence
+--- UGAAGAGGCUAUUUCUGUUGUGGGGAAUGUUGUUUGGAUCGAGGAUAUCAUAAACGCAUACACAUGUUUAUAUGUUAUGAUGCAUUAUAUGACUGAUGUAAUGUACAUAUAUAUACAUACAUGCCACAUGGUAUCGUCGGACCAGGCUUCAUCCCCCUCAACAUGUUAAUUGCCUUCAAUCA
+--- start_position
+--- 369831
+--- position
+--- 369831-370012
+--- structure_stemloop
+--- '....(((((.(((.((((((.((((.(((..((((((.((((.((((((((....((((....((((..((((((.(((.((((((((((.....)))))))))))))))))))))))..))))...)))))))).)))).))))))..))).)))).))))).)..))).)))))......'
+--- precursor_name
+--- ath-MIR165b
+--- nb_reads
+--- 223338
+--- criteria_reads_mirna
+--- 1
+--- structure_optimal
+--- '....(((((.(((.((((((.((((.(((..((((((.((((.((((((((....((((....((((..((((((.(((.((((((((((.....)))))))))))))))))))))))..))))...)))))))).)))).))))))..))).)))).))))).)..))).)))))......'
+--- identifier
+--- ath-MIR165b
+--- chromosome
+--- '4'
+--- '%GC'
+--- '37.91'
+--- strand
+--- '-'
+--- quality
+--- 2
+--- mirna_position
+--- 369856-369876
+--- criteria_nb_reads
+--- 1
+--- mirna_length
+--- 21
+--- mirbase_id
+--- MI0000200
+--- name
+--- '4'
+--- matures
+---
+MIMAT0000188:
+  mature_end: '369876'
+  mature_name: ath-miR165b
+  mature_reads:
+    369856-369873: 1
+    369856-369874: 5
+    369856-369875: 17
+    369856-369876: 221300
+    369857-369876: 1251
+    369858-369875: 1
+    369858-369876: 194
+    369859-369876: 128
+  mature_start: '369856'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/MI0000200.png
+--- length
+--- 182
+--- amfe
+--- -36.5384615384615
+--- mfei
+--- -0.963768115942029
+--- mfe
+--- '-66.50'
+--- mirna_sequence
+--- UCGGACCAGGCUUCAUCCCCC

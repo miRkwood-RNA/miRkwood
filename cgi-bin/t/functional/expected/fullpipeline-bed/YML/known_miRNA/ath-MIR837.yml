@@ -1,0 +1,88 @@
+--- end_position
+--- 6521124
+--- reads
+---
+6520979-6521000: 1
+6520992-6521012: 2
+6520993-6521013: 8
+6520995-6521014: 1
+6520995-6521015: 18
+6521001-6521024: 1
+6521048-6521068: 3
+6521053-6521070: 1
+6521053-6521073: 2
+6521054-6521074: 1
+6521074-6521092: 1
+6521074-6521094: 3
+6521074-6521095: 1
+6521074-6521097: 37
+6521075-6521095: 1
+6521075-6521098: 1
+6521076-6521096: 1
+6521077-6521097: 21
+6521081-6521100: 1
+6521081-6521101: 3
+--- sequence
+--- UUUUUGAUAAAUACUUUUGUUUGCUUACAAGUAUAAAGUCAUCAUGUUUUUUUCAUCAGUUUCUUGUUCGUUUCAAAAUUAUGAUUUUUGUUUACUUACACUCAUAAUCUUGAAACGAACAAAAAACUGAUGGAAAAACAUGAGGACUUUAUACUUGUAAAUAAAUAAAAAUAUUUAUUAGAAA
+--- start_position
+--- 6520941
+--- position
+--- 6520941-6521124
+--- structure_stemloop
+--- (((((((((((((.(((((((((.((((((((((((((((.(((((((((((.(((((((((.(((((((((((((.(((((((....(((......))).))))))).))))))))))))).)))))))))))))))))))).)))))))))))))))).))))))))).)))))))))))))
+--- precursor_name
+--- ath-MIR837
+--- nb_reads
+--- 108
+--- criteria_reads_mirna
+--- 0
+--- structure_optimal
+--- (((((((((((((.(((((((((.((((((((((((((((.(((((((((((.(((((((((.(((((((((((((.(((((((....(((......))).))))))).))))))))))))).)))))))))))))))))))).)))))))))))))))).))))))))).)))))))))))))
+--- identifier
+--- ath-MIR837
+--- chromosome
+--- '1'
+--- '%GC'
+--- '22.83'
+--- strand
+--- +
+--- quality
+--- 1
+--- mirna_position
+--- 6520995-6521015
+--- criteria_nb_reads
+--- 1
+--- mirna_length
+--- 21
+--- mirbase_id
+--- MI0005393
+--- name
+--- '1'
+--- matures
+---
+MIMAT0004258:
+  mature_end: '6521015'
+  mature_name: ath-miR837-5p
+  mature_reads:
+    6520995-6521014: 1
+    6520995-6521015: 18
+  mature_start: '6520995'
+MIMAT0004259:
+  mature_end: '6521073'
+  mature_name: ath-miR837-3p
+  mature_reads:
+    6521053-6521070: 1
+    6521053-6521073: 2
+  mature_start: '6521053'
+--- image
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/MI0005393.png
+--- length
+--- 184
+--- amfe
+--- -46.304347826087
+--- mfei
+--- -2.02857142857143
+--- mfe
+--- '-85.20'
+--- mirna_sequence
+--- AUCAGUUUCUUGUUCGUUUCA

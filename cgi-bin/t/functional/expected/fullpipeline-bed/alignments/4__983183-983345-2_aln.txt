@@ -1,0 +1,10 @@
+	query       109  AUAAUAAA--AUACUAA-U-A  125
+	miRBase 1        AUAAUAAAAAUAAUAAUGA--
+	                 ********    *  *   * 
+
+miRBase 1: gma-miR1533
+	query       98  AUAAUAAA--AUUAUAA-U-A  114
+	miRBase 1       AUAAUAAAAAUAAUAAUGA--
+	                ********       *   * 
+
+miRBase 1: gma-miR1533
