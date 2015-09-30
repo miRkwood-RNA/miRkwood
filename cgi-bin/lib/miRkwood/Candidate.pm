@@ -656,11 +656,12 @@ sub get_reads_from_bed_file {
 
 =cut
 sub determine_precursor_arms {
-    my ( $self, @args ) = @_;
-
+    my ( @args ) = @_;
+    my $start_position = shift @args;
+    my $structure = shift @args;
     my $start_arm_2 = 0;
     my $end_arm_1 = 0;
-    my @structure_array = split(//, $self->{'structure_stemloop'});
+    my @structure_array = split(//, $structure);
     my $stop = 0;
 
     my $index = 0;
@@ -676,8 +677,8 @@ sub determine_precursor_arms {
         $index++;
     }
 
-    $start_arm_2 += $self->{'start_position'};
-    $end_arm_1   += $self->{'start_position'};
+    $start_arm_2 += $start_position;
+    $end_arm_1   += $start_position;
 
     return ( $end_arm_1, $start_arm_2 );
 }
@@ -687,7 +688,7 @@ sub determine_precursor_arms {
 =cut
 sub compute_quality_from_reads {
     my ( $self, @args ) = @_;
-    my ($end_arm_1, $start_arm_2) = $self->determine_precursor_arms( );
+    my ($end_arm_1, $start_arm_2) = determine_precursor_arms( $self->{'start_position'}, $self->{'structure_stemloop'});
     my $precursor_length = $self->{'end_position'} - $self->{'start_position'} + 1;
     my $start_arm_1 = $self->{'start_position'};
     my $end_arm_2   = $self->{'end_position'};
@@ -903,6 +904,11 @@ sub find_mirna {
     my $mirna_start = 0;
     my $mirna_end = 0;
     my $threshold = 0.4;
+    my $arm = '';
+    my $nb_reads_on_arm = 0;
+
+    # determine the positions of the arms
+    my ($end_arm_1, $start_arm_2) = determine_precursor_arms( $self->{'start_position'}, $self->{'structure_stemloop'});
 
     # first browse to find the most abundant read
     foreach ( keys%{$self->{'reads'}} ){
@@ -912,6 +918,12 @@ sub find_mirna {
         }
     }
     ($mirna_start, $mirna_end) = split( /-/, $position_max );
+    if ( $mirna_end <= $end_arm_1 ){
+        $arm = 'first';
+    }
+    elsif ( $mirna_start >= $start_arm_2 ){
+        $arm = 'second';
+    }
 
     # second browse to count how many reads start at the same
     # position than the most abundant read
