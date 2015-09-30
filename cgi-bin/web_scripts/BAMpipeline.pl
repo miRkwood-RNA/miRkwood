@@ -1,5 +1,4 @@
 #!/usr/bin/perl -w
-use lib '/usr/local/share/perl/5.14.2/';
 use strict;
 use warnings;
 use CGI;
@@ -8,7 +7,9 @@ use FindBin;
 use File::Spec;
 use Log::Message::Simple qw[msg error debug];
 
-BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
+BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); 
+push @INC, '/usr/local/share/perl/5.14.2/';
+push @INC, '/usr/local/share/perl/5.14.2/Inline';    }
 use miRkwood;
 use miRkwood::Paths;
 use miRkwood::WebPaths;
