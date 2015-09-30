@@ -4,6 +4,7 @@
 # ABSTRACT: miRkwood - A micro-RNA analysis pipeline for sRNAseq analysis
 
 use lib '/vagrant/cgi-bin/lib/';
+use lib '/usr/local/share/perl/5.14.2/';
 
 use warnings;
 use strict;

@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+use lib '/usr/local/share/perl/5.14.2/';
 use strict;
 use warnings;
 use CGI;
