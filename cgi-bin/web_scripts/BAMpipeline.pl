@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-use 5.14.2;
+use 5.014;
 use strict;
 use warnings;
 use CGI;
