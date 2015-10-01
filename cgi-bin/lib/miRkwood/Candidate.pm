@@ -400,7 +400,6 @@ sub make_alignments_HTML {
         # MiRdup
         if ( defined( $self->{'mirdup_validation'} ) ){
             my $mirdup_key = $self->{'name'} . '__' . $position;
-            
             if ( $mirdup_results{$mirdup_key} ){
                 $mirdup_prediction = 'This prediction is validated by miRdup.';
             } else {
@@ -897,26 +896,36 @@ sub find_mirna {
     my (@args) = @_;
     my $self = shift @args;
     my $genome_db = shift @args;
-    my $total_reads = $self->{'nb_reads'};
     my $max = 0;
     my $position_max = 0;
     my $same_start_reads = 0;
     my $mirna_start = 0;
     my $mirna_end = 0;
-    my $threshold = 0.4;
-    my $arm = '';
-    my $nb_reads_on_arm = 0;
+    my $threshold = 0.5;
+    my $arm = 'both';
+    my $count_arm = {};
 
     # determine the positions of the arms
     my ($end_arm_1, $start_arm_2) = determine_precursor_arms( $self->{'start_position'}, $self->{'structure_stemloop'});
+    my $start_arm_1 = $self->{'start_position'};
+    my $end_arm_2   = $self->{'end_position'};
 
     # first browse to find the most abundant read
+    # and count the number of reads on each arm
     foreach ( keys%{$self->{'reads'}} ){
+        my ($read_start, $read_end) = split( /-/, $_ );
         if ( $self->{'reads'}{$_} > $max ){
             $max = $self->{'reads'}{$_};
             $position_max = $_;
         }
+        if ( $read_start >= $start_arm_1 && $read_end <= $end_arm_1 ){
+            $count_arm->{ 'first' } += $self->{'reads'}{$_};
+        }
+        if ( $read_start >= $start_arm_2 && $read_end <= $end_arm_2 ){
+            $count_arm->{ 'second' } += $self->{'reads'}{$_};
+        }
     }
+    $count_arm->{ 'both' } = $self->{'nb_reads'};
     ($mirna_start, $mirna_end) = split( /-/, $position_max );
     if ( $mirna_end <= $end_arm_1 ){
         $arm = 'first';
@@ -934,7 +943,8 @@ sub find_mirna {
         }
     }
 
-    my $percentage_majority_read = $same_start_reads / $total_reads;
+    my $percentage_majority_read = $same_start_reads / $count_arm->{ $arm };
+
     #~ debug( "             $percentage_majority_read % reads start at the same position than the major read.", 1);
     if ( $percentage_majority_read >= $threshold ){
         my $chromosome = $self->{'name'};
