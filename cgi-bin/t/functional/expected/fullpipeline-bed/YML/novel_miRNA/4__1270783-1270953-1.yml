@@ -11,15 +11,15 @@
   \   UC  C UUUGUGG    GGCUCUUCGA                                                 C\n
   \      AUUC  UU -       CUAA          UUUGAGCCUUUAAACGCACUAAAGGUGUUGAGCUUCUAUGGUUUCUCAA\n"
 --- reads_distribution
---- 0
+--- 2
 --- mirna_position
---- ''
+--- 1270929-1270952
 --- alternatives
 --- {}
 --- criteria_nb_reads
 --- 0
 --- mirna_length
---- ''
+--- 24
 --- name
 --- '4'
 --- energy_optimal
@@ -27,7 +27,7 @@
 --- mfe
 --- '-23.20'
 --- mirna_sequence
---- ''
+--- CGGAGAAGCUGUAGGCGCUUUAUC
 --- end_position
 --- 1270953
 --- reads
@@ -81,7 +81,7 @@
 --- structure_optimal
 --- (((((((((..(.(((((((...((((((((((.....(((((((.(((....)))...)))))))((((((..((..(((..((((....))))..))))).))))))((((((.......))))))......))))))))))....))))))))..))....)))))))
 --- orphan_hairpin
---- 1
+--- 0
 --- '%GC'
 --- '47.95'
 --- CT
@@ -136,12 +136,12 @@
 '141': '27'
 '142': '26'
 '143': '25'
-'144': '24'
+'144': 24
 '145': '0'
 '146': '0'
 '147': '0'
 '148': '0'
-'149': '20'
+'149': 20
 '15': '154'
 '150': '19'
 '151': '18'
@@ -262,13 +262,13 @@
 --- strand
 --- '-'
 --- quality
---- 0
+--- 3
 --- cluster
 --- 1270783-1271103
 --- criteria_star
---- 0
+--- 1
 --- criteria_mirdup
---- 0
+--- 1
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__1270783-1270953-1.png
 --- length

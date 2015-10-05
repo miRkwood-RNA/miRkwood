@@ -9,7 +9,7 @@
   \   GCG    A\n||||| ||  ||||| |||||   ||||||||    |||    \nACUUG CC  UAAUU AGCUC
   \  UUGGUGUU    CGC    A\n     G  AG     U     UAA        UAGG   AAAU\n"
 --- reads_distribution
---- 2
+--- 1
 --- mirna_position
 --- 1231304-1231327
 --- alternatives
@@ -144,11 +144,11 @@
 --- strand
 --- +
 --- quality
---- 3
+--- 2
 --- cluster
 --- 1230544-1231691
 --- criteria_star
---- 1
+--- 0
 --- criteria_mirdup
 --- 0
 --- image

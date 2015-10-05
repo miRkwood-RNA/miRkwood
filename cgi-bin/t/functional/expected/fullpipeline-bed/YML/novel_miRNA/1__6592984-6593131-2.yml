@@ -11,7 +11,7 @@
   \  UUAGGCGAA AUAGA AUC CA CU UUG           UUUG GUAACG CU GUUGA           A\n     AAA
   \        -     A   C  U  G   -----------    -      C  C     GAUAAACAUAC\n"
 --- reads_distribution
---- 3
+--- 2
 --- mirna_position
 --- 6593108-6593131
 --- alternatives
@@ -258,11 +258,11 @@
 --- strand
 --- +
 --- quality
---- 4
+--- 3
 --- cluster
 --- 6592816-6593230
 --- criteria_star
---- 1
+--- 0
 --- criteria_mirdup
 --- 1
 --- image

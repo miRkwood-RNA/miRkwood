@@ -13,13 +13,13 @@
 --- reads_distribution
 --- 0
 --- mirna_position
---- 618451-618474
+--- ''
 --- alternatives
 --- {}
 --- criteria_nb_reads
 --- 1
 --- mirna_length
---- 24
+--- ''
 --- name
 --- '4'
 --- energy_optimal
@@ -27,7 +27,7 @@
 --- mfe
 --- '-12.02'
 --- mirna_sequence
---- CUAUAAAUUAAUAAUGUUGGGACC
+--- ''
 --- end_position
 --- 618526
 --- reads
@@ -222,7 +222,7 @@
 '220': '0'
 '221': '0'
 '222': '0'
-'223': 50
+'223': '50'
 '224': '49'
 '225': '48'
 '226': '47'
@@ -298,7 +298,7 @@
 '48': '225'
 '49': '224'
 '5': '264'
-'50': 223
+'50': '223'
 '51': '0'
 '52': '0'
 '53': '0'
@@ -357,7 +357,7 @@
 --- strand
 --- '-'
 --- quality
---- 3
+--- 2
 --- cluster
 --- 618204-618572
 --- criteria_star

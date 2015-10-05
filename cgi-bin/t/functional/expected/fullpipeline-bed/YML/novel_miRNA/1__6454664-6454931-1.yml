@@ -13,9 +13,9 @@
   UGA  UUAAUC      GU   ACC    UUUUAAG  UAACCAG UUGAGUUAAG UG                                                                           A\n
   \   A   UG      CCCAUA  UUU   CAG-       --       -          U  AGUUGGGUAUUUGGCAUUACUCAACUUUUAAAACUGAGUUUACUCAACUACUCAGUUUACUAAACUACUCAGUUA\n"
 --- reads_distribution
---- 0
+--- 1
 --- mirna_position
---- ''
+--- 6454885-6454908
 --- alternatives
 ---
 1__6454693-6454911-:
@@ -84,7 +84,7 @@
 --- criteria_nb_reads
 --- 1
 --- mirna_length
---- ''
+--- 24
 --- name
 --- '1'
 --- energy_optimal
@@ -92,7 +92,7 @@
 --- mfe
 --- '-23.95'
 --- mirna_sequence
---- ''
+--- UUAGAGAUUUUAGUUGGUUUAAUU
 --- end_position
 --- 6454931
 --- reads
@@ -470,11 +470,11 @@
 --- alignment
 --- 2
 --- quality
---- 2
+--- 4
 --- cluster
 --- 6454597-6455053
 --- criteria_star
---- 0
+--- 1
 --- criteria_mirdup
 --- 0
 --- image

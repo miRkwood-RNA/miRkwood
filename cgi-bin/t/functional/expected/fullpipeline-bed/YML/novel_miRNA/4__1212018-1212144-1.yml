@@ -10,9 +10,9 @@
   \   |||||||| ||||||||||      \nGUAACUU  AACUCAUCCUAGA UUCACUAUAUAU    UAUAUUCG AGAGGUGAGU
   \     U\n       UG             -            AUUC        U          UUUAGU\n"
 --- reads_distribution
---- 2
+--- 0
 --- mirna_position
---- 1212041-1212064
+--- ''
 --- alternatives
 ---
 4__1212039-1212124+:
@@ -45,7 +45,7 @@
 --- criteria_nb_reads
 --- 0
 --- mirna_length
---- 24
+--- ''
 --- name
 --- '4'
 --- energy_optimal
@@ -53,7 +53,7 @@
 --- mfe
 --- '-66.10'
 --- mirna_sequence
---- AAGUGGUAUAUAGAAUAUGAGCCU
+--- ''
 --- end_position
 --- 1212144
 --- reads
@@ -240,13 +240,13 @@
 --- strand
 --- +
 --- quality
---- 4
+--- 1
 --- cluster
 --- 1211927-1212231
 --- criteria_star
---- 1
+--- 0
 --- criteria_mirdup
---- 1
+--- 0
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__1212018-1212144-1.png
 --- length

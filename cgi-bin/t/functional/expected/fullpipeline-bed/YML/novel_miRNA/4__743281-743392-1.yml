@@ -10,7 +10,7 @@
   \    ||| ||||    \nCU   AUUUU  GAUC AAGGGAU UUAAA  CUUUUUGAU     GAU UUAG    U\n
   \ C--     U-    U       -     AU         UUUUU   U    UACU\n"
 --- reads_distribution
---- 2
+--- 1
 --- mirna_position
 --- 743281-743304
 --- alternatives
@@ -172,11 +172,11 @@
 --- strand
 --- '-'
 --- quality
---- 3
+--- 2
 --- cluster
 --- 743280-743550
 --- criteria_star
---- 1
+--- 0
 --- criteria_mirdup
 --- 0
 --- image
