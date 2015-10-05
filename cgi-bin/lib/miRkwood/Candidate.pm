@@ -753,46 +753,48 @@ sub compute_quality_from_reads {
         my $relative_end_mirna = 0;
 
         $relative_start_mirna = $start_mirna - $self->{'start_position'} + 1;
-        $relative_end_mirna = $end_mirna - $self->{'start_position'} + 1;
+        if ( $self->{'strand'} eq '-' ){
+            $relative_start_mirna = $self->{'length'} + $self->{'start_position'} - $end_mirna;  # vive les maths
+        }
+        $relative_end_mirna = $relative_start_mirna + $end_mirna - $start_mirna;
 
         $relative_pairing_start_mirna = $self->find_pairing_position( $relative_start_mirna );
         $relative_pairing_end_mirna = $self->find_pairing_position( $relative_end_mirna );
 
-        my $pairing_start_mirna = $relative_pairing_start_mirna + $self->{'start_position'} - 1;
-        my $pairing_end_mirna = $relative_pairing_end_mirna + $self->{'start_position'} - 1;
+        my $pairing_start_mirna = 0;
+        my $pairing_end_mirna = 0;
+        if ( $self->{'strand'} eq '+' ){
+            $pairing_start_mirna = $relative_pairing_start_mirna + $self->{'start_position'} - 1;
+            $pairing_end_mirna = $relative_pairing_end_mirna + $self->{'start_position'} - 1;
+        }
+        else {
+            $pairing_end_mirna = $self->{'length'} + $self->{'start_position'} - $relative_pairing_start_mirna;
+            $pairing_start_mirna = $relative_pairing_start_mirna + $pairing_end_mirna - $relative_pairing_end_mirna;
+        }
 
-        # Criteria nb of reads starting in a window [-3; +3] around the
-        # mirna start or ending in a window [-5; +5] around the "star" end
-        foreach my $read_position (keys %{$self->{'reads'}}){
+        foreach my $read_position (sort(keys %{$self->{'reads'}})){
             my ($start_read, $end_read) = split(/-/, $read_position);
+            # Criteria nb of reads starting in a window [-3; +3] around the
+            # mirna start or ending in a window [-5; +5] around the "star" end
             if ( ($start_read >= ($start_mirna - 3) and  $start_read <= ($start_mirna + 3)) ){
                 $reads_around_mirna += $self->{'reads'}{$read_position};
-                #~ debug("Start of read ($read_position) is around miRNA start ($start_mirna)", 1);
             }
             elsif ( $end_read >= ($pairing_start_mirna - 5) and $end_read <= ($pairing_start_mirna + 5) ) {
                 $reads_around_mirna += $self->{'reads'}{$read_position};
-                #~ debug("End of read ($read_position) is around pairing miRNA start ($pairing_start_mirna)", 1);                
             }
+
+            # Criteria presence of a star
+            if ( ($end_mirna <= $end_arm_1) || ($start_mirna >= $start_arm_2) ){  
+                my $overlap = miRkwood::Utils::size_overlap( $read_position, "$pairing_end_mirna-$pairing_start_mirna");
+                if ( $overlap > 12 && $self->{'reads'}{$read_position} > 1 ){
+                    $criteria_star = 1;
+                }
+            }
+
         }
         debug("             $reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . ' %)', 1);
         if ( $reads_around_mirna / $self->{'nb_reads'} >= 0.75 ){
             $criteria_reads_mirna = 1;
-        }
-
-        # Criteria presence of a star
-        # For now we only test if there is at least one read on the other arm
-        if ( $start_mirna <= $end_arm_1 ){  # mirna is on arm 1
-            if ( $count_arm_2 > 0 ){
-                $criteria_star = 1;
-            }
-        }
-        elsif ( $end_mirna >= $start_arm_2 ){ # mirna is on arm 2
-            if ( $count_arm_1 > 0 ){
-                $criteria_star = 1;
-            }
-        }
-        else {  # mirna is on the loop => not really a mirna then
-            debug( "             Candidate $self->{'identifier'} : the major read is in the loop", miRkwood->DEBUG() );
         }
 
     }
