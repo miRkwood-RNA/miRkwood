@@ -325,6 +325,9 @@ sub process_tests_for_candidate {
             debug( "              End of validate_mirna_with_mirdup on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
             $result->{'criteria_mirdup'} = $mirdup_on_mirna{'mirna'};
         }
+        foreach (keys%{$alignments}){
+            $alignments->{$_} = '';
+        }
     }
     else {
         $mirdup_results = $posteriori_tests->validate_alignments_with_mirdup( $alignments );
