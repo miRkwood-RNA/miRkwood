@@ -167,6 +167,9 @@ sub print_reads_clouds {
     $output .= "$structure\n";
 
     ### If there is a miRNA, print some [[[..]]] for the miRNA and the paired area (only for new candidates)
+    my $relative_pairing_mirna_start = 0;
+    my $relative_pairing_mirna_end = 0;
+
     if ( $mirna_position ne '' ){
         my @structure_stemloop = split ( //, $structure);
         my $mirna_start = miRkwood::Utils::get_element_of_split( $mirna_position, '-', 0);
@@ -186,11 +189,8 @@ sub print_reads_clouds {
                                       '.' => '.' };
             my ($end_arm_1, $start_arm_2) = miRkwood::Candidate::determine_precursor_arms( $precursor_start, $structure);
 
-            my $relative_pairing_mirna_start = $candidate->find_pairing_position( $relative_mirna_start );
-            my $relative_pairing_mirna_end = $candidate->find_pairing_position( $relative_mirna_end );
-
-            my $pairing_mirna_start = $relative_pairing_mirna_start + $precursor_start - 1;
-            my $pairing_mirna_end = $relative_pairing_mirna_end + $precursor_start - 1;
+            $relative_pairing_mirna_start = $candidate->find_pairing_position( $relative_mirna_start );
+            $relative_pairing_mirna_end = $candidate->find_pairing_position( $relative_mirna_end );
 
             my $relative_end_arm_1   = $end_arm_1 - $precursor_start + 1;
             my $relative_start_arm_2 = $start_arm_2 - $precursor_start + 1;
