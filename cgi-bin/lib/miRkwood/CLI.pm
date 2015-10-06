@@ -278,15 +278,16 @@ sub make_candidate_page {
 
         if ( ! defined( $candidate->{'mirbase_id'} ) ){
             # reads distribution
-            if ( $candidate->{'reads_distribution'} == 1 ){
-                $reads_score = "<li><b>Distribution of reads:</b> one island $star</li>";
-            }
-            elsif ( $candidate->{'reads_distribution'} >= 2 ){
+            if ( $candidate->{'criteria_reads_mirna'} == 1 && $candidate->{'criteria_star'} == 1 ){
                 $reads_score = "<li><b>Distribution of reads:</b> two islands $star$star</li>";
             }
-            else {
+            if ( ($candidate->{'criteria_reads_mirna'} + $candidate->{'criteria_star'}) == 1 ){
+                $reads_score = "<li><b>Distribution of reads:</b> one island $star</li>";
+            }
+            if ( $candidate->{'criteria_reads_mirna'} == 0 && $candidate->{'criteria_star'} == 0 ){
                 $reads_score = '<li><b>Distribution of reads:</b> random</li>';
             }
+
             # stability of duplex
             $read_duplex = '<li><b>Stability of the miRNA duplex (mirdup):</b> ';
             if ( $candidate->{'criteria_mirdup'} == 1 ){
