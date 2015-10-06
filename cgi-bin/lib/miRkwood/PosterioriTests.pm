@@ -64,11 +64,10 @@ sub test_alignment {
       File::Spec->catfile( $self->get_directory(), 'outB2ct_stemloop.ct' );
     miRkwood::Programs::convert_to_ct( $candidate_rnafold_stemploop_out,
         $candidate_ct_stemloop_file )
-      or die('Problem when converting to CT format');
+      or warn('Problem when converting to CT format. File outB2ct_stemloop.ct non created.\n');
 
     my $seqN = File::Spec->catfile( $self->get_directory(), 'seqWithN.txt' );
-    # Un-comment this to run RNAcomp on the sequence without N
-    if ( $mode eq 'smallRNAseq' ){
+    if ( $mode eq 'smallRNAseq' || ! -e $candidate_ct_stemloop_file ){
         my $seqWithT = $self->{'candidate'}{'sequence'};
         $seqWithT =~ s/U/T/g;
         open(my $FILE, '>', $seqN) or die "ERROR while creating $seqN: $!";
@@ -286,7 +285,7 @@ sub mask_CT_file {
                 if (   ( $i != 0 )
                     && ( $sequence->colonne5( $i - 1 ) == 0 )
                     && ( $element1 == $element5Copy )
-                  )    # ici le premier nombre non nul arpès une suite de 0 et
+                  )    # ici le premier nombre non nul après une suite de 0 et
                 {
                     $sequence->boucleterminale(1);
                     $sequence->nbnucleotides($nbnucleotides);

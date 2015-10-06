@@ -751,6 +751,8 @@ sub compute_quality_from_reads {
         my $relative_pairing_end_mirna = 0;
         my $relative_start_mirna = 0;
         my $relative_end_mirna = 0;
+        my $pairing_start_mirna = 0;
+        my $pairing_end_mirna = 0;
 
         $relative_start_mirna = $start_mirna - $self->{'start_position'} + 1;
         if ( $self->{'strand'} eq '-' ){
@@ -761,17 +763,16 @@ sub compute_quality_from_reads {
         $relative_pairing_start_mirna = $self->find_pairing_position( $relative_start_mirna );
         $relative_pairing_end_mirna = $self->find_pairing_position( $relative_end_mirna );
 
-        my $pairing_start_mirna = 0;
-        my $pairing_end_mirna = 0;
-        if ( $self->{'strand'} eq '+' ){
-            $pairing_start_mirna = $relative_pairing_start_mirna + $self->{'start_position'} - 1;
-            $pairing_end_mirna = $relative_pairing_end_mirna + $self->{'start_position'} - 1;
+        if ( $relative_pairing_start_mirna != -1 && $relative_pairing_end_mirna != -1 ){
+            if ( $self->{'strand'} eq '+' ){
+                $pairing_start_mirna = $relative_pairing_start_mirna + $self->{'start_position'} - 1;
+                $pairing_end_mirna = $relative_pairing_end_mirna + $self->{'start_position'} - 1;
+            }
+            else {
+                $pairing_end_mirna = $self->{'length'} + $self->{'start_position'} - $relative_pairing_start_mirna;
+                $pairing_start_mirna = $relative_pairing_start_mirna + $pairing_end_mirna - $relative_pairing_end_mirna;
+            }
         }
-        else {
-            $pairing_end_mirna = $self->{'length'} + $self->{'start_position'} - $relative_pairing_start_mirna;
-            $pairing_start_mirna = $relative_pairing_start_mirna + $pairing_end_mirna - $relative_pairing_end_mirna;
-        }
-
         foreach my $read_position (sort(keys %{$self->{'reads'}})){
             my ($start_read, $end_read) = split(/-/, $read_position);
             # Criteria nb of reads starting in a window [-3; +3] around the
@@ -831,13 +832,15 @@ sub store_attribute_ct {
     my $candidate = shift @args;
     my $directory = shift @args;
 
-    open (my $CT, '<', "$directory/outB2ct_stemloop.ct")
-        or die "Error while opening $directory/outB2ct_stemloop.ct : $!";
-    my @ct = <$CT>;
-    close $CT;
-    foreach ( @ct ){
-        if ( /(\d+)\s+[a-zA-Z]\s+\d+\s+\d+\s+(\d+)\s+\d+/ ){
-            $candidate->{'CT'}{ $1 } = $2;
+    if ( -e "$directory/outB2ct_stemloop.ct" ){
+        open (my $CT, '<', "$directory/outB2ct_stemloop.ct")
+            or warn "Error while opening $directory/outB2ct_stemloop.ct : $!\n";
+        my @ct = <$CT>;
+        close $CT;
+        foreach ( @ct ){
+            if ( /(\d+)\s+[a-zA-Z]\s+\d+\s+\d+\s+(\d+)\s+\d+/ ){
+                $candidate->{'CT'}{ $1 } = $2;
+            }
         }
     }
 
@@ -1027,6 +1030,10 @@ sub find_pairing_position {
 
     my $precursor_length = $self->{'end_position'} - $self->{'start_position'} + 1;
 
+    if ( ! defined( $self->{'CT'} ) ){
+        warn "No CT available.\n";
+        return -1;
+    }
     if ( $self->{'CT'}{$relative_position} ne '0' ){
         $pairing_position = $self->{'CT'}{$relative_position};
     }

@@ -188,45 +188,46 @@ sub print_reads_clouds {
                                       ')' => ']',
                                       '.' => '.' };
             my ($end_arm_1, $start_arm_2) = miRkwood::Candidate::determine_precursor_arms( $precursor_start, $structure);
+            my $relative_end_arm_1   = $end_arm_1 - $precursor_start + 1;
+            my $relative_start_arm_2 = $start_arm_2 - $precursor_start + 1;
 
             $relative_pairing_mirna_start = $candidate->find_pairing_position( $relative_mirna_start );
             $relative_pairing_mirna_end = $candidate->find_pairing_position( $relative_mirna_end );
 
-            my $relative_end_arm_1   = $end_arm_1 - $precursor_start + 1;
-            my $relative_start_arm_2 = $start_arm_2 - $precursor_start + 1;
-
-            if ( $relative_mirna_end <= $relative_end_arm_1 || $relative_mirna_start >= $relative_start_arm_2 ){
-                if ( $relative_mirna_end <= $relative_pairing_mirna_end ){  # mirna on the first arm
-                    for (my $i = 0; $i < $relative_mirna_start - 1; $i++){
-                        $output .= ' ';
+            if ( $relative_pairing_mirna_start != -1 && $relative_pairing_mirna_end != -1 ){
+                if ( $relative_mirna_end <= $relative_end_arm_1 || $relative_mirna_start >= $relative_start_arm_2 ){
+                    if ( $relative_mirna_end <= $relative_pairing_mirna_end ){  # mirna on the first arm
+                        for (my $i = 0; $i < $relative_mirna_start - 1; $i++){
+                            $output .= ' ';
+                        }
+                        for (my $i = 0; $i < $relative_mirna_end - $relative_mirna_start + 1; $i++){
+                            $output .= $corresponding_bracket->{ $structure_stemloop[$relative_mirna_start + $i - 1] };
+                        }
+                        for (my $i = 0; $i < $relative_pairing_mirna_end - $relative_mirna_end - 1; $i++){
+                            $output .= ' ';
+                        }
+                        for (my $i = 0; $i < $relative_pairing_mirna_start - $relative_pairing_mirna_end + 1; $i++){
+                            $output .= $corresponding_bracket->{ $structure_stemloop[$relative_pairing_mirna_end + $i - 1] };
+                        }
+                        $output .= "\n";
                     }
-                    for (my $i = 0; $i < $relative_mirna_end - $relative_mirna_start + 1; $i++){
-                        $output .= $corresponding_bracket->{ $structure_stemloop[$relative_mirna_start + $i - 1] };
+                    if ( $relative_mirna_start >= $relative_pairing_mirna_start ){  # mirna on second arm.
+                        for (my $i = 0; $i < $relative_pairing_mirna_end - 1; $i++){
+                            $output .= ' ';
+                        }
+                        for (my $i = 0; $i < $relative_pairing_mirna_start - $relative_pairing_mirna_end + 1; $i++){
+                            $output .= $corresponding_bracket->{ $structure_stemloop[$relative_pairing_mirna_end + $i - 1] };
+                        }
+                        for (my $i = 0; $i < $relative_mirna_start - $relative_pairing_mirna_start - 1; $i++){
+                            $output .= ' ';
+                        }
+                        for (my $i = 0; $i < $relative_mirna_end - $relative_mirna_start + 1; $i++){
+                            $output .= $corresponding_bracket->{ $structure_stemloop[$relative_mirna_start + $i - 1] };
+                        }
+                        $output .= "\n";
                     }
-                    for (my $i = 0; $i < $relative_pairing_mirna_end - $relative_mirna_end - 1; $i++){
-                        $output .= ' ';
-                    }
-                    for (my $i = 0; $i < $relative_pairing_mirna_start - $relative_pairing_mirna_end + 1; $i++){
-                        $output .= $corresponding_bracket->{ $structure_stemloop[$relative_pairing_mirna_end + $i - 1] };
-                    }
-                    $output .= "\n";
+                    # don't do anything if the miRNA matches (even partially) the loop
                 }
-                if ( $relative_mirna_start >= $relative_pairing_mirna_start ){  # mirna on second arm.
-                    for (my $i = 0; $i < $relative_pairing_mirna_end - 1; $i++){
-                        $output .= ' ';
-                    }
-                    for (my $i = 0; $i < $relative_pairing_mirna_start - $relative_pairing_mirna_end + 1; $i++){
-                        $output .= $corresponding_bracket->{ $structure_stemloop[$relative_pairing_mirna_end + $i - 1] };
-                    }
-                    for (my $i = 0; $i < $relative_mirna_start - $relative_pairing_mirna_start - 1; $i++){
-                        $output .= ' ';
-                    }
-                    for (my $i = 0; $i < $relative_mirna_end - $relative_mirna_start + 1; $i++){
-                        $output .= $corresponding_bracket->{ $structure_stemloop[$relative_mirna_start + $i - 1] };
-                    }
-                    $output .= "\n";
-                }
-                # don't do anything if the miRNA matches (even partially) the loop
             }
         }
     }
