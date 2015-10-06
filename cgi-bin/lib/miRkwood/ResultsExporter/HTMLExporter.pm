@@ -104,7 +104,7 @@ sub export_candidate {
             if ( ${$candidate}{'criteria_nb_reads'} ){
                 $contents = "<font color='#FF00FF'>${$candidate}{$header}</font>";
             }
-            $contents = "<td $onmouseover $onmouseout onclick=\"location.href='$reads_file'\">$contents</td>";
+            $contents = "<td $onmouseover_with_cursor $onmouseout onclick=\"location.href='$reads_file'\">$contents</td>";
         }
         else {
             $contents = "<td $onmouseover $onmouseout>$contents</td>";
