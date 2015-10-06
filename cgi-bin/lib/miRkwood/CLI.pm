@@ -477,6 +477,9 @@ a.nodecoration
 { 
     text-decoration:none;
     color: black;
+    display:block;
+    width:100%; 
+    height: 100%;
 }
 END_TXT
     return ($css);
