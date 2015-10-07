@@ -60,7 +60,7 @@ sub export_candidate {
             $contents .= '</font></center></td>';
         }
         elsif ($header eq 'alignment'){
-            $contents = '<td ';
+            $contents = "<td $onmouseout";
             my $alignment_file = '';
             if ( $cfg->param('job.pipeline') eq 'abinitio' ){
                 $alignment_file = File::Spec->catfile( File::Spec->updir(),
@@ -73,19 +73,16 @@ sub export_candidate {
                                                          miRkwood::Paths::get_alignments_dir_name(),
                                                          ${$candidate}{'identifier'}. '_aln.txt' );
             }
-            my $alignment_link = '';
             if ( ${$candidate}{'alignment'} > 0){
-                $alignment_link = "onclick=\"location.href='$alignment_file'\"";
-                $contents .= $onmouseover_with_cursor;
+                $contents .= "$onmouseover_with_cursor><a href='$alignment_file' class='nodecoration'><center><font color='#008000'>";
+                for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
+                    $contents .= '&#x2713;';
+                }
+                $contents .= '</font></center></a></td>';
             }
             else {
-                $contents .= $onmouseover;
+                $contents .= "$onmouseover></td>";
             }
-            $contents .= " $onmouseout $alignment_link><center><font color='#008000'>";
-            for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
-                $contents .= '&#x2713;';
-            }
-            $contents .= '</font></center></td>';
         }
         elsif ($header eq 'mfei'){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
