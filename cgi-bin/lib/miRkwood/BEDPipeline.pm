@@ -305,7 +305,7 @@ sub run_pipeline_on_sequences_per_chr {
 sub compute_candidates_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
-    my $distance_min = 10_000;
+    my $distance_min = 2_000;
 
     my $sequence_identifier = 0;
 
