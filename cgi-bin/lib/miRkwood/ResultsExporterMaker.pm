@@ -60,11 +60,6 @@ sub make_opendocument_results_exporter {
     return miRkwood::ResultsExporter::OpenDocumentExporter->new( $mirna_type );
 }
 
-sub make_pseudoxml_results_exporter {
-    require miRkwood::ResultsExporter::PseudoXMLExporter;
-    return miRkwood::ResultsExporter::PseudoXMLExporter->new();
-}
-
 sub make_html_results_exporter {
     my ($self, @args) = @_;
     my $pipeline_type = shift @args;

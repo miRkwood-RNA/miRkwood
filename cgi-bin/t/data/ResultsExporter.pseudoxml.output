@@ -1,6 +1,0 @@
-<results id='all'>
-<Sequence name='contig15750' position='34-195' length='162' strand='+' quality='2' shuffles='0.125000' alignment='1' image='/mirkwood/results/jobSep301132162014/workspace/1/1/image.png' structure_stemloop='((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))' sequence='gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc' identifier='1-1'></Sequence>
-</results>
-<results id='all2'>
-<Sequence name='contig15750' position='34-195' length='162' strand='+' quality='2' shuffles='0.125000' alignment='1' image='/mirkwood/results/jobSep301132162014/workspace/1/1/image.png' structure_stemloop='((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))))))))))).))))))..)).))))))' sequence='gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuucaucauguuagaucuucuc' identifier='1-1'></Sequence>
-</results>
