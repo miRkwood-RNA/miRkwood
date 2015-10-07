@@ -22,7 +22,7 @@
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#FF00FF">-1.00</font></td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-37.10</td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">0.125000</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" onclick="location.href='../alignments/1-1_aln.txt'"><center><font color='#008000'>&#x2713;</font></center></td>
+<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../alignments/1-1_aln.txt' class='nodecoration'><center><font color='#008000'>&#x2713;</font></center></a></td>
 
 </tr>
 </tbody>
