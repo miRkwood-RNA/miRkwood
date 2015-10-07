@@ -75,7 +75,7 @@ my $filter_multimapped = $cgi->param('filter_multimapped');
 my $mfei       = $cgi->param('mfei');
 my $randfold   = $cgi->param('randfold');
 my $align      = $cgi->param('align');
-my $varna = 1;
+my $varna = 0;
 
 if ( $filter_tRNA_rRNA   ) { $filter_tRNA_rRNA   = 1 } else { $filter_tRNA_rRNA   = 0 }
 if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }

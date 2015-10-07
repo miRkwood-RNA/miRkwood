@@ -176,10 +176,10 @@ sub convert_basic_to_pseudoXML {
 
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $type eq 'known_miRNA' ){  # known miRNAs for pipeline smallRNAseq
-            @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality nb_reads identifier image criteria_nb_reads};
+            @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality nb_reads identifier criteria_nb_reads};
         }
         else {  # new miRNAs for pipeline smallRNAseq
-            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'reads_distribution', 'mfei', 'nb_reads', @optional_fields, 'identifier', 'image', 'criteria_nb_reads', 'orphan_hairpin' );
+            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'reads_distribution', 'mfei', 'nb_reads', @optional_fields, 'identifier', 'criteria_nb_reads', 'orphan_hairpin' );
         }
     }
     else {  # pipeline ab initio
