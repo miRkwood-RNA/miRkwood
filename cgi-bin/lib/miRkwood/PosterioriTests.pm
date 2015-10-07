@@ -64,7 +64,7 @@ sub test_alignment {
       File::Spec->catfile( $self->get_directory(), 'outB2ct_stemloop.ct' );
     miRkwood::Programs::convert_to_ct( $candidate_rnafold_stemploop_out,
         $candidate_ct_stemloop_file )
-      or warn('Problem when converting to CT format. File outB2ct_stemloop.ct non created.\n');
+      or warn("Problem when converting to CT format. File outB2ct_stemloop.ct non created.\n");
 
     my $seqN = File::Spec->catfile( $self->get_directory(), 'seqWithN.txt' );
     if ( $mode eq 'smallRNAseq' || ! -e $candidate_ct_stemloop_file ){
