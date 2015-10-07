@@ -25,8 +25,7 @@ my $help = 0;
 my $job_title = 0;
 my $output_folder = '';
 my $genome_file;
-my $varna = 1;
-my $no_varna = 0;
+my $varna = 0;
 my $filter_tRNA_rRNA = 1;
 my $no_filter_tRNA_rRNA = 0;
 my $filter_CDS = 1;
@@ -51,7 +50,7 @@ GetOptions(
     'no-filter-CDS'         => \$no_filter_CDS,
     'no-filter-t-r-snoRNA'  => \$no_filter_tRNA_rRNA,
     'no-filter-multimapped' => \$no_filter_multimapped,
-    'no-varna'              => \$no_varna,
+    'varna'                 => \$varna,
     'help|?'                => \$help,
     'force'                 => \$force,
     man                     => \$man
@@ -95,11 +94,6 @@ if( my @files = glob("$output_folder/*") ) {
 
 my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($output_folder) );
 
-
-# Image
-if ( $no_varna ){
-    $varna = 0;
-}
 
 # Check input files
 my $bed_file = $ARGV[0];
@@ -196,9 +190,9 @@ Default: if an annotation GFF file is available rRNA, tRNA, snoRNA are filtered 
 Don't filter out multimapped reads.
 Default: reads that map at more than 5 positions are filtered out.
 
-=item B<--no-varna>
+=item B<--varna>
 
-Disable the structure generation using Varna.
+Allow the structure generation using Varna.
 
 =item B<-help>
 

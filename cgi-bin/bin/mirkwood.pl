@@ -22,7 +22,7 @@ my $shuffles     = 0;
 my $mfei         = 0;
 my $align        = 0;
 my $species_mask = '';
-my $no_varna     = 0;
+my $varna        = 0;
 my $no_process   = 0;
 my $mask         = 0;
 my $trna         = 0;
@@ -35,7 +35,7 @@ GetOptions(
     'filter-mfei'    => \$mfei,
     align            => \$align,
     'both-strands'   => \$both_strands,
-    'no-varna'       => \$no_varna,
+    'varna'          => \$varna,
     'no-process'     => \$no_process,
     'species-mask=s' => \$species_mask,
     'filter-trna'    => \$trna,
@@ -61,11 +61,6 @@ if( my @files = glob("$output_folder/*") ) {
 
 if ($species_mask) {
     $mask = 1;
-}
-
-my $varna = 1;
-if ($no_varna) {
-    $varna = 0;
 }
 
 my $fasta_file = $ARGV[0];
@@ -143,9 +138,9 @@ Filter out tRNAs (using tRNAscan-SE).
 
 Flag conserved mature miRNAs (alignment with miRBase + miRdup).
 
-=item B<--no-varna>
+=item B<--varna>
 
-Disable the structure generation using Varna.
+Allow the structure generation using Varna.
 
 =item B<-help>
 
