@@ -53,7 +53,7 @@ sub export_candidate {
             $contents .= '</font></center></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = "<td $onmouseover_with_cursor $onmouseout onclick=\"location.href='$reads_file'\"><center><font color='#FF8000'>";
+            $contents = "<td $onmouseover $onmouseout><center><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
                 $contents .= '&#x2605;';
             }
@@ -104,7 +104,7 @@ sub export_candidate {
             if ( ${$candidate}{'criteria_nb_reads'} ){
                 $contents = "<font color='#FF00FF'>${$candidate}{$header}</font>";
             }
-            $contents = "<td $onmouseover_with_cursor $onmouseout onclick=\"location.href='$reads_file'\">$contents</td>";
+            $contents = "<td $onmouseover_with_cursor $onmouseout><a href='$reads_file' class='nodecoration'>$contents</a></td>";
         }
         else {
             $contents = "<td $onmouseover $onmouseout>$contents</td>";
