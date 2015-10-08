@@ -99,6 +99,20 @@ my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($out
 my $bed_file = $ARGV[0];
 ( -e $bed_file ) or die("$bed_file is not a file");
 
+open (my $BED, '<', $bed_file) or die "Error when opening BED file: $!";
+my $previous_position = '';
+while ( <$BED> ){
+    my @fields = split( /\t/ );
+    if ( $previous_position ne '' && $fields[1] < $previous_position ){
+        die 'Your BED file is not valid: reads are not sorted.';
+    }
+    $previous_position = $fields[1];
+    if ( ! miRkwood::Utils::is_correct_BED_line($_) ){
+        die 'Your BED file is not valid. Make sure you correctly used our provided script to convert BAM into BED file.\n';
+    }
+}
+close $BED;
+
 ( -e $genome_file ) or die("Genome file $genome_file is not a file");
 if ( $genome_file =~ /([^.\/]+)[.](fa|fasta)/ ){
     $species = $1;
@@ -108,6 +122,7 @@ my $basename_bed = '';
 if ( $bed_file =~ /.*\/([^\/.]+)[.]bed/ ){
     $basename_bed = $1;
 }
+
 
 ##### Create config file
 my $run_options_file = miRkwood::Paths->get_job_config_path($abs_output_folder);
