@@ -91,7 +91,14 @@ my $bedFile = '';
 $bedFile   = $cgi->upload('bedFile') or miRkwood::WebTemplate::web_die("Error when getting BED file: $!");
 my $localBED = $absolute_job_dir . '/' . $cgi->param('bedFile');
 open (my $BED, '>', $localBED) or miRkwood::WebTemplate::web_die("Error when creating BED file: $!");
+my $previous_position = '';
 while ( <$bedFile> ){
+    my @fields = split( /\t/ );
+    if ( $fields[1] < $previous_position ){
+        print $cgi->redirect($error_url . '?type=noSortedBED');
+        exit;
+    }
+    $previous_position = $fields[1];
     print $BED $_;
     if ( ! miRkwood::Utils::is_correct_BED_line($_) ){
         print $cgi->redirect($error_url . '?type=noBED');

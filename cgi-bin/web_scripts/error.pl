@@ -43,6 +43,15 @@ elsif ( $errorType eq 'tooLongSequence' ){
     
 END_MSG
 }
+elsif ( $errorType eq 'noSortedBED' ){
+    $errorMessage = <<"END_MSG";
+    <p>An error occured when processing your data:</p>
+    <p>Your BED file is not valid: reads are not sorted.</p>
+    <br /><br />    
+    
+    
+END_MSG
+}
 elsif ( $errorType eq 'noBED' ){
     $errorMessage = <<"END_MSG";
     <p>An error occured when processing your data:</p>
