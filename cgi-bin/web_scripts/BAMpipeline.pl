@@ -94,7 +94,7 @@ open (my $BED, '>', $localBED) or miRkwood::WebTemplate::web_die("Error when cre
 my $previous_position = '';
 while ( <$bedFile> ){
     my @fields = split( /\t/ );
-    if ( $fields[1] < $previous_position ){
+    if ( $previous_position ne '' && $fields[1] < $previous_position ){
         print $cgi->redirect($error_url . '?type=noSortedBED');
         exit;
     }
