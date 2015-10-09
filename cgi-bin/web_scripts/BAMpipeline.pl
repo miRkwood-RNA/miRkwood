@@ -92,12 +92,15 @@ $bedFile   = $cgi->upload('bedFile') or miRkwood::WebTemplate::web_die("Error wh
 my $localBED = $absolute_job_dir . '/' . $cgi->param('bedFile');
 open (my $BED, '>', $localBED) or miRkwood::WebTemplate::web_die("Error when creating BED file: $!");
 my $previous_position = '';
+my $previous_chromosome = '';
 while ( <$bedFile> ){
     my @fields = split( /\t/ );
-    if ( $previous_position ne '' && $fields[1] < $previous_position ){
+    if ( $previous_chromosome ne '' && $fields[0] eq $previous_chromosome 
+         && $previous_position ne '' && $fields[1] < $previous_position ){
         print $cgi->redirect($error_url . '?type=noSortedBED');
         exit;
     }
+    $previous_chromosome = $fields[0];
     $previous_position = $fields[1];
     print $BED $_;
     if ( ! miRkwood::Utils::is_correct_BED_line($_) ){

@@ -101,11 +101,14 @@ my $bed_file = $ARGV[0];
 
 open (my $BED, '<', $bed_file) or die "Error when opening BED file: $!";
 my $previous_position = '';
+my $previous_chromosome = '';
 while ( <$BED> ){
     my @fields = split( /\t/ );
-    if ( $previous_position ne '' && $fields[1] < $previous_position ){
+    if ( $previous_chromosome ne '' && $fields[0] eq $previous_chromosome 
+         && $previous_position ne '' && $fields[1] < $previous_position ){
         die 'Your BED file is not valid: reads are not sorted.';
     }
+    $previous_chromosome = $fields[0];
     $previous_position = $fields[1];
     if ( ! miRkwood::Utils::is_correct_BED_line($_) ){
         die 'Your BED file is not valid. Make sure you correctly used our provided script to convert BAM into BED file.\n';
