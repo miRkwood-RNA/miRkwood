@@ -327,11 +327,9 @@ sub add_candidate {
     $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => 'Basic');
     $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
 
-    my $subtext = qw{};
-    if(${$candidate}{'structure_stemloop'} ne ${$candidate}{'structure_optimal'}){
-        $subtext .= qw{}
-    } else {
-        $subtext.= 'This stem-loop structure is the MFE structure'
+    my $subtext = '';
+    if(${$candidate}{'structure_stemloop'} eq ${$candidate}{'structure_optimal'}){
+        $subtext = 'This stem-loop structure is the MFE structure'
     }
     my $para1 = $context->append_element(
     odf_create_paragraph(
