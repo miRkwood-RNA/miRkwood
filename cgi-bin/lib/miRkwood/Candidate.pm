@@ -1092,5 +1092,30 @@ sub tag_orphan_hairpins{
     return $self;
 }
 
+=method include_alignments_in_html
+
+=cut
+sub include_alignments_in_html {
+    my ($self, @args) = @_;
+    my $cfg = miRkwood->CONFIG();
+    my $alignment_file = File::Spec->catfile(
+                miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
+                $self->{'identifier'}.'_aln.txt');
+    my $result = '<pre>';
+    open(my $IN, '<', $alignment_file) or return '';
+    my $line;
+    while ( $line = <$IN> ){
+        chomp $line;
+        if ( $line =~ /miRBase.*: ([^ ]*)/ ){
+            my $mirbase_link = '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a>';
+            $line =~ s/$1/$mirbase_link/;
+        }
+        $result .= "$line\n";
+    }
+    close $IN;    
+    $result .= '</pre>';
+    return $result;
+}
+
 
 1;

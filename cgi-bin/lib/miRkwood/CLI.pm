@@ -329,10 +329,8 @@ END_TXT
                                                       File::Spec->updir(),
                                                       miRkwood::Paths::get_alignments_dir_name(),
                                                       $candidate->{'identifier'}. '_aln.txt' );
-            my $absolute_alignment_path = File::Spec->catfile(
-                miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
-                $candidate->{'identifier'}.'_aln.txt');
-            $alignments_html .= include_alignments_in_html( $absolute_alignment_path );
+
+            $alignments_html .= $candidate->include_alignments_in_html();
         }
         $alignments_html .= '</li>';
     }
@@ -397,28 +395,6 @@ sub include_read_cloud_in_html {
         }
     }
     close $IN;
-    $result .= '</pre>';
-    return $result;
-}
-
-=method include_alignments_in_html
-
-=cut
-sub include_alignments_in_html {
-    my @args = @_;
-    my $alignment_file = shift @args;
-    my $result = '<pre>';
-    open(my $IN, '<', $alignment_file) or return '';
-    my $line;
-    while ( $line = <$IN> ){
-        chomp $line;
-        if ( $line =~ /miRBase.*: ([^ ]*)/ ){
-            my $mirbase_link = '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a>';
-            $line =~ s/$1/$mirbase_link/;
-        }
-        $result .= "$line\n";
-    }
-    close $IN;    
     $result .= '</pre>';
     return $result;
 }
