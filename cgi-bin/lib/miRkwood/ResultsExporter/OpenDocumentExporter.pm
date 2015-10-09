@@ -427,7 +427,7 @@ sub add_ODF_alignments {
         return 0;
     }
     my %alignments     = %{ $candidate{'alignments'} };
-    my %mirdup_results = {};
+    my %mirdup_results = ();
     if ( defined( $candidate{'mirdup_validation'} ) ){
         %mirdup_results = %{ $candidate{'mirdup_validation'} };
     }
