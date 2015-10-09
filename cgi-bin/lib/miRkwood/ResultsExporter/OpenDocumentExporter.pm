@@ -257,8 +257,6 @@ sub generate_report {
     my ( $self, @args ) = @_;
     my %results = %{$self->{'results'}};
 
-    my $images_dir = miRkwood::Paths::create_folder($self->get_images_dir() );
-
     my $doc = $self->{'doc'};
 
     # Main context access
@@ -348,9 +346,9 @@ sub add_candidate {
 
     # Copying the image
 
-    my $new_img_path = $self->copy_image($candidate, $key);
+    my $img_path = ${$candidate}{'image'};
     my ( $lien_image, $taille_image ) =
-      $self->{doc}->add_image_file($new_img_path);
+      $self->{doc}->add_image_file($img_path);
 
     my $factor = 0.5;
     my @width = split( 'pt', shift $taille_image);
@@ -375,19 +373,6 @@ sub add_candidate {
     # Section Mirbase alignments
     $self->add_ODF_alignments($context, $candidate);
     return;
-}
-
-sub copy_image{
-    my ( $self, @args ) = @_;
-    my $candidate = shift @args;
-    my $key = shift @args;
-    my $images_dir = $self->get_images_dir();
-    my $img_path = ${$candidate}{'image'};
-    my $img_full_path = $img_path;
-    my $new_img_path = File::Spec->catfile($images_dir, "$key.png");
-    copy($img_full_path, $new_img_path)
-        or die "Copy of $img_full_path to $images_dir failed: $!";
-    return $new_img_path;
 }
 
 =method add_thermodynamics_section
