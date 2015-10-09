@@ -372,7 +372,9 @@ sub add_candidate {
     $self->add_thermodynamics_section($context, $candidate);
 
     # Section Mirbase alignments
-    $self->add_ODF_alignments($context, $candidate);
+    if ( ! defined( ${$candidate}{'mirbase_id'} ) ){
+        $self->add_ODF_alignments($context, $candidate);
+    }
     return;
 }
 
