@@ -345,27 +345,28 @@ sub add_candidate {
 
 
     # Copying the image
+    if ( defined(${$candidate}{'image'}) && ${$candidate}{'image'} ne '' ){
+        my $img_path = ${$candidate}{'image'};
+        my ( $lien_image, $taille_image ) =
+          $self->{doc}->add_image_file($img_path);
 
-    my $img_path = ${$candidate}{'image'};
-    my ( $lien_image, $taille_image ) =
-      $self->{doc}->add_image_file($img_path);
+        my $factor = 0.5;
+        my @width = split( 'pt', shift $taille_image);
+        my $width = ($width[0] * $factor) . 'pt';
+        my @height = split( 'pt', shift $taille_image);
+        my $height = ($height[0] * $factor) . 'pt';
+        my $new_size = [$width, $height];
 
-    my $factor = 0.5;
-    my @width = split( 'pt', shift $taille_image);
-    my $width = ($width[0] * $factor) . 'pt';
-    my @height = split( 'pt', shift $taille_image);
-    my $height = ($height[0] * $factor) . 'pt';
-    my $new_size = [$width, $height];
-
-    $para->append_element(
-        odf_frame->create(
-            image => $lien_image,
-            name  => "Structure_${$candidate}{'name'}_${$candidate}{'position'}",
-            title => 'Structure',
-            description => 'Structure',
-            size => $new_size,
-        )
-    );
+        $para->append_element(
+            odf_frame->create(
+                image => $lien_image,
+                name  => "Structure_${$candidate}{'name'}_${$candidate}{'position'}",
+                title => 'Structure',
+                description => 'Structure',
+                size => $new_size,
+            )
+        );
+    }
 
    # Section Thermodynamics structure
     $self->add_thermodynamics_section($context, $candidate);
