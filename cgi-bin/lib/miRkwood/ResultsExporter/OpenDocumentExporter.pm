@@ -301,6 +301,11 @@ sub add_candidate {
     my $context   = shift @args;
     my $candidate = shift @args;
     my $key = shift @args;
+    my $jobPath = miRkwood::Results->jobId_to_jobPath($self->get_identifier());
+    my $cfg_path = miRkwood::Paths->get_job_config_path($jobPath);
+    miRkwood->CONFIG_FILE($cfg_path);
+    my $cfg = miRkwood->CONFIG();
+
     my ( $start, $end ) = (${$candidate}{'start_position'}, ${$candidate}{'end_position'} );
     $context->append_element(
         odf_create_heading(
@@ -372,7 +377,7 @@ sub add_candidate {
     $self->add_thermodynamics_section($context, $candidate);
 
     # Section Mirbase alignments
-    if ( ! defined( ${$candidate}{'mirbase_id'} ) ){
+    if ( $cfg->param('options.align') && ! defined( ${$candidate}{'mirbase_id'} ) ){
         $self->add_ODF_alignments($context, $candidate);
     }
     return;
