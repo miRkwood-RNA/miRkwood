@@ -189,7 +189,7 @@ END_TXT
 
         if ( $candidate->{'alignment'} ) {
             $alignmentHTML .=
-              $candidate->make_alignments_HTML();
+              $candidate->include_alignments_in_html();
         }
         else {
             $alignmentHTML .= 'No alignment has been found.';
