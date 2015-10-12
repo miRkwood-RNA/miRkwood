@@ -1106,6 +1106,14 @@ sub include_alignments_in_html {
     my $line;
     while ( $line = <$IN> ){
         chomp $line;
+        if ( $line =~ /Prediction : ([\d]+)-([\d]+)/ ){
+            $line = "<b style='font-size:1.2em;'>$line</b>\n\n";
+            $line .= miRkwood::Utils::make_hairpin_with_mature( $self->{'hairpin'},
+                                                                $1, $2,
+                                                                length $self->{'sequence'},
+                                                                'html');
+            $line .= "\n<b>Alignments</b>\n";
+        }
         if ( $line =~ /miRBase.*: ([^ ]*)/ ){
             my $mirbase_link = '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a>';
             $line =~ s/$1/$mirbase_link/;
