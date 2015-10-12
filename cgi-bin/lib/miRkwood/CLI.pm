@@ -330,7 +330,7 @@ END_TXT
                                                       miRkwood::Paths::get_alignments_dir_name(),
                                                       $candidate->{'identifier'}. '_aln.txt' );
 
-            $alignments_html .= $candidate->include_alignments_in_html();
+            $alignments_html .= '<br />' . $candidate->include_alignments_in_html();
         }
         $alignments_html .= '</li>';
     }
@@ -385,7 +385,7 @@ END_TXT
 sub include_read_cloud_in_html {
     my @args = @_;
     my $read_cloud_file = shift @args;
-    my $result = '<pre>';
+    my $result = '<pre style="font-size:0.8em;">';
     open(my $IN, '<', $read_cloud_file) or return '';
     my $line = <$IN>;
     while ( <$IN> ){
