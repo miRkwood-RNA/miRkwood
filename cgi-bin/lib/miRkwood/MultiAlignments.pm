@@ -78,6 +78,7 @@ sub writeInFile{
     my $aln_dir = miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') );
     my $output = '';
 
+    $output .= "Prediction : $posBeginCdt-$posEndCdt\n\n";
     for(my $i=0; $i<@tabAlgtMult; $i++){
 		$output .= "\t";
 		if ($i==0){
@@ -134,6 +135,7 @@ sub writeInFile{
     for(my $cpt=1; $cpt<@tabName; $cpt++){
         $output .= 'miRBase '.$cpt.': '.$tabName[$cpt]."\n";
     }
+    $output .= "\n\n";
     open(my $FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
     print $FILE $output;
     close($FILE);
