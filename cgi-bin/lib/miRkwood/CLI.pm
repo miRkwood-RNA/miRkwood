@@ -86,8 +86,13 @@ sub make_html_from_results {
 
     my %results = %{$results};
     my ($css) = get_page_css();
-    my $page = '<h2>Overview of results</h2>';
+    my $page = "<h2>Overview of results</h2>\n";
+
+    my $nb_results = scalar( keys%results );
+    $page .= "<h3>$nb_results candidates found.</h3>\n";
+
     $page .= make_all_exports( \%results, $abs_output_folder, $pieces_folder, $pipeline_type, $mirna_type );
+    $page .= '<br />';
 
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize('', \%results);

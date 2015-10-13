@@ -123,7 +123,6 @@ sub perform_export{
     my $nb_results = scalar( @keys );
 
     my $output = '';
-    $output .= "<h3>$nb_results candidates found.</h3>\n";
 
     $output .= "<table>\n<tbody>";
 
