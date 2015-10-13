@@ -342,7 +342,7 @@ END_TXT
 
     ### make page
     my $html = <<"END_TXT";
-<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) $arrow</a></h2>
+<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) [$arrow]</a></h2>
 
     <ul>
         <li>
