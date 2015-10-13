@@ -30,6 +30,8 @@ my $filter_tRNA_rRNA = 1;
 my $no_filter_tRNA_rRNA = 0;
 my $filter_CDS = 1;
 my $no_filter_CDS = 0;
+my $filter_bad_hairpins = 1;
+my $no_filter_bad_hairpins = 0;
 my $filter_multimapped = 1;
 my $no_filter_multimapped = 0;
 my $randfold;
@@ -42,18 +44,19 @@ my $force = 0;
 
 ##### Get options
 GetOptions(
-    'genome=s'              => \$genome_file,
-    'output=s'              => \$output_folder,
-    'shuffles'              => \$randfold,
-    'align'                 => \$align,
-    'no-filter-mfei'        => \$no_mfei,
-    'no-filter-CDS'         => \$no_filter_CDS,
-    'no-filter-t-r-snoRNA'  => \$no_filter_tRNA_rRNA,
-    'no-filter-multimapped' => \$no_filter_multimapped,
-    'varna'                 => \$varna,
-    'help|?'                => \$help,
-    'force'                 => \$force,
-    man                     => \$man
+    'genome=s'               => \$genome_file,
+    'output=s'               => \$output_folder,
+    'shuffles'               => \$randfold,
+    'align'                  => \$align,
+    'no-filter-mfei'         => \$no_mfei,
+    'no-filter-CDS'          => \$no_filter_CDS,
+    'no-filter-bad-hairpins' => \$no_filter_bad_hairpins,
+    'no-filter-t-r-snoRNA'   => \$no_filter_tRNA_rRNA,
+    'no-filter-multimapped'  => \$no_filter_multimapped,
+    'varna'                  => \$varna,
+    'help|?'                 => \$help,
+    'force'                  => \$force,
+    man                      => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
@@ -69,6 +72,9 @@ if ( $no_filter_tRNA_rRNA ){
 }
 if ( $no_filter_CDS ){
     $filter_CDS = 0;
+}
+if ( $no_filter_bad_hairpins ){
+    $filter_bad_hairpins = 0;
 }
 if ( $no_filter_multimapped ){
     $filter_multimapped = 0;
@@ -138,6 +144,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $align,
                                          $species_db,
                                          $filter_CDS,
+                                         $filter_bad_hairpins,
                                          $filter_tRNA_rRNA,
                                          $filter_multimapped,
                                          $mfei,

@@ -225,7 +225,21 @@ Write the run options for Web BAM pipeline to the job configuration file.
 =cut
 
 sub write_config_for_bam_pipeline {
-    my ( $run_options_file, $job_title, $species, $mode, $bed, $align, $species_db, $filter_CDS, $filter_tRNA_rRNA, $filter_multimapped, $mfei, $randfold, $varna, $job_dir) = @_;
+    my ( $run_options_file,
+         $job_title,
+         $species,
+         $mode,
+         $bed,
+         $align,
+         $species_db,
+         $filter_CDS,
+         $filter_bad_hairpins,
+         $filter_tRNA_rRNA,
+         $filter_multimapped,
+         $mfei,
+         $randfold,
+         $varna,
+         $job_dir) = @_;
     my $run_options = miRkwood->CONFIG();
 
     $run_options->param( 'job.title',        $job_title );
@@ -233,9 +247,10 @@ sub write_config_for_bam_pipeline {
     $run_options->param( 'job.pipeline',     $mode );
     $run_options->param( 'job.bed',          $bed );
     $run_options->param( 'job.directory',    $job_dir );
-    $run_options->param( 'options.filter_CDS',            $filter_CDS );
-    $run_options->param( 'options.filter_tRNA_rRNA',      $filter_tRNA_rRNA );
-    $run_options->param( 'options.filter_multimapped',    $filter_multimapped );
+    $run_options->param( 'options.filter_CDS',          $filter_CDS );
+    $run_options->param( 'options.filter_bad_hairpins', $filter_bad_hairpins );
+    $run_options->param( 'options.filter_tRNA_rRNA',    $filter_tRNA_rRNA );
+    $run_options->param( 'options.filter_multimapped',  $filter_multimapped );
     $run_options->param( 'options.align',    $align );
     $run_options->param( 'options.db',       $species_db );
     $run_options->param( 'options.mfei',     $mfei );

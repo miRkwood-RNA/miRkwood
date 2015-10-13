@@ -65,21 +65,23 @@ my $species    = '';
 my $species_db = '';
 my $seqArea    = '';
 
-$job_title  = $cgi->param('job');
-$mail       = $cgi->param('mail');
-$species    = $cgi->param('species');
-$species_db = $cgi->param('db');
-my $filter_CDS = $cgi->param('CDS');
-my $filter_tRNA_rRNA   = $cgi->param('filter-tRNA-rRNA');
-my $filter_multimapped = $cgi->param('filter_multimapped');
-my $mfei       = $cgi->param('mfei');
-my $randfold   = $cgi->param('randfold');
-my $align      = $cgi->param('align');
+$job_title              = $cgi->param('job');
+$mail                   = $cgi->param('mail');
+$species                = $cgi->param('species');
+$species_db             = $cgi->param('db');
+my $filter_CDS          = $cgi->param('CDS');
+my $filter_bad_hairpins = $cgi->param('filter-bad-hairpins');
+my $filter_tRNA_rRNA    = $cgi->param('filter-tRNA-rRNA');
+my $filter_multimapped  = $cgi->param('filter_multimapped');
+my $mfei                = $cgi->param('mfei');
+my $randfold            = $cgi->param('randfold');
+my $align               = $cgi->param('align');
 my $varna = 0;
 
 if ( $filter_tRNA_rRNA   ) { $filter_tRNA_rRNA   = 1 } else { $filter_tRNA_rRNA   = 0 }
 if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }
 if ( $filter_CDS ) { $filter_CDS = 1 } else { $filter_CDS = 0 }
+if ( $filter_bad_hairpins ) { $filter_bad_hairpins = 1 } else { $filter_bad_hairpins = 0 }
 if ( $mfei       ) { $mfei       = 1 } else { $mfei       = 0 }
 if ( $randfold   ) { $randfold   = 1 } else { $randfold   = 0 }
 if ( $align      ) { $align      = 1 } else { $align      = 0 }
@@ -191,6 +193,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $align,
                                          $species_db,
                                          $filter_CDS,
+                                         $filter_bad_hairpins,
                                          $filter_tRNA_rRNA,
                                          $filter_multimapped,
                                          $mfei,

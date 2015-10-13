@@ -72,6 +72,10 @@ my $page = <<"END_TXT";
                         &#160;<label for='CDS'>Mask coding regions</label>  [<a href="$help_page#mask_coding_regions">?</a>]
                     </p>
                     <p>
+                        <input class="checkbox" type="checkbox" checked="checked" name='filter-bad-hairpins' id ="filter-bad-hairpins"/>
+                        &#160;<label for='CDS'>Filter out low quality hairpins</label>  [<a href="$help_page#filter_bad_hairpins">?</a>]
+                    </p>
+                    <p>
                         <input class="checkbox" type="checkbox" checked="checked" name='filter-tRNA-rRNA' id ="filter-tRNA-rRNA"/>
                         &#160;<label for='filter-tRNA-rRNA'>Filter out tRNA/rRNA/snoRNA</label>  [<a href="$help_page#filter_tRNA_rRNA">?</a>]
                     </p>
