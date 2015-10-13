@@ -1,5 +1,9 @@
+Prediction : 261-281
+
 	query       261  UGUUAAGAAGUGUUAAUGGUG  281
 	miRBase 1        UGUUAAGGAGUGUUAACGGUG
 	                 ******* ******** ****
 
 miRBase 1: ath-miR5635a
+
+

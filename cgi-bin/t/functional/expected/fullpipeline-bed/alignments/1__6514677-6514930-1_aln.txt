@@ -1,5 +1,9 @@
+Prediction : 153-173
+
 	query       153  AAUUAAAGAUUUAAAUCUU--CU  173
 	miRBase 1        AAUUAAAGAUUU-CAUCUUACU-
 	                 ************  *****    
 
 miRBase 1: ath-miR1886.3
+
+

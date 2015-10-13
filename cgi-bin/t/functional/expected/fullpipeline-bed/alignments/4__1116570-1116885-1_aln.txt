@@ -1,10 +1,18 @@
+Prediction : 70-89
+
 	query       70  UAA---U-UUGCAAAAUAGUCACU  89
 	miRBase 1       UAAGUGUUGCAAAAUAGUCAUU--
 	                ***   *     ** *        
 
 miRBase 1: gma-miR1519
+
+
+Prediction : 108-126
+
 	query       108  ACACUUAG--UUUGUACACCA-  126
 	miRBase 1        ACACUUAGUUUUGUACAACA--
 	                 ********  **     **  *
 
 miRBase 1: ath-miR5014a-5p
+
+

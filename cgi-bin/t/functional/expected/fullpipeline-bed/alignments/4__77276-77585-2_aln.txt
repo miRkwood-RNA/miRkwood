@@ -1,5 +1,9 @@
+Prediction : 20-41
+
 	query       20  CAACCUAAAACCAAUUGGCAAU  41
 	miRBase 1       CAACUUAAAAUCAGUUGGCAAU
 	                **** ***** ** ********
 
 miRBase 1: aly-miR4234
+
+

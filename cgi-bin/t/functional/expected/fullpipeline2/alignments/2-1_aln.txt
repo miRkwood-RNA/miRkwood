@@ -1,3 +1,5 @@
+Prediction : 19-39
+
 	query       19  UCGCUUGGUGCAGGUCGGGAAG  39
 	miRBase 1       UCGCUUGGUGCAGGUCGGG---
 	miRBase 2       UCGCUUGGUGCAGGUCGGGA--
@@ -7,8 +9,14 @@
 miRBase 1: gma-miR168b
 miRBase 2: cme-miR168
 miRBase 3: ath-miR168a
+
+
+Prediction : 102-122
+
 	query       102  CCUGCCUUGCAUCAACUGAAU  122
 	miRBase 1        CCUGCCUUGCAUCAACUGAAU
 	                 *********************
 
 miRBase 1: sly-miR168a-3p
+
+

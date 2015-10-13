@@ -1,3 +1,5 @@
+Prediction : 40-60
+
 	query       40  UAGCCAAGGAUGAAUUGCCUA  60
 	miRBase 1       UAGCCAAGGAUGACUUGCCU-
 	miRBase 2       UAGCCAAGGAUGACUUGCCUA
@@ -5,3 +7,5 @@
 
 miRBase 1: sbi-miR169d-5p
 miRBase 2: osa-miR169f.1
+
+
