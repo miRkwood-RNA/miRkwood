@@ -7,5 +7,3 @@ Prediction : 40-60
 
 miRBase 1: sbi-miR169d-5p
 miRBase 2: osa-miR169f.1
-
-

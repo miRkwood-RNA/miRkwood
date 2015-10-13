@@ -5,8 +5,6 @@ Prediction : 70-89
 	                ***   *     ** *        
 
 miRBase 1: gma-miR1519
-
-
 Prediction : 108-126
 
 	query       108  ACACUUAG--UUUGUACACCA-  126
@@ -14,5 +12,3 @@ Prediction : 108-126
 	                 ********  **     **  *
 
 miRBase 1: ath-miR5014a-5p
-
-

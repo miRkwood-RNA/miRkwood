@@ -5,5 +5,3 @@ Prediction : 153-173
 	                 ************  *****    
 
 miRBase 1: ath-miR1886.3
-
-

@@ -135,7 +135,6 @@ sub writeInFile{
     for(my $cpt=1; $cpt<@tabName; $cpt++){
         $output .= 'miRBase '.$cpt.': '.$tabName[$cpt]."\n";
     }
-    $output .= "\n\n";
     open(my $FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
     print $FILE $output;
     close($FILE);

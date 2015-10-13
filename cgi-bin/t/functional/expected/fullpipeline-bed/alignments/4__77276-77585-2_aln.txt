@@ -5,5 +5,3 @@ Prediction : 20-41
 	                **** ***** ** ********
 
 miRBase 1: aly-miR4234
-
-
