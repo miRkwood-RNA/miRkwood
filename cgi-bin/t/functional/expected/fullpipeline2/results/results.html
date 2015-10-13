@@ -2,22 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <title>miRkwood - MicroRNA identification</title>
-        <STYLE type="text/css">table{
-border:1px solid black;
-border-collapse:collapse;
-width:80%;
+        <STYLE type="text/css">body {
+    font-family:Sans-serif;
+}
+table{
+    border:1px solid black;
+    border-collapse:collapse;
+    width:80%;
+    color:#505050;
 }
 th, td {
-border:1px solid black;
+    border:1px solid #505050;
+    text-align:center;
 }
 span.mature {
     color: blue;
 }
+td .nodecoration
+{ 
+    text-decoration:none;
+    color: #505050;
+    display:block;
+    width:100%; 
+    height: 100%;
+}
+h2 .nodecoration
+{ 
+    text-decoration:none;
+    color: black;
+    display:block;
+    width:100%; 
+    height: 100%;
+}
 </STYLE>
     </head>
     <body>
-        <h2>Overview of results</h2><h3>Get results as</h3> <ul><li><a href='results.csv'>tab-delimited format (csv)</a></li><li><a href='results.fa'>Fasta</a></li><li><a href='results.txt'>dot-bracket format (plain sequence + secondary structure)</a></li><li><a href='results.gff'>gff format</a></li></ul><h3>2 candidates found.</h3>
-<table>
+        <h2>Overview of results</h2>
+<h3>2 candidates found.</h3>
+<h3>Get results as</h3> <ul><li><a href="results.csv">tab-delimited format (csv)</a></li><li><a href="results.fa">Fasta</a></li><li><a href="results.txt">dot-bracket format (plain sequence + secondary structure)</a></li><li><a href="results.gff">gff format</a></li></ul><br /><table>
 <tbody><tr><th>name</th>
 <th>identifier</th>
 <th>position</th>
@@ -29,169 +51,140 @@ span.mature {
 <th>amfe</th>
 <th>alignment</th>
 </tr>
-<tr><td id='table_contig15750-34-195'><a href='#contig15750-34-195'>contig15750</a></td>
-<td>1-1</td>
-<td><a href='#contig15750-34-195'>34-195</a>
-</td>
-<td>162</td>
-<td>+</td>
-<td><center><font color="#FF8000">&#x2605;&#x2605;</font></center></td>
-<td>-60.10</td>
-<td><font color="#FF00FF">-1.00</font></td>
-<td>-37.10</td>
-<td><center><font color="#008000">&#x2713;</font></center></td>
+<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_contig15750-34-195'><a href='#contig15750-34-195' class='nodecoration'>contig15750</a></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">1-1</td>
+<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#contig15750-34-195' class='nodecoration'>34-195</a></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">162</td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-60.10</td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.00</font></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-37.10</td>
+<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../alignments/1-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
 </tr>
-<tr><td id='table_contig15916-187-322'><a href='#contig15916-187-322'>contig15916</a></td>
-<td>2-1</td>
-<td><a href='#contig15916-187-322'>187-322</a>
-</td>
-<td>136</td>
-<td>+</td>
-<td><center><font color="#FF8000">&#x2605;&#x2605;&#x2605;</font></center></td>
-<td>-57.30</td>
-<td><font color="#FF00FF">-0.84</font></td>
-<td>-42.13</td>
-<td><center><font color="#008000">&#x2713;&#x2713;</font></center></td>
+<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_contig15916-187-322'><a href='#contig15916-187-322' class='nodecoration'>contig15916</a></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">2-1</td>
+<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#contig15916-187-322' class='nodecoration'>187-322</a></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">136</td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;&#x2605;</font></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-57.30</td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.84</font></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-42.13</td>
+<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../alignments/2-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;&#x2713;</font></a></td>
 
 </tr>
 </tbody>
 </table>
-<h2 id='contig15750-34-195'><a href='#table_contig15750-34-195'>Results for contig15750, 34-195</a></h2>
+<h2 id='contig15750-34-195'><a href='#table_contig15750-34-195' class='nodecoration'>Results for contig15750, 34-195 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+
     <ul>
-    <li>
-      <b>Name: </b>contig15750
-    </li>
-    <li>
-      <b>Position:</b> 34-195 (162 nt)
-    </li>
-    <li>
-      <b>Strand:</b> + 
-    </li>
-    <li>
-      <b>Sequence (FASTA format):</b> <a href='pieces/contig15750__34-195.fa'>download</a>
-    </li>
-    <li>
-      <b>Alternative candidates (dot-bracket format):</b> <a href='pieces/contig15750__34-195_alternatives.txt'>download</a>
-    </li>
-    
-    </ul>
-<h3>Secondary structure</h3>
-    <ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='pieces/contig15750__34-195.txt'>download</a><br/>This stem-loop structure is the MFE structure.</li></ul>
-<h3>Thermodynamics stability</h3>
-    <ul>
-    <li>
-      <b>MFE:</b> -60.10 kcal/mol
-    </li>
-    <li>
-      <b>AMFE:</b> -37.0987654320988
-    </li>
-    <li>
-      <b>MFEI:</b> -1.00166666666667
-    </li>
-    </ul>
-    <h3>miRBase alignments</h3>
-<span class='toc'>Putative miRNA locus: <a href='#40-59'>40-59</a></span>
-        <h3 id='40-59'>Prediction 1: 40-59</h3>
-        <pre style='height: 80px;'>      u  au      a        u   cuu    u <span class="mature"> -  c      -     u    </span>     --    uca-        
-gagagg uc  acauga gagaagag gcu   auua g<span class="mature">u ag caagga ugaau gccu</span>aauga  cagc    agucguuua
+        <li>
+            <b>Name: </b>contig15750
+        </li>
+        <li>
+            <b>Position:</b> 34-195 (162 nt)
+        </li>
+        <li>
+            <b>Strand:</b> +
+        </li>
+        
+        <li>
+            <b>miRNA precursor:</b> [<a href='pieces/contig15750__34-195.fa'>FASTA sequence</a>] 
+                                    [<a href='pieces/contig15750__34-195.txt'>stem-loop structure</a>] 
+                                    [<a href='pieces/contig15750__34-195_optimal.txt'>optimal MFE structure</a>] 
+                                    [<a href='pieces/contig15750__34-195_alternatives.txt'>alternative sequences</a>]
+        </li>
+        <li>
+            <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -60.10 kcal/mol | 
+                                                                          <i>AMFE</i> -37.0987654320988 | 
+                                                                          <font color='#FF00FF'><i>MFEI</i> -1.00166666666667</font>
+        </li>
+        
+        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 40-60</b>
+
+      u  au      a        u   cuu    u <span class="mature"> -  c      -     u     </span>    --    uca-        
+gagagg uc  acauga gagaagag gcu   auua g<span class="mature">u ag caagga ugaau gccua</span>auga  cagc    agucguuua
 |||||| ||  |||||| |||||||| |||   |||| || || |||||| ||||| |||||||||  ||||    |||||||| a
 cucuuc ag  uguacu cuuuuuuu cgg   uaau ca uc guucuu acuug cggauuauu  guug    ucagcaaaa
       u  au      a        -   c--    u  g  a      u     -         ug    uuuc        
-</pre>
-        This prediction is not validated by miRdup.
-        <h4>Alignments</h4>
-<pre class='alignment'>
-query            40 UAGCCAAGGAUGAAUUGCCU 59
-                    ||||||||||||| |||||| 
-miRBase           1 UAGCCAAGGAUGACUUGCCU 20
-</pre>
-<span class='others'>miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001454'>sbi-miR169d-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031359'>stu-miR169a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031361'>stu-miR169b-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031363'>stu-miR169c-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031365'>stu-miR169d-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031367'>stu-miR169e-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031369'>stu-miR169f-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031371'>stu-miR169g</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031372'>stu-miR169h</a></span>
-<pre class='alignment'>
-query            40 UAGCCAAGGAUGAAUUGCCUA 60
-                    ||||||||||||| ||||||| 
-miRBase           1 UAGCCAAGGAUGACUUGCCUA 21
-</pre>
-<span class='others'>miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001051'>osa-miR169f.1</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001052'>osa-miR169g</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001453'>sbi-miR169c</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001729'>zma-miR169f-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001730'>zma-miR169g</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001731'>zma-miR169h</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001974'>ptc-miR169r</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005614'>bna-miR169c</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005615'>bna-miR169d</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005616'>bna-miR169e</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005617'>bna-miR169f</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0006554'>vvi-miR169x</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0007921'>sly-miR169d</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011334'>sbi-miR169h</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011338'>sbi-miR169m</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0011339'>sbi-miR169n</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0012563'>aqc-miR169a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0018371'>far-miR169</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020394'>tcc-miR169d</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020699'>bdi-miR169h-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0022511'>ssl-miR169</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0029236'>mes-miR169ab</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0029237'>mes-miR169ac</a></span>
 
-<h2 id='contig15916-187-322'><a href='#table_contig15916-187-322'>Results for contig15916, 187-322</a></h2>
-    <ul>
-    <li>
-      <b>Name: </b>contig15916
-    </li>
-    <li>
-      <b>Position:</b> 187-322 (136 nt)
-    </li>
-    <li>
-      <b>Strand:</b> + 
-    </li>
-    <li>
-      <b>Sequence (FASTA format):</b> <a href='pieces/contig15916__187-322.fa'>download</a>
-    </li>
-    <li>
-      <b>Alternative candidates (dot-bracket format):</b> <a href='pieces/contig15916__187-322_alternatives.txt'>download</a>
-    </li>
-    
+<b>Alignments</b>
+
+
+	query       40  UAGCCAAGGAUGAAUUGCCUA  60
+	miRBase 1       UAGCCAAGGAUGACUUGCCU-
+	miRBase 2       UAGCCAAGGAUGACUUGCCUA
+	                ************* ****** 
+
+miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=sbi-miR169d-5p">sbi-miR169d-5p</a>
+miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=osa-miR169f.1">osa-miR169f.1</a>
+</pre></li>
     </ul>
-<h3>Secondary structure</h3>
-    <ul><li><b>Stem-loop structure (dot-bracket format):</b> <a href='pieces/contig15916__187-322.txt'>download</a><br/>This stem-loop structure is the MFE structure.</li></ul>
-<h3>Thermodynamics stability</h3>
+<h2 id='contig15916-187-322'><a href='#table_contig15916-187-322' class='nodecoration'>Results for contig15916, 187-322 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+
     <ul>
-    <li>
-      <b>MFE:</b> -57.30 kcal/mol
-    </li>
-    <li>
-      <b>AMFE:</b> -42.1323529411765
-    </li>
-    <li>
-      <b>MFEI:</b> -0.842647058823529
-    </li>
-    </ul>
-    <h3>miRBase alignments</h3>
-<span class='toc'>Putative miRNA locus: <a href='#19-37'>19-37</a>, <a href='#102-122'>102-122</a></span>
-        <h3 id='19-37'>Prediction 1: 19-37</h3>
-        <pre style='height: 80px;'>     g      ucu   <span class="mature">   c          u    </span> acg-     -  --   c          u-  u
-uuacg cgguuu   gau<span class="mature">ucg uuggugcagg cggg</span>a    gcuug gc  cga gguuucauau  ug c
+        <li>
+            <b>Name: </b>contig15916
+        </li>
+        <li>
+            <b>Position:</b> 187-322 (136 nt)
+        </li>
+        <li>
+            <b>Strand:</b> +
+        </li>
+        
+        <li>
+            <b>miRNA precursor:</b> [<a href='pieces/contig15916__187-322.fa'>FASTA sequence</a>] 
+                                    [<a href='pieces/contig15916__187-322.txt'>stem-loop structure</a>] 
+                                    [<a href='pieces/contig15916__187-322_optimal.txt'>optimal MFE structure</a>] 
+                                    [<a href='pieces/contig15916__187-322_alternatives.txt'>alternative sequences</a>]
+        </li>
+        <li>
+            <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -57.30 kcal/mol | 
+                                                                          <i>AMFE</i> -42.1323529411765 | 
+                                                                          <font color='#FF00FF'><i>MFEI</i> -0.842647058823529</font>
+        </li>
+        
+        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font><font color='#5B9F00'>&#x2713;</font> presence of alignments that cover the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 19-39</b>
+
+     g      ucu   <span class="mature">   c          u     a</span>cg-     -  --   c          u-  u
+uuacg cgguuu   gau<span class="mature">ucg uuggugcagg cggga </span>   gcuug gc  cga gguuucauau  ug c
 ||||| ||||||   |||||| |||||||||| |||||    ||||| ||  ||| ||||||||||  || 
 aaugu gccaag   cuaagu aacuacguuc guccu    ugagu cg  gcu ccaaagugug  ac u
      a      u--      c          c     guca     u  au   -          uc  c
-</pre>
-        This prediction is not validated by miRdup.
-        <h4>Alignments</h4>
-<pre class='alignment'>
-query            19 UCGCUUGGUGCAGGUCGGG 37
-                    ||||||||||||||||||| 
-miRBase           1 UCGCUUGGUGCAGGUCGGG 19
-</pre>
-<span class='others'>miRBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020985'>gma-miR168b</a></span>
-<pre class='alignment'>
-query            19 UCGCUUGGUGCAGGUCGGGA 38
-                    |||||||||||||||||||| 
-miRBase           1 UCGCUUGGUGCAGGUCGGGA 20
-</pre>
-<span class='others'>miRBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0022751'>cme-miR168</a></span>
-<pre class='alignment'>
-query            19 UCGCUUGGUGCAGGUCGGGAA 39
-                    ||||||||||||||||||||| 
-miRBase           1 UCGCUUGGUGCAGGUCGGGAA 21
-</pre>
-<span class='others'>miRBase sequences: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000198'>ath-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0000199'>ath-miR168b</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001681'>gma-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001949'>ptc-miR168a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0001950'>ptc-miR168b-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005625'>bna-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0005675'>vvi-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014073'>ccl-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014086'>crt-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0014168'>rco-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017481'>aly-miR168a-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0017483'>aly-miR168b-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0020390'>tcc-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0021270'>mtr-miR168b</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0022235'>mtr-miR168c-5p</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0022758'>vun-miR168</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0024414'>mes-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0024517'>cca-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0027185'>lus-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0027206'>lus-miR168b</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0024665'>nta-miR168d</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0024666'>nta-miR168e</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0025932'>mdm-miR168a</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0025933'>mdm-miR168b</a>, <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031454'>ppe-miR168</a></span>
-        <h3 id='102-122'>Prediction 2: 102-122</h3>
-        <pre style='height: 80px;'>     g      ucu      c          u     acg-     -  --   c          u-  u
+
+<b>Alignments</b>
+
+
+	query       19  UCGCUUGGUGCAGGUCGGGAAG  39
+	miRBase 1       UCGCUUGGUGCAGGUCGGG---
+	miRBase 2       UCGCUUGGUGCAGGUCGGGA--
+	miRBase 3       UCGCUUGGUGCAGGUCGGGAA-
+	                *******************   
+
+miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR168b">gma-miR168b</a>
+miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=cme-miR168">cme-miR168</a>
+miRBase 3: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR168a">ath-miR168a</a>
+<b style='font-size:1.2em;'>Prediction : 102-122</b>
+
+     g      ucu      c          u     acg-     -  --   c          u-  u
 uuacg cgguuu   gauucg uuggugcagg cggga    gcuug gc  cga gguuucauau  ug c
 ||||| ||||||   |||||| |||||||||| |||||    ||||| ||  ||| ||||||||||  || 
 aaugu gccaag   c<span class="mature">uaagu aacuacguuc gucc</span>u    ugagu cg  gcu ccaaagugug  ac u
      a      u-- <span class="mature">     c          c    </span> guca     u  au   -          uc  c
-</pre>
-        This prediction is validated by miRdup.
-        <h4>Alignments</h4>
-<pre class='alignment'>
-query           102 CCUGCCUUGCAUCAACUGAAU 122
-                    ||||||||||||||||||||| 
-miRBase           1 CCUGCCUUGCAUCAACUGAAU 21
-</pre>
-<span class='others'>miRBase sequence: <a href='http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MIMAT0031130'>sly-miR168a-3p</a></span>
 
+<b>Alignments</b>
+
+
+	query       102  CCUGCCUUGCAUCAACUGAAU  122
+	miRBase 1        CCUGCCUUGCAUCAACUGAAU
+	                 *********************
+
+miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=sly-miR168a-3p">sly-miR168a-3p</a>
+</pre></li>
+    </ul>
 
     </body>
 </html>
