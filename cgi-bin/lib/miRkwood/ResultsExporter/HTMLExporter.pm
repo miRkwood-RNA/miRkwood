@@ -46,18 +46,18 @@ sub export_candidate {
     for my $header ( @headers ) {
         $contents = ${$candidate}{$header};
         if ($header eq 'quality'){
-            $contents = "<td $onmouseover $onmouseout><center><font color='#FF8000'>";
+            $contents = "<td $onmouseover $onmouseout><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= '&#x2605;';
             }
-            $contents .= '</font></center></td>';
+            $contents .= '</font></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = "<td $onmouseover $onmouseout><center><font color='#FF8000'>";
+            $contents = "<td $onmouseover $onmouseout><font color='#FF8000'>";
             for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
                 $contents .= '&#x2605;';
             }
-            $contents .= '</font></center></td>';
+            $contents .= '</font></td>';
         }
         elsif ($header eq 'alignment'){
             $contents = "<td $onmouseout";
@@ -74,11 +74,11 @@ sub export_candidate {
                                                          ${$candidate}{'identifier'}. '_aln.txt' );
             }
             if ( ${$candidate}{'alignment'} > 0){
-                $contents .= "$onmouseover_with_cursor><a href='$alignment_file' class='nodecoration'><center><font color='#008000'>";
+                $contents .= "$onmouseover_with_cursor><a href='$alignment_file' class='nodecoration'><font color='#008000'>";
                 for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
                     $contents .= '&#x2713;';
                 }
-                $contents .= '</font></center></a></td>';
+                $contents .= '</font></a></td>';
             }
             else {
                 $contents .= "$onmouseover></td>";
