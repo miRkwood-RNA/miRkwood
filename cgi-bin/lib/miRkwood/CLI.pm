@@ -239,9 +239,9 @@ sub make_candidate_page {
 
 
     ### HTML sections
-    my $mfei = $candidate->{'mfei'};
+    my $mfei = "<i>MFEI</i> $candidate->{'mfei'}";
     if ( $candidate->{'mfei'} < -0.8 ){
-        $mfei = "<font color='#FF00FF'>$candidate->{'mfei'}</font>";
+        $mfei = "<font color='#FF00FF'><i>MFEI</i> $candidate->{'mfei'}</font>";
     }
 
     # Reads
@@ -364,7 +364,7 @@ END_TXT
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> $candidate->{'mfe'} kcal/mol | 
                                                                           <i>AMFE</i> $candidate->{'amfe'} | 
-                                                                          <i>MFEI</i> $mfei
+                                                                          $mfei
         </li>
         $reads_html
         $alignments_html
