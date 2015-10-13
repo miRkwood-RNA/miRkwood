@@ -181,10 +181,9 @@ sub make_candidate_page {
     my $cfg    = miRkwood->CONFIG();
     my $candidate_name = $candidate->get_shortened_name();
 
-    my $star = '<font color=\'#FF8000\'>&#x2605;</font>';
-    my $coche = '<font color=\'#008000\'>&#x2713;</font>';
-    my $arrow = '<font color=\'#008000\'>&#x25B2;</font>';
-    #~ my $arrow = '<font color=\'#008000\'>&uarr;</font>';
+    my $star = '<font color=\'##FFBE00\'>&#x2605;</font>';
+    my $coche = '<font color=\'##5B9F00\'>&#x2713;</font>';
+    my $arrow = '<font color=\'#008000\'>&uarr;</font>';
 
     ### make files in pieces folder
     my $candidate_fasta_file =
