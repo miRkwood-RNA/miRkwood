@@ -390,7 +390,13 @@ sub include_read_cloud_in_html {
     while ( <$IN> ){
         chomp;
         if ( $_ !~ /^Chromosome/ && $_ !~ /^Position/ && $_ !~ /^Strand/ && $_ ne '' ){
-            $result .= "$_\n";
+            my $depth = -1;
+            if ( /depth=([\d]+)/ ){
+                $depth = $1;
+            }
+            if ( $depth eq -1 || $depth > 1 ){
+                $result .= "$_\n";
+            }
         }
     }
     close $IN;
