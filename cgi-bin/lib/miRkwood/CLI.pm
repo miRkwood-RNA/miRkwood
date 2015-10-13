@@ -447,6 +447,7 @@ table{
 }
 th, td {
     border:1px solid black;
+    text-align:center;
 }
 span.mature {
     color: blue;
