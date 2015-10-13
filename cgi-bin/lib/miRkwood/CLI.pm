@@ -437,13 +437,16 @@ Returns the CSS needed for the webpage
 sub get_page_css {
     my @args = @_;
     my $css = <<"END_TXT";
+body {
+    font-family:Sans-serif;
+}
 table{
-border:1px solid black;
-border-collapse:collapse;
-width:80%;
+    border:1px solid black;
+    border-collapse:collapse;
+    width:80%;
 }
 th, td {
-border:1px solid black;
+    border:1px solid black;
 }
 span.mature {
     color: blue;
