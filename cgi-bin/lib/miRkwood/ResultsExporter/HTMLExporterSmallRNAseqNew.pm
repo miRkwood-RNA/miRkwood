@@ -22,7 +22,13 @@ sub get_header {
     my ( $self, @args ) = @_;
     my $output = '<tr>';
     for my $header ( ('chromosome'), $self->get_headers() ) {
-        if ( $header eq 'mirna_sequence' ){
+        if ( $header eq 'chromosome' ){
+            $output .= "<th>chr</th>\n";
+        }
+        elsif ( $header eq 'mirna_sequence' ){
+            $output .= "<th>miRNA</th>\n";
+        }
+        elsif ( $header eq 'mirna_sequence' ){
             $output .= "<th>miRNA</th>\n";
         }
         elsif ( $header eq 'mirna_length' ){
