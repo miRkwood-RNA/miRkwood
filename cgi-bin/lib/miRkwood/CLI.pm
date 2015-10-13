@@ -272,7 +272,7 @@ sub make_candidate_page {
 
         my $nb_reads = $candidate->{'nb_reads'};
         if ( $candidate->{'criteria_nb_reads'} == 1 ){
-            $nb_reads = "<font color='#FF00FF'>$candidate->{'nb_reads'}</font>";
+            $nb_reads = "<font color='#FF5800'>$candidate->{'nb_reads'}</font>";
         }
 
         if ( ! defined( $candidate->{'mirbase_id'} ) ){
