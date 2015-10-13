@@ -251,7 +251,7 @@ sub make_candidate_page {
         # miRNA sequence
         my $mirna_sequence = '';
         if ( $candidate->{'mirna_length'} eq '' ||  $candidate->{'mirna_length'} eq '0' ){
-            $mirna_sequence = 'None';
+            $mirna_sequence = 'none';
         }
         else{
             $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
