@@ -296,6 +296,21 @@ sub make_candidate_page {
                 $read_duplex .= 'no </li>';
             }
         }
+        else{
+            $reads_score .= '<li><b>Quality:</b> ';
+            if ( $candidate->{'quality'} == 0 ){
+                $reads_score .= 'random distribution</li>';
+            }
+            if ( $candidate->{'criteria_nb_reads'} == 1 && $candidate->{'criteria_reads_mirna'} == 0 ){
+                $reads_score .= "the locus contains more than 10 reads $star</li>";
+            }
+            if ( $candidate->{'criteria_nb_reads'} == 0 && $candidate->{'criteria_reads_mirna'} == 1 ){
+                $reads_score .= "more than half of the reads intersect either with the miRNA or the miRNA* $star</li>";
+            }
+            if ( $candidate->{'quality'} == 2 ){
+                $reads_score .= "the locus contains more than 10 reads, and more than half of them intersect either with the miRNA or the miRNA* $star$star</li>";
+            }
+        }
 
         $reads_html = <<"END_TXT";
 <li>
