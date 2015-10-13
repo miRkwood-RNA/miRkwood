@@ -444,15 +444,24 @@ table{
     border:1px solid black;
     border-collapse:collapse;
     width:80%;
+    color:#505050;
 }
 th, td {
-    border:1px solid black;
+    border:1px solid #505050;
     text-align:center;
 }
 span.mature {
     color: blue;
 }
-a.nodecoration
+td .nodecoration
+{ 
+    text-decoration:none;
+    color: #505050;
+    display:block;
+    width:100%; 
+    height: 100%;
+}
+h2 .nodecoration
 { 
     text-decoration:none;
     color: black;
