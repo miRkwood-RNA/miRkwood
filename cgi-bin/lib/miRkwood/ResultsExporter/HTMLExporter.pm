@@ -46,14 +46,14 @@ sub export_candidate {
     for my $header ( @headers ) {
         $contents = ${$candidate}{$header};
         if ($header eq 'quality'){
-            $contents = "<td $onmouseover $onmouseout><font color='#FF8000'>";
+            $contents = "<td $onmouseover $onmouseout><font color='#FFBE00'>";
             for (my $i = 0; $i < ${$candidate}{'quality'}; $i++){
                 $contents .= '&#x2605;';
             }
             $contents .= '</font></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = "<td $onmouseover $onmouseout><font color='#FF8000'>";
+            $contents = "<td $onmouseover $onmouseout><font color='#FFBE00'>";
             for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
                 $contents .= '&#x2605;';
             }
@@ -74,7 +74,7 @@ sub export_candidate {
                                                          ${$candidate}{'identifier'}. '_aln.txt' );
             }
             if ( ${$candidate}{'alignment'} > 0){
-                $contents .= "$onmouseover_with_cursor><a href='$alignment_file' class='nodecoration'><font color='#008000'>";
+                $contents .= "$onmouseover_with_cursor><a href='$alignment_file' class='nodecoration'><font color='#5B9F00'>";
                 for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
                     $contents .= '&#x2713;';
                 }
@@ -87,7 +87,7 @@ sub export_candidate {
         elsif ($header eq 'mfei'){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
             if ( $contents < -0.8 ){
-                $contents = '<font color="#FF00FF">' . $contents . '</font>';
+                $contents = '<font color="#9F0960">' . $contents . '</font>';
             }
             $contents = "<td $onmouseover $onmouseout>$contents</td>";
         }
@@ -99,7 +99,7 @@ sub export_candidate {
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){
-                $contents = "<font color='#FF00FF'>${$candidate}{$header}</font>";
+                $contents = "<font color='#FF5800'>${$candidate}{$header}</font>";
             }
             $contents = "<td $onmouseover_with_cursor $onmouseout><a href='$reads_file' class='nodecoration'>$contents</a></td>";
         }
