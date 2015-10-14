@@ -149,6 +149,14 @@ if ( $valid ){
             $HTML_additional .= '<li><em>Filter multiply mapped reads:</em> No</li>';
         }
 
+        # Orphan hairpins
+        if ( $cfg->param('options.filter_bad_hairpins') ){
+            $HTML_additional .= '<li><em>Filter low quality hairpins:</em> Yes</li>';
+        }
+        else{
+            $HTML_additional .= '<li><em>Filter low quality hairpins:</em> No</li>';
+        }
+
         $HTML_additional .= '</ul></div>';
 
 
