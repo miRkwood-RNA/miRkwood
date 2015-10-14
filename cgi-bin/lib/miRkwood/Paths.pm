@@ -503,7 +503,22 @@ sub get_bed_size_file_name {
     return 'bed_sizes.txt';
 }
 
-=method get_orphan_hairpin_file_name
+=method get_orphan_clusters_file_name
+
+  Return the name of the bed file which
+  contains data about the orphan clusters,
+  that is the areas where there is a peak
+  of reads but where the secondary structure
+  isn't interesting.
+
+=cut
+sub get_orphan_clusters_file_name {
+    my (@args) = @_;
+    my $basename_bed = shift @args;
+    return $basename_bed.'_orphan_clusters.bed';
+}
+
+=method get_orphan_hairpins_file_name
 
   Return the name of the bed file which
   contains data about the orphan hairpins,
@@ -511,7 +526,7 @@ sub get_bed_size_file_name {
   and no conservation.
 
 =cut
-sub get_orphan_hairpin_file_name {
+sub get_orphan_hairpins_file_name {
     my (@args) = @_;
     my $basename_bed = shift @args;
     return $basename_bed.'_orphan_hairpins.bed';

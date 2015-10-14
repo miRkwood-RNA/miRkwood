@@ -165,7 +165,7 @@ sub process_mirna_candidates {
             $output .= "$final_candidate->{'nb_reads'}\t";
             $output .= "$final_candidate->{'strand'}\n";
             my $orphan_hairpin_bed = File::Spec->catfile( $cfg->param('job.directory'),
-                                                          miRkwood::Paths::get_orphan_hairpin_file_name( $cfg->param('job.bed')) );
+                                                          miRkwood::Paths::get_orphan_hairpins_file_name( $cfg->param('job.bed')) );
             open (my $BED, '>>', $orphan_hairpin_bed) or die "ERROR while writing on $orphan_hairpin_bed: $!\n";
             print $BED $output;
             close $BED;

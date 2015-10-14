@@ -92,8 +92,8 @@ sub run_pipeline {
     $self->{'basic_candidates'} = [];
     my $cfg      = miRkwood->CONFIG();
     my $bed_name = $cfg->param('job.bed');
-    $self->{'orphan_clusters'}  = File::Spec->catfile( $self->{'job_dir'}, "${bed_name}_orphan_clusters.bed" );
-    $self->{'orphan_hairpins'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_hairpin_file_name( $bed_name ) );
+    $self->{'orphan_clusters'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_clusters_file_name( $bed_name ) );
+    $self->{'orphan_hairpins'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_hairpins_file_name( $bed_name ) );
 
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
         debug( "- Start chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
