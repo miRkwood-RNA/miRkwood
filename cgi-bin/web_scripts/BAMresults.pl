@@ -277,7 +277,7 @@ if ( $valid ){
             $HTML_results .= "<li id='li_orphan_hairpins'><span id='normal'><em>Orphan hairpins:</em> 0 reads</span></li>";
         }
 
-        $HTML_results .= "<li id='li_orphans'><span id='normal'><em>Unclassified reads:</em> $nb_orphan_reads reads</span></li>";
+        $HTML_results .= "<li id='li_unclassified_reads'><span id='normal'><em>Unclassified reads:</em> $nb_orphan_reads reads</span></li>";
 
         if ( $nb_known_results > 0 ){
             $HTML_results .= "<li id='li_known_miRNAs'><span id='normal'><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</span></li>";

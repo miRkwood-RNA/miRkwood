@@ -497,7 +497,7 @@ span.urlbox {
     border: 1px solid;
 }
 
-#orphans {
+#unclassified_reads {
     background-color: #00FFFF;
     border: 1px solid;
 }
@@ -534,7 +534,7 @@ span.urlbox {
     color: #006400;
 }
 
-#li_orphans {
+#li_unclassified_reads {
     color: #00FFFF;
 }
 

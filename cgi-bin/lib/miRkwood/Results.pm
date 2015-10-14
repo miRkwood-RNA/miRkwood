@@ -322,7 +322,7 @@ sub make_reads_barchart {
     $width->{'orphan_hairpins'} = int($percentage_orphan_hairpins_reads * $total_witdh / 100 + 0.5 );
     $width->{'known_miRNAs'}    = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
     $width->{'new_miRNAs'}      = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
-    $width->{'orphans'}         = $total_witdh
+    $width->{'unclassified_reads'}         = $total_witdh
                                         - $width->{'CDS'}
                                         - $width->{'other'}
                                         - $width->{'multi'} 
@@ -334,7 +334,7 @@ sub make_reads_barchart {
     my $barchart = "<div style='width:${total_witdh}px'>\n";
     $barchart .= "<table id='barchart_table'>\n";
     $barchart .= "<tr>\n";
-    my @categories = qw{CDS other multimapped orphan_clusters orphan_hairpins orphans known_miRNAs new_miRNAs};
+    my @categories = qw{CDS other multimapped orphan_clusters orphan_hairpins unclassified_reads known_miRNAs new_miRNAs};
     foreach my $category ( @categories ){
         if ( $width->{$category} > 0){
             $barchart .= "<td id='$category' style='width:$width->{$category}px'></td>\n";
