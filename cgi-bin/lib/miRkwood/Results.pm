@@ -314,38 +314,35 @@ sub make_reads_barchart {
          $percentage_orphan_clusters_reads,
          $percentage_orphan_hairpins_reads ) = @_;
 
-    my $width_CDS_reads             = int($percentage_CDS_reads * $total_witdh / 100 + 0.5 );
-    my $width_other_reads           = int($percentage_other_reads * $total_witdh / 100 + 0.5 );
-    my $width_multi_reads           = int($percentage_multi_reads * $total_witdh / 100 + 0.5 );
-    my $width_orphan_clusters_reads = int($percentage_orphan_clusters_reads * $total_witdh / 100 + 0.5 );
-    my $width_orphan_hairpins_reads = int($percentage_orphan_hairpins_reads * $total_witdh / 100 + 0.5 );
-    my $width_known_miRNAs_reads    = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
-    my $width_new_miRNAs_reads      = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
-    my $width_orphans_reads         = $total_witdh
-                                        - $width_CDS_reads
-                                        - $width_other_reads
-                                        - $width_multi_reads
-                                        - $width_known_miRNAs_reads
-                                        - $width_new_miRNAs_reads
-                                        - $width_orphan_clusters_reads
-                                        - $width_orphan_hairpins_reads;
+    my $width;
+    $width->{'CDS'}             = int($percentage_CDS_reads * $total_witdh / 100 + 0.5 );
+    $width->{'other'}           = int($percentage_other_reads * $total_witdh / 100 + 0.5 );
+    $width->{'multi'}           = int($percentage_multi_reads * $total_witdh / 100 + 0.5 );
+    $width->{'orphan_clusters'} = int($percentage_orphan_clusters_reads * $total_witdh / 100 + 0.5 );
+    $width->{'orphan_hairpins'} = int($percentage_orphan_hairpins_reads * $total_witdh / 100 + 0.5 );
+    $width->{'known_miRNAs'}    = int($percentage_known_miRNAs_reads * $total_witdh / 100 + 0.5 );
+    $width->{'new_miRNAs'}      = int($percentage_new_miRNAs_reads * $total_witdh / 100 + 0.5 );
+    $width->{'orphans'}         = $total_witdh
+                                        - $width->{'CDS'}
+                                        - $width->{'other'}
+                                        - $width->{'multi'} 
+                                        - $width->{'known_miRNAs'}
+                                        - $width->{'new_miRNAs'}
+                                        - $width->{'orphan_clusters'}
+                                        - $width->{'orphan_hairpins'};
 
-    my $barchart = <<"END_TXT";
-<div style='width:${total_witdh}px'>
-    <table id="barchart_table">
-        <tr>
-            <td id="CDS" style="width:${width_CDS_reads}px"></td>
-            <td id="other" style="width:${width_other_reads}px"></td>
-            <td id="multimapped" style="width:${width_multi_reads}px;"></td>
-            <td id="orphan_clusters" style="width:${width_orphan_clusters_reads}px;"></td>
-            <td id="orphan_hairpins" style="width:${width_orphan_hairpins_reads}px;"></td>
-            <td id="orphans" style="width:${width_orphans_reads}px;"></td>
-            <td id="known_miRNAs" style="width:${width_known_miRNAs_reads}px;"></td>
-            <td id="new_miRNAs" style="width:${width_new_miRNAs_reads}px;"></td>
-        </tr>
-    </table>
-</div>
-END_TXT
+    my $barchart = "<div style='width:${total_witdh}px'>\n";
+    $barchart .= "<table id='barchart_table'>\n";
+    $barchart .= "<tr>\n";
+    my @categories = qw{CDS other multimapped orphan_clusters orphan_hairpins orphans known_miRNAs new_miRNAs};
+    foreach my $category ( @categories ){
+        if ( $width->{$category} > 0){
+            $barchart .= "<td id='$category' style='width:$width->{$category}px'></td>\n";
+        }
+    }
+    $barchart .= "</tr>\n";
+    $barchart .= "</table>\n";
+    $barchart .= "</div>\n";
 
     return $barchart;
 
