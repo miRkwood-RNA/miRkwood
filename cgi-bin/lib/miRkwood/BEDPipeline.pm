@@ -78,7 +78,7 @@ sub run_pipeline {
     foreach my $BED_type ( @list_of_BED_files ){
         my $BED_file = miRkwood::Paths::get_bed_file ( $self->get_job_dir(), $BED_type, 'bed' );
         miRkwood::BEDHandler::store_reads_nb_in_BED_file( $BED_file, $bed_sizes_file );
-        miRkwood::BEDHandler::zipBEDfile( $BED_file, $self->get_job_dir() );
+        miRkwood::BEDHandler::zipBEDfile( $BED_file );
     }
     debug( 'BED files compressed.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
@@ -113,8 +113,8 @@ sub run_pipeline {
         debug( "- End of chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );
-    miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'}, $self->get_job_dir() );
-    miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_hairpins'}, $self->get_job_dir() );
+    miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'} );
+    miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_hairpins'} );
 
     $self->serialize_basic_candidates( 'basic_candidates' );
 

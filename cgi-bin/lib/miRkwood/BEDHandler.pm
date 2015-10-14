@@ -324,7 +324,6 @@ sub store_reads_nb_in_BED_file {
 sub zipBEDfile{
     my @args = @_;
     my $BED_file = shift @args;
-    my $jobDir = shift @args;
     my $path = '';
     my $basename = '';
     if ( -e $BED_file ){
@@ -332,7 +331,7 @@ sub zipBEDfile{
             $path = $1;
             $basename = $2;
         }
-        system("tar zcf $path/$basename.tar.gz -C $jobDir $basename.bed");
+        system("tar zcf $path/$basename.tar.gz -C $path $basename.bed");
         unlink "$BED_file";
     }
     return;
