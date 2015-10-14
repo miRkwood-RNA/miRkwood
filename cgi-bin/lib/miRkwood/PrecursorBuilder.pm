@@ -149,13 +149,20 @@ sub process_mirna_candidates {
     my (%candidates_hash) = %{ shift @args };
     my @candidates_result;
     my $candidate_identifier = 0;
+    my $cfg = miRkwood->CONFIG();
     #~ debug('     - Process miRNA candidates' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
         debug( "         Start run_pipeline_on_candidate on $candidate_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG());
         my $candidate = $candidates_hash{$key};
-        push @candidates_result, $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
+        my $final_candidate = $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
+        if ( $cfg->param('options.filter_bad_hairpins') && $final_candidate->{'quality'} eq '0' && $final_candidate->{'alignment'} eq '0' ){
+            print STDERR "Candidate $final_candidate->{'identifier'} is an orphan hairpin.\n";
+        }
+        else {
+            push @candidates_result, $final_candidate;
+        }
         debug( "         End of run_pipeline_on_candidate on $candidate_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG());
     }
 

@@ -18,6 +18,6 @@ CoDing Sequences: 2599 reads
 tRNA/rRNA/snoRNA: 6275 reads
 Multiply mapped reads:: 0 reads
 Orphan clusters of reads: 27093 reads
-Unclassified reads: 51052 reads
+Unclassified reads: 51274 reads
 Known miRNAs: 5 sequence(s) - 224134 reads
-Novel miRNAs: 36 sequence(s) - 7950 reads
+Novel miRNAs: 31 sequence(s) - 7728 reads

@@ -7,14 +7,14 @@
   length: 268
   mfe: '-23.95'
   mfei: -0.820731707317073
-  mirna_length: ''
-  mirna_sequence: ''
+  mirna_length: 24
+  mirna_sequence: UUAGAGAUUUUAGUUGGUUUAAUU
   name: '1'
   nb_reads: 204
   orphan_hairpin: 0
   position: 6454664-6454931
-  quality: 2
-  reads_distribution: 0
+  quality: 4
+  reads_distribution: 1
   start_position: 6454664
   strand: '-'
 - alignment: 1
@@ -49,8 +49,8 @@
   nb_reads: 1210
   orphan_hairpin: 0
   position: 6538400-6538487
-  quality: 4
-  reads_distribution: 2
+  quality: 5
+  reads_distribution: 3
   start_position: 6538400
   strand: '-'
 - alignment: 0
@@ -71,24 +71,6 @@
   reads_distribution: 1
   start_position: 6538703
   strand: +
-- alignment: 0
-  amfe: -25.1437699680511
-  criteria_nb_reads: 0
-  identifier: 1__6542772-6543084-3
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/1__6542772-6543084-3.png
-  length: 313
-  mfe: '-32.71'
-  mfei: -0.650413223140496
-  mirna_length: ''
-  mirna_sequence: ''
-  name: '1'
-  nb_reads: 65
-  orphan_hairpin: 1
-  position: 6542772-6543084
-  quality: 0
-  reads_distribution: 0
-  start_position: 6542772
-  strand: '-'
 - alignment: 0
   amfe: -31.25
   criteria_nb_reads: 0
@@ -144,24 +126,6 @@
   start_position: 6543374
   strand: '-'
 - alignment: 0
-  amfe: -23.2804232804233
-  criteria_nb_reads: 0
-  identifier: 1__6589744-6590121-1
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/1__6589744-6590121-1.png
-  length: 378
-  mfe: '-26.85'
-  mfei: -0.606896551724138
-  mirna_length: ''
-  mirna_sequence: ''
-  name: '1'
-  nb_reads: 27
-  orphan_hairpin: 1
-  position: 6589744-6590121
-  quality: 0
-  reads_distribution: 0
-  start_position: 6589744
-  strand: +
-- alignment: 0
   amfe: -23.1081081081081
   criteria_nb_reads: 0
   identifier: 1__6592984-6593131-2
@@ -175,8 +139,8 @@
   nb_reads: 22
   orphan_hairpin: 0
   position: 6592984-6593131
-  quality: 4
-  reads_distribution: 3
+  quality: 3
+  reads_distribution: 2
   start_position: 6592984
   strand: +
 - alignment: 0
@@ -277,33 +241,15 @@
   length: 114
   mfe: '-23.80'
   mfei: -0.7
-  mirna_length: ''
-  mirna_sequence: ''
+  mirna_length: 23
+  mirna_sequence: CUUGGUAUAUUCAAAUUAGGAUU
   name: '4'
   nb_reads: 36
-  orphan_hairpin: 1
-  position: 313266-313379
-  quality: 0
-  reads_distribution: 0
-  start_position: 313266
-  strand: '-'
-- alignment: 0
-  amfe: -18.2142857142857
-  criteria_nb_reads: 0
-  identifier: 4__370740-370935-1
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__370740-370935-1.png
-  length: 196
-  mfe: '-11.40'
-  mfei: -0.74375
-  mirna_length: 24
-  mirna_sequence: AAUAACAAUUAUAAACUGUAAAAU
-  name: '4'
-  nb_reads: 34
   orphan_hairpin: 0
-  position: 370740-370935
+  position: 313266-313379
   quality: 1
   reads_distribution: 0
-  start_position: 370740
+  start_position: 313266
   strand: '-'
 - alignment: 0
   amfe: -40.9444444444444
@@ -324,24 +270,6 @@
   start_position: 434304
   strand: +
 - alignment: 0
-  amfe: -24.375
-  criteria_nb_reads: 0
-  identifier: 4__524541-524668-1
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__524541-524668-1.png
-  length: 128
-  mfe: '-31.20'
-  mfei: -0.742857142857143
-  mirna_length: ''
-  mirna_sequence: ''
-  name: '4'
-  nb_reads: 13
-  orphan_hairpin: 1
-  position: 524541-524668
-  quality: 0
-  reads_distribution: 0
-  start_position: 524541
-  strand: +
-- alignment: 0
   amfe: -19.7388059701493
   criteria_nb_reads: 1
   identifier: 4__618259-618526-1
@@ -349,13 +277,13 @@
   length: 268
   mfe: '-12.02'
   mfei: -1.25952380952381
-  mirna_length: 24
-  mirna_sequence: CUAUAAAUUAAUAAUGUUGGGACC
+  mirna_length: ''
+  mirna_sequence: ''
   name: '4'
   nb_reads: 119
   orphan_hairpin: 0
   position: 618259-618526
-  quality: 3
+  quality: 2
   reads_distribution: 0
   start_position: 618259
   strand: '-'
@@ -373,8 +301,8 @@
   nb_reads: 25
   orphan_hairpin: 0
   position: 743281-743392
-  quality: 3
-  reads_distribution: 2
+  quality: 2
+  reads_distribution: 1
   start_position: 743281
   strand: '-'
 - alignment: 0
@@ -395,6 +323,60 @@
   reads_distribution: 2
   start_position: 743386
   strand: '-'
+- alignment: 1
+  amfe: -18.7730061349693
+  criteria_nb_reads: 1
+  identifier: 4__983183-983345-1
+  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__983183-983345-1.png
+  length: 163
+  mfe: '-20.14'
+  mfei: -0.805263157894737
+  mirna_length: ''
+  mirna_sequence: ''
+  name: '4'
+  nb_reads: 247
+  orphan_hairpin: 0
+  position: 983183-983345
+  quality: 2
+  reads_distribution: 0
+  start_position: 983183
+  strand: '-'
+- alignment: 0
+  amfe: -33.0769230769231
+  criteria_nb_reads: 1
+  identifier: 4__983292-983369-2
+  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__983292-983369-2.png
+  length: 78
+  mfe: '-25.80'
+  mfei: -0.921428571428571
+  mirna_length: 24
+  mirna_sequence: AUGUAAUGAUGGCUUGUAGAGAGU
+  name: '4'
+  nb_reads: 567
+  orphan_hairpin: 0
+  position: 983292-983369
+  quality: 4
+  reads_distribution: 1
+  start_position: 983292
+  strand: +
+- alignment: 0
+  amfe: -27.6300578034682
+  criteria_nb_reads: 0
+  identifier: 4__985565-985737-3
+  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__985565-985737-3.png
+  length: 173
+  mfe: '-24.93'
+  mfei: -0.758730158730159
+  mirna_length: 23
+  mirna_sequence: GAGAGAGAGAGAGAGAGAGAGAG
+  name: '4'
+  nb_reads: 10
+  orphan_hairpin: 0
+  position: 985565-985737
+  quality: 3
+  reads_distribution: 2
+  start_position: 985565
+  strand: +
 - alignment: 0
   amfe: -13.1578947368421
   criteria_nb_reads: 1
@@ -412,60 +394,6 @@
   quality: 2
   reads_distribution: 0
   start_position: 1001115
-  strand: +
-- alignment: 1
-  amfe: -18.7730061349693
-  criteria_nb_reads: 1
-  identifier: 4__983183-983345-2
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__983183-983345-2.png
-  length: 163
-  mfe: '-20.14'
-  mfei: -0.805263157894737
-  mirna_length: ''
-  mirna_sequence: ''
-  name: '4'
-  nb_reads: 247
-  orphan_hairpin: 0
-  position: 983183-983345
-  quality: 2
-  reads_distribution: 0
-  start_position: 983183
-  strand: '-'
-- alignment: 0
-  amfe: -33.0769230769231
-  criteria_nb_reads: 1
-  identifier: 4__983292-983369-3
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__983292-983369-3.png
-  length: 78
-  mfe: '-25.80'
-  mfei: -0.921428571428571
-  mirna_length: 24
-  mirna_sequence: AUGUAAUGAUGGCUUGUAGAGAGU
-  name: '4'
-  nb_reads: 567
-  orphan_hairpin: 0
-  position: 983292-983369
-  quality: 4
-  reads_distribution: 1
-  start_position: 983292
-  strand: +
-- alignment: 0
-  amfe: -27.6300578034682
-  criteria_nb_reads: 0
-  identifier: 4__985565-985737-4
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__985565-985737-4.png
-  length: 173
-  mfe: '-24.93'
-  mfei: -0.758730158730159
-  mirna_length: 23
-  mirna_sequence: GAGAGAGAGAGAGAGAGAGAGAG
-  name: '4'
-  nb_reads: 10
-  orphan_hairpin: 0
-  position: 985565-985737
-  quality: 3
-  reads_distribution: 2
-  start_position: 985565
   strand: +
 - alignment: 1
   amfe: -54.2713567839196
@@ -529,14 +457,14 @@
   length: 127
   mfe: '-66.10'
   mfei: -1.57380952380952
-  mirna_length: 24
-  mirna_sequence: AAGUGGUAUAUAGAAUAUGAGCCU
+  mirna_length: ''
+  mirna_sequence: ''
   name: '4'
   nb_reads: 94
   orphan_hairpin: 0
   position: 1212018-1212144
-  quality: 4
-  reads_distribution: 2
+  quality: 1
+  reads_distribution: 0
   start_position: 1212018
   strand: +
 - alignment: 0
@@ -547,14 +475,14 @@
   length: 399
   mfe: '-70.02'
   mfei: -0.988432835820895
-  mirna_length: ''
-  mirna_sequence: ''
+  mirna_length: 24
+  mirna_sequence: AUCACAAUCGCGGUACAGUAAACG
   name: '4'
   nb_reads: 36
   orphan_hairpin: 0
   position: 1230915-1231313
-  quality: 1
-  reads_distribution: 0
+  quality: 4
+  reads_distribution: 2
   start_position: 1230915
   strand: '-'
 - alignment: 0
@@ -571,8 +499,8 @@
   nb_reads: 69
   orphan_hairpin: 0
   position: 1231264-1231345
-  quality: 3
-  reads_distribution: 2
+  quality: 2
+  reads_distribution: 1
   start_position: 1231264
   strand: +
 - alignment: 0
@@ -583,33 +511,15 @@
   length: 171
   mfe: '-23.20'
   mfei: -0.615853658536585
-  mirna_length: ''
-  mirna_sequence: ''
+  mirna_length: 24
+  mirna_sequence: CGGAGAAGCUGUAGGCGCUUUAUC
   name: '4'
   nb_reads: 66
-  orphan_hairpin: 1
+  orphan_hairpin: 0
   position: 1270783-1270953
-  quality: 0
-  reads_distribution: 0
+  quality: 3
+  reads_distribution: 2
   start_position: 1270783
-  strand: '-'
-- alignment: 0
-  amfe: -14.7490347490348
-  criteria_nb_reads: 0
-  identifier: 4__1282699-1282957-2
-  image: /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__1282699-1282957-2.png
-  length: 259
-  mfe: '-15.55'
-  mfei: -0.606349206349206
-  mirna_length: ''
-  mirna_sequence: ''
-  name: '4'
-  nb_reads: 83
-  orphan_hairpin: 1
-  position: 1282699-1282957
-  quality: 0
-  reads_distribution: 0
-  start_position: 1282699
   strand: '-'
 - alignment: 0
   amfe: -31.9417475728155

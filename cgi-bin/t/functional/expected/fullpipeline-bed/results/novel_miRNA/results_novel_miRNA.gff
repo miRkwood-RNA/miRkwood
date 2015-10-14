@@ -7,11 +7,9 @@
 1	miRkwood	miRNA_primary_transcript	6514677	6514930	.	+	.	Name=preMir_1__6514677-6514930	
 1	miRkwood	miRNA_primary_transcript	6538400	6538487	.	-	.	Name=preMir_1__6538400-6538487	
 1	miRkwood	miRNA_primary_transcript	6538703	6538797	.	+	.	Name=preMir_1__6538703-6538797	
-1	miRkwood	miRNA_primary_transcript	6542772	6543084	.	-	.	Name=preMir_1__6542772-6543084	
 1	miRkwood	miRNA_primary_transcript	6543242	6543337	.	+	.	Name=preMir_1__6543242-6543337	
 1	miRkwood	miRNA_primary_transcript	6543291	6543423	.	+	.	Name=preMir_1__6543291-6543423	
 1	miRkwood	miRNA_primary_transcript	6543374	6543768	.	-	.	Name=preMir_1__6543374-6543768	
-1	miRkwood	miRNA_primary_transcript	6589744	6590121	.	+	.	Name=preMir_1__6589744-6590121	
 1	miRkwood	miRNA_primary_transcript	6592984	6593131	.	+	.	Name=preMir_1__6592984-6593131	
 4	miRkwood	miRNA_primary_transcript	50512	50681	.	+	.	Name=preMir_4__50512-50681	
 4	miRkwood	miRNA_primary_transcript	77043	77331	.	-	.	Name=preMir_4__77043-77331	
@@ -19,9 +17,7 @@
 4	miRkwood	miRNA_primary_transcript	297901	298116	.	-	.	Name=preMir_4__297901-298116	
 4	miRkwood	miRNA_primary_transcript	298193	298561	.	-	.	Name=preMir_4__298193-298561	
 4	miRkwood	miRNA_primary_transcript	313266	313379	.	-	.	Name=preMir_4__313266-313379	
-4	miRkwood	miRNA_primary_transcript	370740	370935	.	-	.	Name=preMir_4__370740-370935	
 4	miRkwood	miRNA_primary_transcript	434304	434483	.	+	.	Name=preMir_4__434304-434483	
-4	miRkwood	miRNA_primary_transcript	524541	524668	.	+	.	Name=preMir_4__524541-524668	
 4	miRkwood	miRNA_primary_transcript	618259	618526	.	-	.	Name=preMir_4__618259-618526	
 4	miRkwood	miRNA_primary_transcript	743281	743392	.	-	.	Name=preMir_4__743281-743392	
 4	miRkwood	miRNA_primary_transcript	743386	743470	.	-	.	Name=preMir_4__743386-743470	
@@ -36,6 +32,5 @@
 4	miRkwood	miRNA_primary_transcript	1230915	1231313	.	-	.	Name=preMir_4__1230915-1231313	
 4	miRkwood	miRNA_primary_transcript	1231264	1231345	.	+	.	Name=preMir_4__1231264-1231345	
 4	miRkwood	miRNA_primary_transcript	1270783	1270953	.	-	.	Name=preMir_4__1270783-1270953	
-4	miRkwood	miRNA_primary_transcript	1282699	1282957	.	-	.	Name=preMir_4__1282699-1282957	
 4	miRkwood	miRNA_primary_transcript	1438780	1438882	.	+	.	Name=preMir_4__1438780-1438882	
 4	miRkwood	miRNA_primary_transcript	1439203	1439307	.	-	.	Name=preMir_4__1439203-1439307	
