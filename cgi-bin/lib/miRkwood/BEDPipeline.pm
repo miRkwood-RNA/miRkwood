@@ -582,12 +582,10 @@ sub clean_workspace_per_chr {
             my $cluster_start = 0;
             my $cluster_end = 0;
             my $strand = '';
-            my $name = '';
             if ( $cluster =~ /.*\/(\d+)-(\d+)([+-])/ ){
                 $cluster_start = $1;
                 $cluster_end = $2;
                 $strand = $3;
-                $name = "$cluster_start-$cluster_end$strand";
             }
 
             my $reads = miRkwood::HairpinBuilder::get_contained_reads( $self->{'parsed_reads'}, $chromosome, $cluster_start, $cluster_end, $strand);
@@ -595,7 +593,7 @@ sub clean_workspace_per_chr {
             foreach my $key ( keys%{$reads} ){
                 $nb_reads += $reads->{$key};
             }
-            $orphan_clusters{ $cluster_start } = "$cluster_end\t$name\t$nb_reads\t$strand";
+            $orphan_clusters{ $cluster_start } = $cluster_end."\t".'orphan_cluster'."\t".$nb_reads."\t".$strand;
 
             system( "rm -Rf $cluster" );
         }
