@@ -414,7 +414,7 @@ sub include_read_cloud_in_html {
             if ( /depth=([\d]+)/ ){
                 $depth = $1;
             }
-            if ( $depth eq -1 || $depth > 1 ){
+            if ( $depth == -1 || $depth > 1 ){
                 $result .= "$_\n";
             }
         }
