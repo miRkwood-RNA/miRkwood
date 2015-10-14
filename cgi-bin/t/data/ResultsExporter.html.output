@@ -1,4 +1,3 @@
-<h3>1 candidates found.</h3>
 <table>
 <tbody><tr><th>name</th>
 <th>identifier</th>
@@ -17,12 +16,12 @@
 <td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#contig15750-34-195' class='nodecoration'>34-195</a></td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">162</td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><center><font color='#FF8000'>&#x2605;&#x2605;</font></center></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-60.10</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#FF00FF">-1.00</font></td>
+<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.00</font></td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-37.10</td>
 <td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">0.125000</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../alignments/1-1_aln.txt' class='nodecoration'><center><font color='#008000'>&#x2713;</font></center></a></td>
+<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../alignments/1-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
 </tr>
 </tbody>
