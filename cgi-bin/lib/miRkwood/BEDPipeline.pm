@@ -112,8 +112,10 @@ sub run_pipeline {
 
         debug( "- End of chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
+
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );
     miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'} );
+    miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_hairpins'}, $bed_sizes_file );
     miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_hairpins'} );
 
     $self->serialize_basic_candidates( 'basic_candidates' );

@@ -5,3 +5,4 @@ functional_test_tRNA_rRNA_snoRNA.bed	6275	486
 functional_test_CDS.bed	2599	2034
 functional_test_multimapped.bed	0	0
 functional_test_orphan_clusters.bed	27093	125
+functional_test_orphan_hairpins.bed	222	5
