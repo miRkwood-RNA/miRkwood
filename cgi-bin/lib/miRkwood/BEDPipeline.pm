@@ -93,6 +93,7 @@ sub run_pipeline {
     my $cfg      = miRkwood->CONFIG();
     my $bed_name = $cfg->param('job.bed');
     $self->{'orphan_clusters'}  = File::Spec->catfile( $self->{'job_dir'}, "${bed_name}_orphan_clusters.bed" );
+    $self->{'orphan_hairpins'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_hairpin_file_name( $bed_name ) );
 
     foreach my $chromosome ( @{$self->{'chromosomes_in_bed'}} ){
         debug( "- Start chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
@@ -113,6 +114,7 @@ sub run_pipeline {
     }
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );
     miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'}, $self->get_job_dir() );
+    miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_hairpins'}, $self->get_job_dir() );
 
     $self->serialize_basic_candidates( 'basic_candidates' );
 

@@ -503,6 +503,20 @@ sub get_bed_size_file_name {
     return 'bed_sizes.txt';
 }
 
+=method get_orphan_hairpin_file_name
+
+  Return the name of the bed file which
+  contains data about the orphan hairpins,
+  that is the candidates with a quality score of 0
+  and no conservation.
+
+=cut
+sub get_orphan_hairpin_file_name {
+    my (@args) = @_;
+    my $basename_bed = shift @args;
+    return $basename_bed.'_orphan_hairpins.bed';
+}
+
 =method create_folder
 
   Method to create a folder if it not already exists

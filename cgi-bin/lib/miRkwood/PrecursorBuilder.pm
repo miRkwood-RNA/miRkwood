@@ -158,7 +158,17 @@ sub process_mirna_candidates {
         my $candidate = $candidates_hash{$key};
         my $final_candidate = $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
         if ( $cfg->param('options.filter_bad_hairpins') && $final_candidate->{'quality'} eq '0' && $final_candidate->{'alignment'} eq '0' ){
-            print STDERR "Candidate $final_candidate->{'identifier'} is an orphan hairpin.\n";
+            my $output = "$final_candidate->{'name'}\t";
+            $output .= "$final_candidate->{'start_position'}\t";
+            $output .= "$final_candidate->{'end_position'}\t";
+            $output .= "orphan_hairpin\t";
+            $output .= "$final_candidate->{'nb_reads'}\t";
+            $output .= "$final_candidate->{'strand'}\n";
+            my $orphan_hairpin_bed = File::Spec->catfile( $cfg->param('job.directory'),
+                                                          miRkwood::Paths::get_orphan_hairpin_file_name( $cfg->param('job.bed')) );
+            open (my $BED, '>>', $orphan_hairpin_bed) or die "ERROR while writing on $orphan_hairpin_bed: $!\n";
+            print $BED $output;
+            close $BED;
         }
         else {
             push @candidates_result, $final_candidate;
