@@ -495,6 +495,13 @@ h2 .nodecoration
     width:100%; 
     height: 100%;
 }
+.non_clickable_cell:hover{
+    background-color: #EDEDED;
+}
+.clickable_cell:hover{
+    background-color: #CCFFFF;
+    cursor:pointer;
+}
 END_TXT
     return ($css);
 }

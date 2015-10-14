@@ -11,17 +11,17 @@
 <th>shuffles</th>
 <th>alignment</th>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_contig15750-34-195'><a href='#contig15750-34-195' class='nodecoration'>contig15750</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">1-1</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#contig15750-34-195' class='nodecoration'>34-195</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">162</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-60.10</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.00</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-37.10</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">0.125000</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../alignments/1-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
+<tr><td class='clickable_cell' id='table_contig15750-34-195'><a href='#contig15750-34-195' class='nodecoration'>contig15750</a></td>
+<td class='non_clickable_cell'>1-1</td>
+<td class='clickable_cell'><a href='#contig15750-34-195' class='nodecoration'>34-195</a></td>
+<td class='non_clickable_cell'>162</td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
+<td class='non_clickable_cell'>-60.10</td>
+<td class='non_clickable_cell'><font color="#9F0960">-1.00</font></td>
+<td class='non_clickable_cell'>-37.10</td>
+<td class='non_clickable_cell'>0.125000</td>
+<td class='clickable_cell'><a href='../alignments/1-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
 </tr>
 </tbody>
