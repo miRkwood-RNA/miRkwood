@@ -492,6 +492,11 @@ span.urlbox {
     border: 1px solid;
 }
 
+#orphan_hairpins {
+    background-color: #006400;
+    border: 1px solid;
+}
+
 #orphans {
     background-color: #00FFFF;
     border: 1px solid;
@@ -523,6 +528,10 @@ span.urlbox {
 
 #li_orphan_clusters {
     color: #00FF00;
+}
+
+#li_orphan_hairpins {
+    color: #006400;
 }
 
 #li_orphans {
