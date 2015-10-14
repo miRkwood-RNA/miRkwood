@@ -78,6 +78,7 @@ if ( $valid ){
     my $percentage_known_miRNAs_reads    = 0;
     my $percentage_new_miRNAs_reads      = 0;
     my $percentage_orphan_clusters_reads = 0;
+    my $percentage_orphan_hairpins_reads = 0;
 
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
@@ -196,6 +197,7 @@ if ( $valid ){
         $percentage_other_reads = $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
         $percentage_multi_reads = $bed_sizes->{'multimapped'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
         $percentage_orphan_clusters_reads = $bed_sizes->{'orphan_clusters'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
+        $percentage_orphan_hairpins_reads = $bed_sizes->{'orphan_hairpins'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
 
         # Known miRNAs
         $nb_reads_known_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_known_yaml );
@@ -212,7 +214,8 @@ if ( $valid ){
                             - $bed_sizes->{'CDS'}{'reads'}
                             - $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'}
                             - $bed_sizes->{'multimapped'}{'reads'}
-                            - $bed_sizes->{'orphan_clusters'}{'reads'};
+                            - $bed_sizes->{'orphan_clusters'}{'reads'}
+                            - $bed_sizes->{'orphan_hairpins'}{'reads'};
 
         ### Create HTML
         my $arguments = '?jobID=' . $id_job;
@@ -228,7 +231,8 @@ if ( $valid ){
                                                                $percentage_multi_reads,
                                                                $percentage_known_miRNAs_reads,
                                                                $percentage_new_miRNAs_reads,
-                                                               $percentage_orphan_clusters_reads );
+                                                               $percentage_orphan_clusters_reads,
+                                                               $percentage_orphan_hairpins_reads, );
 
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary</h2>';
@@ -264,6 +268,13 @@ if ( $valid ){
         }
         else {
             $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> 0 reads</span></li>";
+        }
+
+        if ( $bed_sizes->{'orphan_hairpins'}{'reads'} > 0 ){
+            $HTML_results .= "<li id='li_orphan_hairpins'><span id='normal'><em>Orphan hairpins:</em> $bed_sizes->{'orphan_hairpins'}{'reads'} reads (<a href='$exportFileLink&type=_orphan_hairpins'>download</a>)</span></li>";
+        }
+        else {
+            $HTML_results .= "<li id='li_orphan_hairpins'><span id='normal'><em>Orphan hairpins:</em> 0 reads</span></li>";
         }
 
         $HTML_results .= "<li id='li_orphans'><span id='normal'><em>Unclassified reads:</em> $nb_orphan_reads reads</span></li>";
