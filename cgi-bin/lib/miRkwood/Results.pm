@@ -428,7 +428,7 @@ sub create_summary_page {
     $output_txt .= 'Flag conserved mature miRNAs: ' . $boolean_mapping{ $cfg->param('options.align') } . "\n";
     $output_txt .= 'Select only sequences with MFEI < -0.6: ' . $boolean_mapping{ $cfg->param('options.mfei') } . "\n";
     $output_txt .= 'Compute thermodynamic stability: ' . $boolean_mapping{ $cfg->param('options.randfold') } . "\n";
-    $output_txt .= 'Filter CoDing Sequences:' . $boolean_mapping{ $cfg->param('options.filter_CDS') } . "\n";
+    $output_txt .= 'Filter CoDing Sequences: ' . $boolean_mapping{ $cfg->param('options.filter_CDS') } . "\n";
     $output_txt .= 'Filter tRNA/rRNA/snoRNA: ' . $boolean_mapping{ $cfg->param('options.filter_tRNA_rRNA') } . "\n";
     $output_txt .= 'Filter multiply mapped reads: ' . $boolean_mapping{ $cfg->param('options.filter_multimapped') } . "\n";
     $output_txt .= 'Filter low quality hairpins: ' . $boolean_mapping{ $cfg->param('options.filter_bad_hairpins') } . "\n";
@@ -438,7 +438,7 @@ sub create_summary_page {
     $output_txt .= "Total number of reads: $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
     $output_txt .= "CoDing Sequences: $bed_sizes->{'CDS'}{'reads'} reads\n";
     $output_txt .= "tRNA/rRNA/snoRNA: $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads\n";
-    $output_txt .= "Multiply mapped reads:: $bed_sizes->{'multimapped'}{'reads'} reads\n";
+    $output_txt .= "Multiply mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
     $output_txt .= "Orphan clusters of reads: $bed_sizes->{'orphan_clusters'}{'reads'} reads\n";
     if ( $cfg->param('options.filter_bad_hairpins') ){
         $output_txt .= "Orphan hairpins: $bed_sizes->{'orphan_hairpins'}{'reads'} reads\n";
