@@ -412,13 +412,13 @@ sub create_summary_page {
         }
     }
     close $FH;
-    my $nb_orphan_reads = $bed_sizes->{$basename_bed}{'reads'}
-                    - $nb_reads_known_miRNAs
-                    - $nb_reads_new_miRNAs
-                    - $bed_sizes->{'CDS'}{'reads'}
-                    - $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'}
-                    - $bed_sizes->{'multimapped'}{'reads'}
-                    - $bed_sizes->{'orphan_clusters'}{'reads'};
+
+    my $nb_orphan_reads = $bed_sizes->{$basename_bed}{'reads'} - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+    foreach my $category ( keys%{$bed_sizes} ){
+        if ( $category ne $basename_bed && $category ne 'miRNAs' ){
+            $nb_orphan_reads -= $bed_sizes->{ $category }{'reads'};
+        }
+    }
 
     my $output_txt = '';
     $output_txt .= "OPTIONS SUMMARY\n";
@@ -431,6 +431,7 @@ sub create_summary_page {
     $output_txt .= 'Filter CoDing Sequences:' . $boolean_mapping{ $cfg->param('options.filter_CDS') } . "\n";
     $output_txt .= 'Filter tRNA/rRNA/snoRNA: ' . $boolean_mapping{ $cfg->param('options.filter_tRNA_rRNA') } . "\n";
     $output_txt .= 'Filter multiply mapped reads: ' . $boolean_mapping{ $cfg->param('options.filter_multimapped') } . "\n";
+    $output_txt .= 'Filter low quality hairpins: ' . $boolean_mapping{ $cfg->param('options.filter_bad_hairpins') } . "\n";
 
     $output_txt .= "\nRESULTS SUMMARY\n";
     $output_txt .= "===============\n\n";
@@ -439,6 +440,9 @@ sub create_summary_page {
     $output_txt .= "tRNA/rRNA/snoRNA: $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads\n";
     $output_txt .= "Multiply mapped reads:: $bed_sizes->{'multimapped'}{'reads'} reads\n";
     $output_txt .= "Orphan clusters of reads: $bed_sizes->{'orphan_clusters'}{'reads'} reads\n";
+    if ( $cfg->param('options.filter_bad_hairpins') ){
+        $output_txt .= "Orphan hairpins: $bed_sizes->{'orphan_hairpins'}{'reads'} reads\n";
+    }
     $output_txt .= "Unclassified reads: $nb_orphan_reads reads\n";
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
