@@ -6,9 +6,10 @@ Reference species: Arabidopsis_thaliana
 Flag conserved mature miRNAs: Yes
 Select only sequences with MFEI < -0.6: Yes
 Compute thermodynamic stability: No
-Filter CoDing Sequences:Yes
+Filter CoDing Sequences: Yes
 Filter tRNA/rRNA/snoRNA: Yes
 Filter multiply mapped reads: No
+Filter low quality hairpins: Yes
 
 RESULTS SUMMARY
 ===============
@@ -16,8 +17,9 @@ RESULTS SUMMARY
 Total number of reads: 319103 (29795 unique reads)
 CoDing Sequences: 2599 reads
 tRNA/rRNA/snoRNA: 6275 reads
-Multiply mapped reads:: 0 reads
+Multiply mapped reads: 0 reads
 Orphan clusters of reads: 27093 reads
-Unclassified reads: 51274 reads
+Orphan hairpins: 222 reads
+Unclassified reads: 51052 reads
 Known miRNAs: 5 sequence(s) - 224134 reads
 Novel miRNAs: 31 sequence(s) - 7728 reads
