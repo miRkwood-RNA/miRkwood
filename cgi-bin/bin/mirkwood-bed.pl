@@ -26,10 +26,8 @@ my $job_title = 0;
 my $output_folder = '';
 my $genome_file;
 my $varna = 0;
-my $filter_tRNA_rRNA = 1;
-my $no_filter_tRNA_rRNA = 0;
-my $filter_CDS = 1;
-my $no_filter_CDS = 0;
+my @annotation_gff;
+my $annotation_gff;
 my $filter_bad_hairpins = 1;
 my $no_filter_bad_hairpins = 0;
 my $filter_multimapped = 1;
@@ -49,9 +47,8 @@ GetOptions(
     'shuffles'               => \$randfold,
     'align'                  => \$align,
     'no-filter-mfei'         => \$no_mfei,
-    'no-filter-CDS'          => \$no_filter_CDS,
+    'gff=s'                  => \@annotation_gff,
     'no-filter-bad-hairpins' => \$no_filter_bad_hairpins,
-    'no-filter-t-r-snoRNA'   => \$no_filter_tRNA_rRNA,
     'no-filter-multimapped'  => \$no_filter_multimapped,
     'varna'                  => \$varna,
     'help|?'                 => \$help,
@@ -64,14 +61,10 @@ pod2usage( -verbose => 2 ) if ($man);
 pod2usage("$0: No BED file given.") if ( @ARGV == 0 );
 pod2usage("$0: No genome file given.") if ( ! $genome_file );
 
+$annotation_gff = join( '&', @annotation_gff);
+
 if ( $no_mfei ){
     $mfei = 0;
-}
-if ( $no_filter_tRNA_rRNA ){
-    $filter_tRNA_rRNA = 0;
-}
-if ( $no_filter_CDS ){
-    $filter_CDS = 0;
 }
 if ( $no_filter_bad_hairpins ){
     $filter_bad_hairpins = 0;
@@ -117,7 +110,7 @@ while ( <$BED> ){
     $previous_chromosome = $fields[0];
     $previous_position = $fields[1];
     if ( ! miRkwood::Utils::is_correct_BED_line($_) ){
-        die 'Your BED file is not valid. Make sure you correctly used our provided script to convert BAM into BED file.\n';
+        die "Your BED file is not valid. Make sure you correctly used our provided script to convert BAM into BED file (file : $bed_file).\n";
     }
 }
 close $BED;
@@ -143,9 +136,8 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $basename_bed,
                                          $align,
                                          $species_db,
-                                         $filter_CDS,
+                                         $annotation_gff,
                                          $filter_bad_hairpins,
-                                         $filter_tRNA_rRNA,
                                          $filter_multimapped,
                                          $mfei,
                                          $randfold,

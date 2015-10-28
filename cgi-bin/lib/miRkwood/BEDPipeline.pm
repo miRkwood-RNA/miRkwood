@@ -41,6 +41,7 @@ sub new {
 
 sub run_pipeline {
     my ($self, @args) = @_;
+    my $cfg      = miRkwood->CONFIG();
 
     $self->init_pipeline();
 
@@ -66,7 +67,15 @@ sub run_pipeline {
 
     # Compress BED files
     debug( 'Compress BED files.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-    my @list_of_BED_files = qw{_miRNAs _tRNA_rRNA_snoRNA _CDS _multimapped};
+    my @list_of_BED_files = qw{_miRNAs};
+    my $annotation_gff    = $cfg->param( 'options.annotation_gff' );
+    my @annotation_gff    = split( /\&/, $annotation_gff );
+    foreach my $gff ( @annotation_gff ){
+        if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
+            push @list_of_BED_files, '_'.$1;
+        }        
+    }
+    push @list_of_BED_files, '_multimapped';
 
     my $bed_sizes_file = File::Spec->catfile( $self->get_job_dir(), miRkwood::Paths::get_bed_size_file_name() );
     open (my $FH, '>', $bed_sizes_file) or die "ERROR while creating $bed_sizes_file : $!";
@@ -90,7 +99,7 @@ sub run_pipeline {
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
 
     $self->{'basic_candidates'} = [];
-    my $cfg      = miRkwood->CONFIG();
+    
     my $bed_name = $cfg->param('job.bed');
     $self->{'orphan_clusters'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_clusters_file_name( $bed_name ) );
     $self->{'orphan_hairpins'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_hairpins_file_name( $bed_name ) );
@@ -215,21 +224,7 @@ sub filter_BED {
     my $filteredBED        = '';
     my $mirnaBED           = '';
 
-    if ( $species ne '' ){
-        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_model_organism( $self->get_job_dir(),
-                                                                                            $localBED,
-                                                                                            $species,
-                                                                                            $filter_CDS,
-                                                                                            $filter_tRNA_rRNA,
-                                                                                            $filter_multimapped );
-    }
-    else{
-        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile_for_user_sequence( $self->get_job_dir(),
-                                                                                           $localBED,
-                                                                                           $filter_CDS,
-                                                                                           $filter_tRNA_rRNA,
-                                                                                           $filter_multimapped );
-    }
+    ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile( $localBED, $species );
 
     if ( ! defined($filteredBED) || $filteredBED eq '' ){
         $self->{'bed_file'} = $self->{'initial_bed'};

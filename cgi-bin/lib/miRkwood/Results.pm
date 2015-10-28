@@ -378,6 +378,9 @@ sub create_summary_page {
     my $run_options_file = miRkwood::Paths->get_job_config_path($absolute_job_dir);
     miRkwood->CONFIG_FILE($run_options_file);
     my $cfg = miRkwood->CONFIG();
+    my $annotation_gff = $cfg->param( 'options.annotation_gff' );
+    my @annotation_gff = split( /\&/, $annotation_gff );
+
     my %boolean_mapping = ( 0 => 'No', 1 => 'Yes', '' => 'No' );
     my $bed_sizes;
     my $basename_bed = $cfg->param('job.bed');
@@ -428,16 +431,22 @@ sub create_summary_page {
     $output_txt .= 'Flag conserved mature miRNAs: ' . $boolean_mapping{ $cfg->param('options.align') } . "\n";
     $output_txt .= 'Select only sequences with MFEI < -0.6: ' . $boolean_mapping{ $cfg->param('options.mfei') } . "\n";
     $output_txt .= 'Compute thermodynamic stability: ' . $boolean_mapping{ $cfg->param('options.randfold') } . "\n";
-    $output_txt .= 'Filter CoDing Sequences: ' . $boolean_mapping{ $cfg->param('options.filter_CDS') } . "\n";
-    $output_txt .= 'Filter tRNA/rRNA/snoRNA: ' . $boolean_mapping{ $cfg->param('options.filter_tRNA_rRNA') } . "\n";
+    foreach my $gff ( @annotation_gff ){
+        if ( $gff =~ /[\/\\]([^\/\\]+[.]gff3?)/ ){
+            $output_txt .= "Filter out features given in $1\n";
+        }
+    }
     $output_txt .= 'Filter multiply mapped reads: ' . $boolean_mapping{ $cfg->param('options.filter_multimapped') } . "\n";
     $output_txt .= 'Filter low quality hairpins: ' . $boolean_mapping{ $cfg->param('options.filter_bad_hairpins') } . "\n";
 
     $output_txt .= "\nRESULTS SUMMARY\n";
     $output_txt .= "===============\n\n";
     $output_txt .= "Total number of reads: $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
-    $output_txt .= "CoDing Sequences: $bed_sizes->{'CDS'}{'reads'} reads\n";
-    $output_txt .= "tRNA/rRNA/snoRNA: $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads\n";
+    foreach my $gff ( @annotation_gff ){
+        if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
+            $output_txt .= "$1: $bed_sizes->{ $1 }{'reads'} reads\n";
+        }
+    }
     $output_txt .= "Multiply mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
     $output_txt .= "Orphan clusters of reads: $bed_sizes->{'orphan_clusters'}{'reads'} reads\n";
     if ( $cfg->param('options.filter_bad_hairpins') ){

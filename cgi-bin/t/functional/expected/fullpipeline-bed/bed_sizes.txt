@@ -1,8 +1,8 @@
 #file	reads	unique reads
 functional_test.bed	319103	29795
 functional_test_miRNAs.bed	447348	177
-functional_test_tRNA_rRNA_snoRNA.bed	6275	486
-functional_test_CDS.bed	2599	2034
+functional_test_Arabidopsis_thaliana_CDS.bed	2599	2034
+functional_test_Arabidopsis_thaliana_tRNA_rRNA_snoRNA.bed	6275	486
 functional_test_multimapped.bed	0	0
 functional_test_orphan_clusters.bed	27093	125
 functional_test_orphan_hairpins.bed	222	5

@@ -14,43 +14,36 @@ use miRkwood::Candidate;
 use miRkwood::CandidateHandler;
 
 
-=method filterBEDfile_for_model_organism
+=method filterBEDfile
 
 Method to filter a BED from the reads corresponding to known 
-miRNAS and from other features (CDS, rRNA, tRNA, snoRNA) for a 
+miRNAS and from other features (given in gff) for a 
 model organism.
 Filtered reads are written in auxiliary files.
 Input : - a BED file
         - a species name (to find the annotations files)
 
 =cut
-sub filterBEDfile_for_model_organism {
+sub filterBEDfile {
     my @args = @_;
-    my $class              = shift @args;
-    my $basename           = shift @args;
-    my $bed_file           = shift @args;
-    my $species            = shift @args;
-    my $filter_CDS         = shift @args;
-    my $filter_tRNA_rRNA   = shift @args;
-    my $filter_multimapped = shift @args;
+    my $class    = shift @args;
+    my $bed_file = shift @args;
+    my $species  = shift @args;
+    my $cfg      = miRkwood->CONFIG();
+    my $filter_multimapped = $cfg->param('options.filter_multimapped');
+    my $annotation_gff     = $cfg->param( 'options.annotation_gff' );
+    my @annotation_gff     = split( /\&/, $annotation_gff );
+    my $job_dir            = $cfg->param('job.directory');
+    my $basename           = $cfg->param('job.bed');
 
-    my $data_path = miRkwood::Paths->get_data_path();
+    my $data_path    = miRkwood::Paths->get_data_path();
     my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
-    my $CDS_file = File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" );
-    my $otherRNA_file = File::Spec->catfile( $data_path, "annotations/${species}_tRNA_rRNA_snoRNA.gff" );
 
-    if ( $bed_file =~ /[\/\\]([^\/\\]+)[.]bed/ ){
-        $basename .= '/'.$1;
-    }
+    my $mirna_reads       = File::Spec->catfile( $job_dir , "${basename}_miRNAs.bed");
+    my $multimapped_reads = File::Spec->catfile( $job_dir , "${basename}_multimapped.bed");
+    my $filtered_bed      = File::Spec->catfile( $job_dir , "${basename}_filtered.bed");
 
-    my $mirna_reads       = "${basename}_miRNAs.bed";
-    my $CDS_reads         = "${basename}_CDS.bed";
-    my $otherRNA_reads    = "${basename}_tRNA_rRNA_snoRNA.bed";
-    my $multimapped_reads = "${basename}_multimapped.bed";
-    my $filtered_bed      = "${basename}_filtered.bed";
-    my $tmp_1 = "${basename}_tmp_1.bed";
-    my $tmp_2 = "${basename}_tmp_2.bed";
-    my $tmp_3 = "${basename}_tmp_3.bed";
+    my $output_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_1.bed");
 
     ### Filter out known miRNAs
     if ( -r $mirbase_file ) {
@@ -60,96 +53,75 @@ sub filterBEDfile_for_model_organism {
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
 
         # Delete reads corresponding to known miRNAs from the BED
-        # what's happening here???
-        #~ store_non_overlapping_reads( $bed_file, $mirbase_file, $tmp_1);  # un-comment when tests are done
-        system("cp $bed_file $tmp_1");  # comment when tests are done
+        store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed);  # un-comment when tests are done
+        #~ system("cp $bed_file $tmp_1");  # comment when tests are done
         debug( 'Known miRNAS have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         debug( "WARNING : no miRNA file found for $species.", 1 );
-        system("cp $bed_file $tmp_1");
+        system("cp $bed_file $output_bed");
     }
 
-    ### Filter out CDS
-    if ( $filter_CDS ){
-        if ( -r $CDS_file ){
-            debug( 'Filter out CDS...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    ### Filter out according to given annotation gff (other than known miRNAs)
+    my $i = 1;
+    if ( @annotation_gff ){
+        foreach my $gff ( @annotation_gff ){
+            if ( -r $gff ){
+                debug( "Filter out according to $gff" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+                $i++;
 
-            # Create a file with CDS
-            store_overlapping_reads( $tmp_1, $CDS_file, $CDS_reads, '');
+                my $basename_gff = '';
+                if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
+                    $basename_gff .= $1;
+                }
+                my $input_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_".($i-1).".bed");
+                my $output_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed");
+                my $discarded_reads = File::Spec->catfile( $job_dir , "${basename}_$basename_gff.bed");
+                
+                filter_according_given_gff( $gff, $input_gff_bed, $output_gff_bed, $discarded_reads );
 
-            # Delete reads corresponding to CDS from the BED
-            store_non_overlapping_reads( $tmp_1, $CDS_file, $tmp_2);
-
-            debug( 'CDS have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-        }
-        else{
-            debug( "WARNING : no CDS file found for $species.", 1 );
-            system("cp $tmp_1 $tmp_2");
-        }
-    }
-    else{
-        #~ $tmp_2 = $tmp_1;
-        system("cp $tmp_1 $tmp_2");
-    }
-
-    ### Filter out rRNA, tRNA, snoRNA
-    if ( $filter_tRNA_rRNA ){
-        if ( -r $otherRNA_file ){
-            debug( 'Filter out t/r/snoRNA...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-
-            # Create a file with CDS
-            store_overlapping_reads( $tmp_2, $otherRNA_file, $otherRNA_reads, '');
-
-            # Delete reads corresponding to CDS from the BED
-            store_non_overlapping_reads( $tmp_2, $otherRNA_file, $tmp_3);
-
-            debug( 't/r/snoRNA have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-        }
-        else{
-            debug( "WARNING : no rRNA/tRNA/snoRNA file found for $species.", 1 );
-            system("cp $tmp_2 $tmp_3");
+                debug( "Reads corresponding to $gff have been filtered out from BED." . ' [' . localtime() . ']', miRkwood->DEBUG() );
+            }
+            else {
+                debug( "$gff is not a readable file.", miRkwood->DEBUG() );
+            }
         }
     }
     else{
-        system("cp $tmp_2 $tmp_3");
+        debug( 'No annotation gff file were provided.', miRkwood->DEBUG() );
     }
 
     ### Filter out multimapped reads
     if ( $filter_multimapped ){
         debug( 'Filter out multimapped reads...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-        filter_multimapped_reads( $tmp_3, $filtered_bed, $multimapped_reads );
+        filter_multimapped_reads( File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed"), $filtered_bed, $multimapped_reads );
         debug( 'Multimapped reads have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
-        rename $tmp_3, $filtered_bed;
+        rename File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed"), $filtered_bed;
     }
 
-    unlink $tmp_1;
-    unlink $tmp_2;
-    unlink $tmp_3;
+    for (my $j = 1; $j <= $i; $j++){
+        unlink File::Spec->catfile( $job_dir , "${basename}_tmp_$j.bed");
+    }
 
     return ($filtered_bed, $mirna_reads);
 
 }
 
-=method filterBEDfile_for_user_sequence
 
-Method to filter a BED from the reads corresponding to known 
-miRNAS and from other features (CDS, rRNA, tRNA, snoRNA) for a
-sequence given by the user.
-
-=cut
-sub filterBEDfile_for_user_sequence {
+sub filter_according_given_gff {
     my @args = @_;
-    my $class              = shift @args;
-    my $out_dir            = shift @args;
-    my $bed_file           = shift @args;
-    my $filter_CDS         = shift @args;
-    my $filter_tRNA_rRNA   = shift @args;
-    my $filter_multimapped = shift @args;
+    my $annotation_gff  = shift @args;
+    my $input_bed       = shift @args;
+    my $output_bed      = shift @args;
+    my $discarded_reads = shift @args;
 
-    ##### Not yet implemented. Call to BlastX, rnammer, tRNAscan-SE... ?
+    # Create a file with reads corresponding to the features in the gff file
+    store_overlapping_reads( $input_bed, $annotation_gff, $discarded_reads, '');
+
+    # Delete reads corresponding to the features in the gff file
+    store_non_overlapping_reads( $input_bed, $annotation_gff, $output_bed);
 
     return;
 }
@@ -172,6 +144,7 @@ sub store_overlapping_reads {
     my $additionalArgs = shift @args;
 
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -wa -wb $additionalArgs > $outputFile";
+    debug( "   $job", 1);
     system($job);
 
     return;
@@ -194,6 +167,7 @@ sub store_non_overlapping_reads {
     my $outputFile = shift @args;
 
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -v > $outputFile";
+    debug( "   $job", 1);
     system($job);
 
     return;
