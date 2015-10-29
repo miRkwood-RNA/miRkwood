@@ -77,10 +77,16 @@ my $mfei                = $cgi->param('mfei');
 my $randfold            = $cgi->param('randfold');
 my $align               = $cgi->param('align');
 my $varna = 0;
+my $annotation_gff = '';
+my $data_path = miRkwood::Paths->get_data_path();
+if ( $filter_CDS ){
+    $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" ) . '&';
+}
+if ( $filter_tRNA_rRNA ){
+    $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_tRNA_rRNA_snoRNA.gff" );
+}
 
-if ( $filter_tRNA_rRNA   ) { $filter_tRNA_rRNA   = 1 } else { $filter_tRNA_rRNA   = 0 }
 if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }
-if ( $filter_CDS ) { $filter_CDS = 1 } else { $filter_CDS = 0 }
 if ( $filter_bad_hairpins ) { $filter_bad_hairpins = 1 } else { $filter_bad_hairpins = 0 }
 if ( $mfei       ) { $mfei       = 1 } else { $mfei       = 0 }
 if ( $randfold   ) { $randfold   = 1 } else { $randfold   = 0 }
@@ -192,9 +198,8 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $basename_bed,
                                          $align,
                                          $species_db,
-                                         $filter_CDS,
+                                         $annotation_gff,
                                          $filter_bad_hairpins,
-                                         $filter_tRNA_rRNA,
                                          $filter_multimapped,
                                          $mfei,
                                          $randfold,

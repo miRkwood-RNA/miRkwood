@@ -169,6 +169,7 @@ if ( $valid ){
 
         ### Count the number and percentage of reads in each category
         my $bed_sizes_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_bed_size_file_name() );
+        my $species = $cfg->param('job.plant');
         if ( -e $bed_sizes_file ){
             open (my $FH, '<', $bed_sizes_file) or die "ERROR while opening $bed_sizes_file: $!";
             while ( <$FH> ){
@@ -178,6 +179,12 @@ if ( $valid ){
                     my $name = '';
                     if ( $line[0] eq "$basename_bed.bed" ){
                         $name = $basename_bed;
+                    }
+                    elsif ( $line[0] =~ /${species}_CDS[.]bed/ ){
+                        $name = 'CDS';
+                    }
+                    elsif ( $line[0] =~ /${species}_tRNA_rRNA_snoRNA[.]bed/ ){
+                        $name = 'tRNA_rRNA_snoRNA';
                     }
                     elsif ( $line[0] =~ /${basename_bed}_(.*)[.]bed/ ){
                         $name = $1;
