@@ -37,7 +37,6 @@ my $mfei = 1;
 my $no_mfei = 0;
 my $align = 0;
 my $species = '';
-my $species_db = '';
 my $force = 0;
 
 ##### Get options
@@ -135,7 +134,6 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          'smallRNAseq',
                                          $basename_bed,
                                          $align,
-                                         $species_db,
                                          $annotation_gff,
                                          $filter_bad_hairpins,
                                          $filter_multimapped,

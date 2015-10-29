@@ -62,13 +62,11 @@ my $cgi        = CGI->new();
 my $job_title  = '';
 my $mail       = '';
 my $species    = '';
-my $species_db = '';
 my $seqArea    = '';
 
 $job_title              = $cgi->param('job');
 $mail                   = $cgi->param('mail');
 $species                = $cgi->param('species');
-$species_db             = $cgi->param('db');
 my $filter_CDS          = $cgi->param('CDS');
 my $filter_bad_hairpins = $cgi->param('filter-bad-hairpins');
 my $filter_tRNA_rRNA    = $cgi->param('filter-tRNA-rRNA');
@@ -197,7 +195,6 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          'smallRNAseq',
                                          $basename_bed,
                                          $align,
-                                         $species_db,
                                          $annotation_gff,
                                          $filter_bad_hairpins,
                                          $filter_multimapped,

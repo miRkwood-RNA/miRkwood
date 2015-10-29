@@ -231,7 +231,6 @@ sub write_config_for_bam_pipeline {
          $mode,
          $bed,
          $align,
-         $species_db,
          $annotation_gff,
          $filter_bad_hairpins,
          $filter_multimapped,
@@ -250,7 +249,6 @@ sub write_config_for_bam_pipeline {
     $run_options->param( 'options.filter_bad_hairpins', $filter_bad_hairpins );
     $run_options->param( 'options.filter_multimapped',  $filter_multimapped );
     $run_options->param( 'options.align',    $align );
-    $run_options->param( 'options.db',       $species_db );
     $run_options->param( 'options.mfei',     $mfei );
     $run_options->param( 'options.randfold', $randfold );
     $run_options->param( 'options.varna',    $varna );
