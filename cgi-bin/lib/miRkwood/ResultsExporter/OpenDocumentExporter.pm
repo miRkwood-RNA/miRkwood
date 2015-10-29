@@ -463,12 +463,17 @@ sub add_ODF_alignments {
         }
 
         # Hairpin
-        my $hairpin_with_mature =
-            miRkwood::Utils::make_hairpin_with_mature($candidate{'hairpin'},
+        my $hairpin_with_mature = '';
+        if ( !eval {
+            $hairpin_with_mature =
+              miRkwood::Utils::make_hairpin_with_mature($candidate{'hairpin'},
                                                            $left, $right,
                                                            length $candidate{'sequence'},
                                                            'ascii');
-
+            }
+        ){
+            $hairpin_with_mature = $candidate{'hairpin'};
+        }
         $predictionCounter += 1;
 
         # Sorting the hit list by descending value of the 'score' element

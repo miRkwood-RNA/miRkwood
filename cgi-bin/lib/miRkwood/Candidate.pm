@@ -1108,10 +1108,18 @@ sub include_alignments_in_html {
         chomp $line;
         if ( $line =~ /Prediction : ([\d]+)-([\d]+)/ ){
             $line = "<b style='font-size:1.2em;'>$line</b>\n\n";
-            $line .= miRkwood::Utils::make_hairpin_with_mature( $self->{'hairpin'},
-                                                                $1, $2,
-                                                                length $self->{'sequence'},
-                                                                'html');
+            my $hairpin_with_mature = '';
+            if ( !eval {
+                $hairpin_with_mature =
+                  miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
+                                                            $1, $2,
+                                                            length $self->{'sequence'},
+                                                            'html');
+                }
+            ){
+                $hairpin_with_mature = $self->{'hairpin'};
+            }
+            $line .= $hairpin_with_mature;
             $line .= "\n<b>Alignments</b>\n";
         }
         if ( $line =~ /miRBase.*: ([^ ]*)/ ){
