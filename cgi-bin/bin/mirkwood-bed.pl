@@ -192,15 +192,10 @@ Flag conserved mature miRNAs (alignment with miRBase + miRdup).
 Don't filter out sequences with MFEI >= -0.6.
 Default : only keep sequences with MFEI < -0.6.
 
-=item B<--no-filter-CDS>
+=item B<--gff>
 
-Don't filter out CDS.
-Default: if an annotation GFF file is available CDS are filtered out.
-
-=item B<--no-filter-t-r-snoRNA>
-
-Don't filter out rRNA, tRNA, snoRNA.
-Default: if an annotation GFF file is available rRNA, tRNA, snoRNA are filtered out.
+List of annotation files (gff or gff3 format).
+Reads matching with an element of these files will be filtered out.
 
 =item B<--no-filter-multimapped>
 
