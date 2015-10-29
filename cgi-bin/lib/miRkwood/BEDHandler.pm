@@ -74,10 +74,10 @@ sub filterBEDfile {
                 if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
                     $basename_gff .= $1;
                 }
-                my $input_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_".($i-1).".bed");
+                my $input_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_".($i-1).'.bed');
                 my $output_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed");
                 my $discarded_reads = File::Spec->catfile( $job_dir , "${basename}_$basename_gff.bed");
-                
+
                 filter_according_given_gff( $gff, $input_gff_bed, $output_gff_bed, $discarded_reads );
 
                 debug( "Reads corresponding to $gff have been filtered out from BED." . ' [' . localtime() . ']', miRkwood->DEBUG() );

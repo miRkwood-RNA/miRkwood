@@ -73,7 +73,7 @@ sub run_pipeline {
     foreach my $gff ( @annotation_gff ){
         if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
             push @list_of_BED_files, '_'.$1;
-        }        
+        }
     }
     push @list_of_BED_files, '_multimapped';
 
@@ -99,7 +99,7 @@ sub run_pipeline {
     debug( scalar(@{$self->{'chromosomes_in_bed'}}) . ' chromosome(s) to consider', miRkwood->DEBUG() );
 
     $self->{'basic_candidates'} = [];
-    
+
     my $bed_name = $cfg->param('job.bed');
     $self->{'orphan_clusters'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_clusters_file_name( $bed_name ) );
     $self->{'orphan_hairpins'} = File::Spec->catfile( $self->{'job_dir'}, miRkwood::Paths::get_orphan_hairpins_file_name( $bed_name ) );
