@@ -41,9 +41,10 @@ sub new {
 
 sub run_pipeline {
     my ($self, @args) = @_;
-    my $cfg      = miRkwood->CONFIG();
 
     $self->init_pipeline();
+
+    my $cfg = miRkwood->CONFIG();
 
     debug( 'miRkwood : start processing.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
