@@ -40,6 +40,9 @@ sub get_header {
         elsif ( $header eq 'reads_distribution' ){
             $output .= "<th>reads distribution</th>\n";
         }
+        elsif ( $header eq 'mfei' ){
+            $output .= "<th>&nbsp; mfei &nbsp;</th>\n";
+        }
         else {
             $output .= "<th>$header</th>\n";
         }
