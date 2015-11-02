@@ -10,13 +10,17 @@ table{
     border-collapse:collapse;
     width:80%;
     color:#505050;
+    cellpadding: 0px;
 }
 th, td {
     border:1px solid #505050;
     text-align:center;
 }
 span.mature {
-    color: blue;
+    color: #F3791B;
+}
+ul {
+   list-style-type: circle;
 }
 td .nodecoration
 { 
@@ -34,6 +38,33 @@ h2 .nodecoration
     width:100%; 
     height: 100%;
 }
+h3 .nodecoration
+{
+    text-decoration:none;
+    color: black;
+    display:block;
+    width:100%;
+    height: 100%;
+}
+.non_clickable_cell:hover{
+    background-color: white;
+}
+.clickable_cell:hover{
+    background-color: #EEEEEE;
+    cursor:pointer;
+}
+.read_cell:hover{
+    background-color: #E2F9FB;
+    cursor:pointer;
+}
+.star_cell:hover{
+   background-color: #FCF3C3;
+   cursor:pointer;
+}
+.alignment_cell:hover{
+   background-color: #E4F7E6;
+   cursor:pointer;
+}
 </STYLE>
     </head>
     <body>
@@ -47,353 +78,384 @@ h2 .nodecoration
 <th>length</th>
 <th>reads</th>
 <th>reads distribution</th>
-<th>mfei</th>
+<th>&nbsp; mfei &nbsp;</th>
 <th>alignment</th>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6454664-6454931'><a href='#1-6454664-6454931' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6454664-6454931' class='nodecoration'>6454664-6454931</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">UUAGAGAUUUUAGUUGGUUUAAUU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6454664-6454931-1.txt' class='nodecoration'><font color='#FF5800'>204</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.82</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/1__6454664-6454931-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;&#x2713;</font></a></td>
-
+<tr>
+<td class='clickable_cell' id='table_1-6454664-6454931'><a href='#1-6454664-6454931' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6454664-6454931' class='nodecoration'>6454664-6454931</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>UUAGAGAUUUUAGUUGGUUUAAUU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6454664-6454931-1.txt' class='nodecoration'><font color='#12D0E5'>204</font></a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/1__6454664-6454931-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.82</font></td>
+<td class='alignment_cell'><a href='../../alignments/1__6454664-6454931-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6514677-6514930'><a href='#1-6514677-6514930' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6514677-6514930' class='nodecoration'>6514677-6514930</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">CUUAUUUACAAUGUCAUGCUACU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">23</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6514677-6514930-1.txt' class='nodecoration'>35</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.92</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/1__6514677-6514930-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6514677-6514930'><a href='#1-6514677-6514930' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6514677-6514930' class='nodecoration'>6514677-6514930</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>CUUAUUUACAAUGUCAUGCUACU</td>
+<td class='non_clickable_cell'>23</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6514677-6514930-1.txt' class='nodecoration'>35</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/1__6514677-6514930-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.92</font></td>
+<td class='alignment_cell'><a href='../../alignments/1__6514677-6514930-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6538400-6538487'><a href='#1-6538400-6538487' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6538400-6538487' class='nodecoration'>6538400-6538487</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AGAUGAUGGGCUUAGAUGAUGGGC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6538400-6538487-1.txt' class='nodecoration'><font color='#FF5800'>1210</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.76</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6538400-6538487'><a href='#1-6538400-6538487' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6538400-6538487' class='nodecoration'>6538400-6538487</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>AGAUGAUGGGCUUAGAUGAUGGGC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6538400-6538487-1.txt' class='nodecoration'><font color='#12D0E5'>1210</font></a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/1__6538400-6538487-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'>-0.76</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6538703-6538797'><a href='#1-6538703-6538797' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6538703-6538797' class='nodecoration'>6538703-6538797</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AUAGAUCGGUAAAAGCAUGUUUUC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6538703-6538797-2.txt' class='nodecoration'>11</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.85</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6538703-6538797'><a href='#1-6538703-6538797' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6538703-6538797' class='nodecoration'>6538703-6538797</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>AUAGAUCGGUAAAAGCAUGUUUUC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6538703-6538797-2.txt' class='nodecoration'>11</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/1__6538703-6538797-2.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.85</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6543242-6543337'><a href='#1-6543242-6543337' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6543242-6543337' class='nodecoration'>6543242-6543337</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6543242-6543337-4.txt' class='nodecoration'>24</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.86</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6543242-6543337'><a href='#1-6543242-6543337' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6543242-6543337' class='nodecoration'>6543242-6543337</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6543242-6543337-4.txt' class='nodecoration'>24</a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.86</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6543291-6543423'><a href='#1-6543291-6543423' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6543291-6543423' class='nodecoration'>6543291-6543423</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6543291-6543423-5.txt' class='nodecoration'><font color='#FF5800'>261</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.7</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6543291-6543423'><a href='#1-6543291-6543423' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6543291-6543423' class='nodecoration'>6543291-6543423</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6543291-6543423-5.txt' class='nodecoration'><font color='#12D0E5'>261</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'>-0.7</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6543374-6543768'><a href='#1-6543374-6543768' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6543374-6543768' class='nodecoration'>6543374-6543768</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AGAUGAUGGGCUUAGAUGAUGGGC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6543374-6543768-6.txt' class='nodecoration'><font color='#FF5800'>1376</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.72</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6543374-6543768'><a href='#1-6543374-6543768' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6543374-6543768' class='nodecoration'>6543374-6543768</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>AGAUGAUGGGCUUAGAUGAUGGGC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6543374-6543768-6.txt' class='nodecoration'><font color='#12D0E5'>1376</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'>-0.72</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6592984-6593131'><a href='#1-6592984-6593131' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6592984-6593131' class='nodecoration'>6592984-6593131</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AAAGAUAAAGCGGAUUAAACUGUU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/1__6592984-6593131-2.txt' class='nodecoration'>22</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.63</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6592984-6593131'><a href='#1-6592984-6593131' class='nodecoration'>1</a></td>
+<td class='clickable_cell'><a href='#1-6592984-6593131' class='nodecoration'>6592984-6593131</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>AAAGAUAAAGCGGAUUAAACUGUU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/1__6592984-6593131-2.txt' class='nodecoration'>22</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/1__6592984-6593131-2.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'>-0.63</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-50512-50681'><a href='#4-50512-50681' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-50512-50681' class='nodecoration'>50512-50681</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__50512-50681-1.txt' class='nodecoration'>21</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.89</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-50512-50681'><a href='#4-50512-50681' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-50512-50681' class='nodecoration'>50512-50681</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__50512-50681-1.txt' class='nodecoration'>21</a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.89</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-77043-77331'><a href='#4-77043-77331' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-77043-77331' class='nodecoration'>77043-77331</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__77043-77331-1.txt' class='nodecoration'><font color='#FF5800'>213</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.77</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-77043-77331'><a href='#4-77043-77331' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-77043-77331' class='nodecoration'>77043-77331</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__77043-77331-1.txt' class='nodecoration'><font color='#12D0E5'>213</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'>-0.77</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-77276-77585'><a href='#4-77276-77585' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-77276-77585' class='nodecoration'>77276-77585</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__77276-77585-2.txt' class='nodecoration'><font color='#FF5800'>103</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.81</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/4__77276-77585-2_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-77276-77585'><a href='#4-77276-77585' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-77276-77585' class='nodecoration'>77276-77585</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__77276-77585-2.txt' class='nodecoration'><font color='#12D0E5'>103</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.82</font></td>
+<td class='alignment_cell'><a href='../../alignments/4__77276-77585-2_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-297901-298116'><a href='#4-297901-298116' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-297901-298116' class='nodecoration'>297901-298116</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__297901-298116-1.txt' class='nodecoration'><font color='#FF5800'>301</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.79</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-297901-298116'><a href='#4-297901-298116' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-297901-298116' class='nodecoration'>297901-298116</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__297901-298116-1.txt' class='nodecoration'><font color='#12D0E5'>301</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'>-0.79</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-298193-298561'><a href='#4-298193-298561' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-298193-298561' class='nodecoration'>298193-298561</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AAGCAGAACCCAAGAACAUAGUUU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__298193-298561-2.txt' class='nodecoration'><font color='#FF5800'>300</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.77</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-298193-298561'><a href='#4-298193-298561' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-298193-298561' class='nodecoration'>298193-298561</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>AAGCAGAACCCAAGAACAUAGUUU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__298193-298561-2.txt' class='nodecoration'><font color='#12D0E5'>300</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'>-0.77</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-313266-313379'><a href='#4-313266-313379' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-313266-313379' class='nodecoration'>313266-313379</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">CUUGGUAUAUUCAAAUUAGGAUU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">23</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__313266-313379-1.txt' class='nodecoration'>36</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.7</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-313266-313379'><a href='#4-313266-313379' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-313266-313379' class='nodecoration'>313266-313379</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>CUUGGUAUAUUCAAAUUAGGAUU</td>
+<td class='non_clickable_cell'>23</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__313266-313379-1.txt' class='nodecoration'>36</a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'>-0.7</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-434304-434483'><a href='#4-434304-434483' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-434304-434483' class='nodecoration'>434304-434483</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AGUGACCAUUGGAGCAUCGUGCCU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__434304-434483-1.txt' class='nodecoration'><font color='#FF5800'>152</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.32</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-434304-434483'><a href='#4-434304-434483' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-434304-434483' class='nodecoration'>434304-434483</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>AGUGACCAUUGGAGCAUCGUGCCU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__434304-434483-1.txt' class='nodecoration'><font color='#12D0E5'>152</font></a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__434304-434483-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.32</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-618259-618526'><a href='#4-618259-618526' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-618259-618526' class='nodecoration'>618259-618526</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__618259-618526-1.txt' class='nodecoration'><font color='#FF5800'>119</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.26</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-618259-618526'><a href='#4-618259-618526' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-618259-618526' class='nodecoration'>618259-618526</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__618259-618526-1.txt' class='nodecoration'><font color='#12D0E5'>119</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.26</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-743281-743392'><a href='#4-743281-743392' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-743281-743392' class='nodecoration'>743281-743392</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AUUUAGGGAAUCUAGUUUUUACUC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__743281-743392-1.txt' class='nodecoration'>25</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.78</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-743281-743392'><a href='#4-743281-743392' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-743281-743392' class='nodecoration'>743281-743392</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>AUUUAGGGAAUCUAGUUUUUACUC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__743281-743392-1.txt' class='nodecoration'>25</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__743281-743392-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'>-0.78</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-743386-743470'><a href='#4-743386-743470' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-743386-743470' class='nodecoration'>743386-743470</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AAGGUCUUGAAUGUUUUGUAGAUU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__743386-743470-2.txt' class='nodecoration'>44</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.26</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-743386-743470'><a href='#4-743386-743470' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-743386-743470' class='nodecoration'>743386-743470</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>AAGGUCUUGAAUGUUUUGUAGAUU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__743386-743470-2.txt' class='nodecoration'>44</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__743386-743470-2.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.26</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-983183-983345'><a href='#4-983183-983345' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-983183-983345' class='nodecoration'>983183-983345</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__983183-983345-1.txt' class='nodecoration'><font color='#FF5800'>247</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.81</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/4__983183-983345-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-983183-983345'><a href='#4-983183-983345' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-983183-983345' class='nodecoration'>983183-983345</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__983183-983345-1.txt' class='nodecoration'><font color='#12D0E5'>247</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.81</font></td>
+<td class='alignment_cell'><a href='../../alignments/4__983183-983345-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-983292-983369'><a href='#4-983292-983369' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-983292-983369' class='nodecoration'>983292-983369</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AUGUAAUGAUGGCUUGUAGAGAGU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__983292-983369-2.txt' class='nodecoration'><font color='#FF5800'>567</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.92</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-983292-983369'><a href='#4-983292-983369' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-983292-983369' class='nodecoration'>983292-983369</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>AUGUAAUGAUGGCUUGUAGAGAGU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__983292-983369-2.txt' class='nodecoration'><font color='#12D0E5'>567</font></a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__983292-983369-2.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.92</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-985565-985737'><a href='#4-985565-985737' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-985565-985737' class='nodecoration'>985565-985737</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">GAGAGAGAGAGAGAGAGAGAGAG</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">23</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__985565-985737-3.txt' class='nodecoration'>10</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.76</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-985565-985737'><a href='#4-985565-985737' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-985565-985737' class='nodecoration'>985565-985737</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>GAGAGAGAGAGAGAGAGAGAGAG</td>
+<td class='non_clickable_cell'>23</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__985565-985737-3.txt' class='nodecoration'>10</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__985565-985737-3.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'>-0.76</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1001115-1001209'><a href='#4-1001115-1001209' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1001115-1001209' class='nodecoration'>1001115-1001209</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1001115-1001209-1.txt' class='nodecoration'><font color='#FF5800'>164</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.83</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1001115-1001209'><a href='#4-1001115-1001209' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1001115-1001209' class='nodecoration'>1001115-1001209</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1001115-1001209-1.txt' class='nodecoration'><font color='#12D0E5'>164</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.83</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1023847-1024244'><a href='#4-1023847-1024244' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1023847-1024244' class='nodecoration'>1023847-1024244</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1023847-1024244-1.txt' class='nodecoration'><font color='#FF5800'>364</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.59</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/4__1023847-1024244-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1023847-1024244'><a href='#4-1023847-1024244' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1023847-1024244' class='nodecoration'>1023847-1024244</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1023847-1024244-1.txt' class='nodecoration'><font color='#12D0E5'>364</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.59</font></td>
+<td class='alignment_cell'><a href='../../alignments/4__1023847-1024244-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1116570-1116885'><a href='#4-1116570-1116885' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1116570-1116885' class='nodecoration'>1116570-1116885</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">ACGAAUCAAACAGUGAAAAGUGAC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1116570-1116885-1.txt' class='nodecoration'><font color='#FF5800'>1438</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.69</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/4__1116570-1116885-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;&#x2713;</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1116570-1116885'><a href='#4-1116570-1116885' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1116570-1116885' class='nodecoration'>1116570-1116885</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>ACGAAUCAAACAGUGAAAAGUGAC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1116570-1116885-1.txt' class='nodecoration'><font color='#12D0E5'>1438</font></a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__1116570-1116885-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.69</font></td>
+<td class='alignment_cell'><a href='../../alignments/4__1116570-1116885-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1190061-1190301'><a href='#4-1190061-1190301' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1190061-1190301' class='nodecoration'>1190061-1190301</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1190061-1190301-1.txt' class='nodecoration'><font color='#FF5800'>101</font></a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.98</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#CCFFFF;cursor:pointer;'"><a href='../../alignments/4__1190061-1190301-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1190061-1190301'><a href='#4-1190061-1190301' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1190061-1190301' class='nodecoration'>1190061-1190301</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1190061-1190301-1.txt' class='nodecoration'><font color='#12D0E5'>101</font></a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.98</font></td>
+<td class='alignment_cell'><a href='../../alignments/4__1190061-1190301-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1212018-1212144'><a href='#4-1212018-1212144' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1212018-1212144' class='nodecoration'>1212018-1212144</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1212018-1212144-1.txt' class='nodecoration'>94</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-1.57</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1212018-1212144'><a href='#4-1212018-1212144' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1212018-1212144' class='nodecoration'>1212018-1212144</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1212018-1212144-1.txt' class='nodecoration'>94</a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.57</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1230915-1231313'><a href='#4-1230915-1231313' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1230915-1231313' class='nodecoration'>1230915-1231313</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AUCACAAUCGCGGUACAGUAAACG</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1230915-1231313-1.txt' class='nodecoration'>36</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.99</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1230915-1231313'><a href='#4-1230915-1231313' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1230915-1231313' class='nodecoration'>1230915-1231313</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>AUCACAAUCGCGGUACAGUAAACG</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1230915-1231313-1.txt' class='nodecoration'>36</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__1230915-1231313-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.99</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1231264-1231345'><a href='#4-1231264-1231345' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1231264-1231345' class='nodecoration'>1231264-1231345</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AAACGCGGAUUUGUGGUUAAUCUC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1231264-1231345-2.txt' class='nodecoration'>69</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.67</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1231264-1231345'><a href='#4-1231264-1231345' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1231264-1231345' class='nodecoration'>1231264-1231345</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>AAACGCGGAUUUGUGGUUAAUCUC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1231264-1231345-2.txt' class='nodecoration'>69</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__1231264-1231345-2.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'>-0.67</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1270783-1270953'><a href='#4-1270783-1270953' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1270783-1270953' class='nodecoration'>1270783-1270953</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">CGGAGAAGCUGUAGGCGCUUUAUC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1270783-1270953-1.txt' class='nodecoration'>66</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-0.62</td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1270783-1270953'><a href='#4-1270783-1270953' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1270783-1270953' class='nodecoration'>1270783-1270953</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>CGGAGAAGCUGUAGGCGCUUUAUC</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1270783-1270953-1.txt' class='nodecoration'>66</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__1270783-1270953-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;&#x2605;</font></a></td>
+<td class='non_clickable_cell'>-0.62</td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1438780-1438882'><a href='#4-1438780-1438882' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1438780-1438882' class='nodecoration'>1438780-1438882</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">UGUCCGUUGGAGAUUCUAUUGCCU</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">24</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1438780-1438882-1.txt' class='nodecoration'>17</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.89</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1438780-1438882'><a href='#4-1438780-1438882' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1438780-1438882' class='nodecoration'>1438780-1438882</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>UGUCCGUUGGAGAUUCUAUUGCCU</td>
+<td class='non_clickable_cell'>24</td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1438780-1438882-1.txt' class='nodecoration'>17</a></td>
+<td class='star_cell'><a href='../../read_clouds/novel_miRNA/4__1438780-1438882-1.txt' class='nodecoration'><font color='#FFBE00'>&#x2605;</font></a></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.89</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1439203-1439307'><a href='#4-1439203-1439307' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1439203-1439307' class='nodecoration'>1439203-1439307</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/novel_miRNA/4__1439203-1439307-2.txt' class='nodecoration'>98</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color="#9F0960">-0.81</font></td>
-<td onmouseout="style='background-color:white'"onmouseover="style='background-color:#EDEDED;'"></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1439203-1439307'><a href='#4-1439203-1439307' class='nodecoration'>4</a></td>
+<td class='clickable_cell'><a href='#4-1439203-1439307' class='nodecoration'>1439203-1439307</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'></td>
+<td class='non_clickable_cell'></td>
+<td class='read_cell'><a href='../../read_clouds/novel_miRNA/4__1439203-1439307-2.txt' class='nodecoration'>98</a></td>
+<td class='non_clickable_cell'> </td>
+<td class='non_clickable_cell'><font color="#E13EA5">-0.81</font></td>
+<td class='non_clickable_cell'></td>
 </tr>
+
 </tbody>
 </table>
-<h2 id='1-6454664-6454931'><a href='#table_1-6454664-6454931' class='nodecoration'>Results for 1, 6454664-6454931 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6454664-6454931'><a href='#table_1-6454664-6454931' class='nodecoration'>Results for 1, 6454664-6454931 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -414,11 +476,11 @@ h2 .nodecoration
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -23.95 kcal/mol | 
-                                                                          <i>AMFE</i> -25.1119402985075 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.820731707317073</font>
+                                                                          <i>AMFE</i> -25.11 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.82</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>204</font> (<a href='../../read_clouds/novel_miRNA/1__6454664-6454931-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>204</font> (<a href='../../read_clouds/novel_miRNA/1__6454664-6454931-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> one island <font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">GUUAAACUUAAAUUGGCAUUGGUUUAGAGAUUUUAGUUGGUUUAAUUCAAUUUUACAAAACUUGAUGGGUUAAUUGGGUAAACCAUUGAAACCAUUAACCAUUACAACCUAACUUAUUUUAUUCAUCAAACCAAUUGACUCAUCAAAUCAUUUGACUCAUCAACUCAUUUGAGUCAAAAUUUUCAACUCAUUACGGUUUAUGGGUUGAGUUGAAUUGAGUUGACCAAUGAAUUUUGACCCAUUUUGAUACCCCUAAUUGUAGUAUAGC
@@ -456,7 +518,7 @@ h2 .nodecoration
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> no </li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font><font color='#5B9F00'>&#x2713;</font> presence of alignments that cover the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 201-224</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font><font color='#41BE47'>&#x2713;</font> presence of alignments that cover the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 201-224</b>
 
     A   UA      ------  U--   UUUA       UA       U          U  AAAACUUGAUGGGUUAAUUGGGUAAACCAUUGAAACCAUUAACCAUUACAACCUAACUUAUUUUAUUCAUCAAAC
 GUUA ACU  AAUUGG      CA   UGG    GAGAUUU  GUUGGUU AAUUCAAUUU AC                                                                           C
@@ -474,7 +536,7 @@ CGAU UGA  UUAAUC      GU   ACC    UUUUAAG  UAAC<span class="mature">CAG UUGAGUUA
 miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5653">ath-miR5653</a>
 </pre></li>
     </ul>
-<h2 id='1-6514677-6514930'><a href='#table_1-6514677-6514930' class='nodecoration'>Results for 1, 6514677-6514930 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6514677-6514930'><a href='#table_1-6514677-6514930' class='nodecoration'>Results for 1, 6514677-6514930 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -495,8 +557,8 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5653">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -7.12 kcal/mol | 
-                                                                          <i>AMFE</i> -14.8031496062992 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.917073170731707</font>
+                                                                          <i>AMFE</i> -14.80 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.92</font>
         </li>
         <li>
     <b>Number of reads:</b> 35 (<a href='../../read_clouds/novel_miRNA/1__6514677-6514930-1.txt'>download<a/>)
@@ -511,7 +573,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5653">a
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> no </li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 153-173</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 153-173</b>
 
     UUUGU   C       U    --   A           AAAUAAAUAUUGUUCUUACUAAACGUUUUUUGUUUAAAUAAACAAAUCAUGUAUUUGAACUUAUUUACAAUGUCAUGCUACUGAC
 GUAU     UAA AAUAUUU AAAA  UAA GUUUUUUGUUU                                                                                     A
@@ -529,7 +591,7 @@ UAUA     AUU UUAUAAA UUUU  AUU UAAAAAACGGA                                      
 miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3">ath-miR1886.3</a>
 </pre></li>
     </ul>
-<h2 id='1-6538400-6538487'><a href='#table_1-6538400-6538487' class='nodecoration'>Results for 1, 6538400-6538487 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6538400-6538487'><a href='#table_1-6538400-6538487' class='nodecoration'>Results for 1, 6538400-6538487 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -550,11 +612,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -25.80 kcal/mol | 
-                                                                          <i>AMFE</i> -29.3181818181818 | 
-                                                                          <i>MFEI</i> -0.758823529411765
+                                                                          <i>AMFE</i> -29.32 | 
+                                                                          <i>MFEI</i> -0.76
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>1210</font> (<a href='../../read_clouds/novel_miRNA/1__6538400-6538487-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>1210</font> (<a href='../../read_clouds/novel_miRNA/1__6538400-6538487-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> two islands <font color='#FFBE00'>&#x2605;</font><font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">CCCUAGAAACAUCUAGAUGAUGGGCUUAGAUGAUGGGCCUUAUAAUGGGCAUCCAUCUUUAUUCAUAACAUUUUUUUUGUUGUUGGGG
@@ -611,7 +673,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='1-6538703-6538797'><a href='#table_1-6538703-6538797' class='nodecoration'>Results for 1, 6538703-6538797 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6538703-6538797'><a href='#table_1-6538703-6538797' class='nodecoration'>Results for 1, 6538703-6538797 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -632,8 +694,8 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -22.00 kcal/mol | 
-                                                                          <i>AMFE</i> -23.1578947368421 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.846153846153846</font>
+                                                                          <i>AMFE</i> -23.16 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.85</font>
         </li>
         <li>
     <b>Number of reads:</b> 11 (<a href='../../read_clouds/novel_miRNA/1__6538703-6538797-2.txt'>download<a/>)
@@ -649,7 +711,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='1-6543242-6543337'><a href='#table_1-6543242-6543337' class='nodecoration'>Results for 1, 6543242-6543337 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6543242-6543337'><a href='#table_1-6543242-6543337' class='nodecoration'>Results for 1, 6543242-6543337 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -671,7 +733,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -30.00 kcal/mol | 
                                                                           <i>AMFE</i> -31.25 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.857142857142857</font>
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.86</font>
         </li>
         <li>
     <b>Number of reads:</b> 24 (<a href='../../read_clouds/novel_miRNA/1__6543242-6543337-4.txt'>download<a/>)
@@ -687,7 +749,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='1-6543291-6543423'><a href='#table_1-6543291-6543423' class='nodecoration'>Results for 1, 6543291-6543423 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6543291-6543423'><a href='#table_1-6543291-6543423' class='nodecoration'>Results for 1, 6543291-6543423 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -708,11 +770,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -36.40 kcal/mol | 
-                                                                          <i>AMFE</i> -27.3684210526316 | 
+                                                                          <i>AMFE</i> -27.37 | 
                                                                           <i>MFEI</i> -0.7
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>261</font> (<a href='../../read_clouds/novel_miRNA/1__6543291-6543423-5.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>261</font> (<a href='../../read_clouds/novel_miRNA/1__6543291-6543423-5.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">UGGGUUUUCCUGGUAAGGUUUUUAAUGAGGCAGCAUUUCAAAUACUUUACGAGUUAUGAUACUAUAAUGGUCAUCAGGGGGAGUGUUAUGAAUAAAGAUGGAUGCCCAUUAUAAGGCCCAUCAUCUAAGCCCA
@@ -759,7 +821,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='1-6543374-6543768'><a href='#table_1-6543374-6543768' class='nodecoration'>Results for 1, 6543374-6543768 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6543374-6543768'><a href='#table_1-6543374-6543768' class='nodecoration'>Results for 1, 6543374-6543768 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -780,11 +842,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -26.26 kcal/mol | 
-                                                                          <i>AMFE</i> -27.2911392405063 | 
-                                                                          <i>MFEI</i> -0.718666666666667
+                                                                          <i>AMFE</i> -27.29 | 
+                                                                          <i>MFEI</i> -0.72
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>1376</font> (<a href='../../read_clouds/novel_miRNA/1__6543374-6543768-6.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>1376</font> (<a href='../../read_clouds/novel_miRNA/1__6543374-6543768-6.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">UGUUUGAACAAAUGUGGAUCCAUUAUUGGGCUCAUUGAUGACUAUUGGAUUAGGGCCCAUUUGGUUCGCCGUUUGGCACGCUACAGCCACAAAUGACACGUGUAGGAGAGGAAGACGGAGUUAACGGGGAUGGUCACGGGAUCAUCCAAUGAACGUCAGUUAUUUUAAUGACUCAUUUGUAUUUGGCCACGUCAAAAUAUUUAGCAAAAUUCAAAUAUUUUAACUUCUUUUUUGUUAUAAACAGAGAAAGAGAUAGAAGAAAUGAGUGUGUUAUUCCAUUGAGAUAAAGGGUUCUUUAUAUAGGAGUACAAGGAAAAGGGUAAAACCCUAGAAACAUCUAGAUGAUGGGCUUAGAUGAUGGGCCUUAUAAUGGGCAUCCAUCUUUAUUCAUAACA
@@ -872,7 +934,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='1-6592984-6593131'><a href='#table_1-6592984-6593131' class='nodecoration'>Results for 1, 6592984-6593131 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6592984-6593131'><a href='#table_1-6592984-6593131' class='nodecoration'>Results for 1, 6592984-6593131 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -893,8 +955,8 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -34.20 kcal/mol | 
-                                                                          <i>AMFE</i> -23.1081081081081 | 
-                                                                          <i>MFEI</i> -0.633333333333334
+                                                                          <i>AMFE</i> -23.11 | 
+                                                                          <i>MFEI</i> -0.63
         </li>
         <li>
     <b>Number of reads:</b> 22 (<a href='../../read_clouds/novel_miRNA/1__6592984-6593131-2.txt'>download<a/>)
@@ -910,7 +972,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-50512-50681'><a href='#table_4-50512-50681' class='nodecoration'>Results for 4, 50512-50681 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-50512-50681'><a href='#table_4-50512-50681' class='nodecoration'>Results for 4, 50512-50681 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -931,8 +993,8 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -36.38 kcal/mol | 
-                                                                          <i>AMFE</i> -45.2941176470588 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.885057471264368</font>
+                                                                          <i>AMFE</i> -45.29 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.89</font>
         </li>
         <li>
     <b>Number of reads:</b> 21 (<a href='../../read_clouds/novel_miRNA/4__50512-50681-1.txt'>download<a/>)
@@ -948,7 +1010,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-77043-77331'><a href='#table_4-77043-77331' class='nodecoration'>Results for 4, 77043-77331 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-77043-77331'><a href='#table_4-77043-77331' class='nodecoration'>Results for 4, 77043-77331 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -969,11 +1031,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -59.19 kcal/mol | 
-                                                                          <i>AMFE</i> -35.5363321799308 | 
-                                                                          <i>MFEI</i> -0.766417910447761
+                                                                          <i>AMFE</i> -35.54 | 
+                                                                          <i>MFEI</i> -0.77
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>213</font> (<a href='../../read_clouds/novel_miRNA/4__77043-77331-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>213</font> (<a href='../../read_clouds/novel_miRNA/4__77043-77331-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">UGGGCCUCUUCACCUAUUGCCAAUUGGUUUUAGGUUGGAAACCCACACUCUAAUAUGGUAUCAGAGCCUGAUCCGCACAUACUCAACCCGAUCCACAUCGGUCCGGCCCAAUACUUGGCCCGCCGAUCCAUGCCCAAACAUAUCGAGAUCAAUGGCUAGAAGAACCAUCAUCUCGAGGGGGCGUAUUAGGGACAAUGUCCCACAUCGAAAGUUGAGUAGGAUCUUAAGUGAUAUAUAUAAGAUAUGAGCCUUUCCAUCUAUUGCCAAUUGGUUUUAUGUUGGAAGCCCA
@@ -1011,7 +1073,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-77276-77585'><a href='#table_4-77276-77585' class='nodecoration'>Results for 4, 77276-77585 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-77276-77585'><a href='#table_4-77276-77585' class='nodecoration'>Results for 4, 77276-77585 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1032,11 +1094,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -43.29 kcal/mol | 
-                                                                          <i>AMFE</i> -36.8064516129032 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.815</font>
+                                                                          <i>AMFE</i> -36.81 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.82</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>103</font> (<a href='../../read_clouds/novel_miRNA/4__77276-77585-2.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>103</font> (<a href='../../read_clouds/novel_miRNA/4__77276-77585-2.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">AUAUUAGAGUGUGGGUUUCCAACCUAAAACCAAUUGGCAAUAGGUGAAGAGGCCCAUAUCUUAUAUAUACCACUUAAGAUCUUAUUCAACUUCCGAUGUGGGAUAUUAUCCCUAAUACGCCCCCUCGAGAUGAUGGUUCUUCUAGCCAUUGAUCUCGAUAUGUUUGGGCAUGGAUCGGCGGGCCAAGUAUUGGGCCGGACCGAUGUGGAUCGGGUUGAGUAUGUGCGGAUCGGGGUCUGAUACCAUAUCAGACUGUGGGCUUCCAACGUAAAACUAAUUGGCAAUAGGUGGAGAGGCUCAUAUCUUAUAU
@@ -1060,7 +1122,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR1886.3"
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> no </li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 20-41</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 20-41</b>
 
     U   G          -<span class="mature"> A     AAA        CAA </span> G  GAA          UCUUAUAUAUACCACUUAAGAUCUUAUUCAACUUCCGAUGUGGGAUAUUAUCCCUAAUACGCCCCCUCGAGAUGAUGGUUCUUCUAGCCAUUGAUC
 AUAU AGA UGUGGGUUUC <span class="mature">C ACCUA   CCAAUUGG   U</span>A GU   GAGGCCCAUA                                                                                                U
@@ -1078,7 +1140,7 @@ UAUA UCU AUACUCGGAG G UGGAU   GGUUAAUC   AU CA   CUUCGGGUGU                     
 miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">aly-miR4234</a>
 </pre></li>
     </ul>
-<h2 id='4-297901-298116'><a href='#table_4-297901-298116' class='nodecoration'>Results for 4, 297901-298116 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-297901-298116'><a href='#table_4-297901-298116' class='nodecoration'>Results for 4, 297901-298116 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1099,11 +1161,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -13.88 kcal/mol | 
-                                                                          <i>AMFE</i> -24.537037037037 | 
-                                                                          <i>MFEI</i> -0.791044776119403
+                                                                          <i>AMFE</i> -24.54 | 
+                                                                          <i>MFEI</i> -0.79
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>301</font> (<a href='../../read_clouds/novel_miRNA/4__297901-298116-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>301</font> (<a href='../../read_clouds/novel_miRNA/4__297901-298116-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">CAUGUUUUAAAUGGUAGUUAACUCUUAGUUCAUGUUUAAAAUGGCCACAUAUAAAGUCGAUGUUUAAAAUGACCACAAUUUAAAACUUGACUAAUAAAGUCGUUAACGGAUGAUAACAGAAGUUAGAAGUUCCGUUAAUGACUGAUAACGGCAUGUCUAUUUUGGCCUGGUUAACGAAUAAUCAUGUUUUAAAAGUUAGUUAACGUUUAGUUCAUG
@@ -1144,7 +1206,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-298193-298561'><a href='#table_4-298193-298561' class='nodecoration'>Results for 4, 298193-298561 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-298193-298561'><a href='#table_4-298193-298561' class='nodecoration'>Results for 4, 298193-298561 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1165,11 +1227,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -50.55 kcal/mol | 
-                                                                          <i>AMFE</i> -23.929539295393 | 
-                                                                          <i>MFEI</i> -0.774561403508772
+                                                                          <i>AMFE</i> -23.93 | 
+                                                                          <i>MFEI</i> -0.77
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>300</font> (<a href='../../read_clouds/novel_miRNA/4__298193-298561-2.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>300</font> (<a href='../../read_clouds/novel_miRNA/4__298193-298561-2.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">GUUAAUGACUGCUAAUCUAUCCAAAACAACGUCGUUUGAGAAUAAUCGAAAGAACAUAAAGAUUUUUUCCAUAUGAAAUUUCCAUAUCAAAAAGUUUUAAGCAGAACCCAAGAACAUAGUUUGAUAUAGAGAUAACCGCAGUGCCAGUAAUUGGAAGCAAAUAAAGGUGUUUUCGUUUAUAUAUUUGUUUUAAAUUUUAAAAGGAAUCAUGGAAGCAAAUUGAAGACUCAUUAUAAGAUUGUUCGUCUUGUUUGAGCGGUUGUAGAAAUAGAUUUGGGGAACUGGAGUUUCAUUUAGAAAACAAUCCUGAUUUUCUUUGGAUUAUUCUCAAAACAAAGUCAUUUUAGGGAUACUAAUAGAGUCGUUAAC
@@ -1192,7 +1254,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-313266-313379'><a href='#table_4-313266-313379' class='nodecoration'>Results for 4, 313266-313379 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-313266-313379'><a href='#table_4-313266-313379' class='nodecoration'>Results for 4, 313266-313379 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1213,7 +1275,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -23.80 kcal/mol | 
-                                                                          <i>AMFE</i> -20.8771929824561 | 
+                                                                          <i>AMFE</i> -20.88 | 
                                                                           <i>MFEI</i> -0.7
         </li>
         <li>
@@ -1231,7 +1293,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-434304-434483'><a href='#table_4-434304-434483' class='nodecoration'>Results for 4, 434304-434483 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-434304-434483'><a href='#table_4-434304-434483' class='nodecoration'>Results for 4, 434304-434483 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1252,11 +1314,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -66.37 kcal/mol | 
-                                                                          <i>AMFE</i> -40.9444444444444 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.31607142857143</font>
+                                                                          <i>AMFE</i> -40.94 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.32</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>152</font> (<a href='../../read_clouds/novel_miRNA/4__434304-434483-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>152</font> (<a href='../../read_clouds/novel_miRNA/4__434304-434483-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> two islands <font color='#FFBE00'>&#x2605;</font><font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">UGACUCUAUUUUAGAGGCUGCUCCAAUGGUCACAUGUAAAAUAGAAUUUUCUUUAAAAUAGAGGAGAUAUCAUCUCUAUAAAUAAAGAUCUCUACAUUUAGUCUCUAUUUUUUUCCUAUUUUUGAGGAAACUCUAUUUUAAAAGUGACCAUUGGAGCAUCGUGCCUAUAAAAUAGGGUCA
@@ -1286,7 +1348,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-618259-618526'><a href='#table_4-618259-618526' class='nodecoration'>Results for 4, 618259-618526 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-618259-618526'><a href='#table_4-618259-618526' class='nodecoration'>Results for 4, 618259-618526 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1307,11 +1369,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -12.02 kcal/mol | 
-                                                                          <i>AMFE</i> -19.7388059701493 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.25952380952381</font>
+                                                                          <i>AMFE</i> -19.74 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.26</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>119</font> (<a href='../../read_clouds/novel_miRNA/4__618259-618526-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>119</font> (<a href='../../read_clouds/novel_miRNA/4__618259-618526-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">AAAAAAUUGCAAGAUUAUCAUAUAAGUCACUCAACCAUAUACAGUAGAAACUCUAUAAAUUAAUAAUGUUGGGACCAUGAAAUUUUAUUAAUUUAUAGUGAUAUUAAUUUAUCCUAUAAAUUAAUAUUUAUUAAUUUAUCGUAUAAGUUAAUAAAUAUUAAUUUAUAAAAAUAUUUAUGUAAAAUACAAUACUAUAUUCUUUUUAAAAUGUUUUUAAUUAAUUUUCUAUAUGCUUUGUUGUUUGUAUAUAUAAUUAUGUUAGUUUUUU
@@ -1337,7 +1399,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-743281-743392'><a href='#table_4-743281-743392' class='nodecoration'>Results for 4, 743281-743392 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-743281-743392'><a href='#table_4-743281-743392' class='nodecoration'>Results for 4, 743281-743392 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1358,7 +1420,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -19.50 kcal/mol | 
-                                                                          <i>AMFE</i> -17.4107142857143 | 
+                                                                          <i>AMFE</i> -17.41 | 
                                                                           <i>MFEI</i> -0.78
         </li>
         <li>
@@ -1375,7 +1437,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-743386-743470'><a href='#table_4-743386-743470' class='nodecoration'>Results for 4, 743386-743470 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-743386-743470'><a href='#table_4-743386-743470' class='nodecoration'>Results for 4, 743386-743470 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1396,8 +1458,8 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -24.00 kcal/mol | 
-                                                                          <i>AMFE</i> -28.2352941176471 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.26315789473684</font>
+                                                                          <i>AMFE</i> -28.24 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.26</font>
         </li>
         <li>
     <b>Number of reads:</b> 44 (<a href='../../read_clouds/novel_miRNA/4__743386-743470-2.txt'>download<a/>)
@@ -1414,7 +1476,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-983183-983345'><a href='#table_4-983183-983345' class='nodecoration'>Results for 4, 983183-983345 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-983183-983345'><a href='#table_4-983183-983345' class='nodecoration'>Results for 4, 983183-983345 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1435,11 +1497,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -20.14 kcal/mol | 
-                                                                          <i>AMFE</i> -18.7730061349693 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.805263157894737</font>
+                                                                          <i>AMFE</i> -18.77 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.81</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>247</font> (<a href='../../read_clouds/novel_miRNA/4__983183-983345-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>247</font> (<a href='../../read_clouds/novel_miRNA/4__983183-983345-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">UCAAGUGAGAAACUAUGAGAUACUCUCUACAAGCCAUCAUUACAUUUCUCUUCUUUUAAUUGAUUCAAUUUUUACACUAAAAUAAAAAUUUAAUCAUAUAAUAAAAUUAUAAUAAAAUACUAAUAUUUUUCUUGUUCGAGAAACUUUUUGGGUUUCUCCUUGA
@@ -1475,7 +1537,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=aly-miR4234">a
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> no </li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 109-125</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 109-125</b>
 
      U        AU    UAC-    U-     CCAUCAUUACAUUUCUCUUCUUUUAAUUGAUUCAAUUUUUACACUAA
 UCAAG GAGAAACU  GAGA    UCUC  ACAAG                                               A
@@ -1509,7 +1571,7 @@ AGUUC CUCUUUGG  UUUU    AGAG  UGUUC                <span class="mature">        
 miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">gma-miR1533</a>
 </pre></li>
     </ul>
-<h2 id='4-983292-983369'><a href='#table_4-983292-983369' class='nodecoration'>Results for 4, 983292-983369 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-983292-983369'><a href='#table_4-983292-983369' class='nodecoration'>Results for 4, 983292-983369 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1530,11 +1592,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -25.80 kcal/mol | 
-                                                                          <i>AMFE</i> -33.0769230769231 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.921428571428571</font>
+                                                                          <i>AMFE</i> -33.08 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.92</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>567</font> (<a href='../../read_clouds/novel_miRNA/4__983292-983369-2.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>567</font> (<a href='../../read_clouds/novel_miRNA/4__983292-983369-2.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> one island <font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">AGAAGAGAAAUGUAAUGAUGGCUUGUAGAGAGUAUCUCAUAGUUUCUCACUUGAGAAACUUUCUACACUCUCUCUUCU
@@ -1578,7 +1640,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-985565-985737'><a href='#table_4-985565-985737' class='nodecoration'>Results for 4, 985565-985737 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-985565-985737'><a href='#table_4-985565-985737' class='nodecoration'>Results for 4, 985565-985737 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1599,8 +1661,8 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -24.93 kcal/mol | 
-                                                                          <i>AMFE</i> -27.6300578034682 | 
-                                                                          <i>MFEI</i> -0.758730158730159
+                                                                          <i>AMFE</i> -27.63 | 
+                                                                          <i>MFEI</i> -0.76
         </li>
         <li>
     <b>Number of reads:</b> 10 (<a href='../../read_clouds/novel_miRNA/4__985565-985737-3.txt'>download<a/>)
@@ -1617,7 +1679,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1001115-1001209'><a href='#table_4-1001115-1001209' class='nodecoration'>Results for 4, 1001115-1001209 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1001115-1001209'><a href='#table_4-1001115-1001209' class='nodecoration'>Results for 4, 1001115-1001209 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1638,11 +1700,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -12.50 kcal/mol | 
-                                                                          <i>AMFE</i> -13.1578947368421 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.833333333333333</font>
+                                                                          <i>AMFE</i> -13.16 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.83</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>164</font> (<a href='../../read_clouds/novel_miRNA/4__1001115-1001209-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>164</font> (<a href='../../read_clouds/novel_miRNA/4__1001115-1001209-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">GUAAAGAUGAUUUAAAAAUAUAUGAUAUUAUUUUAUUUGAUUUUAAAUGUAUAGUAAACUGUGAGUUGUAUAUGUUUUAUUGAUAUUAUCUAUAU
@@ -1667,7 +1729,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1023847-1024244'><a href='#table_4-1023847-1024244' class='nodecoration'>Results for 4, 1023847-1024244 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1023847-1024244'><a href='#table_4-1023847-1024244' class='nodecoration'>Results for 4, 1023847-1024244 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1688,11 +1750,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -110.57 kcal/mol | 
-                                                                          <i>AMFE</i> -54.2713567839196 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.58823529411765</font>
+                                                                          <i>AMFE</i> -54.27 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.59</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>364</font> (<a href='../../read_clouds/novel_miRNA/4__1023847-1024244-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>364</font> (<a href='../../read_clouds/novel_miRNA/4__1023847-1024244-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">AACUUUCAAAAAAUGGCCAAAUUAACCGUGAACUUUUGAAAUGGUCGUUUUAUACCUCAAAAAAAAGUUGAUUUCUAAUUUAACCUAUAAUUUAUUGUUGACUUCUAAUUUAACAUAUAAUUUAUCGUUGACCCAGCCAAAUAGACUCACCGUUAACACUCCUUAACAGCGCUCCUAACAGCCGUUACAAAACAUGGCCUAACAGCCGUUAUCGUUGGUUUAAGGACAAAAACAGUUGUUAGUUACGCUGUUAGGAGAGCUGUUAAGAAGUGUUAAUGGUGAGUCGAUUUGGCCGUGUCAACGAUAACUUAUAGGUUAAAUUAGAAGUCAACUUUUUGUUGAGGUAUAAAACGGCCAUUUCAAAAAUUCAUGGUUAAUUUGGCCACUUUUUAAAAGUU
@@ -1741,7 +1803,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=gma-miR1533">g
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> no </li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 261-281</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 261-281</b>
 
       C     A                   C                           A                             UUUAUUGUUGACUUCUAAUUUAACAUAUAAUUUAUCGUUGACCCAGCCAAAUAGACUCACCGUUAACACUCCUUAACAGCGCUCCUAACAGCCGUUACAAAACAUGGC
 AACUUU AAAAA UGGCCAAAUUAACCGUGAA UUUUGAAAUGGUCGUUUUAUACCUCAA AAAAAGUUGAUUUCUAAUUUAACCUAUAA                                                                                                            C
@@ -1759,7 +1821,7 @@ UUGAAA UUUUU ACCGGUUUAAUUGGUACUU AAAACUUUACCGGCAAAAUAUGGAGUU UUUUUCAACUGAAGAUUAA
 miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5635a">ath-miR5635a</a>
 </pre></li>
     </ul>
-<h2 id='4-1116570-1116885'><a href='#table_4-1116570-1116885' class='nodecoration'>Results for 4, 1116570-1116885 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1116570-1116885'><a href='#table_4-1116570-1116885' class='nodecoration'>Results for 4, 1116570-1116885 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1780,11 +1842,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5635a">
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -152.00 kcal/mol | 
-                                                                          <i>AMFE</i> -48.1012658227848 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.68888888888889</font>
+                                                                          <i>AMFE</i> -48.10 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.69</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>1438</font> (<a href='../../read_clouds/novel_miRNA/4__1116570-1116885-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>1438</font> (<a href='../../read_clouds/novel_miRNA/4__1116570-1116885-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> one island <font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">UUUAAGGGUUAAGUUGUAUACUAGUCACUUUUUAAAAUUUAAUUGAAAAAAUAGUCACUUUACUAUUUAUAAUUUGCAAAAUAGUCACUUUUCACUGUUUGAUUCGUACACUUAGUUUGUACACCACUUUUAGUGAUCAGAUGUAUAUAAAAAAUACACAGCGUACACUUUACAUUUGUACAAUAAAAGUGAUGUACAAUCCAAGUGUACGAAUCAAACAGUGAAAAGUGACUACUUUGCAAAUUAUGAAUAGUAAAGUGACUACUUUCCUAAUUAAGUUUGAAAAAGUGACUAUUUUGCCAAAACACCCCUUGAA
@@ -1884,7 +1946,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5635a">
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> yes <font color='#FFBE00'>&#x2605;</font></li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font><font color='#5B9F00'>&#x2713;</font> presence of alignments that cover the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 70-89</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font><font color='#41BE47'>&#x2713;</font> presence of alignments that cover the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 70-89</b>
 
         UUAAG   -  UAC            A           AA   A                  <span class="mature">           A        </span>                        A U       C        G  AU        UAUAAAAAAUA
 UUUAAGGG     UUG UA   UAGUCACUUUUU AAAUUUAAUUG  AAA UAGUCACUUUACUAUUUA<span class="mature">UAAUUUGCAAA UAGUCACU</span>UUUCACUGUUUGAUUCGUACACUU G UUGUACA CACUUUUA UG  CAGAUGUA           C
@@ -1918,7 +1980,7 @@ AAGUUCCC     AAC GU   AUCAGUGAAAAA UUUGAAUUAAU  UUU AUCAGUGAAAUGAUAAGUAUUAAACGUU
 miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5014a-5p">ath-miR5014a-5p</a>
 </pre></li>
     </ul>
-<h2 id='4-1190061-1190301'><a href='#table_4-1190061-1190301' class='nodecoration'>Results for 4, 1190061-1190301 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1190061-1190301'><a href='#table_4-1190061-1190301' class='nodecoration'>Results for 4, 1190061-1190301 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -1939,11 +2001,11 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5014a-5
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -35.00 kcal/mol | 
-                                                                          <i>AMFE</i> -23.6929460580913 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.98448275862069</font>
+                                                                          <i>AMFE</i> -23.69 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.98</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>101</font> (<a href='../../read_clouds/novel_miRNA/4__1190061-1190301-1.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>101</font> (<a href='../../read_clouds/novel_miRNA/4__1190061-1190301-1.txt'>download<a/>)
 </li>
 <li><b>Distribution of reads:</b> random</li>
 <pre style="font-size:0.8em;">UAUUCCCUCCGUCCCACUAAGAUGAAUUUUUUAAAAAUUUCACAUUGUUUAAGAAAUAUUGUAUAAAGACAAUUUUAACCUCUUAAUAUACUUUAAAAAUAAUAAUAAAUAUUUAUCUAAUUAUUUAGUAAGGAUAAAACGGGAAAACAGUUUUAAAAUUUGCAUUGGAAAUAUAAAACUUCUAUCUUUGUGGGACAAAUAUUUUUCCUAGAAAAUUUAUCUUUAUGGGACAGAGGGAGUA
@@ -1965,7 +2027,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=ath-miR5014a-5
 </pre>
 <li><b>Stability of the miRNA duplex (mirdup):</b> no </li>
 
-        <li><b>miRBase alignment:</b> <font color='#5B9F00'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 221-241</b>
+        <li><b>miRBase alignment:</b> <font color='#41BE47'>&#x2713;</font> presence of alignments, which do not overlap the miRNA locus (see reads cloud above)<br /><pre><b style='font-size:1.2em;'>Prediction : 221-241</b>
 
          C      CU               AAAAUUUCACAUUGUUUAAGAAAUAUUGUAUAAAGACAAUUUUAACCUCUUAAUAUACUUUAAAAAUAAUAAUAAAUAUUUAUCUA
 UAUUCCCUC GUCCCA  AAGAUGAAUUUUUUA                                                                                      A
@@ -1985,7 +2047,7 @@ miRBase 1: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=osa-miR1436">o
 miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3p.2">bdi-miR5174e-3p.2</a>
 </pre></li>
     </ul>
-<h2 id='4-1212018-1212144'><a href='#table_4-1212018-1212144' class='nodecoration'>Results for 4, 1212018-1212144 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1212018-1212144'><a href='#table_4-1212018-1212144' class='nodecoration'>Results for 4, 1212018-1212144 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -2006,8 +2068,8 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -66.10 kcal/mol | 
-                                                                          <i>AMFE</i> -52.0472440944882 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.57380952380952</font>
+                                                                          <i>AMFE</i> -52.05 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.57</font>
         </li>
         <li>
     <b>Number of reads:</b> 94 (<a href='../../read_clouds/novel_miRNA/4__1212018-1212144-1.txt'>download<a/>)
@@ -2031,7 +2093,7 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1230915-1231313'><a href='#table_4-1230915-1231313' class='nodecoration'>Results for 4, 1230915-1231313 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1230915-1231313'><a href='#table_4-1230915-1231313' class='nodecoration'>Results for 4, 1230915-1231313 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -2052,8 +2114,8 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -70.02 kcal/mol | 
-                                                                          <i>AMFE</i> -33.1954887218045 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.988432835820895</font>
+                                                                          <i>AMFE</i> -33.20 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.99</font>
         </li>
         <li>
     <b>Number of reads:</b> 36 (<a href='../../read_clouds/novel_miRNA/4__1230915-1231313-1.txt'>download<a/>)
@@ -2073,7 +2135,7 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1231264-1231345'><a href='#table_4-1231264-1231345' class='nodecoration'>Results for 4, 1231264-1231345 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1231264-1231345'><a href='#table_4-1231264-1231345' class='nodecoration'>Results for 4, 1231264-1231345 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -2094,8 +2156,8 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -22.20 kcal/mol | 
-                                                                          <i>AMFE</i> -27.0731707317073 | 
-                                                                          <i>MFEI</i> -0.672727272727273
+                                                                          <i>AMFE</i> -27.07 | 
+                                                                          <i>MFEI</i> -0.67
         </li>
         <li>
     <b>Number of reads:</b> 69 (<a href='../../read_clouds/novel_miRNA/4__1231264-1231345-2.txt'>download<a/>)
@@ -2111,7 +2173,7 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1270783-1270953'><a href='#table_4-1270783-1270953' class='nodecoration'>Results for 4, 1270783-1270953 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1270783-1270953'><a href='#table_4-1270783-1270953' class='nodecoration'>Results for 4, 1270783-1270953 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -2132,8 +2194,8 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -23.20 kcal/mol | 
-                                                                          <i>AMFE</i> -29.5321637426901 | 
-                                                                          <i>MFEI</i> -0.615853658536585
+                                                                          <i>AMFE</i> -29.53 | 
+                                                                          <i>MFEI</i> -0.62
         </li>
         <li>
     <b>Number of reads:</b> 66 (<a href='../../read_clouds/novel_miRNA/4__1270783-1270953-1.txt'>download<a/>)
@@ -2162,7 +2224,7 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1438780-1438882'><a href='#table_4-1438780-1438882' class='nodecoration'>Results for 4, 1438780-1438882 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1438780-1438882'><a href='#table_4-1438780-1438882' class='nodecoration'>Results for 4, 1438780-1438882 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -2183,8 +2245,8 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -32.90 kcal/mol | 
-                                                                          <i>AMFE</i> -31.9417475728155 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.889189189189189</font>
+                                                                          <i>AMFE</i> -31.94 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.89</font>
         </li>
         <li>
     <b>Number of reads:</b> 17 (<a href='../../read_clouds/novel_miRNA/4__1438780-1438882-1.txt'>download<a/>)
@@ -2202,7 +2264,7 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
 
         <li><b>miRBase alignment:</b> none </li></li>
     </ul>
-<h2 id='4-1439203-1439307'><a href='#table_4-1439203-1439307' class='nodecoration'>Results for 4, 1439203-1439307 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1439203-1439307'><a href='#table_4-1439203-1439307' class='nodecoration'>Results for 4, 1439203-1439307 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -2223,8 +2285,8 @@ miRBase 2: <a href="http://mirbase.org/cgi-bin/mirna_entry.pl?acc=bdi-miR5174e-3
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -24.30 kcal/mol | 
-                                                                          <i>AMFE</i> -23.1428571428571 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.81</font>
+                                                                          <i>AMFE</i> -23.14 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.81</font>
         </li>
         <li>
     <b>Number of reads:</b> 98 (<a href='../../read_clouds/novel_miRNA/4__1439203-1439307-2.txt'>download<a/>)

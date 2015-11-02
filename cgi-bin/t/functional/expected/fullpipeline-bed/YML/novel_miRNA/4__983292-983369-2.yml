@@ -209,10 +209,10 @@
 --- criteria_mirdup
 --- 0
 --- image
---- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__983292-983369-3.png
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline-bed/images/4__983292-983369-2.png
 --- length
 --- 78
 --- amfe
---- -33.0769230769231
+--- '-33.08'
 --- mfei
---- -0.921428571428571
+--- '-0.92'

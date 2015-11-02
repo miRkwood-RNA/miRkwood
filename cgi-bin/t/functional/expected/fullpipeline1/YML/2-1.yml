@@ -253,44 +253,44 @@
 --- alternatives
 ---
 contig15916__123-364:
-  amfe: -31.8595041322314
+  amfe: -31.86
   end_position: '364'
   energy_optimal: '-77.10'
   energy_stemloop: '-77.10'
-  mfei: -0.748543689320388
+  mfei: -0.75
   sequence: cagcagauauauauuauuuauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauuguug
   start_position: 123
   strand: +
   structure_optimal: ((((((........((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....))))))))))))))))
   structure_stemloop: ((((((........((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....))))))))))))))))
 contig15916__133-362:
-  amfe: -32.8695652173913
+  amfe: -32.87
   end_position: '362'
   energy_optimal: '-75.60'
   energy_stemloop: '-75.60'
-  mfei: -0.771428571428571
+  mfei: -0.77
   sequence: auauuauuuauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaauauugu
   start_position: 133
   strand: +
   structure_optimal: (((.((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....)))))))))).)))
   structure_stemloop: (((.((((((((((......(.(((...(((..((((...........(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).)))))))))))))..)))...))).).....)))))))))).)))
 contig15916__141-358:
-  amfe: -33.0275229357798
+  amfe: -33.03
   end_position: '358'
   energy_optimal: '-72.00'
   energy_stemloop: '-72.00'
-  mfei: -0.742268041237113
+  mfei: -0.74
   sequence: uauucauauauguguaucgagguaucggaagaagaaauuuucauuguuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaaccgauguaaaugaucugugaccgguguaggagaauuggaugaaua
   start_position: 141
   strand: +
   structure_optimal: (((((((....((...((....((((((....(((.....(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).))))))))))))....))))))...))..))...)))))))
   structure_stemloop: (((((((....((...((....((((((....(((.....(((((..((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((((.((....))..)))))))))))))..)).)))))....))))).)))))))))).)))))).)))))).))))))))))))....))))))...))..))...)))))))
 contig15916__198-313:
-  amfe: -42.0689655172414
+  amfe: -42.07
   end_position: '313'
   energy_optimal: '-48.80'
   energy_stemloop: '-48.80'
-  mfei: -0.841379310344827
+  mfei: -0.84
   sequence: uucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucauauuugucuccacugugugaaaccucguagcuugaguacuguccugccuugcaucaacugaaucugaa
   start_position: 198
   strand: +
@@ -303,11 +303,11 @@ contig15916__198-313:
 --- image
 --- /vagrant/cgi-bin/t/functional/output/fullpipeline1/workspace/2/1/image.png
 --- amfe
---- -42.1323529411765
+--- -42.13
 --- length
 --- 136
 --- mfei
---- -0.842647058823529
+--- -0.84
 --- mfe
 --- '-57.30'
 --- mirdup_validation
