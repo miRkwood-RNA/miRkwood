@@ -155,6 +155,8 @@ sub update_known_candidate_information {
     ($candidate->{'structure_optimal'}, $candidate->{'mfe'}) = $self->get_stemloop_structure_for_known_candidate();
     $candidate->{'structure_stemloop'} = get_stemloop_structure_from_optimal( $candidate->{'structure_optimal'} );
     ($candidate->{'mfei'}, $candidate->{'amfe'}) = miRkwood::Utils::compute_mfei_and_amfe( $candidate->{'sequence'}, $candidate->{'mfe'} );
+    $candidate->{'mfei'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'mfei'}, 3);
+    $candidate->{'amfe'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'amfe'}, 3);
     $candidate->{'image'} = $self->write_VARNA_if_needed();
 
     return $candidate;

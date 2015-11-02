@@ -405,6 +405,12 @@ sub serialize_candidates {
 
     foreach my $candidate (@candidates_array ) {
         miRkwood::CandidateHandler::print_reads_clouds( $candidate, miRkwood::Paths::get_new_reads_dir_from_job_dir( $self->{'job_dir'} ) );
+        $candidate->{'mfei'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'mfei'}, 3);
+        $candidate->{'amfe'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'amfe'}, 3);
+        foreach my $alternative ( keys%{$candidate->{'alternatives'}} ){
+            $candidate->{'alternatives'}{$alternative}{'mfei'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'alternatives'}{$alternative}{'mfei'}, 3);
+            $candidate->{'alternatives'}{$alternative}{'amfe'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'alternatives'}{$alternative}{'amfe'}, 3);
+        }
         miRkwood::CandidateHandler->serialize_candidate_information( miRkwood::Paths::get_new_candidates_dir_from_job_dir( $self->{'job_dir'} ), $candidate );
         push $self->{'basic_candidates'}, $candidate->get_basic_informations();
     }
