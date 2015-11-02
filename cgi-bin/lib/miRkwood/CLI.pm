@@ -187,8 +187,8 @@ sub make_candidate_page {
     my $candidate_name = $candidate->get_shortened_name();
 
     my $star = '<font color=\'#FFBE00\'>&#x2605;</font>';
-    my $coche = '<font color=\'#5B9F00\'>&#x2713;</font>';
-    my $arrow = '<font color=\'#008000\'>&uarr;</font>';
+    my $coche = '<font color=\'#41BE47\'>&#x2713;</font>';
+    my $arrow = '<font color=\'#BDBDBD\'>&uarr;</font>';
 
     ### make files in pieces folder
     my $candidate_fasta_file =
@@ -246,7 +246,7 @@ sub make_candidate_page {
     ### HTML sections
     my $mfei = "<i>MFEI</i> $candidate->{'mfei'}";
     if ( $candidate->{'mfei'} < -0.8 ){
-        $mfei = "<font color='#FF00FF'><i>MFEI</i> $candidate->{'mfei'}</font>";
+        $mfei = "<font color='#E13EA5'><i>MFEI</i> $candidate->{'mfei'}</font>";
     }
 
     # Reads
@@ -277,7 +277,7 @@ sub make_candidate_page {
 
         my $nb_reads = $candidate->{'nb_reads'};
         if ( $candidate->{'criteria_nb_reads'} == 1 ){
-            $nb_reads = "<font color='#FF5800'>$candidate->{'nb_reads'}</font>";
+            $nb_reads = "<font color='#12D0E5'>$candidate->{'nb_reads'}</font>";
         }
 
         if ( ! defined( $candidate->{'mirbase_id'} ) ){
@@ -362,7 +362,7 @@ END_TXT
 
     ### make page
     my $html = <<"END_TXT";
-<h2 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) [$arrow]</a></h2>
+<h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) $arrow</a></h3>
 
     <ul>
         <li>
@@ -471,13 +471,17 @@ table{
     border-collapse:collapse;
     width:80%;
     color:#505050;
+    cellpadding: 0px;
 }
 th, td {
     border:1px solid #505050;
     text-align:center;
 }
 span.mature {
-    color: blue;
+    color: #F3791B;
+}
+ul {
+   list-style-type: circle;
 }
 td .nodecoration
 { 
@@ -495,12 +499,32 @@ h2 .nodecoration
     width:100%; 
     height: 100%;
 }
+h3 .nodecoration
+{
+    text-decoration:none;
+    color: black;
+    display:block;
+    width:100%;
+    height: 100%;
+}
 .non_clickable_cell:hover{
-    background-color: #EDEDED;
+    background-color: white;
 }
 .clickable_cell:hover{
-    background-color: #CCFFFF;
+    background-color: #EEEEEE;
     cursor:pointer;
+}
+.read_cell:hover{
+    background-color: #E2F9FB;
+    cursor:pointer;
+}
+.star_cell:hover{
+   background-color: #FCF3C3;
+   cursor:pointer;
+}
+.alignment_cell:hover{
+   background-color: #E4F7E6;
+   cursor:pointer;
 }
 END_TXT
     return ($css);

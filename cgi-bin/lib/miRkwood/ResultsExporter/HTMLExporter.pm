@@ -24,9 +24,12 @@ sub get_header {
 sub export_candidate {
     my ( $self, @args ) = @_;
     my $candidate = shift @args;
-    my $output   = '<tr>';
-    my $non_clickable_cell  = "class='non_clickable_cell'";
-    my $clickable_cell  = "class='clickable_cell'";
+    my $output = "<tr>\n";
+    my $non_clickable_cell = "class='non_clickable_cell'";
+    my $clickable_cell = "class='clickable_cell'";
+    my $read_cell = "class='read_cell'";
+    my $star_cell = "class='star_cell'";
+    my $alignment_cell = "class='alignment_cell'";
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor' class='nodecoration'>${$candidate}{'name'}</a>";
 
@@ -52,11 +55,16 @@ sub export_candidate {
             $contents .= '</font></td>';
         }
         elsif ($header eq 'reads_distribution'){
-            $contents = "<td $non_clickable_cell><font color='#FFBE00'>";
-            for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
-                $contents .= '&#x2605;';
+            if ( ${$candidate}{'reads_distribution'} == 0){
+                $contents = "<td $non_clickable_cell> </td>";
             }
-            $contents .= '</font></td>';
+            else{
+                $contents = "<td $star_cell><a href='$reads_file' class='nodecoration'><font color='#FFBE00'>";
+                for (my $i = 0; $i < ${$candidate}{'reads_distribution'}; $i++){
+                    $contents .= '&#x2605;';
+                }
+                $contents .= '</font></a></td>';
+            }
         }
         elsif ($header eq 'alignment'){
             $contents = "<td ";
@@ -73,7 +81,7 @@ sub export_candidate {
                                                          ${$candidate}{'identifier'}. '_aln.txt' );
             }
             if ( ${$candidate}{'alignment'} > 0){
-                $contents .= "$clickable_cell><a href='$alignment_file' class='nodecoration'><font color='#5B9F00'>";
+                $contents .= "$alignment_cell><a href='$alignment_file' class='nodecoration'><font color='#41BE47'>";
                 for (my $i = 0; $i < ${$candidate}{'alignment'}; $i++){
                     $contents .= '&#x2713;';
                 }
@@ -86,7 +94,7 @@ sub export_candidate {
         elsif ($header eq 'mfei'){
             $contents = miRkwood::Utils::restrict_num_decimal_digits($contents, 3);
             if ( $contents < -0.8 ){
-                $contents = '<font color="#9F0960">' . $contents . '</font>';
+                $contents = '<font color="#E13EA5">' . $contents . '</font>';
             }
             $contents = "<td $non_clickable_cell>$contents</td>";
         }
@@ -98,9 +106,9 @@ sub export_candidate {
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){
-                $contents = "<font color='#FF5800'>${$candidate}{$header}</font>";
+                $contents = "<font color='#12D0E5'>${$candidate}{$header}</font>";
             }
-            $contents = "<td $clickable_cell><a href='$reads_file' class='nodecoration'>$contents</a></td>";
+            $contents = "<td $read_cell><a href='$reads_file' class='nodecoration'>$contents</a></td>";
         }
         else {
             $contents = "<td $non_clickable_cell>$contents</td>";
@@ -110,7 +118,7 @@ sub export_candidate {
         }
         $output .= "$contents\n";
     }
-    $output .= "\n</tr>\n";
+    $output .= "</tr>\n\n";
     return $output;
 }
 

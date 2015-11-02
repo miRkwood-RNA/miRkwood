@@ -11,18 +11,19 @@
 <th>shuffles</th>
 <th>alignment</th>
 </tr>
-<tr><td class='clickable_cell' id='table_contig15750-34-195'><a href='#contig15750-34-195' class='nodecoration'>contig15750</a></td>
+<tr>
+<td class='clickable_cell' id='table_contig15750-34-195'><a href='#contig15750-34-195' class='nodecoration'>contig15750</a></td>
 <td class='non_clickable_cell'>1-1</td>
 <td class='clickable_cell'><a href='#contig15750-34-195' class='nodecoration'>34-195</a></td>
 <td class='non_clickable_cell'>162</td>
 <td class='non_clickable_cell'>+</td>
 <td class='non_clickable_cell'><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
 <td class='non_clickable_cell'>-60.10</td>
-<td class='non_clickable_cell'><font color="#9F0960">-1.00</font></td>
+<td class='non_clickable_cell'><font color="#E13EA5">-1.00</font></td>
 <td class='non_clickable_cell'>-37.10</td>
 <td class='non_clickable_cell'>0.125000</td>
-<td class='clickable_cell'><a href='../alignments/1-1_aln.txt' class='nodecoration'><font color='#5B9F00'>&#x2713;</font></a></td>
-
+<td class='alignment_cell'><a href='../alignments/1-1_aln.txt' class='nodecoration'><font color='#41BE47'>&#x2713;</font></a></td>
 </tr>
+
 </tbody>
 </table>
