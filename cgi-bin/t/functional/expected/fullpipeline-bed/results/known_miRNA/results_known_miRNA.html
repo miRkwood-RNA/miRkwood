@@ -10,13 +10,17 @@ table{
     border-collapse:collapse;
     width:80%;
     color:#505050;
+    cellpadding: 0px;
 }
 th, td {
     border:1px solid #505050;
     text-align:center;
 }
 span.mature {
-    color: blue;
+    color: #F3791B;
+}
+ul {
+   list-style-type: circle;
 }
 td .nodecoration
 { 
@@ -34,6 +38,33 @@ h2 .nodecoration
     width:100%; 
     height: 100%;
 }
+h3 .nodecoration
+{
+    text-decoration:none;
+    color: black;
+    display:block;
+    width:100%;
+    height: 100%;
+}
+.non_clickable_cell:hover{
+    background-color: white;
+}
+.clickable_cell:hover{
+    background-color: #EEEEEE;
+    cursor:pointer;
+}
+.read_cell:hover{
+    background-color: #E2F9FB;
+    cursor:pointer;
+}
+.star_cell:hover{
+   background-color: #FCF3C3;
+   cursor:pointer;
+}
+.alignment_cell:hover{
+   background-color: #E4F7E6;
+   cursor:pointer;
+}
 </STYLE>
     </head>
     <body>
@@ -50,64 +81,69 @@ h2 .nodecoration
 <th>quality</th>
 <th>reads</th>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6520941-6521124'><a href='#1-6520941-6521124' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">ath-MIR837</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">MI0005393</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6520941-6521124' class='nodecoration'>6520941-6521124</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">AUCAGUUUCUUGUUCGUUUCA</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">21</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/known_miRNA/ath-MIR837.txt' class='nodecoration'><font color='#FF5800'>108</font></a></td>
-
+<tr>
+<td class='clickable_cell' id='table_1-6520941-6521124'><a href='#1-6520941-6521124' class='nodecoration'>1</a></td>
+<td class='non_clickable_cell'>ath-MIR837</td>
+<td class='non_clickable_cell'>MI0005393</td>
+<td class='clickable_cell'><a href='#1-6520941-6521124' class='nodecoration'>6520941-6521124</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>AUCAGUUUCUUGUUCGUUUCA</td>
+<td class='non_clickable_cell'>21</td>
+<td class='non_clickable_cell'><font color='#FFBE00'>&#x2605;</font></td>
+<td class='read_cell'><a href='../../read_clouds/known_miRNA/ath-MIR837.txt' class='nodecoration'><font color='#12D0E5'>108</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_1-6695420-6695609'><a href='#1-6695420-6695609' class='nodecoration'>1</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">ath-MIR169h</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">MI0000982</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#1-6695420-6695609' class='nodecoration'>6695420-6695609</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">UAGCCAAGGAUGACUUGCCUG</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">21</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/known_miRNA/ath-MIR169h.txt' class='nodecoration'><font color='#FF5800'>389</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_1-6695420-6695609'><a href='#1-6695420-6695609' class='nodecoration'>1</a></td>
+<td class='non_clickable_cell'>ath-MIR169h</td>
+<td class='non_clickable_cell'>MI0000982</td>
+<td class='clickable_cell'><a href='#1-6695420-6695609' class='nodecoration'>6695420-6695609</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>UAGCCAAGGAUGACUUGCCUG</td>
+<td class='non_clickable_cell'>21</td>
+<td class='non_clickable_cell'><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
+<td class='read_cell'><a href='../../read_clouds/known_miRNA/ath-MIR169h.txt' class='nodecoration'><font color='#12D0E5'>389</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-369831-370012'><a href='#4-369831-370012' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">ath-MIR165b</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">MI0000200</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-369831-370012' class='nodecoration'>369831-370012</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">UCGGACCAGGCUUCAUCCCCC</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">21</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/known_miRNA/ath-MIR165b.txt' class='nodecoration'><font color='#FF5800'>223338</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-369831-370012'><a href='#4-369831-370012' class='nodecoration'>4</a></td>
+<td class='non_clickable_cell'>ath-MIR165b</td>
+<td class='non_clickable_cell'>MI0000200</td>
+<td class='clickable_cell'><a href='#4-369831-370012' class='nodecoration'>369831-370012</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>UCGGACCAGGCUUCAUCCCCC</td>
+<td class='non_clickable_cell'>21</td>
+<td class='non_clickable_cell'><font color='#FFBE00'>&#x2605;&#x2605;</font></td>
+<td class='read_cell'><a href='../../read_clouds/known_miRNA/ath-MIR165b.txt' class='nodecoration'><font color='#12D0E5'>223338</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1023912-1024149'><a href='#4-1023912-1024149' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">ath-MIR5635d</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">MI0019217</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1023912-1024149' class='nodecoration'>1023912-1024149</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">+</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">UGUUAAGGAGUGUUAACGGUG</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">21</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'>&#x2605;</font></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/known_miRNA/ath-MIR5635d.txt' class='nodecoration'><font color='#FF5800'>294</font></a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1023912-1024149'><a href='#4-1023912-1024149' class='nodecoration'>4</a></td>
+<td class='non_clickable_cell'>ath-MIR5635d</td>
+<td class='non_clickable_cell'>MI0019217</td>
+<td class='clickable_cell'><a href='#4-1023912-1024149' class='nodecoration'>1023912-1024149</a></td>
+<td class='non_clickable_cell'>+</td>
+<td class='non_clickable_cell'>UGUUAAGGAGUGUUAACGGUG</td>
+<td class='non_clickable_cell'>21</td>
+<td class='non_clickable_cell'><font color='#FFBE00'>&#x2605;</font></td>
+<td class='read_cell'><a href='../../read_clouds/known_miRNA/ath-MIR5635d.txt' class='nodecoration'><font color='#12D0E5'>294</font></a></td>
 </tr>
-<tr><td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'" id='table_4-1046804-1046983'><a href='#4-1046804-1046983' class='nodecoration'>4</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">ath-MIR2936</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">MI0013366</td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='#4-1046804-1046983' class='nodecoration'>1046804-1046983</a></td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">-</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">CUUGAGAGAGAGAACACAGACG</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'">22</td>
-<td onmouseover="style='background-color:#EDEDED;'" onmouseout="style='background-color:white'"><font color='#FFBE00'></font></td>
-<td onmouseover="style='background-color:#CCFFFF;cursor:pointer;'" onmouseout="style='background-color:white'"><a href='../../read_clouds/known_miRNA/ath-MIR2936.txt' class='nodecoration'>5</a></td>
 
+<tr>
+<td class='clickable_cell' id='table_4-1046804-1046983'><a href='#4-1046804-1046983' class='nodecoration'>4</a></td>
+<td class='non_clickable_cell'>ath-MIR2936</td>
+<td class='non_clickable_cell'>MI0013366</td>
+<td class='clickable_cell'><a href='#4-1046804-1046983' class='nodecoration'>1046804-1046983</a></td>
+<td class='non_clickable_cell'>-</td>
+<td class='non_clickable_cell'>CUUGAGAGAGAGAACACAGACG</td>
+<td class='non_clickable_cell'>22</td>
+<td class='non_clickable_cell'><font color='#FFBE00'></font></td>
+<td class='read_cell'><a href='../../read_clouds/known_miRNA/ath-MIR2936.txt' class='nodecoration'>5</a></td>
 </tr>
+
 </tbody>
 </table>
-<h2 id='1-6520941-6521124'><a href='#table_1-6520941-6521124' class='nodecoration'>Results for 1, 6520941-6521124 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6520941-6521124'><a href='#table_1-6520941-6521124' class='nodecoration'>Results for 1, 6520941-6521124 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -123,16 +159,16 @@ h2 .nodecoration
         <li>
             <b>miRNA precursor:</b> [<a href='pieces/1__6520941-6521124.fa'>FASTA sequence</a>] 
                                     [<a href='pieces/1__6520941-6521124.txt'>stem-loop structure</a>] 
-                                    [<a href='pieces/1__6520941-6521124_optimal.txt'>optimal MFE structure</a>] 
+                                     
                                     
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -85.20 kcal/mol | 
-                                                                          <i>AMFE</i> -46.304347826087 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -2.02857142857143</font>
+                                                                          <i>AMFE</i> -46.30 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -2.03</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>108</font> (<a href='../../read_clouds/known_miRNA/ath-MIR837.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>108</font> (<a href='../../read_clouds/known_miRNA/ath-MIR837.txt'>download<a/>)
 </li>
 <li><b>Quality:</b> the locus contains more than 10 reads <font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">UUUUUGAUAAAUACUUUUGUUUGCUUACAAGUAUAAAGUCAUCAUGUUUUUUUCAUCAGUUUCUUGUUCGUUUCAAAAUUAUGAUUUUUGUUUACUUACACUCAUAAUCUUGAAACGAACAAAAAACUGAUGGAAAAACAUGAGGACUUUAUACUUGUAAAUAAAUAAAAAUAUUUAUUAGAAA
@@ -152,7 +188,7 @@ h2 .nodecoration
 
         
     </ul>
-<h2 id='1-6695420-6695609'><a href='#table_1-6695420-6695609' class='nodecoration'>Results for 1, 6695420-6695609 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='1-6695420-6695609'><a href='#table_1-6695420-6695609' class='nodecoration'>Results for 1, 6695420-6695609 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -168,16 +204,16 @@ h2 .nodecoration
         <li>
             <b>miRNA precursor:</b> [<a href='pieces/1__6695420-6695609.fa'>FASTA sequence</a>] 
                                     [<a href='pieces/1__6695420-6695609.txt'>stem-loop structure</a>] 
-                                    [<a href='pieces/1__6695420-6695609_optimal.txt'>optimal MFE structure</a>] 
+                                     
                                     
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -79.00 kcal/mol | 
-                                                                          <i>AMFE</i> -41.5789473684211 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.05333333333333</font>
+                                                                          <i>AMFE</i> -41.58 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.05</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>389</font> (<a href='../../read_clouds/known_miRNA/ath-MIR169h.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>389</font> (<a href='../../read_clouds/known_miRNA/ath-MIR169h.txt'>download<a/>)
 </li>
 <li><b>Quality:</b> the locus contains more than 10 reads, and more than half of them intersect either with the miRNA or the miRNA* <font color='#FFBE00'>&#x2605;</font><font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">UCAUAUAAGAGAAAAUGGUGACAUGAAGAAUGAGAACUUGUGUGGUAGCCAAGGAUGACUUGCCUGCGUUUUAGACCAUAUAUAUCAAAGACUCACUCGAUCGAUAGUCUUAGAGUUGGUUGGUCGUCAGGCAGUCUCCUUGGCUAUUCAAACAAUUCUCAUUCUCUUCAUUCACAUUUCUCUUUUUUGG
@@ -202,7 +238,7 @@ h2 .nodecoration
 
         
     </ul>
-<h2 id='4-369831-370012'><a href='#table_4-369831-370012' class='nodecoration'>Results for 4, 369831-370012 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-369831-370012'><a href='#table_4-369831-370012' class='nodecoration'>Results for 4, 369831-370012 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -218,16 +254,16 @@ h2 .nodecoration
         <li>
             <b>miRNA precursor:</b> [<a href='pieces/4__369831-370012.fa'>FASTA sequence</a>] 
                                     [<a href='pieces/4__369831-370012.txt'>stem-loop structure</a>] 
-                                    [<a href='pieces/4__369831-370012_optimal.txt'>optimal MFE structure</a>] 
+                                     
                                     
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -66.50 kcal/mol | 
-                                                                          <i>AMFE</i> -36.5384615384615 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.963768115942029</font>
+                                                                          <i>AMFE</i> -36.54 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.96</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>223338</font> (<a href='../../read_clouds/known_miRNA/ath-MIR165b.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>223338</font> (<a href='../../read_clouds/known_miRNA/ath-MIR165b.txt'>download<a/>)
 </li>
 <li><b>Quality:</b> the locus contains more than 10 reads, and more than half of them intersect either with the miRNA or the miRNA* <font color='#FFBE00'>&#x2605;</font><font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">UGAAGAGGCUAUUUCUGUUGUGGGGAAUGUUGUUUGGAUCGAGGAUAUCAUAAACGCAUACACAUGUUUAUAUGUUAUGAUGCAUUAUAUGACUGAUGUAAUGUACAUAUAUAUACAUACAUGCCACAUGGUAUCGUCGGACCAGGCUUCAUCCCCCUCAACAUGUUAAUUGCCUUCAAUCA
@@ -250,7 +286,7 @@ h2 .nodecoration
 
         
     </ul>
-<h2 id='4-1023912-1024149'><a href='#table_4-1023912-1024149' class='nodecoration'>Results for 4, 1023912-1024149 (+) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1023912-1024149'><a href='#table_4-1023912-1024149' class='nodecoration'>Results for 4, 1023912-1024149 (+) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -266,16 +302,16 @@ h2 .nodecoration
         <li>
             <b>miRNA precursor:</b> [<a href='pieces/4__1023912-1024149.fa'>FASTA sequence</a>] 
                                     [<a href='pieces/4__1023912-1024149.txt'>stem-loop structure</a>] 
-                                    [<a href='pieces/4__1023912-1024149_optimal.txt'>optimal MFE structure</a>] 
+                                     
                                     
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -135.40 kcal/mol | 
-                                                                          <i>AMFE</i> -56.890756302521 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -1.45591397849462</font>
+                                                                          <i>AMFE</i> -56.89 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -1.46</font>
         </li>
         <li>
-    <b>Number of reads:</b> <font color='#FF5800'>294</font> (<a href='../../read_clouds/known_miRNA/ath-MIR5635d.txt'>download<a/>)
+    <b>Number of reads:</b> <font color='#12D0E5'>294</font> (<a href='../../read_clouds/known_miRNA/ath-MIR5635d.txt'>download<a/>)
 </li>
 <li><b>Quality:</b> the locus contains more than 10 reads <font color='#FFBE00'>&#x2605;</font></li>
 <pre style="font-size:0.8em;">AGUUGACUUCUAAUUUAACCUAUAAGUUAUCGUUGACACGGCCAAAUCGACUCACCAUUAACACUUCUUAACAGCUCUCCUAACAGCGUAACUAACAACUGUUUUUGUCCUUAAACCAACGAUAACGGCUGUUAGGCCAUGUUUUGUAACGGCUGUUAGGAGCGCUGUUAAGGAGUGUUAACGGUGAGUCUAUUUGGCUGGGUCAACGAUAAAUUAUAUGUUAAAUUAGAAGUCAACA
@@ -324,7 +360,7 @@ h2 .nodecoration
 
         
     </ul>
-<h2 id='4-1046804-1046983'><a href='#table_4-1046804-1046983' class='nodecoration'>Results for 4, 1046804-1046983 (-) [<font color='#008000'>&uarr;</font>]</a></h2>
+<h3 id='4-1046804-1046983'><a href='#table_4-1046804-1046983' class='nodecoration'>Results for 4, 1046804-1046983 (-) <font color='#BDBDBD'>&uarr;</font></a></h3>
 
     <ul>
         <li>
@@ -340,13 +376,13 @@ h2 .nodecoration
         <li>
             <b>miRNA precursor:</b> [<a href='pieces/4__1046804-1046983.fa'>FASTA sequence</a>] 
                                     [<a href='pieces/4__1046804-1046983.txt'>stem-loop structure</a>] 
-                                    [<a href='pieces/4__1046804-1046983_optimal.txt'>optimal MFE structure</a>] 
+                                     
                                     
         </li>
         <li>
             <b>Stability of the secondary structure of the precursor:</b> <i>MFE</i> -60.40 kcal/mol | 
-                                                                          <i>AMFE</i> -33.5555555555556 | 
-                                                                          <font color='#FF00FF'><i>MFEI</i> -0.816216216216216</font>
+                                                                          <i>AMFE</i> -33.56 | 
+                                                                          <font color='#E13EA5'><i>MFEI</i> -0.82</font>
         </li>
         <li>
     <b>Number of reads:</b> 5 (<a href='../../read_clouds/known_miRNA/ath-MIR2936.txt'>download<a/>)
