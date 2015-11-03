@@ -213,16 +213,19 @@ sub make_candidate_page {
     close($VIENNA_FILE)
       or die("Cannot close file $vienna_file: $!");
 
-    my $vienna_file_optimal =
-      File::Spec->catfile( $pieces_folder, $candidate_name . '_optimal.txt' );
-    open( my $VIENNA_FILE_OPT,
-        '>', File::Spec->catfile( $output_folder, $vienna_file_optimal ) )
-      or die("Cannot open $vienna_file_optimal: $!");
-    print {$VIENNA_FILE_OPT}
-      $candidate->candidateAsVienna(1)
-      or die("Cannot write in file $vienna_file_optimal: $!");
-    close($VIENNA_FILE_OPT)
-      or die("Cannot close file $vienna_file_optimal: $!");
+    my $vienna_file_optimal = '';
+    if ( $candidate->{'structure_optimal'} ne $candidate->{'structure_stemloop'} ){
+        $vienna_file_optimal =
+          File::Spec->catfile( $pieces_folder, $candidate_name . '_optimal.txt' );
+        open( my $VIENNA_FILE_OPT,
+            '>', File::Spec->catfile( $output_folder, $vienna_file_optimal ) )
+          or die("Cannot open $vienna_file_optimal: $!");
+        print {$VIENNA_FILE_OPT}
+          $candidate->candidateAsVienna(1)
+          or die("Cannot write in file $vienna_file_optimal: $!");
+        close($VIENNA_FILE_OPT)
+          or die("Cannot close file $vienna_file_optimal: $!");
+    }
 
     my $alternatives_file = File::Spec->catfile( $pieces_folder,
         $candidate_name . '_alternatives.txt' );
@@ -360,6 +363,12 @@ END_TXT
         $alternatives_HTML = "[<a href='$linkAlternatives'>alternative sequences</a>]"
     }
 
+    # Optimal structure
+    my $optimal_HTML = '';
+    if ( -e $vienna_file_optimal ){
+        $optimal_HTML = "[<a href='$linkViennaOptimal'>optimal MFE structure</a>]";
+    }
+
     ### make page
     my $html = <<"END_TXT";
 <h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) $arrow</a></h3>
@@ -378,7 +387,7 @@ END_TXT
         <li>
             <b>miRNA precursor:</b> [<a href='$linkFasta'>FASTA sequence</a>] 
                                     [<a href='$linkVienna'>stem-loop structure</a>] 
-                                    [<a href='$linkViennaOptimal'>optimal MFE structure</a>] 
+                                    $optimal_HTML 
                                     $alternatives_HTML
         </li>
         <li>
