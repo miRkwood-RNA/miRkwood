@@ -28,8 +28,8 @@ sub filterBEDfile {
     my @args = @_;
     my $class    = shift @args;
     my $bed_file = shift @args;
-    my $species  = shift @args;
     my $cfg      = miRkwood->CONFIG();
+    my $species            = $cfg->param('job.plant');
     my $filter_multimapped = $cfg->param('options.filter_multimapped');
     my $annotation_gff     = $cfg->param( 'options.annotation_gff' );
     my @annotation_gff     = split( /\&/, $annotation_gff );

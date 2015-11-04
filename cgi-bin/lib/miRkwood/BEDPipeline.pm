@@ -217,15 +217,11 @@ initial BED file if no filter had been done.
 sub filter_BED {
     my ($self, @args) = @_;
     my $cfg                = miRkwood->CONFIG();
-    my $species            = $cfg->param('job.plant');
-    my $filter_CDS         = $cfg->param('options.filter_CDS');
-    my $filter_tRNA_rRNA   = $cfg->param('options.filter_tRNA_rRNA');
-    my $filter_multimapped = $cfg->param('options.filter_multimapped');
     my $localBED           = $self->{'initial_bed'};
     my $filteredBED        = '';
     my $mirnaBED           = '';
 
-    ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile( $localBED, $species );
+    ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile( $localBED );
 
     if ( ! defined($filteredBED) || $filteredBED eq '' ){
         $self->{'bed_file'} = $self->{'initial_bed'};
