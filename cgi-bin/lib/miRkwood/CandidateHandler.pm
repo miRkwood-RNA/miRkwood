@@ -162,8 +162,11 @@ sub print_reads_clouds {
 
     $output .= "Chromosome : $chromosome\n";
     $output .= "Position   : $precursor_start-$precursor_end\n";
-    $output .= "Strand     : $strand\n";
-    $output .= "\n$reference\n";
+    $output .= "Strand     : $strand\n\n";
+    if ( $candidate->{'structure_optimal'} ne $candidate->{'structure_stemloop'} ){
+       $output .= "$candidate->{'structure_optimal'}\n"; 
+    }
+    $output .= "$reference\n";
     $output .= "$structure\n";
 
     ### If there is a miRNA, print some [[[..]]] for the miRNA and the paired area (only for new candidates)

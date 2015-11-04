@@ -2,6 +2,7 @@ Chromosome : 1
 Position   : 6454664-6454931
 Strand     : -
 
+((((.(((..((((((((.(((....(((((((..(((((((.((((((((((.((.....((((((((((((((((.........(((((.........................))))).........))))))))))))))))....(((((((((..........)))))))))....(((((((((........))))))))))).))))))))))))))))))))))))...)))...))......))))))..))).))))
 GUUAAACUUAAAUUGGCAUUGGUUUAGAGAUUUUAGUUGGUUUAAUUCAAUUUUACAAAACUUGAUGGGUUAAUUGGGUAAACCAUUGAAACCAUUAACCAUUACAACCUAACUUAUUUUAUUCAUCAAACCAAUUGACUCAUCAAAUCAUUUGACUCAUCAACUCAUUUGAGUCAAAAUUUUCAACUCAUUACGGUUUAUGGGUUGAGUUGAAUUGAGUUGACCAAUGAAUUUUGACCCAUUUUGAUACCCCUAAUUGUAGUAUAGC
 ((((.(((..((((((((.(((....(((((((..(((((((.((((((((((.((........................................................................................................................................................)).))))))))))))))))))))))))...)))...))......))))))..))).))))
                        ...[[[[[[[..[[[[[[[.[[[[                                                                                                                                                                          ]]]]]]]]]]]]]]]]]]..

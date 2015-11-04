@@ -2,6 +2,7 @@ Chromosome : 4
 Position   : 1190061-1190301
 Strand     : -
 
+(((((((((.((((((..(((((((((((((((...............((((((((.(((((......))))).))....))))))..........(((((((.((((....))))...))))))).(((((..((((((.(.....).))))))...)))))...(((((.(((....((((((....))))))....))).))))))))))))))))))))..)))))).)))))))))
 UAUUCCCUCCGUCCCACUAAGAUGAAUUUUUUAAAAAUUUCACAUUGUUUAAGAAAUAUUGUAUAAAGACAAUUUUAACCUCUUAAUAUACUUUAAAAAUAAUAAUAAAUAUUUAUCUAAUUAUUUAGUAAGGAUAAAACGGGAAAACAGUUUUAAAAUUUGCAUUGGAAAUAUAAAACUUCUAUCUUUGUGGGACAAAUAUUUUUCCUAGAAAAUUUAUCUUUAUGGGACAGAGGGAGUA
 (((((((((.((((((..(((((((((((((((...............................................................................................................................................................................)))))))))))))))..)))))).)))))))))
  <-----miRBase------>                                                                                                                                                                                                                            
