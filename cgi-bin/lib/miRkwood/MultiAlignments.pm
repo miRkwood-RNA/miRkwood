@@ -199,14 +199,22 @@ sub fillTabTemp2D{
         my $posBaseEndFinal;
         my ($cdtBase, $mirTp) = splitSeqCdtAligt($tab[0][0]{'alignment'});
         $tabNameMir[0] = 'Query';
-        for(my $i=0; $i<@{$tab[0]}; $i++){
-            my ($cdtSeq, $mirSeq) = splitSeqCdtAligt($tab[0][$i]{'alignment'});
-            ($cdtBase, $posBaseEndFinal) = updateCdtBase($posEndBaseCurrent, $tab[0][$i]{'end_target'}, $cdtBase, $cdtSeq);
-            $tabNameMir[$i+1] = $tab[0][$i]{'name'};
-            ($cdtSeq, $mirSeq, my $tabTemp2DRef) = modifyAligt($cdtSeq, $mirSeq, $posBeginBase, $posEndBaseCurrent, \@tab, $i, \@tabTemp2D);
-            @tabTemp2D = @{$tabTemp2DRef};
-            $hashMirSeq{$tab[0][$i]{'name'}}=$mirSeq;
-            @tabTemp2D = setTabTemp($cdtSeq, $mirSeq, $i+1, \@tabTemp2D);
+        if(@{$tab[0]}==1){
+            ($cdtBase, $posBaseEndFinal) = updateCdtBase($posEndBaseCurrent, $tab[0][0]{'end_target'}, $cdtBase, $cdtBase);
+            $tabNameMir[1] = $tab[0][0]{'name'};
+            $hashMirSeq{$tab[0][0]{'name'}}=$mirTp;
+            @tabTemp2D = setTabTemp($mirTp, $mirTp, 1, \@tabTemp2D)
+        }
+        else{
+            for(my $i=0; $i<@{$tab[0]}; $i++){
+                my ($cdtSeq, $mirSeq) = splitSeqCdtAligt($tab[0][$i]{'alignment'});
+                ($cdtBase, $posBaseEndFinal) = updateCdtBase($posEndBaseCurrent, $tab[0][$i]{'end_target'}, $cdtBase, $cdtSeq);
+                $tabNameMir[$i+1] = $tab[0][$i]{'name'};
+                ($cdtSeq, $mirSeq, my $tabTemp2DRef) = modifyAligt($cdtSeq, $mirSeq, $posBeginBase, $posEndBaseCurrent, \@tab, $i, \@tabTemp2D);
+                @tabTemp2D = @{$tabTemp2DRef};
+                $hashMirSeq{$tab[0][$i]{'name'}}=$mirSeq;
+                @tabTemp2D = setTabTemp($cdtSeq, $mirSeq, $i+1, \@tabTemp2D);
+            }
         }
         $hashMirSeq{'Query'}=$cdtBase;
         @tabTemp2D = setTabTemp($cdtBase, $cdtBase, 0, \@tabTemp2D);
