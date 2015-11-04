@@ -4,7 +4,12 @@
 # rather a predicted stem-loop portion that includes the precursor.
 
 1	miRkwood	miRNA_primary_transcript	6520941	6521124	.	+	.	Name=preMir_1__6520941-6521124	
+1	miRkwood	miRNA	6520995	6521015	.	+	.	Name=Mir_1__6520995-6521015	
 1	miRkwood	miRNA_primary_transcript	6695420	6695609	.	-	.	Name=preMir_1__6695420-6695609	
+1	miRkwood	miRNA	6695544	6695564	.	-	.	Name=Mir_1__6695544-6695564	
 4	miRkwood	miRNA_primary_transcript	369831	370012	.	-	.	Name=preMir_4__369831-370012	
+4	miRkwood	miRNA	369856	369876	.	-	.	Name=Mir_4__369856-369876	
 4	miRkwood	miRNA_primary_transcript	1023912	1024149	.	+	.	Name=preMir_4__1023912-1024149	
+4	miRkwood	miRNA	1024077	1024097	.	+	.	Name=Mir_4__1024077-1024097	
 4	miRkwood	miRNA_primary_transcript	1046804	1046983	.	-	.	Name=preMir_4__1046804-1046983	
+4	miRkwood	miRNA	1046948	1046969	.	-	.	Name=Mir_4__1046948-1046969	

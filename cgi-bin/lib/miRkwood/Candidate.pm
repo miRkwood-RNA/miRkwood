@@ -339,6 +339,20 @@ sub candidate_as_gff {
       '.' . "\t" .                          # phase
       "Name=$candidate_name" . "\t" .       # attributes
       "\n";
+    if ( exists($self->{'mirna_sequence'}) && $self->{'mirna_sequence'} ne '' ){
+        my ($mirna_start, $mirna_end) = split(/-/, $self->{'mirna_position'});
+        my $mir_name = 'Mir_' . $self->{'name'} . '__' . $self->{'mirna_position'};
+        $text .= $self->{'name'} . "\t" .        # seqid
+                    'miRkwood' . "\t" .          # source
+                    'miRNA' . "\t" .             # type
+                    $mirna_start . "\t" .        # start
+                    $mirna_end . "\t" .          # end
+                    '.' . "\t" .                 # score
+                    $self->{'strand'} . "\t" .   # strand
+                    '.' . "\t" .                 # phase
+                    "Name=$mir_name" . "\t" .    # attributes
+                    "\n";
+    }
     return $text;
 }
 
