@@ -278,7 +278,7 @@ sub make_candidate_page {
                 miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
                 $mirna_type,
                 $candidate->{'identifier'}.'.txt');
-        my $read_cloud  = include_read_cloud_in_html( $absolute_read_cloud_path );
+        my $read_cloud  = include_read_cloud_in_html( $absolute_read_cloud_path, $candidate->{'length'}, $candidate->{'nb_reads'} );
         my $read_duplex = '';
 
         my $nb_reads = $candidate->{'nb_reads'};
@@ -416,7 +416,10 @@ END_TXT
 sub include_read_cloud_in_html {
     my @args = @_;
     my $read_cloud_file = shift @args;
-    my $result = '<pre style="font-size:0.8em;">';
+    my $locus_length    = shift @args;
+    my $locus_nb_reads  = shift @args;
+    my $threshold = int( $locus_nb_reads / $locus_length ) + 1;
+    my $result = '<pre style="font-size:0.8em;">\n';
     open(my $IN, '<', $read_cloud_file) or return '';
     my $line = <$IN>;
     while ( <$IN> ){
@@ -426,7 +429,7 @@ sub include_read_cloud_in_html {
             if ( /depth=([\d]+)/ ){
                 $depth = $1;
             }
-            if ( $depth == -1 || $depth > 1 ){
+            if ( $depth == -1 || $depth > $threshold ){
                 $result .= "$_\n";
             }
         }
