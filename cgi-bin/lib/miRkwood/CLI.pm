@@ -227,16 +227,19 @@ sub make_candidate_page {
           or die("Cannot close file $vienna_file_optimal: $!");
     }
 
-    my $alternatives_file = File::Spec->catfile( $pieces_folder,
-        $candidate_name . '_alternatives.txt' );
-    open( my $ALT_FILE, '>',
-        File::Spec->catfile( $output_folder, $alternatives_file ) )
-      or die("Cannot open $alternatives_file: $!");
-    print {$ALT_FILE}
-      $candidate->alternativeCandidatesAsVienna()
-      or die("Cannot write in file $alternatives_file: $!");
-    close($ALT_FILE)
-      or die("Cannot close file $alternatives_file: $!");
+    my $alternatives_file = '';
+    if( $candidate->{'alternatives'} and scalar(keys%{ $candidate->{'alternatives'} }) ){
+        $alternatives_file = File::Spec->catfile( $pieces_folder,
+            $candidate_name . '_alternatives.txt' );
+        open( my $ALT_FILE, '>',
+            File::Spec->catfile( $output_folder, $alternatives_file ) )
+          or die("Cannot open $alternatives_file: $!");
+        print {$ALT_FILE}
+          $candidate->alternativeCandidatesAsVienna()
+          or die("Cannot write in file $alternatives_file: $!");
+        close($ALT_FILE)
+          or die("Cannot close file $alternatives_file: $!");
+    }
 
 
     ### links
@@ -359,7 +362,7 @@ END_TXT
 
     # Alternative sequences
     my $alternatives_HTML = '';
-    if( $candidate->{'alternatives'} and scalar(keys%{ $candidate->{'alternatives'} }) ){
+    if ( -e $alternatives_file ){
         $alternatives_HTML = "[<a href='$linkAlternatives'>alternative sequences</a>]"
     }
 
