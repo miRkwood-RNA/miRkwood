@@ -35,9 +35,7 @@ sub filterBEDfile {
     my @annotation_gff     = split( /\&/, $annotation_gff );
     my $job_dir            = $cfg->param('job.directory');
     my $basename           = $cfg->param('job.bed');
-
-    my $data_path    = miRkwood::Paths->get_data_path();
-    my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
+    my $mirbase_file       = $cfg->param( 'options.mirbase_gff' );
 
     my $mirna_reads       = File::Spec->catfile( $job_dir , "${basename}_miRNAs.bed");
     my $multimapped_reads = File::Spec->catfile( $job_dir , "${basename}_multimapped.bed");

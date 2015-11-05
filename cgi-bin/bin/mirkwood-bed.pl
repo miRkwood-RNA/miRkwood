@@ -26,6 +26,7 @@ my $job_title = 0;
 my $output_folder = '';
 my $genome_file;
 my $varna = 0;
+my $mirbase_file = '';
 my @annotation_gff;
 my $annotation_gff;
 my $filter_bad_hairpins = 1;
@@ -46,6 +47,7 @@ GetOptions(
     'shuffles'               => \$randfold,
     'align'                  => \$align,
     'no-filter-mfei'         => \$no_mfei,
+    'mirbase=s'              => \$mirbase_file,
     'gff=s'                  => \@annotation_gff,
     'no-filter-bad-hairpins' => \$no_filter_bad_hairpins,
     'no-filter-multimapped'  => \$no_filter_multimapped,
@@ -134,6 +136,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          'smallRNAseq',
                                          $basename_bed,
                                          $align,
+                                         $mirbase_file,
                                          $annotation_gff,
                                          $filter_bad_hairpins,
                                          $filter_multimapped,

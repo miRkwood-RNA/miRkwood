@@ -231,6 +231,7 @@ sub write_config_for_bam_pipeline {
          $mode,
          $bed,
          $align,
+         $mirbase_file,
          $annotation_gff,
          $filter_bad_hairpins,
          $filter_multimapped,
@@ -245,6 +246,7 @@ sub write_config_for_bam_pipeline {
     $run_options->param( 'job.pipeline',     $mode );
     $run_options->param( 'job.bed',          $bed );
     $run_options->param( 'job.directory',    $job_dir );
+    $run_options->param( 'options.mirbase_gff', $mirbase_file );
     $run_options->param( 'options.annotation_gff', $annotation_gff );
     $run_options->param( 'options.filter_bad_hairpins', $filter_bad_hairpins );
     $run_options->param( 'options.filter_multimapped',  $filter_multimapped );

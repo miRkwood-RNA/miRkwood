@@ -83,6 +83,7 @@ if ( $filter_CDS ){
 if ( $filter_tRNA_rRNA ){
     $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_tRNA_rRNA_snoRNA.gff" );
 }
+my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
 
 if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }
 if ( $filter_bad_hairpins ) { $filter_bad_hairpins = 1 } else { $filter_bad_hairpins = 0 }
@@ -141,7 +142,7 @@ if ( $species ne '' )    # case model organism
     }
 
 }
-else {
+else {  # delete this since it seems that we won't allow the user to enter their own sequence ?
     debug('Reference sequence is provided by the user.', 1);
 
     if ( $seqArea eq q{} ){
@@ -195,6 +196,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          'smallRNAseq',
                                          $basename_bed,
                                          $align,
+                                         $mirbase_file,
                                          $annotation_gff,
                                          $filter_bad_hairpins,
                                          $filter_multimapped,
