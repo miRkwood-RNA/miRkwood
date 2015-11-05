@@ -193,6 +193,11 @@ Flag conserved mature miRNAs (alignment with miRBase + miRdup).
 Don't filter out sequences with MFEI >= -0.6.
 Default : only keep sequences with MFEI < -0.6.
 
+=item B<--mirbase>
+
+If you have a gff file containing known miRNAs for this assembly,
+use this option to give the path to this file.
+
 =item B<--gff>
 
 List of annotation files (gff or gff3 format).
