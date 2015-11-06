@@ -265,7 +265,7 @@ sub fillTabTemp2D{
         @tabTemp2D = setTabTemp($cdtBase, $cdtBase, 0, \@tabTemp2D);
         my @tabAlgtMult = setAligtMultiple(\%hashMirSeq, \@tabTemp2D, \@tabNameMir);
         @tabAlgtMult = starInAlgt(\@tabAlgtMult);
-        writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posEndBaseFinal);
+        writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posEndBaseFinal, $id_candidate);
     }
 
 }
