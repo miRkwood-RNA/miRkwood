@@ -17,29 +17,37 @@ use warnings;
 #Parameters : $cdtSeq (sequence of candidate), $miRSeq (sequence of mirBase), $posBaseCdtBegin (it's the begin basic position for the aligment), $posBaseCdtEnd (it's the end basic position for the aligment), $tabDataAligtRef (table with the data for a alignment 2*2), $line (position of candidate in $tab2DRef), $tab2DRef (table 2D with the position for the sequence  mirBase of alignment 2*2 compared sequence candidate)
 #Return : $cdtSeq, $miRSeq, @tab2D
 sub modifyAligt{
-    my ($cdtSeq, $miRSeq, $posBaseCdtBegin,$posBaseCdtEnd, $tabDataAligtRef, $line, $tab2DRef) = @_;
-    my @tabDataAligt = @{$tabDataAligtRef};
-    my @tab2D = @{$tab2DRef};
-    my $posCdtBegin = $tabDataAligt[0][$line]{'begin_target'};
-    my $posCdtEnd = $tabDataAligt[0][$line]{'end_target'};
+    my ($cdtBase, $cdtSeq, $miRSeq, $posBaseCdtBegin,$posBaseCdtEnd, $tabDataAligtRef, $line, $tab2DRef) = @_;
+    my @tabDataAligt = @$tabDataAligtRef;
+    my @tab2D = @$tab2DRef;
+    my $posCdtBegin = $tabDataAligt[0][$line]{"begin_target"};
+    my $posCdtEnd = $tabDataAligt[0][$line]{"end_target"};
     if ($posCdtBegin>$posBaseCdtBegin){
         for(my $i=0;$i<($posCdtBegin-$posBaseCdtBegin);$i++){
-            $cdtSeq='X'.$cdtSeq;
-            $miRSeq='-'.$miRSeq;
+            $cdtSeq = "X".$cdtSeq;
+            $miRSeq = "-".$miRSeq;
         }
     }
     if ($posCdtEnd<$posBaseCdtEnd){
         for(my $i=0;$i<($posBaseCdtEnd-$posCdtEnd);$i++){
-            $cdtSeq=$cdtSeq.'X';
-            $miRSeq=$miRSeq.'-';
+            $cdtSeq.="X";
+            $miRSeq.="-";
         }
     }
     if ($posBaseCdtEnd<$posCdtEnd){
         my $nbSeq = @{$tabDataAligt[0]};
         for(my $j=0; $j<($posCdtEnd-$posBaseCdtEnd);$j++){
             for( my $l=0; $l<$nbSeq; $l++){
-            $tab2D[$l][($posCdtEnd-$posBaseCdtBegin)+$j]=0;
+                $tab2D[$l][($posCdtEnd-$posBaseCdtBegin)+$j]=0;
             }
+        }
+    }
+    if (substr($cdtBase, 0, 1) eq "-" && substr($cdtSeq, 0, 1) =~ m/[A-Z]/){
+        my $i=0;
+        while(substr($cdtBase, $i, 1) eq "-"){
+            $cdtSeq = "X".$cdtSeq;
+            $miRSeq = "-".$miRSeq;
+            $i++;
         }
     }
     return ($cdtSeq, $miRSeq, \@tab2D);
