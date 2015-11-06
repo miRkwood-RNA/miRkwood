@@ -36,6 +36,13 @@ sub filterBEDfile {
     my $job_dir            = $cfg->param('job.directory');
     my $basename           = $cfg->param('job.bed');
     my $mirbase_file       = $cfg->param( 'options.mirbase_gff' );
+    my $multimapped_interval = $cfg->param('options.multimapped_interval');
+    my $min_nb_positions = 0;
+    my $max_nb_positions = 5;
+    if ( $multimapped_interval =~ /\[(.*);(.*)\]/ ){
+        $min_nb_positions = $1;
+        $max_nb_positions = $2;
+    }
 
     my $mirna_reads       = File::Spec->catfile( $job_dir , "${basename}_miRNAs.bed");
     my $multimapped_reads = File::Spec->catfile( $job_dir , "${basename}_multimapped.bed");
@@ -90,9 +97,14 @@ sub filterBEDfile {
     }
 
     ### Filter out multimapped reads
-    if ( $filter_multimapped ){
-        debug( 'Filter out multimapped reads...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-        filter_multimapped_reads( File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed"), $filtered_bed, $multimapped_reads );
+    if ( $max_nb_positions != 0 ){
+        debug( "Filter out multimapped reads... (only keep reads between $min_nb_positions and $max_nb_positions positions)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        filter_multimapped_reads( 
+             File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed"),
+             $filtered_bed,
+             $multimapped_reads,
+             $min_nb_positions,
+             $max_nb_positions );
         debug( 'Multimapped reads have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
@@ -142,7 +154,7 @@ sub store_overlapping_reads {
     my $additionalArgs = shift @args;
 
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -wa -wb $additionalArgs > $outputFile";
-    debug( "   $job", 1);
+    #~ debug( "   $job", 1);
     system($job);
 
     return;
@@ -165,7 +177,7 @@ sub store_non_overlapping_reads {
     my $outputFile = shift @args;
 
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -v > $outputFile";
-    debug( "   $job", 1);
+    #~ debug( "   $job", 1);
     system($job);
 
     return;
@@ -182,8 +194,9 @@ sub filter_multimapped_reads {
     my $bed_file = shift @args;
     my $output_file = shift @args;
     my $discarded_file = shift @args;
+    my $min_nb_positions = shift @args;
+    my $max_nb_positions = shift @args;      
 
-    my $max_positions = 5;
     my $counts;
     my @line;
 
@@ -213,7 +226,7 @@ sub filter_multimapped_reads {
     while ( <$BED> ){
 
         @line = split( /\t/xms );
-        if ( $counts->{$line[3]} <= $max_positions ){
+        if ( $counts->{$line[3]} >= $min_nb_positions && $counts->{$line[3]} <= $max_nb_positions ){
             print $KEEP $_;
         }
         else{

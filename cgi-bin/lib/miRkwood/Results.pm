@@ -423,6 +423,14 @@ sub create_summary_page {
         }
     }
 
+    my $multimapped_interval = $cfg->param('options.multimapped_interval');
+    my $min_nb_positions = 0;
+    my $max_nb_positions = 5;
+    if ( $multimapped_interval =~ /\[(.*);(.*)\]/ ){
+        $min_nb_positions = $1;
+        $max_nb_positions = $2;
+    }
+
     my $output_txt = '';
     $output_txt .= "OPTIONS SUMMARY\n";
     $output_txt .= "===============\n\n";
@@ -436,7 +444,12 @@ sub create_summary_page {
             $output_txt .= "Filter out features given in $1\n";
         }
     }
-    $output_txt .= 'Filter multiply mapped reads: ' . $boolean_mapping{ $cfg->param('options.filter_multimapped') } . "\n";
+    if ( $min_nb_positions == 0 && $max_nb_positions == 0){
+        $output_txt .= "Filter multiply mapped reads: No\n";
+    }
+    else{
+        $output_txt .= "Filter multiply mapped reads: keep reads mapping at $min_nb_positions to $max_nb_positions positions\n";
+    }
     $output_txt .= 'Filter low quality hairpins: ' . $boolean_mapping{ $cfg->param('options.filter_bad_hairpins') } . "\n";
 
     $output_txt .= "\nRESULTS SUMMARY\n";

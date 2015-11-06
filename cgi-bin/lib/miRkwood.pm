@@ -234,7 +234,7 @@ sub write_config_for_bam_pipeline {
          $mirbase_file,
          $annotation_gff,
          $filter_bad_hairpins,
-         $filter_multimapped,
+         $multimapped_interval,
          $mfei,
          $randfold,
          $varna,
@@ -249,7 +249,7 @@ sub write_config_for_bam_pipeline {
     $run_options->param( 'options.mirbase_gff', $mirbase_file );
     $run_options->param( 'options.annotation_gff', $annotation_gff );
     $run_options->param( 'options.filter_bad_hairpins', $filter_bad_hairpins );
-    $run_options->param( 'options.filter_multimapped',  $filter_multimapped );
+    $run_options->param( 'options.multimapped_interval',  $multimapped_interval );
     $run_options->param( 'options.align',    $align );
     $run_options->param( 'options.mfei',     $mfei );
     $run_options->param( 'options.randfold', $randfold );

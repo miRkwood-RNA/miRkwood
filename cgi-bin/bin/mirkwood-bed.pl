@@ -31,8 +31,9 @@ my @annotation_gff;
 my $annotation_gff;
 my $filter_bad_hairpins = 1;
 my $no_filter_bad_hairpins = 0;
-my $filter_multimapped = 1;
-my $no_filter_multimapped = 0;
+my $min_read_positions_nb = 0;
+my $max_read_positions_nb = 5;
+my $read_positions_nb_interval = '';
 my $randfold;
 my $mfei = 1;
 my $no_mfei = 0;
@@ -42,19 +43,20 @@ my $force = 0;
 
 ##### Get options
 GetOptions(
-    'genome=s'               => \$genome_file,
-    'output=s'               => \$output_folder,
-    'shuffles'               => \$randfold,
-    'align'                  => \$align,
-    'no-filter-mfei'         => \$no_mfei,
-    'mirbase=s'              => \$mirbase_file,
-    'gff=s'                  => \@annotation_gff,
-    'no-filter-bad-hairpins' => \$no_filter_bad_hairpins,
-    'no-filter-multimapped'  => \$no_filter_multimapped,
-    'varna'                  => \$varna,
-    'help|?'                 => \$help,
-    'force'                  => \$force,
-    man                      => \$man
+    'genome=s'                => \$genome_file,
+    'output=s'                => \$output_folder,
+    'shuffles'                => \$randfold,
+    'align'                   => \$align,
+    'no-filter-mfei'          => \$no_mfei,
+    'mirbase=s'               => \$mirbase_file,
+    'gff=s'                   => \@annotation_gff,
+    'no-filter-bad-hairpins'  => \$no_filter_bad_hairpins,
+    'min-read-positions-nb=s' => \$min_read_positions_nb,
+    'max-read-positions-nb=s' => \$max_read_positions_nb,
+    'varna'                   => \$varna,
+    'help|?'                  => \$help,
+    'force'                   => \$force,
+    man                       => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
@@ -70,9 +72,26 @@ if ( $no_mfei ){
 if ( $no_filter_bad_hairpins ){
     $filter_bad_hairpins = 0;
 }
-if ( $no_filter_multimapped ){
-    $filter_multimapped = 0;
+
+if ( $min_read_positions_nb !~ /^-?(\d+)$/ ){
+    my $msg = "ERROR: --min-read-positions-nb must be digit.\n";
+    $msg .= "Enter 0 if you don't want to specify a minimum number of positions for each read.";
+    die $msg;
 }
+if ( $max_read_positions_nb !~ /^-?(\d+)$/ ){
+    my $msg = "ERROR: --max-read-positions-nb must be digit.\n";
+    $msg .= "Enter 0 if you don't want to specify a maximum number of positions for each read.";
+    die $msg;
+}
+if ( $min_read_positions_nb > $max_read_positions_nb ){
+    die "ERROR: --min-read-positions-nb must be lower than --max-read-positions-nb.\n";
+}
+if ( $min_read_positions_nb < 0 || $max_read_positions_nb < 0 ){
+    $min_read_positions_nb = 0;
+    $max_read_positions_nb = 0;
+}
+$read_positions_nb_interval = "[$min_read_positions_nb;$max_read_positions_nb]";
+
 
 # Check output folder
 if ($output_folder eq ''){
@@ -139,7 +158,7 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $mirbase_file,
                                          $annotation_gff,
                                          $filter_bad_hairpins,
-                                         $filter_multimapped,
+                                         $read_positions_nb_interval,
                                          $mfei,
                                          $randfold,
                                          $varna,
@@ -203,10 +222,15 @@ use this option to give the path to this file.
 List of annotation files (gff or gff3 format).
 Reads matching with an element of these files will be filtered out.
 
-=item B<--no-filter-multimapped>
+=item B<--min-read-positions-nb>
 
-Don't filter out multimapped reads.
-Default: reads that map at more than 5 positions are filtered out.
+Minimum number of positions for each read to be kept.
+Default : 0.
+
+=item B<--max-read-positions-nb>
+
+Maximum number of positions for each read to be kept.
+Default : 5 (reads that map at more than 5 positions are filtered out).
 
 =item B<--varna>
 

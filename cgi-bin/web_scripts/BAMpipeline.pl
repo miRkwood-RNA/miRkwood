@@ -85,7 +85,7 @@ if ( $filter_tRNA_rRNA ){
 }
 my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
 
-if ( $filter_multimapped ) { $filter_multimapped = 1 } else { $filter_multimapped = 0 }
+if ( $filter_multimapped ) { $filter_multimapped = '[0;5]' } else { $filter_multimapped = '[0;0]' }
 if ( $filter_bad_hairpins ) { $filter_bad_hairpins = 1 } else { $filter_bad_hairpins = 0 }
 if ( $mfei       ) { $mfei       = 1 } else { $mfei       = 0 }
 if ( $randfold   ) { $randfold   = 1 } else { $randfold   = 0 }

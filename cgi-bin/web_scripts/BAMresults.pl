@@ -143,7 +143,7 @@ if ( $valid ){
         }
 
         # Multimapped reads
-        if ( $cfg->param('options.filter_multimapped') ){
+        if ( $cfg->param('options.multimapped_interval') ne '[0;0]' ){
             $HTML_additional .= '<li><em>Filter multiply mapped reads:</em> Yes</li>';
         }
         else{
