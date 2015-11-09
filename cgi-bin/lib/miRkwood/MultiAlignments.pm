@@ -150,6 +150,42 @@ sub writeInFile{
     return;
 }
 
+#Allow to conserve the gap in the base                                                                                                                                            
+#Parameters : $cdtBase is the sequence which the base of the multiple alignment and $cdtCurrent is the base of the alignment 2*2                                                  
+#Return : $cdtBase updated                                                                                                                                                        
+sub processUpdateBase{
+    my ($cdtBase, $cdtCurrent) = @_;
+    my $i=0;
+    my $j=0;
+    my $tailleMax=0;
+    if (length($cdtBase)>length($cdtCurrent)){
+        $tailleMax=length($cdtBase);
+    }else{
+        $tailleMax=length($cdtCurrent);
+    }
+    while($i<$tailleMax){
+        if ($i==0 && substr($cdtCurrent, 0, 1) eq "-"){
+            $cdtBase = "-".$cdtBase;
+            $i++;
+            $j++;
+        }elsif(substr($cdtCurrent, $j, 1) eq "-" && substr($cdtBase, $i, 1) ne "-"){
+            my $beforeInsert = substr($cdtBase, 0, $i-1);
+            my $afterInsert = substr($cdtBase, $i);
+            $cdtBase = $beforeInsert."-".$afterInsert;
+            $i++;
+            $j++;
+        }elsif(substr($cdtBase, $j, 1) eq "-" && substr($cdtCurrent, $i, 1) ne "-"){
+            $i++;
+        }elsif(length($cdtCurrent)>length($cdtBase)){
+            $cdtBase=$cdtBase."-";
+        }
+        else{
+            $i++;
+	    $j++;
+        }
+    }
+    return $cdtBase;
+}
 
 #Compares the end positions between the basic candidate and current, if the end position of current candidate is bigger, the basic sequence is update by adding of the last nucleotide of current candidate.
 #Parameter : $posBase (end position of basic candidate), $posAlgt (end position of current candidate), $cdtBase (sequence of basic candidate), $cdtCurrent (sequence of current candidate)
@@ -169,6 +205,8 @@ sub updateCdtBase{
             $cdtBase.=substr($cdtCurrent, length($cdtCurrent)-(($posEndTarget)-$posEndBase)+$i,1);
         }
         $posEndBase=$posEndTarget;
+    }else{
+        $cdtBase = processUpdateBase($cdtBase, $cdtCurrent);
     }
     return ($cdtBase, $posEndBase);
 }
@@ -248,8 +286,8 @@ sub fillTabTemp2D{
             my ($cdt, $mirTp) = splitSeqCdtAligt($tab[0][0]{"alignment"});
             $hashMirSeq{$tab[0][0]{"name"}}=$mirTp;
             $tabNameMir[1] = $tab[0][0]{"name"};
-            @tabTemp2D = setTabTemp($mirTp, $mirTp, 1, \@tabTemp2D)
-
+            @tabTemp2D = setTabTemp($cdt, $mirTp, $mirTp, 1, \@tabTemp2D);
+	    $posEndBaseFinal=$posEndBaseCurrent;
         }
         else{
             for(my $i=0; $i<@{$tab[0]}; $i++){
@@ -258,11 +296,11 @@ sub fillTabTemp2D{
                 @tabTemp2D = @$tabTemp2DRef;
                 $hashMirSeq{$tab[0][$i]{"name"}}=$mirSeq;
                 $tabNameMir[$i+1] = $tab[0][$i]{"name"};
-                @tabTemp2D = setTabTemp($cdtBase, $mirSeq, $i+1, \@tabTemp2D);
+                @tabTemp2D = setTabTemp($cdtSeq, $cdtBase, $mirSeq, $i+1, \@tabTemp2D);
             }
         }
         $hashMirSeq{"Query"}=$cdtBase;
-        @tabTemp2D = setTabTemp($cdtBase, $cdtBase, 0, \@tabTemp2D);
+        @tabTemp2D = setTabTemp($cdtBase, $cdtBase, $cdtBase, 0, \@tabTemp2D);
         my @tabAlgtMult = setAligtMultiple(\%hashMirSeq, \@tabTemp2D, \@tabNameMir);
         @tabAlgtMult = starInAlgt(\@tabAlgtMult);
         writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posEndBaseFinal, $id_candidate);
@@ -275,19 +313,24 @@ sub fillTabTemp2D{
 #Parameters : $cdtSeq (sequence of candidate), $miRSeq (sequence of mir), $numMir (number of mir in the tab2D), $tab2DRef (table 2D with the position of sequence)
 #Return : @tab2D
 sub setTabTemp{
-    my ($cdtSeq, $miRSeq, $numMir, $tab2DRef) = @_;
+    my ($cdtCurrent, $cdtSeq, $miRSeq, $numMir, $tab2DRef) = @_;
     my $posMiR=0;
     my $posCandidate=0;
     my @tab2D = @{$tab2DRef};
     my $i=0;
-
+    my $nbInsertInMirseq = 0;
     while($posCandidate<length($cdtSeq)){
         if(substr($miRSeq,$posMiR,1) eq '-'){
             $tab2D[$numMir][$i]=0;
             $i++;
         }
+	elsif(substr($cdtSeq, $posCandidate, 1) eq "-" && substr($miRSeq,$posMiR,1) =~ m/\w/ && substr($cdtCurrent,$posMiR,1) =~ m/\w/){
+            $tab2D[$numMir][$i]=0;
+            $i++;
+            $nbInsertInMirseq++;
+        }
         elsif(substr($cdtSeq, $posCandidate, 1) eq "-" && substr($miRSeq,$posMiR,1) =~ m/\w/){
-            $tab2D[$numMir][$i]=$posCandidate+1;
+            $tab2D[$numMir][$i]=$posCandidate+1-$nbInsertInMirseq;
             $i++;
         }
         elsif(substr($cdtSeq, $posCandidate, 1) eq "-" && ! substr($miRSeq,$posMiR,1) =~ m/\w/){
@@ -295,7 +338,7 @@ sub setTabTemp{
             $i++;
         }
         else{
-            $tab2D[$numMir][$i]=$posCandidate+1;
+            $tab2D[$numMir][$i]=$posCandidate+1-$nbInsertInMirseq;
             $i++;
         }
         $posCandidate++;
