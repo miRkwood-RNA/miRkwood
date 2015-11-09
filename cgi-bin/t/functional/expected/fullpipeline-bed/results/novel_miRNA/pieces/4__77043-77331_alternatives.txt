@@ -1,9 +1,0 @@
->4__77033-77340- (MFEI: -0.75)
-UAUAAGAUAUGGGCCUCUUCACCUAUUGCCAAUUGGUUUUAGGUUGGAAACCCACACUCUAAUAUGGUAUCAGAGCCUGAUCCGCACAUACUCAACCCGAUCCACAUCGGUCCGGCCCAAUACUUGGCCCGCCGAUCCAUGCCCAAACAUAUCGAGAUCAAUGGCUAGAAGAACCAUCAUCUCGAGGGGGCGUAUUAGGGACAAUGUCCCACAUCGAAAGUUGAGUAGGAUCUUAAGUGAUAUAUAUAAGAUAUGAGCCUUUCCAUCUAUUGCCAAUUGGUUUUAUGUUGGAAGCCCACACUCUAAUA
-(((.(((..(((((.(((..((.((..((((((((((..(((((.(((((..(.((.(((.(((((.(((((......(((((.....((((((((.((((...............................................................................................................))))...))))))))))))).....)))))))))).)))..)).)..))))))))))..))))))))))..)).)).))).)))))...))).)))
->4__77039-77349- (MFEI: -0.74)
-AGUGGUAUAUAUAAGAUAUGGGCCUCUUCACCUAUUGCCAAUUGGUUUUAGGUUGGAAACCCACACUCUAAUAUGGUAUCAGAGCCUGAUCCGCACAUACUCAACCCGAUCCACAUCGGUCCGGCCCAAUACUUGGCCCGCCGAUCCAUGCCCAAACAUAUCGAGAUCAAUGGCUAGAAGAACCAUCAUCUCGAGGGGGCGUAUUAGGGACAAUGUCCCACAUCGAAAGUUGAGUAGGAUCUUAAGUGAUAUAUAUAAGAUAUGAGCCUUUCCAUCUAUUGCCAAUUGGUUUUAUGUUGGAAGCCCACACU
-((((..............(((((.(((..((.((..((((((((((..(((((.(((((..(.((.(((.(((((.(((((......(((((.....((((((((.((((...............................................................................................................))))...))))))))))))).....)))))))))).)))..)).)..))))))))))..))))))))))..)).)).))).)))))))))
->4__77047-77324- (MFEI: -0.74)
-CUUCACCUAUUGCCAAUUGGUUUUAGGUUGGAAACCCACACUCUAAUAUGGUAUCAGAGCCUGAUCCGCACAUACUCAACCCGAUCCACAUCGGUCCGGCCCAAUACUUGGCCCGCCGAUCCAUGCCCAAACAUAUCGAGAUCAAUGGCUAGAAGAACCAUCAUCUCGAGGGGGCGUAUUAGGGACAAUGUCCCACAUCGAAAGUUGAGUAGGAUCUUAAGUGAUAUAUAUAAGAUAUGAGCCUUUCCAUCUAUUGCCAAUUGGUUUUAUGUUGGAAG
-((((((.((..((((((((((..(((((.(((((..(.((.(((.(((((.(((((......(((((.....((((((((.((((...............................................................................................................))))...))))))))))))).....)))))))))).)))..)).)..))))))))))..))))))))))..)).))..))))
