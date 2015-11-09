@@ -423,15 +423,15 @@ sub get_results_folder_for_CLI_from_job_dir {
     }
 }
 
-=method get_pieces_folder_basename_for_CLI
+=method get_sequences_folder_basename_for_CLI
 
-  Return the basename for results directory
+  Return the basename for sequences directory
   (CLI pipeline)
 
 =cut
-sub get_pieces_folder_basename_for_CLI {
+sub get_sequences_folder_basename_for_CLI {
     my (@args) = @_;
-    return 'pieces';
+    return 'sequences';
 }
 
 =method get_bed_file

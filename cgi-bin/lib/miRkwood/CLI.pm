@@ -33,21 +33,23 @@ sub process_results_dir_for_offline {
 
     my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
 
+    my $abs_sequences_folder = miRkwood::Paths::create_folder(
+            File::Spec->catdir( $abs_output_folder, miRkwood::Paths::get_sequences_folder_basename_for_CLI() )
+        );
+
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $mirna_type eq 'known_miRNA' ){
             $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $abs_output_folder );
+            miRkwood::Paths::create_folder( File::Spec->catdir( $abs_sequences_folder, miRkwood::Paths::get_basename_for_known_miRNA() ) );
         }
         else{
             $candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $abs_output_folder );
+            miRkwood::Paths::create_folder( File::Spec->catdir( $abs_sequences_folder, miRkwood::Paths::get_basename_for_novel_miRNA() ) );
         }
     }
     else{
         $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
     }
-
-    my $tmp_pieces_folder = miRkwood::Paths::create_folder(
-            File::Spec->catdir( $final_results_folder, miRkwood::Paths::get_pieces_folder_basename_for_CLI() )
-        );
 
     my %results = miRkwood::Results->deserialize_results($candidates_dir);
 
@@ -72,7 +74,7 @@ sub process_results_dir_for_offline {
 
 Given a reference to a results hash, makes the HTML
 Usage:
-  my $html = make_html_from_results( \%results, $output_folder );
+  my $html = make_html_from_results( \%results, $abs_output_folder, $pipeline_type, $mirna_type );
 
 =cut
 
@@ -82,7 +84,7 @@ sub make_html_from_results {
     my $abs_output_folder = shift @args;
     my $pipeline_type     = shift @args;
     my $mirna_type        = shift @args;
-    my $pieces_folder = miRkwood::Paths::get_pieces_folder_basename_for_CLI();
+    my $sequences_folder = miRkwood::Paths::get_sequences_folder_basename_for_CLI();
 
     my %results = %{$results};
     my ($css) = get_page_css();
@@ -91,7 +93,7 @@ sub make_html_from_results {
     my $nb_results = scalar( keys%results );
     $page .= "<h3>$nb_results candidates found.</h3>\n";
 
-    $page .= make_all_exports( \%results, $abs_output_folder, $pieces_folder, $pipeline_type, $mirna_type );
+    $page .= make_all_exports( \%results, $abs_output_folder, $sequences_folder, $pipeline_type, $mirna_type );
     $page .= '<br />';
 
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $pipeline_type, $mirna_type );
@@ -105,7 +107,7 @@ sub make_html_from_results {
     } keys %results;
 
     foreach my $key ( @keys ){
-        $page .= make_candidate_page( $results{ $key }, $pieces_folder, $abs_output_folder, $pipeline_type, $mirna_type );
+        $page .= make_candidate_page( $results{ $key }, $sequences_folder, $abs_output_folder, $pipeline_type, $mirna_type );
     }
     my $html = get_simple_results_page( $page, $css );
 
@@ -118,7 +120,7 @@ Given a reference to a results hash, generates the various
 exports in the given output directory.
 
 Usage:
-  my $html = make_all_exports(\%results, $output_folder);
+  my $html = make_all_exports(\%results, $abs_output_folder, $sequences_folder, $pipeline_type, $mirna_type);
 
 =cut
 
@@ -126,13 +128,12 @@ sub make_all_exports {
     my (@args)        = @_;
     my $results_ref       = shift @args;
     my $abs_output_folder = shift @args;
-    my $pieces_folder     = shift @args;
+    my $sequences_folder  = shift @args;
     my $pipeline_type     = shift @args;
     my $mirna_type        = shift @args;
     my $id_job = '';
     my $exporter;
     my $html = '<h3>Get results as</h3> <ul>';
-
     my $final_results_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
 
     $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( $pipeline_type, $mirna_type );
@@ -168,19 +169,45 @@ sub make_all_exports {
 Given a candidate hash, make the HTML page
 
 Usage:
-  my $html = make_candidate_page( \$candidate, $pieces_folder, $output_folder );
+  my $html = make_candidate_page( \$candidate, 
+      $sequences_folder_folder,
+      $abs_output_folder,
+      $pipeline_type,
+      $mirna_type );
 
 =cut
 
 sub make_candidate_page {
     my (@args)        = @_;
     my $candidate     = shift @args;
-    my $pieces_folder = shift @args;
+    my $sequences_folder = shift @args;
     my $abs_output_folder = shift @args;
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
-
-    my $output_folder = miRkwood::Paths::get_results_folder_for_CLI_from_job_dir( $abs_output_folder, $pipeline_type, $mirna_type );
+    my $relative_sequences_folder = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), $sequences_folder);
+    my $absolute_sequences_folder = File::Spec->catfile( $abs_output_folder, $sequences_folder );
+    if ( $pipeline_type eq 'smallRNAseq' ){
+        if ( $mirna_type eq 'known_miRNA' ){
+            $relative_sequences_folder = File::Spec->catdir( 
+                $relative_sequences_folder,
+                miRkwood::Paths::get_basename_for_known_miRNA()
+            );
+            $absolute_sequences_folder = File::Spec->catdir( 
+                $absolute_sequences_folder,
+                miRkwood::Paths::get_basename_for_known_miRNA()
+            );
+        }
+        else{
+            $relative_sequences_folder = File::Spec->catdir(
+                $relative_sequences_folder,
+                miRkwood::Paths::get_basename_for_novel_miRNA()
+            );
+            $absolute_sequences_folder = File::Spec->catdir( 
+                $absolute_sequences_folder,
+                miRkwood::Paths::get_basename_for_novel_miRNA()
+            );
+        }
+    }
 
     my $size = length $candidate->{'sequence'};
     my $cfg    = miRkwood->CONFIG();
@@ -190,63 +217,59 @@ sub make_candidate_page {
     my $coche = '<font color=\'#41BE47\'>&#x2713;</font>';
     my $arrow = '<font color=\'#BDBDBD\'>&uarr;</font>';
 
-    ### make files in pieces folder
-    my $candidate_fasta_file =
-      File::Spec->catfile( $pieces_folder, "$candidate_name.fa" );
-    open( my $FASTA_FILE,
-        '>', File::Spec->catfile( $output_folder, $candidate_fasta_file ) )
-      or die("Cannot open file $candidate_fasta_file: $!");
-    print {$FASTA_FILE}
-      $candidate->candidateAsFasta()
-      or die("Cannot write in file $candidate_fasta_file: $!");
+    ### make files in 'sequences' folder
+    my $rel_candidate_fasta_file = File::Spec->catfile( $relative_sequences_folder, "$candidate_name.fa" );
+    my $abs_candidate_fasta_file = File::Spec->catfile( $absolute_sequences_folder, "$candidate_name.fa" );
+    open( my $FASTA_FILE, '>', $abs_candidate_fasta_file ) 
+      or die("Cannot open file $abs_candidate_fasta_file: $!");
+    print {$FASTA_FILE} $candidate->candidateAsFasta()
+      or die("Cannot write in file $abs_candidate_fasta_file: $!");
     close($FASTA_FILE)
-      or die("Cannot close file $candidate_fasta_file: $!");
+      or die("Cannot close file $abs_candidate_fasta_file: $!");
 
-    my $vienna_file =
-      File::Spec->catfile( $pieces_folder, "$candidate_name.txt" );
-    open( my $VIENNA_FILE,
-        '>', File::Spec->catfile( $output_folder, $vienna_file ) )
-      or die("Cannot open $vienna_file: $!");
-    print {$VIENNA_FILE}
-      $candidate->candidateAsVienna(0)
-      or die("Cannot write in file $vienna_file: $!");
+    my $rel_vienna_file = File::Spec->catfile( $relative_sequences_folder, "$candidate_name.txt" );
+    my $abs_vienna_file = File::Spec->catfile( $absolute_sequences_folder, "$candidate_name.txt" );
+    open( my $VIENNA_FILE, '>', $abs_vienna_file )
+      or die("Cannot open $abs_vienna_file: $!");
+    print {$VIENNA_FILE} $candidate->candidateAsVienna(0)
+      or die("Cannot write in file $abs_vienna_file: $!");
     close($VIENNA_FILE)
-      or die("Cannot close file $vienna_file: $!");
+      or die("Cannot close file $abs_vienna_file: $!");
 
-    my $vienna_file_optimal = '';
+    my $rel_vienna_file_optimal = '';
+    my $abs_vienna_file_optimal = '';
     if ( $candidate->{'structure_optimal'} ne $candidate->{'structure_stemloop'} ){
-        $vienna_file_optimal =
-          File::Spec->catfile( $pieces_folder, $candidate_name . '_optimal.txt' );
-        open( my $VIENNA_FILE_OPT,
-            '>', File::Spec->catfile( $output_folder, $vienna_file_optimal ) )
-          or die("Cannot open $vienna_file_optimal: $!");
+        $rel_vienna_file_optimal = File::Spec->catfile( $relative_sequences_folder, $candidate_name . '_optimal.txt' );
+        $abs_vienna_file_optimal = File::Spec->catfile( $absolute_sequences_folder, $candidate_name . '_optimal.txt' );
+        open( my $VIENNA_FILE_OPT, '>', $abs_vienna_file_optimal )
+          or die("Cannot open $abs_vienna_file_optimal: $!");
         print {$VIENNA_FILE_OPT}
           $candidate->candidateAsVienna(1)
-          or die("Cannot write in file $vienna_file_optimal: $!");
+          or die("Cannot write in file $abs_vienna_file_optimal: $!");
         close($VIENNA_FILE_OPT)
-          or die("Cannot close file $vienna_file_optimal: $!");
+          or die("Cannot close file $abs_vienna_file_optimal: $!");
     }
 
-    my $alternatives_file = '';
+    my $rel_alternatives_file = '';
+    my $abs_alternatives_file = '';
     if( $candidate->{'alternatives'} and scalar(keys%{ $candidate->{'alternatives'} }) ){
-        $alternatives_file = File::Spec->catfile( $pieces_folder,
-            $candidate_name . '_alternatives.txt' );
-        open( my $ALT_FILE, '>',
-            File::Spec->catfile( $output_folder, $alternatives_file ) )
-          or die("Cannot open $alternatives_file: $!");
+        $rel_alternatives_file = File::Spec->catfile( $relative_sequences_folder, $candidate_name . '_alternatives.txt' );
+        $abs_alternatives_file = File::Spec->catfile( $absolute_sequences_folder, $candidate_name . '_alternatives.txt' );
+        open( my $ALT_FILE, '>', $abs_alternatives_file )
+          or die("Cannot open $abs_alternatives_file: $!");
         print {$ALT_FILE}
           $candidate->alternativeCandidatesAsVienna()
-          or die("Cannot write in file $alternatives_file: $!");
+          or die("Cannot write in file $abs_alternatives_file: $!");
         close($ALT_FILE)
-          or die("Cannot close file $alternatives_file: $!");
+          or die("Cannot close file $abs_alternatives_file: $!");
     }
 
 
     ### links
-    my $linkFasta         = "$candidate_fasta_file";
-    my $linkVienna        = "$vienna_file";
-    my $linkAlternatives  = "$alternatives_file";
-    my $linkViennaOptimal = "$vienna_file_optimal";
+    my $linkFasta         = "$rel_candidate_fasta_file";
+    my $linkVienna        = "$rel_vienna_file";
+    my $linkAlternatives  = "$rel_alternatives_file";
+    my $linkViennaOptimal = "$rel_vienna_file_optimal";
 
 
     ### HTML sections
@@ -362,13 +385,13 @@ END_TXT
 
     # Alternative sequences
     my $alternatives_HTML = '';
-    if ( -e $alternatives_file ){
+    if ( -e $abs_alternatives_file ){
         $alternatives_HTML = "[<a href='$linkAlternatives'>alternative sequences</a>]"
     }
 
     # Optimal structure
     my $optimal_HTML = '';
-    if ( -e $vienna_file_optimal ){
+    if ( -e $abs_vienna_file_optimal ){
         $optimal_HTML = "[<a href='$linkViennaOptimal'>optimal MFE structure</a>]";
     }
 
