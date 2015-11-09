@@ -79,9 +79,10 @@ sub starInAlgt{
 #Write results in file in the directory alignments. The name file is "id_aln.txt"
 #Parameter :  $tabNameRef (table with the name of mirBase sequence), $tabAlgtMultRef (table two dimensions containing the aligt multiple), $posBeginCdt (position of begin for the candidate), $posEndCdt (position of end for the candidate)
 sub writeInFile{
-    my ($tabNameRef, $tabAlgtMultRef, $posBeginCdt, $posEndCdt, $id_candidate) = @_;
+    my ($tabNameRef, $tabAlgtMultRef, $posBeginCdt, $posEndCdt, $id_candidate, $tabAllNameMirRef) = @_;
     my @tabName = @{$tabNameRef};
     my @tabAlgtMult = @{$tabAlgtMultRef};
+    my @tabAllNameMir = @{$tabAllNameMirRef};
     my $cfg = miRkwood->CONFIG();
     my $aln_dir = miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') );
     my $output = '';
@@ -140,8 +141,8 @@ sub writeInFile{
 		}
     }
     $output .= "\n";
-    for(my $cpt=1; $cpt<@tabName; $cpt++){
-        $output .= 'miRBase '.$cpt.': '.$tabName[$cpt]."\n";
+    for(my $cpt=1; $cpt<@tabAllNameMir; $cpt++){
+        $output .= 'miRBase '.$cpt.': '.$tabAllNameMir[$cpt]."\n";
     }
     $output .= "\n";
     open(my $FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
@@ -274,6 +275,7 @@ sub fillTabTemp2D{
     my $hashDataRef = shift @args;
     my $id_candidate = shift @args;
     my %hashData = %{$hashDataRef};
+    my @tabAllNameMir;
     while (my ($key, $value) = each(%hashData)){
         my @tab = $value;
         my ($posBeginBase, $posEndBaseCurrent) = splitPosCdtAligt($key);
@@ -286,6 +288,7 @@ sub fillTabTemp2D{
             my ($cdt, $mirTp) = splitSeqCdtAligt($tab[0][0]{"alignment"});
             $hashMirSeq{$tab[0][0]{"name"}}=$mirTp;
             $tabNameMir[1] = $tab[0][0]{"name"};
+	    $tabAllNameMir[1] = $tab[0][0]{"def_query"};
             @tabTemp2D = setTabTemp($cdt, $mirTp, $mirTp, 1, \@tabTemp2D);
 	    $posEndBaseFinal=$posEndBaseCurrent;
         }
@@ -296,6 +299,7 @@ sub fillTabTemp2D{
                 @tabTemp2D = @$tabTemp2DRef;
                 $hashMirSeq{$tab[0][$i]{"name"}}=$mirSeq;
                 $tabNameMir[$i+1] = $tab[0][$i]{"name"};
+		$tabAllNameMir[$i+1] = $tab[0][$i]{"def_query"};
                 @tabTemp2D = setTabTemp($cdtSeq, $cdtBase, $mirSeq, $i+1, \@tabTemp2D);
             }
         }
@@ -303,7 +307,7 @@ sub fillTabTemp2D{
         @tabTemp2D = setTabTemp($cdtBase, $cdtBase, $cdtBase, 0, \@tabTemp2D);
         my @tabAlgtMult = setAligtMultiple(\%hashMirSeq, \@tabTemp2D, \@tabNameMir);
         @tabAlgtMult = starInAlgt(\@tabAlgtMult);
-        writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posEndBaseFinal, $id_candidate);
+        writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posEndBaseFinal, $id_candidate, \@tabAllNameMir);
     }
 
 }
