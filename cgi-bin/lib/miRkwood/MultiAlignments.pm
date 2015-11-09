@@ -253,10 +253,10 @@ sub getSeqCdt{
 sub createBaseCdt{
     my ($posBegin, $posEnd, $tabData) = @_;
     my $cdtBase= getSeqCdt($$tabData[0][0]{"alignment"});
-    my $posEndFinal=0;
+    my $posEndFinal=$posEnd;
     for(my $i=1; $i<@{$$tabData[0]}; $i++){
         my $cdtCurrent = getSeqCdt($$tabData[0][$i]{"alignment"});
-        ($cdtBase,my $posEndFinalCurrent) = updateCdtBase($posBegin, $posEnd, $$tabData[0][$i]{"begin_target"}, $$tabData[0][$i]{"end_target"}, $cdtBase, $cdtCurrent);
+        ($cdtBase,my $posEndFinalCurrent) = updateCdtBase($posBegin, $posEndFinal, $$tabData[0][$i]{"begin_target"}, $$tabData[0][$i]{"end_target"}, $cdtBase, $cdtCurrent);
         if ($posEndFinalCurrent>$posEndFinal){
             $posEndFinal = $posEndFinalCurrent;
         }
