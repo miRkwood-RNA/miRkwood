@@ -196,8 +196,8 @@ sub updateCdtBase{
     if ($posBeginTarget>$posBeginBase){
         my $diff = $posBeginTarget-$posBeginBase;
         if ($posEndTarget>$posEndBase){
-            for (my $i=0; $i<(($posEndTarget+$diff)-$posEndBase); $i++){
-                $cdtBase.=substr($cdtCurrent, length($cdtCurrent)-(($posEndTarget+$diff)-$posEndBase)+$i,1);
+            for (my $i=0; $i<(($posEndTarget)-$posEndBase); $i++){
+                $cdtBase.=substr($cdtCurrent, length($cdtCurrent)-(($posEndTarget)-$posEndBase)+$i,1);
             }
             $posEndBase=$posEndTarget;
         }
