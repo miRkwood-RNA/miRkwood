@@ -1136,13 +1136,19 @@ sub include_alignments_in_html {
             $line .= $hairpin_with_mature;
             $line .= "\n<b>Alignments</b>\n";
         }
-        if ( $line =~ /miRBase.*: ([^ ]*)/ ){
-            my $mirbase_link = '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a>';
-            $line =~ s/$1/$mirbase_link/;
+        if ( $line =~ /miRBase (\d+):(.*)/ ){
+            my @list_results = split( '\|', $2);
+            my $mirbase_link = "miRBase $1 : ";
+            foreach my $result ( @list_results ){
+                if ( $result =~ /^ ([^ ]*) / ){
+                    $mirbase_link .= '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a> | ';
+                }
+            }
+            $line = $mirbase_link;
         }
         $result .= "$line\n";
     }
-    close $IN;    
+    close $IN;
     $result .= '</pre>';
     return $result;
 }
