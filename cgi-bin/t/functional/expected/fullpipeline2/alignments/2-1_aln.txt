@@ -1,18 +1,20 @@
 Prediction : 19-39
 
-	query       19  UCGCUUGGUGCAGGUCGGGAAG  39
-	miRBase 1       UCGCUUGGUGCAGGUCGGG---
-	miRBase 2       UCGCUUGGUGCAGGUCGGGA--
-	miRBase 3       UCGCUUGGUGCAGGUCGGGAA-
-	                *******************   
+	query       19  UCGCUUGGUGCAGGUCGGGAA  39
+	miRBase 1       UCGCUUGGUGCAGGUCGGG--
+	miRBase 2       UCGCUUGGUGCAGGUCGGGA-
+	miRBase 3       UCGCUUGGUGCAGGUCGGGAA
+	                *******************  
 
-miRBase 1: gma-miR168b
-miRBase 2: cme-miR168
-miRBase 3: ath-miR168a
+miRBase 1: MIMAT0020985 Glycine max miR168b |
+miRBase 2: MIMAT0022751 Cucumis melo miR168 |
+miRBase 3: MIMAT0000198 Arabidopsis thaliana miR168a | ath-miR168b MIMAT0000199 Arabidopsis thaliana miR168b | gma-miR168a MIMAT0001681 Glycine max miR168a | ptc-miR168a-5p MIMAT0001949 Populus trichocarpa miR168a-5p | ptc-miR168b-5p MIMAT0001950 Populus trichocarpa miR168b-5p | bna-miR168a MIMAT0005625 Brassica napus miR168a | vvi-miR168 MIMAT0005675 Vitis vinifera miR168 | ccl-miR168 MIMAT0014073 Citrus clementine miR168 | crt-miR168 MIMAT0014086 Citrus reticulata miR168 | rco-miR168 MIMAT0014168 Ricinus communis miR168 | aly-miR168a-5p MIMAT0017481 Arabidopsis lyrata miR168a-5p | aly-miR168b-5p MIMAT0017483 Arabidopsis lyrata miR168b-5p | tcc-miR168 MIMAT0020390 Theobroma cacao miR168 | mtr-miR168b MIMAT0021270 Medicago truncatula miR168b | mtr-miR168c-5p MIMAT0022235 Medicago truncatula miR168c-5p | vun-miR168 MIMAT0022758 Vigna unguiculata miR168 | mes-miR168a MIMAT0024414 Manihot esculenta miR168a | cca-miR168a MIMAT0024517 Cynara cardunculus miR168a | lus-miR168a MIMAT0027185 Linum usitatissimum miR168a | lus-miR168b MIMAT0027206 Linum usitatissimum miR168b | nta-miR168d MIMAT0024665 Nicotiana tabacum miR168d | nta-miR168e MIMAT0024666 Nicotiana tabacum miR168e | mdm-miR168a MIMAT0025932 Malus domestica miR168a | mdm-miR168b MIMAT0025933 Malus domestica miR168b | ppe-miR168 MIMAT0031454 Prunus persica miR168 |
+
 Prediction : 102-122
 
 	query       102  CCUGCCUUGCAUCAACUGAAU  122
 	miRBase 1        CCUGCCUUGCAUCAACUGAAU
 	                 *********************
 
-miRBase 1: sly-miR168a-3p
+miRBase 1: MIMAT0031130 Solanum lycopersicum miR168a-3p |
+

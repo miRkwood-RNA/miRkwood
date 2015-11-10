@@ -1,9 +1,10 @@
 Prediction : 221-241
 
 	query       221  -CUUUAUGGGACAGAGGGAGU-  241
-	miRBase 1        CAUUAUGGGACGGAGGGAGU--
-	miRBase 2        -UUUAUGGAACGGAGGGAGUA-
-	                   **   *       **    *
+	miRBase 1        ACAUUAUGGGACGGAGGGAGU-
+	miRBase 2        --UUUAUGGAACGGAGGGAGU-
+	                    ****** ** *********
 
-miRBase 1: osa-miR1436
-miRBase 2: bdi-miR5174e-3p.2
+miRBase 1: MIMAT0005987 Oryza sativa miR1436 | hvu-miR1436 MIMAT0018501 Hordeum vulgare miR1436 |
+miRBase 2: MIMAT0030070 Brachypodium distachyon miR5174e-3p.2 |
+

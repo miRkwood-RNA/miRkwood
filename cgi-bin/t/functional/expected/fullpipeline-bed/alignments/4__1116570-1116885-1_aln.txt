@@ -4,11 +4,13 @@ Prediction : 70-89
 	miRBase 1       UAAGUGUUGCAAAAUAGUCAUU
 	                *** * ************** *
 
-miRBase 1: gma-miR1519
+miRBase 1: MIMAT0007378 Glycine max miR1519 |
+
 Prediction : 108-126
 
 	query       108  ACACUUAG-UUUGUACACCA-  126
 	miRBase 1        ACACUUAGUUUUGUACAACAU
 	                 ******** ******** ** 
 
-miRBase 1: ath-miR5014a-5p
+miRBase 1: MIMAT0021047 Arabidopsis thaliana miR5014a-5p |
+

@@ -4,4 +4,5 @@ Prediction : 153-173
 	miRBase 1        AAUUAAAGAUUU-CAUCUUACU
 	                 ************  ***** **
 
-miRBase 1: ath-miR1886.3
+miRBase 1: MIMAT0013773 Arabidopsis thaliana miR1886.3 |
+

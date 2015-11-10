@@ -4,11 +4,13 @@ Prediction : 109-125
 	miRBase 1        AUAAUAAAAAUAAUAAUGA
 	                 ******** *** **** *
 
-miRBase 1: gma-miR1533
+miRBase 1: MIMAT0007396 Glycine max miR1533 |
+
 Prediction : 98-114
 
 	query       98  AUAAUAAA-AUUAUAAU-A  114
 	miRBase 1       AUAAUAAAAAUAAUAAUGA
 	                ******** ** ***** *
 
-miRBase 1: gma-miR1533
+miRBase 1: MIMAT0007396 Glycine max miR1533 |
+
