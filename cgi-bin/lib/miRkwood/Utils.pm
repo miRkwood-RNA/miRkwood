@@ -1294,6 +1294,28 @@ sub size_overlap {
     }
 }
 
+=method make_numbers_more_readable
+
+  Method to add commad every 3 digit in a number.
+  It makes large numbers more readable.
+
+=cut
+sub make_numbers_more_readable {
+    my (@args) = @_;
+    my $nb = shift @args;
+    my $nb_with_commas = '';
+    my @digits = split( //, $nb);
+    my $length = scalar(@digits);
+    for (my $i = 0; $i < scalar(@digits); $i++ ){
+        $nb_with_commas .= $digits[$length - $i - 1];
+        if ( ($i + 1 ) < scalar(@digits) && ($i + 1) % 3 == 0){
+            $nb_with_commas .= ',';
+        }
+    }
+    $nb_with_commas = reverse($nb_with_commas);
+    return $nb_with_commas;
+}
+
 =method display_var_sizes_in_log_file
 
   Method to track the memory use
