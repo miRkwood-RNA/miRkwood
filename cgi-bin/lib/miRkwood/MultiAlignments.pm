@@ -284,6 +284,7 @@ sub fillTabTemp2D{
         my %hashMirSeq;
         my @tabNameMir;
         $tabNameMir[0] = "Query";
+	@tabAllNameMir=[];
         if(@{$tab[0]}==1){
             my ($cdt, $mirTp) = splitSeqCdtAligt($tab[0][0]{"alignment"});
             $hashMirSeq{$tab[0][0]{"name"}}=$mirTp;
