@@ -2,6 +2,8 @@
 --- UGACUCUAUUUUAGAGGCUGCUCCAAUGGUCACAUGUAAAAUAGAAUUUUCUUUAAAAUAGAGGAGAUAUCAUCUCUAUAAAUAAAGAUCUCUACAUUUAGUCUCUAUUUUUUUCCUAUUUUUGAGGAAACUCUAUUUUAAAAGUGACCAUUGGAGCAUCGUGCCUAUAAAAUAGGGUCA
 --- criteria_reads_mirna
 --- 1
+--- alignment_existence
+--- 1
 --- identifier
 --- 4__434304-434483-1
 --- hairpin
@@ -276,7 +278,9 @@
 --- start_position
 --- 434304
 --- alignments
---- {}
+---
+47-65: ''
+85-103: ''
 --- position
 --- 434304-434483
 --- structure_stemloop
@@ -472,7 +476,7 @@
 '98': '0'
 '99': '0'
 --- alignment
---- 0
+--- 1
 --- strand
 --- +
 --- quality
