@@ -315,31 +315,31 @@ sub process_tests_for_candidate {
     my $alignments = $posteriori_tests->test_alignment( $candidate_rnafold_stemploop_out );
     debug( "              End of test_alignment on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
-    if ( scalar(keys%{$alignments}) > 0 ){
-        miRkwood::MultiAlignments::fillTabTemp2D($alignments, $self->{'identifier'});
-    }
-
-    if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
-        $result->{'criteria_mirdup'} = 0;
-        if ( defined( $self->{'candidate'}{'mirna_sequence'} ) and $self->{'candidate'}{'mirna_sequence'} ne '' ){
-            debug( "              Start validate_mirna_with_mirdup on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
-            my %mirdup_on_mirna = $posteriori_tests->validate_mirna_with_mirdup();
-            debug( "              End of validate_mirna_with_mirdup on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
-            $result->{'criteria_mirdup'} = $mirdup_on_mirna{'mirna'};
-        }
-        foreach (keys%{$alignments}){
-            $alignments->{$_} = '';
-        }
-    }
-    else {
-        $mirdup_results = $posteriori_tests->validate_alignments_with_mirdup( $alignments );
-    }
-
     debug( "              Start store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     miRkwood::Candidate::store_attribute_ct( $self->{'candidate'}, $self->{'directory'} );
     debug( "              End of store_attribute_ct->new for $self->{'identifier'}" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     if ( $cfg->param('options.align') ) {
+        if ( scalar(keys%{$alignments}) > 0 ){
+            miRkwood::MultiAlignments::fillTabTemp2D($alignments, $self->{'identifier'});
+        }
+
+        if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
+            $result->{'criteria_mirdup'} = 0;
+            if ( defined( $self->{'candidate'}{'mirna_sequence'} ) and $self->{'candidate'}{'mirna_sequence'} ne '' ){
+                debug( "              Start validate_mirna_with_mirdup on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+                my %mirdup_on_mirna = $posteriori_tests->validate_mirna_with_mirdup();
+                debug( "              End of validate_mirna_with_mirdup on $candidate_rnafold_stemploop_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+                $result->{'criteria_mirdup'} = $mirdup_on_mirna{'mirna'};
+            }
+            foreach (keys%{$alignments}){
+                $alignments->{$_} = '';
+            }
+        }
+        else {
+            $mirdup_results = $posteriori_tests->validate_alignments_with_mirdup( $alignments );
+        }
+
         if ( scalar(keys%{$alignments}) > 0) {
             $result->{'alignment_existence'} = 1;
             $result->{'alignments'} = $alignments;

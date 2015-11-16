@@ -76,7 +76,9 @@ sub init_pipeline {
     if ( $cfg->param( 'options.varna' ) ){
         mkdir miRkwood::Paths::get_dir_images_path_from_job_dir( $self->get_job_dir() );
     }
-    mkdir miRkwood::Paths::get_dir_alignments_path_from_job_dir( $self->get_job_dir() );
+    if ( $cfg->param( 'options.align' ) ){
+        mkdir miRkwood::Paths::get_dir_alignments_path_from_job_dir( $self->get_job_dir() );
+    }
     $self->create_additional_directories();
     return;
 }

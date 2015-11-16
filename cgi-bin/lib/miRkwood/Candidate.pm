@@ -821,6 +821,9 @@ sub compute_quality_from_reads {
     # reads distribution takes into account the existence of a star, the
     # precision of the processing (% of reads around the miRNA and/or its
     # star) and the miRdup validation
+    if ( ! defined( $self->{'criteria_mirdup'} ) ){
+        $self->{'criteria_mirdup'} = 0;
+    }
     $self->{'reads_distribution'} = $criteria_star + $criteria_reads_mirna + $self->{'criteria_mirdup'};
 
     # quality takes into account the reads distribution quality, the
