@@ -31,14 +31,14 @@ fi
 EXCLUDES="--exclude=.svn --exclude=pvalue.txt --exclude=outBlast.txt --exclude=*miRdupOutput.txt --exclude=*.log --exclude=*.cfg --exclude=*.png --exclude=*.yml --exclude=*.html"
 
 rm -rf $BASEDIR/output/fullpipeline1/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --varna --output $BASEDIR/output/fullpipeline1/ $BASEDIR/data/sequenceSomething.fas --align
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --varna --output $BASEDIR/output/fullpipeline1/ --align --input $BASEDIR/data/sequenceSomething.fas
 perl compare_results.pl $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ > $BASEDIR/output/diff_fullpipeline1
 DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline1/ $BASEDIR/expected/fullpipeline1/ | wc -l)
 ok 'Full pipeline' [ $DIFF -eq 0 ]
 
 
 rm -rf $BASEDIR/output/fullpipeline2/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --varna --output $BASEDIR/output/fullpipeline2/ $BASEDIR/data/filtercds_in.fas --align --species-mask Arabidopsis_thaliana
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood.pl --varna --output $BASEDIR/output/fullpipeline2/ --align --species-mask Arabidopsis_thaliana --input $BASEDIR/data/filtercds_in.fas
 perl compare_results.pl $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ > $BASEDIR/output/diff_fullpipeline2
 DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/fullpipeline2/ | wc -l)
 ok 'Full pipeline with coding region masking (using BLAST)' [ $DIFF -eq 0 ]
@@ -52,7 +52,7 @@ ok 'Full pipeline with coding region masking (using BLAST)' [ $DIFF -eq 0 ]
 
 
 rm -rf $BASEDIR/output/fullpipeline-bed/
-perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bed.pl --varna --min-read-positions-nb 0 --max-read-positions-nb 0 --align --mirbase $ROOTDIR/data/miRBase/Arabidopsis_thaliana_miRBase.gff3 --gff $BASEDIR/../../data/annotations/Arabidopsis_thaliana_CDS.gff --gff $BASEDIR/../../data/annotations/Arabidopsis_thaliana_tRNA_rRNA_snoRNA.gff --output $BASEDIR/output/fullpipeline-bed/ --genome $BASEDIR/../../data/genomes/Arabidopsis_thaliana.fasta $BASEDIR/data/functional_test.bed
+perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bed.pl --varna --min-read-positions-nb 0 --max-read-positions-nb 0 --align --mirbase $ROOTDIR/data/miRBase/Arabidopsis_thaliana_miRBase.gff3 --gff $BASEDIR/../../data/annotations/Arabidopsis_thaliana_CDS.gff --gff $BASEDIR/../../data/annotations/Arabidopsis_thaliana_tRNA_rRNA_snoRNA.gff --output $BASEDIR/output/fullpipeline-bed/ --genome $BASEDIR/../../data/genomes/Arabidopsis_thaliana.fasta --input $BASEDIR/data/functional_test.bed
 perl compare_results.pl $BASEDIR/output/fullpipeline-bed/ $BASEDIR/expected/fullpipeline-bed/ > $BASEDIR/output/diff_fullpipeline-bed
 DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline-bed/ $BASEDIR/expected/fullpipeline-bed/ | wc -l)
 ok 'Full BED pipeline' [ $DIFF -eq 0 ]

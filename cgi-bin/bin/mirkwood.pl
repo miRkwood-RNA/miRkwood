@@ -28,12 +28,14 @@ my $mask         = 0;
 my $trna         = 0;
 my $rrna         = 0;
 my $output_folder = '';
+my $fasta_file = '';
 
 ## Parse options
 GetOptions(
-    shuffles         => \$shuffles,
+    'shuffles'       => \$shuffles,
+    'input=s'        => \$fasta_file,
     'filter-mfei'    => \$mfei,
-    align            => \$align,
+    'align'          => \$align,
     'both-strands'   => \$both_strands,
     'varna'          => \$varna,
     'no-process'     => \$no_process,
@@ -42,12 +44,12 @@ GetOptions(
     'filter-rrna'    => \$rrna,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
-    man              => \$man
+    'man'            => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
 
-pod2usage("$0: No FASTA files given.") if ( @ARGV == 0 );
+pod2usage("$0: No FASTA file given.") if ( $fasta_file eq '' );
 
 if ($output_folder eq ''){
     die("You must indicate an empty directory with the --output option.");
@@ -63,7 +65,6 @@ if ($species_mask) {
     $mask = 1;
 }
 
-my $fasta_file = $ARGV[0];
 ( -e $fasta_file ) or die("$fasta_file is not a file");
 
 my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($output_folder) );
@@ -100,11 +101,15 @@ __END__
 
 =head1 SYNOPSIS
 
-./mirkwood.pl [options] [FASTA files]
+./mirkwood.pl [options]
 
 =head1 OPTIONS
 
 =over 8
+
+=item B<--input>
+
+Path to the fasta file.
 
 =item B<--output>
 
@@ -142,11 +147,11 @@ Flag conserved mature miRNAs (alignment with miRBase + miRdup).
 
 Allow the structure generation using Varna.
 
-=item B<-help>
+=item B<--help>
 
 Print a brief help message and exits.
 
-=item B<-man>
+=item B<--man>
 
 Prints the manual page and exits.
 

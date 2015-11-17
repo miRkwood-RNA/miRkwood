@@ -24,6 +24,7 @@ my $man  = 0;
 my $help = 0;
 my $job_title = 0;
 my $output_folder = '';
+my $bed_file = '';
 my $genome_file;
 my $varna = 0;
 my $mirbase_file = '';
@@ -44,6 +45,7 @@ my $force = 0;
 ##### Get options
 GetOptions(
     'genome=s'                => \$genome_file,
+    'input=s'                 => \$bed_file,
     'output=s'                => \$output_folder,
     'shuffles'                => \$randfold,
     'align'                   => \$align,
@@ -56,12 +58,12 @@ GetOptions(
     'varna'                   => \$varna,
     'help|?'                  => \$help,
     'force'                   => \$force,
-    man                       => \$man
+    'man'                     => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
 pod2usage( -verbose => 2 ) if ($man);
 
-pod2usage("$0: No BED file given.") if ( @ARGV == 0 );
+pod2usage("$0: No BED file given.") if ( $bed_file eq '' );
 pod2usage("$0: No genome file given.") if ( ! $genome_file );
 
 $annotation_gff = join( '&', @annotation_gff);
@@ -115,7 +117,6 @@ my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($out
 
 
 # Check input files
-my $bed_file = $ARGV[0];
 ( -e $bed_file ) or die("$bed_file is not a file");
 
 open (my $BED, '<', $bed_file) or die "Error when opening BED file: $!";
@@ -181,13 +182,17 @@ __END__
 
 =head1 SYNOPSIS
 
-./mirkwood-bed.pl [options] [BED file]
+./mirkwood-bed.pl [options]
 
 =head1 OPTIONS
 
 =over 8
 
 =head2 Mandatory options
+
+=item B<--input>
+
+Path to the BED file (created with our script mirkwood-bam2bed.pl).
 
 =item B<--genome>
 
@@ -221,6 +226,7 @@ use this option to give the path to this file.
 
 List of annotation files (gff or gff3 format).
 Reads matching with an element of these files will be filtered out.
+For instance you can filter out CDS by providing a suitable GFF file.
 
 =item B<--min-read-positions-nb>
 
@@ -236,11 +242,11 @@ Default : 5 (reads that map at more than 5 positions are filtered out).
 
 Allow the structure generation using Varna.
 
-=item B<-help>
+=item B<--help>
 
 Print a brief help message and exits.
 
-=item B<-man>
+=item B<--man>
 
 Prints the manual page and exits.
 
