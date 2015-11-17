@@ -550,7 +550,13 @@ sub get_basic_informations {
     if ( defined( $self->{'orphan_hairpin'} ) ){
         push @headers, 'orphan_hairpin';
     }
-    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'nb_reads', 'criteria_nb_reads' );
+    if ( defined( $self->{'nb_reads'} ) ){
+        push @headers, 'nb_reads';
+    }
+    if ( defined( $self->{'criteria_nb_reads'} ) ){
+        push @headers, 'criteria_nb_reads';
+    }
+    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields );
 	my $result = {};
 
 	foreach (@headers){
