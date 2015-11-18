@@ -18,20 +18,20 @@ use warnings;
 #Return : $cdtSeq, $miRSeq, @tab2D
 sub modifyAligt{
     my ($cdtBase, $cdtSeq, $miRSeq, $posBaseCdtBegin,$posBaseCdtEnd, $tabDataAligtRef, $line, $tab2DRef) = @_;
-    my @tabDataAligt = @$tabDataAligtRef;
-    my @tab2D = @$tab2DRef;
-    my $posCdtBegin = $tabDataAligt[0][$line]{"begin_target"};
-    my $posCdtEnd = $tabDataAligt[0][$line]{"end_target"};
+    my @tabDataAligt = @{$tabDataAligtRef};
+    my @tab2D = @{$tab2DRef};
+    my $posCdtBegin = $tabDataAligt[0][$line]{'begin_target'};
+    my $posCdtEnd = $tabDataAligt[0][$line]{'end_target'};
     if ($posCdtBegin>$posBaseCdtBegin){
         for(my $i=0;$i<($posCdtBegin-$posBaseCdtBegin);$i++){
-            $cdtSeq = "X".$cdtSeq;
-            $miRSeq = "-".$miRSeq;
+            $cdtSeq = 'X'.$cdtSeq;
+            $miRSeq = '-'.$miRSeq;
         }
     }
     if ($posCdtEnd<$posBaseCdtEnd){
         for(my $i=0;$i<($posBaseCdtEnd-$posCdtEnd);$i++){
-            $cdtSeq.="X";
-            $miRSeq.="-";
+            $cdtSeq.='X';
+            $miRSeq.='-';
         }
     }
     if ($posBaseCdtEnd<$posCdtEnd){
@@ -42,11 +42,11 @@ sub modifyAligt{
             }
         }
     }
-    if (substr($cdtBase, 0, 1) eq "-" && substr($cdtSeq, 0, 1) =~ m/[A-Z]/){
+    if (substr($cdtBase, 0, 1) eq '-' && substr($cdtSeq, 0, 1) =~ m/[A-Z]/){
         my $i=0;
-        while(substr($cdtBase, $i, 1) eq "-"){
-            $cdtSeq = "X".$cdtSeq;
-            $miRSeq = "-".$miRSeq;
+        while(substr($cdtBase, $i, 1) eq '-'){
+            $cdtSeq = 'X'.$cdtSeq;
+            $miRSeq = '-'.$miRSeq;
             $i++;
         }
     }
@@ -165,24 +165,24 @@ sub processUpdateBase{
         $tailleMax=length($cdtCurrent);
     }
     while($i<$tailleMax){
-        if ($i==0 && substr($cdtCurrent, 0, 1) eq "-"){
-            $cdtBase = "-".$cdtBase;
+        if ($i==0 && substr($cdtCurrent, 0, 1) eq '-'){
+            $cdtBase = '-'.$cdtBase;
             $i++;
             $j++;
-        }elsif(substr($cdtCurrent, $j, 1) eq "-" && substr($cdtBase, $i, 1) ne "-"){
+        }elsif(substr($cdtCurrent, $j, 1) eq '-' && substr($cdtBase, $i, 1) ne '-'){
             my $beforeInsert = substr($cdtBase, 0, $i-1);
             my $afterInsert = substr($cdtBase, $i);
-            $cdtBase = $beforeInsert."-".$afterInsert;
+            $cdtBase = $beforeInsert.'-'.$afterInsert;
             $i++;
             $j++;
-        }elsif(substr($cdtBase, $j, 1) eq "-" && substr($cdtCurrent, $i, 1) ne "-"){
+        }elsif(substr($cdtBase, $j, 1) eq '-' && substr($cdtCurrent, $i, 1) ne '-'){
             $i++;
         }elsif(length($cdtCurrent)>length($cdtBase)){
-            $cdtBase=$cdtBase."-";
+            $cdtBase=$cdtBase.'-';
         }
         else{
             $i++;
-	    $j++;
+            $j++;
         }
     }
     return $cdtBase;
@@ -241,7 +241,8 @@ sub splitPosCdtAligt{
 #Parameter : $aligt (alignement 2 to 2)                                                                                                                                           
 #Return : $cdtSeq (sequence of candidate)                                                                                                                                         
 sub getSeqCdt{
-    my $aligt = $_[0];
+    my (@args) = @_;
+    my $aligt = shift @args;
     my @tabAligt = split(/\n/, $aligt);
     my $cdtSeq = $tabAligt[0];
     return $cdtSeq;
@@ -253,17 +254,16 @@ sub getSeqCdt{
 #return : $cdtBase is the base sequence final and $posEndFinal is the final position of sequence candidate                                                                        
 sub createBaseCdt{
     my ($posBegin, $posEnd, $tabData) = @_;
-    my $cdtBase= getSeqCdt($$tabData[0][0]{"alignment"});
+    my $cdtBase= getSeqCdt($$tabData[0][0]{'alignment'});
     my $posEndFinal=$posEnd;
     for(my $i=1; $i<@{$$tabData[0]}; $i++){
-        my $cdtCurrent = getSeqCdt($$tabData[0][$i]{"alignment"});
-        ($cdtBase,my $posEndFinalCurrent) = updateCdtBase($posBegin, $posEndFinal, $$tabData[0][$i]{"begin_target"}, $$tabData[0][$i]{"end_target"}, $cdtBase, $cdtCurrent);
+        my $cdtCurrent = getSeqCdt($$tabData[0][$i]{'alignment'});
+        ($cdtBase,my $posEndFinalCurrent) = updateCdtBase($posBegin, $posEndFinal, $$tabData[0][$i]{'begin_target'}, $$tabData[0][$i]{'end_target'}, $cdtBase, $cdtCurrent);
         if ($posEndFinalCurrent>$posEndFinal){
             $posEndFinal = $posEndFinalCurrent;
         }
     }
     return ($cdtBase, $posEndFinal);
-
 }
 
 
@@ -283,34 +283,34 @@ sub fillTabTemp2D{
         my @tabTemp2D;
         my %hashMirSeq;
         my @tabNameMir;
-        $tabNameMir[0] = "Query";
-	@tabAllNameMir=[];
+        $tabNameMir[0] = 'Query';
+        @tabAllNameMir=[];
         if(@{$tab[0]}==1){
-            my ($cdt, $mirTp) = splitSeqCdtAligt($tab[0][0]{"alignment"});
-            $hashMirSeq{$tab[0][0]{"name"}}=$mirTp;
-            $tabNameMir[1] = $tab[0][0]{"name"};
-	    $tabAllNameMir[1] = $tab[0][0]{"def_query"};
+            my ($cdt, $mirTp) = splitSeqCdtAligt($tab[0][0]{'alignment'});
+            $hashMirSeq{$tab[0][0]{'name'}}=$mirTp;
+            $tabNameMir[1] = $tab[0][0]{'name'};
+            $tabAllNameMir[1] = $tab[0][0]{'def_query'};
             @tabTemp2D = setTabTemp($cdt, $mirTp, $mirTp, 1, \@tabTemp2D);
-	    $posEndBaseFinal=$posEndBaseCurrent;
+            $posEndBaseFinal=$posEndBaseCurrent;
         }
         else{
             for(my $i=0; $i<@{$tab[0]}; $i++){
-                my ($cdtSeq, $mirSeq) = splitSeqCdtAligt($tab[0][$i]{"alignment"});
+                my ($cdtSeq, $mirSeq) = splitSeqCdtAligt($tab[0][$i]{'alignment'});
                 ($cdtSeq, $mirSeq, my $tabTemp2DRef) = modifyAligt($cdtBase, $cdtSeq, $mirSeq, $posBeginBase, $posEndBaseFinal, \@tab, $i, \@tabTemp2D);
-                @tabTemp2D = @$tabTemp2DRef;
-                $hashMirSeq{$tab[0][$i]{"name"}}=$mirSeq;
-                $tabNameMir[$i+1] = $tab[0][$i]{"name"};
-		$tabAllNameMir[$i+1] = $tab[0][$i]{"def_query"};
+                @tabTemp2D = @{$tabTemp2DRef};
+                $hashMirSeq{$tab[0][$i]{'name'}}=$mirSeq;
+                $tabNameMir[$i+1] = $tab[0][$i]{'name'};
+                $tabAllNameMir[$i+1] = $tab[0][$i]{'def_query'};
                 @tabTemp2D = setTabTemp($cdtSeq, $cdtBase, $mirSeq, $i+1, \@tabTemp2D);
             }
         }
-        $hashMirSeq{"Query"}=$cdtBase;
+        $hashMirSeq{'Query'}=$cdtBase;
         @tabTemp2D = setTabTemp($cdtBase, $cdtBase, $cdtBase, 0, \@tabTemp2D);
         my @tabAlgtMult = setAligtMultiple(\%hashMirSeq, \@tabTemp2D, \@tabNameMir);
         @tabAlgtMult = starInAlgt(\@tabAlgtMult);
         writeInFile(\@tabNameMir, \@tabAlgtMult, $posBeginBase, $posEndBaseFinal, $id_candidate, \@tabAllNameMir);
     }
-
+    return;
 }
 
 
@@ -329,16 +329,16 @@ sub setTabTemp{
             $tab2D[$numMir][$i]=0;
             $i++;
         }
-	elsif(substr($cdtSeq, $posCandidate, 1) eq "-" && substr($miRSeq,$posMiR,1) =~ m/\w/ && substr($cdtCurrent,$posMiR,1) =~ m/\w/){
+        elsif(substr($cdtSeq, $posCandidate, 1) eq '-' && substr($miRSeq,$posMiR,1) =~ m/\w/ && substr($cdtCurrent,$posMiR,1) =~ m/\w/){
             $tab2D[$numMir][$i]=0;
             $i++;
             $nbInsertInMirseq++;
         }
-        elsif(substr($cdtSeq, $posCandidate, 1) eq "-" && substr($miRSeq,$posMiR,1) =~ m/\w/){
+        elsif(substr($cdtSeq, $posCandidate, 1) eq '-' && substr($miRSeq,$posMiR,1) =~ m/\w/){
             $tab2D[$numMir][$i]=$posCandidate+1-$nbInsertInMirseq;
             $i++;
         }
-        elsif(substr($cdtSeq, $posCandidate, 1) eq "-" && ! substr($miRSeq,$posMiR,1) =~ m/\w/){
+        elsif(substr($cdtSeq, $posCandidate, 1) eq '-' && ! substr($miRSeq,$posMiR,1) =~ m/\w/){
             $tab2D[$numMir][$i]=0;
             $i++;
         }
