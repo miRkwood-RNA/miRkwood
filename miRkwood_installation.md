@@ -13,17 +13,22 @@ The easiest way to deploy miRkwood is to create a virtual machine (VM) and to us
 the configuration management software Ansible.
 
 
-1. Recommended installation
+Installation in a VM
+--------------------
 
-1.1. Create the VM
+1. Create the VM
 
 - Install VirtualBox <https://www.virtualbox.org/wiki/Downloads>
 
 - Install Vagrant in its most recent version : <http://www.vagrantup.com/downloads.html>
   (tested on Vagrant 1.4.3 and Vagrant 1.6.5)
 
+Vagrant is a tool to create and configure virtual development environments.
+It can be considered a wrapper around virtualization software such as VirtualBox
+and configuration management software such as Chef, Salt and Puppet − or Ansible in our case.
 
-1.2. Install Ansible
+
+2. Install Ansible
 
 Ansible is an IT automation tool. It can configure systems, deploy software, and orchestrate 
 more advanced IT tasks such as continuous deployments or zero downtime rolling updates.
@@ -32,9 +37,12 @@ more advanced IT tasks such as continuous deployments or zero downtime rolling u
 (tested with Ansible 1.6 and 1.7)
 
 
-1.3. Install miRkwood dependencies
+3. Install miRkwood dependencies
 
-- Extract miRkwood archive and cd to the newly created directory.
+- Clone the miRkwood repository on the Inria Sequoia forge
+    `svn checkout svn+ssh://scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/ mirkwood`
+
+(Note that miRkwood uses SVN externals to fetch some provisionning dependencies)
 
 - Run Vagrant at the miRkwood repository root
     `vagrant up`
@@ -50,7 +58,8 @@ This step can take up to 10 minutes.
 Congratulations! A miRkwood instance is now running at <http://192.168.33.20/mirkwood>
 
 
-2. Alternative installation
+Installation in a VM without Ansible
+------------------------------------
 
 If you are unlucky enough that you cannot install Ansible (this problem may
 occur on Mac systems), you will have to install yourself all dependencies.
