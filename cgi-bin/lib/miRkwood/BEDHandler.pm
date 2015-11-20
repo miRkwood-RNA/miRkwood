@@ -59,7 +59,7 @@ sub filterBEDfile {
 
         # Delete reads corresponding to known miRNAs from the BED
         store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed);  # un-comment when tests are done
-        #~ system("cp $bed_file $tmp_1");  # comment when tests are done
+        #~ system("cp $bed_file $output_bed");  # comment when tests are done
         debug( 'Known miRNAS have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
@@ -108,6 +108,7 @@ sub filterBEDfile {
         debug( 'Multimapped reads have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
+        debug( 'Don\'t filter out multimapped reads from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         rename File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed"), $filtered_bed;
     }
 
@@ -297,6 +298,8 @@ sub store_reads_nb_in_BED_file {
         $basename_bed = $1;
     }
     my ($nb_reads, $nb_unique_reads) = count_reads_in_bed_file( $BED_file, -1, -1 );
+    #~ $nb_reads = miRkwood::Utils::make_numbers_more_readable( $nb_reads );
+    #~ $nb_unique_reads = miRkwood::Utils::make_numbers_more_readable( $nb_unique_reads );
     open (my $FH, '>>', $log_file) or die "ERROR while opening $log_file : $!";
     print $FH "$basename_bed\t$nb_reads\t$nb_unique_reads\n";
     close $FH;
