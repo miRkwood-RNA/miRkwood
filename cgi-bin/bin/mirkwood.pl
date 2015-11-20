@@ -107,6 +107,8 @@ __END__
 
 =over 8
 
+=head2 Mandatory options
+
 =item B<--input>
 
 Path to the fasta file.
@@ -114,6 +116,8 @@ Path to the fasta file.
 =item B<--output>
 
 Output directory. If non existing it will be created. The directory must be empty.
+
+=head2 Additional options
 
 =item B<--both-strands>
 
