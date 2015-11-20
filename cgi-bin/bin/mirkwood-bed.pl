@@ -228,6 +228,12 @@ List of annotation files (gff or gff3 format).
 Reads matching with an element of these files will be filtered out.
 For instance you can filter out CDS by providing a suitable GFF file.
 
+=item B<--no-filter-bad-hairpins>
+
+By default the candidates with a quality score of 0 and no
+conservation are discarded from results and are stored in a BED file.
+Use this option to keep all results.
+
 =item B<--min-read-positions-nb>
 
 Minimum number of positions for each read to be kept.
