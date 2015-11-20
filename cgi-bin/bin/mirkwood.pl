@@ -95,6 +95,7 @@ unless ($no_process) {
     my $results_folder = miRkwood::Paths::create_folder( File::Spec->catdir( $abs_output_folder, 'results' ) );
     my $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
     miRkwood::CLI::process_results_dir_for_offline($abs_output_folder, 'abinitio') unless $no_process;
+    #~ miRkwood::Results::clean_job_dir_for_cli_pipeline( $abs_output_folder );
 }
 
 __END__
