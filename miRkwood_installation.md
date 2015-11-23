@@ -163,9 +163,9 @@ install it, then compile it.
 - rnammer
 # Install hmmer
 wget --directory-prefix=/tmp/  http://selab.janelia.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
-cd /opt/hmmer-2.3.2/
 tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
-cd $ROOT_PATH
+cd /opt/hmmer-2.3.2/
+./configure --enable-threads
 make --directory=/opt/hmmer-2.3.2/
 ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23
 
