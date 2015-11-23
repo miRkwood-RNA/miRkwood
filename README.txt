@@ -32,7 +32,7 @@ USAGE
 
 
 OPTIONS
-    -mirkwood.pl: ./mirkwood.pl [options]
+    -mirkwood.pl: perl -I/{miRkwood_path}/cgi-bin/lib/ mirkwood.pl [options]
           Mandatory options:
             --input
                 Path to the fasta file.
@@ -73,7 +73,7 @@ OPTIONS
                 Prints the manual page and exits.
 
 
-    -mirkwood-bed.pl:./mirkwood-bed.pl [options]
+    -mirkwood-bed.pl: perl -I/{miRkwood_path}/cgi-bin/lib/ mirkwood-bed.pl [options]
           Mandatory options:
             --input
                 Path to the BED file (created with our script mirkwood-bam2bed.pl).
