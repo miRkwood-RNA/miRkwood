@@ -7,6 +7,7 @@ use warnings;
 use Cwd;
 use File::Spec;
 use File::Basename;
+use File::Path qw(make_path);
 
 use miRkwood;
 use miRkwood::Results;
@@ -542,7 +543,7 @@ sub create_folder {
     my (@args) = @_;
     my $folder = shift @args;
     if ( !-e $folder ) {
-        mkdir $folder or die "ERROR when creating $folder : $!";
+        make_path($folder) or die "ERROR when creating $folder : $!";
     }
     return $folder;
 }
