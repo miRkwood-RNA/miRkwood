@@ -90,18 +90,21 @@ are corrects.
 
 1. Mandatory dependencies
 - Perl modules
-libtest-file-perl
-libtest-exception-perl
-libtap-formatter-junit-perl
-libconfig-simple-perl
-libyaml-libyaml-perl
-libfile-which-perl
-libmime-lite-perl
-libxml-twig-perl
-libimage-size-perl
-libfile-type-perl
-libfile-slurp-perl
-libarchive-zip-perl
+Test::File
+Test::Exception
+TAP::Formatter::JUnit
+Config::Simple
+YAML::XS
+File::Which
+MIME::Lite
+XML::Twig
+Image::Size
+File::Size
+File::Slurp
+Archive::Zip
+ODF::lpOD
+Inline::CPP
+Bio::DB::Fasta
 
 - RNAstemloop
 This program takes an output file from RNALfold and extract 
