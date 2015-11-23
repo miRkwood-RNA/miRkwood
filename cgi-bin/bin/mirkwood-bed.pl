@@ -183,7 +183,7 @@ __END__
 
 =head1 SYNOPSIS
 
-./mirkwood-bed.pl [options]
+perl -I/{miRkwood_path}/cgi-bin/lib/ mirkwood-bed.pl [options]
 
 =head1 OPTIONS
 
