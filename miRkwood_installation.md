@@ -137,7 +137,7 @@ Ensuire Python pip is installed.
 Copy the sources where you want it to be (the sources are given in
 /{miRkwood_path}/provisioning/roles/mirkwood-software/files/) and
 then build it with pip.
-pip /path/rnashuffles
+pip install /path/rnashuffles
 
 - VARNA (Visualization Applet for RNA secondary structure)
 Make sure that the Java Runtime Environment is installed.
