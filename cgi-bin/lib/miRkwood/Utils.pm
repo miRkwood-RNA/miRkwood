@@ -905,6 +905,9 @@ sub compute_gc_content {
 
     my @dna      = split( //, $sequence );
     my $length   = scalar @dna;
+    if ( $length == 0 ){
+        return 0;
+    }
     my $gc_count = 0;
 
     for my $nucl ( @dna ) {
