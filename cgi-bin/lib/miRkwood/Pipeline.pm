@@ -268,7 +268,7 @@ sub serialize_candidates {
             $candidate->{'alternatives'}{$alternative}{'amfe'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'alternatives'}{$alternative}{'amfe'}, 3);
         }
         miRkwood::CandidateHandler->serialize_candidate_information( miRkwood::Paths::get_dir_candidates_path_from_job_dir( $self->get_job_dir() ), $candidate );
-        push $self->{'basic_candidates'}, $candidate->get_basic_informations();
+        push @{ $self->{'basic_candidates'} }, $candidate->get_basic_informations();
     }
     return;
 }

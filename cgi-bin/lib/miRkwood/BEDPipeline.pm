@@ -408,7 +408,7 @@ sub serialize_candidates {
             $candidate->{'alternatives'}{$alternative}{'amfe'} = miRkwood::Utils::restrict_num_decimal_digits( $candidate->{'alternatives'}{$alternative}{'amfe'}, 3);
         }
         miRkwood::CandidateHandler->serialize_candidate_information( miRkwood::Paths::get_new_candidates_dir_from_job_dir( $self->{'job_dir'} ), $candidate );
-        push $self->{'basic_candidates'}, $candidate->get_basic_informations();
+        push @{ $self->{'basic_candidates'} }, $candidate->get_basic_informations();
     }
     return;
 }
@@ -549,7 +549,7 @@ sub store_known_mirnas_as_candidate_objects {
         miRkwood::CandidateHandler->serialize_candidate_information($candidates_dir, $candidate);
 
         ### Store basic information (used for the HTML table) for this Candidate
-        push $self->{'basic_known_candidates'}, $candidate->get_basic_informations();
+        push @{ $self->{'basic_known_candidates'} }, $candidate->get_basic_informations();
 
         ### Create individual card with reads cloud
         miRkwood::CandidateHandler::print_reads_clouds( $candidate, $reads_dir );
