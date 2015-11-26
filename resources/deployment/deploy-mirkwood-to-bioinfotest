@@ -5,8 +5,8 @@
 
 REVISION=$1
 
-SSH_USER=bonsai-bot
-SERVER=bioinfotest.lifl.fr
+SSH_USER=bonsai
+SERVER=bioinfodev.lifl.fr
 LOCAL_SCRIPT=deploy-mirkwood-locally
 
 revision=$REVISION; (echo "script() {"; cat $LOCAL_SCRIPT; echo "}"; echo "script $revision" ) | ssh $SSH_USER@$SERVER "bash"
