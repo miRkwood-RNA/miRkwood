@@ -447,7 +447,7 @@ sub include_read_cloud_in_html {
     my $locus_length    = shift @args;
     my $locus_nb_reads  = shift @args;
     my $threshold = int( $locus_nb_reads / $locus_length ) + 1;
-    my $result = '<pre style="font-size:0.8em;">\n';
+    my $result = "<pre style='font-size:0.8em;'>\n";
     open(my $IN, '<', $read_cloud_file) or return '';
     my $line = <$IN>;
     while ( <$IN> ){
