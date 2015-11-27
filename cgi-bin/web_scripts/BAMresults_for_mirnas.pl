@@ -9,6 +9,7 @@ use File::Spec;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood;
 use miRkwood::Paths;
+use miRkwood::Utils;
 use miRkwood::Pipeline;
 use miRkwood::WebTemplate;
 use miRkwood::Results;
@@ -85,6 +86,7 @@ if ( $valid ){
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
         $nb_results = miRkwood::Results->number_of_results_bis( $id_job, $mirnas_type );
+        $nb_results = miRkwood::Utils::make_numbers_more_readable( $nb_results );
 
         $mirnas_results .= miRkwood::Results->get_basic_pseudoXML_for_jobID($id_job, 'smallRNAseq', $mirnas_type);
     }

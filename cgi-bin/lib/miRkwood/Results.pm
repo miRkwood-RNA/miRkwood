@@ -204,6 +204,12 @@ sub convert_basic_to_pseudoXML {
                 $contents += $candidate->{'reads'}{$key};
             }
         }
+        if ( $header eq 'position' ){
+            my ($start, $end) = split( /-/, $contents);
+            $start = miRkwood::Utils::make_numbers_more_readable( $start );
+            $end = miRkwood::Utils::make_numbers_more_readable( $end );
+            $contents = "$start-$end";
+        }
         $result .= " $header='$contents'";
     }
     $result .= '></Sequence>';
