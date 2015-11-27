@@ -8,6 +8,7 @@ use File::Spec;
 
 use miRkwood;
 use miRkwood::Paths;
+use miRkwood::Utils;
 use miRkwood::Results;
 use miRkwood::ResultsExporterMaker;
 
@@ -91,6 +92,7 @@ sub make_html_from_results {
     my $page = "<h2>Overview of results</h2>\n";
 
     my $nb_results = scalar( keys%results );
+    $nb_results = miRkwood::Utils::make_numbers_more_readable( $nb_results );
     $page .= "<h3>$nb_results candidates found.</h3>\n";
 
     $page .= make_all_exports( \%results, $abs_output_folder, $sequences_folder, $pipeline_type, $mirna_type );
@@ -396,15 +398,18 @@ END_TXT
     }
 
     ### make page
+    my ($start, $end) = split( /-/, $candidate->{'position'});
+    $start = miRkwood::Utils::make_numbers_more_readable( $start );
+    $end = miRkwood::Utils::make_numbers_more_readable( $end );
     my $html = <<"END_TXT";
-<h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'}) $arrow</a></h3>
+<h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $start-$end ($candidate->{'strand'}) $arrow</a></h3>
 
     <ul>
         <li>
             <b>Name: </b>$candidate->{'name'}
         </li>
         <li>
-            <b>Position:</b> $candidate->{'position'} ($size nt)
+            <b>Position:</b> $start-$end ($size nt)
         </li>
         <li>
             <b>Strand:</b> $candidate->{'strand'}

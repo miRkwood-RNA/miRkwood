@@ -102,7 +102,10 @@ sub export_candidate {
             $contents = "<td $non_clickable_cell>" . miRkwood::Utils::restrict_num_decimal_digits($contents, 3) . '</td>';
         }
         elsif ( $header eq 'position'){
-            $contents = "<td $clickable_cell><a href='#$anchor' class='nodecoration'>${$candidate}{$header}</a></td>";
+            my ($start, $end) = split( /-/, $contents);
+            $start = miRkwood::Utils::make_numbers_more_readable( $start );
+            $end = miRkwood::Utils::make_numbers_more_readable( $end );
+            $contents = "<td $clickable_cell><a href='#$anchor' class='nodecoration'>$start-$end</a></td>";
         }
         elsif ( $header eq 'nb_reads' ){
             if ( ${$candidate}{'criteria_nb_reads'} ){
