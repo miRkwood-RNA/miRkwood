@@ -9,6 +9,7 @@ use File::Spec;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood;
 use miRkwood::Paths;
+use miRkwood::Utils;
 use miRkwood::Pipeline;
 use miRkwood::WebTemplate;
 use miRkwood::BEDHandler;
@@ -241,59 +242,71 @@ if ( $valid ){
                                                                $percentage_orphan_clusters_reads,
                                                                $percentage_orphan_hairpins_reads, );
 
+        my $nb_total_reads = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{$basename_bed}{'reads'} );
+        my $nb_total_unq_reads = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{$basename_bed}{'unique_reads'} );
         $HTML_results .= "<div class='results_summary'><ul>";
         $HTML_results .= '<h2>Results summary</h2>';
         $HTML_results .= '<br />';
-        $HTML_results .= "<li><em>Total number of reads:</em> $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)</li>";
+        $HTML_results .= "<li><em>Total number of reads:</em> $nb_total_reads ($nb_total_unq_reads unique reads)</li>";
         $HTML_results .= '<br />';
         $HTML_results .= "$barchart<br />";
 
 
         if ( $bed_sizes->{'CDS'}{'reads'} > 0 ){
-            $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> $bed_sizes->{'CDS'}{'reads'} reads (<a href='$exportFileLink&type=_CDS'>download</a>)</span></li>";
+            my $nb_reads_CDS = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'CDS'}{'reads'} );
+            $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> $nb_reads_CDS reads (<a href='$exportFileLink&type=_CDS'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> 0 reads</span></li>";
         }
 
         if ( $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} > 0 ){
-            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} reads (<a href='$exportFileLink&type=_tRNA_rRNA_snoRNA'>download</a>)</span></li>";
+            my $nb_reads_tRNA_rRNA_snoRNA = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} );
+            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $nb_reads_tRNA_rRNA_snoRNA reads (<a href='$exportFileLink&type=_tRNA_rRNA_snoRNA'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> 0 reads</span></li>";
         }
 
         if ( $bed_sizes->{'multimapped'}{'reads'} > 0 ){
-            $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> $bed_sizes->{'multimapped'}{'reads'} reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</span></li>";
+            my $nb_reads_multimapped = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'multimapped'}{'reads'} );
+            $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> $nb_reads_multimapped reads (<a href='$exportFileLink&type=_multimapped'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_multimapped'><span id='normal'><em>Multiply mapped reads:</em> 0 reads</span></li>";
         }
 
         if ( $bed_sizes->{'orphan_clusters'}{'reads'} > 0 ){
-            $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> $bed_sizes->{'orphan_clusters'}{'reads'} reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</span></li>";
+            my $nb_reads_orphan_clusters = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'orphan_clusters'}{'reads'} );
+            $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> $nb_reads_orphan_clusters reads (<a href='$exportFileLink&type=_orphan_clusters'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_orphan_clusters'><span id='normal'><em>Orphan clusters of reads:</em> 0 reads</span></li>";
         }
 
         if ( $bed_sizes->{'orphan_hairpins'}{'reads'} > 0 ){
-            $HTML_results .= "<li id='li_orphan_hairpins'><span id='normal'><em>Orphan hairpins:</em> $bed_sizes->{'orphan_hairpins'}{'reads'} reads (<a href='$exportFileLink&type=_orphan_hairpins'>download</a>)</span></li>";
+            my $nb_reads_orphan_hairpins = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'orphan_hairpins'}{'reads'} );
+            $HTML_results .= "<li id='li_orphan_hairpins'><span id='normal'><em>Orphan hairpins:</em> $nb_reads_orphan_hairpins reads (<a href='$exportFileLink&type=_orphan_hairpins'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_orphan_hairpins'><span id='normal'><em>Orphan hairpins:</em> 0 reads</span></li>";
         }
 
+        $nb_orphan_reads = miRkwood::Utils::make_numbers_more_readable( $nb_orphan_reads );
         $HTML_results .= "<li id='li_unclassified_reads'><span id='normal'><em>Unclassified reads:</em> $nb_orphan_reads reads</span></li>";
 
+        $nb_reads_known_miRNAs = miRkwood::Utils::make_numbers_more_readable( $nb_reads_known_miRNAs );
         if ( $nb_known_results > 0 ){
+            $nb_known_results = miRkwood::Utils::make_numbers_more_readable( $nb_known_results );
             $HTML_results .= "<li id='li_known_miRNAs'><span id='normal'><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads (<a href=$known_url>see results</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_known_miRNAs'><span id='normal'><em>Known miRNAs:</em> $nb_known_results sequence(s) - $nb_reads_known_miRNAs reads</span></li>";
         }
 
+        $nb_reads_new_miRNAs = miRkwood::Utils::make_numbers_more_readable( $nb_reads_new_miRNAs );
         if ( $nb_new_results > 0 ){
+            $nb_new_results = miRkwood::Utils::make_numbers_more_readable( $nb_new_results );
             $HTML_results .= "<li id='li_new_miRNAs'><span id='normal'><em>Novel miRNAs:</em> $nb_new_results sequence(s) - $nb_reads_new_miRNAs reads (<a href=$new_url>see results</a>)</span></li>";
         }
         else {
