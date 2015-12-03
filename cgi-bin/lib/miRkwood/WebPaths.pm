@@ -93,6 +93,28 @@ sub get_js_path {
     return File::Spec->catdir($config{'html_root'}, 'js');
 }
 
+=method get_server_scripts_path
+
+Return the Server scripts directory
+
+=cut
+sub get_server_scripts_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_web_config();
+    return $config{'server_scripts'};    
+}
+
+=method get_server_libs_path
+
+Return the Server libs directory
+
+=cut
+sub get_server_libs_path {
+    my ($self, @args) = @_;
+    my %config = $self->get_web_config();
+    return $config{'libs'};   
+}
+
 =method get_results_web_path
 
 Return the path to the results, as seen from the web
