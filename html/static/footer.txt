@@ -1,5 +1,4 @@
-<div class="theme-border-footer"></div>
-<div class="copyright">
+<div id="footer">
      <table class="footerTable">
      	    <tr>
 		<td align="left">
