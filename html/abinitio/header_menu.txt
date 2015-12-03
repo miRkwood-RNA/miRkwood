@@ -1,9 +1,14 @@
-<div class="frametitle">
- <h1><a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a></h1>
-   <div class="menu_central">
-     <a href="/mirkwood/">miRkwood</a>
-     <a href="/cgi-bin/mirkwood/web_scripts/interface.pl">web server</a>
-     <a href="/mirkwood/abinitio/help.php">help</a>
-     <a href="/mirkwood/id.php">retrieve result with an ID</a>
-   </div>
-</div>
+<ul id="menu">
+    <li class="onglet onglet_left" id="home">
+	    <a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a>
+    </li>
+    <li class="onglet" id="web_server">
+	    <a href="/cgi-bin/mirkwood/web_scripts/interface.pl">web server</a>
+	</li>
+    <li class="onglet" id="web_server">
+	    <a href="/mirkwood/abinitio/help.php">help</a>
+    </li>
+    <li class="onglet onglet_right" id="web_server">
+	    <a href="/mirkwood/id.php">retrieve result with an ID</a>
+    </li>
+</ul>

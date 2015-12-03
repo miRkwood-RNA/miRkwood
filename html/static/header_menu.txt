@@ -1,8 +1,11 @@
-<div class="frametitle">
-    <h1>miRkwood</h1>
-    <div class="menu_central">
-        <a href="/mirkwood/">home</a>
-        <a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a>
-        <a href="/mirkwood/smallRNAseq/index.php">miRkwood small RNA-seq</a>
-    </div>
-</div>
+<ul id="menu">
+   	 <li class="onglet onglet_left" id="home">
+	    <a href="/mirkwood/mirkwood.php" >miRkwood</a>
+	 </li>
+	 <li class="onglet" id="web_server">
+	    <a href="/mirkwood/abinitio/index.php" >miRkwood <em>ab initio</em></a>
+	 </li>
+     <li class="onglet onglet_right" id="web_server">
+	    <a href="/mirkwood/smallRNAseq/index.php" >miRkwood small RNA-seq</a>
+	 </li>
+</ul>

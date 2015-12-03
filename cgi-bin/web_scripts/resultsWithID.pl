@@ -22,16 +22,16 @@ my $web_scripts = miRkwood::WebPaths->get_web_scripts();
 
 my @css = (
 	miRkwood::WebTemplate->get_server_css_file(),
-	miRkwood::WebTemplate->get_css_file()
+	miRkwood::WebTemplate->get_css_file(),
+    miRkwood::WebTemplate->get_mirkwood_css_file()
 );
 my @js = (
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'graphics.js' ),
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'miARN.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(),
-		'imgpreview.full.jquery.js' )
-
+	#~ File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'imgpreview.full.jquery.js' ),
+    miRkwood::WebTemplate->get_bioinfo_js_file()
 );
 
 my $id_job = $cgi->param('run_id');    # récupération id job
@@ -70,36 +70,45 @@ if ($valid) {
 	if ( $nb_results != 0 ) {
 		$body = <<"END_TXT";
 <body onload="main('all',true);">
-    <div class="theme-border"></div>
-    <div class="logo"></div>
-    <div class="bloc_droit">
-    $header_menu
-<div class="main main-full">
-    $HTML_additional
-    <div id="select" >
-    	<div style="width: 510px"  class="forms">
-            <p class='text-results'>Export selected entries \(<a id='select-all' onclick='selectAll()' >select all<\/a>/<a id='deselect-all' onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p>
-    		<form id= 'exportForm'>
-                <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (CSV)</label><br/>
-                <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
-                <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
-                <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
-                <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label>
-                <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "abinitio", "")'/>
-    		</form>
-    	</div>
-    		<p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
-  			<a id="hrefposition" style="color:blue;" onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" style="color:black;" onclick='sortBy("quality")'  >sort by quality</a>
-    		</p>
+
+    <div class="frametitle">
+        <h1 id="title">miRkwood <em>ab initio</em></h1>
     </div>
-    
-    <div id="table" ></div>
-    <div id="singleCell"> </div>
-    $HTML_results
-    
-    <div id="id_job" >$id_job</div>
-</div><!-- main -->
-</div><!-- bloc droit-->
+
+    <div id="center_sup">
+        <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+        <div class="tabs" id="menu_central" style="display:inline-block"> 
+            $header_menu
+        </div>
+        <div id="arborescence"></div>
+    </div>
+
+    <div id="main">
+        $HTML_additional
+        <div id="select" >
+            <div style="width: 510px"  class="forms">
+                <p class='text-results'>Export selected entries \(<a id='select-all' onclick='selectAll()' >select all<\/a>/<a id='deselect-all' onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p>
+                <form id= 'exportForm'>
+                    <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (CSV)</label><br/>
+                    <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
+                    <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
+                    <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
+                    <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label>
+                    <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "abinitio", "")'/>
+                </form>
+            </div>
+                <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
+                <a id="hrefposition" style="color:blue;" onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" style="color:black;" onclick='sortBy("quality")'  >sort by quality</a>
+                </p>
+        </div>
+
+        <div id="table" ></div>
+        <div id="singleCell"> </div>
+        $HTML_results
+
+        <div id="id_job" >$id_job</div>
+    </div><!-- main -->
+
 $footer
 </body>
 END_TXT
@@ -107,18 +116,22 @@ END_TXT
 	else {
 		$body = <<"END_TXT";
 <body onload="main('all');">
-    <div class="theme-border"></div>
-    <a href="/">
-        <div class="logo"></div>
-    </a>
-    <div class="bloc_droit">
-    $header_menu
-<div class="main main-full">
-    $HTML_additional
- 
-   
-</div><!-- main -->
-</div><!-- bloc droit-->
+    <div class="frametitle">
+        <h1 id="title">miRkwood <em>ab initio</em></h1>
+    </div>
+
+    <div id="center_sup">
+        <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+        <div class="tabs" id="menu_central" style="display:inline-block"> 
+            $header_menu
+        </div>
+        <div id="arborescence"></div>
+    </div>
+
+    <div id="main">
+        $HTML_additional
+    </div><!-- main -->
+
 $footer
 </body>
 END_TXT
@@ -129,7 +142,7 @@ END_TXT
 }
 else {
 	my $page = <<"END_TXT";
-<div class="main">
+<div id="main">
     $HTML_additional
     <p>No results available for the given job identifier $id_job.</p>
 </div><!-- main -->

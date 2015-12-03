@@ -1,21 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-        <link type='text/css' rel='stylesheet' href='../../Style/bioinfo.css' />
+    <head>
+        <link type='text/css' rel='stylesheet' href='../../Style/css/bioinfo.css' />
+        <link type='text/css' rel='stylesheet' href='../style/mirkwood.css' />
 		<link type='text/css' rel='stylesheet' href='../style/help.css' />
 		<link type='text/css' rel='stylesheet' href='../style/rna.css' />
+        <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="../../libs/jquery.history.js"></script>
+        <script type="text/javascript" src="../../scripts/bioinfo.js"></script>
         <script type='text/javascript' src='/js/miARN.js'></script>
         <title>miRkwood ab initio - Help</title>
     </head>
- <body>
-        <div class="theme-border"></div>
-        <a href="/">
-            <div class="logo"></div>
-        </a>
-        <div class="bloc_droit">
-        <?php include("./header_menu.txt") ?>
+    <body>
+        <div class="frametitle">
+            <h1 id="title">miRkwood <em>ab initio</em></h1>
+        </div>
 
-<div class="main-full">
+        <div id="center_sup">
+            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+            <div class="tabs" id="menu_central" style="display:inline-block">
+                <? include("./header_menu.txt") ?>
+            </div>
+            <div id="arborescence"></div>
+        </div>
+
+        <div id="main">
 
 <br /> 
 
@@ -159,7 +168,7 @@ where MFE (minimal free energy) denotes the negative folding free
 
 <p>Results are summarized in a two-way table. Each row corresponds to a pre-miRNA, and each column to a feature. By default, results are sorted by sequence and then by position. It is possible to have them sorted by quality (<a href='#definition_quality'>see definition</a>). You can view all information related to a given prediction by clicking on the row (<a href='#html_report'>see section HTML Report</a>).</p>
 
-<img style='width:750px; display: block; margin: 0 auto;' src='style/screenshot-results-report.png'' alt='The two-way table summarizing the results' />
+<img style='width:750px; display: block; margin: 0 auto;' src='../style/screenshot-results-report.png'' alt='The two-way table summarizing the results' />
 
 <dl>
 <dt>Name</dt>
@@ -304,7 +313,7 @@ are shorter than the primary transcript.
 </dl>
 
 <p>The stem-loop structure of the miRNA precursor is also displayed with  <a href='http://varna.lri.fr/'>Varna</a>.</p>
-<img style='width:400px; display: block; margin: 0 auto;' src='style/structure.png' alt='The stem-loop structure of the miRNA precursor' />
+<img style='width:400px; display: block; margin: 0 auto;' src='../style/structure.png' alt='The stem-loop structure of the miRNA precursor' />
 
 <h3>Thermodynamics stability</h3>
 <dl>
@@ -343,11 +352,12 @@ gucg<span class="mature">ugc uggcu c cuguaugcca</span>c ag     aucgauuu  u
 caguacg acuga g gacaugcggug uc     uagcuaaa  u
        a     u a           a  ac---        ac
 </pre>
- 
-</div> <!-- main full -->
 
-</div><!-- bloc droit-->
-       <?php include("./static/footer.txt") ?>
+        </div> <!-- main -->
+
+
+        <?php require("../lib.inc")?>
+        <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2013"); ?>  
     </body>
     
 </html>

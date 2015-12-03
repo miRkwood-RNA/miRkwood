@@ -8,8 +8,15 @@ BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::WebTemplate;
 use miRkwood::WebPaths;
 
-my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
-my @js  = (miRkwood::WebTemplate->get_js_file());
+my @css = (
+    miRkwood::WebTemplate->get_server_css_file(),
+    miRkwood::WebTemplate->get_css_file(),
+    miRkwood::WebTemplate->get_mirkwood_css_file()
+);
+my @js  = (
+    miRkwood::WebTemplate->get_js_file(),
+    miRkwood::WebTemplate->get_bioinfo_js_file()
+);
 
 my $index_page = File::Spec->catfile( miRkwood::WebPaths->get_html_path(), 'index.php');
 
@@ -72,7 +79,7 @@ END_MSG
 }
 
 my $page = <<"END_TXT";
-<div class="main">
+<div id="main">
   <div id="page">
     <h2>Error</h2>
       $errorMessage

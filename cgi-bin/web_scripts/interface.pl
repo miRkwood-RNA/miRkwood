@@ -9,13 +9,17 @@ use File::Spec;
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
 use miRkwood::WebTemplate;
 
-my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
-my @js  = (miRkwood::WebTemplate->get_js_file());
+my @css = (
+    miRkwood::WebTemplate->get_server_css_file(),
+    miRkwood::WebTemplate->get_css_file(),
+    miRkwood::WebTemplate->get_mirkwood_css_file()
+);
+my @js  = (miRkwood::WebTemplate->get_js_file(), miRkwood::WebTemplate->get_bioinfo_js_file());
 
 my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'abinitio'), 'help.php');
 
 my $page = <<"END_TXT";
-<div class="main">
+<div id="main">
   <form id='form' onsubmit="return verifySequence();" method="post" action="./pipeline.pl" enctype="multipart/form-data">
     <fieldset id="fieldset">
       <div class="forms">

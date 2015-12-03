@@ -24,7 +24,8 @@ my $web_scripts = miRkwood::WebPaths->get_web_scripts();
 
 my @css = (
 	miRkwood::WebTemplate->get_server_css_file(),
-	miRkwood::WebTemplate->get_css_file()
+	miRkwood::WebTemplate->get_css_file(),
+    miRkwood::WebTemplate->get_mirkwood_css_file()
 );
 my @js = (
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
@@ -321,19 +322,25 @@ if ( $valid ){
 
     $page = <<"END_TXT";
 <body onload="main('all');">
-    <div class="theme-border"></div>
-    <a href="/">
-        <div class="logo"></div>
-    </a>
-    <div class="bloc_droit">
-        $header_menu
-        <div class="main main-full">
-            $HTML_additional
-            
-            $HTML_results
+    <div class="frametitle">
+        <h1 id="title">miRkwood small RNA-seq</h1>
+    </div>
 
-        </div><!-- main -->
-    </div><!-- bloc droit-->
+    <div id="center_sup">
+        <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+        <div class="tabs" id="menu_central" style="display:inline-block"> 
+            $header_menu
+        </div>
+        <div id="arborescence"></div>
+    </div>
+
+    <div id="main">
+        $HTML_additional
+
+        $HTML_results
+
+    </div><!-- main -->
+
     $footer
 </body>
 END_TXT
@@ -345,7 +352,7 @@ END_TXT
 else{   # job id is not a valid ID
     $HTML_additional .= '</div>';
 	$page = <<"END_TXT";
-<div class="main">
+<div id="main">
     $HTML_additional
     <p>No results available for the given job identifier $id_job.</p>
 </div><!-- main -->

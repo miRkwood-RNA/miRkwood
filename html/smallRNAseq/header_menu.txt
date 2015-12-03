@@ -1,11 +1,20 @@
-<div class="frametitle">
- <h1><a href="/mirkwood/smallRNAseq/index.php">miRkwood small RNA-seq</a></h1>
-   <div class="menu_central">
-     <a href="/mirkwood/">miRkwood</a>
-     <a href="/cgi-bin/mirkwood/web_scripts/BAMinterface.pl">web server</a>
-     <a href="/mirkwood/smallRNAseq/example.php">quick start</a>
-     <a href="/mirkwood/smallRNAseq/BED_file.php">input file</a>
-     <a href="/mirkwood/smallRNAseq/help.php">help</a>
-     <a href="/mirkwood/id.php">retrieve result with an ID</a>
-   </div>
-</div>
+<ul id="menu">
+    <li class="onglet onglet_left" id="home">
+	    <a href="/mirkwood/smallRNAseq/index.php">miRkwood small RNA-seq</a>
+    </li>
+    <li class="onglet" id="web_server">
+	    <a href="/cgi-bin/mirkwood/web_scripts/BAMinterface.pl">web server</a>
+	</li>
+    <li class="onglet" id="web_server">
+	    <a href="/mirkwood/smallRNAseq/example.php">quick start</a>
+    </li>
+    <li class="onglet" id="web_server">
+	    <a href="/mirkwood/smallRNAseq/BED_file.php">input file</a>
+    </li>
+    <li class="onglet" id="web_server">
+	    <a href="/mirkwood/smallRNAseq/help.php">help</a>
+    </li>
+    <li class="onglet onglet_right" id="web_server">
+	    <a href="/mirkwood/id.php">retrieve result with an ID</a>
+    </li>
+</ul>

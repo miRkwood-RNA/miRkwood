@@ -17,8 +17,15 @@ use miRkwood::Results;
 
 
 ##### Page settings
-my @css = (miRkwood::WebTemplate->get_server_css_file(), miRkwood::WebTemplate->get_css_file());
-my @js  = (miRkwood::WebTemplate->get_js_file());
+my @css = (
+	miRkwood::WebTemplate->get_server_css_file(),
+	miRkwood::WebTemplate->get_css_file(),
+    miRkwood::WebTemplate->get_mirkwood_css_file()
+);
+my @js  = (
+    miRkwood::WebTemplate->get_js_file(),
+    miRkwood::WebTemplate->get_bioinfo_js_file()
+);
 
 
 ##### Parameters
@@ -70,7 +77,7 @@ if ( $valid ){
     else{
         my $HTML_additional = "<p class='header-results' id='job_id'><b>Job ID:</b> $jobId</p>";
         $page = <<"END_TXT";
-<div class="main">
+<div id="main">
     $HTML_additional
     <p>Sorry, something went wrong with miRkwood. Your job is not finished or it has crashed. <br />
     No results available for the given job identifier $jobId.</p>
@@ -90,7 +97,7 @@ END_TXT
 else{
     my $HTML_additional = "<p class='header-results' id='job_id'><b>Job ID:</b> $jobId</p>";
 	$page = <<"END_TXT";
-<div class="main">
+<div id="main">
     $HTML_additional
     <p>No results available for the given job identifier $jobId.</p>
 

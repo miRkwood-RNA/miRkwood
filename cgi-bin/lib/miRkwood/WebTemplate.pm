@@ -128,6 +128,17 @@ sub get_css_file {
     return File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'script.css');
 }
 
+=method get_mirkwood_css_file
+
+Return the miRkwood CSS file
+
+=cut
+
+sub get_mirkwood_css_file {
+    my @args = @_;
+    return File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'mirkwood.css');
+}
+
 =method get_server_css_file
 
 Return the server CSS file
@@ -150,6 +161,30 @@ sub get_js_file {
     my @args = @_;
     return File::Spec->catfile(miRkwood::WebPaths->get_js_path(), 'miARN.js');
 }
+
+
+=method get_bioinfo_js_file
+
+Return the bioinfo JavaScript file
+
+=cut
+
+sub get_bioinfo_js_file {
+    my @args = @_;
+    return File::Spec->catfile(miRkwood::WebPaths->get_server_scripts_path(), 'bioinfo.js');
+}
+
+
+=method get_jquery_lib
+
+Return the path to jquery lib on Bioinfo
+
+=cut
+sub get_jquery_lib {
+    my @args = @_;
+    return File::Spec->catfile(miRkwood::WebPaths->get_server_libs_path(), 'jquery-1.11.3.min.js');
+}
+
 
 =method get_error_page
 
@@ -216,23 +251,29 @@ sub get_HTML_page_for_content {
     my $title     = shift @args;
     my $no_menu   = shift @args;
 
-    my $bioinfo_menu = '';
-    if (! $no_menu){
-        $bioinfo_menu = miRkwood::WebTemplate::get_bioinfo_menu();
-    }
+    #~ my $bioinfo_menu = '';
+    #~ if (! $no_menu){
+        #~ $bioinfo_menu = miRkwood::WebTemplate::get_bioinfo_menu();
+    #~ }
 
     my $header_menu  = miRkwood::WebTemplate::get_header_menu($pipeline);
     my $footer       = miRkwood::WebTemplate::get_footer();
 
     my $body = <<"END_TXT";
     <body>
-        <div class="theme-border"></div>
-        <a href="/">
-            <div class="logo"></div>
-        </a>
-        $bioinfo_menu
+        <div class="frametitle">
+            <h1 id="title">$title</h1>
+        </div>
+
+        <div id="center_sup">
+            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+            <div class="tabs" id="menu_central" style="display:inline-block"> 
+                $header_menu
+            </div>
+            <div id="arborescence"></div>
+        </div>
         <div class="bloc_droit">
-        $header_menu
+        
             $page
         </div><!-- bloc droit-->
         $footer
@@ -263,12 +304,15 @@ sub get_HTML_page_for_body {
         $js_html .= "<script type='text/javascript' src='$js'></script>\n";
     }
 
+    my $jquery_html = "<script type='text/javascript' src='" . get_jquery_lib() . "'></script>\n";
+
     my $HTML = <<"END_TXT";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <meta name="keywords" content="microRNA, miRNA, premir, plant, arabidopsis thaliana, mirkwood, RNAfold" />
+        $jquery_html
         <title>$title</title>
         $css_html        $js_html    </head>
     $body
