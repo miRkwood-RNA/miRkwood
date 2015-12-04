@@ -111,7 +111,7 @@
             <br /><br /><br />
 
         </div><!-- bloc droit-->
-        <?php require("../lib.inc")?>
+        <?php require("/bio1/www/html/lib.inc")?>
         <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2013"); ?>
     </body>
 
