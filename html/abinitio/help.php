@@ -19,7 +19,7 @@
         <div id="center_sup">
             <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
             <div class="tabs" id="menu_central" style="display:inline-block">
-                <? include("./header_menu.txt") ?>
+                <?php include("./header_menu.txt") ?>
             </div>
             <div id="arborescence"></div>
         </div>
