@@ -259,6 +259,10 @@ sub get_HTML_page_for_content {
     my $header_menu  = miRkwood::WebTemplate::get_header_menu($pipeline);
     my $footer       = miRkwood::WebTemplate::get_footer();
 
+    if ( $title eq 'miRkwood ab initio' ){
+        $title = 'miRkwood <em>ab initio</em>';
+    }
+
     my $index_link;
     if ( $pipeline eq 'static' ){
         $index_link = '/mirkwood/index.php';
