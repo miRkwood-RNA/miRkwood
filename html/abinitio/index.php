@@ -6,7 +6,7 @@
         <link href="/Style/css/page_theme.css" rel="stylesheet" style="text/css"/>
 
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="../../scripts/bioinfo.js"></script>
+        <script type="text/javascript" src="../js/header.js"></script>
         <title>miRkwood ab initio</title>
     </head>
     <body>

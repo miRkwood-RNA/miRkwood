@@ -171,7 +171,7 @@ Return the bioinfo JavaScript file
 
 sub get_bioinfo_js_file {
     my @args = @_;
-    return File::Spec->catfile(miRkwood::WebPaths->get_server_scripts_path(), 'bioinfo.js');
+    return File::Spec->catfile(miRkwood::WebPaths->get_js_path(), 'header.js');
 }
 
 
