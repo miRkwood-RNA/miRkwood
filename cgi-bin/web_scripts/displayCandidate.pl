@@ -19,7 +19,7 @@ my $jobId          = $cgi->param('jobID');
 my $candidate_id   = $cgi->param('id');
 
 my @css = (File::Spec->catfile(miRkwood::WebPaths->get_css_path(), 'results.css'));
-my @js  = (miRkwood::WebTemplate->get_js_file());
+my @js = ();
 
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 

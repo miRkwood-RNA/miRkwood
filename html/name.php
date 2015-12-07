@@ -8,7 +8,6 @@
         <script type="text/javascript" src="../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../scripts/bioinfo.js"></script>
-        <script type='text/javascript' src='/js/miARN.js'></script>
         <title>miRkwood - MicroRNA identification</title>
     </head>
     <body>

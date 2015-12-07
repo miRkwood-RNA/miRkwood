@@ -6,7 +6,6 @@
         <link href="/Style/css/page_theme.css" rel="stylesheet" style="text/css"/>
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
-        <script type='text/javascript' src='../js/miARN.js'></script>
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../../scripts/bioinfo.js"></script>

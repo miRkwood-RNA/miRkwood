@@ -23,7 +23,6 @@ my @css = (
     miRkwood::WebTemplate->get_mirkwood_css_file()
 );
 my @js  = (
-    miRkwood::WebTemplate->get_js_file(),
     miRkwood::WebTemplate->get_bioinfo_js_file()
 );
 
