@@ -202,7 +202,7 @@ sub get_error_page {
     my $footer = 'Please send this to the miRkwood team, at the address in the footer.';
     my $contents = "<br/><br/>$header<br/><br/>$explanation<br/><br/>$error_message<br/><br/><br/>$footer";
     my $title = 'miRkwood - Error';
-    my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'static/', $contents, \@css, \@js, $title);
+    my $html = miRkwood::WebTemplate::get_HTML_page_for_content( 'static', $contents, \@css, \@js, $title);
     my $res = <<"HTML";
 Content-type: text/html
 
@@ -259,6 +259,17 @@ sub get_HTML_page_for_content {
     my $header_menu  = miRkwood::WebTemplate::get_header_menu($pipeline);
     my $footer       = miRkwood::WebTemplate::get_footer();
 
+    my $index_link;
+    if ( $pipeline eq 'static' ){
+        $index_link = '/mirkwood/index.php';
+    }
+    elsif ( $pipeline eq 'abinitio' ){
+        $index_link = '/mirkwood/abinitio/index.php';
+    }
+    else{
+        $index_link = '/mirkwood/smallRNAseq/index.php';
+    }
+
     my $body = <<"END_TXT";
     <body>
         <div class="frametitle">
@@ -266,7 +277,7 @@ sub get_HTML_page_for_content {
         </div>
 
         <div id="center_sup">
-            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+            <div id="link_home" style="display:inline-block"><a href="$index_link" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
             <div class="tabs" id="menu_central" style="display:inline-block"> 
                 $header_menu
             </div>
