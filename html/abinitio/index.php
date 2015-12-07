@@ -33,7 +33,6 @@
 
             <ul>
                 <li><a href='help.php'>read user manual</a></li>
-                <!-- <li><a href='method.php'>learn about the method</a></li> -->
                 <li><a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>use web server</a></li>
             </ul>
 

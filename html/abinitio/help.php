@@ -31,9 +31,7 @@
   the identification of plant miRNAs and their hairpin precursors.</p>
   <p>
   This page is a user manual for <a href='/cgi-bin/mirkwood/web_scripts/interface.pl'>miRkwood website</a>.
-<!-- For the full detail of the method implemented in miRkwood, see <a
-  href="method.php">miRkwood method</a>.-->
-</p>
+  </p>
 
 <br />
 
@@ -142,8 +140,7 @@ where MFE (minimal free energy) denotes the negative folding free
   checked, this option removes all candidate pre-miRNAs with an MFEI
   greater than or equal to -0.6. Indeed, more than 96% of plant
   miRBase precursors have an MFEI smaller than -0.6, whereas
-  pseudo-hairpins show significantly larger values of MFEI
-  <!-- (for more details, see <a href='method.php'>miRkwood method</a>)-->.</dd>
+  pseudo-hairpins show significantly larger values of MFEI.</dd>
 
 <dt id='compute-thermodynamic-stability'>Compute thermodynamic stability</dt>
 <dd>The significance of the stability of the sequence can also be measured by comparison with other equivalent sequences. <em><a href='http://www.ncbi.nlm.nih.gov/pubmed/15217813'>Bonnet et al</a></em> have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.  We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </dd>
@@ -182,7 +179,7 @@ where MFE (minimal free energy) denotes the negative folding free
 <dt id='definition_quality'>Quality</dt>
 <dd>The quality is a distinctive feature of miRkwood. It is a combination of all other criteria described afterwards, and allows to rank the predictions according to the significance, from zero- to three- stars. It is calculated as follows.
 <ul>
-<li><em>MFEI &lt; -0.8:</em> add one star. This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins (see <a href="method.php">miRkwood method</a>).</li>
+<li><em>MFEI &lt; -0.8:</em> add one star. This MFEI threshold covers 83% of miRBase pre-miRNAs, whereas it is observed in less than 13% of pseudo hairpins.</li>
 
 <li><em>Existence of a conserved miRNA in miRBase (alignment):</em> add one star. We allow up to three errors in the alignment with mature miRBase, which corresponds to an estimated P-value of  3E-2 for each pre-miRNA. Alignments with 2 errors or less have an estimated P-value of 4E-3.</li>
 
