@@ -358,7 +358,7 @@ else{   # job id is not a valid ID
 END_TXT
 
     my $title = 'miRkwood - No results';
-	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'smallrnaseq', $page, \@css, \@js, $title, 1 );
+	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'smallrnaseq', $page, \@css, \@js, $title );
 }
 
 

@@ -149,7 +149,7 @@ else {
 END_TXT
 
     my $title = 'miRkwood - No results';
-	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js, $title, 1 );
+	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'abinitio', $page, \@css, \@js, $title );
 }
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html

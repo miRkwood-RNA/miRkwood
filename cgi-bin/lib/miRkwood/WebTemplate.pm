@@ -249,12 +249,6 @@ sub get_HTML_page_for_content {
     my $css_files = shift @args;
     my $js_files  = shift @args;
     my $title     = shift @args;
-    my $no_menu   = shift @args;
-
-    #~ my $bioinfo_menu = '';
-    #~ if (! $no_menu){
-        #~ $bioinfo_menu = miRkwood::WebTemplate::get_bioinfo_menu();
-    #~ }
 
     my $header_menu  = miRkwood::WebTemplate::get_header_menu($pipeline);
     my $footer       = miRkwood::WebTemplate::get_footer();
