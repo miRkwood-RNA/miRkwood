@@ -95,7 +95,7 @@ sub make_html_from_results {
     $nb_results = miRkwood::Utils::make_numbers_more_readable( $nb_results );
     $page .= "<h3>$nb_results candidates found.</h3>\n";
 
-    $page .= make_all_exports( \%results, $abs_output_folder, $sequences_folder, $pipeline_type, $mirna_type );
+    $page .= make_all_exports( \%results, $abs_output_folder, $pipeline_type, $mirna_type );
     $page .= '<br />';
 
     my $exporter = miRkwood::ResultsExporterMaker->make_html_results_exporter( $pipeline_type, $mirna_type );
@@ -122,7 +122,7 @@ Given a reference to a results hash, generates the various
 exports in the given output directory.
 
 Usage:
-  my $html = make_all_exports(\%results, $abs_output_folder, $sequences_folder, $pipeline_type, $mirna_type);
+  my $html = make_all_exports(\%results, $abs_output_folder, $pipeline_type, $mirna_type);
 
 =cut
 
@@ -130,7 +130,6 @@ sub make_all_exports {
     my (@args)        = @_;
     my $results_ref       = shift @args;
     my $abs_output_folder = shift @args;
-    my $sequences_folder  = shift @args;
     my $pipeline_type     = shift @args;
     my $mirna_type        = shift @args;
     my $id_job = '';
