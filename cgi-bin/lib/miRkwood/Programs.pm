@@ -60,6 +60,7 @@ sub list_programs {
     my %progs = %programs_paths;
     delete $progs{'tRNAscanSE'};
     delete $progs{'vienna_progs'};
+    delete $progs{'mirdup'};
     return values %progs;
 }
 
@@ -472,24 +473,31 @@ sub run_mirdup_validation_on_file {
     my $miRdup_model_name = miRkwood::Data::get_mirdup_model_name();
     my $miRdup_model_path = miRkwood::Data::get_mirdup_data_path();
 
-    my $run_mirdup_cmd = "cd $miRdup_model_path && "
-        . "java -jar $programs_paths{'mirdup'}"
-        . " -r $programs_paths{'vienna_progs'}/"
-        . " -c $miRdup_model_name"
-        . " -v $validation_source_file"
-        . " > /dev/null";
-    system($run_mirdup_cmd);
+    if ( -f $programs_paths{'mirdup'} ){
 
-    my @useless_created_by_mirdup_files = ("$validation_source_file.arff",
-            "$validation_source_file.arff",
-            "$validation_source_file.folded",
-            "$validation_source_file.$miRdup_model_name.miRdup.txt",
-            "$validation_source_file.$miRdup_model_name.miRdupOutput.txt");
+        my $run_mirdup_cmd = "cd $miRdup_model_path && "
+            . "java -jar $programs_paths{'mirdup'}"
+            . " -r $programs_paths{'vienna_progs'}/"
+            . " -c $miRdup_model_name"
+            . " -v $validation_source_file"
+            . " > /dev/null";
+        system($run_mirdup_cmd);
 
-    foreach my $file ( @useless_created_by_mirdup_files ){
-        if ( -e $file ){
-            unlink $file;
+        my @useless_created_by_mirdup_files = ("$validation_source_file.arff",
+                "$validation_source_file.arff",
+                "$validation_source_file.folded",
+                "$validation_source_file.$miRdup_model_name.miRdup.txt",
+                "$validation_source_file.$miRdup_model_name.miRdupOutput.txt");
+
+        foreach my $file ( @useless_created_by_mirdup_files ){
+            if ( -e $file ){
+                unlink $file;
+            }
         }
+
+    }
+    else{
+        debug('[WARNING] miRdup is not installed. Cannot validate the miRNA with miRdup.', miRkwood->DEBUG());
     }
 
     my $output_file =
