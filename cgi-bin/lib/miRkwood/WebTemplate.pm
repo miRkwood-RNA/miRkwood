@@ -288,10 +288,10 @@ sub get_HTML_page_for_content {
             </div>
             <div id="arborescence"></div>
         </div>
-        <div class="bloc_droit">
+        <div id="main">
         
             $page
-        </div><!-- bloc droit-->
+        </div>
         $footer
     </body>
 END_TXT
