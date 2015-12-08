@@ -80,7 +80,7 @@ sub test_alignment {
     }
 
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
-    miRkwood::Programs::run_RNAcomp( $seqN, $exonerate_out )
+    miRkwood::Programs::run_piccolo( $seqN, $exonerate_out )
       or die("Problem when running RNAcomp : $!");
     my $alignments = $self->post_process_alignments($exonerate_out );
     return $alignments;

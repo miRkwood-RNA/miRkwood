@@ -1,11 +1,3 @@
-Prediction : 85-103
-
-	query       85  AA-GAUCUCUACAUU-UAGUC  103
-	miRBase 1       AACGAUCUCUACAUUGUAGGC
-	                ** ************ *** *
-
-miRBase 1: MIMAT0035465 Solanum lycopersicum miR9475-5p |
-
 Prediction : 47-65
 
 	query       47  UUUUCU-UUAA-AAUAGAGGA  65

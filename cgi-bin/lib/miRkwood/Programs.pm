@@ -295,19 +295,19 @@ sub run_exonerate {
     return ( -e $output );
 }
 
-=method run_RNAcomp
+=method run_piccolo
 
-  Run RNAcomp on the given file
+  Run piccolo on the given file
   Return whether the output file exists.
-  RNAcomp output format is the same as exonerate, so
-  exonerate output parser can be used for RNAcomp output file.
+  piccolo output format is the same as exonerate, so
+  exonerate output parser can be used for piccolo output file.
 
 =cut
-sub run_RNAcomp {
+sub run_piccolo {
     my ( $input, $output ) = @_;
     my $mirbase_file = miRkwood::Data::get_mirbase_file();
 
-    my $cmd = "$programs_paths{'RNAcomp'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
+    my $cmd = "$programs_paths{'piccolo'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
     #~ debug( '          ' . $cmd, miRkwood->DEBUG());
     debug( "                Running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     system($cmd);

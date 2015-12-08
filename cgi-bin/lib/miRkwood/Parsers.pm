@@ -387,7 +387,7 @@ sub parse_custom_exonerate_output{
 
 =method parse_exonerate_alignment
 
-Parse the alignment given in the output of Exonerate
+Parse the alignment given in the output of Exonerate/RNAcomp/piccolo
 
 Usage: parse_exonerate_alignment($alignment);
 
