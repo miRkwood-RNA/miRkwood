@@ -166,6 +166,15 @@ miRkwood::write_config_for_bam_pipeline( $run_options_file,
                                          $abs_output_folder);
 
 
+##### Check external softwares
+miRkwood::Programs::init_programs();
+my @unavailable = miRkwood::Programs::list_unavailable_programs();
+if (@unavailable){
+    my $error = "Cannot find required third-party software: @unavailable.";
+    die($error);
+}
+
+
 ##### Launch pipeline
 my $pipeline = miRkwood::BEDPipeline->new($output_folder, $bed_file, $genome_file);
 $pipeline->run_pipeline();

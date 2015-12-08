@@ -70,6 +70,15 @@ if ($species_mask) {
 my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($output_folder) );
 
 
+##### Check external softwares
+miRkwood::Programs::init_programs();
+my @unavailable = miRkwood::Programs::list_unavailable_programs();
+if (@unavailable){
+    my $error = "Cannot find required third-party software: @unavailable.";
+    die($error);
+}
+
+
 # Importing modules after directory creation
 use miRkwood;
 use miRkwood::FastaPipeline;
