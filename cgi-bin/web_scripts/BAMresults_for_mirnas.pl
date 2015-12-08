@@ -108,49 +108,49 @@ if ( $valid ){
         <div id="arborescence"></div>
     </div>
 
-        <div id="main">
-            $HTML_additional
-            $return_html
+    <div id="main">
+        $HTML_additional
+        $return_html
 
-            <div id='new_mirnas'>
-                <p class='header-results' id='precursors_count' style='font-size: 150%;'>
-                    <b>$mirna miRNAs : $nb_results miRNA precursor(s) found</b>
-                </p> 
-                            
-                <div id="select" >
-                    <div style="width: 510px"  class="forms">
-                        <p class='text-results'>Export selected entries \(<a id='select-all' onclick='selectAll()' >select all<\/a>/<a id='deselect-all' onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p>
-                        <form id= 'exportForm'>
-                            <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (CSV)</label><br/>
-                            <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
-                            <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
-                            <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
-                            <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/>
-                            <input type="radio" name="export" id="export-reads" value="reads" />&#160;<label for='export-reads'>read cloud format</label>
-                            <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "smallRNAseq", "$mirnas_type")'/>
-                        </form>
-                    </div>
+        <div id='new_mirnas'>
+            <p class='header-results' id='precursors_count' style='font-size: 150%;'>
+                <b>$mirna miRNAs : $nb_results miRNA precursor(s) found</b>
+            </p> 
 
-                    <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
-                    $displayAllCandidates
-                    <a id="hrefposition" class='on' style="color:blue;" onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" class='off' style="color:black;" onclick='sortBy("quality")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
-                    </p>
-                </div> 
-                          
-                <div id="table" > </div>    
-                <div id="singleCell"> </div>
-                $mirnas_results
-                
-                <div id="id_job" >$id_job</div>
-            </div>
-            
-            <br />            
-                    
-        </div><!-- main -->
-    </div><!-- bloc droit--> 
+            <div id="select" >
+                <div style="width: 510px"  class="forms">
+                    <p class='text-results'>Export selected entries \(<a id='select-all' onclick='selectAll()' >select all<\/a>/<a id='deselect-all' onclick='deSelectAll()'  >deselect all</a>\) in one of the following formats:</p>
+                    <form id= 'exportForm'>
+                        <input type="radio" name="export" id="export-csv" checked='checked' value="csv" />&#160;<label for='export-csv'>tabular format (CSV)</label><br/>
+                        <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
+                        <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
+                        <input type="radio" name="export" id="export-odf" value="odf" />&#160;<label for='export-odf'>full report in document format (ODF)</label><br/>
+                        <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/>
+                        <input type="radio" name="export" id="export-reads" value="reads" />&#160;<label for='export-reads'>read cloud format</label>
+                        <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "smallRNAseq", "$mirnas_type")'/>
+                    </form>
+                </div>
+
+                <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
+                $displayAllCandidates
+                <a id="hrefposition" class='on' style="color:blue;" onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" class='off' style="color:black;" onclick='sortBy("quality")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
+                </p>
+            </div> 
+
+            <div id="table" > </div>
+            <div id="singleCell"> </div>
+            $mirnas_results
+
+            <div id="id_job" >$id_job</div>
+        </div>
+
+        <br />
+
+    </div><!-- main -->
+
     $footer  
-</body>    
-    
+</body>
+
 END_TXT
 
     } # end if nb results != 0
@@ -161,12 +161,12 @@ END_TXT
     <a href="/">
         <div class="logo"></div>
     </a>
-    <div class="bloc_droit">
+    <div id="main">
         $header_menu
         <div class="main main-full">
             $HTML_additional
-        </div><!-- main -->
-    </div><!-- bloc droit-->
+        </div>
+    </div>
     $footer
 </body>
 END_TXT
@@ -179,7 +179,7 @@ END_TXT
 else{   # job id is not a valid ID
     $HTML_additional .= '</div>';
 	$page = <<"END_TXT";
-<div class="main">
+<div id="main">
     $HTML_additional
     <p>No results available for the given job identifier $id_job.</p>
 </div><!-- main -->
