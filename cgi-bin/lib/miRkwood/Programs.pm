@@ -61,6 +61,7 @@ sub list_programs {
     delete $progs{'tRNAscanSE'};
     delete $progs{'vienna_progs'};
     delete $progs{'mirdup'};
+    delete $progs{'varna'};
     return values %progs;
 }
 
@@ -101,10 +102,15 @@ Return whether the output file exists.
 
 sub run_varna_on_structure {
     my ( $sequence, $structure, $varna_image ) = @_;
-    my $varna_cmd =
-"/usr/bin/java -cp $programs_paths{'varna'} fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -sequenceDBN '$sequence' -structureDBN '$structure' -o $varna_image > /dev/null 2>&1";
-    system($varna_cmd);
-    return ( -e $varna_image );
+    if ( -f $programs_paths{'varna'} ){
+        my $varna_cmd =
+    "/usr/bin/java -cp $programs_paths{'varna'} fr.orsay.lri.varna.applications.VARNAcmd -titleSize 0 -sequenceDBN '$sequence' -structureDBN '$structure' -o $varna_image > /dev/null 2>&1";
+        system($varna_cmd);
+        return ( -e $varna_image );
+    }
+    else{
+        debug('[WARNING] VARNA is not installed. Cannot create the image with VARNA.', miRkwood->DEBUG());
+    }
 }
 
 =method convert_to_ct
