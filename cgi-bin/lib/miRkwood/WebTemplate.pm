@@ -195,8 +195,15 @@ Return a generic error page
 sub get_error_page {
     my @args = @_;
     my $error_message = shift @args;
-    my @css = (get_server_css_file(), get_css_file());
-    my @js  = (get_js_file());
+    my @css = (
+        miRkwood::WebTemplate->get_server_css_file(),
+        miRkwood::WebTemplate->get_css_file(),
+        miRkwood::WebTemplate->get_mirkwood_css_file()
+    );
+    my @js  = (
+        miRkwood::WebTemplate->get_js_file(),
+        miRkwood::WebTemplate->get_bioinfo_js_file()
+    );
     my $header = 'Sorry, something went wrong with miRkwood';
     my $explanation = 'The error which occured is:';
     my $footer = 'Please send this to the miRkwood team, at the address in the footer.';
