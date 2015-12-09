@@ -309,6 +309,8 @@ sub get_HTML_page_for_body {
     if ( ( ! defined($title) ) || $title eq '' ){
         $title = 'miRkwood - MicroRNA identification';
     }
+    $title =~ s/<em>//;
+    $title =~ s/<\/em>//;
 
     my $css_html = '';
     foreach my $css (@css_files){
