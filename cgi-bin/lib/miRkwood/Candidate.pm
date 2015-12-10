@@ -534,30 +534,13 @@ sub get_basic_informations {
 	my ( $self, @args ) = @_;
 
 	my @optional_fields = $self->get_optional_candidate_fields();
-    my @headers;
-    if ( defined( $self->{'precursor_name'} ) ){
-        push @headers, 'precursor_name';
-    }
-    if ( defined( $self->{'mirna_sequence'} ) ){
-        push @headers, 'mirna_sequence';
-    }
-    if ( defined( $self->{'mirna_length'} ) ){
-        push @headers, 'mirna_length';
-    }
-    if ( defined( $self->{'reads_distribution'} ) ){
-        push @headers, 'reads_distribution';
-    }
-    if ( defined( $self->{'orphan_hairpin'} ) ){
-        push @headers, 'orphan_hairpin';
-    }
-    if ( defined( $self->{'nb_reads'} ) ){
-        push @headers, 'nb_reads';
-    }
-    if ( defined( $self->{'criteria_nb_reads'} ) ){
-        push @headers, 'criteria_nb_reads';
-    }
-    push @headers, ( 'identifier', 'position', 'start_position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields );
 	my $result = {};
+
+    my @headers = keys %{$self};
+    my @elements_to_be_deleted = qw(alignments alignment_existence CT energy_optimal name image mirdup_validation reads cluster chromosome matures);
+    foreach (@elements_to_be_deleted){
+        @headers = miRkwood::Utils::delete_element_in_array( $_, \@headers);
+    }
 
 	foreach (@headers){
 		$result->{$_} = $self->{$_};

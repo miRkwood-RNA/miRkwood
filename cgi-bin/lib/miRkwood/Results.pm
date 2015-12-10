@@ -235,41 +235,22 @@ sub has_candidates {
 
 =method deserialize_results
 
-Retrieve the results in the given directory
+Retrieve the results in the given basic yml file
 
 Usage:
-my %results = miRkwood::Results->deserialize_results( $candidates_dir );
+my %results = miRkwood::Results->deserialize_results( $basic_candidates_file );
 
 =cut
 
 sub deserialize_results {
 	my ( $self, @args ) = @_;
-	my $candidates_dir = shift @args;
-	my %myResults      = ();
-	opendir (DIR, $candidates_dir) or die "ERROR while opening $candidates_dir:$!";    #ouverture répertoire job
-	my @files;
-	@files = readdir DIR;
-	closedir DIR;
-	foreach my $file (@files)        # parcours du contenu
-	{
-		my $full_file = File::Spec->catfile( $candidates_dir, $file );
-		if (   $file ne '.'
-			&& $file ne '..' )
-		{
-			my $candidate;
-			if (
-				eval {
-					$candidate =
-					  miRkwood::Candidate->new_from_serialized($full_file);
-				}
-			  )
-			{
-				my $identifier = $candidate->get_identifier();
-				$myResults{$identifier} = $candidate;
-			}
-		}
-	}
-	return %myResults;
+	my $basic_candidates_file = shift @args;
+    my %myResults = ();
+    my $results = miRkwood::get_yaml_file( $basic_candidates_file );
+    foreach my $element ( @{$results} ){
+        $myResults{ $element->{'identifier'} } = miRkwood::Candidate->new( $element );
+    }
+    return %myResults;
 }
 
 =method number_of_results

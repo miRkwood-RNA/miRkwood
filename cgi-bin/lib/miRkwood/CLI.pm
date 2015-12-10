@@ -38,10 +38,13 @@ sub process_results_dir_for_offline {
             File::Spec->catdir( $abs_output_folder, miRkwood::Paths::get_sequences_folder_basename_for_CLI() )
         );
 
+    my $basic_results_file = File::Spec->catfile($abs_output_folder, 'basic_candidates.yml');
+
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $mirna_type eq 'known_miRNA' ){
             $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $abs_output_folder );
             miRkwood::Paths::create_folder( File::Spec->catdir( $abs_sequences_folder, miRkwood::Paths::get_basename_for_known_miRNA() ) );
+            $basic_results_file = File::Spec->catfile($abs_output_folder, 'basic_known_candidates.yml');
         }
         else{
             $candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $abs_output_folder );
@@ -52,7 +55,7 @@ sub process_results_dir_for_offline {
         $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir( $abs_output_folder );
     }
 
-    my %results = miRkwood::Results->deserialize_results($candidates_dir);
+    my %results = miRkwood::Results->deserialize_results($basic_results_file);
 
     my $html = make_html_from_results( \%results, $abs_output_folder, $pipeline_type, $mirna_type );
 
