@@ -26,7 +26,8 @@
     Solanum tuberosum miR169d-5p | stu-miR169e-5p MIMAT0031367 Solanum tuberosum miR169e-5p
     | stu-miR169f-5p MIMAT0031369 Solanum tuberosum miR169f-5p | stu-miR169g MIMAT0031371
     Solanum tuberosum miR169g | stu-miR169h MIMAT0031372 Solanum tuberosum miR169h
-    |
+    | atr-miR169a MIMAT0033921 Amborella trichopoda miR169a | atr-miR169c MIMAT0033923
+    Amborella trichopoda miR169c |
   end_query: 20
   end_target: 59
   name: sbi-miR169d-5p
@@ -56,7 +57,8 @@
     | tcc-miR169d MIMAT0020394 Theobroma cacao miR169d | bdi-miR169h-5p MIMAT0020699
     Brachypodium distachyon miR169h-5p | ssl-miR169 MIMAT0022511 Salvia sclarea miR169
     | mes-miR169ab MIMAT0029236 Manihot esculenta miR169ab | mes-miR169ac MIMAT0029237
-    Manihot esculenta miR169ac |
+    Manihot esculenta miR169ac | bdi-miR169n MIMAT0035517 Brachypodium distachyon
+    miR169n | ata-miR169c-5p MIMAT0037136 Aegilops tauschii miR169c-5p |
   end_query: 21
   end_target: 60
   name: osa-miR169f.1
@@ -250,62 +252,30 @@
 --- 2
 --- alternatives
 ---
-contig15750__54-177:
-  amfe: -31.85
-  end_position: '177'
-  energy_optimal: '-39.50'
-  energy_stemloop: '-39.50'
-  mfei: -0.86
+'contig15750__54-177 (MFEI: -0.86)':
   sequence: gaagagugcucuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucggcuuuuuuuc
-  start_position: 54
-  strand: +
-  structure_optimal: ((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))..))))))
   structure_stemloop: ((((((.(((...((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).)))..))))))
-contig15750__64-168:
-  amfe: -32.67
-  end_position: '168'
-  energy_optimal: '-34.30'
-  energy_stemloop: '-34.30'
-  mfei: -0.88
+'contig15750__64-168 (MFEI: -0.88)':
   sequence: cuuauuauguagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacugacuuaaucgg
-  start_position: 64
-  strand: +
-  structure_optimal: ((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))
   structure_stemloop: ((.((((.((((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)).)).)))).))
-contig15750__73-158:
-  amfe: -37.67
-  end_position: '158'
-  energy_optimal: '-32.40'
-  energy_stemloop: '-32.40'
-  mfei: -0.98
+'contig15750__73-158 (MFEI: -0.98)':
   sequence: uagccaaggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuucuugacug
-  start_position: 73
-  strand: +
-  structure_optimal: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
   structure_stemloop: (((.(((((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))).)))))).)))
-contig15750__80-150:
-  amfe: -38.73
-  end_position: '150'
-  energy_optimal: '-27.50'
-  energy_stemloop: '-27.50'
-  mfei: -1.06
+'contig15750__80-150 (MFEI: -1.06)':
   sequence: ggaugaauugccuaaugacagcucaagucguuuaaaaaacgacucuuuguugguuuauuaggcguucauuu
-  start_position: 80
-  strand: +
-  structure_optimal: ((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))))))
   structure_stemloop: ((((((((.(((((((((((((...((((((((...))))))))....))))..)))))))))))))))))
 --- energy_optimal
 --- '-60.10'
 --- name
 --- contig15750
 --- image
---- /vagrant/cgi-bin/t/functional/output/fullpipeline1/workspace/1/1/image.png
+--- /vagrant/cgi-bin/t/functional/output/fullpipeline1/images/1-1.png
 --- amfe
---- -37.10
+--- '-37.10'
 --- length
 --- 162
 --- mfei
---- -1.00
+--- '-1.00'
 --- mfe
 --- '-60.10'
 --- mirdup_validation

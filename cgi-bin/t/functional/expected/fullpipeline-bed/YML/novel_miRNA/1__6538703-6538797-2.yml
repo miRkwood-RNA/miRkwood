@@ -15,24 +15,8 @@
 --- 6538719-6538742
 --- alternatives
 ---
-1__6538709-6538792+:
-  amfe: '-24.76'
-  cluster: 6538451-6538916
-  end_position: 6538792
-  energy_optimal: '-20.80'
-  energy_stemloop: '-20.80'
-  mfei: '-0.99'
-  reads:
-    6538714-6538734: 1
-    6538714-6538737: 1
-    6538717-6538734: 2
-    6538719-6538741: 1
-    6538719-6538742: 4
-    6538752-6538771: 1
+'1__6538709-6538792+ (MFEI: -0.99)':
   sequence: UGAUUAUAGUAUAGAUCGGUAAAAGCAUGUUUUCAAUGAUUCAAUAAAGAAGAGAAUCAUGCUUAUCAUUUGUUUCUAUAAUUA
-  start_position: 6538709
-  strand: +
-  structure_optimal: (((((((((.((((((.((((..(((((((((((.....(((......)))))))).))))))))))))))))..)))))))))
   structure_stemloop: (((((((((.((((((.((((..(((((((((((.....(((......)))))))).))))))))))))))))..)))))))))
 --- criteria_nb_reads
 --- 0

@@ -16,30 +16,8 @@
 --- ''
 --- alternatives
 ---
-4__50567-50666+:
-  amfe: -45.6
-  cluster: 50419-50687
-  end_position: 50666
-  energy_optimal: '-45.60'
-  energy_stemloop: '-45.60'
-  mfei: '-0.81'
-  reads:
-    50600-50621: 1
-    50605-50627: 1
-    50609-50632: 1
-    50617-50640: 3
-    50618-50640: 1
-    50621-50644: 1
-    50622-50645: 1
-    50624-50645: 2
-    50625-50648: 4
-    50628-50649: 1
-    50633-50652: 1
-    50635-50655: 1
+'4__50567-50666+ (MFEI: -0.81)':
   sequence: GCUGGAAGACUAGCUAGCUCAGCUAGGUGAGCUGACCGACAGCUCGACUGAGCUCGGUGAGCUGAUCGUGUACUGACCCAGCUGGGUGGUCAUUCUAAGU
-  start_position: 50567
-  strand: +
-  structure_optimal: ((((((((((((.((((((((((..(((.((((.(((((..((((....))))))))).)))).)))..)..))))....))))).))))).)))).)))
   structure_stemloop: ((((((((((((.((((((((((..(((.((((.(((((..((((....))))))))).)))).)))..)..))))....))))).))))).)))).)))
 --- criteria_nb_reads
 --- 0
