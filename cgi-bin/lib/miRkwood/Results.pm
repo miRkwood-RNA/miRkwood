@@ -86,21 +86,18 @@ $type should be 'known_miRNA', 'novel_miRNA' (for BEDPipeline) or '' (for other 
 sub get_structure_for_jobID {
 	my ( $self, @args ) = @_;
 	my $jobId   = shift @args;
-	my $mirna_type = shift @args;   # should be 'known_miRNA', 'novel_miRNA' (for BEDPipeline) or '' (for other pipelines)
+	my $mirna_type = shift @args;   # should be 'known_miRNA' or anything else
 	my $job_dir = $self->jobId_to_jobPath($jobId);
 	miRkwood->CONFIG_FILE(
 		miRkwood::Paths->get_job_config_path($job_dir) );
-	my $candidates_dir = '';
+	my $candidates_file = '';
     if ( $mirna_type eq 'known_miRNA' ){
-        $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir($job_dir);
-    }
-    elsif ($mirna_type eq 'novel_miRNA' ){
-        $candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir($job_dir);
+        $candidates_file = File::Spec->catfile( $job_dir, 'basic_known_candidates.yml');
     }
     else{
-        $candidates_dir = miRkwood::Paths::get_dir_candidates_path_from_job_dir($job_dir);
+        $candidates_file = File::Spec->catfile( $job_dir, 'basic_candidates.yml');
     }
-	return $self->deserialize_results($candidates_dir);
+	return $self->deserialize_results($candidates_file);
 }
 
 =method get_basic_structure_for_jobID
@@ -376,10 +373,8 @@ sub create_summary_page {
     my $nb_reads_known_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_known_yaml );
     my $nb_reads_new_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_yaml );
 
-    my $known_candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $absolute_job_dir );
-    my $novel_candidates_dir = miRkwood::Paths::get_new_candidates_dir_from_job_dir( $absolute_job_dir );
-    my %known_results = miRkwood::Results->deserialize_results($known_candidates_dir);
-    my %novel_results = miRkwood::Results->deserialize_results($novel_candidates_dir);
+    my %known_results = miRkwood::Results->deserialize_results($basic_known_yaml);
+    my %novel_results = miRkwood::Results->deserialize_results($basic_yaml);
 
     my $nb_results_known_miRNAs = miRkwood::Results->number_of_results( \%known_results );
     my $nb_results_new_miRNAs = miRkwood::Results->number_of_results( \%novel_results );
