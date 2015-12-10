@@ -123,6 +123,8 @@ sub run_pipeline {
         debug( "- End of chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
 
+    $self->count_alignments_per_miRNA();
+
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );
     miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'} );
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_hairpins'}, $bed_sizes_file );
@@ -147,6 +149,34 @@ sub run_pipeline {
     debug( "Done in $day day $hour h $min min $sec sec.", miRkwood->DEBUG() );
 
     return;
+}
+
+sub count_alignments_per_miRNA {
+    my ($self, @args) = @_;
+    my $nb_alignments_per_read;
+
+    open( my $BED, '<', $self->{'bed_file'}) or die "ERROR while opening $self->{'bed_file'}: $!";
+    while ( <$BED> ){
+        chomp;
+        my @fields = split( /\t/ );
+        $fields[3] =~ s/T/U/g;
+        if ( $fields[5] eq '-' ){
+            $fields[3] = miRkwood::Utils::reverse_complement( $fields[3] );
+        }
+        if ( ! defined( $nb_alignments_per_read->{ $fields[3] } ) ){
+            $nb_alignments_per_read->{ $fields[3] } = 0;
+        }
+        $nb_alignments_per_read->{ $fields[3] }++;
+    }
+    foreach my $candidate ( @{$self->{'basic_candidates'}} ){
+        if ( $candidate->{'mirna_sequence'} ne '' ){
+            $candidate->{'nb_alignments_for_miRNA'} = $nb_alignments_per_read->{ $candidate->{'mirna_sequence'} };
+        }
+        else {
+            $candidate->{'nb_alignments_for_miRNA'} = '';
+        }
+    }
+    return $self;
 }
 
 
