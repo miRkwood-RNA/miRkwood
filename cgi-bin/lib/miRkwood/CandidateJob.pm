@@ -397,7 +397,9 @@ sub convert_alternative_candidates {
     my %results;
     foreach my $alternative (@alternatives) {
         my $name = delete $alternative->{'name'};
-        $results{$name} = $alternative;
+        $name .= ' (MFEI: ' . miRkwood::Utils::restrict_num_decimal_digits( $alternative->{'mfei'}, 3) . ')';
+        $results{$name}{'sequence'} = $alternative->{'sequence'};
+        $results{$name}{'structure_stemloop'} = $alternative->{'structure_stemloop'};
     }
     return \%results;
 }

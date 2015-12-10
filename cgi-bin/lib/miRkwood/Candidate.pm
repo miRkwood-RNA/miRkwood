@@ -371,7 +371,7 @@ sub alternativeCandidatesAsVienna {
         my %alternatives = %{$alternatives};
         foreach my $name (sort keys %alternatives) {
             my %alternative = %{$alternatives{$name}};
-            $output .= '>'.$name . ' (MFEI: ' . $alternative{'mfei'} . ')'. "\n" .
+            $output .= '>'.$name . "\n" .
                        $alternative{'sequence'} . "\n" .
                        $alternative{'structure_stemloop'} . "\n";
         }
