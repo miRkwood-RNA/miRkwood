@@ -316,9 +316,9 @@ sub run_piccolo {
 
     my $cmd = "$programs_paths{'piccolo'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
     #~ debug( '          ' . $cmd, miRkwood->DEBUG());
-    debug( "                Running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
+    debug( "                Running piccolo on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     system($cmd);
-    debug( "                End of running RNAcomp on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
+    debug( "                End of running piccolo on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
     return ( -e $output );
 
 }

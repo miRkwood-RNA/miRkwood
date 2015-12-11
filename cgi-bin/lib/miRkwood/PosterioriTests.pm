@@ -50,7 +50,7 @@ sub test_randfold {
 
 =method test_alignment
 
-Run the Alignment (RNAcomp) a posteriori test
+Run the Alignment (piccolo) a posteriori test
 
 =cut
 
@@ -81,7 +81,7 @@ sub test_alignment {
 
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
     miRkwood::Programs::run_piccolo( $seqN, $exonerate_out )
-      or die("Problem when running RNAcomp : $!");
+      or die("Problem when running piccolo : $!");
     my $alignments = $self->post_process_alignments($exonerate_out );
     return $alignments;
 }
@@ -109,7 +109,7 @@ sub post_process_alignments {
       )
     {
         # Catching exception
-        carp("Exception when parsing RNAcomp output $file_alignement");
+        carp("Exception when parsing piccolo output $file_alignement");
         return;
     }
     else {

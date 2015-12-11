@@ -148,8 +148,8 @@ You can download VARNA jar on http://varna.lri.fr/bin/VARNAv3-91.jar and
 then create a symbolic link or change the corresponding line in the 
 programs.cfg file.
 
-- RNAcomp (piccolo)
-RNAcomp is a "homemade" program that performs alignments.
+- piccolo
+piccolo is a "homemade" program that performs alignments.
 It is stored in the ${local_programs} directory.
 
 3. Optional dependencies for abinitio pipeline
