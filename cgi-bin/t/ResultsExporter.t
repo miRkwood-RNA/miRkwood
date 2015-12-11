@@ -24,9 +24,9 @@ use miRkwood::Results;
 my $config_file = input_file('run_options.cfg');
 miRkwood->CONFIG_FILE($config_file);
 
-my $candidates_dir = input_file('YML');
+my $candidates_YML_file = input_file('basic_candidates.yml');
 ok(
-    my %results = miRkwood::Results->deserialize_results($candidates_dir),
+    my %results = miRkwood::Results->deserialize_results($candidates_YML_file),
     'Can call deserialize_results'
 );
 

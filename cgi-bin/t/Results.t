@@ -15,10 +15,10 @@ BEGIN {
 }
 require_ok('miRkwood::Results');
 
-my $candidates_dir = input_file('YML');
+my $candidates_YML_file = input_file('basic_candidates.yml');
 
 ok(
-    my %results = miRkwood::Results->deserialize_results($candidates_dir),
+    my %results = miRkwood::Results->deserialize_results($candidates_YML_file),
     'Can call deserialize_results'
 );
 
