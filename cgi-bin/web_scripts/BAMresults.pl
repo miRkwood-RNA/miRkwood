@@ -326,7 +326,7 @@ if ( $valid ){
     </div>
 
     <div id="center_sup">
-        <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+        <div id="link_home" style="display:inline-block"><a href="/mirkwood/smallRNAseq/index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
         <div class="tabs" id="menu_central" style="display:inline-block"> 
             $header_menu
         </div>
