@@ -84,9 +84,18 @@
 
             <p>For this step, you should use our custom script mirkwood-bam2bed.pl (<a href="../../cgi-bin/mirkwood/web_scripts/getScript.pl?file=mirkwood-bam2bed.pl">download the script</a>).  mirkwood-bam2bed.pl is a perl script dependent upon the installation of SAMtools. In practice, the BED file is up to 10 times smaller than the BAM file and up to XXX times smaller than the set of raw reads, while retaining all information needed to conduct the analysis. This allows to reduce significantly the bandwidth necessary to upload the data to miRkwood server. </p>
 
-            <pre class='code'>mirkwood-bam2bed.pl -bam /path/to/your/bam/file -out /output/directory/</pre>
+            <pre class='code'>mirkwood-bam2bed.pl --in /input/file --bed /output/file/ --min X --max Y</pre>
 
+<!--
             <br />
+-->
+            
+            <p>
+                --in : path to your input file (format BAM or SAM)<br />
+                --bed : path to your output BED file<br />
+                --min : keep only reads with length &ge; min (default 18)<br />
+                --max  : keep only reads with length &le; max (default 25)
+            </p>
 
             <p>The generated BED file has the following syntax.</p>
 
