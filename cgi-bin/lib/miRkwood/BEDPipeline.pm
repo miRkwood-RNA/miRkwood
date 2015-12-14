@@ -124,6 +124,7 @@ sub run_pipeline {
     }
 
     $self->count_alignments_per_miRNA();
+    $self->count_precursors_per_miRNA();
 
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'orphan_clusters'}, $bed_sizes_file );
     miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'} );
@@ -151,6 +152,15 @@ sub run_pipeline {
     return;
 }
 
+=method count_alignments_per_miRNA
+
+  Read the non filtered BED file and the basic_candidates hash
+  file to count how many times each read corresponding to a miRNA
+  is aligned.
+  Modify the basic_candidates hash to add a feature 'nb_alignments_for_miRNA'
+  for each candidate.
+
+=cut
 sub count_alignments_per_miRNA {
     my ($self, @args) = @_;
     my $nb_alignments_per_read;
@@ -174,6 +184,31 @@ sub count_alignments_per_miRNA {
         }
         else {
             $candidate->{'nb_alignments_for_miRNA'} = '';
+        }
+    }
+    return $self;
+}
+
+=method count_precursors_per_miRNA
+
+  
+
+=cut
+sub count_precursors_per_miRNA {
+    my ($self, @args) = @_;
+    my $list_ID_foreach_miRNA;
+
+    foreach my $candidate ( @{$self->{'basic_candidates'}} ){
+        if ( $candidate->{'mirna_sequence'} ne '' ){
+            push @{$list_ID_foreach_miRNA->{ $candidate->{'mirna_sequence'} } }, $candidate->{'identifier'};
+        }
+    }
+    foreach my $candidate ( @{$self->{'basic_candidates'}} ){
+        @{ $candidate->{'list_id_with_same_mirna'} } = ();
+        if ( $candidate->{'mirna_sequence'} ne '' ){
+            my @list_id = @{$list_ID_foreach_miRNA->{ $candidate->{'mirna_sequence'} } };
+            @list_id = miRkwood::Utils::delete_element_in_array( $candidate->{'identifier'}, \@list_id );
+            @{ $candidate->{'list_id_with_same_mirna'} } = @list_id;
         }
     }
     return $self;
