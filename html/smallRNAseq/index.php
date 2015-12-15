@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <link type='text/css' rel='stylesheet' href='../../Style/css/bioinfo.css' />
         <link type='text/css' rel='stylesheet' href='../style/mirkwood.css' />
+        <link type='text/css' rel='stylesheet' href='../../Style/css/bioinfo.css' />
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../js/header.js"></script>
