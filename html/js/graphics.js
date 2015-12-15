@@ -161,6 +161,10 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 					{
 						td.innerHTML = '<h3>LENGTH</h3>' ;
 					}
+					else if (value.toString() == 'list_id_with_same_mirna') 
+					{
+						td.innerHTML = '<h3>OCC.</h3>' ;
+					}
 					else if (value.toString() == 'strand')
 					{
 						td.innerHTML = '<h3>+/-</h3>' ;
@@ -268,6 +272,21 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 					{
 						var value = myResults.getValueByFactor(i-1,'mirna_sequence');
 						td.innerHTML = "<span class='mirna_sequence'>"+value+"</span>";
+					}
+                    else if( factor =='list_id_with_same_mirna')
+					{
+                        var list_id_string = myResults.getValueByFactor(i-1,'list_id_with_same_mirna');
+                        var mirna = myResults.getValueByFactor(i-1,'mirna_sequence');
+                        if ( mirna == '' ){
+                            td.innerHTML = '';
+                        }
+                        else if ( list_id_string.length == 0 ){
+                            td.innerHTML = 1;
+                        }
+                        else {
+                            var value = list_id_string.split(' ').length + 1;
+                            td.innerHTML = value;
+                        }
 					}
 					else
 					{
