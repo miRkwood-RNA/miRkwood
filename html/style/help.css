@@ -1,9 +1,5 @@
 
 body {
-/*
-	font-family: sans-serif;
-	font-size: 10pt;
-*/
     counter-reset:section;
     text-align: justify;
 }
