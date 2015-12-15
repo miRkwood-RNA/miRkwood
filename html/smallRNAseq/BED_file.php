@@ -13,7 +13,7 @@
     </head>
     <body>
         <div class="frametitle">
-            <h1 id="title">miRkwood smallRNA-seq</h1>
+            <h1 id="title">miRkwood small RNA-seq</h1>
         </div>
 
         <div id="center_sup">
