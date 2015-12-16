@@ -528,7 +528,15 @@ sub get_optional_candidate_fields {
     return @fields;
 }
 
+=method get_basic_informations
 
+Return a hash with only the features from the candidate that are 
+needed to create or display the results.
+/!\ If we add new features to the candidate YML, they will be
+automatically added to the basic_candidates YML file unless they
+are also added to @elements_to_be_deleted.
+
+=cut
 sub get_basic_informations {
 
 	my ( $self, @args ) = @_;
