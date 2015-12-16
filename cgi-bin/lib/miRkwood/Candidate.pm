@@ -965,15 +965,17 @@ sub find_mirna {
         $self->{'mirna_position'} = "$mirna_start-$mirna_end";
         $self->{'mirna_sequence'} = $genome_db->seq( $chromosome, $mirna_start => $mirna_end );
         $self->{'mirna_sequence'} =~ s/T/U/g;
-        $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
         if ( $self->{'strand'} eq '-' ){
             $self->{'mirna_sequence'} = miRkwood::Utils::reverse_complement( $self->{'mirna_sequence'} );
         }
+        $self->{'mirna_length'}   = $mirna_end - $mirna_start + 1;
+        $self->{'mirna_depth'}    = $self->{'reads'}{ $self->{'mirna_position'} };
     }
     else {
         $self->{'mirna_position'} = '';
         $self->{'mirna_sequence'} = '';
         $self->{'mirna_length'}   = '';
+        $self->{'mirna_depth'}    = '';
     }
 
     return $self;
