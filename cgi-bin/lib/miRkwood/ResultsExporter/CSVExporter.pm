@@ -19,7 +19,9 @@ sub get_file_extension {
 
 sub get_header {
     my ( $self, @args ) = @_;
-    return join( ',', $self->get_csv_headers() ) . "\n";
+    my $header = join( ',', $self->get_csv_headers() ) . "\n";
+    $header =~ s/nb_alignments_for_miRNA/nb_of_copies/;
+    return $header;
 }
 
 sub export_candidate {
