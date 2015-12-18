@@ -293,11 +293,23 @@ sub make_candidate_page {
         }
         else{
             $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
+            if ( $mirna_type eq 'novel_miRNA' ){
+                $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>\n";
+                $mirna_html .= "<li><b>miRNA depth:</b> $candidate->{'mirna_depth'} (weight: $candidate->{'weight'})</li>\n";
+                $mirna_html .= "<li><b>Candidates with the same miRNA:</b>";
+                if ( scalar( @{ $candidate->{'list_id_with_same_mirna'} } ) ){
+                    foreach ( @{ $candidate->{'list_id_with_same_mirna'} } ){
+                        if ( /(.*)__(\d+)-(\d+)/ ){
+                            $mirna_html .= " <a href='#$1-$2-$3'>$1__$2-$3</a>";
+                        }
+                    }
+                    $mirna_html .= "</li>\n";
+                }
+                else{
+                    $mirna_html .= ' none</li>';
+                }
+            }
         }
-        $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>";
-        $mirna_html .= "<li><b>miRNA depth:</b> $candidate->{'mirna_depth'}</li>";
-        $mirna_html .= "<li><b>miRNA number of copies:</b> $candidate->{'nb_alignments_for_miRNA'}</li>";
-        $mirna_html .= "<li><b>miRNA weight:</b> $candidate->{'weight'}</li>";
 
         # Reads
         # this is not very robust. be cautious if you change the tree view
@@ -407,7 +419,7 @@ END_TXT
     $start = miRkwood::Utils::make_numbers_more_readable( $start );
     $end = miRkwood::Utils::make_numbers_more_readable( $end );
     my $html = <<"END_TXT";
-<h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}, $start-$end ($candidate->{'strand'}) $arrow</a></h3>
+<h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}__$start-$end ($candidate->{'strand'}) $arrow</a></h3>
 
     <ul>
         <li>
