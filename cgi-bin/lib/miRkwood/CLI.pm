@@ -295,6 +295,9 @@ sub make_candidate_page {
             $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
         }
         $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>";
+        $mirna_html .= "<li><b>miRNA depth:</b> $candidate->{'mirna_depth'}</li>";
+        $mirna_html .= "<li><b>miRNA number of copies:</b> $candidate->{'nb_alignments_for_miRNA'}</li>";
+        $mirna_html .= "<li><b>miRNA weight:</b> $candidate->{'weight'}</li>";
 
         # Reads
         # this is not very robust. be cautious if you change the tree view
