@@ -353,7 +353,7 @@ sub make_candidate_page {
         $reads_html = <<"END_TXT";
 $read_duplex
 <li>
-    <b>Number of reads:</b> $nb_reads (<a href='$reads_file'>download<a/>)
+    <b>Number of reads:</b> $nb_reads [<a href='$reads_file'>download<a/>]
 </li>
 $reads_score
 $read_cloud
