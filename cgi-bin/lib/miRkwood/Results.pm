@@ -195,12 +195,6 @@ sub convert_basic_to_pseudoXML {
         if ( $header eq 'shuffles' && $contents == 1){
             $contents = q{};
         }
-        if ($header eq 'reads'){
-            $contents = 0;
-            foreach my $key (keys( %{$candidate->{'reads'}} )){
-                $contents += $candidate->{'reads'}{$key};
-            }
-        }
         if ( $header eq 'position' ){
             my ($start, $end) = split( /-/, $contents);
             $start = miRkwood::Utils::make_numbers_more_readable( $start );
