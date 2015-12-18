@@ -28,9 +28,6 @@ sub get_header {
         elsif ( $header eq 'mirna_sequence' ){
             $output .= "<th>miRNA</th>\n";
         }
-        elsif ( $header eq 'mirna_sequence' ){
-            $output .= "<th>miRNA</th>\n";
-        }
         elsif ( $header eq 'mirna_length' ){
             $output .= "<th>length</th>\n";
         }
