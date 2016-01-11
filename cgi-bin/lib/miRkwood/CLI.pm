@@ -414,6 +414,13 @@ END_TXT
         $optimal_HTML = "[<a href='$linkViennaOptimal'>optimal MFE structure</a>]";
     }
 
+    # miRBase name
+    my $mirbase_name = '';
+    if ( defined( $candidate->{'mirbase_id'} ) ){
+        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $candidate->{'mirbase_id'} );
+        $mirbase_name = "<li><b>miRbase name:</b> <a href='$mirbase_link'>$candidate->{'identifier'}</a></li>";
+    }
+
     ### make page
     my ($start, $end) = split( /-/, $candidate->{'position'});
     $start = miRkwood::Utils::make_numbers_more_readable( $start );
@@ -422,6 +429,7 @@ END_TXT
 <h3 id='$candidate->{'name'}-$candidate->{'position'}'><a href='#table_$candidate->{'name'}-$candidate->{'position'}' class='nodecoration'>Results for $candidate->{'name'}__$start-$end ($candidate->{'strand'}) $arrow</a></h3>
 
     <ul>
+        $mirbase_name
         <li>
             <b>Name: </b>$candidate->{'name'}
         </li>
