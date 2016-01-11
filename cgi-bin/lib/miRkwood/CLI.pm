@@ -297,7 +297,7 @@ sub make_candidate_page {
             if ( $mirna_type eq 'novel_miRNA' ){
                 $mirna_html .= "<li><b>miRNA depth:</b> $candidate->{'mirna_depth'} (weight: $candidate->{'weight'})</li>\n";
                 $mirna_html .= "<li><b>Candidates with the same miRNA:</b>";
-                if ( scalar( @{ $candidate->{'list_id_with_same_mirna'} } ) ){
+                if ( defined( $candidate->{'list_id_with_same_mirna'} ) && scalar( @{ $candidate->{'list_id_with_same_mirna'} } ) ){
                     foreach ( @{ $candidate->{'list_id_with_same_mirna'} } ){
                         if ( /(.*)__(\d+)-(\d+)/ ){
                             $mirna_html .= " <a href='#$1-$2-$3'>$1__$2-$3</a>";
