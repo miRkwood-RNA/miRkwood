@@ -259,6 +259,18 @@ sub print_reads_clouds {
             push @positions_tags, "$relative_tag_start-$relative_tag_end";
         }
 
+        if ( $strand eq '-' ){  # "reverse" the tags in case of strand '-' 	 
+            my @new_positions_tags = ();
+            foreach my $position (@positions_tags){
+                my $tag_start = miRkwood::Utils::get_element_of_split( $position, '-', 0);
+                my $tag_end   = miRkwood::Utils::get_element_of_split( $position, '-', 1);
+                my $new_tag_start = $precursor_length - $tag_end + 1;
+                my $new_tag_end   = $precursor_length - $tag_start + 1;
+                push @new_positions_tags, "$new_tag_start-$new_tag_end";
+            }
+            @positions_tags = @new_positions_tags;
+        }
+
     }
 
     if ( @positions_tags ){
