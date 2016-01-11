@@ -293,8 +293,8 @@ sub make_candidate_page {
         }
         else{
             $mirna_sequence = "$candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)";
+            $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>\n";
             if ( $mirna_type eq 'novel_miRNA' ){
-                $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>\n";
                 $mirna_html .= "<li><b>miRNA depth:</b> $candidate->{'mirna_depth'} (weight: $candidate->{'weight'})</li>\n";
                 $mirna_html .= "<li><b>Candidates with the same miRNA:</b>";
                 if ( scalar( @{ $candidate->{'list_id_with_same_mirna'} } ) ){
