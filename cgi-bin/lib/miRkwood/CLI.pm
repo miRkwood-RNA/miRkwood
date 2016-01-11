@@ -431,7 +431,7 @@ END_TXT
     <ul>
         $mirbase_name
         <li>
-            <b>Name: </b>$candidate->{'name'}
+            <b>Chromosome: </b>$candidate->{'name'}
         </li>
         <li>
             <b>Position:</b> $start-$end ($size nt)
