@@ -275,6 +275,10 @@ sub get_HTML_page_for_content {
         $index_link = '/mirkwood/smallRNAseq/index.php';
     }
 
+    my $arborescence = "<a href='/'>home</a> &gt; ";
+    $arborescence .= "<a href='/theme_page/rna.html'>RNA</a> &gt; ";
+    $arborescence .= "<a href='/mirkwood/mirkwood.php'>mirkwood</a>";
+
     my $body = <<"END_TXT";
     <body>
         <div class="frametitle">
@@ -286,7 +290,7 @@ sub get_HTML_page_for_content {
             <div class="tabs" id="menu_central" style="display:inline-block"> 
                 $header_menu
             </div>
-            <div id="arborescence"></div>
+            <div id="arborescence">$arborescence</div>
         </div>
         <div id="main">
         
