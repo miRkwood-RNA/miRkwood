@@ -4,7 +4,6 @@
         <link type='text/css' rel='stylesheet' href='../style/mirkwood.css' />
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
-        <link type='text/css' rel='stylesheet' href='../style/script.css' />
         <link type='text/css' rel='stylesheet' href='/Style/css/bioinfo.css' />
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
