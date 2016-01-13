@@ -43,6 +43,10 @@ my $cfg = miRkwood->CONFIG();
 
 my $html = '';
 
+my $arborescence = "<a href='/'>home</a> &gt; ";
+$arborescence .= "<a href='/theme_page/rna.html'>RNA</a> &gt; ";
+$arborescence .= "<a href='/mirkwood/mirkwood.php'>mirkwood</a>";
+
 my $HTML_additional = '';
 $HTML_additional .=
   "<p class='header-results' id='job_id'><b>Job ID:</b> " . $id_job . '</p>';
@@ -80,7 +84,7 @@ if ($valid) {
         <div class="tabs" id="menu_central" style="display:inline-block"> 
             $header_menu
         </div>
-        <div id="arborescence"></div>
+        <div id="arborescence">$arborescence</div>
     </div>
 
     <div id="main">
@@ -125,7 +129,7 @@ END_TXT
         <div class="tabs" id="menu_central" style="display:inline-block"> 
             $header_menu
         </div>
-        <div id="arborescence"></div>
+        <div id="arborescence">$arborescence</div>
     </div>
 
     <div id="main">

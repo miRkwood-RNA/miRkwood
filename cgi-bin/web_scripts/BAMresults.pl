@@ -318,6 +318,9 @@ if ( $valid ){
 
     }
 
+    my $arborescence = "<a href='/'>home</a> &gt; ";
+    $arborescence .= "<a href='/theme_page/rna.html'>RNA</a> &gt; ";
+    $arborescence .= "<a href='/mirkwood/mirkwood.php'>mirkwood</a>";
 
     $page = <<"END_TXT";
 <body onload="main('all');">
@@ -330,7 +333,7 @@ if ( $valid ){
         <div class="tabs" id="menu_central" style="display:inline-block"> 
             $header_menu
         </div>
-        <div id="arborescence"></div>
+        <div id="arborescence">$arborescence</div>
     </div>
 
     <div id="main">
