@@ -31,8 +31,7 @@ my @js = (
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'graphics.js' ),
 	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'miARN.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
-	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'imgpreview.full.jquery.js' ),
+	File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' )
     miRkwood::WebTemplate->get_bioinfo_js_file()
 );
 
