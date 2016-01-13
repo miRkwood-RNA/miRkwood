@@ -48,6 +48,7 @@ my $return_html = "<p><a class='returnlink' href='$returnlink'>Back to main resu
 my $valid = miRkwood::Results->is_valid_jobID($id_job);
 my $html = '';
 my $HTML_additional = '';
+my $main_contents;
 my $page = '';
 
 my $mirnas_results = '';
@@ -94,25 +95,9 @@ if ( $valid ){
 
     if ( $nb_results != 0 ) {
 
-        $page = <<"END_TXT";
-<body onload="main('all',false);">
-    <div class="frametitle">
-        <h1 id="title">miRkwood small RNA-seq</h1>
-    </div>
-
-    <div id="center_sup">
-        <div id="link_home" style="display:inline-block"><a href="/mirkwood/smallRNAseq/index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-        <div class="tabs" id="menu_central" style="display:inline-block"> 
-            $header_menu
-        </div>
-        <div id="arborescence"></div>
-    </div>
-
-    <div id="main">
-        $HTML_additional
-        $return_html
-
-        <div id='new_mirnas'>
+        $main_contents = <<"END_TXT";
+            $return_html
+            <div id='new_mirnas'>
             <p class='header-results' id='precursors_count' style='font-size: 150%;'>
                 <b>$mirna miRNAs : $nb_results miRNA precursor(s) found</b>
             </p> 
@@ -145,49 +130,42 @@ if ( $valid ){
         </div>
 
         <br />
-
-    </div><!-- main -->
-
-    $footer  
-</body>
-
 END_TXT
 
     } # end if nb results != 0
     else {  # 0 results
-		$page = <<"END_TXT";
+        $main_contents .= "<p class='header-results' id='precursors_count'><b>0 miRNA precursor(s) found</b></p>";
+    }
+
+}   # end if valid
+else{   # job id is not a valid ID
+    $main_contents .= "<p>No results available for the given job identifier $id_job.</p>";
+}
+
+$page = <<"END_TXT";
 <body onload="main('all');">
-    <div class="theme-border"></div>
-    <a href="/">
-        <div class="logo"></div>
-    </a>
-    <div id="main">
-        $header_menu
-        <div class="main main-full">
-            $HTML_additional
+    <div class="frametitle">
+        <h1 id="title">miRkwood small RNA-seq</h1>
+    </div>
+
+    <div id="center_sup">
+        <div id="link_home" style="display:inline-block"><a href="/mirkwood/smallRNAseq/index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
+        <div class="tabs" id="menu_central" style="display:inline-block"> 
+            $header_menu
         </div>
+        <div id="arborescence"></div>
+    </div>
+
+    <div id="main">
+        $HTML_additional
+        $main_contents
     </div>
     $footer
 </body>
 END_TXT
-    }
 
-    my $title = 'miRkwood - '. lc($mirna).' candidates';
-    $html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js, $title);
-
-}   # end if valid
-else{   # job id is not a valid ID
-    $HTML_additional .= '</div>';
-	$page = <<"END_TXT";
-<div id="main">
-    $HTML_additional
-    <p>No results available for the given job identifier $id_job.</p>
-</div><!-- main -->
-END_TXT
-
-    my $title = 'miRkwood - No results';
-	$html = miRkwood::WebTemplate::get_HTML_page_for_content( 'smallrnaseq', $page, \@css, \@js, $title );
-}
+my $title = 'miRkwood - '. lc($mirna).' candidates';
+$html = miRkwood::WebTemplate::get_HTML_page_for_body($page, \@css, \@js, $title);
 
 
 print <<"DATA" or die("Error when displaying HTML: $!");
