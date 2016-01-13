@@ -29,9 +29,7 @@ my @css = (
 my @js = ( File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'results.js' ),
 	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'graphics.js' ),
 	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'miARN.js' ),
-	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' ),
-	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'imgpreview.full.jquery.js' )
-
+	       File::Spec->catfile( miRkwood::WebPaths->get_js_path(), 'jquery.min.js' )
 );
 
 my $help_page = File::Spec->catfile( File::Spec->catdir( miRkwood::WebPaths->get_html_path(), 'smallRNAseq'), 'help.php');
