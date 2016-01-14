@@ -1,0 +1,7 @@
+#!/bin/sh
+# Script that deploys miRkwood from Bioinfodev to Bioinfo
+
+USER=bonsai-bot
+SERVER=bioinfodev.lifl.fr
+
+ssh -A $USER@$SERVER < deploy-mirkwood-to-bioinfo

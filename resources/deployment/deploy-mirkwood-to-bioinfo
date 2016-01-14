@@ -1,0 +1,38 @@
+#!/bin/sh
+# Deploy miRkwood from local to BioInfo
+ 	
+SERVER=root@bioinfo.lifl.fr
+ 	
+HTML_BASE_DIR=/bio1/www/html
+CGI_BASE_DIR=/bio1/www/cgi-bin
+ 	
+HTML_DIR=$HTML_BASE_DIR/mirkwood
+CGI_DIR=$CGI_BASE_DIR/mirkwood
+ 	
+EXCLUDE="--exclude=results/*"
+
+BACKUP_DIR="/bio1/backups/mirkwood"
+
+
+tar cvzf html_mirkwood.tar.gz -C $HTML_BASE_DIR/ --exclude=results --exclude=.svn mirkwood
+tar cvzf cgi-bin_mirkwood.tar.gz -C $CGI_BASE_DIR --exclude=data --exclude=t/* --exclude=.svn --exclude=programs mirkwood
+
+ssh $SERVER tar cvzf $BACKUP_DIR/html_mirkwood_`date "+%Y-%m-%d"`.tar.gz -C $HTML_BASE_DIR/ --exclude=results --exclude=.svn mirkwood
+ssh $SERVER tar cvzf $BACKUP_DIR/cgi-bin_mirkwood_`date "+%Y-%m-%d"`.tar.gz  -C $CGI_BASE_DIR/ --exclude=data --exclude=t/* --exclude=.svn --exclude=programs mirkwood
+
+scp html_mirkwood.tar.gz $SERVER:/tmp/
+scp cgi-bin_mirkwood.tar.gz $SERVER:/tmp/
+
+echo Déploiement final sur bioinfo
+ssh $SERVER tar xvzf /tmp/html_mirkwood.tar.gz -C $HTML_BASE_DIR/
+ssh $SERVER tar xvzf /tmp/cgi-bin_mirkwood.tar.gz -C $CGI_BASE_DIR/
+
+rm *_mirkwood.tar.gz
+
+echo done
+
+ 	
+#rsync -aEzv --cvs-exclude $EXCLUDE $HTML_DIR $SERVER:$HTML_BASE_DIR
+#rsync -aEzv $CGI_DIR $SERVER:$CGI_BASE_DIR
+
+
