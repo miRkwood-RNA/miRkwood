@@ -178,6 +178,7 @@ sub count_alignments_per_miRNA {
         }
         $nb_alignments_per_read->{ $fields[3] }++;
     }
+    close $BED;
     foreach my $candidate ( @{$self->{'basic_candidates'}} ){
         if ( $candidate->{'mirna_sequence'} ne '' ){
             $candidate->{'nb_alignments_for_miRNA'} = $nb_alignments_per_read->{ $candidate->{'mirna_sequence'} };
