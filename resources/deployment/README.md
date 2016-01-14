@@ -39,10 +39,8 @@ On BioInfo
 
 BioInfo does not accept connections to the outside world, so we cannot check out the Forge repository.
 
-The solution is to mirror the contents of the qualification server using rsync.
+The solution is to mirror the contents of the qualification server using scp.
 
-The Shell script `mirror-local-mirkwood-to-bioinfo` can be used for that.
+The Shell script `deploy-mirkwood-to-bioinfo` can be used for that.
 
-You may use directly its wrapper, `mirror-mirkwood-from-bioinfotest-to-bioinfo`:
-
-    ./mirror-mirkwood-from-bioinfotest-to-bioinfo
+You must use it from bioinfodev, or use the wrapper `mirror-deploy-mirkwood-from-local-to-bioinfo`.
