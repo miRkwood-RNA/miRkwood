@@ -24,6 +24,7 @@ my @js = ();
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 
 my $candidate;
+my $basic_candidate;
 my $html_contents;
 
 my $cfg_path = miRkwood::Paths->get_job_config_path($job);
@@ -39,6 +40,15 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     # Catching exception
     $html_contents = 'No results for the given identifiers';
 }else{
+
+    my $mirna_depth = '';
+    if ( eval {$basic_candidate = miRkwood::CandidateHandler->retrieve_candidate_information_from_basic_yml($job, $candidate_id);}) {
+       $mirna_depth = <<"END_TXT";
+            <li>
+                <b>miRNA depth:</b> $basic_candidate->{'mirna_depth'} (weight: $basic_candidate->{'weight'})
+            </li>
+END_TXT
+    }
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         if ( defined($candidate->{'mirbase_id'}) ){ # smallRNA-seq pipeline, known candidate
@@ -89,6 +99,7 @@ END_TXT
             <li>
                 <b>miRNA sequence:</b> $candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)
             </li>
+            $mirna_depth
 END_TXT
         }
 
