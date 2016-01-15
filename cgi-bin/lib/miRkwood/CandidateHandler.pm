@@ -59,8 +59,7 @@ sub retrieve_candidate_information_from_basic_yml {
     }
     my %results = miRkwood::Results->deserialize_results($yml_file);
     if ( ! exists ( $results{ $id } ) ){
-        $yml_file = File::Spec->catfile( $job_dir, 'basic_known_candidates.yml' );
-        %results = miRkwood::Results->deserialize_results($yml_file);
+        return '';
     }
     return miRkwood::Candidate->new( $results{ $id } );
 }
