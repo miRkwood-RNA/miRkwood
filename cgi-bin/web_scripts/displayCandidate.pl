@@ -87,10 +87,7 @@ END_TXT
         if ( $candidate->{'mirna_sequence'} ne '' ){
             $mirna = <<"END_TXT";
             <li>
-                <b>miRNA:</b> $candidate->{'mirna_sequence'}
-            </li>
-            <li>
-                <b>miRNA length:</b> $candidate->{'mirna_length'} nt
+                <b>miRNA sequence:</b> $candidate->{'mirna_sequence'} ($candidate->{'mirna_length'} nt)
             </li>
 END_TXT
         }
