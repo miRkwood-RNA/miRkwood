@@ -25,12 +25,12 @@ To deploy the latest versuib on a distant server, just run:
 
     ssh <server> < deploy-mirkwood-locally
 
-On BioInfoTest, you may use the wrapper script `deploy-mirkwood-to-bioinfotest`,
+On BioInfoDev, you may use the wrapper script `deploy-mirkwood-to-bioinfodev`,
 which also takes as optional argument the number of the Subversion revision to deploy.
 
-    ./deploy-mirkwood-to-bioinfotest
+    ./deploy-mirkwood-to-bioinfodev
 
-    ./deploy-mirkwood-to-bioinfotest 11460
+    ./deploy-mirkwood-to-bioinfodev 11460
 
 
 
