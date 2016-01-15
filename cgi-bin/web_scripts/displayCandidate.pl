@@ -24,6 +24,7 @@ my @js = ();
 my $job = miRkwood::Results->jobId_to_jobPath($jobId);
 
 my $candidate;
+my ($start, $end);
 my $basic_candidate;
 my $html_contents;
 
@@ -61,7 +62,9 @@ END_TXT
                 if ( defined( $basic_candidate->{'list_id_with_same_mirna'} ) && scalar( @{ $basic_candidate->{'list_id_with_same_mirna'} } ) ){
                     foreach ( @{ $basic_candidate->{'list_id_with_same_mirna'} } ){
                         if ( /(.*)__(\d+)-(\d+)/ ){
-                            $mirna_depth .= " <a href='./displayCandidate.pl?jobID=$jobId&id=$_'>$1__$2-$3</a>";
+                            my $readable_start = miRkwood::Utils::make_numbers_more_readable( $2 );
+                            my $readable_end   = miRkwood::Utils::make_numbers_more_readable( $3 );
+                            $mirna_depth .= " <a href='./displayCandidate.pl?jobID=$jobId&id=$_'>$1__$readable_start-$readable_end</a>";
                         }
                     }
                     $mirna_depth .= "</li>\n";
@@ -95,6 +98,11 @@ END_TXT
     my $reads_length_diagramm = $candidate->create_reads_length_diagramm();
     my $mirna = '';
     my $quality = '';
+
+    ($start, $end) = split( /-/, $candidate->{'position'});
+    $start = miRkwood::Utils::make_numbers_more_readable( $start );
+    $end = miRkwood::Utils::make_numbers_more_readable( $end );
+
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         # reads
         $htmlReadsCloud = <<"END_TXT";
@@ -239,7 +247,7 @@ END_TXT
           <b>Chromosome: </b>$candidate->{'name'}
         </li>
         <li>
-          <b>Position:</b> $candidate->{'position'} ($size nt)
+          <b>Position:</b> $start-$end ($size nt)
         </li>
         <li>
           <b>Strand:</b> $candidate->{'strand'}
@@ -280,14 +288,14 @@ END_TXT
 
 my $body  = <<"END_TXT";
     <body>
-       <h1>Results for $candidate->{'name'}, $candidate->{'position'} ($candidate->{'strand'})</h1>
+       <h1>Results for $candidate->{'name'}, $start-$end ($candidate->{'strand'})</h1>
         $return_html
         $html_contents
         $return_html
     </body>
 END_TXT
 
-my $title = "miRkwood - $candidate->{'name'}, $candidate->{'position'}";
+my $title = "miRkwood - $candidate->{'name'}, $start-$end";
 my $html = miRkwood::WebTemplate::get_HTML_page_for_body($body, \@css, \@js, $title);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
