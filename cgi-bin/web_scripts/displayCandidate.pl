@@ -287,6 +287,12 @@ END_TXT
 END_TXT
 }
 
+my $page_title = 'miRkwood - No results';
+
+if ( defined( $candidate->{'name'} ) ){
+    $page_title = "miRkwood - $candidate->{'name'}, $start-$end";
+}
+
 my $body  = <<"END_TXT";
     <body>
        <h1>Results for $candidate->{'name'}, $start-$end ($candidate->{'strand'})</h1>
@@ -296,8 +302,7 @@ my $body  = <<"END_TXT";
     </body>
 END_TXT
 
-my $title = "miRkwood - $candidate->{'name'}, $start-$end";
-my $html = miRkwood::WebTemplate::get_HTML_page_for_body($body, \@css, \@js, $title);
+my $html = miRkwood::WebTemplate::get_HTML_page_for_body($body, \@css, \@js, $page_title);
 
 print <<"DATA" or die("Error when displaying HTML: $!");
 Content-type: text/html
