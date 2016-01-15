@@ -61,7 +61,7 @@ END_TXT
                 if ( defined( $basic_candidate->{'list_id_with_same_mirna'} ) && scalar( @{ $basic_candidate->{'list_id_with_same_mirna'} } ) ){
                     foreach ( @{ $basic_candidate->{'list_id_with_same_mirna'} } ){
                         if ( /(.*)__(\d+)-(\d+)/ ){
-                            $mirna_depth .= " $1__$2-$3";
+                            $mirna_depth .= " <a href='./displayCandidate.pl?jobID=$jobId&id=$_'>$1__$2-$3</a>";
                         }
                     }
                     $mirna_depth .= "</li>\n";
