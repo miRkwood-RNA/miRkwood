@@ -72,14 +72,10 @@ if (! eval {$candidate = miRkwood::CandidateHandler->retrieve_candidate_informat
     my $quality = '';
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         # reads
-        my $nb_reads = 0;
-        foreach my $key (keys( %{$candidate->{'reads'}} )){
-            $nb_reads += $candidate->{'reads'}{$key};
-        }
         $htmlReadsCloud = <<"END_TXT";
         <h2>Reads</h2>
         <ul>
-            <li><b>Number of reads:</b> $nb_reads</li>
+            <li><b>Number of reads:</b> $candidate->{'nb_reads'}</li>
             <li><b>Reads length distribution:</b> <br />
                 $reads_length_diagramm
             </li>
