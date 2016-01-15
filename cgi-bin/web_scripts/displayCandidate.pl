@@ -105,10 +105,11 @@ END_TXT
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         # reads
+        my $nb_reads = miRkwood::Utils::make_numbers_more_readable( $candidate->{'nb_reads'} );
         $htmlReadsCloud = <<"END_TXT";
         <h2>Reads</h2>
         <ul>
-            <li><b>Number of reads:</b> $candidate->{'nb_reads'}</li>
+            <li><b>Number of reads:</b> $nb_reads</li>
             <li><b>Reads length distribution:</b> <br />
                 $reads_length_diagramm
             </li>
