@@ -288,14 +288,16 @@ END_TXT
 }
 
 my $page_title = 'miRkwood - No results';
+my $body_header = "<h1>Results for $candidate_id</h1>";
 
 if ( defined( $candidate->{'name'} ) ){
     $page_title = "miRkwood - $candidate->{'name'}, $start-$end";
+    $body_header = "<h1>Results for $candidate->{'name'}, $start-$end ($candidate->{'strand'})</h1>";
 }
 
 my $body  = <<"END_TXT";
     <body>
-       <h1>Results for $candidate->{'name'}, $start-$end ($candidate->{'strand'})</h1>
+        $body_header
         $return_html
         $html_contents
         $return_html
