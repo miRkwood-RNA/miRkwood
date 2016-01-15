@@ -9,7 +9,9 @@ use Log::Message::Simple qw[msg error debug];
 
 use miRkwood::Candidate;
 use miRkwood::Utils;
+
 use YAML::XS;
+use File::Spec;
 
 =method retrieve_candidate_information
 
@@ -33,6 +35,34 @@ sub retrieve_candidate_information {
     }else{
         return miRkwood::Candidate->new_from_serialized($candidate_filepath);
     }
+}
+
+=method retrieve_candidate_information_from_basic_yml
+
+Check correctness and get the result for a given candidate
+from the 'basic' YML file
+
+Arguments:
+- $job - the job directory
+- $id - the candidate identifier
+
+Returns:
+ A miRkwood::Candidate instance
+=cut
+sub retrieve_candidate_information_from_basic_yml {
+    my ( $self, @args ) = @_;
+    my $job_dir = shift @args;
+    my $id = shift @args;
+    my $yml_file = File::Spec->catfile( $job_dir, 'basic_candidates.yml' );
+    if ( !-e $yml_file ){
+        die("Unvalid candidate information in $yml_file ");
+    }
+    my %results = miRkwood::Results->deserialize_results($yml_file);
+    if ( ! exists ( $results{ $id } ) ){
+        $yml_file = File::Spec->catfile( $job_dir, 'basic_known_candidates.yml' );
+        %results = miRkwood::Results->deserialize_results($yml_file);
+    }
+    return miRkwood::Candidate->new( $results{ $id } );
 }
 
 =method get_candidate_filepath
