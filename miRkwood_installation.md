@@ -106,6 +106,18 @@ ODF::lpOD
 Inline::CPP
 Bio::DB::Fasta
 
+
+Inline::CPP may sometimes be difficult to install. In that case, please 
+install first the following modules:
+Inline::C
+Inline
+Pegex
+ExtUtils::MakeMarker
+File-ShareDir-Install
+Capture::Tiny
+ExtUtills::CppGuess
+
+
 - RNAstemloop
 This program takes an output file from RNALfold and extract 
 candidates stemloop from the secondary structures.
