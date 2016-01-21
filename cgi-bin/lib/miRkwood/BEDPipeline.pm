@@ -59,7 +59,6 @@ sub run_pipeline {
     if ( $self->{'mirna_bed'} ne '' ){
         debug( 'Treat known miRNAs.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->treat_known_mirnas();
-        debug( 'known miRNAs treated.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
@@ -67,7 +66,6 @@ sub run_pipeline {
 
 
     # Compress BED files
-    debug( 'Compress BED files.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my @list_of_BED_files = qw{_miRNAs};
     my $annotation_gff    = $cfg->param( 'options.annotation_gff' );
     my @annotation_gff    = split( /\&/, $annotation_gff );
@@ -90,7 +88,6 @@ sub run_pipeline {
         miRkwood::BEDHandler::store_reads_nb_in_BED_file( $BED_file, $bed_sizes_file );
         miRkwood::BEDHandler::zipBEDfile( $BED_file );
     }
-    debug( 'BED files compressed.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     # Look for new miRNAs
     debug( 'Treat new miRNAs.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
@@ -110,17 +107,11 @@ sub run_pipeline {
 
         debug( "  Start init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->init_sequences_per_chr( $chromosome );
-        debug( "  End of init_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
         debug( "  Start run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->run_pipeline_on_sequences_per_chr( $chromosome );
-        debug( "  End of run_pipeline_on_sequences_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
-        debug( "  Start clean_workspace_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         $self->clean_workspace_per_chr( $chromosome );
-        debug( "  End of clean_workspace_per_chr for $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
-
-        debug( "- End of chromosome $chromosome" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
 
     $self->count_alignments_per_miRNA();
@@ -345,7 +336,6 @@ sub list_chrom_in_bed {
 sub init_sequences_per_chr {
     my ($self, @args) = @_;
     my $chromosome = shift @args;
-    debug( '   Constructing loci' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $clustering = miRkwood::ClusterBuilder->new($self->{'genome_db'}, $self->{'bed_file'});
     $self->{'sequences'} = $clustering->build_loci_per_chr( $chromosome, $self->{'average_coverage'} );
     $self->{'parsed_reads'} = $clustering->get_parsed_bed();
@@ -384,12 +374,9 @@ sub compute_candidates_per_chr {
         $sequence_identifier++;
 
         if ( ( $locus->{'begin'} - $previous_end ) < $distance_min ){
-            #~ debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in same bunch than previous one", miRkwood->DEBUG());
             push @hairpin_candidates_for_chr, @{ $hairpinBuilder->build_hairpins($locus) };
         }
         else {
-            #~ debug("  - Locus $locus->{'begin'}-$locus->{'end'} is in a new bunch", miRkwood->DEBUG());
-
             # Treat previous bunch
             debug( '    * Treat previous bunch', miRkwood->DEBUG());
             undef $hairpinBuilder;
@@ -402,18 +389,15 @@ sub compute_candidates_per_chr {
                 # Merge candidates
                 debug( "     - Merge candidates (current locus : $locus->{'begin'}-$locus->{'end'})" . ' [' . localtime() . ']', miRkwood->DEBUG() );
                 my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
-                debug( "     - End of merge candidates (current locus : $locus->{'begin'}-$locus->{'end'})" . ' [' . localtime() . ']', miRkwood->DEBUG() );
                 undef @sorted_hairpin_candidates_for_chr;
 
                 # Posteriori tests and update candidate information
                 debug("     - Process miRNA candidates (current locus : $locus->{'begin'}-$locus->{'end'})" . ' [' . localtime() . ']', miRkwood->DEBUG() );
                 my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
-                debug("     - End of process miRNA candidates (current locus : $locus->{'begin'}-$locus->{'end'})" . ' [' . localtime() . ']', miRkwood->DEBUG() );
                 undef $candidates_hash;
 
                 debug("     - serialize_candidates (current locus : $locus->{'begin'}-$locus->{'end'})" . ' [' . localtime() . ']', miRkwood->DEBUG() );
                 $self->serialize_candidates($final_candidates_hash);
-                debug("     - End of serialize_candidates (current locus : $locus->{'begin'}-$locus->{'end'})" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
             }
 
@@ -429,12 +413,9 @@ sub compute_candidates_per_chr {
         $previous_end = $locus->{'end'};
         miRkwood::Utils::display_var_sizes_in_log_file( '..... BEDPipeline : compute_candidates_per_chr_new() (boucle sur loci)' );
 
-        debug( '    End of sequence '.($sequence_identifier-1) . ' [' . localtime() . ']', miRkwood->DEBUG() );
-
     }   # end foreach locus
 
     # Treat last bunch
-    #~ debug( '    * Treat last bunch', miRkwood->DEBUG());
     my @sorted_hairpin_candidates_for_chr = sort { $a->{'start_position'} <=> $b->{'start_position'} } @hairpin_candidates_for_chr;
     undef @hairpin_candidates_for_chr;
 
@@ -444,13 +425,11 @@ sub compute_candidates_per_chr {
         # Merge candidates
         debug( '     - Merge candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         my $candidates_hash = miRkwood::PrecursorBuilder::merge_candidates( \@sorted_hairpin_candidates_for_chr );
-        debug( '     - End of merge candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         undef @sorted_hairpin_candidates_for_chr;
 
         # Posteriori tests and update candidate information
         debug('     - Process miRNA candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         my $final_candidates_hash = $precursorBuilderJob->process_mirna_candidates( $candidates_hash );
-        debug('     - End of process miRNA candidates (current locus : last one)' . ' [' . localtime() . ']', miRkwood->DEBUG() );
         undef $candidates_hash;
 
         $self->serialize_candidates($final_candidates_hash);

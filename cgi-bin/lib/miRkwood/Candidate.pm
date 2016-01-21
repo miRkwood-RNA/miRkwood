@@ -754,7 +754,7 @@ sub compute_quality_from_reads {
     if ( $self->{'mirna_sequence'} eq '' ){
         $criteria_star = 0;
         $criteria_reads_mirna = 0;
-        debug( "             Candidate $self->{'identifier'} : no mirna", miRkwood->DEBUG() );
+        #~ debug( "             Candidate $self->{'identifier'} : no mirna", miRkwood->DEBUG() );
     }
     else {
         my ($start_mirna, $end_mirna) = split(/-/, $self->{'mirna_position'});
@@ -804,7 +804,7 @@ sub compute_quality_from_reads {
             }
 
         }
-        debug("             $reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . ' %)', 1);
+        #~ debug("             $reads_around_mirna reads around the miRNA on a total of $self->{'nb_reads'} (" . ( 100 * $reads_around_mirna / $self->{'nb_reads'}) . ' %)', 1);
         if ( $reads_around_mirna / $self->{'nb_reads'} >= 0.75 ){
             $criteria_reads_mirna = 1;
         }
@@ -834,7 +834,7 @@ sub compute_quality_from_reads {
         $self->{'quality'} += 1;
     }
 
-    debug( "             Candidate $self->{'identifier'} ($self->{'quality'}): criteria nb reads : $criteria_nb_reads;  criteria mirdup : $self->{'criteria_mirdup'}; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
+    #~ debug( "             Candidate $self->{'identifier'} ($self->{'quality'}): criteria nb reads : $criteria_nb_reads;  criteria mirdup : $self->{'criteria_mirdup'}; criteria reads around mirna : $criteria_reads_mirna; criteria star : $criteria_star", miRkwood->DEBUG() );
 
     #~ return $criteria_nb_reads + $criteria_star + $criteria_reads_mirna;
     return $self;

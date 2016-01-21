@@ -52,7 +52,7 @@ sub filterBEDfile {
 
     ### Filter out known miRNAs
     if ( -r $mirbase_file ) {
-        debug( 'Filter out known miRNAS...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( 'Filter out known miRNAS' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
         # Create a file with known miRNAs
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
@@ -60,7 +60,6 @@ sub filterBEDfile {
         # Delete reads corresponding to known miRNAs from the BED
         store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed);  # un-comment when tests are done
         #~ system("cp $bed_file $output_bed");  # comment when tests are done
-        debug( 'Known miRNAS have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         debug( "WARNING : no miRNA file found for $species.", 1 );
@@ -84,8 +83,6 @@ sub filterBEDfile {
                 my $discarded_reads = File::Spec->catfile( $job_dir , "${basename}_$basename_gff.bed");
 
                 filter_according_given_gff( $gff, $input_gff_bed, $output_gff_bed, $discarded_reads );
-
-                debug( "Reads corresponding to $gff have been filtered out from BED." . ' [' . localtime() . ']', miRkwood->DEBUG() );
             }
             else {
                 debug( "$gff is not a readable file.", miRkwood->DEBUG() );
@@ -98,14 +95,13 @@ sub filterBEDfile {
 
     ### Filter out multimapped reads
     if ( $max_nb_positions != 0 ){
-        debug( "Filter out multimapped reads... (only keep reads between $min_nb_positions and $max_nb_positions positions)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+        debug( "Filter out multimapped reads (only keep reads between $min_nb_positions and $max_nb_positions positions)" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         filter_multimapped_reads( 
              File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed"),
              $filtered_bed,
              $multimapped_reads,
              $min_nb_positions,
              $max_nb_positions );
-        debug( 'Multimapped reads have been filtered out from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
     }
     else{
         debug( 'Don\'t filter out multimapped reads from BED.' . ' [' . localtime() . ']', miRkwood->DEBUG() );

@@ -150,11 +150,9 @@ sub process_mirna_candidates {
     my @candidates_result;
     my $candidate_identifier = 0;
     my $cfg = miRkwood->CONFIG();
-    #~ debug('     - Process miRNA candidates' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
     foreach my $key ( sort keys %candidates_hash ) {
         $candidate_identifier++;
-        debug( "         Start run_pipeline_on_candidate on $candidate_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG());
         my $candidate = $candidates_hash{$key};
         my $final_candidate = $self->run_pipeline_on_candidate( $candidate_identifier, $candidate );
         if ( $cfg->param('options.filter_bad_hairpins') && $final_candidate->{'quality'} eq '0' && $final_candidate->{'alignment'} eq '0' ){
@@ -173,7 +171,6 @@ sub process_mirna_candidates {
         else {
             push @candidates_result, $final_candidate;
         }
-        debug( "         End of run_pipeline_on_candidate on $candidate_identifier" . ' [' . localtime() . ']', miRkwood->DEBUG());
     }
 
     miRkwood::Utils::display_var_sizes_in_log_file( '..... PrecursorBuilder : process_mirna_candidates' );

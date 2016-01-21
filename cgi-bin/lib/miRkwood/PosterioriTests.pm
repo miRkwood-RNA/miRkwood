@@ -94,7 +94,6 @@ sub test_alignment {
 sub post_process_alignments {
     my ( $self, @args ) = @_;
     my $file_alignement = shift @args;
-    debug( "                Start post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my %alignments;
 
     if (-z $file_alignement){
@@ -114,7 +113,6 @@ sub post_process_alignments {
     }
     else {
         %alignments = $self->merge_alignments( \%alignments );
-        debug( "                End of post_process_alignments->new for $file_alignement" . ' [' . localtime() . ']', miRkwood->DEBUG() );
         return \%alignments;
     }
 }
@@ -141,7 +139,6 @@ sub merge_alignments {
     my ( $self, @args ) = @_;
     my $alignments = shift @args;
     my %alignments = %{$alignments};
-    debug( "                  Start merge_alignments->new for $alignments" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my %merged_alignments;
     my ( $stocked_left, $stocked_right ) = ( -10, -10 );
 
@@ -185,7 +182,6 @@ sub merge_alignments {
 
     # Drop the remaining hits in the hash
     push @{ $merged_alignments{$final_key} }, @stocked_hits;
-    debug( "                  End of merge_alignments->new for $alignments" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     return %merged_alignments;
 }
 
@@ -211,8 +207,6 @@ Mask the CT file and outputting to boucleTermWithN_out file
 sub mask_CT_file {
     my ( $self, @args ) = @_;
     my ( $CT, $boucleTermWithN_out ) = @args;
-
-    debug( "                Start mask_CT_file for $boucleTermWithN_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
  # tableau associatif contenant le nom la séquence (clé) et un struct (valeur)
     my %tab = ();
@@ -321,7 +315,6 @@ sub mask_CT_file {
         print $RES "\n";
     }
     close $RES or die "Problème à la fermeture : $!";
-    debug( "                End of mask_CT_file for $boucleTermWithN_out" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     return $boucleTermWithN_out;
 }
 

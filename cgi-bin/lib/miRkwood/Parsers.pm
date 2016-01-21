@@ -348,7 +348,6 @@ Usage: parse_exonerate_alignment($alignment);
 sub parse_custom_exonerate_output{
     my @args = @_;
     my $yaml_file = shift @args;
-    debug( "                  Start parse_custom_exonerate_output->new for $yaml_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $yaml = miRkwood::get_yaml_file($yaml_file) or die("Error when parsing YAML file $yaml_file");
     my @contents = @{$yaml} or die("Error when parsing YAML file $yaml_file");
 
@@ -381,7 +380,6 @@ sub parse_custom_exonerate_output{
          }
          push @{$results{$key}}, $value;
     }
-    debug( "                  End of parse_custom_exonerate_output->new for $yaml_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     return %results;
 }
 

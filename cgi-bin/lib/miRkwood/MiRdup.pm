@@ -153,7 +153,6 @@ sub validate_with_mirdup {
     my $mature_seq  = shift @args;
     my $structure   = shift @args;
     my @alignments  = @args;
-    debug( "                  Start validate_with_mirdup for $output_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     open( my $FOut, '>', $output_file )
       or die "Error when opening $output_file: $!";
     print {$FOut}
@@ -163,7 +162,6 @@ sub validate_with_mirdup {
     close $FOut or die "Error when closing $output_file: $!";
     my $result_file =
       miRkwood::Programs::run_mirdup_validation_on_file($output_file);
-    debug( "                  End of validate_with_mirdup for $output_file" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     if ( ! -e $result_file || ! -r $result_file ){
         return $self->parse_validation_output($output_file);
     }

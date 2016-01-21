@@ -97,8 +97,6 @@ sub build_hairpins {
 
     miRkwood::Utils::display_var_sizes_in_log_file( '..... HairpinBuilder : build_hairpins' );
 
-    debug( "      End of build hairpins for locus " . ($locus->{begin}+1) . '-' . ($locus->{end}) . ' [' . localtime() . ']', miRkwood->DEBUG());
-
 	return \@sorted_new_candidates;
 }
 
@@ -161,7 +159,6 @@ sub process_RNAstemloop_on_filenames {
     debug( $msg . ' [' . localtime() . ']', miRkwood->DEBUG() );
     my $candidates = $self->process_RNAstemloop($STEM_FH, $EVAL_OPT_FH, $EVAL_STEM_FH, $sequence_begin, $seq_len, $chr, $strand,
     $sequence_miRnas);
-    debug( "       End of processing RNAstemloop ( $rnastemloop_out_stemloop, $rnaeval_out_optimal, $rnaeval_out_stemloop )" . ' [' . localtime() . ']', miRkwood->DEBUG() );
     close($STEM_FH);
     close($EVAL_OPT_FH);
     close($EVAL_STEM_FH);

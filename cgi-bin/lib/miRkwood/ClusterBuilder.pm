@@ -12,7 +12,6 @@ use miRkwood::HairpinBuilder;
 use miRkwood::ClusterJob;
 use miRkwood::KMean;
 use List::Util qw(max min);
-use Log::Message::Simple qw[msg error debug];
 
 sub new {
     my ( $class,
@@ -41,27 +40,22 @@ sub build_loci_per_chr {
     my $chromosome = shift @args;
     my $average_coverage = shift @args;
 
-    debug( '    - Get read distribution...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	my ($reads_per_chr, $parsed_bed) = $this->get_read_distribution_per_chr_from_bed( $this->{'bed_file'}, $chromosome );
 	$this->{'parsed_bed'} = $parsed_bed;
 
-    debug( '    - Get trains...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	my $trains_hash_per_chr = $this->__get_trains_for_chr( $reads_per_chr );
 
 	my $cluster_job = miRkwood::ClusterJob->new($this->{'genome_db'});
 	$cluster_job->init_from_clustering($this);
 
-    debug( '    - Get spikes...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	my $spikes_per_chr = $cluster_job->extract_spike_train_per_chr($trains_hash_per_chr);
 
 	undef $trains_hash_per_chr;
 
-    debug( '    - Process spikes...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	my $putative_miRna = $cluster_job->process_spikes_for_chr($chromosome, $spikes_per_chr);
 
 	undef $spikes_per_chr;
 
-    debug( '    - Get loci...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	my $loci_per_chr = $cluster_job->compute_candidate_precursors_from_miRnaPos_for_chr($chromosome,
                                                                                         $putative_miRna,
                                                                                         $this->{'chr_info'}{$chromosome},
@@ -69,7 +63,6 @@ sub build_loci_per_chr {
                                                                                         $this->{'loci_read_coverage_threshold'},
                                                                                         $this->{'peak_padding'},
                                                                                         $parsed_bed);
-    debug( '    - End of get loci...' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 	undef $putative_miRna;
 
 	miRkwood::Utils::display_var_sizes_in_log_file( '..... ClusterBuilder : build_loci' );
