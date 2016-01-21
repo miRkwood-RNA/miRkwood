@@ -439,6 +439,9 @@ END_TXT
         <li>
             <b>Strand:</b> $candidate->{'strand'}
         </li>
+        <li>
+            <b>G+C content:</b> $candidate->{'%GC'} &#37;
+        </li>
         $mirna_html
         <li>
             <b>miRNA precursor:</b> [<a href='$linkFasta'>FASTA sequence</a>] 
