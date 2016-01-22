@@ -667,6 +667,9 @@ sub make_hairpin_with_mature {
     if (!$mode){
         $mode = 'ascii';
     }
+    my $right_without_gaps = $right;
+    $right++ while ( $top =~ m/-/g );
+    $right++ while ( $upper =~ m/-/g );
     if ( $right <= $l + 2 ){
         # the alignment is on the top arm
 		my ( $true_left, $size ) =
@@ -696,6 +699,8 @@ sub make_hairpin_with_mature {
 		}
     }
     else {
+        $right = $right_without_gaps;
+        my $left_without_gaps = $left;
         $left++ while ( $top =~ m/-/g );
         $left++ while ( $upper =~ m/-/g );
         if ( $left >= $l + 2 ) {
@@ -729,6 +734,7 @@ sub make_hairpin_with_mature {
         }
         else {
             # the alignment is in the middle of the loop
+            $left = $left_without_gaps;
             my $converted_left = $length - $right + 1;
             my ( $true_left_top, $size_top ) =
               compute_mature_boundaries( $left, $pseudo_size, $top );
