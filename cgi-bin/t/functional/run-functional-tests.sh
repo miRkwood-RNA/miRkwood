@@ -44,13 +44,6 @@ DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline2/ $BASEDIR/expected/
 ok 'Full pipeline with coding region masking (using BLAST)' [ $DIFF -eq 0 ]
 
 
-#~ rm -rf $BASEDIR/output/fullpipeline-bam/
-#~ perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bam.pl --output $BASEDIR/output/fullpipeline-bam/ $BASEDIR/../data/Clusters.reads-Athaliana_167-ChrC.bam --genome $BASEDIR/../data/Clusters.Athaliana_167-ChrC.fa
-#~ perl compare_results.pl $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ > $BASEDIR/output/diff_fullpipeline-bam
-#~ DIFF=$(perl compare_results.pl $BASEDIR/output/fullpipeline-bam/ $BASEDIR/expected/fullpipeline-bam/ | wc -l)
-#~ ok 'Full BAM pipeline' [ $DIFF -eq 0 ]
-
-
 rm -rf $BASEDIR/output/fullpipeline-bed/
 perl -I$ROOTDIR/lib $ROOTDIR/bin/mirkwood-bed.pl --varna --min-read-positions-nb 0 --max-read-positions-nb 0 --align --mirbase $ROOTDIR/data/miRBase/Arabidopsis_thaliana_miRBase.gff3 --gff $BASEDIR/../../data/annotations/Arabidopsis_thaliana_CDS.gff --gff $BASEDIR/../../data/annotations/Arabidopsis_thaliana_tRNA_rRNA_snoRNA.gff --output $BASEDIR/output/fullpipeline-bed/ --genome $BASEDIR/../../data/genomes/Arabidopsis_thaliana.fasta --input $BASEDIR/data/functional_test.bed
 perl compare_results.pl $BASEDIR/output/fullpipeline-bed/ $BASEDIR/expected/fullpipeline-bed/ > $BASEDIR/output/diff_fullpipeline-bed
