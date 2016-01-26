@@ -27,7 +27,7 @@
   score: 0
   seq: CCUGCCUUGCAUCAACUGAAU
   strand_target: +
-19-37:
+19-39:
 - alignment: 'UCGCUUGGUGCAGGUCGGG
 
     |||||||||||||||||||
@@ -282,4 +282,4 @@
 --- mirdup_validation
 ---
 contig15916__102-122: 1
-contig15916__19-37: 0
+contig15916__19-39: 1
