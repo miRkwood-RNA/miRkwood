@@ -188,9 +188,19 @@ sub processUpdateBase{
     return $cdtBase;
 }
 
-#Compares the end positions between the basic candidate and current, if the end position of current candidate is bigger, the basic sequence is update by adding of the last nucleotide of current candidate.
-#Parameter : $posBase (end position of basic candidate), $posAlgt (end position of current candidate), $cdtBase (sequence of basic candidate), $cdtCurrent (sequence of current candidate)
-#Return : $cdtBase
+# Compares the end positions between the basic candidate and current.
+# If the end position of current candidate is bigger, the basic sequence is updated
+# by adding the last nucleotide of current candidate.
+# Parameters : 
+# - $posBeginBase (end position of basic candidate)
+# - $posEndBase (end position of basic candidate)
+# - $posBeginTarget (end position of current candidate)
+# - $posEndTarget (end position of current candidate)
+# - $cdtBase (sequence of basic candidate)
+# - $cdtCurrent (sequence of current candidate)
+# Return : 
+# - $cdtBase (sequence used as reference for the multiple alignment)
+# - $posEndBase (end position of sequence used as reference for the multiple alignment)
 sub updateCdtBase{
     my ($posBeginBase, $posEndBase, $posBeginTarget, $posEndTarget, $cdtBase, $cdtCurrent) =@_;
     if ($posBeginTarget>$posBeginBase){
