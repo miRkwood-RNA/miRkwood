@@ -194,7 +194,6 @@ sub processUpdateBase{
 sub updateCdtBase{
     my ($posBeginBase, $posEndBase, $posBeginTarget, $posEndTarget, $cdtBase, $cdtCurrent) =@_;
     if ($posBeginTarget>$posBeginBase){
-        my $diff = $posBeginTarget-$posBeginBase;
         if ($posEndTarget>$posEndBase){
             for (my $i=0; $i<(($posEndTarget)-$posEndBase); $i++){
                 $cdtBase.=substr($cdtCurrent, length($cdtCurrent)-(($posEndTarget)-$posEndBase)+$i,1);
