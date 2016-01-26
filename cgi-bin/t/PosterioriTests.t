@@ -32,7 +32,7 @@ ok(
 
 my %expected_merged = ();
 push @{ $expected_merged{'0-21'} }, ( 'A', 'B', 'C', 'D', 'E' );
-push @{ $expected_merged{'4-30'} }, ( 'F', 'G', 'H' );
+push @{ $expected_merged{'4-31'} }, ( 'F', 'G', 'H' );
 push @{ $expected_merged{'10-40'} }, ('I');
 is_deeply( \%merged_alignments, \%expected_merged, 'merge_alignments ok' );
 
@@ -50,7 +50,7 @@ ok(
 );
 
 my %expected_merged2 = ();
-push @{ $expected_merged2{'38-58'} },
+push @{ $expected_merged2{'37-60'} },
   ( 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K' );
 is_deeply( \%merged_alignments2, \%expected_merged2, 'merge_alignments ok' );
 
@@ -69,7 +69,7 @@ ok(
     'Can call merge_alignments'
 );
 my %expected_merged3 = ();
-push @{ $expected_merged3{'1-21'} },
+push @{ $expected_merged3{'1-24'} },
   ( 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M' );
 is_deeply( \%merged_alignments3, \%expected_merged3,
     'merge_alignments ok on edge case' );
