@@ -289,10 +289,15 @@ sub fillTabTemp2D{
     my (@args) = @_;
     my $hashDataRef = shift @args;
     my $id_candidate = shift @args;
-    my %hashData = %{$hashDataRef};
     my @tabAllNameMir;
-    while (my ($key, $value) = each(%hashData)){
-        my @tab = $value;
+    my @keys = sort {
+        ( miRkwood::Utils::get_element_of_split( $a, '-', 0 )
+              <=> miRkwood::Utils::get_element_of_split( $b, '-', 0 ) )
+          || ( miRkwood::Utils::get_element_of_split( $a, '-', 1 )
+            <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 ) )
+    } keys %{$hashDataRef};
+    foreach my $key (@keys) {
+        my @tab = $hashDataRef->{$key};
         my ($posBeginBase, $posEndBaseCurrent) = splitPosCdtAligt($key);
         my ($cdtBase, $posEndBaseFinal) = createBaseCdt($posBeginBase, $posEndBaseCurrent, \@tab);
         my @tabTemp2D;
