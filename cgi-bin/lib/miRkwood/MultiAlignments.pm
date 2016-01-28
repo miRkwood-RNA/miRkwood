@@ -4,6 +4,8 @@ package miRkwood::MultiAlignments;
 
 use strict;
 use warnings;
+use miRkwood;
+use miRkwood::Utils;
 
 # Feature set that will help create a multiple alignment from alignment 2 by 2. 
 # The depart is a hash (key : string with a basic position of candidat in the alignment 2 by 2, 
