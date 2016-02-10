@@ -41,7 +41,7 @@ sub compare_folders {
         print "---$files_2\n";
     }
     else{
-        foreach ( @{$list_files_1} ){
+        foreach (sort ( @{$list_files_1} ) ){
             if ( $_ eq 'outBlast.txt' or $_ eq 'pvalue.txt' or $_ eq 'basic_candidates.yml' or $_ eq 'basic_known_candidates.yml' ){
                 # don't compare these files
             }
