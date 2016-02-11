@@ -350,6 +350,20 @@ sub add_candidate {
         );
         $para2->set_span(filter  => 'structure', style   => 'StandardBold');
     }
+    else {
+        $list->add_item(text => "miRNA sequence: ${$candidate}{'mirna_sequence'} (${$candidate}{'mirna_length'} nt)", style => 'Basic');
+        $list->add_item(text => "miRNA depth: ${$candidate}{'mirna_depth'} (weight: ${$candidate}{'weight'})", style => 'Basic');
+        if ( defined( ${$candidate}{'list_id_with_same_mirna'} ) && scalar( @{ ${$candidate}{'list_id_with_same_mirna'} } ) ){
+            my $list_mirna = '';
+            foreach ( @{ ${$candidate}{'list_id_with_same_mirna'} } ){
+                $list_mirna .= "$_ ";
+            }
+            $list->add_item(text => "Candidates with the same miRNA: $list_mirna", style => 'Basic');
+        }
+        else{
+            $list->add_item(text => "Candidates with the same miRNA: none", style => 'Basic');
+        }
+    }
 
 
     # Copying the image
