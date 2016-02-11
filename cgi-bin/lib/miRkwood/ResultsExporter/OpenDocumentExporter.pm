@@ -311,7 +311,7 @@ sub add_candidate {
         odf_create_heading(
             level => 1,
             style => 'Level 1 Heading',
-            text  => "Sequence: ${$candidate}{'name'}, ${$candidate}{'position'}",
+            text  => "Results for: ${$candidate}{'name'}, ${$candidate}{'position'}",
         )
     );
 
@@ -325,7 +325,7 @@ sub add_candidate {
       miRkwood::Utils->make_Vienna_viz( ${$candidate}{'structure_stemloop'},
         ${$candidate}{'sequence'} );
 
-    $list->add_item(text => "Name: ${$candidate}{'name'}", style => 'Basic');
+    $list->add_item(text => "Chromosome: ${$candidate}{'name'}", style => 'Basic');
     $list->add_item(text => "Position: ${$candidate}{'position'} ($size nt)", style => 'Basic');
     $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => 'Basic');
     $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
