@@ -1,8 +1,8 @@
 Prediction : 201-224
 
-	query       201  UGGGUUGAGUUGAAUUGAGUUGAC  224
-	miRBase 1        UGGGUUGAGUUGAGUUGAGUUGGC
-	                 ************* ******** *
+    query       201  UGGGUUGAGUUGAAUUGAGUUGAC  224
+    miRBase 1        UGGGUUGAGUUGAGUUGAGUUGGC
+                     ************* ******** *
 
 miRBase 1: MIMAT0022425 Arabidopsis thaliana miR5653 |
 

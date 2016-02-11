@@ -91,7 +91,7 @@ sub writeInFile{
 
     $output .= "Prediction : $posBeginCdt-$posEndCdt\n\n";
     for(my $i=0; $i<@tabAlgtMult; $i++){
-		$output .= "\t";
+		$output .= '    ';
 		if ($i==0){
 			$output .= 'query       '.$posBeginCdt.'  ';
 		}

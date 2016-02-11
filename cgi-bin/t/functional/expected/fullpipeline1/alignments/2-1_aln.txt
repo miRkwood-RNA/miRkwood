@@ -1,10 +1,10 @@
 Prediction : 19-39
 
-	query       19  UCGCUUGGUGCAGGUCGGGAA  39
-	miRBase 1       UCGCUUGGUGCAGGUCGGG--
-	miRBase 2       UCGCUUGGUGCAGGUCGGGA-
-	miRBase 3       UCGCUUGGUGCAGGUCGGGAA
-	                *******************  
+    query       19  UCGCUUGGUGCAGGUCGGGAA  39
+    miRBase 1       UCGCUUGGUGCAGGUCGGG--
+    miRBase 2       UCGCUUGGUGCAGGUCGGGA-
+    miRBase 3       UCGCUUGGUGCAGGUCGGGAA
+                    *******************  
 
 miRBase 1: MIMAT0020985 Glycine max miR168b |
 miRBase 2: MIMAT0022751 Cucumis melo miR168 |
@@ -12,9 +12,9 @@ miRBase 3: MIMAT0000198 Arabidopsis thaliana miR168a-5p | ath-miR168b-5p MIMAT00
 
 Prediction : 102-122
 
-	query       102  CCUGCCUUGCAUCAACUGAAU  122
-	miRBase 1        CCUGCCUUGCAUCAACUGAAU
-	                 *********************
+    query       102  CCUGCCUUGCAUCAACUGAAU  122
+    miRBase 1        CCUGCCUUGCAUCAACUGAAU
+                     *********************
 
 miRBase 1: MIMAT0031130 Solanum lycopersicum miR168a-3p |
 

@@ -1,8 +1,8 @@
 Prediction : 261-281
 
-	query       261  UGUUAAGAAGUGUUAAUGGUG  281
-	miRBase 1        UGUUAAGGAGUGUUAACGGUG
-	                 ******* ******** ****
+    query       261  UGUUAAGAAGUGUUAAUGGUG  281
+    miRBase 1        UGUUAAGGAGUGUUAACGGUG
+                     ******* ******** ****
 
 miRBase 1: MIMAT0022395 Arabidopsis thaliana miR5635a | ath-miR5635d MIMAT0022405 Arabidopsis thaliana miR5635d | ath-miR5635b MIMAT0022418 Arabidopsis thaliana miR5635b | ath-miR5635c MIMAT0022428 Arabidopsis thaliana miR5635c |
 

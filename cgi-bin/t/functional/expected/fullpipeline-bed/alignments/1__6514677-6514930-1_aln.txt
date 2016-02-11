@@ -1,8 +1,8 @@
 Prediction : 153-173
 
-	query       153  AAUUAAAGAUUUAAAUCUU-CU  173
-	miRBase 1        AAUUAAAGAUUU-CAUCUUACU
-	                 ************  ***** **
+    query       153  AAUUAAAGAUUUAAAUCUU-CU  173
+    miRBase 1        AAUUAAAGAUUU-CAUCUUACU
+                     ************  ***** **
 
 miRBase 1: MIMAT0013773 Arabidopsis thaliana miR1886.3 |
 

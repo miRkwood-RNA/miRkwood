@@ -1,8 +1,8 @@
 Prediction : 47-65
 
-	query       47  UUUUCU-UUAA-AAUAGAGGA  65
-	miRBase 1       UUUUCUCUUAACAACAGAGGA
-	                ****** **** ** ******
+    query       47  UUUUCU-UUAA-AAUAGAGGA  65
+    miRBase 1       UUUUCUCUUAACAACAGAGGA
+                    ****** **** ** ******
 
 miRBase 1: MIMAT0033872 Amborella trichopoda miR8586 |
 

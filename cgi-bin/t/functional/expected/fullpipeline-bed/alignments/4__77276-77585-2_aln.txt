@@ -1,8 +1,8 @@
 Prediction : 20-41
 
-	query       20  CAACCUAAAACCAAUUGGCAAU  41
-	miRBase 1       CAACUUAAAAUCAGUUGGCAAU
-	                **** ***** ** ********
+    query       20  CAACCUAAAACCAAUUGGCAAU  41
+    miRBase 1       CAACUUAAAAUCAGUUGGCAAU
+                    **** ***** ** ********
 
 miRBase 1: MIMAT0017923 Arabidopsis lyrata miR4234 |
 
