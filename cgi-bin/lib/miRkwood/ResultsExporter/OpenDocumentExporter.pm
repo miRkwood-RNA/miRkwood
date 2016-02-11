@@ -330,23 +330,26 @@ sub add_candidate {
     $list->add_item(text => "Strand: ${$candidate}{'strand'}", style => 'Basic');
     $list->add_item(text => "G+C content: ${$candidate}{'%GC'}%", style => 'Basic');
 
-    my $subtext = '';
-    if(${$candidate}{'structure_stemloop'} eq ${$candidate}{'structure_optimal'}){
-        $subtext = 'This stem-loop structure is the MFE structure'
+    # ab initio pipeline : add the sequence with structure
+    if ( $cfg->param('job.pipeline') eq 'abinitio' ){
+        my $subtext = '';
+        if(${$candidate}{'structure_stemloop'} eq ${$candidate}{'structure_optimal'}){
+            $subtext = 'This stem-loop structure is the MFE structure'
+        }
+        my $para1 = $context->append_element(
+        odf_create_paragraph(
+            text    => $vienna_seq,
+            style   =>'Vienna'
+            )
+        );
+        my $para2 = $context->append_element(
+        odf_create_paragraph(
+            text    => $subtext,
+            style   =>'Basic'
+            )
+        );
+        $para2->set_span(filter  => 'structure', style   => 'StandardBold');
     }
-    my $para1 = $context->append_element(
-    odf_create_paragraph(
-        text    => $vienna_seq,
-        style   =>'Vienna'
-        )
-    );
-    my $para2 = $context->append_element(
-    odf_create_paragraph(
-        text    => $subtext,
-        style   =>'Basic'
-        )
-    );
-    $para2->set_span(filter  => 'structure', style   => 'StandardBold');
 
 
     # Copying the image
