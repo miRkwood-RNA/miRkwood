@@ -356,6 +356,41 @@ sub candidate_as_gff {
     return $text;
 }
 
+=method candidateAsOrg
+
+Convert a candidate to ORG-mode format
+
+=cut
+
+sub candidateAsOrg {
+    my ( $self, @args ) = @_;
+    my $boolean = { 1 => 'yes', 0 => 'no' };
+    my $output = '';
+    my $position = miRkwood::Utils::make_numbers_more_readable( $self->{'position'} );
+    $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n";
+    $output .= "Chromosome : $self->{'name'}\n";
+    $output .= "Position: $position ($self->{'length'} nt)\n";
+    $output .= "Strand: $self->{'strand'}\n";
+    $output .= "G+C content: $self->{'%GC'} %\n";
+    $output .= "miRNA sequence: $self->{'mirna_sequence'}\n";
+    $output .= "miRNA depth: $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
+    if ( defined( $self->{'list_id_with_same_mirna'} ) && scalar( @{ $self->{'list_id_with_same_mirna'} } ) ){
+        my $list_mirna = '';
+        foreach ( @{ $self->{'list_id_with_same_mirna'} } ){
+            $list_mirna .= "$_ ";
+        }
+        $output .= "Candidates with the same miRNA: $list_mirna\n";
+    }
+    else{
+        $output .= "Candidates with the same miRNA: none\n";
+    }
+    $output .= "Stability of the secondary structure of the precursor: MFE $self->{'mfe'} kcal/mol | AMFE $self->{'amfe'} | MFEI $self->{'mfei'}\n";
+    $output .= "Stability of the miRNA duplex (mirdup): $boolean->{ $self->{'criteria_mirdup'} }\n";
+    $output .= "Number of reads: $self->{'nb_reads'}\n";
+    $output .= "\n";
+    return $output;
+}
+
 
 =method alternativeCandidatesAsVienna
 

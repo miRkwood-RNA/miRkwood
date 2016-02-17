@@ -38,6 +38,9 @@ given ($export_type) {
         $exporter = miRkwood::ResultsExporterMaker->make_opendocument_results_exporter( $mirna_type );
         $exporter->{'cgi'} = $cgi;
     }
+    when (/org/) {
+        $exporter = miRkwood::ResultsExporterMaker->make_org_results_exporter( $mirna_type );
+    }
     when (/csv/) {
         $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter($pipeline_type, $mirna_type );
     }

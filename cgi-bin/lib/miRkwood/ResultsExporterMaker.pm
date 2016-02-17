@@ -89,6 +89,12 @@ sub make_reads_clouds_results_exporter {
     return miRkwood::ResultsExporter::ReadsExporter->new( $mirna_type );
 }
 
+sub make_org_results_exporter {
+    my ($self, @args) = @_;
+    my $mirna_type = shift @args;
+    require miRkwood::ResultsExporter::OrgExporter;
+    return miRkwood::ResultsExporter::OrgExporter->new( $mirna_type );
+}
 
 
 1;
