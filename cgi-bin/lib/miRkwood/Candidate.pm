@@ -365,27 +365,36 @@ Convert a candidate to ORG-mode format
 sub candidateAsOrg {
     my ( $self, @args ) = @_;
     my $boolean = { 1 => 'yes', 0 => 'no' };
+    my $known_miRNA = 0;
     my $output = '';
     my $position = miRkwood::Utils::make_numbers_more_readable( $self->{'position'} );
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n";
+    if ( defined( $self->{'mirbase_id'} ) ){
+        $known_miRNA = 1;
+        $output .= "miRBase name: $self->{'identifier'}\n";
+    }
     $output .= "Chromosome : $self->{'name'}\n";
     $output .= "Position: $position ($self->{'length'} nt)\n";
     $output .= "Strand: $self->{'strand'}\n";
     $output .= "G+C content: $self->{'%GC'} %\n";
     $output .= "miRNA sequence: $self->{'mirna_sequence'}\n";
-    $output .= "miRNA depth: $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
-    if ( defined( $self->{'list_id_with_same_mirna'} ) && scalar( @{ $self->{'list_id_with_same_mirna'} } ) ){
-        my $list_mirna = '';
-        foreach ( @{ $self->{'list_id_with_same_mirna'} } ){
-            $list_mirna .= "$_ ";
+    if ( ! $known_miRNA ){
+        $output .= "miRNA depth: $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
+        if ( defined( $self->{'list_id_with_same_mirna'} ) && scalar( @{ $self->{'list_id_with_same_mirna'} } ) ){
+            my $list_mirna = '';
+            foreach ( @{ $self->{'list_id_with_same_mirna'} } ){
+                $list_mirna .= "$_ ";
+            }
+            $output .= "Candidates with the same miRNA: $list_mirna\n";
         }
-        $output .= "Candidates with the same miRNA: $list_mirna\n";
-    }
-    else{
-        $output .= "Candidates with the same miRNA: none\n";
+        else{
+            $output .= "Candidates with the same miRNA: none\n";
+        }
     }
     $output .= "Stability of the secondary structure of the precursor: MFE $self->{'mfe'} kcal/mol | AMFE $self->{'amfe'} | MFEI $self->{'mfei'}\n";
-    $output .= "Stability of the miRNA duplex (mirdup): $boolean->{ $self->{'criteria_mirdup'} }\n";
+    if ( ! $known_miRNA ){
+        $output .= "Stability of the miRNA duplex (mirdup): $boolean->{ $self->{'criteria_mirdup'} }\n";
+    }
     $output .= "Number of reads: $self->{'nb_reads'}\n";
     $output .= "\n";
     return $output;
