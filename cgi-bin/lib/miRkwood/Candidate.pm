@@ -371,7 +371,8 @@ sub candidateAsOrg {
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n";
     if ( defined( $self->{'mirbase_id'} ) ){
         $known_miRNA = 1;
-        $output .= "miRBase name: $self->{'identifier'}\n";
+        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $self->{'mirbase_id'} );
+        $output .= "miRBase name: [[$mirbase_link][$self->{'identifier'}]]\n";
     }
     $output .= "Chromosome: $self->{'name'}\n";
     $output .= "Position: $position ($self->{'length'} nt)\n";
