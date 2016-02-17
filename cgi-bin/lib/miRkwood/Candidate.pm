@@ -373,7 +373,7 @@ sub candidateAsOrg {
         $known_miRNA = 1;
         $output .= "miRBase name: $self->{'identifier'}\n";
     }
-    $output .= "Chromosome : $self->{'name'}\n";
+    $output .= "Chromosome: $self->{'name'}\n";
     $output .= "Position: $position ($self->{'length'} nt)\n";
     $output .= "Strand: $self->{'strand'}\n";
     $output .= "G+C content: $self->{'%GC'} %\n";
