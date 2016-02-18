@@ -11,6 +11,7 @@ use YAML::XS;
 use Log::Message::Simple qw[msg error debug];
 
 use miRkwood;
+use miRkwood::CLI;
 use miRkwood::Paths;
 use miRkwood::Parsers;
 use miRkwood::Utils;
@@ -364,12 +365,15 @@ Convert a candidate to ORG-mode format
 
 sub candidateAsOrg {
     my ( $self, @args ) = @_;
+    my $cfg = miRkwood->CONFIG();
     my $boolean = { 1 => 'yes', 0 => 'no' };
     my $known_miRNA = 0;
+    my $mirna_type = 'novel_miRNA';
     my $output = '';
     my $position = miRkwood::Utils::make_numbers_more_readable( $self->{'position'} );
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n";
     if ( defined( $self->{'mirbase_id'} ) ){
+        $mirna_type = 'known_miRNA';
         $known_miRNA = 1;
         my $mirbase_link = miRkwood::Utils::make_mirbase_link( $self->{'mirbase_id'} );
         $output .= "miRBase name: [[$mirbase_link][$self->{'identifier'}]]\n";
@@ -408,6 +412,11 @@ sub candidateAsOrg {
             $output .= "*Distribution of reads:* random\n";
         } 
     }
+    my $absolute_read_cloud_path = File::Spec->catfile(
+                miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
+                $mirna_type,
+                $self->{'identifier'}.'.txt');
+    $output .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
     $output .= "\n";
     return $output;
 }
