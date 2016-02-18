@@ -392,7 +392,7 @@ sub candidateAsOrg {
             $output .= "*Candidates with the same miRNA:* none\n";
         }
     }
-    $output .= "*Stability of the secondary structure of the precursor:* MFE $self->{'mfe'} kcal/mol | AMFE $self->{'amfe'} | MFEI $self->{'mfei'}\n";
+    $output .= "*Stability of the secondary structure of the precursor:* /MFE/ $self->{'mfe'} kcal/mol | /AMFE/ $self->{'amfe'} | /MFEI/ $self->{'mfei'}\n";
     if ( ! $known_miRNA ){
         $output .= "*Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
     }
