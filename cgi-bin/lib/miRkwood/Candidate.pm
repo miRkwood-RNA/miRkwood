@@ -397,6 +397,17 @@ sub candidateAsOrg {
         $output .= "*Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
     }
     $output .= "*Total number of reads mapped to the precursor:* $self->{'nb_reads'}\n";
+    if ( ! $known_miRNA ){
+        if ( $self->{'criteria_reads_mirna'} == 1 && $self->{'criteria_star'} == 1 ){
+            $output .= "*Distribution of reads:* two islands\n";
+        }
+        if ( ($self->{'criteria_reads_mirna'} + $self->{'criteria_star'}) == 1 ){
+            $output .= "*Distribution of reads:* one island\n";
+        }
+        if ( $self->{'criteria_reads_mirna'} == 0 && $self->{'criteria_star'} == 0 ){
+            $output .= "*Distribution of reads:* random\n";
+        } 
+    }
     $output .= "\n";
     return $output;
 }
