@@ -1182,7 +1182,7 @@ sub include_alignments_in_html {
     my $alignment_file = File::Spec->catfile(
                 miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
                 $self->{'identifier'}.'_aln.txt');
-    my $result = '<pre>';
+    my $result = '';
     open(my $IN, '<', $alignment_file) or return '';
     my $line;
     while ( $line = <$IN> ){
@@ -1216,7 +1216,6 @@ sub include_alignments_in_html {
         $result .= "$line\n";
     }
     close $IN;
-    $result .= '</pre>';
     return $result;
 }
 

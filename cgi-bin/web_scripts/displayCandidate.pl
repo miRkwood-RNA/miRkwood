@@ -216,8 +216,8 @@ END_TXT
         $alignmentHTML = '<h2>Conserved mature miRNA</h2>';
 
         if ( $candidate->{'alignment'} ) {
-            $alignmentHTML .=
-              $candidate->include_alignments_in_html();
+            $alignmentHTML .= '<pre>' .
+              $candidate->include_alignments_in_html() . '</pre>';
         }
         else {
             $alignmentHTML .= 'No alignment has been found.';
