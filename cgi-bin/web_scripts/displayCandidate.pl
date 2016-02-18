@@ -217,7 +217,7 @@ END_TXT
 
         if ( $candidate->{'alignment'} ) {
             $alignmentHTML .= '<pre>' .
-              $candidate->include_alignments_in_html() . '</pre>';
+              $candidate->include_alignments_in_html( 'html' ) . '</pre>';
         }
         else {
             $alignmentHTML .= 'No alignment has been found.';

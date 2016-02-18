@@ -417,6 +417,23 @@ sub candidateAsOrg {
                 $mirna_type,
                 $self->{'identifier'}.'.txt');
     $output .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
+    if ( ! $known_miRNA && $cfg->param('options.align') ){
+        if ( $self->{'alignment'} == 0 ){
+            $output .= "*miRBase alignment:* none\n";
+        }
+        else {
+            if ( $self->{'alignment'} == 2 ){
+                $output .= "*miRBase alignment:* presence of alignments that cover the miRNA locus (see reads cloud above)\n";
+            }
+            elsif ( $self->{'alignment'} == 1 ){
+                $output .= "*miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
+            }
+            else {
+                $output .= 'none';
+            }
+            $output .= "\n" . $self->include_alignments_in_html( 'org' );
+        }
+    }
     $output .= "\n";
     return $output;
 }
@@ -1178,6 +1195,11 @@ sub tag_orphan_hairpins{
 =cut
 sub include_alignments_in_html {
     my ($self, @args) = @_;
+    my $format = shift @args;   # should be 'html' or 'org'
+    my $mode_for_hairpin = $format;
+    if ( $format eq 'org' ){
+        $mode_for_hairpin = 'ascii';
+    }
     my $cfg = miRkwood->CONFIG();
     my $alignment_file = File::Spec->catfile(
                 miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
@@ -1188,27 +1210,42 @@ sub include_alignments_in_html {
     while ( $line = <$IN> ){
         chomp $line;
         if ( $line =~ /Prediction : ([\d]+)-([\d]+)/ ){
-            $line = "<b style='font-size:1.2em;'>$line</b>\n\n";
+            if ( $format eq 'org' ){
+                $line = "*$line*\n\n";
+            }
+            else {
+                $line = "<b style='font-size:1.2em;'>$line</b>\n\n";
+            }
             my $hairpin_with_mature = '';
             if ( !eval {
                 $hairpin_with_mature =
                   miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
                                                             $1, $2,
                                                             length $self->{'sequence'},
-                                                            'html');
+                                                            $mode_for_hairpin);
                 }
             ){
                 $hairpin_with_mature = $self->{'hairpin'};
             }
             $line .= $hairpin_with_mature;
-            $line .= "\n<b>Alignments</b>\n";
+            if ( $format eq 'org' ){
+                $line .= "\n*Alignments*\n";
+            }
+            else {
+                $line .= "\n<b>Alignments</b>\n";
+            }
         }
         if ( $line =~ /miRBase (\d+):(.*)/ ){
             my @list_results = split( '\|', $2);
             my $mirbase_link = "miRBase $1 : ";
             foreach my $result ( @list_results ){
                 if ( $result =~ /^ ([^ ]*) / ){
-                    $mirbase_link .= '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a> | ';
+                    if ( $format eq 'org' ){
+                        $mirbase_link .= "[[miRkwood::Utils::make_mirbase_link( $1 )][$1]] | ";
+                    }
+                    else {
+                        $mirbase_link .= '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a> | ';
+                    }
                 }
             }
             $line = $mirbase_link;

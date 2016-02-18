@@ -398,7 +398,7 @@ END_TXT
                                                       miRkwood::Paths::get_alignments_dir_name(),
                                                       $candidate->{'identifier'}. '_aln.txt' );
 
-            $alignments_html .= '<br /><pre>' . $candidate->include_alignments_in_html() . '</pre>';
+            $alignments_html .= '<br /><pre>' . $candidate->include_alignments_in_html( 'html' ) . '</pre>';
         }
         $alignments_html .= '</li>';
     }
