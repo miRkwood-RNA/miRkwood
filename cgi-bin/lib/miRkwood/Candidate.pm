@@ -412,11 +412,15 @@ sub candidateAsOrg {
             $output .= "*Distribution of reads:* random\n";
         } 
     }
+
+    # Read cloud
     my $absolute_read_cloud_path = File::Spec->catfile(
                 miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
                 $mirna_type,
                 $self->{'identifier'}.'.txt');
     $output .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
+
+    # Alignments
     if ( ! $known_miRNA && $cfg->param('options.align') ){
         if ( $self->{'alignment'} == 0 ){
             $output .= "*miRBase alignment:* none\n";
