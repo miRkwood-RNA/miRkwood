@@ -429,7 +429,7 @@ sub candidateAsOrg {
                 $output .= "*miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
             }
             else {
-                $output .= 'none';
+                $output .= 'none\n';
             }
             $output .= "\n" . $self->include_alignments_in_html( 'org' );
         }
