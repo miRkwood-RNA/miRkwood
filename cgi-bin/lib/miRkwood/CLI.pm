@@ -296,7 +296,7 @@ sub make_candidate_page {
             $mirna_html = "<li><b>miRNA sequence:</b> $mirna_sequence</li>\n";
             if ( $mirna_type eq 'novel_miRNA' ){
                 $mirna_html .= "<li><b>miRNA depth:</b> $candidate->{'mirna_depth'} (weight: $candidate->{'weight'})</li>\n";
-                $mirna_html .= "<li><b>Candidates with the same miRNA:</b>";
+                $mirna_html .= "<li><b>Other precursors with the same miRNA:</b>";
                 if ( defined( $candidate->{'list_id_with_same_mirna'} ) && scalar( @{ $candidate->{'list_id_with_same_mirna'} } ) ){
                     foreach ( @{ $candidate->{'list_id_with_same_mirna'} } ){
                         if ( /(.*)__(\d+)-(\d+)/ ){
@@ -368,7 +368,7 @@ sub make_candidate_page {
         $reads_html = <<"END_TXT";
 $read_duplex
 <li>
-    <b>Number of reads:</b> $nb_reads [<a href='$reads_file'>download<a/>]
+    <b>Total number of reads mapped to the precursor:</b> $nb_reads [<a href='$reads_file'>download<a/>]
 </li>
 $reads_score
 $read_cloud
