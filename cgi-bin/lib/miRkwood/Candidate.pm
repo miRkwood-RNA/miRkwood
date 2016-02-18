@@ -396,7 +396,7 @@ sub candidateAsOrg {
     if ( ! $known_miRNA ){
         $output .= "Stability of the miRNA duplex (mirdup): $boolean->{ $self->{'criteria_mirdup'} }\n";
     }
-    $output .= "Number of reads: $self->{'nb_reads'}\n";
+    $output .= "Total number of reads mapped to the precursor: $self->{'nb_reads'}\n";
     $output .= "\n";
     return $output;
 }
