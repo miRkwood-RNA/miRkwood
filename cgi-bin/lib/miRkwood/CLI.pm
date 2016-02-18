@@ -371,7 +371,8 @@ $read_duplex
     <b>Total number of reads mapped to the precursor:</b> $nb_reads [<a href='$reads_file'>download<a/>]
 </li>
 $reads_score
-$read_cloud
+<pre style='font-size:0.8em;'>
+$read_cloud</pre>
 END_TXT
     }
 
@@ -465,8 +466,8 @@ END_TXT
 
 =method include_read_cloud_in_html
 
-  Read contents of read cloud file and store it
-  in 'pre' tags, except the header.
+  Read contents of read cloud file (except header)
+  and return it.
 
 =cut
 sub include_read_cloud_in_html {
@@ -475,7 +476,7 @@ sub include_read_cloud_in_html {
     my $locus_length    = shift @args;
     my $locus_nb_reads  = shift @args;
     my $threshold = int( $locus_nb_reads / $locus_length ) + 1;
-    my $result = "<pre style='font-size:0.8em;'>\n";
+    my $result = '';
     open(my $IN, '<', $read_cloud_file) or return '';
     my $line = <$IN>;
     while ( <$IN> ){
@@ -491,7 +492,6 @@ sub include_read_cloud_in_html {
         }
     }
     close $IN;
-    $result .= '</pre>';
     return $result;
 }
 
