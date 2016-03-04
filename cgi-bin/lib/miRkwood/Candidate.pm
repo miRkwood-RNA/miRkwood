@@ -384,6 +384,14 @@ sub candidateAsOrg {
     $output .= "*Strand:* $self->{'strand'}\n";
     $output .= "*G+C content:* $self->{'%GC'} %\n";
 
+    my $vienna_seq = miRkwood::Utils->make_Vienna_viz( $self->{'structure_stemloop'}, $self->{'sequence'} );
+
+    $output .= "*miRNA precursor:*\n=\n";
+    $output .= $vienna_seq . "=\n";
+    if ( $self->{'structure_stemloop'} eq $self->{'structure_optimal'} ){
+        $output .= "This stem-loop structure is the MFE structure.\n";
+    }
+
     if ( $cfg->param('job.pipeline') eq 'abinitio' ){
         
     }
