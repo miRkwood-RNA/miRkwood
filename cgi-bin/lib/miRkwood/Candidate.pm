@@ -371,13 +371,21 @@ sub candidateAsOrg {
     my $mirna_type = 'novel_miRNA';
     my $output = '';
     my $position = miRkwood::Utils::make_numbers_more_readable( $self->{'position'} );
+    my $mirbase_name = '';
     my $mirna_sequence = '';
     my $mirna_depth = '';
     my $list_candidates_with_same_mirna = '';
     my $mirdup = '';
     my $reads = '';
     my $alignments = '';
-    
+
+    if ( defined( $self->{'mirbase_id'} ) ){
+        $mirna_type = 'known_miRNA';
+        $known_miRNA = 1;
+        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $self->{'mirbase_id'} );
+        $mirbase_name = "*miRBase name:* [[$mirbase_link][$self->{'identifier'}]]\n";
+    }
+
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
         $mirna_sequence = "*miRNA sequence:* $self->{'mirna_sequence'}\n";
         if ( ! $known_miRNA ){
@@ -393,7 +401,7 @@ sub candidateAsOrg {
                 $list_candidates_with_same_mirna = "*Candidates with the same miRNA:* none\n";
             }
         }
-        
+
         if ( ! $known_miRNA ){
             $mirdup .= "*Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
         }
@@ -438,12 +446,8 @@ sub candidateAsOrg {
     }
     
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n\n";
-    if ( defined( $self->{'mirbase_id'} ) ){
-        $mirna_type = 'known_miRNA';
-        $known_miRNA = 1;
-        my $mirbase_link = miRkwood::Utils::make_mirbase_link( $self->{'mirbase_id'} );
-        $output .= "miRBase name: [[$mirbase_link][$self->{'identifier'}]]\n";
-    }
+
+    $output .= $mirbase_name;
     $output .= "*Chromosome:* $self->{'name'}\n";
     $output .= "*Position:* $position ($self->{'length'} nt)\n";
     $output .= "*Strand:* $self->{'strand'}\n";
