@@ -13,7 +13,6 @@ use miRkwood::FileUtils;
 use miRkwood::Paths;
 use miRkwood::Utils;
 use miRkwood::SequenceJob;
-use miRkwood::HairpinBuilder;
 use miRkwood::PrecursorBuilder;
 use miRkwood::BEDHandler;
 
