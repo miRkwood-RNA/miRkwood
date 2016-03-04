@@ -112,7 +112,7 @@ install first the following modules:
 Inline::C
 Inline
 Pegex
-ExtUtils::MakeMarker
+ExtUtils::MakeMaker
 File-ShareDir-Install
 Capture::Tiny
 ExtUtills::CppGuess
