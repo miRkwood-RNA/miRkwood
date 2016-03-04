@@ -994,10 +994,10 @@ sub make_Vienna_viz {
             $sequenceString = q{};
         }
         if ( ( $viennaString ne q{} ) && ( $_ == length($Vienna) ) ) {
-            $string .= $sequenceString . "\n" . $viennaString . "\n\n";
+            $string .= $sequenceString . "\n" . $viennaString . "\n";
         }
     }
-    return $string
+    return $string;
 }
 
 sub create_mirbase_tag {
