@@ -371,6 +371,7 @@ sub candidateAsOrg {
     my $mirna_type = 'novel_miRNA';
     my $output = '';
     my $position = miRkwood::Utils::make_numbers_more_readable( $self->{'position'} );
+
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n";
     if ( defined( $self->{'mirbase_id'} ) ){
         $mirna_type = 'known_miRNA';
@@ -382,62 +383,69 @@ sub candidateAsOrg {
     $output .= "*Position:* $position ($self->{'length'} nt)\n";
     $output .= "*Strand:* $self->{'strand'}\n";
     $output .= "*G+C content:* $self->{'%GC'} %\n";
-    $output .= "*miRNA sequence:* $self->{'mirna_sequence'}\n";
-    if ( ! $known_miRNA ){
-        $output .= "*miRNA depth:* $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
-        if ( defined( $self->{'list_id_with_same_mirna'} ) && scalar( @{ $self->{'list_id_with_same_mirna'} } ) ){
-            my $list_mirna = '';
-            foreach ( @{ $self->{'list_id_with_same_mirna'} } ){
-                $list_mirna .= "$_ ";
-            }
-            $output .= "*Candidates with the same miRNA:* $list_mirna\n";
-        }
-        else{
-            $output .= "*Candidates with the same miRNA:* none\n";
-        }
-    }
-    $output .= "*Stability of the secondary structure of the precursor:* /MFE/ $self->{'mfe'} kcal/mol | /AMFE/ $self->{'amfe'} | /MFEI/ $self->{'mfei'}\n";
-    if ( ! $known_miRNA ){
-        $output .= "*Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
-    }
-    $output .= "*Total number of reads mapped to the precursor:* $self->{'nb_reads'}\n";
-    if ( ! $known_miRNA ){
-        if ( $self->{'criteria_reads_mirna'} == 1 && $self->{'criteria_star'} == 1 ){
-            $output .= "*Distribution of reads:* two islands\n";
-        }
-        if ( ($self->{'criteria_reads_mirna'} + $self->{'criteria_star'}) == 1 ){
-            $output .= "*Distribution of reads:* one island\n";
-        }
-        if ( $self->{'criteria_reads_mirna'} == 0 && $self->{'criteria_star'} == 0 ){
-            $output .= "*Distribution of reads:* random\n";
-        } 
-    }
 
-    # Read cloud
-    my $absolute_read_cloud_path = File::Spec->catfile(
-                miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
-                $mirna_type,
-                $self->{'identifier'}.'.txt');
-    $output .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
-
-    # Alignments
-    if ( ! $known_miRNA && $cfg->param('options.align') ){
-        if ( $self->{'alignment'} == 0 ){
-            $output .= "*miRBase alignment:* none\n";
-        }
-        else {
-            if ( $self->{'alignment'} == 2 ){
-                $output .= "*miRBase alignment:* presence of alignments that cover the miRNA locus (see reads cloud above)\n";
+    if ( $cfg->param('job.pipeline') eq 'abinitio' ){
+        
+    }
+    else {
+        $output .= "*miRNA sequence:* $self->{'mirna_sequence'}\n";
+        if ( ! $known_miRNA ){
+            $output .= "*miRNA depth:* $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
+            if ( defined( $self->{'list_id_with_same_mirna'} ) && scalar( @{ $self->{'list_id_with_same_mirna'} } ) ){
+                my $list_mirna = '';
+                foreach ( @{ $self->{'list_id_with_same_mirna'} } ){
+                    $list_mirna .= "$_ ";
+                }
+                $output .= "*Candidates with the same miRNA:* $list_mirna\n";
             }
-            elsif ( $self->{'alignment'} == 1 ){
-                $output .= "*miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
+            else{
+                $output .= "*Candidates with the same miRNA:* none\n";
+            }
+        }
+        $output .= "*Stability of the secondary structure of the precursor:* /MFE/ $self->{'mfe'} kcal/mol | /AMFE/ $self->{'amfe'} | /MFEI/ $self->{'mfei'}\n";
+        if ( ! $known_miRNA ){
+            $output .= "*Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
+        }
+        $output .= "*Total number of reads mapped to the precursor:* $self->{'nb_reads'}\n";
+        if ( ! $known_miRNA ){
+            if ( $self->{'criteria_reads_mirna'} == 1 && $self->{'criteria_star'} == 1 ){
+                $output .= "*Distribution of reads:* two islands\n";
+            }
+            if ( ($self->{'criteria_reads_mirna'} + $self->{'criteria_star'}) == 1 ){
+                $output .= "*Distribution of reads:* one island\n";
+            }
+            if ( $self->{'criteria_reads_mirna'} == 0 && $self->{'criteria_star'} == 0 ){
+                $output .= "*Distribution of reads:* random\n";
+            } 
+        }
+
+        # Read cloud
+        my $absolute_read_cloud_path = File::Spec->catfile(
+                    miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
+                    $mirna_type,
+                    $self->{'identifier'}.'.txt');
+        $output .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
+
+        # Alignments
+        if ( ! $known_miRNA && $cfg->param('options.align') ){
+            if ( $self->{'alignment'} == 0 ){
+                $output .= "*miRBase alignment:* none\n";
             }
             else {
-                $output .= 'none\n';
+                if ( $self->{'alignment'} == 2 ){
+                    $output .= "*miRBase alignment:* presence of alignments that cover the miRNA locus (see reads cloud above)\n";
+                }
+                elsif ( $self->{'alignment'} == 1 ){
+                    $output .= "*miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
+                }
+                else {
+                    $output .= 'none\n';
+                }
+                $output .= "\n" . $self->include_alignments_in_html( 'org' );
             }
-            $output .= "\n" . $self->include_alignments_in_html( 'org' );
         }
     }
+
     $output .= "\n";
     return $output;
 }
