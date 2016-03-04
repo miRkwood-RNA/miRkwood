@@ -38,7 +38,7 @@ sub new {
 
 Run the pipeline
 
- Usage : miRkwood::MainPipeline::fasta_pipeline( $idirJob );
+ Usage : miRkwood::Pipeline::run_pipeline();
  Input : The job directory
  Return: -
 
