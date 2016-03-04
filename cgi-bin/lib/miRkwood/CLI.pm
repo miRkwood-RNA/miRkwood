@@ -378,7 +378,7 @@ END_TXT
 
     # miRBase alignments
     my $alignments_html = '';
-    if ( ! defined( $candidate->{'mirbase_id'} ) ){
+    if ( ! defined( $candidate->{'mirbase_id'} ) && $cfg->param('options.align') ){
         $alignments_html .= '<li><b>miRBase alignment:</b> ';
         if ( $candidate->{'alignment'} == 0 ){
              $alignments_html .= 'none </li>';
