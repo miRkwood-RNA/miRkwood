@@ -80,25 +80,27 @@ sub get_masking_information {
     my ($self, @args) = @_;
     my %filter;
     my $cfg = miRkwood->CONFIG();
-    my $masking_folder = miRkwood::Paths::create_folder( File::Spec->catdir($self->get_job_dir(), 'masks') );
-    my $sequences = $self->get_uploaded_sequences_file();
-
-    if ($cfg->param('options.filter')) {
-        debug( 'Get masking information for coding regions', miRkwood->DEBUG() );
-        my $plant = $cfg->param('job.plant');
-        my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
-        my %blast_mask = miRkwood::Maskers::get_coding_region_masking_information( $sequences, $masking_folder, $blast_database );
-        %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
-    }
-    if ($cfg->param('options.mask-trna')) {
-        debug( 'Get masking information for tRNAs', miRkwood->DEBUG() );
-        my %trna_mask = miRkwood::Maskers::get_trna_masking_information( $sequences, $masking_folder );
-        %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
-    }
-    if ($cfg->param('options.mask-rrna')) {
-        debug( 'Get masking information for ribosomal RNAs', miRkwood->DEBUG() );
-        my %rrna_mask = miRkwood::Maskers::get_rnammer_masking_information( $sequences, $masking_folder );
-        %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
+    if ( $cfg->param('options.filter') || $cfg->param('options.mask-trna') || $cfg->param('options.mask-rrna') ){
+        my $masking_folder = miRkwood::Paths::create_folder( File::Spec->catdir($self->get_job_dir(), 'masks') );
+        my $sequences = $self->get_uploaded_sequences_file();
+    
+        if ($cfg->param('options.filter')) {
+            debug( 'Get masking information for coding regions', miRkwood->DEBUG() );
+            my $plant = $cfg->param('job.plant');
+            my $blast_database = File::Spec->catfile( $dirData, "$plant.fas" );
+            my %blast_mask = miRkwood::Maskers::get_coding_region_masking_information( $sequences, $masking_folder, $blast_database );
+            %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%blast_mask);
+        }
+        if ($cfg->param('options.mask-trna')) {
+            debug( 'Get masking information for tRNAs', miRkwood->DEBUG() );
+            my %trna_mask = miRkwood::Maskers::get_trna_masking_information( $sequences, $masking_folder );
+            %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%trna_mask);
+        }
+        if ($cfg->param('options.mask-rrna')) {
+            debug( 'Get masking information for ribosomal RNAs', miRkwood->DEBUG() );
+            my %rrna_mask = miRkwood::Maskers::get_rnammer_masking_information( $sequences, $masking_folder );
+            %filter = miRkwood::Utils::merge_hashes_of_arrays(\%filter, \%rrna_mask);
+        }
     }
     return %filter;
 }
