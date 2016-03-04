@@ -372,7 +372,7 @@ sub candidateAsOrg {
     my $output = '';
     my $position = miRkwood::Utils::make_numbers_more_readable( $self->{'position'} );
 
-    $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n";
+    $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n\n";
     if ( defined( $self->{'mirbase_id'} ) ){
         $mirna_type = 'known_miRNA';
         $known_miRNA = 1;
