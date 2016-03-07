@@ -144,7 +144,6 @@ sub make_all_exports {
     $exporter = miRkwood::ResultsExporterMaker->make_csv_results_exporter( $pipeline_type, $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
-    my $csv_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
     $html .= '<li><a href="' . $exporter->get_filename() . '">tab-delimited format (csv)</a></li>';
 
     # Create fasta
@@ -158,14 +157,12 @@ sub make_all_exports {
     $exporter = miRkwood::ResultsExporterMaker->make_dotbracket_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
-    my $dotbracket_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
     $html .= '<li><a href="' . $exporter->get_filename() . '">dot-bracket format (plain sequence + secondary structure)</a></li>';
 
     # Create GFF
     $exporter = miRkwood::ResultsExporterMaker->make_gff_results_exporter( $mirna_type );
     $exporter->initialize($id_job, $results_ref);
     $exporter->export_on_disk( $final_results_folder );
-    my $gff_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
     $html .= '<li><a href="' . $exporter->get_filename() . '">gff format</a></li>';
 
     # Create ORG
