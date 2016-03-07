@@ -164,6 +164,12 @@ sub make_all_exports {
     my $gff_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
     $html .= '<li><a href="' . $exporter->get_filename() . '">gff format</a></li>';
 
+    $exporter = miRkwood::ResultsExporterMaker->make_org_results_exporter( $mirna_type );
+    $exporter->initialize($id_job, $results_ref);
+    $exporter->export_on_disk( $final_results_folder );
+    my $org_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
+    $html .= '<li><a href="' . $exporter->get_filename() . '">ORG format</a></li>';
+
     $html .= '</ul>';
     return $html;
 }
