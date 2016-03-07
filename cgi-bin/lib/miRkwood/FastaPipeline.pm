@@ -83,7 +83,7 @@ sub get_masking_information {
     if ( $cfg->param('options.filter') || $cfg->param('options.mask-trna') || $cfg->param('options.mask-rrna') ){
         my $masking_folder = miRkwood::Paths::create_folder( File::Spec->catdir($self->get_job_dir(), 'masks') );
         my $sequences = $self->get_uploaded_sequences_file();
-    
+
         if ($cfg->param('options.filter')) {
             debug( 'Get masking information for coding regions', miRkwood->DEBUG() );
             my $plant = $cfg->param('job.plant');
