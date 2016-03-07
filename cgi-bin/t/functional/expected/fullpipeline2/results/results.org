@@ -1,10 +1,10 @@
 * Results for contig15750: 34-,195 (+)
 
-*Chromosome:* contig15750
-*Position:* 34-,195 (162 nt)
-*Strand:* +
-*G+C content:* 37.04 %
-*miRNA precursor:*
+** *Chromosome:* contig15750
+** *Position:* 34-,195 (162 nt)
+** *Strand:* +
+** *G+C:* 37.04 %
+** *miRNA precursor:*
 =
 gagagguucauacaugaagagaagagugcucuuauuauguagccaaggaugaauugccua
 ((((((.((..((((((.((((((((.(((...((((.((((.(((((((((((.(((((
@@ -16,15 +16,15 @@ gacugacuuaaucggcuuuuuuucaucauguuagaucuucuc
 ).)).)).)))).))))))))))).))))))..)).))))))
 =
 This stem-loop structure is the MFE structure.
-*Stability of the secondary structure of the precursor:* /MFE/ -60.10 kcal/mol | /AMFE/ -37.10 | /MFEI/ -1.00
+** *Stability of the secondary structure of the precursor:* /MFE/ -60.10 kcal/mol | /AMFE/ -37.10 | /MFEI/ -1.00
 
 * Results for contig15916: 1,87-,322 (+)
 
-*Chromosome:* contig15916
-*Position:* 1,87-,322 (136 nt)
-*Strand:* +
-*G+C content:* 50 %
-*miRNA precursor:*
+** *Chromosome:* contig15916
+** *Position:* 1,87-,322 (136 nt)
+** *Strand:* +
+** *G+C:* 50 %
+** *miRNA precursor:*
 =
 uuacggcgguuuucugauucgcuuggugcaggucgggaacggcuuggccgacgguuucau
 (((((.((((((...((((((.((((((((((.(((((...((((((((((.((((((((
@@ -36,5 +36,5 @@ aucugaaccgauguaa
 ))).)))))).)))))
 =
 This stem-loop structure is the MFE structure.
-*Stability of the secondary structure of the precursor:* /MFE/ -57.30 kcal/mol | /AMFE/ -42.13 | /MFEI/ -0.84
+** *Stability of the secondary structure of the precursor:* /MFE/ -57.30 kcal/mol | /AMFE/ -42.13 | /MFEI/ -0.84
 
