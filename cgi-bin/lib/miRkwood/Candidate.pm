@@ -383,38 +383,38 @@ sub candidateAsOrg {
         $mirna_type = 'known_miRNA';
         $known_miRNA = 1;
         my $mirbase_link = miRkwood::Utils::make_mirbase_link( $self->{'mirbase_id'} );
-        $mirbase_name = "*miRBase name:* [[$mirbase_link][$self->{'identifier'}]]\n";
+        $mirbase_name = "** *miRBase name:* [[$mirbase_link][$self->{'identifier'}]]\n";
     }
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
-        $mirna_sequence = "*miRNA sequence:* $self->{'mirna_sequence'}\n";
+        $mirna_sequence = "** *miRNA sequence:* $self->{'mirna_sequence'}\n";
         if ( ! $known_miRNA ){
-            $mirna_depth = "*miRNA depth:* $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
+            $mirna_depth = "** *miRNA depth:* $self->{'mirna_depth'} (weigth: $self->{'weight'})\n";
             if ( defined( $self->{'list_id_with_same_mirna'} ) && scalar( @{ $self->{'list_id_with_same_mirna'} } ) ){
                 my $list_mirna = '';
                 foreach ( @{ $self->{'list_id_with_same_mirna'} } ){
                     $list_mirna .= "$_ ";
                 }
-                $list_candidates_with_same_mirna = "*Candidates with the same miRNA:* $list_mirna\n";
+                $list_candidates_with_same_mirna = "** *Candidates with the same miRNA:* $list_mirna\n";
             }
             else{
-                $list_candidates_with_same_mirna = "*Candidates with the same miRNA:* none\n";
+                $list_candidates_with_same_mirna = "** *Candidates with the same miRNA:* none\n";
             }
         }
 
         if ( ! $known_miRNA ){
-            $mirdup .= "*Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
+            $mirdup .= "** *Stability of the miRNA duplex (mirdup):* $boolean->{ $self->{'criteria_mirdup'} }\n";
         }
-        $reads .= "*Total number of reads mapped to the precursor:* $self->{'nb_reads'}\n";
+        $reads .= "** *Total number of reads mapped to the precursor:* $self->{'nb_reads'}\n";
         if ( ! $known_miRNA ){
             if ( $self->{'criteria_reads_mirna'} == 1 && $self->{'criteria_star'} == 1 ){
-                $reads .= "*Distribution of reads:* two islands\n";
+                $reads .= "** *Distribution of reads:* two islands\n";
             }
             if ( ($self->{'criteria_reads_mirna'} + $self->{'criteria_star'}) == 1 ){
-                $reads .= "*Distribution of reads:* one island\n";
+                $reads .= "** *Distribution of reads:* one island\n";
             }
             if ( $self->{'criteria_reads_mirna'} == 0 && $self->{'criteria_star'} == 0 ){
-                $reads .= "*Distribution of reads:* random\n";
+                $reads .= "** *Distribution of reads:* random\n";
             }
         }
 
@@ -428,14 +428,14 @@ sub candidateAsOrg {
         # Alignments
         if ( ! $known_miRNA && $cfg->param('options.align') ){
             if ( $self->{'alignment'} == 0 ){
-                $alignments .= "*miRBase alignment:* none\n\n";
+                $alignments .= "** *miRBase alignment:* none\n\n";
             }
             else {
                 if ( $self->{'alignment'} == 2 ){
-                    $alignments .= "*miRBase alignment:* presence of alignments that cover the miRNA locus (see reads cloud above)\n";
+                    $alignments .= "** *miRBase alignment:* presence of alignments that cover the miRNA locus (see reads cloud above)\n";
                 }
                 elsif ( $self->{'alignment'} == 1 ){
-                    $alignments .= "*miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
+                    $alignments .= "** *miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
                 }
                 else {
                     $alignments .= "none\n";
@@ -448,21 +448,21 @@ sub candidateAsOrg {
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n\n";
 
     $output .= $mirbase_name;
-    $output .= "*Chromosome:* $self->{'name'}\n";
-    $output .= "*Position:* $position ($self->{'length'} nt)\n";
-    $output .= "*Strand:* $self->{'strand'}\n";
-    $output .= "*G+C content:* $self->{'%GC'} %\n";
+    $output .= "** *Chromosome:* $self->{'name'}\n";
+    $output .= "** *Position:* $position ($self->{'length'} nt)\n";
+    $output .= "** *Strand:* $self->{'strand'}\n";
+    $output .= "** *G+C:* $self->{'%GC'} %\n";
     $output .= $mirna_sequence;
     $output .= $mirna_depth;
     $output .= $list_candidates_with_same_mirna;
 
     my $vienna_seq = miRkwood::Utils->make_Vienna_viz( $self->{'structure_stemloop'}, $self->{'sequence'} );
-    $output .= "*miRNA precursor:*\n=\n";
+    $output .= "** *miRNA precursor:*\n=\n";
     $output .= $vienna_seq . "=\n";
     if ( $self->{'structure_stemloop'} eq $self->{'structure_optimal'} ){
         $output .= "This stem-loop structure is the MFE structure.\n";
     }
-    $output .= "*Stability of the secondary structure of the precursor:* /MFE/ $self->{'mfe'} kcal/mol | /AMFE/ $self->{'amfe'} | /MFEI/ $self->{'mfei'}\n";
+    $output .= "** *Stability of the secondary structure of the precursor:* /MFE/ $self->{'mfe'} kcal/mol | /AMFE/ $self->{'amfe'} | /MFEI/ $self->{'mfei'}\n";
 
     $output .= $mirdup;
     $output .= $reads;
