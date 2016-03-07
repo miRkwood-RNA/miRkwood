@@ -136,10 +136,18 @@ rnalfold
 rnaeval
 
 - samtools
-paquet...
+Install package 'samtools' with your usual package installer,
+for instance with
+`sudo apt-get install samtools`
+or
+`sudo yum install samtools`
 
 - bedtools
-paquet...
+Install package 'bedtools' with your usual package installer,
+for instance with
+`sudo apt-get install bedtools`
+or
+`sudo yum install bedtools`
 
 2. Optional dependencies for both pipelines
 - miRdup
