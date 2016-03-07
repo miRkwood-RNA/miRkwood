@@ -54,7 +54,7 @@ sub compare_folders {
 
                 compare_2_hash( \%attributes_1, \%attributes_2, $_);
             }
-            elsif ( $_ !~/[.]html|[.]svn|[.]log|[.]cfg|[.]png|miRdupOutput[.]txt|[.]tar[.]gz$/ ) {
+            elsif ( $_ !~/[.]html|[.]svn|[.]log|[.]cfg|[.]png|miRdupOutput[.]txt|[.]tar[.]gz|[.]pdf$/ ) {
                 open CMD, "diff $folder_1/$_ $folder_2/$_ |";
                 while ( my $line = <CMD> ){
                     if ( $line ne /^\n$/ ){
