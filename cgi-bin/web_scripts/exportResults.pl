@@ -53,6 +53,18 @@ given ($export_type) {
     when (/reads/) {
         $exporter = miRkwood::ResultsExporterMaker->make_reads_clouds_results_exporter( $mirna_type );
     }
+    when (/pdf/) {
+        # Create ORG file, mandatory for PDF creation
+        my $dir_for_org_file = '/tmp/';
+        my $exporter_org = miRkwood::ResultsExporterMaker->make_org_results_exporter( $mirna_type );
+        $exporter_org->initialize($id_job, \%myResults, \@sequences_to_export);
+        $exporter_org->export_on_disk( $dir_for_org_file );
+        my $org_file = File::Spec->catfile($dir_for_org_file, $exporter_org->get_filename());
+
+        # Call exporter for PDF
+        $exporter = miRkwood::ResultsExporterMaker->make_pdf_results_exporter( $mirna_type, $org_file );
+    }
+
     default { miRkwood::WebTemplate::web_die("The export type '$export_type' is not supported"); }
 }
 $exporter->initialize($id_job, \%myResults, \@sequences_to_export);

@@ -173,10 +173,10 @@ sub make_all_exports {
     $html .= '<li><a href="' . $exporter->get_filename() . '">ORG format</a></li>';
 
     # Create PDF
-    $exporter = miRkwood::ResultsExporterMaker->make_pdf_results_exporter( $mirna_type );
+    $exporter = miRkwood::ResultsExporterMaker->make_pdf_results_exporter( $mirna_type, $org_file );
     $exporter->initialize($id_job, $results_ref);
     my $pdf_file = File::Spec->catfile($final_results_folder, $exporter->get_filename());
-    $exporter->create_PDF_from_ORG( $pdf_file, $org_file );
+    $exporter->create_PDF_from_ORG( $pdf_file );
     $html .= '<li><a href="' . $exporter->get_filename() . '">PDF format</a></li>';
 
     $html .= '</ul>';

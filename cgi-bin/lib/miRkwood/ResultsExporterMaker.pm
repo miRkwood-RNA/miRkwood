@@ -99,8 +99,9 @@ sub make_org_results_exporter {
 sub make_pdf_results_exporter {
     my ($self, @args) = @_;
     my $mirna_type = shift @args;
+    my $dir_for_org_file = shift @args;
     require miRkwood::ResultsExporter::PDFExporter;
-    return miRkwood::ResultsExporter::PDFExporter->new( $mirna_type );
+    return miRkwood::ResultsExporter::PDFExporter->new( $mirna_type, $dir_for_org_file );
 }
 
 
