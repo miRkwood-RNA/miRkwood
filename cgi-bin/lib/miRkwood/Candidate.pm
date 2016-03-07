@@ -419,11 +419,11 @@ sub candidateAsOrg {
         }
 
         # Read cloud
-        my $absolute_read_cloud_path = File::Spec->catfile(
-                    miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
-                    $mirna_type,
-                    $self->{'identifier'}.'.txt');
-        $reads .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
+        #~ my $absolute_read_cloud_path = File::Spec->catfile(
+                    #~ miRkwood::Paths::get_dir_reads_path_from_job_dir( $cfg->param('job.directory') ),
+                    #~ $mirna_type,
+                    #~ $self->{'identifier'}.'.txt');
+        #~ $reads .= "=\n" . miRkwood::CLI::include_read_cloud_in_html( $absolute_read_cloud_path, $self->{'length'}, $self->{'nb_reads'} ) . "=\n";
 
         # Alignments
         if ( ! $known_miRNA && $cfg->param('options.align') ){
@@ -440,7 +440,8 @@ sub candidateAsOrg {
                 else {
                     $alignments .= "none\n";
                 }
-                $alignments .= "\n" . $self->include_alignments_in_html( 'org' );
+                $alignments .= "\n";
+                #~ $alignments .= "\n" . $self->include_alignments_in_html( 'org' );
             }
         }
     }
