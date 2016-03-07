@@ -415,7 +415,7 @@ sub candidateAsOrg {
             }
             if ( $self->{'criteria_reads_mirna'} == 0 && $self->{'criteria_star'} == 0 ){
                 $reads .= "*Distribution of reads:* random\n";
-            } 
+            }
         }
 
         # Read cloud
@@ -438,13 +438,13 @@ sub candidateAsOrg {
                     $alignments .= "*miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
                 }
                 else {
-                    $alignments .= 'none\n';
+                    $alignments .= "none\n";
                 }
                 $alignments .= "\n" . $self->include_alignments_in_html( 'org' );
             }
         }
     }
-    
+
     $output .= "* Results for $self->{'name'}: $position ($self->{'strand'})\n\n";
 
     $output .= $mirbase_name;
@@ -912,7 +912,7 @@ sub compute_quality_from_reads {
             }
 
             # Criteria presence of a star
-            if ( ($end_mirna <= $end_arm_1) || ($start_mirna >= $start_arm_2) ){  
+            if ( ($end_mirna <= $end_arm_1) || ($start_mirna >= $start_arm_2) ){
                 my $overlap = miRkwood::Utils::size_overlap( $read_position, "$pairing_end_mirna-$pairing_start_mirna");
                 if ( $overlap > 12 && $self->{'reads'}{$read_position} > 1 ){
                     $criteria_star = 1;
