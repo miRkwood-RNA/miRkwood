@@ -64,6 +64,8 @@ sub export_for_web {
 
     $self->create_PDF_from_ORG( $pdf_file );
     my $contents = miRkwood::FileUtils::slurp_bin_file ( $pdf_file );
+    unlink $self->get_org_file();
+    unlink $pdf_file;
 
     my $answer = <<"DATA"
 Content-type: $content_type
