@@ -20,11 +20,11 @@ sub new {
     my $mirna_type = shift @args;
     my $org_file = shift @args;
     my $self = {
-        identifier => undef,
-        results => undef,
-        sequences_to_export => undef,
-        mirna_type => $mirna_type,
-        'org_file' => $org_file
+        'identifier'          => undef,
+        'results'             => undef,
+        'sequences_to_export' => undef,
+        'mirna_type'          => $mirna_type,
+        'org_file'            => $org_file
     };
     bless $self, $class;
     return $self;

@@ -17,10 +17,10 @@ sub new {
     my ( $class, @args ) = @_;
     my $mirna_type = shift @args;
     my $self = {
-        identifier => undef,
-        results => undef,
-        sequences_to_export => undef,
-        mirna_type => $mirna_type,
+        'identifier'          => undef,
+        'results'             => undef,
+        'sequences_to_export' => undef,
+        'mirna_type'          => $mirna_type,
     };
     bless $self, $class;
     return $self;
