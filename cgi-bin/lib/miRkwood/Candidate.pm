@@ -432,10 +432,10 @@ sub candidateAsOrg {
             }
             else {
                 if ( $self->{'alignment'} == 2 ){
-                    $alignments .= "** *miRBase alignment:* presence of alignments that cover the miRNA locus (see reads cloud above)\n";
+                    $alignments .= "** *miRBase alignment:* presence of alignments that cover the miRNA locus\n";
                 }
                 elsif ( $self->{'alignment'} == 1 ){
-                    $alignments .= "** *miRBase alignment:* presence of alignments, which do not overlap the miRNA locus (see reads cloud above)\n";
+                    $alignments .= "** *miRBase alignment:* presence of alignments, which do not overlap the miRNA locus\n";
                 }
                 else {
                     $alignments .= "none\n";
