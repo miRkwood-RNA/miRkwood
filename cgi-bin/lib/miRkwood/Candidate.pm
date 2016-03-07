@@ -428,7 +428,7 @@ sub candidateAsOrg {
         # Alignments
         if ( ! $known_miRNA && $cfg->param('options.align') ){
             if ( $self->{'alignment'} == 0 ){
-                $alignments .= "*miRBase alignment:* none\n";
+                $alignments .= "*miRBase alignment:* none\n\n";
             }
             else {
                 if ( $self->{'alignment'} == 2 ){
