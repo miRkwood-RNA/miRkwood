@@ -51,7 +51,7 @@ sub create_PDF_from_ORG {
     my $org_file = $self->get_org_file();
     my $cmd = "pandoc -o $pdf_file $org_file";
     system( $cmd );
-    return; 
+    return;
 }
 
 sub export_for_web {
