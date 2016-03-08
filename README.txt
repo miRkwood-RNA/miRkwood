@@ -178,6 +178,11 @@ OUTPUT
                 input BED file that fall into a peak but that don't correspond to
                 a valid miRNA candidate.
 
+            your_bed_orphan_hairpins.tar.gz: a BED containing all candidates
+                with a quality score of 0 and no conservation. By default 
+                these candidates are excluded from final results, but you can
+                change this behaviour with flag option --no-filter-bad-hairpins.
+
             your_bed_filtered.bed: a BED containing all reads from your 
                 input BED file that have not been filtered out in one of the
                 previous categories.
