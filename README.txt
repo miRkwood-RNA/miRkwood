@@ -117,53 +117,69 @@ OPTIONS
 
 
 OUTPUT
-    alignments : folder containing all alignments files
-        (only if option --align is on).
 
-    images: folder containing images created by VARNA
-        (only if option --image is on).
+    For both pipelines:
 
-    masks (abinitio pipeline only): folder containing results 
-        of BlastX, rnammer and tRNAscan-SE.
+        alignments : folder containing all alignments files
+            (only if option --align is on).
 
-    read_clouds (smallRNAseq pipeline only): folder containing 
-        all text files for the candidates read clouds.
+        images: folder containing images created by VARNA
+            (only if option --image is on).
 
-    results: folder containing all results files, in several 
-        formats (csv, fa, gff, html and txt).
+        results: folder containing all results files, in several 
+            formats (csv, fa, gff, html and txt).
 
-    sequences: folder containing sequences for each candidate 
-        in fasta and dotbracket format, alternatives sequences 
-        if they exist and optimal structure if it is different 
-        from the stemloop structure.
+        sequences: folder containing sequences for each candidate 
+            in fasta and dotbracket format, alternatives sequences 
+            if they exist and optimal structure if it is different 
+            from the stemloop structure.
 
-    YML: folder containing all candidates data in YAML format.
+        YML: folder containing all candidates data in YAML format.
 
-    bed_sizes.txt (smallRNAseq pipeline only): tabulated file with
-        number of reads for each BED file.
+        basic_candidates.yml: contains a summary of all candidates
+            with basic informations (this file is needed to create
+            the results files).
 
-    summary.txt (smallRNAseq pipeline only): contains a summary of 
-    your options and of results.
+        log.log: log file (hey, what did you expect?)
 
-    Depending on the options you chose for your job you may find 
-    some of the following files:
+        run_options.cfg: config file with the chosen options.
 
-    your_bed_your_GFF.tar.gz: a BED containing all reads matching
-        to features from your GFF file, for each GFF file that you
-        provided.
+    ab initio pipeline only:
 
-    your_bed_multimapped.tar.gz: a BED containing all reads from your 
-        input BED file mapping at less than --min-read-positions-nb positions
-        and more than --max-read-positions-nb positions.
+        masks: folder containing results of BlastX, rnammer and tRNAscan-SE.
 
-    your_bed_miRNAs.tar.gz: a BED containing all reads from your 
-        input BED file corresponding to miRNAs present in miRBase.
+        input_sequences.fas: your sequences.
 
-    your_bed_orphan_clusters.tar.gz: a BED containing all reads from your 
-        input BED file that fall into a peak but that don't correspond to
-        a valid miRNA candidate.
+    smallRNAseq pipeline only:
 
-    your_bed_filtered.bed: a BED containing all reads from your 
-        input BED file that have not been filtered out in one of the
-        previous categories.
+        read_clouds: folder containing all text files for the candidates 
+            read clouds.
+
+        bed_sizes.txt: tabulated file with the number of reads in each BED file.
+
+        summary.txt: contains a summary of your options and of results.
+
+
+        Depending on the options you chose for your job you may find 
+        some of the following files:
+
+            your_bed_your_GFF.tar.gz: a BED containing all reads matching
+                to features from your GFF file, for each GFF file that you
+                provided.
+
+            your_bed_multimapped.tar.gz: a BED containing all reads from your 
+                input BED file mapping at less than --min-read-positions-nb positions
+                or more than --max-read-positions-nb positions.
+
+            your_bed_miRNAs.tar.gz: a BED containing all reads from your 
+                input BED file corresponding to miRNAs present in miRBase.
+
+            your_bed_orphan_clusters.tar.gz: a BED containing all reads from your 
+                input BED file that fall into a peak but that don't correspond to
+                a valid miRNA candidate.
+
+            your_bed_filtered.bed: a BED containing all reads from your 
+                input BED file that have not been filtered out in one of the
+                previous categories.
+
 
