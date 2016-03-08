@@ -231,7 +231,13 @@ sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/
 chown -R www-data:www-data "/opt/RNAmmer"
 
 - blastX
-paquet...
+BLAST finds regions of local similarity between sequences.
+We use it to mask CDS regions in the sequences given by the user.
+Install package 'ncbi-blast+' with your usual package manager,
+for instance with
+`sudo apt-get install ncbi-blast+`
+or
+`sudo yum install ncbi-blast+`
 
 4. Optional dependencies for smallRNAseq pipeline
 
