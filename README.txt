@@ -3,7 +3,7 @@ SYNOPSIS
 
 
 INSTALL
-    See file miRkwood_installation.txt.
+    See file miRkwood_installation.md.
 
 
 REQUIRED FILES
