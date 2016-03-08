@@ -124,7 +124,7 @@ OUTPUT
             (only if option --align is on).
 
         images: folder containing images created by VARNA
-            (only if option --image is on).
+            (only if option --varna is on).
 
         results: folder containing all results files, in several 
             formats (csv, fa, gff, html and txt).
