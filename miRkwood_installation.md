@@ -89,6 +89,7 @@ are corrects.
 
 
 1. Mandatory dependencies
+
 - Perl modules
 Test::File
 Test::Exception
@@ -160,8 +161,14 @@ your usual package manager.
 
 
 2. Optional dependencies for both pipelines
+
 - miRdup
-http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.2.zip
+miRdup is a tool for the validation of pre-miRNAs predictions.
+Download the archive at
+http://www.cs.mcgill.ca/~blanchem/mirdup/
+(tested with version 1.2)
+However, if you don't want or don't manage to install it, you can skip
+it. It will only affect the quality score of some candidates.
 
 - rnashuffles
 rnashuffles is a "homemade" program that computes the thermodynamic
