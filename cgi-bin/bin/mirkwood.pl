@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 # PODNAME: mirkwood.pl
 # ABSTRACT: miRkwood - A micro-RNA analysis pipeline
@@ -29,6 +29,7 @@ my $trna         = 0;
 my $rrna         = 0;
 my $output_folder = '';
 my $fasta_file = '';
+my $force = 0;
 
 ## Parse options
 GetOptions(
@@ -44,6 +45,7 @@ GetOptions(
     'filter-rrna'    => \$rrna,
     'output=s'       => \$output_folder,
     'help|?'         => \$help,
+    'force'          => \$force,
     'man'            => \$man
 ) || pod2usage( -verbose => 0 );
 pod2usage( -verbose => 1 ) if ($help);
@@ -58,8 +60,15 @@ if ($output_folder eq ''){
 $output_folder = miRkwood::Paths::create_folder( $output_folder );
 
 if( my @files = glob("$output_folder/*") ) {
-     die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
-}   
+    if ( $force ){
+        print "Directory $output_folder is not empty. It will be cleared out.\n";
+        system("rm -Rf $output_folder");
+        $output_folder = miRkwood::Paths::create_folder( $output_folder );
+    }
+    else{
+        die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
+    }
+}
 
 if ($species_mask) {
     $mask = 1;
