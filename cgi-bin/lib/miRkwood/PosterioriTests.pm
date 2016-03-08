@@ -40,10 +40,16 @@ Run the Randfold a posteriori test
 sub test_randfold {
     my ( $self, @args ) = @_;
     my $seq_file = shift @args;
-    my $randfold_out = File::Spec->catfile( $self->get_directory(), 'randfold.out' );
-    miRkwood::Programs::run_randfold( $seq_file, $randfold_out, 200)
-      or die('Problem when running Randfold');
-    my $res = miRkwood::Parsers::parse_pvalue($randfold_out);
+    my $res = 0;
+    if ( which( 'rnashuffles' ) ){
+        debug('[WARNING] RNAshuffles is not installed. Cannot compute thermodynamic stability with RNAshuffles.', miRkwood->DEBUG());
+    }
+    else {
+        my $randfold_out = File::Spec->catfile( $self->get_directory(), 'randfold.out' );
+        miRkwood::Programs::run_randfold( $seq_file, $randfold_out, 200)
+          or die('Problem when running Randfold');
+        $res = miRkwood::Parsers::parse_pvalue($randfold_out);
+    }
     return $res;
 }
 

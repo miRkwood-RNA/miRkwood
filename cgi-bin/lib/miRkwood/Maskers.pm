@@ -20,14 +20,19 @@ by running Blastx and parsing the output
 
 sub get_coding_region_masking_information {
     my ( $sequences_file, $masking_folder, $blast_database ) = @_;
-    my $blast_output   = File::Spec->catfile( $masking_folder,  'outBlast.txt' );
-    my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
-    miRkwood::Programs::run_blast(
-                                        $sequences_file, $blast_database,
-                                        $blastx_options,     $blast_output
-    ) or die('Problem when running Blastx');
-
-    my %blast_seqs = miRkwood::Parsers::parse_blast_output($blast_output);
+    my %blast_seqs;
+    if ( ! which( 'blastx' ) ){
+        debug('[WARNING] blastx is not installed. Cannot mask the CDS with blastx.', miRkwood->DEBUG());
+    }
+    else{
+        my $blast_output   = File::Spec->catfile( $masking_folder,  'outBlast.txt' );
+        my $blastx_options = '-outfmt 6 -max_target_seqs 1 -evalue 1E-5';
+        miRkwood::Programs::run_blast(
+                                            $sequences_file, $blast_database,
+                                            $blastx_options,     $blast_output
+        ) or die('Problem when running Blastx');
+        %blast_seqs = miRkwood::Parsers::parse_blast_output($blast_output);
+    }
     return %blast_seqs;
 }
 
@@ -39,12 +44,17 @@ Retrieve tRNA masking information by running tRNAscan-SE and parsing the output
 
 sub get_trna_masking_information {
     my ( $sequences_file, $masking_folder ) = @_;
-    my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
-
-    miRkwood::Programs::run_tRNAscanSE_on_file($sequences_file, $output
-    ) or die('Problem when running tRNAscanSE');
-
-    my %trna_seqs = miRkwood::Parsers::parse_tRNAscanSE_output($output);
+    my %trna_seqs;
+    if ( ! which( 'tRNAscanSE' ) ){
+        debug('[WARNING] tRNAscanSE is not installed. Cannot mask the tRNA with tRNAscanSE.', miRkwood->DEBUG());
+    }
+    else{
+        my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
+    
+        miRkwood::Programs::run_tRNAscanSE_on_file($sequences_file, $output
+        ) or die('Problem when running tRNAscanSE');
+        my %trna_seqs = miRkwood::Parsers::parse_tRNAscanSE_output($output);
+    }
     return %trna_seqs;
 }
 
@@ -56,12 +66,17 @@ Retrieve ribosomal RNA masking information by running RNAmmer and parsing the ou
 
 sub get_rnammer_masking_information {
     my ( $sequences_file, $masking_folder ) = @_;
-    my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
-    my $kingdom = 'euk';
-    miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
-      or die('Problem when running RNAmmer');
-
-    my %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
+    my %rnammer_seqs;
+    if ( ! which( 'rnammer' ) ){
+        debug('[WARNING] rnammer is not installed. Cannot mask the rRNA with rnammer.', miRkwood->DEBUG());
+    }
+    else{
+        my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
+        my $kingdom = 'euk';
+        miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
+          or die('Problem when running RNAmmer');
+        my %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
+    }
     return %rnammer_seqs;
 }
 

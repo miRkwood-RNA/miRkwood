@@ -61,10 +61,16 @@ List all the binaries needed in the pipeline.
 sub list_programs {
     my @args = @_;
     my %progs = %programs_paths;
-    delete $progs{'tRNAscanSE'};
     delete $progs{'vienna_progs'};
     delete $progs{'mirdup'};
     delete $progs{'varna'};
+
+    # These programs are used only by abinitio pipelines and
+    # for optional features.
+    delete $progs{'tRNAscanSE'};
+    delete $progs{'blastx'};
+    delete $progs{'rnammer'};
+    delete $progs{'rnashuffles'};
     return values %progs;
 }
 
