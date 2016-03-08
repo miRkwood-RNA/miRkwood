@@ -46,6 +46,10 @@ sub get_Vienna_program_path {
     } else {
         $folder = which($rnafold_exe);
     }
+    if ( ! defined($folder) || $folder eq '' ){
+        die( 'Cannot find required third-party software: rnafold.' );
+    }
+    print STDERR File::Basename::dirname($folder)."\n";
     return File::Basename::dirname($folder);
 }
 
