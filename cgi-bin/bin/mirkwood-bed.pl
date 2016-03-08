@@ -111,7 +111,7 @@ if( my @files = glob("$output_folder/*") ) {
     else{
         die("Directory $output_folder is not empty. Please clear it out or choose another directory.");
     }
-} 
+}
 
 my $abs_output_folder = miRkwood::Paths::create_folder( File::Spec->rel2abs($output_folder) );
 
