@@ -91,11 +91,12 @@ are corrects.
 1. Mandatory dependencies
 
 - Perl modules
+Config::Simple
+YAML::XS
+
 Test::File
 Test::Exception
 TAP::Formatter::JUnit
-Config::Simple
-YAML::XS
 File::Which
 MIME::Lite
 XML::Twig
@@ -197,6 +198,8 @@ Extract the archive and replace '$(HOME)' by the path where you want to
 install it, then compile it.
 
 - rnammer
+This program predicts 5s/8s, 16s/18s and 23s/28s ribosomal
+RNA in genomic sequences.
 # Install hmmer
 wget --directory-prefix=/tmp/  http://selab.janelia.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
 tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
