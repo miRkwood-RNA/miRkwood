@@ -1,27 +1,15 @@
 SYNOPSIS
+
     miRkwood is an application that allows for the fast and easy identification of microRNAs. It is specifically designed for plant microRNAs.
 
 
 INSTALL
+
     See file miRkwood_installation.md.
 
 
-REQUIRED FILES
-    If you have annotation files for CDS, r/t/snoRNA and want to filter out
-    CDS and/or r/t/snoRNA, make sure to store the corresponding files into
-    the {miRkwood_path}/cgi-bin/data/annotations/ directory.
-    These files should be named after your genome file. 
-    E.g if your genome file name is "species.fa" or "species.fasta" you should
-    name your annotation files "species_CDS.gff" and "species_tRNA_rRNA_snoRNA.gff".
-    
-    If you have a miRBase file for your species, miRkwood can detect known miRNAs.
-    Make sure your miRBase file is stored in the {miRkwood_path}/cgi-bin/data/miRBase/
-    directory and is named after your genome file.
-    E.g if your genome file name is "species.fa" or "species.fasta" you should
-    name your annotation file "species_miRBase.gff3".
-
-
 USAGE
+
     miRkwood comes in two distinct pipelines, according to the input data type.
 
     -mirkwood.pl (abinitio pipeline): scans a genomic sequence and finds all potential microRNA precursors.
@@ -32,6 +20,7 @@ USAGE
 
 
 OPTIONS
+
     -mirkwood.pl: perl -I/{miRkwood_path}/cgi-bin/lib/ mirkwood.pl [options]
           Mandatory options:
             --input
