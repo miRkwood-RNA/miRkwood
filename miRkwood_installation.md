@@ -191,7 +191,6 @@ It is stored in the ${local_programs} directory.
 
 3. Optional dependencies for abinitio pipeline
 - tRNAscan-SE
-
 This program searches for tRNA genes in genomic sequences.
 Download the archive at http://lowelab.ucsc.edu/software/tRNAscan-SE.tar.gz.
 Extract the archive and replace '$(HOME)' by the path where you want to 
@@ -238,10 +237,5 @@ for instance with
 `sudo apt-get install ncbi-blast+`
 or
 `sudo yum install ncbi-blast+`
-
-4. Optional dependencies for smallRNAseq pipeline
-
-
-
 
 
