@@ -163,22 +163,22 @@ OUTPUT
         Depending on the options you chose for your job you may find 
         some of the following files:
 
-            your_bed_your_GFF.tar.gz: a BED containing all reads matching
+            your_bed_your_GFF.tar.gz: a compressed BED containing all reads matching
                 to features from your GFF file, for each GFF file that you
                 provided.
 
-            your_bed_multimapped.tar.gz: a BED containing all reads from your 
+            your_bed_multimapped.tar.gz: a compressed BED containing all reads from your 
                 input BED file mapping at less than --min-read-positions-nb positions
                 or more than --max-read-positions-nb positions.
 
-            your_bed_miRNAs.tar.gz: a BED containing all reads from your 
+            your_bed_miRNAs.tar.gz: a compressed BED containing all reads from your 
                 input BED file corresponding to miRNAs present in miRBase.
 
-            your_bed_orphan_clusters.tar.gz: a BED containing all reads from your 
+            your_bed_orphan_clusters.tar.gz: a compressed BED containing all reads from your 
                 input BED file that fall into a peak but that don't correspond to
                 a valid miRNA candidate.
 
-            your_bed_orphan_hairpins.tar.gz: a BED containing all candidates
+            your_bed_orphan_hairpins.tar.gz: a compressed BED containing all candidates
                 with a quality score of 0 and no conservation. By default 
                 these candidates are excluded from final results, but you can
                 change this behaviour with flag option --no-filter-bad-hairpins.
