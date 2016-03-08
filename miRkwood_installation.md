@@ -93,11 +93,11 @@ are corrects.
 - Perl modules
 Config::Simple
 YAML::XS
+File::Which
 
 Test::File
 Test::Exception
 TAP::Formatter::JUnit
-File::Which
 MIME::Lite
 XML::Twig
 Image::Size
@@ -130,6 +130,7 @@ or simply change the corresponding line in the programs.cfg file.
 The ViennaRNA Package consists of a C code library and several stand-alone 
 programs for the prediction and comparison of RNA secondary structures.
 http://www.tbi.univie.ac.at/RNA/
+Tested with version 2.1.6-1.
 
 Make sure that the following programs are correctly installed:
 b2ct
