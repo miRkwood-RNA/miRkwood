@@ -155,15 +155,6 @@ for instance with
 or
 `sudo yum install bedtools`
 
-- Pandoc
-We use Pandoc to convert results report from ORG format to PDF format.
-Check
-http://pandoc.org/installing.html
-for the installation guide.
-
-You will also need LaTex, please install package 'texlive' with
-your usual package manager.
-
 
 2. Optional dependencies for both pipelines
 
@@ -251,4 +242,11 @@ for instance with
 or
 `sudo yum install ncbi-blast+`
 
+- Pandoc
+We use Pandoc to convert results report from ORG format to PDF format.
+Check
+http://pandoc.org/installing.html
+for the installation guide.
 
+You will also need LaTex, please install package 'texlive' with
+your usual package manager.
