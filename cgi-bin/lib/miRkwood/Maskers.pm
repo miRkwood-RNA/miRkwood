@@ -50,10 +50,9 @@ sub get_trna_masking_information {
     }
     else{
         my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
-    
         miRkwood::Programs::run_tRNAscanSE_on_file($sequences_file, $output
         ) or die('Problem when running tRNAscanSE');
-        my %trna_seqs = miRkwood::Parsers::parse_tRNAscanSE_output($output);
+        %trna_seqs = miRkwood::Parsers::parse_tRNAscanSE_output($output);
     }
     return %trna_seqs;
 }
@@ -75,7 +74,7 @@ sub get_rnammer_masking_information {
         my $kingdom = 'euk';
         miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
           or die('Problem when running RNAmmer');
-        my %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
+        %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
     }
     return %rnammer_seqs;
 }
