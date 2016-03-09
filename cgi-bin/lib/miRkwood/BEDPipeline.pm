@@ -55,16 +55,9 @@ sub run_pipeline {
 
     $self->filter_BED();
 
-
     # Look for known miRNAs
-    if ( $self->{'mirna_bed'} ne '' ){
-        debug( 'Treat known miRNAs.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
-        $self->treat_known_mirnas();
-    }
-    else{
-        debug( 'No BED for known miRNAs.', miRkwood->DEBUG() );
-    }
-
+    debug( 'Treat known miRNAs.' . ' [' . localtime() . ']', miRkwood->DEBUG() );
+    $self->treat_known_mirnas();
 
     # Compress BED files
     my @list_of_BED_files = qw{_miRNAs};
@@ -474,9 +467,13 @@ sub treat_known_mirnas {
 
     $self->{'basic_known_candidates'} = [];
 
-    $self->store_known_mirnas_as_candidate_objects();
+    if ( $self->{'mirna_bed'} ne '' ){
+        $self->store_known_mirnas_as_candidate_objects();
+    }
+    else{
+        debug( '   No BED for known miRNAs.', miRkwood->DEBUG() );
+    }
     $self->serialize_basic_candidates( 'basic_known_candidates' );
-
     undef $self->{'basic_known_candidates'};
 
     return;
