@@ -57,20 +57,22 @@ sub process_results_dir_for_offline {
 
     my %results = miRkwood::Results->deserialize_results($basic_results_file);
 
-    my $html = make_html_from_results( \%results, $abs_output_folder, $pipeline_type, $mirna_type );
+    if ( scalar( keys%results ) ){
+        my $html = make_html_from_results( \%results, $abs_output_folder, $pipeline_type, $mirna_type );
 
-    my $html_output = 'results.html';
-    if ( $pipeline_type ne 'abinitio' ){
-        $html_output = "results_$mirna_type.html";
+        my $html_output = 'results.html';
+        if ( $pipeline_type ne 'abinitio' ){
+            $html_output = "results_$mirna_type.html";
+        }
+
+        my $html_page = File::Spec->catfile( $final_results_folder, $html_output );
+        open( my $HTML, '>', $html_page )
+          or die("Cannot open $html_page: $!");
+        print {$HTML} $html
+          or die("Cannot write in $html_page: $!");
+        close($HTML)
+          or die("Cannot close $html_page: $!");
     }
-
-    my $html_page = File::Spec->catfile( $final_results_folder, $html_output );
-    open( my $HTML, '>', $html_page )
-      or die("Cannot open $html_page: $!");
-    print {$HTML} $html
-      or die("Cannot write in $html_page: $!");
-    close($HTML)
-      or die("Cannot close $html_page: $!");
     return;
 }
 
