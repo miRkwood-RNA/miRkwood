@@ -134,9 +134,12 @@ Tested with version 2.1.6-1.
 
 Make sure that the following programs are correctly installed:
 b2ct
-rnafold
-rnalfold
-rnaeval
+RNAfold
+RNAlfold
+RNAeval
+
+Be careful that RNAfold, RNAlfold and RNAeval are usually installed
+in /usr/bin, and b2ct is usually installed in /usr/share/ViennaRNA/bin.
 
 - samtools
 Install package 'samtools' with your usual package manager,
