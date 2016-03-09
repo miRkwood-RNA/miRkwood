@@ -5,6 +5,7 @@ package miRkwood::Maskers;
 use strict;
 use warnings;
 
+use File::Which;
 use File::Spec;
 use Log::Message::Simple qw[msg error debug];
 
