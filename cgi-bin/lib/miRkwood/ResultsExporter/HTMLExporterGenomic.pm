@@ -14,7 +14,7 @@ sub get_headers {
     my ( $self, @args ) = @_;
     my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @headers =
-      ( 'identifier', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields );
+      ( 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields );
     return @headers;
 }
 
