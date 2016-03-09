@@ -5,6 +5,9 @@ package miRkwood::ResultsExporter::PDFExporter;
 use strict;
 use warnings;
 use File::Spec;
+use File::Which;
+use Log::Message::Simple qw[msg error debug];
+
 use miRkwood::FileUtils;
 
 use parent 'miRkwood::ResultsExporter::ResultsExporter';
@@ -49,8 +52,13 @@ sub create_PDF_from_ORG {
     my ( $self, @args ) = @_;
     my $pdf_file = shift @args;
     my $org_file = $self->get_org_file();
-    my $cmd = "pandoc -o $pdf_file $org_file";
-    system( $cmd );
+    if ( ! which( 'pandoc' ) ){
+        debug('[WARNING] pandoc is not installed. Cannot create PDF.', miRkwood->DEBUG());
+    }
+    else{
+        my $cmd = "pandoc -o $pdf_file $org_file";
+        system( $cmd );
+    }
     return;
 }
 
