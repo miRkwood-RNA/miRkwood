@@ -7,6 +7,7 @@ use warnings;
 
 use parent 'miRkwood::Pipeline';
 
+use File::Which;
 use Log::Message::Simple qw[msg error debug];
 use miRkwood::Paths;
 use miRkwood::Utils;
@@ -281,7 +282,12 @@ sub filter_BED {
     my $filteredBED        = '';
     my $mirnaBED           = '';
 
-    ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile( $localBED );
+    if ( ! which( 'intersectBed' ) ){
+        debug('[WARNING] bedtools are not installed. Cannot filter the BED file.', miRkwood->DEBUG());
+    }
+    else{
+        ($filteredBED, $mirnaBED) = miRkwood::BEDHandler->filterBEDfile( $localBED );
+    }
 
     if ( ! defined($filteredBED) || $filteredBED eq '' ){
         $self->{'bed_file'} = $self->{'initial_bed'};
