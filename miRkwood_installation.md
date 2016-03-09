@@ -186,6 +186,12 @@ pip install /path/rnashuffles
 
 - VARNA (Visualization Applet for RNA secondary structure)
 Make sure that the Java Runtime Environment is installed.
+Install package 'default-jre' with your usual package manager,
+for instance with
+`sudo apt-get install default-jre`
+or
+`sudo yum install default-jre`
+
 You can download VARNA jar on http://varna.lri.fr/bin/VARNAv3-91.jar and
 then create a symbolic link or change the corresponding line in the 
 programs.cfg file.
