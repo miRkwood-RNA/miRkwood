@@ -1,9 +1,10 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 use strict;
 use warnings;
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use FindBin;
+use File::Which;
 use File::Spec;
 
 BEGIN { require File::Spec->catfile( $FindBin::Bin, 'requireLibrary.pl' ); }
@@ -81,6 +82,11 @@ if ( $valid ){
 
     my $nb_results = 0;
 
+    my $pdf_export = '';
+    if ( which( 'pandoc' ) ){
+        $pdf_export = "<input type='radio' name='export' id='export-pdf' value='pdf' />&#160;<label for='export-pdf'>full report in PDF format</label><br/>";
+    }
+
     if ( $cfg->param('job.title') ) {
         $HTML_additional .= "<p class='header-results' id='job_title'><b>Job title:</b> " . $cfg->param('job.title') . '</p>';
     }
@@ -111,7 +117,7 @@ if ( $valid ){
                         <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
                         <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
                         <input type="radio" name="export" id="export-org" value="org" />&#160;<label for='export-org'>full report in ORG-mode format</label><br/>
-                        <input type="radio" name="export" id="export-pdf" value="pdf" />&#160;<label for='export-pdf'>full report in PDF format</label><br/>
+                        $pdf_export
                         <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label><br/>
                         <input type="radio" name="export" id="export-reads" value="reads" />&#160;<label for='export-reads'>read cloud format</label>
                         <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "smallRNAseq", "$mirnas_type")'/>

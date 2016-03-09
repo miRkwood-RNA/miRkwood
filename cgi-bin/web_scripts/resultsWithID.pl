@@ -4,6 +4,7 @@ use warnings;
 
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
+use File::Which;
 use File::Spec;
 use FindBin;
 
@@ -60,6 +61,10 @@ my $valid = miRkwood::Results->is_valid_jobID($id_job);
 if ($valid) {
 	my $HTML_results = '';
 	my $nb_results = 0;
+    my $pdf_export = '';
+    if ( which( 'pandoc' ) ){
+        $pdf_export = "<input type='radio' name='export' id='export-pdf' value='pdf' />&#160;<label for='export-pdf'>full report in PDF format</label><br/>";
+    }
 	unless ( miRkwood::Results->is_job_finished($id_job) ) {
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
@@ -97,7 +102,7 @@ if ($valid) {
                     <input type="radio" name="export" id="export-fas" value="fas" />&#160;<label for='export-fas'>FASTA format</label><br/>
                     <input type="radio" name="export" id="export-dot" value="dot" />&#160;<label for='export-dot'>dot-bracket format (plain sequence + secondary structure)</label><br/>
                     <input type="radio" name="export" id="export-org" value="org" />&#160;<label for='export-org'>full report in ORG-mode format</label><br/>
-                    <input type="radio" name="export" id="export-pdf" value="pdf" />&#160;<label for='export-pdf'>full report in PDF format</label><br/>
+                    $pdf_export
                     <input type="radio" name="export" id="export-gff" value="gff" />&#160;<label for='export-gff'>GFF format</label>
                     <input style="margin-left:360px" class="myButton" type="button" name="export-button" id='export-button' value="Export" onclick='exportTo("$id_job", "$web_scripts", "abinitio", "")'/>
                 </form>
