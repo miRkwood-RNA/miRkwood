@@ -1,6 +1,5 @@
 <table>
 <tbody><tr><th>name</th>
-<th>identifier</th>
 <th>position</th>
 <th>length</th>
 <th>strand</th>
@@ -13,7 +12,6 @@
 </tr>
 <tr>
 <td class='clickable_cell' id='table_contig15750-34-195'><a href='#contig15750-34-195' class='nodecoration'>contig15750</a></td>
-<td class='non_clickable_cell'>1-1</td>
 <td class='clickable_cell'><a href='#contig15750-34-195' class='nodecoration'>34-195</a></td>
 <td class='non_clickable_cell'>162</td>
 <td class='non_clickable_cell'>+</td>
