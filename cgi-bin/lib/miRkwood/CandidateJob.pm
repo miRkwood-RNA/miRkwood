@@ -312,7 +312,9 @@ sub process_tests_for_candidate {
             }
         }
         else {
-            $mirdup_results = $posteriori_tests->validate_alignments_with_mirdup( $alignments );
+            if ( scalar(keys%{$alignments}) > 0 ){
+                $mirdup_results = $posteriori_tests->validate_alignments_with_mirdup( $alignments );
+            }
         }
 
         if ( scalar(keys%{$alignments}) > 0) {
