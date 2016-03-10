@@ -94,19 +94,15 @@ are corrects.
 Config::Simple
 YAML::XS
 File::Which
-
-Test::File
-Test::Exception
-TAP::Formatter::JUnit
 MIME::Lite
-XML::Twig
+Inline::CPP (for smallRNAseq pipeline only)
+Bio::DB::Fasta (for smallRNAseq pipeline only)
+
+(pas utiles pour la version ligne de commande, tester pour la version web)
 Image::Size
 File::Size
 File::Slurp
 Archive::Zip
-ODF::lpOD
-Inline::CPP
-Bio::DB::Fasta
 
 
 Inline::CPP may sometimes be difficult to install. In that case, please 
