@@ -86,9 +86,15 @@ sub test_alignment {
     }
 
     my $exonerate_out = File::Spec->catfile( $self->get_directory(), 'alignement.txt' );
-    miRkwood::Programs::run_piccolo( $seqN, $exonerate_out )
-      or die("Problem when running piccolo : $!");
-    my $alignments = $self->post_process_alignments($exonerate_out );
+    my $alignments;
+    my $created_aln_file = miRkwood::Programs::run_piccolo( $seqN, $exonerate_out );
+    if ( $created_aln_file ){
+        $alignments = $self->post_process_alignments($exonerate_out );
+    }
+    else {
+        debug('[WARNING] No alignment file was created by piccolo.', miRkwood->DEBUG());
+    }
+
     return $alignments;
 }
 

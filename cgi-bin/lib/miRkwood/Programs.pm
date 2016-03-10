@@ -64,6 +64,7 @@ sub list_programs {
     delete $progs{'vienna_progs'};
     delete $progs{'mirdup'};
     delete $progs{'varna'};
+    delete $progs{'piccolo'};
 
     # These programs are used only by abinitio pipelines and
     # for optional features.
@@ -320,13 +321,16 @@ sub run_exonerate {
 sub run_piccolo {
     my ( $input, $output ) = @_;
     my $mirbase_file = miRkwood::Data::get_mirbase_file();
-
-    my $cmd = "$programs_paths{'piccolo'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
-    #~ debug( '          ' . $cmd, miRkwood->DEBUG());
-    debug( "         Running piccolo on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
-    system($cmd);
+    if ( ! -f $programs_paths{'piccolo'} ) {
+        debug('[WARNING] piccolo is not installed. Cannot align against miRBase.', miRkwood->DEBUG());
+    }
+    else {
+        my $cmd = "$programs_paths{'piccolo'} -r $mirbase_file -i $input --half > $output 2> /dev/null";
+        #~ debug( '          ' . $cmd, miRkwood->DEBUG());
+        debug( "         Running piccolo on $input" . ' [' . localtime() . ']', miRkwood->DEBUG());
+        system($cmd);
+    }
     return ( -e $output );
-
 }
 
 =method run_rnastemloop
