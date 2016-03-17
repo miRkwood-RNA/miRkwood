@@ -56,10 +56,15 @@ sub compare_folders {
             }
             elsif ( $_ !~/[.]html|[.]svn|[.]log|[.]cfg|[.]png|miRdupOutput[.]txt|[.]tar[.]gz|[.]pdf$/ ) {
                 open CMD, "diff $folder_1/$_ $folder_2/$_ |";
+                my $diff_output = '';
                 while ( my $line = <CMD> ){
                     if ( $line ne /^\n$/ ){
-                        print $line;
+                        $diff_output .= $line;
                     }
+                }
+                if ( $diff_output ne '' ){
+                    print "---------- File $_\n";
+                    print $diff_output;
                 }
                 close CMD;
             }
