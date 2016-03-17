@@ -20,7 +20,7 @@ sub fillTabTemp2D{
             <=> miRkwood::Utils::get_element_of_split( $b, '-', 1 ) )
     } keys %{$alignments};
     my $additional_data = {};
-    
+
     foreach my $key (@keys) {
         my @tab = $alignments->{$key};
         my $start_aln = miRkwood::Utils::get_element_of_split( $key, '-', 0 );
@@ -58,7 +58,6 @@ sub fillTabTemp2D{
         }
         else {
             # multiple alignments
-            my $query_base;
             for ( my $i = 1; $i < @{$tab[0]}; $i++){
                 my $query = miRkwood::Utils::get_element_of_split( $tab[0][$i]{'alignment'}, '\n', 0 );
                 my $target = miRkwood::Utils::get_element_of_split( $tab[0][$i]{'alignment'}, '\n', 2 );
@@ -191,7 +190,7 @@ sub construct_multiple_aln {
             for (my $aln = 0; $aln < $nb_aln; $aln++){
                 # add the needed nucleotides or gaps
                 for (my $j = 0; $j < $diff_max - 1; $j++){
-                    if ( $nb_gaps->[$aln] == $diff_max ){ 
+                    if ( $nb_gaps->[$aln] == $diff_max ){
                         push @{ $final_aln->[$aln] }, shift @{ $targets->[$aln] };
                     }
                     else {
