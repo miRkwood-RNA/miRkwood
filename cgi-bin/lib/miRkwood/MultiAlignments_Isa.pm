@@ -137,25 +137,31 @@ sub construct_multiple_aln {
     my $diff_max = 0;
     my $nb_aln = scalar( @{$position_tab} );
 
-    # initialise the final query and targets.
-    # deal with the fact that some targets may start earlier than the query.
+    ### initialise the final query and targets.
+    ### deal with the fact that some targets may start earlier than the query.
     my $left_gaps = 0;
+    # count how much gaps should be added on the left of the alignments
     for (my $aln = 0; $aln < scalar( @{$position_tab} ); $aln++){
         if ( $position_tab->[$aln][0] - 1 > $left_gaps) {
             $left_gaps = $position_tab->[$aln][0] - 1;
         }
     }
+    # add gaps for the query
     for (my $i = 0; $i < $left_gaps; $i++){
         push @{ $final_query }, '-';
     }
     push @{ $final_query }, $query[0];
+    # add the appropriate number of gaps for the targets
     for (my $aln = 0; $aln < scalar( @{$position_tab} ); $aln++){
         for (my $i = 0; $i < $left_gaps - $position_tab->[$aln][0] + 1; $i++){
             push @{ $final_aln->[$aln] }, '-';
         }
-        push @{ $final_aln->[$aln] }, shift @{ $targets->[$aln] };
+        for (my $i = 0; $i < $position_tab->[$aln][0]; $i++){
+            push @{ $final_aln->[$aln] }, shift @{ $targets->[$aln] };
+        }
     }
 
+    # main part of the alignment
     for (my $pos = 1; $pos < scalar( @query ); $pos++){
         $diff_max = 0;
         for (my $aln = 0; $aln < $nb_aln; $aln++){
@@ -177,11 +183,10 @@ sub construct_multiple_aln {
                     push @{ $final_aln->[$aln] }, '-';
                 }
                 else {
-                    # match / mismatch  
+                    # match / mismatch
                     push @{ $final_aln->[$aln] }, shift @{ $targets->[$aln] };
                 }
             }
-            #~ push @{ $final_query }, $query[$pos];
         }
         else {  # one or several targets have an insertion
             for (my $j = 0; $j < $diff_max - 1; $j++){
