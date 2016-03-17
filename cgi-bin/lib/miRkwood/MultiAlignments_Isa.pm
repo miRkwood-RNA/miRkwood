@@ -340,7 +340,7 @@ sub write_in_file {
 
     #~ print STDERR $output;
     
-    open(my $FILE,'>>', $aln_dir."/${id_candidate}_aln.txt") or die"open: $!";
+    open(my $FILE, '>>', "$aln_dir/${id_candidate}_aln.txt") or die "ERROR when creating $aln_dir/${id_candidate}_aln.txt: $!";
     print $FILE $output;
     close($FILE);
 
