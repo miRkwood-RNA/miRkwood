@@ -95,25 +95,38 @@ sub init_positionTab {
     my $query = shift @args;
     my $target = shift @args;
     my $position_tab = [];
-    my $query_without_gaps = $query;
-    $query_without_gaps =~ s/-//g;
     my @query = split ( //, $query );
     my @target = split ( //, $target );
-    my $position_target = 1;
-    my $index_seq = 0;
-    my $nb_gaps = 0;
-    for (my $i = 0; $i < length( $query_without_gaps ); $i++ ){
-        if ( $target[ $index_seq ] eq '-' ){
-            $position_tab->[0][$i] = 0;
-            $nb_gaps++;
+
+    # First position on the position tab is given by the number
+    # of gaps in query before the query really starts ( + 1 )
+    my $i = 0;
+    my $nb_left_gaps = 0;
+    while ( $query[$i] eq '-' ){
+        $nb_left_gaps++;
+        $i++;
+    }
+    for (my $j = 0; $j < $nb_left_gaps; $j++){
+        shift @target;
+        shift @query;
+    }
+
+    $position_tab->[0][0] = $nb_left_gaps + 1;
+    my $last_non_null_value = $position_tab->[0][0];
+
+    for (my $i = 1; $i < scalar(@query); $i++ ){
+        if ( $target[$i] eq '-' ){
+            push @{$position_tab->[0]}, 0;
         }
-        else{
-            if ( $query[ $index_seq ] eq '-' ){
-                $index_seq++;
+        else {
+            if ( $query[$i] eq '-' ){
+                $last_non_null_value++;
             }
-            $position_tab->[0][$i] = ($index_seq + 1 - $nb_gaps);
+            else {
+                $last_non_null_value++;
+                push @{$position_tab->[0]}, $last_non_null_value;
+            }
         }
-        $index_seq++;
     }
     return $position_tab;
 }
@@ -306,7 +319,6 @@ sub write_in_file {
     my $additional_data = shift @args;
     my $cfg = miRkwood->CONFIG();
     my $aln_dir = miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') );
-
     my $output = '';
     my $output_tab = {};
 
