@@ -298,7 +298,7 @@ sub process_tests_for_candidate {
 
     if ( $cfg->param('options.align') ) {
         if ( scalar(keys%{$alignments}) > 0 ){
-            miRkwood::MultiAlignments::fillTabTemp2D($alignments, $self->{'identifier'});
+            miRkwood::MultiAlignments::fillTabTemp2D($alignments, $self->{'identifier'}, $self->{'candidate'}{'sequence'});
         }
 
         if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){
