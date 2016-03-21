@@ -179,14 +179,20 @@ sub construct_multiple_aln {
         }
     }
 
-    # main part of the alignment
+    ### main part of the alignment
     for (my $pos = 1; $pos < scalar( @query ); $pos++){
+        # for each aln, calculate the difference between its value on this
+        # position and its value on the previous position (it will tell if
+        # there is a gap or not).
         $diff_max = 0;
         for (my $aln = 0; $aln < $nb_aln; $aln++){
             my $diff = $position_tab->[$aln][$pos] - $position_tab->[$aln][$pos-1];
             if ( $position_tab->[$aln][$pos-1] == 0 ){
                 $diff = 1;
             }
+            # if $diff < 0  : there is a gap in the alignment target
+            # if $diff == 1 : match/mismatch
+            # if $diff > 1  : there is a gap in the query and maybe some other targets
             $nb_gaps->[$aln] = $diff;
             if ( $diff > $diff_max ){
                 $diff_max = $diff;
@@ -236,6 +242,7 @@ sub construct_multiple_aln {
         }
         push @{ $final_query }, $query[$pos];
     }
+
     ### deal with possible gaps at the right end of the query
     # look for the longest target
     my $length_max = 0;
