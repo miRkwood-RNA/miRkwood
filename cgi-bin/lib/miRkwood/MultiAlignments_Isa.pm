@@ -87,7 +87,6 @@ sub fillTabTemp2D{
                 push @{ $targets->[$i] }, split( //, $target );
             }
             ($final_query, $final_aln) = construct_multiple_aln ( $positionTab, $global_query, $targets );
-            #~ print STDERR Dumper( $final_aln );
         }
         $additional_data->{ 'final_query' } = $final_query;
         my $stars_line = construct_stars_line( $final_aln, $final_query );
@@ -212,13 +211,18 @@ sub construct_multiple_aln {
                 push @{ $final_query }, '-';
             }
             for (my $aln = 0; $aln < $nb_aln; $aln++){
-                # add the needed nucleotides or gaps
-                for (my $j = 0; $j < $diff_max - 1; $j++){
-                    if ( $nb_gaps->[$aln] == $diff_max ){
+                # add the needed gaps or nucleotides
+                if ( $nb_gaps->[$aln] == $diff_max ){
+                    for (my $j = 0; $j < $diff_max - 1; $j++){
                         push @{ $final_aln->[$aln] }, shift @{ $targets->[$aln] };
                     }
-                    else {
+                }
+                else {
+                    for (my $j = 0; $j < $diff_max - $nb_gaps->[$aln]; $j++){
                         push @{ $final_aln->[$aln] }, '-';
+                    }
+                    for (my $j = 0; $j < $nb_gaps->[$aln] - 1; $j++){
+                        push @{ $final_aln->[$aln] }, shift @{ $targets->[$aln] };
                     }
                 }
                 # add the current letter
