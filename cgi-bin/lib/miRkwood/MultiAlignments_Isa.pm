@@ -28,8 +28,8 @@ sub fillTabTemp2D{
         my $length = $end_aln - $start_aln + 1;
         my $global_query = substr( $candidate_seq, $start_aln - 1, $length);
         $global_query = uc( $global_query );
-        my $positionTab = [];
-        my $targets = [];
+        my $final_query = [];
+        my $final_aln = [];
 
         $additional_data->{ 'start_aln' } = $start_aln;
         $additional_data->{ 'end_aln' } = $end_aln;
@@ -45,19 +45,24 @@ sub fillTabTemp2D{
 
         $additional_data->{ 'def_query' }[0] = $tab[0][0]{'def_query'};
 
-        $positionTab = init_positionTab( $query, $target );
-        $target =~ s/-//g;
-        push @{ $targets->[0] }, split( //, $target );
-
-        #~ print STDERR Dumper( $positionTab );
-        #~ write_tab ($positionTab);
-
         if ( @{$tab[0]} == 1 ){
             # only one alignment
-            
+            my @final_query = split( //, $query );
+            $final_query = \@final_query;
+            my @target = split( //, $target );
+            $final_aln->[0] = \@target;
         }
         else {
             # multiple alignments
+            my $positionTab = [];
+            my $targets = [];
+            $positionTab = init_positionTab( $query, $target );
+            $target =~ s/-//g;
+            push @{ $targets->[0] }, split( //, $target );
+
+            #~ print STDERR Dumper( $positionTab );
+            #~ write_tab ($positionTab);
+
             for ( my $i = 1; $i < @{$tab[0]}; $i++){
                 my $query = miRkwood::Utils::get_element_of_split( $tab[0][$i]{'alignment'}, '\n', 0 );
                 my $target = miRkwood::Utils::get_element_of_split( $tab[0][$i]{'alignment'}, '\n', 2 );
@@ -81,8 +86,9 @@ sub fillTabTemp2D{
                 $target =~ s/-//g;
                 push @{ $targets->[$i] }, split( //, $target );
             }
+            ($final_query, $final_aln) = construct_multiple_aln ( $positionTab, $global_query, $targets );
+            #~ print STDERR Dumper( $final_aln );
         }
-        my ($final_query, $final_aln) = construct_multiple_aln ( $positionTab, $global_query, $targets );
         $additional_data->{ 'final_query' } = $final_query;
         my $stars_line = construct_stars_line( $final_aln, $final_query );
         write_in_file( $id_candidate, $final_aln, $stars_line, $additional_data );
