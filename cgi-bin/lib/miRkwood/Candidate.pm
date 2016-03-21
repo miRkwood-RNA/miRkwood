@@ -441,7 +441,7 @@ sub candidateAsOrg {
                     $alignments .= "none\n";
                 }
                 $alignments .= "\n";
-                #~ $alignments .= "\n" . $self->include_alignments_in_html( 'org' );
+                #~ $alignments .= "\n" . $self->include_alignments_in_org();
             }
         }
     }
@@ -1230,11 +1230,6 @@ sub tag_orphan_hairpins{
 =cut
 sub include_alignments_in_html {
     my ($self, @args) = @_;
-    my $format = shift @args;   # should be 'html' or 'org'
-    my $mode_for_hairpin = $format;
-    if ( $format eq 'org' ){
-        $mode_for_hairpin = 'ascii';
-    }
     my $cfg = miRkwood->CONFIG();
     my $alignment_file = File::Spec->catfile(
                 miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
@@ -1245,48 +1240,67 @@ sub include_alignments_in_html {
     while ( $line = <$IN> ){
         chomp $line;
         if ( $line =~ /Prediction : ([\d]+)-([\d]+)/ ){
-            if ( $format eq 'org' ){
-                $line = "*$line*\n\n";
-            }
-            else {
-                $line = "<b style='font-size:1.2em;'>$line</b>\n\n";
-            }
+            $line = "<b style='font-size:1.2em;'>$line</b>\n\n";
             my $hairpin_with_mature = '';
             if ( !eval {
                 $hairpin_with_mature =
                   miRkwood::Utils::make_hairpin_with_mature($self->{'hairpin'},
                                                             $1, $2,
                                                             length $self->{'sequence'},
-                                                            $mode_for_hairpin);
+                                                            'html');
                 }
             ){
                 $hairpin_with_mature = $self->{'hairpin'};
             }
             $line .= $hairpin_with_mature;
-            if ( $format eq 'org' ){
-                $line .= "\n*Alignments*\n";
-            }
-            else {
-                $line .= "\n<b>Alignments</b>\n";
-            }
+            $line .= "\n<b>Alignments</b>\n";
         }
         if ( $line =~ /miRBase (\d+):(.*)/ ){
             my @list_results = split( '\|', $2);
             my $mirbase_link = "miRBase $1 : ";
             foreach my $result ( @list_results ){
                 if ( $result =~ /^ ([^ ]*) / ){
-                    if ( $format eq 'org' ){
-                        $mirbase_link .= "[[miRkwood::Utils::make_mirbase_link( $1 )][$1]] | ";
-                    }
-                    else {
-                        $mirbase_link .= '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a> | ';
-                    }
+                    $mirbase_link .= '<a href="' . miRkwood::Utils::make_mirbase_link( $1 ) . '">' . $1 . '</a> | ';
                 }
             }
             $line = $mirbase_link;
         }
         $result .= "$line\n";
     }
+    close $IN;
+    return $result;
+}
+
+=method include_alignments_in_org
+
+=cut
+sub include_alignments_in_org {
+    my ($self, @args) = @_;
+    my $cfg = miRkwood->CONFIG();
+    my $alignment_file = File::Spec->catfile(
+                miRkwood::Paths::get_dir_alignments_path_from_job_dir( $cfg->param('job.directory') ),
+                $self->{'identifier'}.'_aln.txt');
+    my $result = '=';
+    open(my $IN, '<', $alignment_file) or return '';
+    my $line;
+    while ( $line = <$IN> ){
+        chomp $line;
+        if ( $line =~ /Prediction : ([\d]+)-([\d]+)/ ){
+            $line = "*$line*\n\n";
+        }
+        if ( $line =~ /miRBase (\d+):(.*)/ ){
+            my @list_results = split( '\|', $2);
+            my $mirbase_link = "miRBase $1 : ";
+            foreach my $result ( @list_results ){
+                if ( $result =~ /^ ([^ ]*) / ){
+                    $mirbase_link .= "[[miRkwood::Utils::make_mirbase_link( $1 )][$1]] | ";
+                }
+            }
+            $line = $mirbase_link;
+        }
+        $result .= "$line\n";
+    }
+    $result .= '=';
     close $IN;
     return $result;
 }
