@@ -6,7 +6,6 @@ use strict;
 use warnings;
 use miRkwood;
 use miRkwood::Utils;
-use Data::Dumper;
 
 sub fillTabTemp2D{
     my (@args) = @_;
@@ -60,9 +59,6 @@ sub fillTabTemp2D{
             $target =~ s/-//g;
             push @{ $targets->[0] }, split( //, $target );
 
-            #~ print STDERR Dumper( $positionTab );
-            #~ write_tab ($positionTab);
-
             for ( my $i = 1; $i < @{$tab[0]}; $i++){
                 my $query = miRkwood::Utils::get_element_of_split( $tab[0][$i]{'alignment'}, '\n', 0 );
                 my $target = miRkwood::Utils::get_element_of_split( $tab[0][$i]{'alignment'}, '\n', 2 );
@@ -81,7 +77,6 @@ sub fillTabTemp2D{
                 }
 
                 $positionTab = modify_positionTab( $positionTab, $query, $target );
-                #~ write_tab ($positionTab);
 
                 $target =~ s/-//g;
                 push @{ $targets->[$i] }, split( //, $target );
@@ -141,12 +136,6 @@ sub construct_multiple_aln {
     my $position_tab = shift @args;
     my $query = shift @args;
     my $targets = shift @args;
-    #~ print STDERR "construct_multiple_aln is called with :\n";
-    #~ print STDERR "position_tab : \n";
-    #~ print STDERR Dumper($position_tab);
-    #~ print STDERR "query : $query\n";
-    #~ print STDERR "targets : \n";
-    #~ print STDERR Dumper($targets);
     my $final_aln = [];
     $query =~ s/-//g;
     my @query = split( //, $query );
@@ -284,30 +273,17 @@ sub modify_positionTab {
     for (my $i = 0; $i < length( $query_without_gaps ); $i++ ){
         if ( $target[ $index_seq ] eq '-' ){
             $position_tab->[$curr_aln][$i] = 0;
-            #~ print STDERR "$query[$i] is paired with a gap\n";
         }
         else{
             if ( $query[ $index_seq ] eq '-' ){
                 $index_seq++;
-                #~ print STDERR "There is an indel around position $i\n";
             }
             $position_tab->[$curr_aln][$i] = ($index_seq + 1);
-            #~ print STDERR "$query[$i] is paired with the ".($index_seq + 1). " position\n";
         }
         $index_seq++;
     }
 
     return $position_tab;
-}
-
-
-sub write_tab {
-    my @args = @_;
-    my $position_tab = shift @args;
-    for (my $i = 0; $i < scalar( @{$position_tab} ); $i++){
-        print STDERR "aln $i | ". join( ' ', @{$position_tab->[$i]})."\n";
-    }
-    return;
 }
 
 sub construct_stars_line {
@@ -372,8 +348,6 @@ sub write_in_file {
     }
     $output .= "\n";
 
-    #~ print STDERR $output;
-    
     open(my $FILE, '>>', "$aln_dir/${id_candidate}_aln.txt") or die "ERROR when creating $aln_dir/${id_candidate}_aln.txt: $!";
     print $FILE $output;
     close($FILE);
