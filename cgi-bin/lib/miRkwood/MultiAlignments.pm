@@ -90,6 +90,25 @@ sub fillTabTemp2D{
     return;
 }
 
+=method init_positionTab
+
+  Method to initialise the array of positions with the first alignment.
+  It is a n x m matrix with n : number of alignments and m : length of
+  the global alignment (given by the key in the Candidate 'alignments' 
+  attribute.
+  $position_tab->[$aln][$pos] contains the position in the $aln-th target
+  which is paired with the $pos-th position in query.
+  If this value is 0, there is a gap in the target.
+  If this value is higher than the value in ($pos-1)-th position + 1, 
+  there is one or several gaps in the query.
+  For instance if we have the following alignments :
+  query     | A B C D                query     | A B C - D
+  target 1  | A B - D                target 2  | A B C N D
+  The $position_tab will contains :
+  target 1  | 1 2 0 3
+  target 2  | 1 2 3 5
+
+=cut
 sub init_positionTab {
     my (@args) = @_;
     my $query = shift @args;
