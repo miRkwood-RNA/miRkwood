@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
+use File::Which;
 
 
 ################################################################################
@@ -44,6 +45,12 @@ Dependancies : samtools
 Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.
 
 EOF
+
+
+########## Check that the samtools are installed
+if ( ! which( 'samtools' ) ){
+    die "ERROR: samtools are missing. Please install them in your PATH.\n";
+}
 
 
 ########## Get options
