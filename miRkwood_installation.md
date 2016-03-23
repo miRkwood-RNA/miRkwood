@@ -137,13 +137,6 @@ RNAeval
 Be careful that RNAfold, RNAlfold and RNAeval are usually installed
 in /usr/bin, and b2ct is usually installed in /usr/share/ViennaRNA/bin.
 
-- samtools
-Install package 'samtools' with your usual package manager,
-for instance with
-`sudo apt-get install samtools`
-or
-`sudo yum install samtools`
-
 - bedtools
 Install package 'bedtools' with your usual package manager,
 for instance with
