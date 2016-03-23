@@ -137,11 +137,6 @@ echo "... Install build-essential"
 sudo apt-get install build-essential
 
 
-##### Install samtools
-echo "... Install samtools"
-sudo apt-get install samtools
-
-
 ##### Install bedtools
 echo "... Install bedtools"
 sudo apt-get install bedtools
