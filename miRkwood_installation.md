@@ -94,7 +94,7 @@ are corrects.
 Config::Simple
 YAML::XS
 File::Which
-MIME::Lite
+MIME::Lite (pour la version Web)
 Inline::CPP (for smallRNAseq pipeline only)
 Bio::DB::Fasta (for smallRNAseq pipeline only)
 
@@ -113,7 +113,7 @@ Pegex
 ExtUtils::MakeMaker
 File-ShareDir-Install
 Capture::Tiny
-ExtUtills::CppGuess
+ExtUtils::CppGuess
 
 
 - RNAstemloop
