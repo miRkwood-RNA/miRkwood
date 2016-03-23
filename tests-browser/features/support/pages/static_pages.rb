@@ -8,9 +8,9 @@ class MirkwoodPage
 
 end
 
-class HomePage < MirkwoodPage
+class AbInitioHomePage < MirkwoodPage
   include URL
-  page_url URL.home_url()
+  page_url URL.ab_initio_home_url()
 
   a('link_help', :text => 'help')
   a('link_web_server', :text => 'use web server')

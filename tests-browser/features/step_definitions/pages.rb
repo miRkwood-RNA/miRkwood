@@ -2,8 +2,8 @@ Given(/^I am on miRkwood interface page$/) do
   visit InterfacePage
 end
 
-Given(/^I am on miRkwood home page$/) do
-  visit HomePage
+Given(/^I am on miRkwood ab initio home page$/) do
+  visit AbInitioHomePage
 end
 
 

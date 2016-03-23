@@ -1,7 +1,7 @@
 Feature: Navigation on the miRkwood home page
 
     Background:
-        Given I am on miRkwood home page
+        Given I am on miRkwood ab initio home page
 
     Scenario: Going to web server page from menu
         When I select web server in the menu

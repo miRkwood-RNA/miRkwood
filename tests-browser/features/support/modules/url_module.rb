@@ -16,4 +16,14 @@ module URL
     end
     mirkwood_home_url
   end
+
+  def self.ab_initio_home_url()
+    if ENV["MIRKWOOD_HOME_URL"]
+      mirkwood_home_url = ENV["MIRKWOOD_HOME_URL"]
+    else
+      mirkwood_home_url = 'http://bioinfo.lifl.fr/mirkwood/abinitio/'
+    end
+    mirkwood_home_url
+  end
+
 end
