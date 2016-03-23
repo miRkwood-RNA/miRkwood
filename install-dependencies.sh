@@ -228,14 +228,10 @@ pip /opt/rnashuffles
 
 ##### Install Perl dependencies
 echo "... Install Perl dependencies via apt"
-sudo apt-get install libtest-file-perl
-sudo apt-get install libtest-exception-perl
-sudo apt-get install libtap-formatter-junit-perl
 sudo apt-get install libconfig-simple-perl
 sudo apt-get install libyaml-libyaml-perl
 sudo apt-get install libfile-which-perl
 sudo apt-get install libmime-lite-perl
-sudo apt-get install libxml-twig-perl
 sudo apt-get install libimage-size-perl
 sudo apt-get install libfile-type-perl
 sudo apt-get install libfile-slurp-perl
@@ -247,7 +243,6 @@ sudo apt-get install cpanminus
 
 # Install Perl dependencies from CPAN
 echo "... Install Perl dependencies from CPAN"
-sudo cpanm ODF::lpOD
 sudo cpanm Inline::CPP
 sudo cpanm Bio::DB::Fasta
 
