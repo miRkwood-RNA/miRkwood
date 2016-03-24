@@ -117,7 +117,7 @@ sudo ln -s /vagrant/html /bio1/www/html/mirkwood/
 
 ##### Link results directory
 echo "... Link results directory"
-sudo ln -s /home/vagrant/ /bio1/www/html/mirkwood/results/
+sudo ln -s /home/vagrant/results /bio1/www/html/mirkwood/results/
 
 
 
