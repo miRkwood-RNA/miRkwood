@@ -305,11 +305,6 @@ then
     sudo wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/bioinfo.css
 
 
-    ##### Get Bonsai logo
-    echo "... Get Bonsai logo"
-    sudo wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/logo.png
-
-
     ##### Make style sub directory
     echo "... Make style sub directory"
     sudo mkdir /bio1/www/html/Style/css
