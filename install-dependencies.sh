@@ -260,7 +260,7 @@ then
     # Create results directory
     echo "... Create results directory "
     mkdir /home/vagrant/results
-    chmod -R +w ~/results
+    chmod -R 777 ~/results
 
     # Link results directory
     echo "... Link results directory"
