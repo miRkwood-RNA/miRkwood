@@ -85,42 +85,6 @@ fi
 
 
 
-########## Create directories ############################################################
-
-echo "Create directories"
-
-##### Create results directory
-echo "... Create results directory "
-mkdir /home/vagrant/results
-chmod -R +w ~/results
-
-
-##### Create cgi-bin directory
-echo "... Create cgi-bin directory"
-sudo mkdir -p /bio1/www/cgi-bin/
-
-
-##### Link it to vagrant cgi-bin directory
-echo "... Link it to vagrant cgi-bin directory"
-sudo ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
-
-
-##### Create html directory
-echo "... Create html directory"
-sudo mkdir -p /bio1/www/html/
-
-
-##### Link it to vagrant html directory
-echo "... Link it to vagrant html directory"
-sudo ln -s /vagrant/html /bio1/www/html/mirkwood/
-
-
-##### Link results directory
-echo "... Link results directory"
-sudo ln -s /home/vagrant/results /bio1/www/html/mirkwood/results/
-
-
-
 ########## Install dependencies for both web version and CLI version of miRkwood #########
 
 echo "Install dependencies for both web version and CLI version of miRkwood"
@@ -272,6 +236,36 @@ sh $ROOT_PATH/cgi-bin/install-data.sh $ROOT_PATH/cgi-bin/data
 if [ ! "$CLI_ONLY" ]
 then
     echo "Requirements to run miRkwood web-service locally"
+
+
+    ##### Create directories
+    echo "Create directories"
+
+    # Create cgi-bin directory
+    echo "... Create cgi-bin directory"
+    sudo mkdir -p /bio1/www/cgi-bin/
+
+    # Link it to vagrant cgi-bin directory
+    echo "... Link it to vagrant cgi-bin directory"
+    sudo ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
+
+    # Create html directory
+    echo "... Create html directory"
+    sudo mkdir -p /bio1/www/html/
+
+    # Link it to vagrant html directory
+    echo "... Link it to vagrant html directory"
+    sudo ln -s /vagrant/html /bio1/www/html/mirkwood/
+
+    # Create results directory
+    echo "... Create results directory "
+    mkdir /home/vagrant/results
+    chmod -R +w ~/results
+
+    # Link results directory
+    echo "... Link results directory"
+    sudo ln -s /home/vagrant/results /bio1/www/html/mirkwood/results/
+
 
     ##### Install Apache (only needed for the Web service)
     echo "... Install Apache"
