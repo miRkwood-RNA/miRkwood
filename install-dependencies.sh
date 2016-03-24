@@ -97,27 +97,27 @@ chmod -R +w ~/results
 
 ##### Create cgi-bin directory
 echo "... Create cgi-bin directory"
-mkdir -p /bio1/www/cgi-bin/
+sudo mkdir -p /bio1/www/cgi-bin/
 
 
 ##### Link it to vagrant cgi-bin directory
 echo "... Link it to vagrant cgi-bin directory"
-ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
+sudo ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
 
 
 ##### Create html directory
 echo "... Create html directory"
-mkdir -p /bio1/www/html/
+sudo mkdir -p /bio1/www/html/
 
 
 ##### Link it to vagrant html directory
 echo "... Link it to vagrant html directory"
-ln -s /vagrant/html /bio1/www/html/mirkwood/
+sudo ln -s /vagrant/html /bio1/www/html/mirkwood/
 
 
 ##### Link results directory
 echo "... Link results directory"
-ln -s /home/vagrant/ /bio1/www/html/mirkwood/results/
+sudo ln -s /home/vagrant/ /bio1/www/html/mirkwood/results/
 
 
 
