@@ -313,6 +313,7 @@ then
     ##### Make style sub directory
     echo "... Make style sub directory"
     sudo mkdir /bio1/www/html/Style/css
+    sudo mkdir /bio1/www/html/Style/css/theme
 
 
     ##### Get BioInfo CSS
@@ -324,6 +325,7 @@ then
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_left.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/page_theme.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/table.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css/theme http://bioinfo.lifl.fr/Style/css/theme/rna.css
 
 
     ##### Get BioInfo main page
