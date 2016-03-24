@@ -279,13 +279,13 @@ then
 
     ##### BioInfo virtual host
     echo "... BioInfo virtual host"
-    cp $ROOT_PATH/provisioning/roles/bioinfo/files/bioinfo.conf /etc/apache2/sites-available/bioinfo.conf
+    sudo cp $ROOT_PATH/provisioning/roles/bioinfo/files/bioinfo.conf /etc/apache2/sites-available/bioinfo.conf
     sudo service apache2 restart
 
 
     ##### Enable BioInfo virtualhost
     echo "... Enable BioInfo virtualhost"
-    ln -s /etc/apache2/sites-available/bioinfo.conf /etc/apache2/sites-enabled/bioinfo
+    sudo ln -s /etc/apache2/sites-available/bioinfo.conf /etc/apache2/sites-enabled/bioinfo
     sudo service apache2 restart
 
 
@@ -297,37 +297,37 @@ then
 
     ##### Make style directory
     echo "... Make style directory"
-    mkdir /bio1/www/html/Style
+    sudo mkdir /bio1/www/html/Style
 
 
     ##### Get BioInfo CSS
     echo "... Get BioInfo CSS"
-    wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/bioinfo.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/bioinfo.css
 
 
     ##### Get Bonsai logo
     echo "... Get Bonsai logo"
-    wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/logo.png
+    sudo wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/logo.png
 
 
     ##### Make style sub directory
     echo "... Make style sub directory"
-    mkdir /bio1/www/html/Style/css
+    sudo mkdir /bio1/www/html/Style/css
 
 
     ##### Get BioInfo CSS
     echo "... Get BioInfo CSS"
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/box_homepage.css
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/divers.css
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/footer.css
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/header.css
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_left.css
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/page_theme.css
-    wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/table.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/box_homepage.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/divers.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/footer.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/header.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_left.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/page_theme.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/table.css
 
 
     ##### Get BioInfo main page
     echo "... Get BioInfo main page"
-    wget --directory-prefix=/bio1/www/html/ http://bioinfo.lifl.fr/index.php
+    sudo wget --directory-prefix=/bio1/www/html/ http://bioinfo.lifl.fr/index.php
 
 fi
