@@ -146,7 +146,7 @@ chown -R www-data:www-data "/opt/tRNAscan-SE"
 ##### Install RNAmmer (only needed for ab initio pipeline)
 echo "... Install RNAmmer"
 # Install hmmer
-wget --directory-prefix=/tmp/  http://selab.janelia.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
+wget --directory-prefix=/tmp/  http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
 cd /opt/hmmer-2.3.2/
 tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
 cd $ROOT_PATH

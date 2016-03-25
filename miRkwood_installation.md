@@ -191,7 +191,7 @@ install it, then compile it.
 This program predicts 5s/8s, 16s/18s and 23s/28s ribosomal
 RNA in genomic sequences.
 # Install hmmer
-wget --directory-prefix=/tmp/  http://selab.janelia.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
+wget --directory-prefix=/tmp/  http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
 tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
 cd /opt/hmmer-2.3.2/
 ./configure --enable-threads
