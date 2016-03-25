@@ -113,8 +113,8 @@ sudo apt-get install ncbi-blast+
 
 ##### Install miRdup
 echo "... Install miRdup"
-wget --directory-prefix=/tmp/ http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.2.zip
-unzip -qq /tmp/miRdup_1.2.zip -d /opt/miRdup
+wget --directory-prefix=/tmp/ http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.4.zip
+unzip -qq /tmp/miRdup_1.4.zip -d /opt/miRdup
 
 
 ##### Install VARNA
