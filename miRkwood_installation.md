@@ -94,15 +94,9 @@ are corrects.
 Config::Simple
 YAML::XS
 File::Which
-MIME::Lite (pour la version Web)
+MIME::Lite (for Web version only)
 Inline::CPP (for smallRNAseq pipeline only)
 Bio::DB::Fasta (for smallRNAseq pipeline only)
-
-(pas utiles pour la version ligne de commande, tester pour la version web)
-Image::Size
-File::Size
-File::Slurp
-Archive::Zip
 
 
 Inline::CPP may sometimes be difficult to install. In that case, please 
