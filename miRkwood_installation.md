@@ -111,8 +111,9 @@ ExtUtils::CppGuess
 
 
 - RNAstemloop
-This program takes an output file from RNALfold and extract 
-candidates stemloop from the secondary structures.
+RNAstemloop is an in-house program that takes an output file from
+RNALfold and extract candidates stemloop from the secondary structures.
+RNAstemloop is stored in ${local_programs}.
 You can create a symbolic link to the program that suits your architecture,
 or simply change the corresponding line in the programs.cfg file.
 
@@ -150,7 +151,7 @@ However, if you don't want or don't manage to install it, you can skip
 it. It will only affect the quality score of some candidates.
 
 - rnashuffles
-rnashuffles is a "homemade" program that computes the thermodynamic
+rnashuffles is an in-house program that computes the thermodynamic
 stability.
 Ensuire Python pip is installed.
 Copy the sources where you want it to be (the sources are given in
@@ -171,15 +172,17 @@ then create a symbolic link or change the corresponding line in the
 programs.cfg file.
 
 - piccolo
-piccolo is a "homemade" program that performs alignments.
+piccolo is an in-house program that performs alignments.
 It is stored in the ${local_programs} directory.
 
+
 3. Optional dependencies for abinitio pipeline
+
 - tRNAscan-SE
 This program searches for tRNA genes in genomic sequences.
 Download the archive at http://lowelab.ucsc.edu/software/tRNAscan-SE.tar.gz.
-Extract the archive and replace '$(HOME)' by the path where you want to 
-install it, then compile it.
+Extract the archive and edit the Makefile to replace '$(HOME)' by the 
+path where you want to install it, then compile it.
 
 - rnammer
 This program predicts 5s/8s, 16s/18s and 23s/28s ribosomal
