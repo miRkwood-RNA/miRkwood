@@ -38,7 +38,7 @@
 
             <ul><li> <a href="sample.bed">Download the sample BED file</a> </li></ul> 
 
-            <p>This file contains Illumina reads for <i> Arabidopsis thaliana</i> from SRA <a href="http://www.ncbi.nlm.nih.gov/sra/?term=SRR051927">SRR051927</a>. We have mapped these reads on <i>TAIR 10</i>, and have selected the portion of reads corresponding to the first 2,200,00 nt of chromosome 1. This gives a total of 19,756 reads. </p>
+            <p>This file contains Illumina reads for <i> Arabidopsis thaliana</i> from SRA <a href="http://www.ncbi.nlm.nih.gov/sra/?term=SRR960237 ">SRR960237 </a>. We have mapped these reads on <i>TAIR 10</i>, and have selected 2 portions of reads, one from chromosome 1 and one from chromosome 4. This gives a total of 319,103 reads. </p>
 
             <p>If you want to know more on how to create this BED file for your data, check out the <a href="BED_file.php">detailed instruction</a>.</p> 
 
@@ -77,22 +77,22 @@
 
             <ul>
                 <li>
-                    <i>Total number of reads:</i> 19756 (4075 unique reads) <br> <br>
-                    The initial BED file contains 19756 reads, forming 4075 unique reads.
+                    <i>Total number of reads:</i> 319,103 (29,795 unique reads) <br> <br>
+                    The initial BED file contains 319,103 reads, forming 29,795 unique reads.
                     <br> <br>
                 </li>
 
                 <li>
-                    <i>CoDing Sequences:</i> 834 reads <br> <br>
-                    834 reads fall within a coding region (annotated as CDS) and are
+                    <i>CoDing Sequences:</i> 2,599 reads <br> <br>
+                    2,599 reads fall within a coding region (annotated as CDS) and are
                     discarded from the analysis.  You can list them by clicking on
                     the <i>download</i> link (GFF file).
                     <br> <br>
                 </li>
 
                 <li>
-                    <i>rRNA/tRNA/snoRNA:</i> 11568 reads <br> <br>
-                    11568 reads fall within a region annotated either as ribosomal RNA, or
+                    <i>rRNA/tRNA/snoRNA:</i> 6,275 reads <br> <br>
+                    6,275 reads fall within a region annotated either as ribosomal RNA, or
                     transfer RNA or snoRNA, and are discarded from the analysis. 
                     You can list them by clicking on
                     the <i>download</i> link (GFF file).
@@ -100,15 +100,15 @@
                 </li>
 
                 <li>
-                    <i>Multiply mapped reads:</i> 16 reads <br> <br> 
-                    16 reads map to more than five locations, and are discarded from the
+                    <i>Multiply mapped reads:</i> 1,665 reads <br> <br> 
+                    1,665 reads map to more than five locations, and are discarded from the
                     analysis.  You can list them by clicking on
                     the <i>download</i> link (BED file).
                     <br> <br>
                 </li>
 
                 <li>
-                    <i>Orphan cluster of reads:</i> 3506 reads<br><br>
+                    <i>Orphan cluster of reads:</i> 26,826 reads<br><br>
                     A cluster of reads is a short region in the genome
                     that has been enriched with aligned reads. Here we
                     report the number of reads that occur in a cluster not classified as
@@ -119,8 +119,13 @@
                 </li>
 
                 <li>
-                    <i> Unclassified reads:</i> 2632 reads<br><br>
-                    2632 reads do not belong to any cluster, or do not
+                    <i>Orphan hairpins:</i> 277 reads<br><br>
+                     <br> <br>
+                </li>
+
+                <li>
+                    <i> Unclassified reads:</i> 49,706 reads<br><br>
+                    49,706 reads do not belong to any cluster, or do not
                     fall in any annotated region.
                     <br> <br>
                 </li>
@@ -128,7 +133,7 @@
                 <li> 
                     <i>Known miRNAs:</i> 5 <br> <br>
                     5 precursors of miRNA present in miRbase
-                    intersect with a total of 346 reads
+                    intersect with a total of 224,134 reads
                     present in the input BED file.
                     <br> <br> 
                     You can display detailed results by clicking on the link <i>see results</i>.
@@ -141,12 +146,12 @@
                 </li>
 
                 <li> 
-                    <i> Novel miRNAs: </i> 21 <br> <br>
-                    miRkwood finds 21 new miRNAs that have not
+                    <i> Novel miRNAs: </i> 30 <br> <br>
+                    miRkwood finds 30 new miRNAs that have not
                     been previously  reported in miRbase and that are supported by a significant
                     read coverage  and a stemloop secondary
-                    structure. These 21 miRNAs represent a total
-                    of 1120 reads.<br> <br> 
+                    structure. These 30 miRNAs represent a total
+                    of 7,621 reads.<br> <br> 
                     You can display detailed results by clicking on the link <i>see results</i>.
                     From this new page, you will be able to access a comprehensive report
                     for each predicted miRNA :
