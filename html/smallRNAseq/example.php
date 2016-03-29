@@ -69,7 +69,7 @@
 
 
             <img style='width:700px; display: block; margin: 0
-            auto;'src='../style/repartition.png' alt='read graphics' />
+            auto;'src='../style/reads_repartition.png' alt='read graphics' />
 
             <p> This diagram indicates the proportion of reads
             found for each category. This is a graphical
@@ -172,7 +172,7 @@
 
             <center>
 
-                <img style='width:700px; display: block; margin: 0 auto;'src='../style/table_novelmirna.png' alt='results table' />
+                <img style='width:700px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
 
                 <br />
 
