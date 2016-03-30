@@ -55,15 +55,8 @@ $arborescence .= "<a href='/mirkwood/mirkwood.php'>mirkwood</a>";
 
 my $mirnas_results = '';
 my $mirna = '';
-my $displayAllCandidates = '';
 if ( $mirnas_type eq 'novel_miRNA' ){
     $mirna = 'Novel';
-    $displayAllCandidates = <<"END_TXT";
-<a id="dontDisplayOrphanHairpins" class='on' style="color:blue;" onclick='displayAllOrNot(false)'>Don't display orphan hairpins </a>
-/
-<a id="displayAll" class='off' style="color:black;" onclick='displayAllOrNot(true)' >Display all candidates </a>
-<br />
-END_TXT
 }
 elsif ( $mirnas_type eq 'known_miRNA' ){
     $mirna = 'Known';
@@ -125,7 +118,7 @@ if ( $valid ){
                 </div>
 
                 <p class='helper-results'>Click on a line to see the HTML report of a pre-miRNA prediction. Click on a checkbox to select an entry.<br/>
-                $displayAllCandidates
+
                 <a id="hrefposition" class='on' style="color:blue;" onclick='sortBy("position")' >Sort by position <\/a> /  <a id="hrefquality" class='off' style="color:black;" onclick='sortBy("quality")'  >sort by quality</a> <a href="$help_page#quality">[?]</a>
                 </p>
             </div> 
