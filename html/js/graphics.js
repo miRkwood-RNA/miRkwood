@@ -90,199 +90,193 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 	table.appendChild(tbdy); //ajouter au tableau table
 	for (var i=0;i<rowsNumber;i++) // parcours nombre de ligne
 	{
-		if (i!=0)
-		{
-			var discarded = myResults.getValueByFactor(i-1,'orphan_hairpin');
-		}
-		if (displayOrphanHairpins || discarded!=1){       
-			var tr=document.createElement('tr'); 
-			tbdy.appendChild(tr); //ajouter ligne
-			if (i!=0) 	
-			{
-				var checkbox = document.createElement('input');
-				checkbox.type = "checkbox";
-				checkbox.name = "name";
-				checkbox.value = "value";
-				checkbox.id = "checkbox"+i;
-				checkbox.setAttribute("class" , "allCheckbox");
-				var td=document.createElement('td');
-				td.id = "checkboxSelect"+i;
-				tr.appendChild(td);
-				td.appendChild(checkbox);
-            }else {
+        var tr=document.createElement('tr'); 
+        tbdy.appendChild(tr); //ajouter ligne
+        if (i!=0) 	
+        {
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.name = "name";
+            checkbox.value = "value";
+            checkbox.id = "checkbox"+i;
+            checkbox.setAttribute("class" , "allCheckbox");
+            var td=document.createElement('td');
+            td.id = "checkboxSelect"+i;
+            tr.appendChild(td);
+            td.appendChild(checkbox);
+        }else {
 
-				var checkbox = document.createElement('input');
-				checkbox.type = "checkbox";
-				checkbox.name = "name";
-				checkbox.value = "value";
-				checkbox.id = "checkboxSelect";
-				checkbox.setAttribute('onclick',"checkboxSelect()");
-				var td=document.createElement('td');
-				td.appendChild(checkbox);
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.name = "name";
+            checkbox.value = "value";
+            checkbox.id = "checkboxSelect";
+            checkbox.setAttribute('onclick',"checkboxSelect()");
+            var td=document.createElement('td');
+            td.appendChild(checkbox);
 
-				tr.appendChild(td);
+            tr.appendChild(td);
+        }
+
+        for (var j=0;j<columnsNumber;j++) // parcours nombre de colonnes
+        {
+            if (i==0)
+            {
+                var td=document.createElement('th');
+                td.setAttribute("class" , "factors");
+            }
+            else
+            {
+                var td=document.createElement('td');
+                if (j==0) {
+                    td.setAttribute("class" , "names");
+                }
+                td.setAttribute('onclick',"showCellInfo("+i+","+j+")");
+                td.setAttribute('onmouseover',"colorOver("+i+","+j+")");
+                td.setAttribute('onmouseout',"colorOut("+i+","+j+")");
+            }
+            td.setAttribute('id',"cell-"+i+"-"+j);
+            td.width='100';
+
+            if ((i==0)&&(j!=0))
+            {
+                var value = myResults.getFactorsNamesList()[j-1]; // ajouter critère
+                //if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
+                if  (value.toString() == 'image')  {
+                    td.innerHTML = '<h3>2D<br>structure</h3>' ;
+                }else if (value.toString() == 'precursor_name') 
+                {
+                    td.innerHTML = '<h3>miRbase name</h3>' ;
+                }
+                else if (value.toString() == 'mirna_sequence') 
+                {
+                    td.innerHTML = '<h3>miRNA </h3>' ;
+                }
+                else if (value.toString() == 'mirna_length') 
+                {
+                    td.innerHTML = '<h3>LENGTH</h3>' ;
+                }
+                else if (value.toString() == 'strand')
+                {
+                    td.innerHTML = '<h3>+/-</h3>' ;
+                }
+                else if (value.toString() == 'nb_reads')
+                {
+                    td.innerHTML = '<h3>READS</h3>' ;
+                }
+                else if (value.toString() == 'reads_distribution')
+                {
+                    td.innerHTML = '<h3>reads<br>distribution</h3>' ;
+                }
+                else if (value.toString() == 'quality') 
+                {
+                    td.innerHTML = '<h3 onclick ="sortingTable(\'all2\',false)"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
+                }
+                else if (value.toString() == 'alignment')
+                {
+                    td.innerHTML = '<h3 >conserved<br>miRNA</h3>';
+                }
+                else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
+                {
+                    td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ;
+                }
+                else 
+                {
+                    td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
+                }
+
+            }
+            if ((i!=0)&&(j==0)) // ajouter nom séquence 
+            {
+                var value = myResults.getSequencesNamesList()[i-1];
+                td.innerHTML = "<a class='name'>"+value.substr(0,29)  + "</a>"; // ajouter la valeur à la cellule
+            }
+            if ((i!=0)&&(j!=0))  // cas cellule
+            {
+                var factor = myResults.getFactorsNamesList()[j-1];
+
+                if ( factor =='quality') 
+                {	
+                    var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices 				
+                    var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
+
+                    td.innerHTML = string;
+                }
+                else if ( factor =='reads_distribution')
+                {
+                    var value = myResults.getValueByFactor(i-1,'reads_distribution'); // appel fonction qui définit la valeur à partir des indices 				
+                    var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
+
+                    td.innerHTML = string;
+                }
+                else if ( factor =='image') //cas lien image
+                {	
+                    var value = myResults.getValueByFactor(i-1,'image');
+
+                    td.innerHTML = "<a  href='" +value + "'><img src='/mirkwood/style/loupe.png' alt='preview' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
+
+                }
+                else if( factor =='alignment') //cas lien alignement 
+                {
+                    var value = myResults.getValueByFactor(i-1,'alignment');
+                    str = "<img src='/mirkwood/style/check.png' alt='yes' style='width:15px; height:15px;' /> 	 ";
+                    if (value == 1)
+                    {
+                        var string = repeat(str, parseInt(value));
+                        td.innerHTML =  string;
+                    }
+                    else if (value == 2) {
+                        var string = repeat(str, parseInt(value));
+                        td.innerHTML =  string;
+                    }
+                    else
+                    {
+                        td.innerHTML = "";
+                    }
+                }
+                else if( factor =='mfei')
+                {
+                    var value = myResults.getValueByFactor(i-1,'mfei');
+                    if( value < -0.8 )
+                    {
+                        td.innerHTML = "<font color='#FF00FF'>"+value+"</font>";
+                    }
+                    else
+                    {
+                        td.innerHTML = value;
+                    }
+                }
+                else if( factor =='nb_reads')
+                {
+                    var color = myResults.getValueByFactor(i-1,'criteria_nb_reads');
+                    var value = myResults.getValueByFactor(i-1,'nb_reads');
+                    if ( color == 1)
+                    {
+                        td.innerHTML = "<font color='#FF00FF'>"+value+"</font>";
+                    }
+                    else
+                    {
+                        td.innerHTML = value;
+                    }
+                }
+                else if( factor =='mirna_sequence')
+                {
+                    var value = myResults.getValueByFactor(i-1,'mirna_sequence');
+                    td.innerHTML = "<span class='mirna_sequence'>"+value+"</span>";
+                }
+                else
+                {
+                    var value = document.createTextNode(myResults.getValueByFactor(i-1,factor)); // appel fonction qui définit la valeur à partir des indices 
+                    td.appendChild(value); // ajouter la valeur à la cellule
+                }
+            }
+            if ((i==0)&&(j==0))
+            {
+                td.innerHTML = '<h3 onclick ="sortingTable(\'all\',false)">Chr</h3>';
             }
 
-            for (var j=0;j<columnsNumber;j++) // parcours nombre de colonnes
-            {
-				if (i==0)
-				{
-					var td=document.createElement('th');
-					td.setAttribute("class" , "factors");
-				}
-				else
-				{
-					var td=document.createElement('td');
-					if (j==0) {
-						td.setAttribute("class" , "names");
-					}
- 					td.setAttribute('onclick',"showCellInfo("+i+","+j+")");
-					td.setAttribute('onmouseover',"colorOver("+i+","+j+")");
-					td.setAttribute('onmouseout',"colorOut("+i+","+j+")");
-				}
-				td.setAttribute('id',"cell-"+i+"-"+j);
-				td.width='100';
-
-				if ((i==0)&&(j!=0))
-				{
-					var value = myResults.getFactorsNamesList()[j-1]; // ajouter critère
-					//if ((myResults.getFactorsNamesList()[j-1]) == 'quality' ) {value = value + '<h5>fff</h5>'} ; 
-					if  (value.toString() == 'image')  {
-						td.innerHTML = '<h3>2D<br>structure</h3>' ;
-					}else if (value.toString() == 'precursor_name') 
-					{
-						td.innerHTML = '<h3>miRbase name</h3>' ;
-					}
-					else if (value.toString() == 'mirna_sequence') 
-					{
-						td.innerHTML = '<h3>miRNA </h3>' ;
-					}
-					else if (value.toString() == 'mirna_length') 
-					{
-						td.innerHTML = '<h3>LENGTH</h3>' ;
-					}
-					else if (value.toString() == 'strand')
-					{
-						td.innerHTML = '<h3>+/-</h3>' ;
-					}
-					else if (value.toString() == 'nb_reads')
-					{
-						td.innerHTML = '<h3>READS</h3>' ;
-					}
-					else if (value.toString() == 'reads_distribution')
-					{
-						td.innerHTML = '<h3>reads<br>distribution</h3>' ;
-					}
-					else if (value.toString() == 'quality') 
-					{
-						td.innerHTML = '<h3 onclick ="sortingTable(\'all2\',false)"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
-					}
-                    else if (value.toString() == 'alignment')
-					{
-						td.innerHTML = '<h3 >conserved<br>miRNA</h3>';
-					}
-                    else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
-					{
-						td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ;
-					}
-					else 
-					{
-						td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
-					}
-
-				}
-				if ((i!=0)&&(j==0)) // ajouter nom séquence 
-				{
-					var value = myResults.getSequencesNamesList()[i-1];
-					td.innerHTML = "<a class='name'>"+value.substr(0,29)  + "</a>"; // ajouter la valeur à la cellule
-				}
-				if ((i!=0)&&(j!=0))  // cas cellule
-				{
-					var factor = myResults.getFactorsNamesList()[j-1];
-
-					if ( factor =='quality') 
-					{	
-						var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices 				
-						var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
-
-						td.innerHTML = string;
-					}
-					else if ( factor =='reads_distribution')
-					{
-						var value = myResults.getValueByFactor(i-1,'reads_distribution'); // appel fonction qui définit la valeur à partir des indices 				
-						var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
-
-						td.innerHTML = string;
-					}
-					else if ( factor =='image') //cas lien image
-					{	
-						var value = myResults.getValueByFactor(i-1,'image');
-
-						td.innerHTML = "<a  href='" +value + "'><img src='/mirkwood/style/loupe.png' alt='preview' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
-
-					}
-					else if( factor =='alignment') //cas lien alignement 
-					{
-						var value = myResults.getValueByFactor(i-1,'alignment');
-						str = "<img src='/mirkwood/style/check.png' alt='yes' style='width:15px; height:15px;' /> 	 ";
-						if (value == 1)
-						{
-							var string = repeat(str, parseInt(value));
-							td.innerHTML =  string;
-						}
-						else if (value == 2) {
-							var string = repeat(str, parseInt(value));
-							td.innerHTML =  string;
-						}
-						else
-						{
-							td.innerHTML = "";
-						}
-					}
-					else if( factor =='mfei')
-					{
-						var value = myResults.getValueByFactor(i-1,'mfei');
-						if( value < -0.8 )
-						{
-							td.innerHTML = "<font color='#FF00FF'>"+value+"</font>";
-						}
-						else
-						{
-							td.innerHTML = value;
-						}
-					}
-					else if( factor =='nb_reads')
-					{
-						var color = myResults.getValueByFactor(i-1,'criteria_nb_reads');
-						var value = myResults.getValueByFactor(i-1,'nb_reads');
-						if ( color == 1)
-						{
-							td.innerHTML = "<font color='#FF00FF'>"+value+"</font>";
-						}
-						else
-						{
-							td.innerHTML = value;
-						}
-					}
-					else if( factor =='mirna_sequence')
-					{
-						var value = myResults.getValueByFactor(i-1,'mirna_sequence');
-						td.innerHTML = "<span class='mirna_sequence'>"+value+"</span>";
-					}
-					else
-					{
-						var value = document.createTextNode(myResults.getValueByFactor(i-1,factor)); // appel fonction qui définit la valeur à partir des indices 
-						td.appendChild(value); // ajouter la valeur à la cellule
-					}
-				}
-				if ((i==0)&&(j==0))
-				{
-					td.innerHTML = '<h3 onclick ="sortingTable(\'all\',false)">Chr</h3>';
-				}
-
-				tr.appendChild(td); // ajoute colonne à la ligne
-			}
-		}
+            tr.appendChild(td); // ajoute colonne à la ligne
+        }
 	}
 	tar.appendChild(table);
 
