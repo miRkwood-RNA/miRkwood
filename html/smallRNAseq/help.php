@@ -63,7 +63,7 @@
                             <li><a href="#fasta"> FASTA format</a></li>
                             <li><a href="#dot_bracket"> Dot-bracket format</a></li>
                             <li><a href="#csv"> Tabular format (CSV) </a></li>
-                            <li><a href="#odf"> Full report in document format (ODF)</a></li>
+                            <li><a href="#pdf"> Full report in PDF</a></li>
                             <li><a href="#read_cloud">Reads cloud</a></li> 
                         </ol>
                     </li> 
@@ -324,7 +324,7 @@
 
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (see <a href="">Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</p>
 
-            <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when an alignment between the candidate sequence and miRBase is found (see <a href="">Flag conserved mature miRNAs</a>). It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /><img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML or ODF report.</p>
+            <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when an alignment between the candidate sequence and miRBase is found (see <a href="">Flag conserved mature miRNAs</a>). It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /><img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' /> when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML report.</p>
 
             <p><b>2D structure:</b> You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href="http://varna.lri.fr/">Varna.</a></p>
 
@@ -341,7 +341,7 @@
 
             <p id='csv'><b>CSV <em>(comma separated value)</em>:</b> It contains the same information as the result table, plus the FASTA sequences and the dot-bracket secondary structures. This tabular format is supported by spreadsheets like Excel. </p>
 
-            <p id='odf'><b>ODF:</b> This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. This document format is compatible with Word or OpenOffice. </p>    
+            <p id='pdf'><b>PDF:</b> This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. </p>    
                         
             <p id='read_cloud'><b> Reads cloud:</b>  This archive is a
             compilation of all reads clouds. Each reads cloud is a text file that

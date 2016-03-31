@@ -50,7 +50,7 @@
      <li> Tabular format (CSV) </li>
      <li> FASTA</li>
      <li> dot-bracket format<br/>(plain sequence + secondary structure) </li>
-     <li> Full report in document format (ODF)</li>
+     <li> Full report in PDF</li>
      <li> GFF format</li>
    </ol>
  </li> 
@@ -197,7 +197,7 @@ where MFE (minimal free energy) denotes the negative folding free
 <dd>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</dd>
 
 <dt>miRBase alignment (option)</dt>
-<dd>This cell is checked when an alignment between the candidate sequence and miRBase is found (<a href='#flag-conserved-mature-mirnas'>see Flag conserved mature miRNAs</a>). It is doubled checked when the location of the candidate mature miRNA is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. The alignments are visible in the HTML or ODT report.</dd>
+<dd>This cell is checked when an alignment between the candidate sequence and miRBase is found (<a href='#flag-conserved-mature-mirnas'>see Flag conserved mature miRNAs</a>). It is doubled checked when the location of the candidate mature miRNA is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>. The alignments are visible in the HTML report.</dd>
 
 <dt>2D structure</dt>
 <dd>You can drag the mouse over the zoom icon to visualize the stem-loop structure of the pre-miRNA. The image is generated with <a href='http://varna.lri.fr/'>Varna</a>.</dd>
@@ -244,12 +244,10 @@ gucgugccuggcucccuguaugccacaagaaaacaucgauuuaguuucaaaaucgaucacuaguggcguacagaguaguc
 </pre>
 
 
-<h3>Full report in document format (ODT)</h3>
+<h3>Full report in PDF</h3>
 
 <p>This is an equivalent of the <a href='#html_report'>HTML
-report</a>, and contains the full report of the predictions. This open
-document format is compatible with OpenOffice. See more information on
-<a href="http://en.wikipedia.org/wiki/OpenDocument">OpenDocument</a>.</p>
+report</a>, and contains the full report of the predictions.</p>
 
 <h3>GFF format</h3>
 
