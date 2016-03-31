@@ -435,31 +435,3 @@ function sortBy(sortValue)
 	 	
 }
 
-function displayAllOrNot(displayOrphanHairpins)
-{
-	var sortType = 'all';
-	if (document.getElementById('hrefquality').className == 'on')
-	{
-		sortType = 'all2';
-	}
-	if (displayOrphanHairpins)
-	{
-		document.getElementById('displayAll').style.color= 'blue';
-		document.getElementById('displayAll').className='on';
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'black';
-		document.getElementById('dontDisplayOrphanHairpins').className='off';
-		var table = document.getElementById('table');
-		table.innerHTML = "";
-		main(sortType, true);
-	}
-	else
-	{
-		document.getElementById('displayAll').style.color= 'black';
-		document.getElementById('displayAll').className='off';
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue';
-		document.getElementById('dontDisplayOrphanHairpins').className='on';
-		var table = document.getElementById('table');
-		table.innerHTML = "";
-		main(sortType, false);
-	}
-}
