@@ -286,6 +286,9 @@
 
             <p><b>Length:</b> Length of the miRNA.</p>
 
+            <p><b>Weight:</b> It is the depth of the read labelled as the miRNA,
+            divided by the number of places in the genome where this read is aligned.</p>
+
             <p><b>Reads:</b> The total number of reads included in the locus.</p>
 
             <p id='quality'><b>Reads distribution:</b> This score, ranging from O
