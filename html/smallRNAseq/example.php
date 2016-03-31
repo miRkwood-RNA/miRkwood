@@ -59,8 +59,8 @@
             <h2> Results page </h2>
 
             <p>The top of the page displays the job ID, that can
-            be saved for future usage (with the link <i>retrieve a
-            result with an ID</i>, on the main menu).</p> 
+            be saved for future usage (with the link <a href="../id.php">retrieve a
+            result with an ID</a>, on the main menu).</p> 
 
             <p>The result page has then two main parts. The first one
             (<i>Options summary</i>) is simply a summary of your
