@@ -120,7 +120,13 @@
 
                 <li>
                     <i>Orphan hairpins:</i> 277 reads<br><br>
-                     <br> <br>
+                    An orphan hairpin is a candidate with a global score of 0
+                    and showing no conservation with miRBase.
+                    If you select the option "filter out low quality hairpins",
+                    low quality candidates will be discarded and you can obtain the list 
+                    of the corresponding orphan hairpins by clicking on the 
+                    <i>download</i> link (BED file).
+                    <br> <br>
                 </li>
 
                 <li>
