@@ -63,6 +63,7 @@
                             <li><a href="#fasta"> FASTA format</a></li>
                             <li><a href="#dot_bracket"> Dot-bracket format</a></li>
                             <li><a href="#csv"> Tabular format (CSV) </a></li>
+                            <li><a href="#org"> Full report in ORG format</a></li>
                             <li><a href="#pdf"> Full report in PDF</a></li>
                             <li><a href="#read_cloud">Reads cloud</a></li> 
                         </ol>
@@ -341,7 +342,9 @@
 
             <p id='csv'><b>CSV <em>(comma separated value)</em>:</b> It contains the same information as the result table, plus the FASTA sequences and the dot-bracket secondary structures. This tabular format is supported by spreadsheets like Excel. </p>
 
-            <p id='pdf'><b>PDF:</b> This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. </p>    
+            <p id='org'><b>ORG:</b> This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. </p>
+
+            <p id='pdf'><b>PDF:</b> This is an equivalent of the <a href="#org">ORG report</a>. </p>
                         
             <p id='read_cloud'><b> Reads cloud:</b>  This archive is a
             compilation of all reads clouds. Each reads cloud is a text file that

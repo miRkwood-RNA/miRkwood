@@ -50,6 +50,7 @@
      <li> Tabular format (CSV) </li>
      <li> FASTA</li>
      <li> dot-bracket format<br/>(plain sequence + secondary structure) </li>
+     <li> Full report in ORG format</li>
      <li> Full report in PDF</li>
      <li> GFF format</li>
    </ol>
@@ -244,10 +245,15 @@ gucgugccuggcucccuguaugccacaagaaaacaucgauuuaguuucaaaaucgaucacuaguggcguacagaguaguc
 </pre>
 
 
+<h3>Full report in ORG</h3>
+
+<p>This is an equivalent of the <a href="#html_report">HTML report</a>, and contains the full report of the predictions. </p>
+
+
 <h3>Full report in PDF</h3>
 
-<p>This is an equivalent of the <a href='#html_report'>HTML
-report</a>, and contains the full report of the predictions.</p>
+<p>This is an equivalent of the ORG report. </p>
+
 
 <h3>GFF format</h3>
 
