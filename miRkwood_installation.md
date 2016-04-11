@@ -100,7 +100,7 @@ or simply change the corresponding line in the programs.cfg file.
 - Vienna package
 The ViennaRNA Package consists of a C code library and several stand-alone 
 programs for the prediction and comparison of RNA secondary structures.
-http://www.tbi.univie.ac.at/RNA/
+See http://www.tbi.univie.ac.at/RNA/ for the installation.
 Tested with version 2.1.6-1.
 
 Make sure that the following programs are correctly installed:
@@ -137,7 +137,7 @@ Ensuire Python pip is installed.
 Copy the sources where you want it to be (the sources are given in
 /{miRkwood_path}/provisioning/roles/mirkwood-software/files/) and
 then build it with pip.
-pip install /path/rnashuffles
+`pip install /path/rnashuffles`
 
 - VARNA (Visualization Applet for RNA secondary structure)
 Make sure that the Java Runtime Environment is installed.
