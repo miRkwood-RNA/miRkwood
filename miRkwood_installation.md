@@ -58,26 +58,6 @@ This step can take up to 10 minutes.
 Congratulations! A miRkwood instance is now running at <http://192.168.33.20/mirkwood>
 
 
-Installation in a VM without Ansible
-------------------------------------
-
-If you are unlucky enough that you cannot install Ansible (this problem may
-occur on Mac systems), you will have to install yourself all dependencies.
-
-1. Create the VM
-
-We still recommand to run miRkwood on an Ubuntu 12.04.
-
-# Need details here to install Ubuntu on the VM.
-
-
-2. Install dependencies
-
-All these steps take place on the VM.
-
-Run script install-dependencies.sh in super-user mode.
-
-
 Manual installation
 -------------------
 
