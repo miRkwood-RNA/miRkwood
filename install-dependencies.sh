@@ -208,6 +208,7 @@ sudo apt-get install cpanminus
 # Install Perl dependencies from CPAN
 echo "... Install Perl dependencies from CPAN"
 sudo cpanm Inline::CPP
+sudo cpanm LWP::UserAgent
 sudo cpanm Bio::DB::Fasta
 
 

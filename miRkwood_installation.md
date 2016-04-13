@@ -76,6 +76,7 @@ YAML::XS
 File::Which
 MIME::Lite (for Web version only)
 Inline::CPP (for smallRNAseq pipeline only)
+LWP::UserAgent (for smallRNAseq pipeline only)
 Bio::DB::Fasta (for smallRNAseq pipeline only)
 
 
