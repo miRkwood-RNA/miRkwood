@@ -3,7 +3,7 @@
 # PODNAME: mirkwood.pl
 # ABSTRACT: miRkwood - A micro-RNA analysis pipeline
 
-use lib '/vagrant/cgi-bin/lib/';
+use lib '../lib/';
 
 use warnings;
 use strict;
