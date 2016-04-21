@@ -51,8 +51,3 @@ RUN sed -i -re 's/RNAstemloop/RNAstemloop-x86_64/g'  /home/mirkwood/cgi-bin/lib/
 
 
 
-
-# CMD ["--help"]
-# ENTRYPOINT ["perl", "-I/home/miRkwood/cgi-bin/lib", "/home/miRkwood/cgi-bin/bin/mirkwood.pl"]
-
-
