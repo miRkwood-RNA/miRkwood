@@ -97,7 +97,10 @@ if ( !$job_title ) { $job_title  = 0 }
 ##### Download BED file, check it and write it in the results directory
 my $bedFile = '';
 $bedFile   = $cgi->upload('bedFile') or miRkwood::WebTemplate::web_die("Error when getting BED file: $!");
-my $localBED = $absolute_job_dir . '/' . $cgi->param('bedFile');
+my $localBEDname = $bedFile;
+$localBEDname =~ s/\s//g;
+$localBEDname =~ tr/\(\)/__/;
+my $localBED = $absolute_job_dir . '/' . $localBEDname;
 open (my $BED, '>', $localBED) or miRkwood::WebTemplate::web_die("Error when creating BED file: $!");
 my $previous_position = '';
 my $previous_chromosome = '';
