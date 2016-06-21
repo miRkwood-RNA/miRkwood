@@ -166,7 +166,12 @@ sub count_alignments_per_miRNA {
     close $BED;
     foreach my $candidate ( @{$self->{'basic_candidates'}} ){
         if ( $candidate->{'mirna_sequence'} ne '' ){
-            $candidate->{'nb_alignments_for_miRNA'} = $nb_alignments_per_read->{ $candidate->{'mirna_sequence'} };
+            if ( defined( $nb_alignments_per_read->{ $candidate->{'mirna_sequence'} } ) && ($nb_alignments_per_read->{ $candidate->{'mirna_sequence'} } != 0) ){
+                $candidate->{'nb_alignments_for_miRNA'} = $nb_alignments_per_read->{ $candidate->{'mirna_sequence'} };
+            }
+            else{
+                $candidate->{'nb_alignments_for_miRNA'} = 1;
+            }
             $candidate->{'weight'} = $candidate->{'mirna_depth'} / $candidate->{'nb_alignments_for_miRNA'};
             $candidate->{'weight'} = miRkwood::Utils::restrict_num_decimal_digits($candidate->{'weight'}, 3);
         }
