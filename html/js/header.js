@@ -70,7 +70,7 @@ function display_arborescence(url){
     var name_soft=tab_url[1];
     if(soft_theme.hasOwnProperty(name_soft)){
 		var theme = soft_theme[name_soft];
-		$("#arborescence").html("<a href='/'>home</a> &gt; <a href='/theme_page/"+theme+".html'>"+theme.toUpperCase()+"</a> &gt; "+"<a href='/"+name_soft+"/"+name_soft.toLowerCase()+".php'>"+name_soft+"</a>");
+		$("#arborescence").html("<a href='/'>home</a> &gt; <a href='/topic/"+theme+".html'>"+theme.toUpperCase()+"</a> &gt; "+"<a href='/"+name_soft+"/"+name_soft.toLowerCase()+".php'>"+name_soft+"</a>");
     }
 }
 
@@ -93,7 +93,7 @@ function set_appropriate_title (url) {
             title = title + " - " + val;
         }
         $(document).attr("title", title);
-    } else if (name_soft == "theme_page") {
+    } else if (name_soft == "topic") {
         onglet = onglet.replace(/.html/,"");
         var title = "Bonsai bioinformatics - " + onglet;
         $(document).attr("title", title);

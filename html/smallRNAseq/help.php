@@ -5,6 +5,7 @@
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
         <link type='text/css' rel='stylesheet' href='/Style/css/bioinfo.css' />
+	<script type="text/javascript" src="/scripts/bioinfo.js"></script>
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../js/header.js"></script>
@@ -13,28 +14,25 @@
     <body>
 
         <div class="frametitle">
-            <h1 id="title">miRkwood small RNA-seq</h1>
+            <h1 id="title" onclick="loadLink('/mirkwood/smallRNAseq/index.php');">miRkwood small RNA-seq</h1>
         </div>
 
-        <div id="center_sup">
-            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-            <div class="tabs" id="menu_central" style="display:inline-block">
-                <?php include("./header_menu.txt") ?>
-            </div>
-            <div id="arborescence"></div>
+        <div class="tabs" id="menu_central" style="display:inline-block">
+            <?php include("./header_menu.txt") ?>
         </div>
+        <div id="arborescence"></div>
 
         <div id="main">
 
             <br />
 
-            <p>This page is a  user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>. This application allows to search for microRNAs in small RNA sequencing data in plants.</p>
+            <p>This page is a  user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>.</p>
 
             <p>If this is your first time using miRkwood, we would
             suggest visiting  our <a href="./example.php">quick start</a>
             guide before.</p>
 
-            <br /> 
+            <br /> <br />
 
             <div class="table-of-contents">
                 <ol>
@@ -77,7 +75,7 @@
                 </ol>
             </div>
 
-
+<br />
             <h2 id='input_form'>Input form</h2>
 
             <h3 id='reads'>Upload your set of reads</h3>

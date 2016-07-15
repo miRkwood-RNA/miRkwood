@@ -9,48 +9,56 @@
     </head>
     <body>
         <div class="frametitle">
-            <h1 id="title">miRkwood</h1>                 
+            <h1 id="title" onclick="loadLink('/mirkwood/index.php');">miRkwood</h1>                 
         </div>
         
-        <div id="center_sup">
-            <div class="theme-border" style="display:none"></div>
-            <div id="link_home" style="display:inline-block"><a href="/theme_page/rna.html" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-            <div class="tabs" id="menu_central" style="display:inline-block"><?php include("./static/header_menu.txt")?></div>
-            <div id="arborescence"></div>
-        </div>
+        <div class="tabs" id="menu_central" style="display:inline-block"><?php include("./static/header_menu.txt")?></div>
+        <div id="arborescence"></div>
 
         <div id="main">
 
             <br />
-            <p>miRkwood is a web application that allows for the fast and easy identification of microRNAs. It is specifically designed for plant microRNAs. It offers an user-friendly interface to navigate in the data, as well as many export options to allow the user to conduct further analyses on a local computer.</p>
+<h2>Fast and easy identification of plant microRNAs</h2>
 
-            <br /><br />
+ <p>miRkwood is a software package for the discovery of microRNAs and their hairpin precursors in plant genomes. It combines multiple evidences to support the prediction: thermodynamical stability, conservation, miRNA:miRNA* duplex,... mirkwood has a user-friendly interface to navigate in the data, as
+well as many export options to conduct further
+analyses. </p>
 
-            <div>
-                <a href="./abinitio/index.php"><span class="urlbox">miRkwood <i>ab initio</i></span></a>
-                <p>for the analysis of raw genomic sequence (<a href="./abinitio/index.php">go</a>)</p>
-            </div>
-            <br />
-            <br />
-            <div>
-                <a href="./smallRNAseq/index.php"><span class="urlbox">miRkwood small RNA-seq</span></a>
-                <p>for the analysis of deep sequencing data (<a href="./smallRNAseq/index.php">go</a>)</p>
-            </div>
+<p>It comes in two versions.</p>
+
+<br />
+       
+<p>
+<div class="mirkwood_button">
+ 
+     <a href="./abinitio/index.php"><b>Run mirkwood ab initio</b>, for the analysis of  raw
+  genomic sequences</a>
+
+</div>
+</p>
+<p>
+<div class="mirkwood_button">
+  
+     <a href="./smallRNAseq/index.php"><b>Run mirkwood small RNA-seq</b>, for the analysis of deep
+  sequencing data</a>
+
+</div>
+</p>
+
             
-            <br /><br />
+            <br />
 
-            <h2> Where does the name come from ? </h2> 
+            <h3> Where does the name come from ? </h3> 
 
-            <ul>
-                <li> <a href="name.php">visit Tolkien's legendarium</a></li> 
-            </ul>
+            <p> Visit <a href="name.php">Tolkien's legendarium</a>. </p>
+            
         
-            <h2> Authors</h2>
+            <h3> Authors</h3>
             <p>Sylvain Legrand (Evo-Eco-Paleo, UMR CNRS 8198 University of Lille)<br/>
             Isabelle Guigon, Jean-Fr&eacute;d&eacute;ric Berthelot, Mohcen Benmounah, H&eacute;l&egrave;ne Touzet, <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (CRIStAL, UMR CNRS 9189 University of Lille,  and Inria Lille Nord Europe)
             </p>
 
-            <h2>Contact</h2>
+            <h3>Contact</h3>
             <p><script type="text/javascript">
                 <!--
                 function escramble()
@@ -73,8 +81,9 @@
                 //-->
             </script></p>
 
-            <br />
-            <p>This project is funded by <a href="https://www.france-genomique.org/">France Genomique.</a></p>
+           
+<h3> Funding</h3>
+            <p>This project was supported  by <a href="https://www.france-genomique.org/">France Genomique</a>.</p>
 
         </div><!-- main-->
         

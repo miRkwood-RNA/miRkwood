@@ -1,32 +1,21 @@
-
 body {
-    counter-reset:section;
+    counter-reset:section;       
     text-align: justify;
 }
 
-h2 {
-   
-    padding-top:   5pt;
-    padding-bottom: 5pt;
-    padding-left: 15pt;
-/*
-    margin-right:  -50px;
-*/
-    margin-top:  16pt;
-    font-size:     16pt;
-    font-weight: normal; 
-    counter-reset:subsection;
-    background-color:#FFF0BC; 
-/*
-    width:40%; 
-*/
-    border-left: 7px solid #f4ba31; 
-}
+h2{ 
+counter-reset: subsection; 
+ } 
 
-h2:before {
-    counter-increment:section;
-    content:counter(section) ". ";
-}
+h2:before { 
+  counter-increment: section;  
+  content: counter(section) ". ";
+} 
+
+h3:before { 
+  counter-increment: subsection;
+  content: counter(section) "." counter(subsection) " ";
+ }
 
 hr.section{
     margin-left:0;
@@ -38,48 +27,21 @@ hr.section{
     
 }
 
-/* Overriding bioinfo.css */
-h2:first-letter {
-    font-weight: inherit;
-    font-size: inherit;
-    color: inherit;
-    background-color: inherit;
-}
 
 .menu_central {
     font-family: Verdana,Arial,Helvetica,sans-serif;
 }
 
-h3 {
-    margin-top: 2em;
-    margin-bottom: 0px;
-    margin-right:  -50px;
-    font-size:     12pt;
-    font-weight:   bold;
-    text-align:    left;
-}
 
-h3:before
-    {
-    counter-increment:subsection;
-    content:counter(section) "." counter(subsection) " ";
-    }
 
-p {
-    text-align: justify;
-    padding: 1px 0px 1px 0px;
-}
+
 
 p.equation {
     text-align: center;
     font-family:monospace;
 }
 
-p.title {
-    font-size:22px;
-    padding-top: 12px;
-    padding-bottom: 20px;    
-}
+
 
 .example{
     text-align: justify;
@@ -101,8 +63,8 @@ p.title {
 }
 
 div.table-of-contents{
-    border: 2px solid #f4ba31; 
-    margin-left: 30px;
+    border: 2px solid #FF9333; 
+    margin-left: 20px;
     width:50%;
     background-color: #FEFEFE; 
 }
@@ -150,13 +112,5 @@ ol li {
     
 }
 
-dt {
-    padding-top: 5px;
-    padding-left: 15px;
-    font-weight:bold;
-}
-dd {
- padding-top: 4px; 
- padding-bottom: 6px;
-}
+
 

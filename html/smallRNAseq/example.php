@@ -6,6 +6,7 @@
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
         <link type='text/css' rel='stylesheet' href='/Style/css/bioinfo.css' />
+	<script type="text/javascript" src="/scripts/bioinfo.js"></script>
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../js/header.js"></script>
@@ -13,23 +14,23 @@
     </head>
     <body>
         <div class="frametitle">
-            <h1 id="title">miRkwood small RNA-seq</h1>
+            <h1 id="title" onclick="loadLink('/mirkwood/smallRNAseq/index.php');">miRkwood small RNA-seq</h1>
         </div>
 
-        <div id="center_sup">
-            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-            <div class="tabs" id="menu_central" style="display:inline-block">
-                <?php include("./header_menu.txt") ?>
-            </div>
-            <div id="arborescence"></div>
+        <div class="tabs" id="menu_central" style="display:inline-block">
+            <?php include("./header_menu.txt") ?>
         </div>
+        <div id="arborescence"></div>
 
         <div id="main">
 
-            <p class='title'>Quick start</p>
+           
+<div id="mirkwood_title">Quick start</div>
 
             <p>This page covers the basics on how to get started
-            with miRkwood small RNA-seq. The main input of
+                                               with miRkwood small RNA-seq. A comprehensive user guide is to be found <a href="./help.php">here</a>.</p>
+
+<p>The main input of
             miRkwood is a set of reads (ranging from 15 nt to 35
             nt approximately) that have been previously mapped on
             a reference genome and that are stored in a file in

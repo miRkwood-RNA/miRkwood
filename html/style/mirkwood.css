@@ -5,7 +5,39 @@ span.urlbox {
     background-color: darkorange;
     color:white;
     font-size:1.2em;
-    font-weight:bold;
+    font-weight:normal;
     padding: 10px;
     margin: 10px;
 }
+
+.mirkwood_button { 
+  border-radius: 8px;
+  color: black; 
+  background: #ffffff;
+  padding: 10px 20px 10px 20px;
+  border: solid #888888 2px;
+  text-decoration: none;
+}         
+
+.mirkwood_button a:hover { 
+  background: #ffffff;
+  text-decoration: none;
+  color: orange;
+}
+
+.mirkwood_button a{ 
+text-decoration: none;
+color: black;
+} 
+
+#mirkwood_title{    
+    background-color: #fff;
+    padding-bottom: 0px;
+    text-align: left;
+    color: #32331D;
+    line-height: 16px;
+    padding-bottom: 10px;
+    font-size: 1.4em;
+    padding-top: 16px;
+    font-weight:bold;
+ }

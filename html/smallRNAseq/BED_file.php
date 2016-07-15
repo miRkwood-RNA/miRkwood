@@ -5,6 +5,7 @@
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
         <link type='text/css' rel='stylesheet' href='/Style/css/bioinfo.css' />
+	<script type="text/javascript" src="/scripts/bioinfo.js"></script>
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../js/header.js"></script>
@@ -12,20 +13,17 @@
     </head>
     <body>
         <div class="frametitle">
-            <h1 id="title">miRkwood small RNA-seq</h1>
+            <h1 id="title" onclick="loadLink('/mirkwood/smallRNAseq/index.php');">miRkwood small RNA-seq</h1>
         </div>
 
-        <div id="center_sup">
-            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-            <div class="tabs" id="menu_central" style="display:inline-block">
-                <?php include("./header_menu.txt") ?>
-            </div>
-            <div id="arborescence"></div>
+        <div class="tabs" id="menu_central" style="display:inline-block">
+            <?php include("./header_menu.txt") ?>
         </div>
+        <div id="arborescence"></div>
 
         <div id="main">
 
-            <p class='title'>How to prepare my input files ?</p>
+            <div id="mirkwood_title">How to prepare my input files ?</div>
 
             <p>The input of miRkwood is a set of reads produced by
             deep sequencing of small RNAs and mapped to a
@@ -114,7 +112,7 @@
 
             <br />
 
-            <a href="../../cgi-bin/mirkwood/web_scripts/BAMinterface.pl"><span class="urlbox">Run miRkwood</span></a> 
+           <span class="mirkwood_button"> <a href="../../cgi-bin/mirkwood/web_scripts/BAMinterface.pl">Run mirkwood</a></span> 
 
             <br /><br /><br />
 

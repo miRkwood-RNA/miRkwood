@@ -5,6 +5,7 @@
 		<link type='text/css' rel='stylesheet' href='./style/script.css' />
 		<link type='text/css' rel='stylesheet' href='./style/rna.css' />
         <link type='text/css' rel='stylesheet' href='../Style/css/bioinfo.css' />
+	<script type="text/javascript" src="/scripts/bioinfo.js"></script>
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="./js/header.js"></script>
@@ -14,16 +15,13 @@
 
     <body>
         <div class="frametitle">
-            <h1 id="title">miRkwood</h1>
+            <h1 id="title" onclick="loadLink('/mirkwood/index.php');">miRkwood</h1>
         </div>
 
-        <div id="center_sup">
-            <div id="link_home" style="display:inline-block"><a href="../index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-            <div class="tabs" id="menu_central" style="display:inline-block">
-                <?php include("./static/header_menu.txt") ?>
-            </div>
-            <div id="arborescence"></div>
+        <div class="tabs" id="menu_central" style="display:inline-block">
+            <?php include("./static/header_menu.txt") ?>
         </div>
+        <div id="arborescence"></div>
 
         <div id="main">
 

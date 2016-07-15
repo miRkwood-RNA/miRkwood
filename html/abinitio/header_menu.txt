@@ -1,7 +1,4 @@
 <ul id="menu">
-    <li class="onglet onglet_left" id="home">
-	    <a href="/mirkwood/abinitio/index.php">miRkwood <em>ab initio</em></a>
-    </li>
     <li class="onglet" id="web_server">
 	    <a href="/cgi-bin/mirkwood/web_scripts/interface.pl">web server</a>
 	</li>
