@@ -50,7 +50,7 @@ my $HTML_additional = '';
 my $main_contents;
 my $page = '';
 my $arborescence = "<a href='/'>home</a> &gt; ";
-$arborescence .= "<a href='/theme_page/rna.html'>RNA</a> &gt; ";
+$arborescence .= "<a href='/topic/rna.html'>RNA</a> &gt; ";
 $arborescence .= "<a href='/mirkwood/mirkwood.php'>mirkwood</a>";
 
 my $mirnas_results = '';
@@ -149,13 +149,10 @@ $page = <<"END_TXT";
         <h1 id="title">miRkwood small RNA-seq</h1>
     </div>
 
-    <div id="center_sup">
-        <div id="link_home" style="display:inline-block"><a href="/mirkwood/smallRNAseq/index.php" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-        <div class="tabs" id="menu_central" style="display:inline-block"> 
-            $header_menu
-        </div>
-        <div id="arborescence">$arborescence</div>
+    <div class="tabs" id="menu_central" style="display:inline-block"> 
+        $header_menu
     </div>
+    <div id="arborescence">$arborescence</div>
 
     <div id="main">
         $HTML_additional

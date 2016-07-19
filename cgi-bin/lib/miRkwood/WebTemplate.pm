@@ -276,24 +276,21 @@ sub get_HTML_page_for_content {
     }
 
     my $arborescence = "<a href='/'>home</a> &gt; ";
-    $arborescence .= "<a href='/theme_page/rna.html'>RNA</a> &gt; ";
+    $arborescence .= "<a href='/topic/rna.html'>RNA</a> &gt; ";
     $arborescence .= "<a href='/mirkwood/mirkwood.php'>mirkwood</a>";
 
     my $body = <<"END_TXT";
     <body>
         <div class="frametitle">
-            <h1 id="title">$title</h1>
+            <h1 id="title" onclick="window.location='/mirkwood/';">$title</h1>
         </div>
 
-        <div id="center_sup">
-            <div id="link_home" style="display:inline-block"><a href="$index_link" class="text_onglet"><img src="/Style/icon/home_w.png" alt="home_general"/></a></div>
-            <div class="tabs" id="menu_central" style="display:inline-block"> 
-                $header_menu
-            </div>
-            <div id="arborescence">$arborescence</div>
+        <div class="tabs" id="menu_central" style="display:inline-block"> 
+            $header_menu
         </div>
-        <div id="main">
-        
+        <div id="arborescence">$arborescence</div>
+
+        <div id="main">       
             $page
         </div>
         $footer
