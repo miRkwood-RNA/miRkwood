@@ -243,7 +243,7 @@ sub get_cgi_url {
     my @args = @_;
     my $page = shift @args;
     # dirname( $ENV{HTTP_REFERER} );
-    my $path = File::Spec->catfile($ENV{SERVER_NAME}, miRkwood::WebPaths->get_web_scripts(), $page);
+    my $path = File::Spec->catfile($ENV{SERVER_NAME} . ':' . $ENV{SERVER_PORT}, miRkwood::WebPaths->get_web_scripts(), $page);
     my $url  = 'http://'. $path;
     return $url;
 }
