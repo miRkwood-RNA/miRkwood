@@ -658,7 +658,6 @@ sub get_basic_informations {
 
 	my ( $self, @args ) = @_;
 
-	my @optional_fields = $self->get_optional_candidate_fields();
 	my $result = {};
 
     my @headers = keys %{$self};
