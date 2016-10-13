@@ -12,7 +12,6 @@ use miRkwood::Utils;
 
 sub get_headers {
     my ( $self, @args ) = @_;
-    my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @headers = qw{identifier mirbase_id position strand mirna_sequence mirna_length quality nb_reads};
     return @headers;
 }
