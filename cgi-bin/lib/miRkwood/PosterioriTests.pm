@@ -12,6 +12,7 @@ use miRkwood::Utils;
 
 use Log::Message::Simple qw[msg error debug];
 
+use File::Which;
 use File::Spec;
 use Carp;
 use Class::Struct;
