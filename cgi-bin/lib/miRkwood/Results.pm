@@ -169,18 +169,19 @@ sub convert_basic_to_pseudoXML {
 
 	my @headers;
     my @fields_to_truncate = qw{mfe mfei amfe};
-	my @optional_fields = miRkwood::Candidate->get_optional_candidate_fields();
+    my @optional_candidate_fields = miRkwood::Candidate->get_optional_candidate_fields();
+    my @optional_mirna_fields = miRkwood::Candidate->get_optional_mirna_fields();
 
     if ( $pipeline_type eq 'smallRNAseq' ){
         if ( $type eq 'known_miRNA' ){  # known miRNAs for pipeline smallRNAseq
             @headers = qw{name precursor_name position strand mirna_sequence mirna_length quality nb_reads identifier criteria_nb_reads};
         }
         else {  # new miRNAs for pipeline smallRNAseq
-            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'mirna_depth', 'weight', 'reads_distribution', 'mfei', 'nb_reads', @optional_fields, 'identifier', 'criteria_nb_reads' );
+            push @headers, ( 'name', 'position', 'strand', 'mirna_sequence', 'mirna_length', 'mirna_depth', 'weight', 'reads_distribution', 'mfei', 'nb_reads', @optional_candidate_fields, @optional_mirna_fields, 'identifier', 'criteria_nb_reads' );
         }
     }
     else {  # pipeline ab initio
-       push @headers, ( 'name', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_fields, 'image', 'identifier' );
+       push @headers, ( 'name', 'position', 'length', 'strand', 'quality', 'mfe', 'mfei', 'amfe', @optional_candidate_fields, @optional_mirna_fields, 'image', 'identifier' );
     }
 
     my $result = '<Sequence';

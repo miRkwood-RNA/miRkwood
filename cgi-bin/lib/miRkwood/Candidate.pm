@@ -626,7 +626,8 @@ INNER
 
 =method get_optional_candidate_fields
 
-Return the optional fields based on the current configuration
+  Return the optional fields for the candidate (miRNA precursor)
+  based on the current configuration
 
 =cut
 
@@ -638,6 +639,22 @@ sub get_optional_candidate_fields {
     if ( $cfg->param('options.randfold') ) {
         push @fields, ('shuffles');
     }
+
+    return @fields;
+}
+
+=method get_optional_mirna_fields
+
+  Return the optional fields for the miRNA
+  based on the current configuration
+
+=cut
+
+sub get_optional_mirna_fields {
+    my ( $self, @args ) = @_;
+    my @fields = ();
+    my $cfg    = miRkwood->CONFIG();
+
     if ( $cfg->param('options.align') ) {
         push @fields, ('alignment');
     }
