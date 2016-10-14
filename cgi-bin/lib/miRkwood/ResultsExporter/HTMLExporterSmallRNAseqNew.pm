@@ -31,12 +31,13 @@ sub get_headers {
 sub get_header {
     my ( $self, @args ) = @_;
     my $output = '<tr>';
+    my $left_border_cell = "class='left_border'";
     for my $header ( ('chromosome'), $self->get_headers() ) {
         if ( $header eq 'chromosome' ){
             $output .= "<th>chr</th>\n";
         }
         elsif ( $header eq 'mirna_sequence' ){
-            $output .= "<th>miRNA</th>\n";
+            $output .= "<th $left_border_cell>miRNA</th>\n";
         }
         elsif ( $header eq 'mirna_length' ){
             $output .= "<th>length</th>\n";

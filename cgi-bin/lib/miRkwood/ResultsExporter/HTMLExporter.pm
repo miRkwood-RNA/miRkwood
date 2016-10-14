@@ -30,6 +30,7 @@ sub export_candidate {
     my $read_cell = "class='read_cell'";
     my $star_cell = "class='star_cell'";
     my $alignment_cell = "class='alignment_cell'";
+    my $left_border_cell = "class='left_border'";
     my $anchor   = "${$candidate}{'name'}-${$candidate}{'position'}";
     my $contents = "<a href='#$anchor' class='nodecoration'>${$candidate}{'name'}</a>";
 
@@ -112,6 +113,9 @@ sub export_candidate {
                 $contents = "<font color='#12D0E5'>${$candidate}{$header}</font>";
             }
             $contents = "<td $read_cell><a href='$reads_file' class='nodecoration'>$contents</a></td>";
+        }
+        elsif ( $header eq 'mirna_sequence' ){
+            $contents = "<td $left_border_cell>$contents</td>";
         }
         else {
             $contents = "<td $non_clickable_cell>$contents</td>";

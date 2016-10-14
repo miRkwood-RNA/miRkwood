@@ -607,12 +607,15 @@ h3 .nodecoration
     cursor:pointer;
 }
 .star_cell:hover{
-   background-color: #FCF3C3;
-   cursor:pointer;
+    background-color: #FCF3C3;
+    cursor:pointer;
 }
 .alignment_cell:hover{
-   background-color: #E4F7E6;
-   cursor:pointer;
+    background-color: #E4F7E6;
+    cursor:pointer;
+}
+.left_border{
+    border-left: 2px solid black;
 }
 END_TXT
     return ($css);
