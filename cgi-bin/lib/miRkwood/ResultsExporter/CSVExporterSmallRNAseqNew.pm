@@ -12,7 +12,7 @@ sub get_csv_headers {
     my ( $self, @args ) = @_;
     my @optional_candidate_fields = miRkwood::Candidate->get_optional_candidate_fields();
     my @optional_mirna_fields = miRkwood::Candidate->get_optional_mirna_fields();
-    my @csv_headers = ( qw{name start_position end_position strand}, 
+    my @csv_headers = ( qw{name start_position end_position strand},
         qw{mirna_sequence mirna_length mirna_depth nb_alignments_for_miRNA weight},
         qw{quality nb_reads reads_distribution %GC mfe mfei amfe},
         @optional_candidate_fields,
