@@ -90,9 +90,10 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
 	table.appendChild(tbdy); //ajouter au tableau table
 	for (var i=0;i<rowsNumber;i++) // parcours nombre de ligne
 	{
-        var tr=document.createElement('tr'); 
+        var tr=document.createElement('tr');
+        var td=document.createElement('td');
         tbdy.appendChild(tr); //ajouter ligne
-        if (i!=0) 	
+        if (i!=0)
         {
             var checkbox = document.createElement('input');
             checkbox.type = "checkbox";
@@ -100,7 +101,6 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
             checkbox.value = "value";
             checkbox.id = "checkbox"+i;
             checkbox.setAttribute("class" , "allCheckbox");
-            var td=document.createElement('td');
             td.id = "checkboxSelect"+i;
             tr.appendChild(td);
             td.appendChild(checkbox);
@@ -112,7 +112,6 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
             checkbox.value = "value";
             checkbox.id = "checkboxSelect";
             checkbox.setAttribute('onclick',"checkboxSelect()");
-            var td=document.createElement('td');
             td.appendChild(checkbox);
 
             tr.appendChild(td);
