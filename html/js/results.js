@@ -103,7 +103,7 @@ results.prototype.getValuesByFactorName = function(factor)
  */
 results.prototype.getFactorsNamesList = function()
 {
-	var allNames = new Array( "position", "strand", "mirna_sequence", "mirna_length", "weight", "nb_reads", "reads_distribution", "quality", "length", "mfe", "mfei", "shuffles", "alignment", "precursor_name", "image" );
+	var allNames = new Array( "position", "strand", "quality", "precursor_name", "nb_reads", "reads_distribution", "mfe", "mfei", "shuffles", "mirna_sequence", "mirna_length", "weight", "length", "alignment", "image" );
 	var names = new Array();
 	for(var i = 0;i < allNames.length;i++)
 	{
@@ -111,7 +111,6 @@ results.prototype.getFactorsNamesList = function()
 		names.push(allNames[i]);
 	}
 	return names;
-	
 }
 
 /**
