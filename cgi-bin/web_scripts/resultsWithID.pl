@@ -78,7 +78,7 @@ if ($valid) {
 	my $body = '';
 	if ( $nb_results != 0 ) {
 		$body = <<"END_TXT";
-<body onload="main('all',true,'abinitio');">
+<body onload="main('all','abinitio');">
 
     <div class="frametitle">
         <h1 id="title">miRkwood <em>ab initio</em></h1>

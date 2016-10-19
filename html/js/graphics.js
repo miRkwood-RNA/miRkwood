@@ -1,13 +1,13 @@
 /**
  * Instantiation  de classe results.js
  */
-function main(id, displayOrphanHairpins,pipeline_type)
+function main(id,pipeline_type)
 {
 	myResults = new results(id);
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
     miRNAFeaturesNumber = myResults.getMiRNAFactorsNamesList().length;
-	createGrid('table',rowsNumber+1,columnsNumber+1,displayOrphanHairpins,miRNAFeaturesNumber,pipeline_type);// fonction permettant de créer le tableau par rapport au résultats
+	createGrid('table',rowsNumber+1,columnsNumber+1,miRNAFeaturesNumber,pipeline_type);// fonction permettant de créer le tableau par rapport au résultats
 	//#######plugin imgPreview########
 	jQuery.noConflict();
 	(function($){  
@@ -81,7 +81,7 @@ function colorOut(a,b)
 /**
  * création du tableau avec les résultats
  */
-function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins,miRNAFeaturesNumber,pipeline_type)
+function createGrid(id,rowsNumber,columnsNumber,miRNAFeaturesNumber,pipeline_type)
 {
 	var tar=document.getElementById(id); // div "table"
 	//tar.appendChild(div);
@@ -413,7 +413,7 @@ function exportTo(id, webroot, pipeline, mirna_type)
 }
 
 
-function sortingTable(id, displayOrphanHairpins)
+function sortingTable(id)
 {
 	document.getElementById('hrefposition').style.color= 'blue';
 	document.getElementById('hrefquality').style.color= 'black';
@@ -422,44 +422,28 @@ function sortingTable(id, displayOrphanHairpins)
 		document.getElementById('hrefposition').style.color= 'black';
 		document.getElementById('hrefquality').style.color= 'blue';
 	}
-	if( document.getElementById('displayAll') != null & document.getElementById('dontDisplayOrphanHairpins') != null)
-	{
-		document.getElementById('displayAll').style.color= 'black';
-		document.getElementById('dontDisplayOrphanHairpins').style.color= 'blue';
-		if (displayOrphanHairpins)
-		{
-			document.getElementById('displayAll').style.color= 'blue';
-			document.getElementById('dontDisplayOrphanHairpins').style.color= 'black';
-		}
-	}
 	var table = document.getElementById('table');
 	table.innerHTML = "";
-	main(id, displayOrphanHairpins);
+	main(id);
 }
 
 
 function sortBy(sortValue)
 {
-	var displayOrphanHairpins = true;   // true by default because of abinitio pipeline
-	var element = document.getElementById('dontDisplayOrphanHairpins');
-	if (element != null && element.className == 'on')
-	{
-		displayOrphanHairpins = false;
-	}
 	if (sortValue == 'position')
 	{	
 		document.getElementById('hrefquality').style.color= 'black';
 		document.getElementById('hrefquality').className='off';
 		document.getElementById('hrefposition').style.color= 'blue';
 		document.getElementById('hrefposition').className='on';
-		sortingTable('all',displayOrphanHairpins);
+		sortingTable('all');
 	} else 
 	{	
 		document.getElementById('hrefposition').style.color= 'black';
 		document.getElementById('hrefposition').className='off';
 		document.getElementById('hrefquality').style.color= 'blue';
 		document.getElementById('hrefquality').className='on';
-		sortingTable('all2',displayOrphanHairpins);
+		sortingTable('all2');
 	}
 	 	
 }
