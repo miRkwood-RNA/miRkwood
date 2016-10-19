@@ -159,7 +159,8 @@ pre
 {
 	text-align:center;
 	border: 1px dotted #bbb;
-	padding: .5em;
+	padding-left: .5em;
+	padding-right: .5em;
 	font-size: 12px;
 }
 #table td 
