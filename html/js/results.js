@@ -115,6 +115,21 @@ results.prototype.getFactorsNamesList = function()
 }
 
 /**
+ * list of features about the miRNA
+ */
+results.prototype.getMiRNAFactorsNamesList = function()
+{
+    var allNames = new Array( "mirna_sequence", "mirna_length", "weight", "alignment" );
+    var names = new Array();
+    for(var i = 0;i < allNames.length;i++)
+    {
+        if (document.getElementsByTagName('Sequence')[0].getAttribute(allNames[i])!= null)
+        names.push(allNames[i]);
+    }
+    return names;
+}
+
+/**
  * Retourner nom séquence à partir d'un indice
  */
 results.prototype.getSequenceNameByIndex = function(ind)
