@@ -161,6 +161,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins,miRNAFeatu
                     var td_mirna = document.createElement('th');
                     td_mirna.innerHTML = '<h3>miRNA </h3>' ;
                     td_mirna.setAttribute("colspan", miRNAFeaturesNumber);
+                    td_mirna.setAttribute("class" , "factors");
                     tr.appendChild(td_mirna); // ajoute colonne à la ligne
                     tbdy.appendChild(tr); // add the first header line to the table
 
