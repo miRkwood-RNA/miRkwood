@@ -195,7 +195,7 @@ function createGrid(id,rowsNumber,columnsNumber,miRNAFeaturesNumber,pipeline_typ
                 }
                 else if (value.toString() == 'quality') 
                 {
-                    td.innerHTML = '<h3 onclick ="sortingTable(\'all2\',false)"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
+                    td.innerHTML = '<h3 onclick ="sortingTable(\'all2\','+pipeline_type+')"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
                     td.setAttribute("rowspan", rowspanValue);
                 }
                 else if (value.toString() == 'alignment')
@@ -300,7 +300,7 @@ function createGrid(id,rowsNumber,columnsNumber,miRNAFeaturesNumber,pipeline_typ
             }
             if ((i==0)&&(j==0))
             {
-                td.innerHTML = '<h3 onclick ="sortingTable(\'all\',false)">Chr</h3>';
+                td.innerHTML = '<h3 onclick ="sortingTable(\'all\','+pipeline_type+')">Chr</h3>';
                 td.setAttribute("rowspan", rowspanValue);
             }
 
@@ -413,7 +413,7 @@ function exportTo(id, webroot, pipeline, mirna_type)
 }
 
 
-function sortingTable(id)
+function sortingTable(id,pipeline_type)
 {
 	document.getElementById('hrefposition').style.color= 'blue';
 	document.getElementById('hrefquality').style.color= 'black';
@@ -424,11 +424,11 @@ function sortingTable(id)
 	}
 	var table = document.getElementById('table');
 	table.innerHTML = "";
-	main(id);
+	main(id,pipeline_type);
 }
 
 
-function sortBy(sortValue)
+function sortBy(sortValue,pipeline_type)
 {
 	if (sortValue == 'position')
 	{	
@@ -436,14 +436,14 @@ function sortBy(sortValue)
 		document.getElementById('hrefquality').className='off';
 		document.getElementById('hrefposition').style.color= 'blue';
 		document.getElementById('hrefposition').className='on';
-		sortingTable('all');
+		sortingTable('all',pipeline_type);
 	} else 
 	{	
 		document.getElementById('hrefposition').style.color= 'black';
 		document.getElementById('hrefposition').className='off';
 		document.getElementById('hrefquality').style.color= 'blue';
 		document.getElementById('hrefquality').className='on';
-		sortingTable('all2');
+		sortingTable('all2',pipeline_type);
 	}
 	 	
 }
