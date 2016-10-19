@@ -167,7 +167,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins,miRNAFeatu
                     var tr=document.createElement('tr');
                     tbdy.appendChild(tr);
 
-                    td.innerHTML = '<h3>sequence</h3>' ;
+                    td.innerHTML = '<h3>SEQUENCE</h3>' ;
                 }
                 else if (value.toString() == 'mirna_length') 
                 {
