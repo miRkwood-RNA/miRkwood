@@ -1,12 +1,13 @@
 /**
  * Instantiation  de classe results.js
  */
-function main(id, displayOrphanHairpins)
+function main(id, displayOrphanHairpins,pipeline_type)
 {
 	myResults = new results(id);
 	rowsNumber = myResults.getSequencesNamesList().length; //récupération de la longueur du tableau à afficher(ligne)
 	columnsNumber = myResults.getFactorsNamesList().length;//nom de collone
-	createGrid('table',rowsNumber+1,columnsNumber+1,displayOrphanHairpins);// fonction permettant de créer le tableau par rapport au résultats
+    miRNAFeaturesNumber = myResults.getMiRNAFactorsNamesList().length;
+	createGrid('table',rowsNumber+1,columnsNumber+1,displayOrphanHairpins,miRNAFeaturesNumber,pipeline_type);// fonction permettant de créer le tableau par rapport au résultats
 	//#######plugin imgPreview########
 	jQuery.noConflict();
 	(function($){  
@@ -80,10 +81,17 @@ function colorOut(a,b)
 /**
  * création du tableau avec les résultats
  */
-function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
+function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins,miRNAFeaturesNumber,pipeline_type)
 {
 	var tar=document.getElementById(id); // div "table"
 	//tar.appendChild(div);
+
+    var rowspanValue = 2;
+    if ( pipeline_type == 'abinitio')
+    {
+        rowspanValue = 1;
+    }
+
 	var table=document.createElement('table');
 	var tbdy=document.createElement('tbody');
 	tbdy.id = 'cases';
@@ -113,7 +121,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
             checkbox.id = "checkboxSelect";
             checkbox.setAttribute('onclick',"checkboxSelect()");
             td.appendChild(checkbox);
-
+            td.setAttribute("rowspan", rowspanValue);
             tr.appendChild(td);
         }
 
@@ -146,30 +154,48 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
                 }else if (value.toString() == 'precursor_name') 
                 {
                     td.innerHTML = '<h3>miRbase name</h3>' ;
+                    td.setAttribute("rowspan", rowspanValue);
                 }
                 else if (value.toString() == 'mirna_sequence') 
                 {
-                    td.innerHTML = '<h3>miRNA </h3>' ;
+                    var td_mirna = document.createElement('th');
+                    td_mirna.innerHTML = '<h3>miRNA </h3>' ;
+                    td_mirna.setAttribute("colspan", miRNAFeaturesNumber);
+                    tr.appendChild(td_mirna); // ajoute colonne à la ligne
+                    tbdy.appendChild(tr); // add the first header line to the table
+
+                    var tr=document.createElement('tr');
+                    tbdy.appendChild(tr);
+
+                    td.innerHTML = '<h3>sequence</h3>' ;
                 }
                 else if (value.toString() == 'mirna_length') 
                 {
                     td.innerHTML = '<h3>LENGTH</h3>' ;
                 }
+                else if (value.toString() == 'weight') 
+                {
+                    td.innerHTML = '<h3>WEIGHT</h3>' ;
+                }
                 else if (value.toString() == 'strand')
                 {
                     td.innerHTML = '<h3>+/-</h3>' ;
+                    td.setAttribute("rowspan", rowspanValue);
                 }
                 else if (value.toString() == 'nb_reads')
                 {
                     td.innerHTML = '<h3>READS</h3>' ;
+                    td.setAttribute("rowspan", rowspanValue);
                 }
                 else if (value.toString() == 'reads_distribution')
                 {
                     td.innerHTML = '<h3>reads<br>distribution</h3>' ;
+                    td.setAttribute("rowspan", rowspanValue);
                 }
                 else if (value.toString() == 'quality') 
                 {
                     td.innerHTML = '<h3 onclick ="sortingTable(\'all2\',false)"   style="text-transform:uppercase;">'+value.toString()+'</h3>';
+                    td.setAttribute("rowspan", rowspanValue);
                 }
                 else if (value.toString() == 'alignment')
                 {
@@ -178,10 +204,12 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
                 else if ((value.toString() == 'mfe') || (value.toString() == 'mfei') || (value.toString() == 'amfe') )
                 {
                     td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ;
+                    td.setAttribute("rowspan", rowspanValue);
                 }
                 else 
                 {
                     td.innerHTML = '<h3 style="text-transform:uppercase;" >'+value.toString()+'</h3>' ; // ajouter la valeur à la cellule
+                    td.setAttribute("rowspan", rowspanValue);
                 }
 
             }
@@ -195,21 +223,21 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
                 var factor = myResults.getFactorsNamesList()[j-1];
 
                 if ( factor =='quality') 
-                {	
-                    var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices 				
+                {
+                    var value = myResults.getValueByFactor(i-1,'quality'); // appel fonction qui définit la valeur à partir des indices
                     var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
 
                     td.innerHTML = string;
                 }
                 else if ( factor =='reads_distribution')
                 {
-                    var value = myResults.getValueByFactor(i-1,'reads_distribution'); // appel fonction qui définit la valeur à partir des indices 				
+                    var value = myResults.getValueByFactor(i-1,'reads_distribution'); // appel fonction qui définit la valeur à partir des indices
                     var string = repeat("<img src='/mirkwood/style/star.png' alt='star' style='width:15px; height:15px;' /> 	 ", parseInt(value))
 
                     td.innerHTML = string;
                 }
                 else if ( factor =='image') //cas lien image
-                {	
+                {
                     var value = myResults.getValueByFactor(i-1,'image');
 
                     td.innerHTML = "<a  href='" +value + "'><img src='/mirkwood/style/loupe.png' alt='preview' style='width:15px; height:15px;' /></a></a>  "; // ajouter la valeur à la cellule
@@ -272,6 +300,7 @@ function createGrid(id,rowsNumber,columnsNumber,displayOrphanHairpins)
             if ((i==0)&&(j==0))
             {
                 td.innerHTML = '<h3 onclick ="sortingTable(\'all\',false)">Chr</h3>';
+                td.setAttribute("rowspan", rowspanValue);
             }
 
             tr.appendChild(td); // ajoute colonne à la ligne
