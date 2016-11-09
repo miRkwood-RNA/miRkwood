@@ -12,7 +12,7 @@ use miRkwood::Utils;
 
 sub get_headers {
     my ( $self, @args ) = @_;
-    my @headers = qw{identifier mirbase_id position strand mirna_sequence mirna_length quality nb_reads};
+    my @headers = qw{precursor_name mirbase_id position strand mirna_sequence mirna_length quality nb_reads};
     return @headers;
 }
 
