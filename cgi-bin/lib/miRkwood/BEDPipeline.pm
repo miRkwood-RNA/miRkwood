@@ -510,6 +510,7 @@ sub store_known_mirnas_as_candidate_objects {
     }
 
     ##### Read the GFF and links each precursor with its mature
+    # /!\ If a precursor does not have any mature, it will not appear in this hash
     open (my $GFF, '<', $gff_file) or die "ERROR while opening $gff_file : $!";
 
     while ( <$GFF> ){
@@ -561,9 +562,11 @@ sub store_known_mirnas_as_candidate_objects {
             $data->{$precursor_id}{'reads'}{"$read_start-$read_end"} = $field[4];
 
             my $mature_id = $mature_informations_for_precursor->{$precursor_id}{'mature_id'};
-            $data->{$precursor_id}{'matures'}{$mature_id}{'mature_name'}  = $mature_informations_for_precursor->{$precursor_id}{'mature_name'};
-            $data->{$precursor_id}{'matures'}{$mature_id}{'mature_start'} = $mature_informations_for_precursor->{$precursor_id}{'mature_start'};
-            $data->{$precursor_id}{'matures'}{$mature_id}{'mature_end'}   = $mature_informations_for_precursor->{$precursor_id}{'mature_end'};
+            if ( defined($mature_id) and $mature_id ne '' ){
+                $data->{$precursor_id}{'matures'}{$mature_id}{'mature_name'}  = $mature_informations_for_precursor->{$precursor_id}{'mature_name'};
+                $data->{$precursor_id}{'matures'}{$mature_id}{'mature_start'} = $mature_informations_for_precursor->{$precursor_id}{'mature_start'};
+                $data->{$precursor_id}{'matures'}{$mature_id}{'mature_end'}   = $mature_informations_for_precursor->{$precursor_id}{'mature_end'};
+            }
         }
         elsif ( $field[8] eq 'miRNA' ){
             if ( $field[14] =~ /Derives_from=([^;]+)/ ){
