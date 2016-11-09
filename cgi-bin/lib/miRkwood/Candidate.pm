@@ -383,7 +383,7 @@ sub candidateAsOrg {
         $mirna_type = 'known_miRNA';
         $known_miRNA = 1;
         my $mirbase_link = miRkwood::Utils::make_mirbase_link( $self->{'mirbase_id'} );
-        $mirbase_name = "** *miRBase name:* [[$mirbase_link][$self->{'identifier'}]]\n";
+        $mirbase_name = "** *miRBase name:* [[$mirbase_link][$self->{'precursor_name'}]]\n";
     }
 
     if ( $cfg->param('job.pipeline') eq 'smallRNAseq' ){

@@ -436,7 +436,7 @@ END_TXT
     my $mirbase_name = '';
     if ( defined( $candidate->{'mirbase_id'} ) ){
         my $mirbase_link = miRkwood::Utils::make_mirbase_link( $candidate->{'mirbase_id'} );
-        $mirbase_name = "<li><b>miRbase name:</b> <a href='$mirbase_link'>$candidate->{'identifier'}</a></li>";
+        $mirbase_name = "<li><b>miRbase name:</b> <a href='$mirbase_link'>$candidate->{'precursor_name'}</a></li>";
     }
 
     ### make page
