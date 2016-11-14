@@ -1160,7 +1160,9 @@ sub find_mirna_for_known_candidate {
             $mirna_end = $self->{'matures'}{$mirna_max}{'mature_end'};
         }
         $self->{'mirna_position'} = "$mirna_start-$mirna_end";
-        $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
+        if ( defined( $self->{'name'} ) and $self->{'name'} ne '' ){
+            $self->{'mirna_sequence'} = $genome_db->seq( $self->{'name'}, $mirna_start => $mirna_end );
+        }
         if ( $self->{'strand'} eq '-' ){
             $self->{'mirna_sequence'} = miRkwood::Utils::reverse_complement( $self->{'mirna_sequence'} );
         }
