@@ -186,7 +186,7 @@ sub print_reads_clouds {
 
     ### Print the header
     if ( defined($candidate->{'mirbase_id'}) ){
-        $output .= $candidate->{'identifier'}."\n";
+        $output .= $candidate->{'precursor_name'}."\n";
     }
 
     $output .= "Chromosome : $chromosome\n";
