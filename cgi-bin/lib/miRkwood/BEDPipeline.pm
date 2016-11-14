@@ -551,7 +551,7 @@ sub store_known_mirnas_as_candidate_objects {
         if ( $field[8] eq 'miRNA_primary_transcript' ){
             $precursor_id = $id;
 
-            $data->{$precursor_id}{'identifier'} = $name;
+            $data->{$precursor_id}{'identifier'} = $id;
             $data->{$precursor_id}{'precursor_name'} = $name;
             $data->{$precursor_id}{'mirbase_id'} = $id;
             $data->{$precursor_id}{'name'}  = $field[0];
