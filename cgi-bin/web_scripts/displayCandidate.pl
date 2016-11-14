@@ -237,7 +237,7 @@ END_TXT
     my $name = '';
     if ( defined($candidate->{'mirbase_id'}) ){
         my $mirbase_link = miRkwood::Utils::make_mirbase_link( $candidate->{'mirbase_id'} );
-        $name = "<li><b>miRbase name:</b> <a href='$mirbase_link'>$candidate->{'identifier'}</a></li>";
+        $name = "<li><b>miRbase name:</b> <a href='$mirbase_link'>$candidate->{'precursor_name'}</a></li>";
     }
 
     $html_contents = <<"END_TXT";
