@@ -12,32 +12,36 @@ use miRkwood::Utils;
 
 sub get_headers {
     my ( $self, @args ) = @_;
-    my @headers = qw{precursor_name mirbase_id position strand mirna_sequence mirna_length quality nb_reads};
+    my @headers = qw{precursor_name mirbase_id position strand quality nb_reads mirna_sequence mirna_length};
     return @headers;
 }
 
 
 sub get_header {
     my ( $self, @args ) = @_;
+    my $left_border_cell = "class='left_border'";
     my $output = '<tr>';
     for my $header ( ('chromosome'), $self->get_headers() ) {
         if ( $header eq 'chromosome' ){
-            $output .= "<th>chr</th>\n";
+            $output .= "<th rowspan='2'>chr</th>\n";
         }
         elsif ( $header eq 'mirbase_id' ){
-            $output .= "<th>miRBase ID</th>\n";
+            $output .= "<th rowspan='2'>miRBase ID</th>\n";
         }
         elsif ( $header eq 'mirna_sequence' ){
-            $output .= "<th>miRNA</th>\n";
+            $output .= "<th colspan='2' $left_border_cell>miRNA</th>\n";
+            $output .= "</tr>\n";
+            $output .= "<tr>\n";
+            $output .= "<th class='left_border'>sequence</th>\n";
         }
         elsif ( $header eq 'mirna_length' ){
             $output .= "<th>length</th>\n";
         }
         elsif ( $header eq 'nb_reads' ){
-            $output .= "<th>reads</th>\n";
+            $output .= "<th rowspan='2'>reads</th>\n";
         }
         else {
-            $output .= "<th>$header</th>\n";
+            $output .= "<th rowspan='2'>$header</th>\n";
         }
     }
     $output .= "</tr>\n";
