@@ -28,6 +28,9 @@ sub get_header {
         elsif ( $header eq 'mirbase_id' ){
             $output .= "<th rowspan='2'>miRBase ID</th>\n";
         }
+        elsif ( $header eq 'precursor_name' ){
+            $output .= "<th rowspan='2'>miRBase name</th>\n";
+        }
         elsif ( $header eq 'mirna_sequence' ){
             $output .= "<th colspan='2' $left_border_cell>miRNA</th>\n";
             $output .= "</tr>\n";
