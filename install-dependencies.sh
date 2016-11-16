@@ -10,7 +10,7 @@
 ########## Get options ###################################################################
 WEB_ONLY=
 CLI_ONLY=
-PATH=
+GIVEN_PATH=
 ROOT_PATH=
 
 while getopts 'cp:' OPTION
@@ -18,7 +18,7 @@ do
     case $OPTION in
     c)  CLI_ONLY=1
         ;;
-    p)  PATH=1
+    p)  GIVEN_PATH=1
         ROOT_PATH="$OPTARG"
         ;;
     ?)  printf "Usage : %s [-c] -p <mirkwood_path>\n" "$0"
@@ -29,7 +29,7 @@ do
     esac
 done
 
-if [ ! "$PATH" ]
+if [ ! "$GIVEN_PATH" ]
 then
     echo "No path supplied"
 	printf "Usage : %s [-c] -p <mirkwood_path>\n" "$0"
