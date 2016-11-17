@@ -92,7 +92,7 @@ echo "Install dependencies for both web version and CLI version of miRkwood"
 ##### Install Vienna package
 echo "... Install Vienna package"
 cp provisioning/roles/mirkwood-software/files/vienna-rna_2.1.6-1_amd64.deb /tmp/vienna-rna_2.1.6-1_amd64.deb
-dpkg -i /tmp/vienna-rna_2.1.6-1_amd64.deb
+sudo dpkg -i /tmp/vienna-rna_2.1.6-1_amd64.deb
 ln -s /usr/share/ViennaRNA/bin/b2ct /usr/bin/b2ct
 
 
