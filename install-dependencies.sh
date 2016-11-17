@@ -221,7 +221,7 @@ ln -s $RNAstemloop"-"$ARCH $RNAstemloop
 ##### Create symbolic links for programs
 echo "... Install Create symbolic links for programs"
 ln -s "/opt/VARNAv3-91.jar" $ROOT_PATH"/cgi-bin/programs/VARNA.jar"
-ln -s "/opt/miRdup" $ROOT_PATH"/cgi-bin/programs/miRdup-1.2"
+ln -s "/opt/miRdup" $ROOT_PATH"/cgi-bin/programs/miRdup-1.4"
 ln -s "/opt/tRNAscan-SE" $ROOT_PATH"/cgi-bin/programs/tRNAscan-SE"
 ln -s "/opt/RNAmmer" $ROOT_PATH"/cgi-bin/programs/rnammer"
 
