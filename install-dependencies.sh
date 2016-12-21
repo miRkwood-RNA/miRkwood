@@ -198,7 +198,7 @@ sudo apt-get install python-pip
 cp -r $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnashuffles /opt/
 
 # Build RNAshuffles
-pip /opt/rnashuffles
+pip install /opt/rnashuffles
 
 
 ##### Install Perl dependencies
