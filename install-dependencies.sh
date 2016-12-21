@@ -84,6 +84,17 @@ else
 fi
 
 
+##### Make sure 'wget' is installed
+WGET=/usr/bin/wget
+if [ ! -e $WGET ]
+then
+    echo "... Install wget"
+    sudo apt-get install wget
+else
+    echo "... wget is already installed"
+fi
+
+
 
 ########## Install dependencies for both web version and CLI version of miRkwood #########
 
