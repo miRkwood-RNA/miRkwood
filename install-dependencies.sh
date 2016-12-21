@@ -123,7 +123,7 @@ echo "... Install VARNA"
 sudo apt-get install default-jre
 
 # Download VARNA jar
-wget --directory-prefix=/opt/ http://varna.lri.fr/bin/VARNAv3-91.jar
+sudo wget --directory-prefix=/opt/ http://varna.lri.fr/bin/VARNAv3-91.jar
 
 
 ##### Install tRNAscan-SE (only needed for ab initio pipeline)
@@ -147,11 +147,11 @@ chown -R www-data:www-data "/opt/tRNAscan-SE"
 echo "... Install RNAmmer"
 # Install hmmer
 wget --directory-prefix=/tmp/  http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
-cd /opt/hmmer-2.3.2/
-tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
+sudo mkdir /opt/hmmer-2.3.2/
+sudo tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
 cd $ROOT_PATH
 make --directory=/opt/hmmer-2.3.2/
-ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23
+sudo ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23
 
 # Install Perl dependency
 sudo apt-get install libxml-simple-perl
@@ -160,22 +160,22 @@ sudo apt-get install libxml-simple-perl
 cp $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnammer-1.2.src.tar.Z /tmp/rnammer-1.2.src.tar.Z
 
 # Create RNAmmer directory
-mkdir /opt/RNAmmer
+sudo mkdir /opt/RNAmmer
 
 # Extract RNAmmer
-tar xf /tmp/rnammer-1.2.src.tar.Z --directory /opt/RNAmmer
+sudo tar xf /tmp/rnammer-1.2.src.tar.Z --directory /opt/RNAmmer
 
 # Add necessary module import to RNAmmer perl executable
-sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rnammer
+sudo sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rnammer
 
 # Update self-path in RNAmmer perl executable
-sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer
+sudo sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer
 
 # Update paths to HMMER in RNAmmer perl executable
-sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/' -i /opt/RNAmmer/rnammer
+sudo sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/' -i /opt/RNAmmer/rnammer
 
 # Make relevant user/group
-chown -R www-data:www-data "/opt/RNAmmer"
+sudo chown -R www-data:www-data "/opt/RNAmmer"
 
 
 ##### Install RNAshuffles
