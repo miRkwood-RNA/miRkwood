@@ -204,9 +204,10 @@ sub make_candidate_page {
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
     my $sequences_folder = miRkwood::Paths::get_sequences_folder_basename_for_CLI();
-    my $relative_sequences_folder = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), $sequences_folder);
+    my $relative_sequences_folder;
     my $absolute_sequences_folder = File::Spec->catfile( $abs_output_folder, $sequences_folder );
     if ( $pipeline_type eq 'smallRNAseq' ){
+        $relative_sequences_folder = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), $sequences_folder);
         if ( $mirna_type eq 'known_miRNA' ){
             $relative_sequences_folder = File::Spec->catdir( 
                 $relative_sequences_folder,
@@ -227,6 +228,9 @@ sub make_candidate_page {
                 miRkwood::Paths::get_basename_for_novel_miRNA()
             );
         }
+    }
+    else{
+        $relative_sequences_folder = File::Spec->catdir( File::Spec->updir(), $sequences_folder);
     }
 
     my $size = length $candidate->{'sequence'};
