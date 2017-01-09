@@ -90,7 +90,6 @@ sub make_html_from_results {
     my $abs_output_folder = shift @args;
     my $pipeline_type     = shift @args;
     my $mirna_type        = shift @args;
-    my $sequences_folder = miRkwood::Paths::get_sequences_folder_basename_for_CLI();
 
     my %results = %{$results};
     my ($css) = get_page_css();
@@ -114,7 +113,7 @@ sub make_html_from_results {
     } keys %results;
 
     foreach my $key ( @keys ){
-        $page .= make_candidate_page( $results{ $key }, $sequences_folder, $abs_output_folder, $pipeline_type, $mirna_type );
+        $page .= make_candidate_page( $results{ $key }, $abs_output_folder, $pipeline_type, $mirna_type );
     }
     my $html = get_simple_results_page( $page, $css );
 
@@ -201,10 +200,10 @@ Usage:
 sub make_candidate_page {
     my (@args)        = @_;
     my $candidate     = shift @args;
-    my $sequences_folder = shift @args;
     my $abs_output_folder = shift @args;
     my $pipeline_type = shift @args;
     my $mirna_type    = shift @args;
+    my $sequences_folder = miRkwood::Paths::get_sequences_folder_basename_for_CLI();
     my $relative_sequences_folder = File::Spec->catdir( File::Spec->updir(), File::Spec->updir(), $sequences_folder);
     my $absolute_sequences_folder = File::Spec->catfile( $abs_output_folder, $sequences_folder );
     if ( $pipeline_type eq 'smallRNAseq' ){
