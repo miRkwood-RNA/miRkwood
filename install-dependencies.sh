@@ -236,7 +236,6 @@ ln -s "/opt/RNAmmer" $ROOT_PATH"/cgi-bin/programs/rnammer"
 
 ##### Deploy miRkwood data
 echo "..... Deploy miRkwood data ................................."
-sudo mkdir $ROOT_PATH/cgi-bin/data
 sh $ROOT_PATH/cgi-bin/install-data.sh $ROOT_PATH/cgi-bin/data
 
 
