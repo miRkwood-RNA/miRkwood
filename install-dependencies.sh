@@ -49,7 +49,7 @@ MAKE=/usr/bin/make
 if [ ! -e $MAKE ]
 then
     echo "... Install make"
-    sudo apt-get install make
+    sudo apt-get -y install make
 else
     echo "... make is already installed"
 fi
@@ -60,7 +60,7 @@ GCOMP=/usr/bin/g++
 if [ ! -e $GCOMP ]
 then
     echo "... Install g++"
-    sudo apt-get install g++
+    sudo apt-get -y install g++
 else
     echo "... g++ is already installed"
 fi
@@ -71,7 +71,7 @@ UNZIP=/usr/bin/unzip
 if [ ! -e $UNZIP ]
 then
     echo "... Install unzip"
-    sudo apt-get install unzip
+    sudo apt-get -y install unzip
 else
     echo "... unzip is already installed"
 fi
@@ -82,7 +82,7 @@ WGET=/usr/bin/wget
 if [ ! -e $WGET ]
 then
     echo "... Install wget"
-    sudo apt-get install wget
+    sudo apt-get -y install wget
 else
     echo "... wget is already installed"
 fi
@@ -102,17 +102,17 @@ ln -s /usr/share/ViennaRNA/bin/b2ct /usr/bin/b2ct
 
 ##### Install build-essential
 echo "... Install build-essential"
-sudo apt-get install build-essential
+sudo apt-get -y install build-essential
 
 
 ##### Install bedtools
 echo "... Install bedtools"
-sudo apt-get install bedtools
+sudo apt-get -y install bedtools
 
 
 ##### Install NCBI Blast+
 echo "... Install ncbi-blast+"
-sudo apt-get install ncbi-blast+
+sudo apt-get -y install ncbi-blast+
 
 
 ##### Install miRdup
@@ -124,7 +124,7 @@ unzip -qq /tmp/miRdup_1.4.zip -d /opt/miRdup
 ##### Install VARNA
 echo "... Install VARNA"
 # Ensure the Java Runtime Environment is installed
-sudo apt-get install default-jre
+sudo apt-get -y install default-jre
 
 # Download VARNA jar
 sudo wget --directory-prefix=/opt/ http://varna.lri.fr/bin/VARNAv3-91.jar
@@ -158,7 +158,7 @@ make --directory=/opt/hmmer-2.3.2/
 sudo ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23
 
 # Install Perl dependency
-sudo apt-get install libxml-simple-perl
+sudo apt-get -y install libxml-simple-perl
 
 # Copy RNAmmer archive in /opt
 cp $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnammer-1.2.src.tar.Z /tmp/rnammer-1.2.src.tar.Z
@@ -185,7 +185,7 @@ sudo chown -R www-data:www-data "/opt/RNAmmer"
 ##### Install RNAshuffles
 echo "... Install RNAshuffles"
 # Ensure Python pip is installed
-sudo apt-get install python-pip
+sudo apt-get -y install python-pip
 
 # Copy RNAshuffles files
 cp -r $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnashuffles /opt/
@@ -196,18 +196,18 @@ pip install /opt/rnashuffles
 
 ##### Install Perl dependencies
 echo "... Install Perl dependencies via apt"
-sudo apt-get install libconfig-simple-perl
-sudo apt-get install libyaml-libyaml-perl
-sudo apt-get install libfile-which-perl
-sudo apt-get install libmime-lite-perl
-sudo apt-get install libimage-size-perl
-sudo apt-get install libfile-type-perl
-sudo apt-get install libfile-slurp-perl
-sudo apt-get install libarchive-zip-perl
+sudo apt-get -y install libconfig-simple-perl
+sudo apt-get -y install libyaml-libyaml-perl
+sudo apt-get -y install libfile-which-perl
+sudo apt-get -y install libmime-lite-perl
+sudo apt-get -y install libimage-size-perl
+sudo apt-get -y install libfile-type-perl
+sudo apt-get -y install libfile-slurp-perl
+sudo apt-get -y install libarchive-zip-perl
 
 # Ensure cpanm is available
 echo "... Install cpanm"
-sudo apt-get install cpanminus
+sudo apt-get -y install cpanminus
 
 # Install Perl dependencies from CPAN
 echo "... Install Perl dependencies from CPAN"
@@ -275,12 +275,12 @@ then
 
     ##### Install Apache (only needed for the Web service)
     echo "... Install Apache"
-    sudo apt-get install apache2
+    sudo apt-get -y install apache2
 
 
     ##### Install PHP (only needed for the Web service)
     echo "... Install PHP"
-    sudo apt-get install libapache2-mod-php5
+    sudo apt-get -y install libapache2-mod-php5
 
 
     ##### BioInfo virtual host
