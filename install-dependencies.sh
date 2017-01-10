@@ -11,32 +11,19 @@
 WEB_ONLY=
 CLI_ONLY=
 GIVEN_PATH=
-ROOT_PATH=
+ROOT_PATH=$(dirname $(readlink -f $0));
 
-while getopts 'cp:' OPTION
+while getopts 'c' OPTION
 do
     case $OPTION in
     c)  CLI_ONLY=1
         ;;
-    p)  GIVEN_PATH=1
-        ROOT_PATH="$OPTARG"
-        ;;
-    ?)  printf "Usage : %s [-c] -p <mirkwood_path>\n" "$0"
+    ?)  printf "Usage : %s [-c]\n" "$0"
         printf "   -c : install only requirements for CLI version\n"
-        printf "   -p <mirkwood_path> : path to miRkwood directory\n" 
         exit 2
         ;;
     esac
 done
-
-if [ ! "$GIVEN_PATH" ]
-then
-    echo "No path supplied"
-	printf "Usage : %s [-c] -p <mirkwood_path>\n" "$0"
-    printf "   -c : install only requirements for CLI version\n"
-    printf "   -p <mirkwood_path> : path to miRkwood directory\n" 
-	exit 1   
-fi
 
 
 cd $ROOT_PATH
@@ -44,7 +31,6 @@ cd $ROOT_PATH
 
 ########## Look for the architecture #####################################################
 ARCH=`uname -m`
-
 
 
 ########## Prerequisites #################################################################
@@ -230,7 +216,7 @@ ln -s $RNAstemloop"-"$ARCH $RNAstemloop
 
 
 ##### Create symbolic links for programs
-echo "... Install Create symbolic links for programs"
+echo "... Create symbolic links for programs"
 ln -s "/opt/VARNAv3-91.jar" $ROOT_PATH"/cgi-bin/programs/VARNA.jar"
 ln -s "/opt/miRdup" $ROOT_PATH"/cgi-bin/programs/miRdup-1.4"
 ln -s "/opt/tRNAscan-SE" $ROOT_PATH"/cgi-bin/programs/tRNAscan-SE"
