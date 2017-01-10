@@ -67,16 +67,13 @@ Retrieve ribosomal RNA masking information by running RNAmmer and parsing the ou
 sub get_rnammer_masking_information {
     my ( $sequences_file, $masking_folder ) = @_;
     my %rnammer_seqs;
-    if ( ! which( 'rnammer' ) ){
-        debug('[WARNING] rnammer is not installed. Cannot mask the rRNA with rnammer.', miRkwood->DEBUG());
-    }
-    else{
-        my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
-        my $kingdom = 'euk';
-        miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
-          or die('Problem when running RNAmmer');
-        %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
-    }
+
+    my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
+    my $kingdom = 'euk';
+    miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
+      or die('Problem when running RNAmmer');
+    %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
+
     return %rnammer_seqs;
 }
 

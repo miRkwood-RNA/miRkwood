@@ -557,15 +557,20 @@ sub run_rnammer_on_file {
     my ( $input, $kingdom, $output ) = @_;
     my $tmp_dir = tempdir( CLEANUP => 1 );
     my $rnammer_cmd = qw{};
-    $rnammer_cmd =
-      "$programs_paths{'rnammer'} "
-      . "-T $tmp_dir "          # Temporary directory
-      . "-S $kingdom "          # Kingdom
-      . "-m lsu,ssu,tsu "       # Molecule types
-      . "--gff $output "        # GFF output
-      . "< $input";
-    debug( "$rnammer_cmd", miRkwood->DEBUG() );
-    system($rnammer_cmd);
+    if ( -f $programs_paths{'rnammer'} ){
+        $rnammer_cmd =
+          "$programs_paths{'rnammer'} "
+          . "-T $tmp_dir "          # Temporary directory
+          . "-S $kingdom "          # Kingdom
+          . "-m lsu,ssu,tsu "       # Molecule types
+          . "--gff $output "        # GFF output
+          . "< $input";
+        debug( "$rnammer_cmd", miRkwood->DEBUG() );
+        system($rnammer_cmd);
+    }
+    else {
+        debug('[WARNING] rnammer is not installed. Cannot mask the rRNA with rnammer.', miRkwood->DEBUG());
+    }
     return ( -e $output );
 }
 
