@@ -46,14 +46,14 @@ Retrieve tRNA masking information by running tRNAscan-SE and parsing the output
 sub get_trna_masking_information {
     my ( $sequences_file, $masking_folder ) = @_;
     my %trna_seqs;
-    if ( ! which( 'tRNAscanSE' ) ){
-        debug('[WARNING] tRNAscanSE is not installed. Cannot mask the tRNA with tRNAscanSE.', miRkwood->DEBUG());
-    }
-    else{
-        my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
-        miRkwood::Programs::run_tRNAscanSE_on_file($sequences_file, $output
-        ) or die('Problem when running tRNAscanSE');
+
+    my $output = File::Spec->catfile( $masking_folder, 'trnascanse.out' );
+    my $file_created = miRkwood::Programs::run_tRNAscanSE_on_file($sequences_file, $output );
+    if ( $file_created ){
         %trna_seqs = miRkwood::Parsers::parse_tRNAscanSE_output($output);
+    }
+    else {
+        debug('[WARNING] Something went wrong with tRNAscanSE. No file created.', miRkwood->DEBUG());
     }
     return %trna_seqs;
 }

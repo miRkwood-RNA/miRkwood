@@ -533,16 +533,21 @@ sub run_tRNAscanSE_on_file {
     my ( $input, $output ) = @_;
     my $tRNAscanSE_cmd = qw{};
     my $tRNAscanSE_bin = $programs_paths{'tRNAscanSE'};
-    $tRNAscanSE_cmd =
-        "PERL5LIB=$tRNAscanSE_bin: "
-      . "$tRNAscanSE_bin/tRNAscan-SE "
-      . "$input "
-      . '--quiet '
-      . '--brief '
-      . '--forceow '
-      . "--output $output";
-    debug("$tRNAscanSE_cmd", miRkwood->DEBUG());
-    system($tRNAscanSE_cmd);
+    if ( -f $programs_paths{'rnammer'} ){
+        $tRNAscanSE_cmd =
+            "PERL5LIB=$tRNAscanSE_bin: "
+          . "$tRNAscanSE_bin/tRNAscan-SE "
+          . "$input "
+          . '--quiet '
+          . '--brief '
+          . '--forceow '
+          . "--output $output";
+        debug("$tRNAscanSE_cmd", miRkwood->DEBUG());
+        system($tRNAscanSE_cmd);
+    }
+    else {
+        debug('[WARNING] tRNAscanSE is not installed. Cannot mask the tRNA with tRNAscanSE.', miRkwood->DEBUG());
+    }
     return ( -e $output );
 }
 
