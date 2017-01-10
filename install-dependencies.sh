@@ -33,6 +33,13 @@ cd $ROOT_PATH
 ARCH=`uname -m`
 
 
+########## Update & upgrade ##############################################################
+echo "Update & upgrade"
+
+sudo apt-get -y update
+sudo apt-get -y upgrade
+
+
 ########## Prerequisites #################################################################
 
 echo "Check prerequisites"
