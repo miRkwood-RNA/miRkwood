@@ -70,9 +70,13 @@ sub get_rnammer_masking_information {
 
     my $output = File::Spec->catfile( $masking_folder, 'rnammer.out' );
     my $kingdom = 'euk';
-    miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output )
-      or die('Problem when running RNAmmer');
-    %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
+    my $file_created = miRkwood::Programs::run_rnammer_on_file( $sequences_file, $kingdom, $output );
+    if ( $file_created ){
+        %rnammer_seqs = miRkwood::Parsers::parse_rnammer_output($output);
+    }
+    else {
+        debug('[WARNING] Something went wrong with rnammer. No file created.', miRkwood->DEBUG());
+    }
 
     return %rnammer_seqs;
 }
