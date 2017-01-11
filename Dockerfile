@@ -74,7 +74,8 @@ RUN rm -f /home/mirkwood/cgi-bin/programs/RNAstemloop
 RUN ln -s /home/mirkwood/cgi-bin/programs/RNAstemloop-x86_64 /home/mirkwood/cgi-bin/programs/RNAstemloop
 
 ### Install miRdup
-RUN unzip -qq /home/mirkwood/provisioning/roles/mirkwood-software/files/miRdup_1.4.zip -d /opt/miRdup
+RUN wget --directory-prefix=/tmp/ http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.4.zip
+RUN unzip -qq /tmp/miRdup_1.4.zip -d /opt/miRdup
 
 ### Install rnammer
 # Install hmmer
