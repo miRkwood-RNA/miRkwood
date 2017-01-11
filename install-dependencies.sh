@@ -147,8 +147,9 @@ sed -re 's/\$\(HOME\)\//\/opt\/tRNAscan-SE\//g' -i /tmp/tRNAscan-SE-1.3.1/Makefi
 make --directory=/tmp/tRNAscan-SE-1.3.1/
 make install --directory=/tmp/tRNAscan-SE-1.3.1/
 
-# Make relevant user/group
+# Make relevant user/group and file mode
 chown -R www-data:www-data "/opt/tRNAscan-SE"
+sudo chmod -R +x /opt/tRNAscan-SE/bin/tRNAscanSE/
 
 
 ##### Install RNAmmer (only needed for ab initio pipeline)

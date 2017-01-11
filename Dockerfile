@@ -51,8 +51,9 @@ RUN sed -re 's/\$\(HOME\)\//\/opt\/tRNAscan-SE\//g' -i /tmp/tRNAscan-SE-1.3.1/Ma
 RUN make --directory=/tmp/tRNAscan-SE-1.3.1/
 RUN make install --directory=/tmp/tRNAscan-SE-1.3.1/
 
-# Make relevant user/group
+# Make relevant user/group and file mode
 RUN chown -R www-data:www-data "/opt/tRNAscan-SE"
+RUN chmod -R +x /opt/tRNAscan-SE/bin/tRNAscanSE/
 
 
 ##### Copy miRkwood code
