@@ -180,7 +180,7 @@ sudo sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rn
 sudo sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer
 
 # Update paths to HMMER in RNAmmer perl executable
-sudo sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/' -i /opt/RNAmmer/rnammer
+sudo sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23";/' -i /opt/RNAmmer/rnammer
 
 # Make relevant user/group
 sudo chown -R www-data:www-data "/opt/RNAmmer"

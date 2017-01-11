@@ -102,7 +102,7 @@ RUN sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rna
 RUN sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer
 
 # Update paths to HMMER in RNAmmer perl executable
-RUN sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/' -i /opt/RNAmmer/rnammer
+RUN sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23";/' -i /opt/RNAmmer/rnammer
 
 # Make relevant user/group
 RUN chown -R www-data:www-data "/opt/RNAmmer"
