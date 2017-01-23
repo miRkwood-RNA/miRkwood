@@ -147,12 +147,12 @@ while ( <$BED> ){
 close $BED;
 
 ( -e $genome_file ) or die("Genome file $genome_file is not a file");
-if ( $genome_file =~ /([^\/]+)[.](fa|fasta)/ ){
+if ( $genome_file =~ /([^\/]+)[.](fa|fasta|dat)/ ){
     $species = $1;
 }
 
 my $basename_bed = '';
-if ( $bed_file =~ /.*\/([^\/]+)[.]bed/ ){
+if ( $bed_file =~ /.*\/([^\/]+)[.](bed|dat)/ ){
     $basename_bed = $1;
 }
 
