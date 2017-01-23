@@ -493,7 +493,7 @@ sub store_known_mirnas_as_candidate_objects {
     my $candidates_dir = miRkwood::Paths::get_known_candidates_dir_from_job_dir( $job_dir );
     my $cfg            = miRkwood->CONFIG();
     my $species        = $cfg->param('job.plant');
-    my $gff_file       = File::Spec->catfile( miRkwood::Paths->get_data_path(), "miRBase/${species}_miRBase.gff3");
+    my $gff_file       = $cfg->param('options.mirbase_gff');
 
     my @field;
     my ($id, $name);
