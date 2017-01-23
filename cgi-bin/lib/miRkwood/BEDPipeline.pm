@@ -64,7 +64,7 @@ sub run_pipeline {
     my $annotation_gff    = $cfg->param( 'options.annotation_gff' );
     my @annotation_gff    = split( /\&/, $annotation_gff );
     foreach my $gff ( @annotation_gff ){
-        if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
+        if ( $gff =~ /[\/\\]([^\/\\]+)[.](gff3?|dat)/ ){
             push @list_of_BED_files, '_'.$1;
         }
     }

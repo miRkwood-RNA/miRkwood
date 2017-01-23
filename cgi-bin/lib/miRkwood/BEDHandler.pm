@@ -75,7 +75,7 @@ sub filterBEDfile {
                 $i++;
 
                 my $basename_gff = '';
-                if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
+                if ( $gff =~ /[\/\\]([^\/\\]+)[.](gff3?|dat)/ ){
                     $basename_gff .= $1;
                 }
                 my $input_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_".($i-1).'.bed');
