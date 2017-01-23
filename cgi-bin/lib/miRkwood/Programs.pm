@@ -24,7 +24,7 @@ sub init_programs{
     my %programs_config = miRkwood::PROGRAMS_CONFIG();
     my $mirkwood_local_programs = miRkwood::Paths::get_local_programs_path();
     while (my ($key, $value) = each %programs_config) {
-        $value =~ s/\${local_programs}/$mirkwood_local_programs/g;
+        $value =~ s/\$\{local_programs\}/$mirkwood_local_programs/g;
         $programs_paths{$key} = $value;
     }
     $programs_paths{'vienna_progs'} = get_Vienna_program_path($programs_config{'rnafold'});
