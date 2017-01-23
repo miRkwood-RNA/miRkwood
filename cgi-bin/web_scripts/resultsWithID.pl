@@ -62,9 +62,9 @@ if ($valid) {
 	my $HTML_results = '';
 	my $nb_results = 0;
     my $pdf_export = '';
-    if ( which( 'pandoc' ) ){
-        $pdf_export = "<input type='radio' name='export' id='export-pdf' value='pdf' />&#160;<label for='export-pdf'>full report in PDF format</label><br/>";
-    }
+    #~ if ( which( 'pandoc' ) ){
+        #~ $pdf_export = "<input type='radio' name='export' id='export-pdf' value='pdf' />&#160;<label for='export-pdf'>full report in PDF format</label><br/>";
+    #~ }
 	unless ( miRkwood::Results->is_job_finished($id_job) ) {
 		$HTML_additional .= "<p class='warning'>Still processing...</p>";
 	} else {
