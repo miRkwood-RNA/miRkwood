@@ -3,7 +3,18 @@
 # PODNAME: mirkwood-bed.pl
 # ABSTRACT: miRkwood - A micro-RNA analysis pipeline for sRNAseq analysis
 
+my $script_directory;
+my $lib_directory;
+
+BEGIN {
+    use File::Spec;
+    use FindBin;
+    $script_directory = $FindBin::Bin;
+    $lib_directory = File::Spec->catdir( $script_directory, File::Spec->updir(), 'lib');
+}
+
 use lib '../lib/';
+use lib $lib_directory;
 
 use warnings;
 use strict;

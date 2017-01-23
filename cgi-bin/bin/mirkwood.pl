@@ -3,7 +3,18 @@
 # PODNAME: mirkwood.pl
 # ABSTRACT: miRkwood - A micro-RNA analysis pipeline
 
+my $script_directory;
+my $lib_directory;
+
+BEGIN {
+    use File::Spec;
+    use FindBin;
+    $script_directory = $FindBin::Bin;
+    $lib_directory = File::Spec->catdir( $script_directory, File::Spec->updir(), 'lib');
+}
+
 use lib '../lib/';
+use lib $lib_directory;
 
 use warnings;
 use strict;
@@ -11,7 +22,6 @@ use strict;
 use Pod::Usage;
 use Getopt::Long;
 use File::Copy;
-use File::Spec;
 
 my $man  = 0;
 my $help = 0;
