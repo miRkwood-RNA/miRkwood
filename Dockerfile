@@ -26,6 +26,7 @@ RUN apt-get -y install libarchive-zip-perl
 RUN cpanm LWP::UserAgent
 RUN cpanm Bio::DB::Fasta
 RUN cpanm Inline::CPP
+RUN cpanm Log::Message::Simple
 
 
 ##### Install dependencies not provided with miRkwood ################

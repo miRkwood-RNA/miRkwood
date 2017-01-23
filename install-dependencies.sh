@@ -219,6 +219,7 @@ echo "..... Install Perl dependencies from CPAN .................."
 sudo cpanm Inline::CPP
 sudo cpanm LWP::UserAgent
 sudo cpanm Bio::DB::Fasta
+sudo cpanm Log::Message::Simple
 
 
 ##### Instal local RNAstemloop
