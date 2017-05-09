@@ -1,0 +1,10 @@
+[MESSAGES CONTROL]
+disable=C
+
+[REPORTS]
+output-format=parseable
+reports=no
+comment=no
+
+[FORMAT]
+max-line-length=100

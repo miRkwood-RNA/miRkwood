@@ -1,0 +1,17 @@
+---
+# file: rnashuffles.yml
+
+- name: Ensure Python pip is installed
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - python-pip
+
+- name: Copy RNAshuffles files
+  copy:
+    src=rnashuffles
+    dest=/opt/
+
+- name: Build RNAshuffles
+  pip:
+    name='/opt/rnashuffles'
+

@@ -1,0 +1,25 @@
+---
+# file: hmmer.yml
+
+- name: Download HMMER2 archive
+  get_url:
+    dest=/tmp/hmmer-2.3.2.tar.gz
+    url=http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
+
+- name: Extract HMMER2
+  command: tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
+  register: command_result
+  failed_when: "'FAILED' in command_result.stderr"
+
+- name: Configure HMMER2
+  command: ./configure --enable-threads
+    chdir=/opt/hmmer-2.3.2/
+
+- name: Build HMMER2
+  command: make --directory=/opt/hmmer-2.3.2/
+
+- name: Install HMMER2
+  file:
+    src=/opt/hmmer-2.3.2/src/hmmsearch
+    dest=/usr/bin/hmmsearch23
+    state=link

@@ -1,0 +1,53 @@
+---
+# file: rnammer.yml
+
+- name: Check if HMMER2 is installed
+  stat:
+    path=/usr/bin/hmmsearch23
+    follow=true
+  register: hmmer
+
+- include: hmmer.yml
+  when: hmmer is defined and hmmer.stat.exists == false
+
+- name: Install Perl dependency XML::Simple
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - libxml-simple-perl
+
+- name: Copy RNAmmer archive to remote
+  copy:
+    src: rnammer-1.2.src.tar.Z
+    dest: /tmp/rnammer-1.2.src.tar.Z
+
+- name: Create RNAmmer directory
+  file:
+    dest: /opt/RNAmmer
+    state: directory
+
+- name: Extract RNAmmer
+  command: tar xf /tmp/rnammer-1.2.src.tar.Z --directory /opt/RNAmmer
+  register: command_result
+  failed_when: "'FAILED' in command_result.stderr"
+
+- name: Add necessary module import to RNAmmer perl executable
+  replace:
+    dest=/opt/RNAmmer/rnammer
+    regexp='(use Getopt::Long;)'
+    replace='use File::Basename;\n\1'
+    backup=yes
+
+- name: Update self-path in RNAmmer perl executable
+  replace:
+    dest=/opt/RNAmmer/rnammer
+    regexp='"/usr/cbs/bio/src/rnammer-1.2"'
+    replace='dirname(__FILE__)'
+    backup=yes
+
+- name: Update paths to HMMER in RNAmmer perl executable
+  replace:
+    dest=/opt/RNAmmer/rnammer
+    regexp='\$HMMSEARCH_BINARY\s?=.*'
+    replace='$HMMSEARCH_BINARY="/usr/bin/hmmsearch23";'
+    backup=yes
+
