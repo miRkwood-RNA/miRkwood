@@ -57,10 +57,14 @@ RUN chown -R www-data:www-data "/opt/tRNAscan-SE"
 RUN chmod -R +x /opt/tRNAscan-SE/bin/tRNAscanSE/
 
 
-##### Copy miRkwood code
+##### Get miRkwood code
 RUN rm -Rf /home/mirkwood/
-COPY ./cgi-bin/ /home/mirkwood/cgi-bin/
-COPY ./provisioning/ /home/mirkwood/provisioning/
+
+RUN wget --directory-prefix=/home/ https://github.com/miRkwood-RNA/miRkwood/archive/master.zip
+
+RUN unzip -qq /home/master.zip -d /home/
+
+RUN mv /home/miRkwood-master/ /home/mirkwood/
 
 
 ##### Install dependencies provided with miRkwood ####################
