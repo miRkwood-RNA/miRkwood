@@ -11,6 +11,7 @@ RUN apt-get -y install unzip
 RUN apt-get -y install cpanminus
 RUN apt-get -y install wget
 RUN apt-get -y install default-jre --fix-missing
+RUN apt-get -y install samtools
 
 
 ##### Install Perl modules ###########################################
