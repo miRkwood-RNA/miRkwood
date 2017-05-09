@@ -10,7 +10,7 @@ use File::Which;
 # Date : 2014-11-27
 # This script converts a BAM file into a BED file for use by miRkwood.
 #
-# Dependancies : samtools, perl module File::Which
+# Dependencies : samtools, perl module File::Which
 # Make sure to have it installed in your PATH.
 # For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.
 ################################################################################
@@ -41,7 +41,7 @@ Options :
     -max  : keep only reads with length <= max (default 25)
     -help : display this message and quit
 
-Dependancies : samtools
+Dependencies : samtools
 Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.
 
 EOF
