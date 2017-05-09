@@ -1,7 +1,0 @@
-graft test
-graft shuffles
-global-exclude *.pyc
-global-exclude *~
-global-exclude *Analyser.py
-global-exclude *ParameterGenerator.py
-global-exclude *Task.py
