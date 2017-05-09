@@ -210,3 +210,82 @@ or
 `sudo yum install ncbi-blast+`
 
 
+Usage with Docker
+-----------------
+
+If you choose to use Docker you won't have to deal with installing 
+miRkwood dependencies. All you will have to install is Docker
+(https://docs.docker.com/engine/installation/).
+
+A Docker image for miRkwood is stored at: https://hub.docker.com/r/iguigon/mirkwood/
+You can download miRkwood image with:
+sudo docker pull iguigon/mirkwood
+
+
+Usage:
+
+1. Abinitio pipeline:
+
+Here is an example of command line for abinitio pipeline:
+
+sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
+    iguigon/mirkwood \
+    perl -I/home/mirkwood/cgi-bin/lib/  /home/mirkwood/cgi-bin/bin/mirkwood.pl \
+    --input /home/mapping/input/sequenceSomething.fas \
+    --output /home/mapping/output/results_abinitio \
+    --filter-rrna --filter-trna --varna
+
+Type the following command for detailed help on the command options:
+sudo docker run iguigon/mirkwood perl -I/home/mirkwood/cgi-bin/lib/  /home/mirkwood/cgi-bin/bin/mirkwood.pl --help
+
+
+2. SmallRNAseq pipeline:
+
+miRkwood smallRNAseq pipeline takes as input a BED file with the following syntax:
+
+1    18092    18112    SRR051927.5475072    1    -
+1    18094    18118    SRR051927.2544175    2    +
+1    18096    18119    SRR051927.3033336    1    +
+1    18100    18124    SRR051927.172198     9    +
+
+In this file, each line is a unique read.
+The fields are, from left to right: name of the chromosome, starting position,
+ending position, read identifier, number of occurrences of the read in the data, strand.
+Positions follow the BED numbering convention: the first base of the chromosome is
+considered position 0 (0-based position) and the feature does not include the stop position.
+
+You can convert a BAM file into the needed BED format with our custom script:
+sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
+    iguigon/mirkwood \
+    perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/scripts/mirkwood-bam2bed.pl \
+    --in /home/mapping/input.bam \
+    --bed /home/mapping/output.bed \
+    --min 18 \
+    --max 25
+
+Type the following command for detailed help on the command options:
+sudo docker run iguigon/mirkwood perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/scripts/mirkwood-bam2bed.pl --help
+
+
+Here is an example of command line for smallRNAseq pipeline:
+
+sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
+    iguigon/mirkwood \
+    perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/bin/mirkwood-bed.pl \
+    --input /home/mapping/input/sample.bed \
+    --output /home/mapping/output/results_smallRNAseq \
+    --genome /home/mapping/input/my_genome.fasta \
+    --mirbase /home/mapping/input/my_mirbase_file.gff3 \
+    --gff /home/mapping/input/my_annotations_file.gff \
+    --min-read-positions-nb 0 --max-read-positions-nb 5 --align
+
+Type the following command for detailed help on the command options:
+sudo docker run iguigon/mirkwood perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/bin/mirkwood-bed.pl --help
+
+
+With the -v /your/mapping/repertory/:/home/mapping/ parameter,
+Docker will mount your local folder /your/mapping/repertory/ into the container under /home/mapping/.
+Make sure you have stored all your needed input files in this folder.
+Results files will be stored here as well.
+
+
