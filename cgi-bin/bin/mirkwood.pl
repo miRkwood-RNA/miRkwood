@@ -134,9 +134,9 @@ perl -I/{miRkwood_path}/cgi-bin/lib/ mirkwood.pl [options]
 
 =head1 OPTIONS
 
-=over 8
-
 =head2 Mandatory options
+
+=over 8
 
 =item B<--input>
 
@@ -146,7 +146,11 @@ Path to the fasta file.
 
 Output directory. If non existing it will be created. The directory must be empty.
 
+=back
+
 =head2 Additional options
+
+=over 8
 
 =item B<--both-strands>
 
