@@ -228,13 +228,13 @@ Here is an example of command line for abinitio pipeline:
 
 sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
     iguigon/mirkwood \
-    perl -I/home/mirkwood/cgi-bin/lib/  /home/mirkwood/cgi-bin/bin/mirkwood.pl \
+    ./mirkwood.pl \
     --input /home/mapping/input/sequenceSomething.fas \
     --output /home/mapping/output/results_abinitio \
     --filter-rrna --filter-trna --varna
 
 Type the following command for detailed help on the command options:
-sudo docker run iguigon/mirkwood perl -I/home/mirkwood/cgi-bin/lib/  /home/mirkwood/cgi-bin/bin/mirkwood.pl --help
+sudo docker run iguigon/mirkwood perl ./mirkwood.pl --help
 
 
 2. SmallRNAseq pipeline:
@@ -255,21 +255,21 @@ considered position 0 (0-based position) and the feature does not include the st
 You can convert a BAM file into the needed BED format with our custom script:
 sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
     iguigon/mirkwood \
-    perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/scripts/mirkwood-bam2bed.pl \
+    ./mirkwood-bam2bed.pl \
     --in /home/mapping/input.bam \
     --bed /home/mapping/output.bed \
     --min 18 \
     --max 25
 
 Type the following command for detailed help on the command options:
-sudo docker run iguigon/mirkwood perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/scripts/mirkwood-bam2bed.pl --help
+sudo docker run iguigon/mirkwood ./mirkwood-bam2bed.pl --help
 
 
 Here is an example of command line for smallRNAseq pipeline:
 
 sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
     iguigon/mirkwood \
-    perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/bin/mirkwood-bed.pl \
+    ./mirkwood-bed.pl \
     --input /home/mapping/input/sample.bed \
     --output /home/mapping/output/results_smallRNAseq \
     --genome /home/mapping/input/my_genome.fasta \
@@ -278,7 +278,7 @@ sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
     --min-read-positions-nb 0 --max-read-positions-nb 5 --align
 
 Type the following command for detailed help on the command options:
-sudo docker run iguigon/mirkwood perl -I/home/mirkwood/cgi-bin/lib/ /home/mirkwood/cgi-bin/bin/mirkwood-bed.pl --help
+sudo docker run iguigon/mirkwood ./mirkwood-bed.pl --help
 
 
 With the -v /your/mapping/repertory/:/home/mapping/ parameter,
