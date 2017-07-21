@@ -39,10 +39,8 @@ more advanced IT tasks such as continuous deployments or zero downtime rolling u
 
 3. Install miRkwood dependencies
 
-- Clone the miRkwood repository on the Inria Sequoia forge
-    `svn checkout svn+ssh://scm.gforge.inria.fr/svnroot/sequoia/pipelineMiRNA/web/ mirkwood`
-
-(Note that miRkwood uses SVN externals to fetch some provisionning dependencies)
+- Clone the miRkwood repository on the gitHub repository
+    `git clone https://github.com/miRkwood-RNA/miRkwood.git`
 
 - Run Vagrant at the miRkwood repository root
     `vagrant up`
