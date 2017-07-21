@@ -1,0 +1,61 @@
+<tool id="mirkwood_abinitio" name="miRkwood ab initio" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command interpreter="perl"><![CDATA[mirkwood_abinitio_wrapper.pl
+    --log ${logfile}
+    --zip ${zip}
+    --html ${results_html}
+    
+    --input ${fasta}
+    --output "miRkwood_output"
+    
+    #if $advanced.advanced_options == "yes"
+        $advanced.shuffles
+        $advanced.filter_mfei
+        $advanced.align
+        $advanced.both_strands
+        $advanced.filter_trna
+        $advanced.filter_rrna
+        $advanced.varna
+    #end if
+
+    ]]></command>
+    <inputs>
+        <param format="fasta" name="fasta" type="data" label="fasta sequences" help="--input: one or several sequence(s) (FASTA format)" />
+        <conditional name="advanced">
+            <param name="advanced_options" type="select" label="Advanced options">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="yes">
+                <param type="boolean" name="shuffles" truevalue="--shuffles" falsevalue="" checked="false" label="Compute thermodynamic stability (shuffled sequences)" />
+                <param type="boolean" name="filter_mfei" truevalue="--filter-mfei" falsevalue="" checked="true" label="Select only sequences with MFEI &lt; -0.6" />
+                <param type="boolean" name="align" truevalue="--align" falsevalue="" checked="true" label="Flag conserved mature miRNAs (alignment with miRBase + miRdup)" />
+                <param type="boolean" name="both_strands" truevalue="--both-strands" falsevalue="" checked="false" label="Scan both strands" />
+                <param type="boolean" name="filter_trna" truevalue="--filter-trna" falsevalue="" checked="false" label="Filter out tRNAs (using tRNAscan-SE)" />
+                <param type="boolean" name="filter_rrna" truevalue="--filter-rrna" falsevalue="" checked="false" label="Filter out ribosomal RNAs (using RNAmmer)" />
+                <param type="boolean" name="varna" truevalue="--varna" falsevalue="" checked="false" label="Allow the structure generation using Varna" />
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data format="zip" name="zip" label="ZIP Output"/>
+        <data format="txt" name="logfile" label="Log"/>
+        <data format="html" name="results_html" label="HTML results"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="fasta" value="sequenceSomething.fas" />
+            <output name="output_html" file="extra_files.html" />
+        </test>
+    </tests>
+    <help><![CDATA[
+        miRkwood ab initio allows to scan a genomic sequence (up to 100,000 nt) and find all potential microRNAs.
+    ]]></help>
+    <citations>
+        <citation> </citation>
+    </citations>
+</tool>
