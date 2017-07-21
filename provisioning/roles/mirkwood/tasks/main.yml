@@ -1,0 +1,88 @@
+--- 
+# Deploys miRkwood
+
+- name: Install Perl dependencies
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - libconfig-simple-perl
+    - libyaml-libyaml-perl
+    - libfile-which-perl
+    - libmime-lite-perl
+
+- name: Ensure cpanm is available
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - cpanminus
+
+- name: Install Perl dependencies from CPAN
+  cpanm: name={{ item }}
+  with_items:
+    - Inline::CPP
+    - Bio::DB::Fasta
+    - Devel::Size
+    - PadWalker
+    - Archive::Zip
+
+- name: Check if miRkwood directory is deployed
+  stat:
+    path={{ mirkwood_path }}
+    follow=true
+  register: mirkwood_deployed
+  tags:
+   - post_deploy
+
+- name: Install local RNAstemloop
+  file:
+    src={{ mirkwood_path }}/programs/RNAstemloop-{{ architecture }}
+    dest={{ mirkwood_path }}/programs/RNAstemloop
+    state=link
+  when: mirkwood_deployed is defined and mirkwood_deployed.stat.exists == true
+  tags:
+   - post_deploy
+
+- name: Make relevant users/groups for local programs
+  file:
+    path=/opt/{{ item }}
+    owner=www-data
+    group=www-data
+    recurse=yes
+  when: mirkwood_deployed is defined and mirkwood_deployed.stat.exists == true
+  with_items:
+    - tRNAscan-SE
+    - RNAmmer
+
+- name: Make programs for local programs
+  file:
+    src=/opt/{{ item.path }}
+    dest={{ mirkwood_path }}/programs/{{ item.dest }}
+    state=link
+  when: mirkwood_deployed is defined and mirkwood_deployed.stat.exists == true
+  with_items:
+    - { path: 'VARNAv3-91.jar', dest: 'VARNA.jar' }
+    - { path: 'miRdup', dest: 'miRdup-1.4' }
+    - { path: 'tRNAscan-SE', dest: 'tRNAscan-SE' }
+    - { path: 'RNAmmer', dest: 'rnammer' }
+  tags:
+   - post_deploy
+
+- name: Deploy miRkwood data
+  command: "{{ mirkwood_path }}/install-data.sh {{ mirkwood_path }}/data"
+  when: mirkwood_deployed is defined and mirkwood_deployed.stat.exists == true
+  tags:
+   - post_deploy
+
+- name: Create results directory
+  file:
+    path={{ mirkwood_results_path }}
+    state=directory
+    group=www-data
+  tags:
+   - post_deploy
+
+- name: Make results directory executable
+  file:
+    path: "{{ mirkwood_results_path }}"
+    mode: 0777
+    recurse: yes
+  tags:
+   - post_deploy

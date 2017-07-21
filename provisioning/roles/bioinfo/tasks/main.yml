@@ -1,0 +1,49 @@
+---
+- name: Install Apache
+  apt: pkg=apache2 state=present update_cache=yes
+
+- name: Install PHP
+  apt: pkg=libapache2-mod-php5 state=present
+
+- name: BioInfo virtual host
+  copy: 
+    src: bioinfo.conf
+    dest: /etc/apache2/sites-available/bioinfo.conf
+  notify: Restart Apache
+
+- name: Enable BioInfo virtualhost
+  file:
+    src: /etc/apache2/sites-available/bioinfo.conf
+    dest: /etc/apache2/sites-enabled/bioinfo
+    state: link
+  notify: Restart Apache
+
+- name: Disable default Apache virtualhost
+  file:
+    dest: /etc/apache2/sites-enabled/000-default
+    state: absent
+  notify: Restart Apache
+
+- name: Create cgi-bin directory
+  file:
+    dest: /bio1/www/cgi-bin/
+    state: directory
+
+- name: Create html directory
+  file:
+    dest: /bio1/www/html/
+    state: directory
+
+- stat:
+    path=/bio1/www/html/Style
+    follow=true
+  register: style
+
+- include: bioinfo-style.yml
+  when: style.stat.exists == false
+
+- name: Get BioInfo main page
+  get_url: dest=/bio1/www/html/ url=http://bioinfo.lifl.fr/{{ item }}
+  with_items:
+  - index.php
+

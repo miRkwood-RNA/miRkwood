@@ -1,0 +1,8 @@
+--- 
+# Default variables
+
+mirkwood_path: '/bio1/www/cgi-bin/mirkwood/'
+
+architecture: 'x86_64'
+
+mirkwood_results_path: '/bio1/www/html/mirkwood/results/'

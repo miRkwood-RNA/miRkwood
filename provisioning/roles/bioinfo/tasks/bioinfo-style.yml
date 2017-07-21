@@ -1,0 +1,66 @@
+---
+# file: bioinfo-style.yml
+
+- name: Make style directory
+  file:
+    path=/bio1/www/html/Style
+    state=directory
+
+- name: Make style sub directory (1)
+  file:
+    path=/bio1/www/html/Style/css
+    state=directory
+
+- name: Make style sub directory (2)
+  file:
+    path=/bio1/www/html/Style/css/theme
+    state=directory
+
+- name: Make style sub directory (3)
+  file:
+    path=/bio1/www/html/libs
+    state=directory
+
+- name: Copy BioInfo CSS (1)
+  copy:
+    src: bioinfo.css
+    dest: /bio1/www/html/Style/css/bioinfo.css
+
+- name: Copy BioInfo CSS (2)
+  copy:
+    src: rna.css
+    dest: /bio1/www/html/Style/css/theme/rna.css
+
+- name: Copy BioInfo CSS (3)
+  copy:
+    src: menu_central.css
+    dest: /bio1/www/html/Style/css/menu_central.css
+
+- name: Copy BioInfo CSS (4)
+  copy:
+    src: header.css
+    dest: /bio1/www/html/Style/css/header.css
+
+- name: Get BioInfo CSS
+  get_url: dest=/bio1/www/html/Style/css url=http://bioinfo.lifl.fr/Style/css/{{ item }}
+  with_items:
+  - page_theme.css
+  - divers.css
+  - footer.css
+  - table.css
+
+- name: Copy BioInfo lib (1)
+  copy:
+    src: lib.inc
+    dest: /bio1/www/html/lib.inc
+
+- name: Copy BioInfo lib (2)
+  copy:
+    src: jquery-1.11.3.min.js
+    dest: /bio1/www/html/libs/jquery-1.11.3.min.js
+
+- name: Copy BioInfo lib (3)
+  copy:
+    src: jquery.history.js
+    dest: /bio1/www/html/libs/jquery.history.js
+

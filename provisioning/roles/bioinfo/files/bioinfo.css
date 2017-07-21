@@ -1,0 +1,186 @@
+@import url(divers.css);
+@import url(footer.css);
+@import url(header.css);
+@import url(table.css);
+@import url(menu_central.css);
+
+html{
+ width: 960px;
+ display: block;
+ margin: auto;
+ overflow-y:scroll;
+ background-color:#EDEBE1;
+}
+
+body{
+    font-family: 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    background-color: white;
+    color: #000;  
+    margin:0px;
+    width:100%;
+}
+
+
+.theme-border{
+    width: 100%;
+    height: 35px;
+    background-color: #EDEBE1;
+    z-index:1;
+    position:relative;
+}
+
+#waiting{ 
+       font-size : 30px;
+}
+
+/***************************************************************************** 
+*** SIDEBAR 
+******************************************************************************
+
+
+
+/***************************************************************************** 
+*** BLOC PRINCIPAL 
+*****************************************************************************/
+
+/** GLOBAL CONTAINER ********************************************************/
+#main{
+    display:block;
+    width:90%;
+    font-size:12px;
+    min-height:680px;
+    margin:20px auto;
+}
+
+#main h2{
+    font-size:16px;
+    margin-bottom:15px;
+}
+
+#main p{
+    font-size:12px;
+}
+
+#main ul{
+    font-size:12px;
+}
+
+#text_home p{
+    font-size:14px;
+}
+
+#text_home{
+    margin-bottom:30px;
+}
+
+#menu_central ul{
+    font-size:14px;
+}
+
+#center_sup{
+    display:block;
+    width:960px;
+    height:35px;
+    margin-bottom:50px;
+}
+
+
+
+/** CONTENT ******************************************************************/
+
+
+h2{
+    margin-top: 0;
+    background-color: #fff;
+    padding-bottom: 0px;
+    text-align: left;
+    color: #32331D;
+    line-height: 16px;
+    margin-top: 6px;
+    margin-bottom: 5px;   
+    font-size: 1.2em;
+    padding-top: 8px;
+}
+
+h3{
+  color:#32331D;
+  font-size: 1.1em;
+}
+
+p{
+    margin-left: 10px;
+    margin-bottom :5px;
+    margin-right: 10px;
+    text-align: justify;
+    line-height: 20px;
+}
+
+input[type=submit], input[type=button]{
+  font-weight: bold;  
+}
+
+ul{
+    list-style-type: square;
+}
+
+ul li{
+    line-height: 20px;    
+}
+
+img{
+    border: 0;
+}
+
+a:hover{
+  color: #00008B;
+  text-decoration: underline;
+}
+
+a{
+  color: #0431B4;
+  text-decoration: none;
+}
+
+a:active, a:focus{
+      outline:none;
+}
+
+
+/*
+.button_form_fill{
+    moz-box-shadow:inset 0px 1px 0px 0px #dcecfb;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #dcecfb;
+    box-shadow:inset 0px 1px 0px 0px #dcecfb;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, white), color-stop(1, #ececec));
+    background:-moz-linear-gradient(top, white 5%, #ececec 100%);
+    background:-webkit-linear-gradient(top, white 5%, #ececec 100%);
+    background:-o-linear-gradient(top, white 5%, #ececec 100%);
+    background:-ms-linear-gradient(top, white 5%, #ececec 100%);
+    background:linear-gradient(to bottom, white 5%, #ececec 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#ececec',GradientType=0);
+    background-color:#999;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:0px solid #999;
+    display:inline-block;
+    cursor:pointer;
+    color:#55;
+    font-family:arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #999;
+}
+
+.button_form_fill:hover{
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ececec), color-stop(1, white));
+    background:-moz-linear-gradient(top, #ececec 5%, white 100%);
+    background:-webkit-linear-gradient(top, #ececec 5%, white 100%);
+    background:-o-linear-gradient(top, #ececec 5%, white 100%);
+    background:-ms-linear-gradient(top, #ececec 5%, white 100%);
+    background:linear-gradient(to bottom, #ececec 5%, white 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ececec', endColorstr='white',GradientType=0);
+    background-color:#ececec;
+}*/
