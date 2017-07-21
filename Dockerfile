@@ -137,3 +137,6 @@ RUN ln -s /opt/RNAmmer /home/mirkwood/cgi-bin/programs/rnammer
 ##### Deploy miRkwood data ###########################################
 RUN sh /home/mirkwood/cgi-bin/install-data.sh /home/mirkwood/cgi-bin/data
 
+
+##### cd to the bin directory
+WORKDIR /home/mirkwood/cgi-bin/bin
