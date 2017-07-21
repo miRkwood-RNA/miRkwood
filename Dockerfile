@@ -28,6 +28,7 @@ RUN cpanm LWP::UserAgent
 RUN cpanm Bio::DB::Fasta
 RUN cpanm Inline::CPP
 RUN cpanm Log::Message::Simple
+RUN cpanm Archive::Zip
 
 
 ##### Install dependencies not provided with miRkwood ################
