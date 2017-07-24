@@ -7,6 +7,9 @@ use strict;
 use Getopt::Long;
 use Pod::Usage;
 use Archive::Zip;
+use File::Spec;
+use File::Basename;
+use Cwd 'abs_path';
 
 my $man  = 0;
 my $help = 0;
@@ -101,8 +104,8 @@ if ( $man ){
 }
 
 
-my $mirkwood_path = './';
-my $cmd = $mirkwood_path . "mirkwood.pl --input $fasta_file --output $output_folder $flag_options";
+my $mirkwood_path = File::Spec->catfile( abs_path(dirname(__FILE__)), "mirkwood.pl" );
+my $cmd = $mirkwood_path . " --input $fasta_file --output $output_folder $flag_options";
 #~ print STDERR "$cmd\n";
 system( $cmd );
 
