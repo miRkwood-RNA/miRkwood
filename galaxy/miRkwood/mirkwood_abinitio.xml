@@ -5,7 +5,7 @@
     <stdio>
         <exit_code range="1:" />
     </stdio>
-    <command interpreter="perl"><![CDATA[
+    <command><![CDATA[
     /home/mirkwood/cgi-bin/bin/mirkwood_abinitio_wrapper.pl
     --log ${logfile}
     --zip ${zip}
