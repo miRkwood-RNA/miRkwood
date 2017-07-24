@@ -1,10 +1,12 @@
 <tool id="mirkwood_abinitio" name="miRkwood ab initio" version="0.1.0">
     <requirements>
+        <container type="docker">iguigon/mirkwood</container>
     </requirements>
     <stdio>
         <exit_code range="1:" />
     </stdio>
-    <command interpreter="perl"><![CDATA[mirkwood_abinitio_wrapper.pl
+    <command interpreter="perl"><![CDATA[
+    /home/mirkwood/cgi-bin/bin/mirkwood_abinitio_wrapper.pl
     --log ${logfile}
     --zip ${zip}
     --html ${results_html}
@@ -53,7 +55,27 @@
         </test>
     </tests>
     <help><![CDATA[
+        **What it does**
+        
+        miRkwood is a software package for the discovery of microRNAs and their hairpin precursors in plant genomes. It combines multiple evidences to support the prediction: thermodynamical stability, conservation, miRNA:miRNA* duplex,... 
+        
         miRkwood ab initio allows to scan a genomic sequence (up to 100,000 nt) and find all potential microRNAs.
+        
+        Web page : http://bioinfo.lifl.fr/mirkwood/mirkwood.php
+        
+        GitHub : https://github.com/miRkwood-RNA/miRkwood
+        
+        **Input**
+        
+        One or several sequence(s), FASTA format.
+        
+        **Results**
+        
+        - an HTML page with the results summary
+        - a log file
+        - a ZIP archive containing all files produced by miRkwood.
+        
+        
     ]]></help>
     <citations>
         <citation> </citation>
