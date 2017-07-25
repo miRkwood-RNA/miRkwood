@@ -41,8 +41,8 @@ my $force = 0;
 GetOptions(
     # wrapper options
     'log=s'          => \$log_file,
-    'novel_html=s'         => \$novel_results_html,
-    'known_html=s'         => \$known_results_html,
+    'novel-html=s'   => \$novel_results_html,
+    'known-html=s'   => \$known_results_html,
     'zip=s'          => \$zip_folder,
     # miRkwood options
     'genome=s'                => \$genome_file,
