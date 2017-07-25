@@ -59,7 +59,7 @@
     <help><![CDATA[
         **What it does**
         
-        miRkwood is a software package for the discovery of microRNAs and their hairpin precursors in plant genomes. It combines multiple evidences to support the prediction: thermodynamical stability, conservation, miRNA:miRNA* duplex,... 
+        miRkwood is a software package for the discovery of microRNAs and their hairpin precursors in *plant* genomes. It combines multiple evidences to support the prediction: thermodynamical stability, conservation, miRNA:miRNA* duplex,... 
         
         miRkwood ab initio allows to scan a genomic sequence (up to 100,000 nt) and find all potential microRNAs.
         
@@ -75,7 +75,7 @@
         
         - an HTML page with the results summary
         - a log file
-        - a ZIP archive containing all files produced by miRkwood.
+        - a ZIP archive containing all files produced by miRkwood
         
         
     ]]></help>
