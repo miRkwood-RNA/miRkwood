@@ -19,6 +19,9 @@ my $log_file = '';
 my $novel_results_html = '';
 my $known_results_html = '';
 my $zip_folder = '';
+my $summary_file = '';
+my $bed_sizes_file = '';
+
 
 ### miRkwood options
 my $genome_file   = '';
@@ -44,6 +47,8 @@ GetOptions(
     'novel-html=s'   => \$novel_results_html,
     'known-html=s'   => \$known_results_html,
     'zip=s'          => \$zip_folder,
+    'summary=s'      => \$summary_file,
+    'bed-sizes=s'    => \$bed_sizes_file,
     # miRkwood options
     'genome=s'                => \$genome_file,
     'input=s'                 => \$bed_file,
@@ -70,6 +75,8 @@ pod2usage("$0: No zip path given.") if ( $zip_folder eq '' );
 pod2usage("$0: No log path given.") if ( $log_file eq '' );
 pod2usage("$0: No html path given for novel miRNAs.") if ( $novel_results_html eq '' );
 pod2usage("$0: No html path given for known miRNAs.") if ( $known_results_html eq '' );
+pod2usage("$0: No summary path given.") if ( $summary_file eq '' );
+pod2usage("$0: No path given for bed sizes file.") if ( $bed_sizes_file eq '' );
 
 
 ### Run miRkwood
@@ -124,6 +131,8 @@ system( $cmd );
 system( "cp $output_folder/log.log $log_file" );
 system( "cp $output_folder/results/novel_miRNA/results_novel_miRNA.html $novel_results_html" );
 system( "cp $output_folder/results/known_miRNA/results_known_miRNA.html $known_results_html" );
+system( "cp $output_folder/summary.txt $summary_file" );
+system( "cp $output_folder/bed_sizes.txt $bed_sizes_file" );
 
 
 ### Create a zip with miRkwood output directory
