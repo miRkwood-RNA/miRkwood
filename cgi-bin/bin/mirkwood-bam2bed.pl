@@ -85,7 +85,7 @@ if ( $min_length >= $max_length ){
 if ( $input_file =~ /([^\/\\]+)[.]sam/ ){
     system("sort -k 3,3 -k 4,4n $input_file | grep -v \"^@\" > $sorted_sam_file");
 }
-elsif ( $input_file =~ /([^\/\\]+)[.]bam/ ){
+elsif ( $input_file =~ /([^\/\\]+)[.](bam|dat)/ ){
     ##### Sort BAM file
     system("samtools sort $input_file $sorted_bam_file");
 
