@@ -68,16 +68,12 @@ if ( $help ){
 }
 
 if ( ( ! -r $input_file ) || ( $bed_file eq '' ) ){
-    print "Missing parameter!\n";
-    print $help_message;
-    exit;
+    die "Missing parameter!\n" . $help_message;
 }
 
 
 if ( $min_length >= $max_length ){
-    print "--min should be strictly lower than --max\n";
-    print $help_message;
-    exit;
+    die "--min should be strictly lower than --max\n" . $help_message;
 }
 
 
