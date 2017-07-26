@@ -82,7 +82,6 @@ if ( $min_length >= $max_length ){
 
 
 ########## Create sorted SAM file
-print STDOUT "input file : $input_file\n";
 if ( $input_file =~ /([^\/\\]+)[.]sam/ ){
     system("sort -k 3,3 -k 4,4n $input_file | grep -v \"^@\" > $sorted_sam_file");
 }
