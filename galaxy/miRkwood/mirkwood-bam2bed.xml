@@ -1,0 +1,50 @@
+<tool id="mirkwood-bam2bed" name="mirkwood-bam2bed" version="0.1.0">
+    <requirements>
+        <container type="docker">iguigon/mirkwood</container>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+    /home/mirkwood/cgi-bin/bin/mirkwood-bam2bed.pl
+    --in ${inputfile}
+    --bed ${outputfile}
+    --min ${minreadsize}
+    --max ${maxreadsize}
+    ]]></command>
+    <inputs>
+        <param format="bam" name="inputfile" type="data" label="BAM reads file" help="--in: your set of reads (BAM format)" />
+        <param name="minreadsize" type="integer" value="18" label="--min" help="keep only reads with length &#8805; min [default: 18]" />
+        <param name="maxreadsize" type="integer" value="25" label="--max" help="keep only reads with length &#8804; max [default: 25]" />
+    </inputs>
+    <outputs>
+        <data format="bed" name="outputfile" label="BED file"/>
+    </outputs>
+    <help><![CDATA[
+        **What it does**
+        
+        This tool converts a BAM file into a BED file for use by miRkwood.
+        
+        miRkwood is a software package for the discovery of microRNAs and their hairpin precursors in *plant* genomes. It combines multiple evidences to support the prediction: thermodynamical stability, conservation, miRNA:miRNA* duplex,... 
+        
+        Web page : http://bioinfo.lifl.fr/mirkwood/mirkwood.php
+        
+        GitHub : https://github.com/miRkwood-RNA/miRkwood
+        
+        **Input**
+        
+        One set of reads, BAM format.
+        
+        **Results**
+        
+        - one 6-columns BED file.
+        
+        In this file, each line is a unique read. The fields are, from left to right: name of the chromosome, starting position, ending position, read identifier, number of occurrences of the read in the data, strand. Positions follow the BED numbering convention: the first base of the chromosome is considered position 0 (0-based position) and the feature does not include the stop position. 
+        
+    ]]></help>
+    <citations>
+<!--
+        <citation> </citation>
+-->
+    </citations>
+</tool>
