@@ -64,12 +64,6 @@
         <data format="txt" name="summary" label="Summary"/>
         <data format="tabular" name="bedsizesfile" label="Bed_sizes"/>
     </outputs>
-    <tests>
-        <test>
-            <param name="fasta" value="sequenceSomething.fas" />
-            <output name="results_html" value="HTML_results.html" />
-        </test>
-    </tests>
     <help><![CDATA[
         **What it does**
         
