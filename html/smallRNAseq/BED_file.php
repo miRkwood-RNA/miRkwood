@@ -97,13 +97,13 @@
             <p>The generated BED file has the following syntax.</p>
 
 <pre class='example'>
-1    18092    18112    SRR051927.5475072    1    -
-1    18094    18118    SRR051927.2544175    2    +
-1    18096    18119    SRR051927.3033336    1    +
-1    18100    18124    SRR051927.172198     9    +
+1    18092    18112    AAACGTGTAGAGAGAGACTCA    1    -
+1    18094    18118    GATTCTTTTGTTTGCCACT    2    +
+1    18096    18119    TCGATAGGATCAAGTACATCT    1    +
+1    18100    18124    AAGAAGAAAAAGAAGAAGAAGAAG     9    +
 </pre>
 
-            <p>In this file, each line is a unique read. The fields are, from left to right:  name of the chromosome, starting position, ending position, read identifier, number of occurrences of the read in the data, strand. Positions follow the BED numbering convention: the first base of the chromosome is considered position 0 (0-based position) and the feature does not include the stop position. </p>
+            <p>In this file, each line is a unique read. The fields are, from left to right:  name of the chromosome, starting position, ending position, read sequence, number of occurrences of the read in the data, strand. Positions follow the BED numbering convention: the first base of the chromosome is considered position 0 (0-based position) and the feature does not include the stop position. </p>
 
             <br />
 
