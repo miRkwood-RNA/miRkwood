@@ -140,3 +140,7 @@ RUN sh /home/mirkwood/cgi-bin/install-data.sh /home/mirkwood/cgi-bin/data
 
 ##### cd to the bin directory
 WORKDIR /home/mirkwood/cgi-bin/bin
+
+
+##### Add bin dir to the PATH
+ENV PATH="${PATH}:/home/mirkwood/cgi-bin/bin/"
