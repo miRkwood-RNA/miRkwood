@@ -8,10 +8,10 @@ It is constituted of:
 
 
 miRkwood comes with a fair number of dependencies. It was tested on Ubuntu 12.04.
-For use miRkwood you can either:  
-- use Docker  
-- deploy miRkwood in a virtual machine (VM) with the configuration management software Ansible.  
-- install miRkwood manually (for the most motivated people!)  
+For use miRkwood you can either:
+- use Docker
+- deploy miRkwood in a virtual machine (VM) with the configuration management software Ansible.
+- install miRkwood manually (for the most motivated people!)
 
 
 ## Usage with Docker
@@ -31,25 +31,25 @@ Usage:
 
 Here is an example of command line for abinitio pipeline:
 
-> sudo docker run -v /your/mapping/repertory/:/home/mapping/ \  
->     iguigon/mirkwood \  
->     ./mirkwood.pl \  
->     --input /home/mapping/input/sequenceSomething.fas \  
->     --output /home/mapping/output/results_abinitio \  
->     --filter-rrna --filter-trna --varna  
+> sudo docker run -v /your/mapping/repertory/:/MAPPING/ \
+>     iguigon/mirkwood \
+>     mirkwood.pl \
+>     --input /MAPPING/input/sequenceSomething.fas \
+>     --output /MAPPING/output/results_abinitio \
+>     --filter-rrna --filter-trna --varna
 
 Type the following command for detailed help on the command options:
-sudo docker run iguigon/mirkwood perl ./mirkwood.pl --help
+sudo docker run iguigon/mirkwood mirkwood.pl --help
 
 
 2. SmallRNAseq pipeline:
 
 miRkwood smallRNAseq pipeline takes as input a BED file with the following syntax:
 
-> 1    18092    18112    SRR051927.5475072    1    -  
-> 1    18094    18118    SRR051927.2544175    2    +  
-> 1    18096    18119    SRR051927.3033336    1    +  
-> 1    18100    18124    SRR051927.172198     9    +  
+> 1	18092	18112	AAACGTGTAGAGAGAGACTCA	1	-
+> 1	18094	18118	GATTCTTTTGTTTGCCACT	2	+
+> 1	18096	18119	TCGATAGGATCAAGTACATCT	1	+
+> 1	18100	18124	AAGAAGAAAAAGAAGAAGAAGAAG	9	+
 
 In this file, each line is a unique read.
 The fields are, from left to right: name of the chromosome, starting position,
@@ -58,36 +58,36 @@ Positions follow the BED numbering convention: the first base of the chromosome 
 considered position 0 (0-based position) and the feature does not include the stop position.
 
 You can convert a BAM file into the needed BED format with our custom script:
-> sudo docker run -v /your/mapping/repertory/:/home/mapping/ \  
->     iguigon/mirkwood \  
->     ./mirkwood-bam2bed.pl \  
->     --in /home/mapping/input.bam \  
->     --bed /home/mapping/output.bed \  
->     --min 18 \  
->     --max 25  
+> sudo docker run -v /your/mapping/repertory/:/MAPPING/ \
+>     iguigon/mirkwood \
+>     mirkwood-bam2bed.pl \
+>     --in MAPPING/input.bam \
+>     --bed MAPPING/output.bed \
+>     --min 18 \
+>     --max 25
 
 Type the following command for detailed help on the command options:
-sudo docker run iguigon/mirkwood ./mirkwood-bam2bed.pl --help
+sudo docker run iguigon/mirkwood mirkwood-bam2bed.pl --help
 
 
 Here is an example of command line for smallRNAseq pipeline:
 
-> sudo docker run -v /your/mapping/repertory/:/home/mapping/ \
->     iguigon/mirkwood \  
->     ./mirkwood-bed.pl \  
->     --input /home/mapping/input/sample.bed \  
->     --output /home/mapping/output/results_smallRNAseq \  
->     --genome /home/mapping/input/my_genome.fasta \  
->     --mirbase /home/mapping/input/my_mirbase_file.gff3 \  
->     --gff /home/mapping/input/my_annotations_file.gff \  
->     --min-read-positions-nb 0 --max-read-positions-nb 5 --align  
+> sudo docker run -v /your/mapping/repertory/:/MAPPING/ \
+>     iguigon/mirkwood \
+>     mirkwood-bed.pl \
+>     --input /MAPPING/input/sample.bed \
+>     --output /MAPPING/output/results_smallRNAseq \
+>     --genome /MAPPING/input/my_genome.fasta \
+>     --mirbase /MAPPING/input/my_mirbase_file.gff3 \
+>     --gff /MAPPING/input/my_annotations_file.gff \
+>     --min-read-positions-nb 0 --max-read-positions-nb 5 --align
 
 Type the following command for detailed help on the command options:
-sudo docker run iguigon/mirkwood ./mirkwood-bed.pl --help
+sudo docker run iguigon/mirkwood mirkwood-bed.pl --help
 
 
-With the -v /your/mapping/repertory/:/home/mapping/ parameter,
-Docker will mount your local folder /your/mapping/repertory/ into the container under /home/mapping/.
+With the -v /your/mapping/repertory/:/MAPPING/ parameter,
+Docker will mount your local folder /your/mapping/repertory/ into the container under /MAPPING/.
 Make sure you have stored all your needed input files in this folder.
 Results files will be stored here as well.
 
