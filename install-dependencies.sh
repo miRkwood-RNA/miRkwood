@@ -258,17 +258,17 @@ then
     sudo mkdir -p /bio1/www/cgi-bin/
 
     # Link it to vagrant cgi-bin directory
-    sudo ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood/
+    sudo ln -s /vagrant/cgi-bin /bio1/www/cgi-bin/mirkwood
 
     # Create html directory
     sudo mkdir -p /bio1/www/html/
 
     # Link it to vagrant html directory
-    sudo ln -s /vagrant/html /bio1/www/html/mirkwood/
+    sudo ln -s /vagrant/html /bio1/www/html/mirkwood
 
     # Create results directory
     mkdir /home/vagrant/results
-    chmod -R 777 ~/results
+    sudo chmod -R 777 ~/results
 
     # Link results directory
     sudo ln -s /home/vagrant/results /bio1/www/html/mirkwood/results/
@@ -309,7 +309,7 @@ then
 
     ##### Get BioInfo CSS
     echo "..... Get BioInfo CSS ......................................"
-    sudo wget --directory-prefix=/bio1/www/html/Style/ http://bioinfo.lifl.fr/Style/bioinfo.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css/ http://bioinfo.lifl.fr/Style/css/bioinfo.css
 
 
     ##### Make style sub directory
@@ -324,7 +324,7 @@ then
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/divers.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/footer.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/header.css
-    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_left.css
+    sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/menu_central.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/page_theme.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css http://bioinfo.lifl.fr/Style/css/table.css
     sudo wget --directory-prefix=/bio1/www/html/Style/css/theme http://bioinfo.lifl.fr/Style/css/theme/rna.css
