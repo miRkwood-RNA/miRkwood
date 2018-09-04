@@ -82,7 +82,7 @@ if ( $filter_CDS ){
     $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_CDS.gff" ) . '&';
 }
 if ( $filter_tRNA_rRNA ){
-    $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_tRNA_rRNA_snoRNA.gff" );
+    $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );
 }
 my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
 

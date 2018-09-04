@@ -183,8 +183,8 @@ if ( $valid ){
                     elsif ( $line[0] =~ /${species}_CDS[.]bed/ ){
                         $name = 'CDS';
                     }
-                    elsif ( $line[0] =~ /${species}_tRNA_rRNA_snoRNA[.]bed/ ){
-                        $name = 'tRNA_rRNA_snoRNA';
+                    elsif ( $line[0] =~ /${species}_otherRNA[.]bed/ ){
+                        $name = 'otherRNA';
                     }
                     elsif ( $line[0] =~ /${basename_bed}_(.*)[.]bed/ ){
                         $name = $1;
@@ -201,7 +201,7 @@ if ( $valid ){
         }
 
         $percentage_CDS_reads = $bed_sizes->{'CDS'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
-        $percentage_other_reads = $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
+        $percentage_other_reads = $bed_sizes->{'otherRNA'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
         $percentage_multi_reads = $bed_sizes->{'multimapped'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
         $percentage_orphan_clusters_reads = $bed_sizes->{'orphan_clusters'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
         $percentage_orphan_hairpins_reads = $bed_sizes->{'orphan_hairpins'}{'reads'} / $bed_sizes->{$basename_bed}{'reads'} * 100;
@@ -219,7 +219,7 @@ if ( $valid ){
                             - $nb_reads_known_miRNAs
                             - $nb_reads_new_miRNAs
                             - $bed_sizes->{'CDS'}{'reads'}
-                            - $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'}
+                            - $bed_sizes->{'otherRNA'}{'reads'}
                             - $bed_sizes->{'multimapped'}{'reads'}
                             - $bed_sizes->{'orphan_clusters'}{'reads'}
                             - $bed_sizes->{'orphan_hairpins'}{'reads'};
@@ -259,9 +259,9 @@ if ( $valid ){
             $HTML_results .= "<li id='li_CDS'><span id='normal'><em>CoDing Sequences:</em> 0 reads</span></li>";
         }
 
-        if ( $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} > 0 ){
-            my $nb_reads_tRNA_rRNA_snoRNA = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'tRNA_rRNA_snoRNA'}{'reads'} );
-            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $nb_reads_tRNA_rRNA_snoRNA reads (<a href='$exportFileLink&type=_tRNA_rRNA_snoRNA'>download</a>)</span></li>";
+        if ( $bed_sizes->{'otherRNA'}{'reads'} > 0 ){
+            my $nb_reads_otherRNA = miRkwood::Utils::make_numbers_more_readable( $bed_sizes->{'otherRNA'}{'reads'} );
+            $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> $nb_reads_otherRNA reads (<a href='$exportFileLink&type=_otherRNA'>download</a>)</span></li>";
         }
         else {
             $HTML_results .= "<li id='li_other'><span id='normal'><em>tRNA/rRNA/snoRNA:</em> 0 reads</span></li>";
