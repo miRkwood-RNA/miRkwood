@@ -60,7 +60,7 @@ sub get_local_programs_path {
 
 =method get_scripts_path
 
-Return the project static directory
+Return the project scripts directory
 
 =cut
 
@@ -71,7 +71,7 @@ sub get_scripts_path {
 
 =method get_lib_path
 
-Return the project static directory
+Return the project lib directory
 
 =cut
 
