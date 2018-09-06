@@ -120,11 +120,9 @@ while ( <$SAM> ){
     }
 
     if ( ! exists( $counts->{$chromosome}{$start}{$sequence}{$strand} ) ){
-        $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'} = 0;
+        $counts->{$chromosome}{$start}{$sequence}{$strand} = 0;
     }
-    $counts->{$chromosome}{$start}{$sequence}{$strand}{'count'}++;
-
-    $counts->{$chromosome}{$start}{$sequence}{$strand}{'sequence'} = $line[9];
+    $counts->{$chromosome}{$start}{$sequence}{$strand}++;
 
 }
 
@@ -142,8 +140,8 @@ foreach my $chromosome ( sort ( keys%{$counts} ) ){
                 print $BED "$chromosome\t";
                 print $BED "$start\t";
                 print $BED "$end\t";
-                print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}{'sequence'}\t";
-                print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}{'count'}\t";
+                print $BED "$sequence\t";
+                print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}\t";
                 print $BED "$strand\n";
             }
         }
