@@ -42,7 +42,7 @@ sub test_randfold {
     my ( $self, @args ) = @_;
     my $seq_file = shift @args;
     my $res = 0;
-    if ( which( 'rnashuffles' ) ){
+    if ( ! which( 'RNAshuffles' ) ){
         debug('[WARNING] RNAshuffles is not installed. Cannot compute thermodynamic stability with RNAshuffles.', miRkwood->DEBUG());
     }
     else {
