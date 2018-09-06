@@ -19,7 +19,7 @@ my $file = $cgi->param('file');
 my $script_file = '';
 
 if ( $allowed_files{ $file } ){
-    $script_file = File::Spec->catfile( miRkwood::Paths::get_scripts_path(), $file );
+    $script_file = File::Spec->catfile( miRkwood::Paths::get_bin_path(), $file );
 }
 
 my ( $filename, $contents, $disposition );

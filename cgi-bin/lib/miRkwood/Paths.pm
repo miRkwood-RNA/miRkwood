@@ -80,6 +80,17 @@ sub get_lib_path {
     return File::Spec->catdir(miRkwood->MIRKWOOD_PATH(), 'lib');
 }
 
+=method get_lib_path
+
+Return the project bin directory
+
+=cut
+
+sub get_bin_path {
+    my ($self, @args) = @_;
+    return File::Spec->catdir(miRkwood->MIRKWOOD_PATH(), 'bin');
+}
+
 =method get_results_filesystem_path
 
 Return the path to the results, as seen from the get_results_filesystem_path
