@@ -84,7 +84,7 @@ if ( $filter_CDS ){
 if ( $filter_tRNA_rRNA ){
     $annotation_gff .= File::Spec->catfile( $data_path, "annotations/${species}_otherRNA.gff" );
 }
-my $mirbase_file = File::Spec->catfile( $data_path, "miRBase/${species}_miRBase.gff3" );
+my $mirbase_file = File::Spec->catfile( $data_path, "mirbase_gff/${species}_miRBase.gff3" );
 
 if ( $filter_multimapped ) { $filter_multimapped = '[0;5]' } else { $filter_multimapped = '[0;0]' }
 if ( $filter_bad_hairpins ) { $filter_bad_hairpins = 1 } else { $filter_bad_hairpins = 0 }
