@@ -54,11 +54,19 @@ sub filterBEDfile {
     if ( -r $mirbase_file ) {
         debug( 'Filter out known miRNAS' . ' [' . localtime() . ']', miRkwood->DEBUG() );
 
+        my $result_non_overlapping_reads = 0;
+
         # Create a file with known miRNAs
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
 
         # Delete reads corresponding to known miRNAs from the BED
-        store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed);  # un-comment when tests are done
+        $result_non_overlapping_reads = store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed);  # un-comment when tests are done
+
+        if ($result_non_overlapping_reads){
+            debug( 'WARNING : there was a problem with miRbase file. Couldn\'t filter out known miRNAs', 1 );
+            system("cp $bed_file $output_bed");
+        }
+
         #~ system("cp $bed_file $output_bed");  # comment when tests are done
     }
     else{
@@ -128,7 +136,13 @@ sub filter_according_given_gff {
     store_overlapping_reads( $input_bed, $annotation_gff, $discarded_reads, '');
 
     # Delete reads corresponding to the features in the gff file
-    store_non_overlapping_reads( $input_bed, $annotation_gff, $output_bed);
+    my $result = 0;
+    $result = store_non_overlapping_reads( $input_bed, $annotation_gff, $output_bed);
+
+    if ($result){
+        debug( "WARNING : there was a problem with annotation file $annotation_gff. Couldn't filter out", 1 );
+        system("cp $input_bed $output_bed");
+    }
 
     return;
 }
@@ -152,9 +166,9 @@ sub store_overlapping_reads {
 
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -wa -wb $additionalArgs > $outputFile";
     #~ debug( "   $job", 1);
-    system($job);
+    my $result = system($job);
 
-    return;
+    return $result;
 }
 
 
@@ -175,9 +189,9 @@ sub store_non_overlapping_reads {
 
     my $job = "intersectBed -a $bed_file -b $referenceFile -s -v > $outputFile";
     #~ debug( "   $job", 1);
-    system($job);
+    my $result = system($job);
 
-    return;
+    return $result;
 }
 
 
