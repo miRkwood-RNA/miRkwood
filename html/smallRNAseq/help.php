@@ -36,7 +36,7 @@
 
             <br /> <br />
 
-            <div class="table-of-contents">
+            <div>
                 <ol>
                     <li><a href="#input_form"> Input form</a>
                         <ol>
