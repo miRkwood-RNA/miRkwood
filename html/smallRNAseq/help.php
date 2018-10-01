@@ -24,6 +24,8 @@
 
         <div id="main">
 
+            <div id="mirkwood_title">User manual</div>
+
             <br />
 
             <p>This page is a  user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>.</p>

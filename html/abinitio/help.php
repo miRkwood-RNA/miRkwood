@@ -26,6 +26,8 @@
 
         <div id="main">
 
+            <div id="mirkwood_title">User manual</div>
+
 <br /> 
 
   <p>
