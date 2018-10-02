@@ -334,6 +334,10 @@ then
     echo "..... Get BioInfo main page ................................"
     sudo wget --directory-prefix=/bio1/www/html/ http://bioinfo.lifl.fr/index.php
 
+    ##### Get lib.inc
+    echo "..... Get lib.inc .........................................."
+    sudo cp $ROOT_PATH/provisioning/roles/roles/bioinfo/files/lib.inc /bio1/www/html/
+
 fi
 
 echo
