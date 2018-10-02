@@ -6,7 +6,7 @@
         <link type='text/css' rel='stylesheet' href='../style/help.css' />
         <link type='text/css' rel='stylesheet' href='../style/rna.css' />
         <link type='text/css' rel='stylesheet' href='/Style/css/bioinfo.css' />
-	<script type="text/javascript" src="/scripts/bioinfo.js"></script>
+        <script type="text/javascript" src="/scripts/bioinfo.js"></script>
         <script type="text/javascript" src="../../libs/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../../libs/jquery.history.js"></script>
         <script type="text/javascript" src="../js/header.js"></script>
@@ -28,9 +28,10 @@
 <div id="mirkwood_title">Quick start</div>
 
             <p>This page covers the basics on how to get started
-                                               with miRkwood small RNA-seq. A comprehensive user guide is to be found <a href="./help.php">here</a>.</p>
+            with <a href="/cgi-bin/mirkwood/web_scripts/BAMinterface.pl">miRkwood small RNA-seq web server</a>.
+            A comprehensive user guide is to be found <a href="./help.php">here</a>.</p>
 
-<p>The main input of
+            <p>The main input of
             miRkwood is a set of reads (ranging from 15 nt to 35
             nt approximately) that have been previously mapped on
             a reference genome and that are stored in a file in
@@ -39,9 +40,13 @@
 
             <ul><li> <a href="sample.bed">Download the sample BED file</a> </li></ul> 
 
-            <p>This file contains Illumina reads for <i> Arabidopsis thaliana</i> from SRA <a href="http://www.ncbi.nlm.nih.gov/sra/?term=SRR960237 ">SRR960237 </a>. We have mapped these reads on <i>TAIR 10</i>, and have selected 2 portions of reads, one from chromosome 1 and one from chromosome 4. This gives a total of 319,103 reads. </p>
+            <p>This file contains Illumina reads for <i> Arabidopsis thaliana</i> from SRA
+            <a href="http://www.ncbi.nlm.nih.gov/sra/?term=SRR960237 ">SRR960237 </a>.
+            We have mapped these reads on <i>TAIR 10</i>, and have selected 2 portions of reads,
+            one from chromosome 1 and one from chromosome 4. This gives a total of 319,103 reads. </p>
 
-            <p>If you want to know more on how to create this BED file for your data, check out the <a href="BED_file.php">detailed instruction</a>.</p> 
+            <p>If you want to know more on how to create this BED file for your data, check out the
+            <a href="BED_file.php">detailed instruction</a>.</p>
 
 
             <h2> Input form</h2> 
@@ -61,7 +66,7 @@
 
             <p>The top of the page displays the job ID, that can
             be saved for future usage (with the link <a href="../id.php">retrieve a
-            result with an ID</a>, on the main menu).</p> 
+            result with an ID</a>, on the main menu).</p>
 
             <p>The result page has then two main parts. The first one
             (<i>Options summary</i>) is simply a summary of your
@@ -110,11 +115,9 @@
 
                 <li>
                     <i>Orphan cluster of reads:</i> 26,826 reads<br><br>
-                    A cluster of reads is a short region in the genome
-                    that has been enriched with aligned reads. Here we
-                    report the number of reads that occur in a cluster not classified as
-                    miRNA by miRkwood, due to the secondary structure.  You
-                    can obtain the list of the corresponding orphan clusters by clicking on
+                    An orphan cluster  is a short region in the genome
+                    that is enriched with aligned reads but that shows no secondary structure compatible with a hairpin. You
+                    can obtain the list of the such clusters by clicking on
                     the <i>download</i> link (BED file).
                     <br> <br>
                 </li>
@@ -122,27 +125,26 @@
                 <li>
                     <i>Orphan hairpins:</i> 277 reads<br><br>
                     An orphan hairpin is a candidate with a global score of 0
-                    and showing no conservation with miRBase.
-                    If you select the option "filter out low quality hairpins",
-                    low quality candidates will be discarded and you can obtain the list 
-                    of the corresponding orphan hairpins by clicking on the 
+                    and showing no conservation with miRBase. By default,
+                    if you select the option "filter out low quality hairpins",
+                    such hairpins will be discarded automatically and you can obtain the list
+                    by clicking on the
                     <i>download</i> link (BED file).
                     <br> <br>
                 </li>
 
                 <li>
                     <i> Unclassified reads:</i> 49,706 reads<br><br>
-                    49,706 reads do not belong to any cluster, or do not
+                    49,706 reads do not belong to any oprphan cluster, to any orphan hairpin, or do not
                     fall in any annotated region.
                     <br> <br>
                 </li>
 
                 <li> 
-                    <i>Known miRNAs:</i> 5 <br> <br>
-                    5 precursors of miRNA present in miRbase
+                    <i>Known miRNAs: </i>5 sequence(s) - 224,134 reads  <br> <br>
+                    mirKwood finds 5 pre-miRNAs  present in miRbase that
                     intersect with a total of 224,134 reads
                     present in the input BED file.
-                    <br> <br> 
                     You can display detailed results by clicking on the link <i>see results</i>.
                     From this new page, you will be able to access a short report for each miRNA found :
                     miRBase accession number, positions of the
@@ -153,54 +155,30 @@
                 </li>
 
                 <li> 
-                    <i> Novel miRNAs: </i> 30 <br> <br>
-                    miRkwood finds 30 new miRNAs that have not
+                    <i> Novel miRNAs: </i>30 sequence(s) - 7,621 reads <br> <br>
+                    miRkwood finds 30 new pre-miRNAs that have not
                     been previously  reported in miRbase and that are supported by a significant
                     read coverage  and a stemloop secondary
                     structure. These 30 miRNAs represent a total
-                    of 7,621 reads.<br> <br> 
+                    of 7,621 reads.
                     You can display detailed results by clicking on the link <i>see results</i>.
                     From this new page, you will be able to access a comprehensive report
                     for each predicted miRNA :
                     positions of the precursor, sequence of the
                     miRNA, secondary structure, read
                     distribution, thermodynamic stability, precision of the duplex
-                    processing, conservation, ... 
+                    processing, conservation, ...
                     Predictions are ranked according to a
                     quality score.
                     <br /> <br />
-                </li> 
+                </li>
 
             </ul>
 
             <p>If you want to know more about all parameter options, export
-            formats, visualisation tools,  please visit our main 
+            formats, visualisation tools,  please visit our main
             <a href="help.php">help page</a>.</p>
 
-            <center>
-
-                <img style='width:700px; display: block; margin: 0 auto;'src='../style/results_novelmirna.png' alt='results table' />
-
-                <br />
-
-<pre class='example'>
-Locus  : 1:234009-234092
-Strand : -
-
-GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
-((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
-         <------miRBase------>                          <------miRBase------>
-*********************............................................................... length=21 depth=5
-.......*********************........................................................ length=21 depth=2
-........................................................*********************....... length=21 depth=1
-............................................................*********************... length=21 depth=16
-</pre>
-
-                <br />
-
-                <img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png' alt='hairpin with mature' />		
-
-            </center>
 
             <br />
 
