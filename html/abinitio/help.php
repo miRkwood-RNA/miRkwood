@@ -47,7 +47,6 @@
                             <li> FASTA</li>
                             <li> dot-bracket format<br/>(plain sequence + secondary structure) </li>
                             <li> Full report in ORG format</li>
-                            <li> Full report in PDF</li>
                             <li> GFF format</li>
                         </ol>
                     </li>
