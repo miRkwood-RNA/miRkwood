@@ -92,6 +92,7 @@ open( my $OUTPUT, '>>', $sequence_upload )
   or miRkwood::WebTemplate::web_die("Error when opening -$sequence_upload-: $!");
 my $name;
 my @lines = split /\n/, $seq;
+my $seq_length = 0;
 foreach my $line (@lines) {
     if ( $line =~ /^>/smx ) {
         $name = $line;
@@ -100,9 +101,15 @@ foreach my $line (@lines) {
         my $cleaned_line = miRkwood::Utils::mask_sequence_nucleotide($line);
         print $OUTPUT $name . "\n" . $cleaned_line . "\n";
         $name = '';
+        $seq_length += length($cleaned_line);
     }
 }
 close $OUTPUT or die("Error when closing $sequence_upload: $!");
+
+if ($seq_length > 100000){
+    print $cgi->redirect($error_url . '?type=tooLongSequence');
+    exit;
+}
 
 # redirection vers la page wait en attendant le calcul
 my $arguments = '?jobId=' . $jobId . '&nameJob=' . $job_title . '&mail=' . $mail;
