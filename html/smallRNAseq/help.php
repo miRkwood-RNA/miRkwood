@@ -95,7 +95,7 @@
 
             <h3 id='reference'>Select an assembly</h3>
 
-            <p>miRkwood currently proposes 7 assemblies, which are listed below.</p>
+            <p>miRkwood currently proposes 12 assemblies, which are listed below.</p>
 
             <ul>
                 <li><em>Arabidopsis lyrata</em> - v1.0 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
@@ -112,9 +112,9 @@
                 <li><em>Vitis vinifera</em> - Genoscope-20100122 - GFF: <a href="http://phytozome.jgi.doe.gov/pz/portal.html">Phytozome</a></li>
             </ul>
 
-            <p>Each assembly is supplemented by two GFF format
+            <p>When available, the assembly is supplemented by two GFF
             files. The first one contains the genome coordinates of
-            annotated  CDS, tRNAs, rRNAs and snoRNAs,  and is
+            annotated  CDSs, tRNAs, rRNAs and snoRNAs,  and is
             used to apply masking options described in <a
             href="#parameters">Section 1.3 - Parameters</a>.  The
             source of this file is indicated above, case by case. The
@@ -124,7 +124,7 @@
 
             <h3 id='parameters'>Parameters</h3>
 
-            <p>miRkwood comes with a series of options, that allow to customize the search and enhance the results.
+            <p>miRkwood comes with a series of options, that allow to customise the search and enhance the results.
             These options can be divided in two main types: parameters concerning the processing of the sequence reads
             and parameters concerning the secondary structure of the miRNA precursor.
             Note that they only apply to novel miRNAs. For known miRNAs, the user can rely on the additional
@@ -158,7 +158,7 @@
             <h4 id='secondary_structure'>Parameters for the secondary structure of the hairpin precursor</h4>
 
             <p>After cluster detection, miRkwood aims at determining
-            which sequences can fold into a stem-loop structure. This
+            which sequences can fold into a stemloop structure. This
             gives a set of candidate precursors of miRNAs.
             For each candidate, it is possible to calculate additional criteria
             that help to bring further evidence to the quality of the prediction and
@@ -182,17 +182,19 @@
             by comparison with other equivalent sequences. <a href="http://www.ncbi.nlm.nih.gov/pubmed/15217813">Bonnet <em>et al</em></a>
             have established that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.
             We compute the probability that, for a given sequence, the MFE of the secondary structure is different from a distribution
-            of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency. </p>
+            of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency.
+            Default: unchecked.</p>
 
             <p id='flag_conserved_mirnas'><b>Flag conserved mature miRNAs:</b>
             This option permits to check if the predicted miRNA belongs to some known miRNA family.
             For that, we compare the sequence of the precursor with the database of mature miRNAs of plant
-            (<em>Viridiplantae</em>) deposited in <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> (Release 20).
+            (<em>Viridiplantae</em>) deposited in <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> (Release 21).
             We select alignments with at most three errors (mismatch, deletion or insertion) against
-            the full-length mature miRNA and that occur in one of the two arms of the stem-loop.
+            the full-length mature miRNA and that occur in one of the two arms of the stemloop.
             Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.
             This location is then validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>,
-            that assesses the stability of the miRNA:miRNA* duplex. Here, it was trained on miRbase <em>Viridiplantae</em> V20.</p>
+            that assesses the stability of the miRNA:miRNA* duplex. Here, it was trained on miRbase <em>Viridiplantae</em> V21.
+            Default: checked.</p>
 
             <p id='filter_bad_hairpins'><b>Filter out low quality hairpins:</b>
             When this option is checked, hairpins found by miRkwood with a global score of 0
@@ -230,7 +232,7 @@
             <p><b>Multiply mapped reads:</b> This is the number of reads that have been discarded by the option <i> Remove multiply mapped reads</i>.
             You can list them by clicking on the <i>download</i> link.</p>
 
-            <p><b>Orphan cluster of reads:</b>An orphan cluster is a short region in the genome
+            <p><b>Orphan cluster of reads:</b> An orphan cluster is a short region in the genome
             that is enriched with aligned reads but that shows no secondary structure compatible
             with a hairpin. You can obtain the list of the such clusters by clicking on the <i>download</i> link (BED file). </p>
 
@@ -244,7 +246,7 @@
 
             <p><b> Unclassified reads:</b> Unclassified reads
             are isolated reads, that do not belong to any
-            cluster, or do not fall in any annotated region.
+            cluster or any orphan hairpin, or do not fall in any annotated region.
             </p>
 
             <p><b>Known miRNAs:</b> This is the number of loci annotated as microRNA precursors
@@ -256,15 +258,15 @@
             <p><b>Novel miRNAs:</b> This is the number of miRNAs found by  miRkwood that have not
             been previously  reported in miRbase.
             You can display detailed results by clicking on the link <i>see results</i>.
-            See <a href="#novel_mirna">Section 2.2</a>.</p>
+            See <a href="#novel_mirna">Section 2.3</a>.</p>
 
 
             <h3 id="known_mirnas">Known miRNAs</h3>
 
-            <p>Known miRNAs are miRNAs that are already present in the
+            <p>Known miRNAs are miRNAs that are already present with their precursor in the
             miRBase database (version 21). We consider that a known
             microRNA is found in the data as soon as there is at least
-            one read  on the precursor sequence. The quality score
+            one read  on the precursor sequence. The quality score (see definition below)
             helps to determine which are the best candidates.</p>
 
             <br />
@@ -284,12 +286,6 @@
 
             <p><b>+/- :</b> Strand, forward (+) or reverse (-).</p>
 
-            <p><b>miRNA:</b> Sequence of the miRNA.</p>
-
-            <p><b>Length:</b> Length of the miRNA.
-
-            <p><b>Reads:</b> Number of reads included in the locus.</p>
-
             <p><b>Quality:</b> This score measures the consistency between the distribution of reads
             along the locus and the annotation provided in miRbase.
             It ranges between 0 and 2 stars, and  is calculated as follows. </p>
@@ -301,14 +297,17 @@
 
             <p><b>miRBAse name:</b> miRBase identifier.</p>
 
-            <p><b>2D structure:</b> You can drag the mouse over the zoom icon to visualise the stem-loop structure
-            of the pre-miRNA. The image is generated with <a href="http://varna.lri.fr/">Varna.</a></p>
+            <p><b>Reads:</b> Number of reads included in the locus.</p>
+
+            <p><b>miRNA Sequence:</b> Sequence of the miRNA.</p>
+
+            <p><b>miRNA Length:</b> Length of the miRNA.
 
 
             <h3 id="novel_mirnas">Novel miRNAs</h3> 
 
             <p>Novel miRNAs are miRNAS that are not reported in miRBase. The prediction is supported
-            by the presence of a stem-loop secondary structure, a
+            by the presence of a stemloop secondary structure, a
             significant read coverage and read distribution.</p>
 
             <br />
@@ -332,17 +331,9 @@
 
             <p><b>+/-:</b> Strand, forward (+) or reverse (-). </p>
 
-            <p><b>miRNA:</b> Sequence of the miRNA. It is the sequence
-            of the most common read, with a frequency of at least 33%.</p>
+            <p><b>Reads:</b> Total number of reads included in the locus.</p>
 
-            <p><b>Length:</b> Length of the miRNA.</p>
-
-            <p><b>Weight:</b> It is the depth of the read labelled as the miRNA,
-            divided by the number of places in the genome where this read is aligned.</p>
-
-            <p><b>Reads:</b> The total number of reads included in the locus.</p>
-
-            <p id='quality'><b>Reads distribution:</b> This score, ranging from O
+            <p id='quality'><b>Reads distribution:</b> This score, ranging from 0
             to 3-stars, allows to qualify the pattern of reads mapping
             to a putative microRNA precursor. It aims at determining
             if this distribution of reads presents a typical 2-peaks
@@ -350,7 +341,7 @@
 
             <ul>
                 <li><em>Number of reads:</em> The  locus has either
-                at least 10 reads mapping to each arm,  at least 100
+                at least 10 reads mapping to each arm, or at least 100
                 reads mapping in total. </li>
                 <li><em>Precision of the precursor processing :</em>
                 At least 75% of reads start in a window [-3,+3]
@@ -380,9 +371,17 @@
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower
             than the MFE of the candidate miRNA precursor (see <a href="">Compute thermodynamic stability</a>).
             This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
-            We report pre-miRNA stem-loops for which the value is smaller than 0.01,
+            We report pre-miRNA stemloops for which the value is smaller than 0.01,
             which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01,
             we say that it is non significant, and do not report any value.</p>
+
+            <p><b>miRNA Sequence:</b> Sequence of the miRNA. It is the sequence
+            of the most common read, with a frequency of at least 33%.</p>
+
+            <p><b>miRNA Length:</b> Length of the miRNA (when existing).</p>
+
+            <p><b>miRNA Weight:</b> Depth of the miRNA read (when existing)
+            divided by the number of possible alignments of this read in the genome.</p>
 
             <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             when an alignment between the candidate sequence and miRBase is found
@@ -391,18 +390,15 @@
             <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML report.</p>
 
-            <p><b>2D structure:</b> You can drag the mouse over the zoom icon to visualise the stem-loop structure of the pre-miRNA.
-            The image is generated with <a href="http://varna.lri.fr/">Varna.</a></p>
-
 
             <h2 id='export'>Export </h2>
 
             <p>Results, or a selection of them, can be exported to a variety of formats, and saved to a local folder for further analyses. </p>
 
             <p id='gff'><b>GFF:</b> General annotation format, that displays the list of positions of pre-miRNA found
-            (see more explanation on <a href="http://www.ensembl.org/info/website/upload/gff.html">Ensembl documentation</a>)</p>
+            (see more explanation on <a href="http://www.ensembl.org/info/website/upload/gff.html">Ensembl documentation</a>).</p>
 
-            <p id='fasta'><b>FASTA:</b> This is the compilation of all pre-miRNA sequences found </p>
+            <p id='fasta'><b>FASTA:</b> This is the compilation of all pre-miRNA sequences found. </p>
 
             <p id='dot_bracket'><b>Dot-bracket notation:</b> This is the compilation of all pre-miRNA sequences found,
             together with the predicted secondary structure. The secondary structure is given as a set of matching parentheses
@@ -413,7 +409,8 @@
             and the dot-bracket secondary structures. This tabular format is supported by spreadsheets like Excel. </p>
 
             <p id='org'><b>ORG:</b>
-            This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions. </p>
+            This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions.
+            This file can be easily edited by the user. </p>
 
             <p id='read_cloud'><b> Reads cloud:</b>  This archive is a
             compilation of all reads clouds. Each reads cloud is a text file that
@@ -428,30 +425,42 @@
             <h3 id='html_known_mirnas'>HTML report for known miRNAs</h3>
 
             <ul>
-                <li><b>Name:</b> miRBase identifier, and link to access the miRBase entry.</li>
+                <li><b>miRBase name:</b> miRBase identifier, and link to access the miRBase entry.</li>
+                <li><b>Chromosome:</b> Name of the chromosome</li>
                 <li><b>Position:</b> Start and end positions of the pre-miRNA, such as indicated in miRBase
                     in 1-based notation (consistently with the GFF format). The length is indicated in parentheses.
                 </li>
                 <li><b>Strand:</b> + (forward) or - (reverse).</li>
-                <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
-                <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
-                <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.
+                <li><b>G+C content:</b> Percentage of bases that are either guanine or cytosine.</li>
+                <li><b>miRNA sequence:</b> Sequence of the predicted miRNA.</li>
+                <li><b>Sequence (FASTA format):</b> Link to download the sequence of the precursor.</li>
+                <li><b>Stemloop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.
                     The first line contains a FASTA-like header. The second line contains the nucleic acid sequence.
                     The last line contains the set of associated pairings encoded by brackets and dots.
                     A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')'
                     at position <em>j</em>. Unpaired bases are represented by dots.
                 </li>
+                <li><b>Alternative candidates:</b>
+                    This is the set of stemloop sequences that overlap the current prediction.
+                    The choice between several alternative overlapping candidate pre-miRNAs
+                    is made according to the best MFEI.
+                </li>
             </ul>
 <pre class='example'>
->  1:234009-234092,-, stem-loop structure
+>  1:234009-234092,-, stemloop structure
 GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
 ((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
 </pre>
+
+            <p><b> Quality:</b> It details the computation of the quality score as explained in
+                <a href="#known_mirnas">Section 2.2 Known miRNAs</a>.</p>
 
             <p><b> Reads</b></p>
 
             <ul>
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
+                <li><b>Reads length distribution:</b> This plot gives the sequence length distribution
+                for all reads in the precursor locus.</li>
                 <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
                 <br />
                 Each <tt>**********</tt> string is a unique read. Its length and its depth 
@@ -473,17 +482,37 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 ............................................................*********************... length=21 depth=16
 </pre>
 
+            <p><b>Thermodynamics stability</b></p>
+
+            <ul>
+                <li><b>MFE:</b> Value of the Minimum Free Energy (computed by <a href="http://www.tbi.univie.ac.at/RNA/RNAeval.html">RNAeval</a>) </li>
+                <li><b>AMFE:</b> Value of the adjusted MFE : MFE/(sequence length) x 100</li>
+                <li><b>MFEI:</b> Value of the minimum folding energy index (as defined <a href="#filter_mfei">here</a>)</li>
+                <li><b>Shuffles (option):</b> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor
+                    (see <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
+                    This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
+                    We report pre-miRNA stemloops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences.
+                    Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</li>
+            </ul>
+
+
+
             <h3 id='html_novel_mirnas'>HTML report for novel miRNAs</h3>
 
             <ul>
-                <li><b>Name:</b> miRBase identifier, and link to access the miRBase entry.</li>
+                <li><b>Chromosome:</b> Name of the chromosome</li>
                 <li><b>Position:</b> Start and end positions of the pre-miRNA, such as indicated in miRBase
                     in 1-based notation (consistently with the GFF format). The length is indicated in parentheses.
                 </li>
                 <li><b>Strand:</b> + (forward) or - (reverse).</li>
-                <li><b>GC content:</b> Percentage of bases that are either guanine or cytosine.</li>
-                <li><b>Sequence (FASTA format):</b> Link to download the sequence.</li>
-                <li><b>Stem-loop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.
+                <li><b>G+C content:</b> Percentage of bases that are either guanine or cytosine.</li>
+                <li><b>miRNA sequence:</b> Sequence of the predicted miRNA.</li>
+                <li><b>miRNA depth:</b> Depth of the miRNA read (weight: miRNA depth
+                    divided by the number of possible alignments of this read in the genome.)</li>
+                <li><b>Candidates with the same miRNA:</b> List of other miRkwood predictions
+                    that involve the same miRNA sequence.</li>
+                <li><b>Sequence (FASTA format):</b> Link to download the sequence of the precursor.</li>
+                <li><b>Stemloop structure:</b> Link to download the secondary structure in <em>dot-bracket format</em>.
                     The first line contains a FASTA-like header. The second line contains the nucleic acid sequence.
                     The last line contains the set of associated pairings encoded by brackets and dots.
                     A base pair between bases <em>i</em> and <em>j</em> is represented by a '(' at position <em>i</em> and a ')'
@@ -492,29 +521,54 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
             </ul>
 
 <pre class='example'>
->  1:234009-234092,-, stem-loop structure
+>  1:234009-234092,-, stemloop structure
 GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAUCUCU
 ((.(((((((((((((((((((((.((.(((.((((.(.......).)))).))).)).))))))))))))))))))))).)).
 </pre>
 
             <ul> 
-                <li><b>Optimal MFE secondary structure:</b> If the stem-loop structure is not the MFE structure,
+                <li><b>Optimal MFE secondary structure:</b> If the stemloop structure is not the MFE structure,
                     we also provide a link to download the MFE structure.
                 </li>
                 <li><b>Alternative candidates (dot-bracket format):</b>
-                    This is the set of stem-loop sequences that overlap the current prediction.
+                    This is the set of stemloop sequences that overlap the current prediction.
                     The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.
                 </li>
             </ul>
 
-            <p>The stem-loop structure of the miRNA precursor is also displayed with <a href="http://varna.lri.fr/">Varna.</a></p>
+            <p>The stemloop structure of the miRNA precursor is also displayed with <a href="http://varna.lri.fr/">Varna.</a></p>
 
             <img style='width:400px; display: block; margin: 0 auto;' src='../style/varna.png' alt='Varna image' />
+
+
+            <p><b>Quality:</b></p>
+            This score includes the reads ditribution score (as defined <a XXX>here</a>)
+            and extends it with some additional criteria.
+            It ranges from 0 to 6.
+
+            <ul>
+                <li><b>MFEI &lt; -0.8:</b> This MFEI threshold covers 83% of miRBase pre-miRNAs,
+                    whereas it is observed in less than 13% of pseudo hairpins.</li>
+                <li><b>Criteria number of reads:</b>The locus has either
+                    at least 10 reads mapping to each arm, or at least 100
+                    reads mapping in total. </li>
+                <li><b>Existence of a miRNA:</b> It is the sequence
+                    of the most common read, if the frequency is at least 33%. </li>
+                <li><b>The miRNA is validated by miRdup:</b> ????? </li>
+                <li><b>Criteria presence of the miRNA:miRNA* duplex:</b> There is at least one read in the window [-5,+5] on
+                the strand of the miRNA*. </li>
+                <li><b>Criteria precision of the precursor processing:</b> At least 75% of reads start in a window [-3,+3]
+                    centered around the start position of the miRNA, or
+                    [-5,+5] on the opposite arm of the stemloop. </li>
+            </ul>
+
 
             <p><b> Reads</b></p>
 
             <ul>
                 <li><b>Number of reads:</b> The total number of reads included in the locus.</li>
+                <li><b>Reads length distribution:</b> This plot gives the sequence length distribution
+                for all reads in the precursor locus.</li>
                 <li><b>Reads cloud:</b> This is a visual representation of all reads included in the locus.
                     <br />
                     Each <tt>**********</tt> string is a unique read. Its length and its depth
@@ -542,15 +596,15 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
             <ul>
                 <li><b>MFE:</b> Value of the Minimum Free Energy (computed by <a href="http://www.tbi.univie.ac.at/RNA/RNAeval.html">RNAeval</a>) </li>
                 <li><b>AMFE:</b> Value of the adjusted MFE : MFE/(sequence length) x 100</li>
-                <li><b>MFEI:</b> Value of the minimum folding energy index (as defined <a href="">here</a>)</li>
-                <li><b>Shuffles:</b> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor
+                <li><b>MFEI:</b> Value of the minimum folding energy index (as defined <a href="#filter_mfei">here</a>)</li>
+                <li><b>Shuffles (option):</b> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor
                     (see <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
                     This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
-                    We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences.
+                    We report pre-miRNA stemloops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences.
                     Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</li>
             </ul>
 
-            <p><b>Conservation of the mature miRNA</b></p>
+            <p><b>Conserved mature miRNA</b></p>
 
             <p>All alignments with miRBase are reported and gathered according to their positions. </p>
 
@@ -559,7 +613,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
             <p>query is the user sequence, and miRBase designates the mature miRNA found in miRBase.
             It is possible to access the corresponding mirBase entry by clicking on the link under the alignment.
             The report also indicates whether the location is validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>.
-            Finally, we provide an ASCII representation of the putative miRNA within the stem-loop  precursor.</p>
+            Finally, we provide an ASCII representation of the putative miRNA within the stemloop  precursor.</p>
 
             <img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png'' alt='hairpin with mature' />
 
