@@ -135,7 +135,7 @@
 
                 <li>
                     <i> Unclassified reads:</i> 49,706 reads<br><br>
-                    49,706 reads do not belong to any oprphan cluster, to any orphan hairpin, or do not
+                    49,706 reads do not belong to any orphan cluster or any orphan hairpin, or do not
                     fall in any annotated region.
                     <br> <br>
                 </li>
