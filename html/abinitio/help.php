@@ -151,13 +151,13 @@
             Some families of mature miRNAs are highly conserved through evolution.
             In this case, it is possible to localize the mature miRNA within the pre-miRNA by similarity.
             For that, we compare each sequence with the mature miRNAs of plant (<i>Viridiplantae</i>)
-            deposited in <a href='http://www.mirbase.org/ftp.shtml'>miRBase</a> (Release 20).
+            deposited in <a href='http://www.mirbase.org/ftp.shtml'>miRBase</a> (Release 21).
             Alignments are performed with <a href='https://www.ebi.ac.uk/~guy/exonerate/'>Exonerate</a>,
             which implements an exact model for pairwise alignment.
             We select alignments with at most three errors (mismatch, deletion or insertion)
-            against the full-length mature miRNA and that occur in one of the two arms of the stem-loop.
+            against the full-length mature miRNA and that occur in one of the two arms of the stemloop.
             The putative location obtained is then validated with <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>,
-            that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRBase Viridiplantae v20.</p>
+            that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRBase Viridiplantae v21.</p>
 
 
             <h3>Submission</h3>
@@ -213,7 +213,11 @@
 
             <p><b>MFEI: </b> Value of the MFEI (<a href='#mfei_definition'>see definition</a>).</p>
 
-            <p><b>Shuffles (option): </b>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).  This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.  We report pre-miRNA stem-loops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</p>
+            <p><b>Shuffles (option): </b>Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor
+                (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).
+                This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
+                We report pre-miRNA stemloops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences.
+                Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</p>
 
             <p><b>miRBase alignment (option): </b>
                 This cell is checked when an alignment between the candidate sequence and miRBase is found
@@ -223,7 +227,7 @@
                 The alignments are visible in the HTML report.
             </p>
 
-            <p><b>2D structure :</b> You can drag the mouse over the zoom icon to visualize the stem-loop
+            <p><b>2D structure :</b> You can drag the mouse over the zoom icon to visualize the stemloop
                 structure of the pre-miRNA. The image is generated with <a href='http://varna.lri.fr/'>Varna</a>.
             </p>
 
@@ -277,7 +281,7 @@ gucgugccuggcucccuguaugccacaagaaaacaucgauuuaguuucaaaaucgaucacuaguggcguacagaguaguc
 ##gff-version 3
 # miRNA precursor sequences found by miRkwood have type 'miRNA_primary_transcript'.
 # Note, these sequences do not represent the full primary transcript,
-# rather a predicted stem-loop portion that includes the precursor.
+# rather a predicted stemloop portion that includes the precursor.
 
 sample  miRkwood  miRNA_primary_transcript  5  93  .  +  .  Name=preMir_sample__5-93
 </pre>
@@ -316,12 +320,12 @@ sample  miRkwood  miRNA_primary_transcript  5  93  .  +  .  Name=preMir_sample__
             </p>
 
             <p><b>Alternative candidates (dot-bracket format): </b>
-            This is the set of stem-loop sequences that overlap the current prediction.
+            This is the set of stemloop sequences that overlap the current prediction.
             The choice between several alternative overlapping candidate pre-miRNAs is made according to the best MFEI.
             </p>
 
-            <p>The stem-loop structure of the miRNA precursor is also displayed with <a href='http://varna.lri.fr/'>Varna</a>.</p>
-            <img style='width:400px; display: block; margin: 0 auto;' src='../style/structure.png' alt='The stem-loop structure of the miRNA precursor' />
+            <p>The stemloop structure of the miRNA precursor is also displayed with <a href='http://varna.lri.fr/'>Varna</a>.</p>
+            <img style='width:400px; display: block; margin: 0 auto;' src='../style/structure.png' alt='The stemloop structure of the miRNA precursor' />
 
 
             <h3>Thermodynamics stability</h3>
@@ -342,7 +346,7 @@ sample  miRkwood  miRNA_primary_transcript  5  93  .  +  .  Name=preMir_sample__
             <p><b>Shuffles: </b> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate
             miRNA precursor (<a href='#compute-thermodynamic-stability'>see Compute thermodynamic stability</a>).
             This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
-            We report pre-miRNA stem-loops for which the value is smaller than 0.1, which covers more than 89% of miRBase sequences.
+            We report pre-miRNA stemloops for which the value is smaller than 0.1, which covers more than 89% of miRBase sequences.
             Otherwise, if the P-value is greater than 0.1, we say that it is non significant, and do not report any value.
             </p>
 
@@ -366,7 +370,7 @@ miRBase           1 cgccuggcuccuuguaugcca 21
             (or the miRNA*) found in miRBase.
             It is possible to access the corresponding miRBAse entry by clicking on the link under the alignment.
             The report also indicates whether the location is validated by <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>.
-            Finally, we provide an ASCII representation of the putative miRNA within the stem-loop precursor.
+            Finally, we provide an ASCII representation of the putative miRNA within the stemloop precursor.
             </p>
 
 <pre class='example'>
