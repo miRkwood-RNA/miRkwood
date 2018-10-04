@@ -152,10 +152,9 @@
             In this case, it is possible to localize the mature miRNA within the pre-miRNA by similarity.
             For that, we compare each sequence with the mature miRNAs of plant (<i>Viridiplantae</i>)
             deposited in <a href='http://www.mirbase.org/ftp.shtml'>miRBase</a> (Release 21).
-            Alignments are performed with <a href='https://www.ebi.ac.uk/~guy/exonerate/'>Exonerate</a>,
-            which implements an exact model for pairwise alignment.
             We select alignments with at most three errors (mismatch, deletion or insertion)
             against the full-length mature miRNA and that occur in one of the two arms of the stemloop.
+            Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.
             The putative location obtained is then validated with <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>,
             that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRBase Viridiplantae v21.</p>
 
