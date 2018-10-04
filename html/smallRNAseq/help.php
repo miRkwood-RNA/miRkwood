@@ -369,7 +369,7 @@
             whereas it is observed in less than 13% of pseudo hairpins.</p>
 
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower
-            than the MFE of the candidate miRNA precursor (see <a href="">Compute thermodynamic stability</a>).
+            than the MFE of the candidate miRNA precursor (see <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
             This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
             We report pre-miRNA stemloops for which the value is smaller than 0.01,
             which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01,
@@ -385,7 +385,7 @@
 
             <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             when an alignment between the candidate sequence and miRBase is found
-            (see <a href="">Flag conserved mature miRNAs</a>).
+            (see <a href="#flag_conserved_mirnas">Flag conserved mature miRNAs</a>).
             It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML report.</p>
@@ -402,7 +402,7 @@
 
             <p id='dot_bracket'><b>Dot-bracket notation:</b> This is the compilation of all pre-miRNA sequences found,
             together with the predicted secondary structure. The secondary structure is given as a set of matching parentheses
-            (see more explanation on <a href="">Vienna website</a>).  </p>
+            (see more explanation on <a href="https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/rna_structure_notations.html">Vienna website</a>).  </p>
 
             <p id='csv'><b>CSV <em>(comma separated value)</em>:</b>
             It contains the same information as the result table, plus the FASTA sequences
@@ -542,7 +542,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 
 
             <p><b>Quality:</b></p>
-            This score includes the reads ditribution score (as defined <a XXX>here</a>)
+            This score includes the reads ditribution score (as defined <a href="#novel_mirnas">here</a>)
             and extends it with some additional criteria.
             It ranges from 0 to 6.
 
