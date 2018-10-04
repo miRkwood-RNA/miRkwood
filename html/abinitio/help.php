@@ -136,7 +136,7 @@
             greater than or equal to -0.6. Indeed, more than 96% of plant
             miRBase precursors have an MFEI smaller than -0.6, whereas
             pseudo-hairpins show significantly larger values of MFEI.
-            </p>
+            Default: checked.</p>
 
             <p id='compute-thermodynamic-stability'><b>Compute thermodynamic stability: </b>
             The significance of the stability of the sequence can also be measured by comparison
@@ -145,7 +145,7 @@
             that the majority of the pre-miRNA sequences exhibit a MFE that is lower than that for shuffled sequences.
             We compute the probability that, for a given sequence, the MFE of the secondary structure is different
             from a distribution of MFE computed with 300 random sequences with the same length and the same dinucleotide frequency.
-            </p>
+            Default: unchecked.</p>
 
             <p id='flag-conserved-mature-mirnas'><b>Flag conserved mature miRNAs: </b>
             Some families of mature miRNAs are highly conserved through evolution.
@@ -156,7 +156,8 @@
             against the full-length mature miRNA and that occur in one of the two arms of the stemloop.
             Moreover, this alignment allows to infer a putative location for the miRNA within the precursor.
             The putative location obtained is then validated with <a href='http://www.cs.mcgill.ca/~blanchem/mirdup/'>miRdup</a>,
-            that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRBase Viridiplantae v21.</p>
+            that assesses the stability of the miRNA-miRNA* duplex. Here, it was trained on miRBase Viridiplantae v21.
+            Default: checked.</p>
 
 
             <h3>Submission</h3>
