@@ -259,7 +259,7 @@
                 <em>i</em> and <em>j</em> is represented by a "(" at position
                 <em>i</em> and a ")" at position <em>j</em>. Unpaired bases are
                 represented by dots (see more explanation on <a
-                href='http://www.tbi.univie.ac.at/RNA/bracket.html'>Vienna
+                href='https://www.tbi.univie.ac.at/RNA/ViennaRNA/doc/html/rna_structure_notations.html'>Vienna
                 website</a>).
             </p>
 
