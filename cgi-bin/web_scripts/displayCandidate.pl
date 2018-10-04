@@ -128,13 +128,12 @@ END_TXT
         }
 
         # quality
-        $quality = <<"END_TXT";
-        <h2>Quality <a href="$help_page#quality">[?]</a> </h2>
-        <b>Quality:</b> $candidate->{'quality'}   <br /><ul>
+        if ( defined($candidate->{'mirbase_id'}) ){ # known miRNAs
+            $quality = <<"END_TXT";
+            <h2>Quality <a href="$help_page#known_mirna_quality">[?]</a> </h2>
+            <b>Quality:</b> $candidate->{'quality'}   <br /><ul>
 
 END_TXT
-
-        if ( defined($candidate->{'mirbase_id'}) ){ # known miRNAs
             if ( $candidate->{'criteria_nb_reads'} ){
                 $quality .= '<li><b>Criteria number of reads:</b> Yes</li>';
             }
@@ -149,7 +148,11 @@ END_TXT
             }
         }
         else {  # novel miRNAs
+            $quality = <<"END_TXT";
+            <h2>Quality <a href="$help_page#novel_mirna_quality">[?]</a> </h2>
+            <b>Quality:</b> $candidate->{'quality'}   <br /><ul>
 
+END_TXT
             if ( $candidate->{'mfei'} < -0.8 ){
                 $quality .= '<li><b>MFEI < -0.8:</b> Yes</li>';
             }

@@ -286,7 +286,7 @@
 
             <p><b>+/- :</b> Strand, forward (+) or reverse (-).</p>
 
-            <p><b>Quality:</b> This score measures the consistency between the distribution of reads
+            <p id='known_mirna_quality'><b>Quality:</b> This score measures the consistency between the distribution of reads
             along the locus and the annotation provided in miRbase.
             It ranges between 0 and 2 stars, and  is calculated as follows. </p>
 
@@ -316,10 +316,12 @@
 
             <p>Each row corresponds to miRNA precursor, and each
             column to a feature. By default, results are sorted by
-            sequence and then by position. It is possible to have them
-            sorted by <i>quality</i>. The quality is the sum of three
+            sequence and then by position.
+
+            It is possible to have them sorted by quality.
+            The <b id='novel_mirna_quality'>quality</b> is the sum of three
             values: the existence of a miRNA sequence, the score of
-            reads distribution, the value of the MFEI (<-0.8) (see
+            reads distribution, the value of the MFEI (&lt;-0.8) (see
             definitions below). You can view all information related
             to a given prediction by clicking on the row (see <a
              href="#html_report">section HTML Report</a>).</p>
@@ -333,7 +335,7 @@
 
             <p><b>Reads:</b> Total number of reads included in the locus.</p>
 
-            <p id='quality'><b>Reads distribution:</b> This score, ranging from 0
+            <p><b>Reads distribution:</b> This score, ranging from 0
             to 3-stars, allows to qualify the pattern of reads mapping
             to a putative microRNA precursor. It aims at determining
             if this distribution of reads presents a typical 2-peaks
