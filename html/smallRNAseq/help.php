@@ -28,10 +28,10 @@
 
             <br />
 
-            <p>This page is a  user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>.</p>
+            <p>This page is a user manual for the <a href='/cgi-bin/mirkwood/web_scripts/BAMinterface.pl'>miRkwood small RNA-seq web application</a>.</p>
 
             <p>If this is your first time using miRkwood, we would
-            suggest visiting  our <a href="./example.php">quick start</a>
+            suggest visiting our <a href="./example.php">quick start</a>
             guide before.</p>
 
             <br /> <br />
@@ -76,7 +76,9 @@
                 </ol>
             </div>
 
-<br />
+            <br />
+
+
             <h2 id='input_form'>Input form</h2>
 
             <h3 id='reads'>Upload your set of reads</h3>
@@ -316,15 +318,22 @@
 
             <p>Each row corresponds to miRNA precursor, and each
             column to a feature. By default, results are sorted by
-            sequence and then by position.
+            sequence and then by position.</p>
 
-            It is possible to have them sorted by quality.
-            The <b id='novel_mirna_quality'>quality</b> is the sum of three
-            values: the existence of a miRNA sequence, the score of
-            reads distribution, the value of the MFEI (&lt;-0.8) (see
-            definitions below). You can view all information related
+            <p>It is possible to have the results sorted by quality.
+            The <b id='novel_mirna_quality'>quality</b> is the sum of four
+            values: </p>
+            <ul>
+                <li>the existence of a miRNA sequence, </li>
+                <li>the validation of the miRNA/miRNA* duplex by <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>, </li>
+                <li>the score of reads distribution, </li>
+                <li>the value of the MFEI of the precursor secondary structure (&lt;-0.8)
+                    (see definitions below). </li>
+            </ul>
+
+            <p>You can view all information related
             to a given prediction by clicking on the row (see <a
-             href="#html_report">section HTML Report</a>).</p>
+            href="#html_report">section HTML Report</a>).</p>
 
             <p><b>Chr:</b> Number of the chromosome.</p>
 
@@ -386,11 +395,12 @@
             divided by the number of possible alignments of this read in the genome.</p>
 
             <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
-            when an alignment between the candidate sequence and miRBase is found
+            when an alignment between the miRNA precursor sequence and plant mature miRNA database of miRBase is found
             (see <a href="#flag_conserved_mirnas">Flag conserved mature miRNAs</a>).
             It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
-            when the location of the candidate mature miRNA is validated by miRdup. The alignments are visible in the HTML report.</p>
+            if at least 40% of reads overlap with the miRBase sequence.
+            The alignments are visible in the HTML report.</p>
 
 
             <h2 id='export'>Export </h2>
@@ -551,12 +561,13 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
             <ul>
                 <li><b>MFEI &lt; -0.8:</b> This MFEI threshold covers 83% of miRBase pre-miRNAs,
                     whereas it is observed in less than 13% of pseudo hairpins.</li>
-                <li><b>Criteria number of reads:</b>The locus has either
+                <li><b>Criteria number of reads:</b> The locus has either
                     at least 10 reads mapping to each arm, or at least 100
                     reads mapping in total. </li>
                 <li><b>Existence of a miRNA:</b> It is the sequence
                     of the most common read, if the frequency is at least 33%. </li>
-                <li><b>The miRNA is validated by miRdup:</b> ????? </li>
+                <li><b>The miRNA is validated by miRdup:</b>  This measures the stability of the miRNA/miRNA* duplex
+                    (<a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">see more information</a>), </li>
                 <li><b>Criteria presence of the miRNA:miRNA* duplex:</b> There is at least one read in the window [-5,+5] on
                 the strand of the miRNA*. </li>
                 <li><b>Criteria precision of the precursor processing:</b> At least 75% of reads start in a window [-3,+3]
@@ -612,16 +623,15 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 
             <img style='width:610px; display: block; margin: 0 auto;' src='../style/alignment.png'' alt='alignment' />
 
-            <p>query is the user sequence, and miRBase designates the mature miRNA found in miRBase.
-            It is possible to access the corresponding mirBase entry by clicking on the link under the alignment.
-            The report also indicates whether the location is validated with <a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">miRdup</a>.
+            <p><i>query</i> is the user sequence, and <i>miRBase</i> designates the mature miRNA found in miRBase.
+            It is possible to access the corresponding miRBase entry by clicking on the link under the alignment.
             Finally, we provide an ASCII representation of the putative miRNA within the stemloop  precursor.</p>
 
             <img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png'' alt='hairpin with mature' />
 
         </div>
         <?php require("/bio1/www/html/lib.inc")?>
-        <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2013"); ?>
+        <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2018"); ?>
     </body>
 
 </html>
