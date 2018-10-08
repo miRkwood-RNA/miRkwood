@@ -1,7 +1,7 @@
 <div id="footer">
-     <table class="footerTable">
+     <table id="footerTable">
      	    <tr>
-		<td align="left">
+		<td id='footer_left'>
 		For questions about <b>miRkwood</b> or for bug reports, please contact <script type="text/javascript">
 	<!--
 	    function escramble()
@@ -17,15 +17,15 @@
 	    e=  '">';
 	    g=  '<';
 	    h=  '/a>';
-	    document.write(a+b+c+d+i+j+e+'the mirRkwood team'+g+h);
+	    document.write(a+b+c+d+i+j+'?Subject=[mirRkwood]'+e+'miRkwood'+g+h);
 	    }
 	    escramble();
 
             //-->
 	    </script>
 		</td>
-		<td align="right">
-		2013 - <a href="http://www.lifl.fr/bonsai">Bonsai bioinformatics</a>
+		<td id='footer_right'>
+		2018 - <a href="http://cristal.univ-lille.fr/bonsai">Bonsai bioinformatics</a>
         	</td>
 	     </tr>
      </table>
