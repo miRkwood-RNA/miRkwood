@@ -42,8 +42,7 @@
 
         </div> <!-- main -->
 
-        <?php require("/bio1/www/html/lib.inc")?>
-        <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2013"); ?>
+        <?php include('static/footer.php') ?>
 
     </body>
 

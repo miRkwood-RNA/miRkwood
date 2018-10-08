@@ -58,8 +58,7 @@ thermodynamic stability, quality of the miRNA-miRNA* duplex, read coverage, read
             <br /><br />
 
         </div>
-        <?php require("/bio1/www/html/lib.inc")?>
-        <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2016"); ?>
+        <?php include('../static/footer.php') ?>
     </body>
 
 </html>

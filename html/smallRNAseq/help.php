@@ -630,8 +630,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
             <img style='width:600px; display: block; margin: 0 auto;' src='../style/hairpin_with_mature.png'' alt='hairpin with mature' />
 
         </div>
-        <?php require("/bio1/www/html/lib.inc")?>
-        <?php footer("miRkwood","miRkwood", "mirkwood@univ-lille1.fr","2018"); ?>
+        <?php include('../static/footer.php') ?>
     </body>
 
 </html>
