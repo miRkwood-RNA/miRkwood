@@ -116,11 +116,11 @@
 
             <p>When available, the assembly is supplemented by two GFF
             files. The first one contains the genome coordinates of
-            annotated  CDSs, tRNAs, rRNAs and snoRNAs,  and is
-            used to apply masking options described in <a
-            href="#parameters">Section 1.3 - Parameters</a>.  The
-            source of this file is indicated above, case by case. The
-            other GFF file compiles all miRNAs and precursors of miRNAs
+            annotated  CDSs, tRNAs, rRNAs and snoRNAs, and is
+            used to apply masking options described in section
+            <a href="#parameters">Parameters</a>.
+            The source of this file is indicated above, case by case.
+            The other GFF file compiles all miRNAs and precursors of miRNAs
             available in MiRBase 21 and is used to detect known miRNAs that are expressed in the sequencing data. </p>
 
 
@@ -254,13 +254,13 @@
             <p><b>Known miRNAs:</b> This is the number of loci annotated as microRNA precursors
             in miRBase that intersect with reads from the BED file.
             You can display detailed results by clicking on the link <i>see results</i>.
-            See <a href="#known_mirna">Section 2.2</a>.
+            See section <a href="#known_mirnas">Known miRNAs</a>.
             </p>
 
-            <p><b>Novel miRNAs:</b> This is the number of miRNAs found by  miRkwood that have not
-            been previously  reported in miRbase.
+            <p><b>Novel miRNAs:</b> This is the number of miRNAs found by miRkwood that have not
+            been previously reported in miRbase.
             You can display detailed results by clicking on the link <i>see results</i>.
-            See <a href="#novel_mirna">Section 2.3</a>.</p>
+            See section <a href="#novel_mirnas">Novel miRNAs</a>.</p>
 
 
             <h3 id="known_mirnas">Known miRNAs</h3>
@@ -280,7 +280,7 @@
             By default, results are sorted by sequence and then by position.
             It is possible to have them sorted by quality (see definition below).
             You can view all information related to a given prediction by clicking on the row
-            (see <a href="#html_report">section HTML Report</a>).</p>
+            (see section <a href="#html_report">HTML Report</a>).</p>
 
             <p><b>Chr:</b> Number of the chromosome.</p>
 
@@ -332,8 +332,8 @@
             </ul>
 
             <p>You can view all information related
-            to a given prediction by clicking on the row (see <a
-            href="#html_report">section HTML Report</a>).</p>
+            to a given prediction by clicking on the row (see section
+            <a href="#html_report">HTML Report</a>).</p>
 
             <p><b>Chr:</b> Number of the chromosome.</p>
 
@@ -380,7 +380,7 @@
             whereas it is observed in less than 13% of pseudo hairpins.</p>
 
             <p><b>Shuffles (option):</b> proportion of shuffled sequences whose MFE is lower
-            than the MFE of the candidate miRNA precursor (see <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
+            than the MFE of the candidate miRNA precursor (see paragraph <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
             This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
             We report pre-miRNA stemloops for which the value is smaller than 0.01,
             which covers more than 89% of miRBase sequences. Otherwise, if the P-value is greater than 0.01,
@@ -396,7 +396,7 @@
 
             <p><b>Conserved miRNA (option):</b> This cell is checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             when an alignment between the miRNA precursor sequence and plant mature miRNA database of miRBase is found
-            (see <a href="#flag_conserved_mirnas">Flag conserved mature miRNAs</a>).
+            (see paragraph <a href="#flag_conserved_mirnas">Flag conserved mature miRNAs</a>).
             It is doubled checked <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             <img src='../style/check.png' alt='arobas' style='width:15px; height:15px;' />
             if at least 40% of reads overlap with the miRBase sequence.
@@ -421,7 +421,7 @@
             and the dot-bracket secondary structures. This tabular format is supported by spreadsheets like Excel. </p>
 
             <p id='org'><b>ORG:</b>
-            This is an equivalent of the <a href="#html_export">HTML report</a>, and contains the full report of the predictions.
+            This is an equivalent of the <a href="#html_report">HTML report</a>, and contains the full report of the predictions.
             This file can be easily edited by the user. </p>
 
             <p id='read_cloud'><b> Reads cloud:</b>  This archive is a
@@ -430,7 +430,7 @@
             positions, sequence, secondary structure, existence of an alignment
             with miRbase, distribution of mapped reads. It can easily be parsed.</p>
 
-            <h2 id='html_export'>HTML report </h2>
+            <h2 id='html_report'>HTML report </h2>
 
             <p>The HTML report contains all information related to a given predicted pre-miRNA.</p>
 
@@ -465,7 +465,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
 </pre>
 
             <p><b> Quality:</b> It details the computation of the quality score as explained in
-                <a href="#known_mirnas">Section 2.2 Known miRNAs</a>.</p>
+                section <a href="#known_mirnas">Known miRNAs</a>.</p>
 
             <p><b> Reads</b></p>
 
@@ -501,7 +501,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
                 <li><b>AMFE:</b> Value of the adjusted MFE : MFE/(sequence length) x 100</li>
                 <li><b>MFEI:</b> Value of the minimum folding energy index (as defined <a href="#filter_mfei">here</a>)</li>
                 <li><b>Shuffles (option):</b> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor
-                    (see <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
+                    (see paragraph <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
                     This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
                     We report pre-miRNA stemloops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences.
                     Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</li>
@@ -566,8 +566,8 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
                     reads mapping in total. </li>
                 <li><b>Existence of a miRNA:</b> It is the sequence
                     of the most common read, if the frequency is at least 33%. </li>
-                <li><b>The miRNA is validated by miRdup:</b>  This measures the stability of the miRNA/miRNA* duplex
-                    (<a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">see more information</a>), </li>
+                <li><b>The miRNA is validated by miRdup:</b> This measures the stability of the miRNA/miRNA* duplex
+                    (<a href="http://www.cs.mcgill.ca/~blanchem/mirdup/">more information</a>), </li>
                 <li><b>Criteria presence of the miRNA:miRNA* duplex:</b> There is at least one read in the window [-5,+5] on
                 the strand of the miRNA*. </li>
                 <li><b>Criteria precision of the precursor processing:</b> At least 75% of reads start in a window [-3,+3]
@@ -611,7 +611,7 @@ GAAAUGAUGCGCAAAUGCGGAUAUCAAUGUAAAUCAGGGAGAAGGCAUGAUAUACCUUUAUAUCCGCAUUUGCGCAUCAU
                 <li><b>AMFE:</b> Value of the adjusted MFE : MFE/(sequence length) x 100</li>
                 <li><b>MFEI:</b> Value of the minimum folding energy index (as defined <a href="#filter_mfei">here</a>)</li>
                 <li><b>Shuffles (option):</b> Proportion of shuffled sequences whose MFE is lower than the MFE of the candidate miRNA precursor
-                    (see <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
+                    (see paragraph <a href="#thermodynamic_stability">Compute thermodynamic stability</a>).
                     This value ranges between 0 and 1. The smaller it is, the more significant is the MFE.
                     We report pre-miRNA stemloops for which the value is smaller than 0.01, which covers more than 89% of miRBase sequences.
                     Otherwise, if the P-value is greater than 0.01, we say that it is non significant, and do not report any value.</li>
