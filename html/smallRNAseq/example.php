@@ -24,8 +24,7 @@
 
         <div id="main">
 
-           
-<div id="mirkwood_title">Quick start</div>
+            <div id="mirkwood_title">Quick start</div>
 
             <p>This page covers the basics on how to get started
             with <a href="/cgi-bin/mirkwood/web_scripts/BAMinterface.pl">miRkwood small RNA-seq web server</a>.
@@ -154,7 +153,7 @@
                     <br> <br>
                 </li>
 
-                <li> 
+                <li>
                     <i> Novel miRNAs: </i>30 sequence(s) - 7,621 reads <br> <br>
                     miRkwood finds 30 new pre-miRNAs that have not
                     been previously  reported in miRbase and that are supported by a significant

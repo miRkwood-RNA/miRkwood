@@ -24,19 +24,21 @@
 
             <h2>Where does the name come from ?</h2>
 
-<br /><br />
+            <br /><br />
 
             <img style='width:600px; display: block; margin: 0 auto;'src='./style/forest.jpg' alt='mirkwood forest' />
 
-            <br />
+            <br /><br />
 
-<br /> 
-            <p>
-            The term Mirkwood is taken from the germanic mythology (Myrkvior, meaning "mirky wood, dark wood") and is used  for two distinct fictional forests on the continent of Middle-earth in Tolkien's legendarium.
+            <p>The term Mirkwood is taken from the germanic mythology (Myrkvior, meaning "mirky wood, dark wood")
+            and is used for two distinct fictional forests on the continent of Middle-earth in Tolkien's legendarium.
             </p>
 
-            <p>
-            One of these occurred in the First Age of Middle-earth, when the highlands of Dorthonion north of Beleriand were known as Mirkwood after falling under Morgoth's control. The other Mirkwood, and the more famous of the two, was the large forest in Rhovanion, east of the Anduin. This had acquired the name Mirkwood during the Third Age, after it fell under the influence of the Necromancer. This Mirkwood features significantly in <i>The Hobbit</i> and in the film <i>The Hobbit: The Desolation of Smaug</i>.
+            <p>One of these occurred in the First Age of Middle-earth, when the highlands of Dorthonion north
+            of Beleriand were known as Mirkwood after falling under Morgoth's control.
+            The other Mirkwood, and the more famous of the two, was the large forest in Rhovanion, east of the Anduin.
+            This had acquired the name Mirkwood during the Third Age, after it fell under the influence of the Necromancer.
+            This Mirkwood features significantly in <i>The Hobbit</i> and in the film <i>The Hobbit: The Desolation of Smaug</i>.
             </p>
 
         </div>
