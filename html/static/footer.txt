@@ -13,7 +13,7 @@
 	    b+= 'lto:';
 	    d=  'ood@u';
 	    i= 'niv-l';
-	    j= 'ille1.fr';
+	    j= 'ille.fr';
 	    e=  '">';
 	    g=  '<';
 	    h=  '/a>';
