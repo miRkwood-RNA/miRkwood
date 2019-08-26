@@ -56,7 +56,9 @@
             <h3> Authors</h3>
 
             <p>Sylvain Legrand (Evo-Eco-Paleo, UMR CNRS 8198 University of Lille)<br/>
-            Isabelle Guigon, Jean-Fr&eacute;d&eacute;ric Berthelot, Mohcen Benmounah, H&eacute;l&egrave;ne Touzet,
+            Isabelle Guigon, Jean-Fr&eacute;d&eacute;ric Berthelot, Mohcen Benmounah, <a href='https://wikis.univ-lille.fr/bilille/accueil'>bilille</a>
+            <br/>
+            H&eacute;l&egrave;ne Touzet,
             <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (CRIStAL, UMR CNRS 9189 University of Lille, and Inria Lille Nord Europe)
             </p>
 
