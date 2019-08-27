@@ -59,7 +59,7 @@
             Isabelle Guigon, Jean-Fr&eacute;d&eacute;ric Berthelot, Mohcen Benmounah, <a href='https://wikis.univ-lille.fr/bilille/accueil'>bilille</a>
             <br/>
             H&eacute;l&egrave;ne Touzet,
-            <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (CRIStAL, UMR CNRS 9189 University of Lille, and Inria Lille Nord Europe)
+            <a href='http://www.lifl.fr/bonsai'>Bonsai</a> (CRIStAL, UMR CNRS 9189 University of Lille)
             </p>
 
 
