@@ -25,7 +25,7 @@
 	    </script>
 		</td>
 		<td id='footer_right'>
-		2018 - <a href="http://cristal.univ-lille.fr/bonsai">Bonsai bioinformatics</a>
+		2019 - <a href="http://cristal.univ-lille.fr/bonsai">Bonsai bioinformatics</a>
         	</td>
 	     </tr>
      </table>
