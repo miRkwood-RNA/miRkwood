@@ -79,18 +79,23 @@ sub filterBEDfile {
     if ( @annotation_gff ){
         foreach my $gff ( @annotation_gff ){
             if ( -r $gff ){
-                debug( "Filter out according to $gff" . ' [' . localtime() . ']', miRkwood->DEBUG() );
-                $i++;
 
                 my $gff_type = '';
-                if ( $gff =~ /_([^_]+)[.](gff3?|dat)/ ){
+                if ( $gff =~ /_([^_]+)[.](gtf|gff3?|dat)/ ){
                     $gff_type .= $1;
-                }
-                my $input_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_".($i-1).'.bed');
-                my $output_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed");
-                my $discarded_reads = File::Spec->catfile( $job_dir , "${basename}_$gff_type.bed");
 
-                filter_according_given_gff( $gff, $input_gff_bed, $output_gff_bed, $discarded_reads );
+                    debug( "Filter out according to $gff" . ' [' . localtime() . ']', miRkwood->DEBUG() );
+                    $i++;
+
+                    my $input_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_".($i-1).'.bed');
+                    my $output_gff_bed = File::Spec->catfile( $job_dir , "${basename}_tmp_$i.bed");
+                    my $discarded_reads = File::Spec->catfile( $job_dir , "${basename}_$gff_type.bed");
+
+                    filter_according_given_gff( $gff, $input_gff_bed, $output_gff_bed, $discarded_reads );
+                }
+                else{
+                    debug( "WARNING: unrecognized format for file $gff", miRkwood->DEBUG() );
+                }
             }
             else {
                 debug( "$gff is not a readable file.", miRkwood->DEBUG() );
