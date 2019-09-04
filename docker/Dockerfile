@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER miRkwood team (mirkwood@univ-lille1.fr)
+MAINTAINER miRkwood team (mirkwood@univ-lille.fr)
 
 
 ##### Check prerequisites ############################################
