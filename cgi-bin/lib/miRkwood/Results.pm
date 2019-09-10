@@ -417,7 +417,7 @@ sub create_summary_page {
     $output_txt .= 'Select only sequences with MFEI < -0.6: ' . $boolean_mapping{ $cfg->param('options.mfei') } . "\n";
     $output_txt .= 'Compute thermodynamic stability: ' . $boolean_mapping{ $cfg->param('options.randfold') } . "\n";
     foreach my $gff ( @annotation_gff ){
-        if ( $gff =~ /[\/\\]([^\/\\]+[.]gff3?)/ ){
+        if ( $gff =~ /[\/\\]([^\/\\]+[.](dat|gtf|gff3?))/ ){
             $output_txt .= "Filter out features given in $1\n";
         }
     }
@@ -433,8 +433,9 @@ sub create_summary_page {
     $output_txt .= "===============\n\n";
     $output_txt .= "Total number of reads: $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
     foreach my $gff ( @annotation_gff ){
-        if ( $gff =~ /[\/\\]([^\/\\]+)[.]gff3?/ ){
-            $output_txt .= "$1: $bed_sizes->{ $1 }{'reads'} reads\n";
+        if ( $gff =~ /[\/\\]([^\/\\]+)_(.*)[.](dat|gtf|gff3?)/ ){
+            print "    <$1> <$2> <$3>\n";
+            $output_txt .= "${1}_$2: $bed_sizes->{ $2 }{'reads'} reads\n";
         }
     }
     $output_txt .= "Multiply mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
