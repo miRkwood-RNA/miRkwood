@@ -434,7 +434,6 @@ sub create_summary_page {
     $output_txt .= "Total number of reads: $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
     foreach my $gff ( @annotation_gff ){
         if ( $gff =~ /[\/\\]([^\/\\]+)_(.*)[.](dat|gtf|gff3?)/ ){
-            print "    <$1> <$2> <$3>\n";
             $output_txt .= "${1}_$2: $bed_sizes->{ $2 }{'reads'} reads\n";
         }
     }
