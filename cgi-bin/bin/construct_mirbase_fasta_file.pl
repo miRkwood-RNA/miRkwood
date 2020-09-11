@@ -8,8 +8,8 @@ use Bio::DB::Fasta;
 ########################################################################
 # Script to build the miRNAs fasta file for use by miRkwood.
 # Given a list of species (tabulated file with the species in the first column, 
-# or simply a list of species, one per line) and fasta files (mature.fa 
-# and hairpin.fa) found on miRBase web site, this script extracts sequences 
+# or simply a list of species, one per line) and a fasta file (mature.fa 
+# found on miRBase web site, this script extracts sequences 
 # from Viridiplantae clades and then merges identical miRNAs with a new 
 # header containing all initial entries for each sequence.
 # The list of species can be obtained here : http://www.mirbase.org/cgi-bin/browse.pl
@@ -31,8 +31,8 @@ my $help_message = "construct_mirbase_fasta_file.pl
 ----------
 Script to build the miRNAs fasta file for use by miRkwood.
 Given a list of species (tabulated file with the species in the first column, 
-or simply a list of species, one per line) and fasta files (mature.fa 
-and hairpin.fa) found on miRBase web site, this script extracts sequences 
+or simply a list of species, one per line) and a fasta files (mature.fa 
+found on miRBase web site, this script extracts sequences 
 from Viridiplantae clades and then merges identical miRNAs with a new 
 header containing all initial entries for each sequence.
 The list of species can be obtained here : http://www.mirbase.org/cgi-bin/browse.pl
