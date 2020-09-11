@@ -1,74 +1,82 @@
-Species	Precursors	Mature	Genome version
-Chlamydomonas reinhardtii 	50	86	 [CHLRE3.1]
-Cunninghamia lanceolata 	4	4	
-Picea abies 	40	41	
-Pinus densata 	29	29	
-Pinus taeda 	35	36	
-Physcomitrella patens 	229	280	 [JGI1.1]
-Selaginella moellendorffii 	58	64	
-Amborella trichopoda 	124	129	 [AmTr_v1.0]
-Panax ginseng 	29	32	
-Cynara cardunculus 	48	57	
-Helianthus annuus 	6	7	
-Helianthus argophyllus 	3	3	
-Helianthus ciliaris 	3	3	
-Helianthus exilis 	2	2	
-Helianthus paradoxus 	3	3	
-Helianthus petiolaris 	3	3	
-Helianthus tuberosus 	16	16	
-Arabidopsis lyrata 	205	384	 [v1.0]
-Arabidopsis thaliana 	325	427	 [TAIR10]
-Brassica napus 	90	92	 [BrassicaDB-20080411]
-Brassica oleracea 	10	11	
-Brassica rapa 	96	157	 [Brapa_1.1]
-Carica papaya 	79	81	
-Cucumis melo 	120	120	
-Hevea brasiliensis 	31	31	 [Hevbra_1.0]
-Manihot esculenta 	153	153	 [Cassava4]
-Ricinus communis 	63	63	 [TIGR0.1]
-Acacia auriculiformis 	7	7	
-Arachis hypogaea 	23	32	
-Acacia mangium 	3	3	
-Glycine max 	573	639	 [v1.0]
-Glycine soja 	13	13	
-Lotus japonicus 	62	67	 [lj2.5]
-Medicago truncatula 	672	756	 [JCVI_Mt3.5.2]
-Phaseolus vulgaris 	8	10	
-Vigna unguiculata 	18	18	
-Avicennia marina 	2	3	
-Digitalis purpurea 	13	13	
-Rehmannia glutinosa 	32	37	
-Salvia sclarea 	18	18	
-Linum usitatissimum 	124	124	
-Gossypium arboreum 	1	1	
-Gossypium herbaceum 	1	1	
-Gossypium hirsutum 	78	80	
-Gossypium raimondii 	296	296	 [Graimondii2_0]
-Theobroma cacao 	82	82	
-Aquilegia caerulea 	45	45	
-Bruguiera cylindrica 	4	4	
-Bruguiera gymnorhiza 	4	4	
-Malus domestica 	206	207	 [maldom-pseudo1.0]
-Prunus persica 	180	214	 [Prupe1_0]
-Citrus clementina 	5	5	
-Citrus reticulata 	4	4	
-Citrus sinensis 	60	64	
-Citrus trifoliata 	6	6	
-Populus euphratica 	4	4	
-Populus trichocarpa 	352	401	 [JGI_Poptr2.0]
-Nicotiana tabacum 	162	164	
-Solanum lycopersicum 	77	110	 [SL2.40]
-Solanum tuberosum 	224	343	 [SolTub3.0]
-Vitis vinifera 	163	186	 [Genoscope-20100122]
-Aegilops tauschii 	88	173	 [ASM34733v1]
-Brachypodium distachyon 	317	525	 [Bd21]
-Elaeis guineensis 	6	6	
-Festuca arundinacea 	15	15	
-Hordeum vulgare 	69	71	
-Oryza sativa 	592	713	 [MSU7]
-Sorghum bicolor 	205	241	 [Sorbi1]
-Saccharum officinarum 	16	16	
-Saccharum sp. 	19	20	
-Triticum aestivum 	116	119	
-Triticum turgidum 	1	1	
-Zea mays 	172	321	 [RefGen_v2]
+Chlamydomonas reinhardtii
+Cunninghamia lanceolata
+Picea abies
+Pinus densata
+Pinus taeda
+Physcomitrella patens
+Selaginella moellendorffii
+Amborella trichopoda
+Salicornia europaea
+Panax ginseng
+Cynara cardunculus
+Helianthus annuus
+Helianthus argophyllus
+Helianthus ciliaris
+Helianthus exilis
+Helianthus paradoxus
+Helianthus petiolaris
+Helianthus tuberosus
+Arabidopsis lyrata
+Arabidopsis thaliana
+Brassica napus
+Brassica oleracea
+Brassica rapa
+Camelina sativa
+Carica papaya
+Cucumis melo
+Cucumis sativus
+Hevea brasiliensis
+Manihot esculenta
+Ricinus communis
+Acacia auriculiformis
+Arachis hypogaea
+Acacia mangium
+Glycine max
+Glycine soja
+Lotus japonicus
+Medicago truncatula
+Phaseolus vulgaris
+Vigna unguiculata
+Avicennia marina
+Digitalis purpurea
+Rehmannia glutinosa
+Salvia miltiorrhiza
+Salvia sclarea
+Linum usitatissimum
+Gossypium arboreum
+Gossypium herbaceum
+Gossypium hirsutum
+Gossypium raimondii
+Theobroma cacao
+Eugenia uniflora
+Paeonia lactiflora
+Aquilegia caerulea
+Bruguiera cylindrica
+Bruguiera gymnorhiza
+Fragaria vesca
+Malus domestica
+Prunus persica
+Citrus clementina
+Citrus reticulata
+Citrus sinensis
+Citrus trifoliata
+Populus euphratica
+Populus trichocarpa
+Nicotiana tabacum
+Solanum lycopersicum
+Solanum tuberosum
+Vitis vinifera
+Asparagus officinalis
+Aegilops tauschii
+Brachypodium distachyon
+Elaeis guineensis
+Festuca arundinacea
+Hordeum vulgare
+Oryza sativa
+Sorghum bicolor
+Saccharum officinarum
+Saccharum sp.
+Triticum aestivum
+Triticum turgidum
+Vriesea carinata
+Zea mays
