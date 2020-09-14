@@ -1,8 +1,8 @@
 ---
-- name: Download miRdup archive
-  get_url:
-    dest=/tmp/miRdup_1.4.zip
-    url=http://www.cs.mcgill.ca/~blanchem/mirdup/miRdup_1.4.zip
+- name: Copy miRdup archive
+  copy:
+    src: miRdup_1.4.zip
+    dest: /tmp/miRdup_1.4.zip
 
 - name: Ensure unzip is installed
   apt: pkg=unzip state=present
