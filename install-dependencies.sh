@@ -336,7 +336,7 @@ then
 
     ##### Get lib.inc
     echo "..... Get lib.inc .........................................."
-    sudo cp $ROOT_PATH/provisioning/roles/roles/bioinfo/files/lib.inc /bio1/www/html/
+    sudo cp $ROOT_PATH/provisioning/roles/bioinfo/files/lib.inc /bio1/www/html/
 
 fi
 
