@@ -234,7 +234,7 @@ Compute thermodynamic stability (shuffled sequences).
 
 =item B<--align>
 
-Flag conserved mature miRNAs (alignment with miRBase + miRdup).
+Flag conserved mature miRNAs (alignment with miRBase + miRdup) (default: off).
 
 =item B<--no-filter-mfei>
 
@@ -270,7 +270,7 @@ Default : 5 (reads that map at more than 5 positions are filtered out).
 
 =item B<--varna>
 
-Allow the structure generation using Varna.
+Allow the structure generation using Varna (default: off).
 
 =item B<--help>
 
