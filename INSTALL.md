@@ -24,7 +24,7 @@ All you will have to install is Docker
 
 A Docker image for miRkwood is stored at: https://hub.docker.com/r/iguigon/mirkwood/
 You can download miRkwood image with:
-`sudo docker pull iguigon/mirkwood:latest`
+> sudo docker pull iguigon/mirkwood:latest
 
 
 ### Install in a VM
@@ -53,10 +53,10 @@ more advanced IT tasks such as continuous deployments or zero downtime rolling u
 3. Install miRkwood dependencies
 
 - Clone the miRkwood repository on the gitHub repository
-    `git clone https://github.com/miRkwood-RNA/miRkwood.git`
+> git clone https://github.com/miRkwood-RNA/miRkwood.git
 
 - Run Vagrant at the miRkwood repository root
-    `vagrant up`
+> vagrant up
 
 - Vagrant will
     - download an Ubuntu ISO
@@ -120,9 +120,11 @@ in `/usr/bin`, and b2ct is usually installed in `/usr/share/ViennaRNA/bin`.
 - **bedtools**  
 Install package 'bedtools' with your usual package manager,
 for instance with
-`sudo apt-get install bedtools`
+> sudo apt-get install bedtools
+
 or
-`sudo yum install bedtools`
+
+> sudo yum install bedtools
 
 
 2. Optional dependencies for both pipelines
@@ -139,9 +141,11 @@ it. It will only affect the quality score of some candidates.
 Make sure that the Java Runtime Environment is installed.
 Install package 'default-jre' with your usual package manager,
 for instance with
-`sudo apt-get install default-jre`
+> sudo apt-get install default-jre
+
 or
-`sudo yum install default-jre`
+
+> sudo yum install default-jre
 
 You can download VARNA jar on http://varna.lri.fr/bin/VARNAv3-91.jar and
 then create a symbolic link or change the corresponding line in the 
@@ -160,45 +164,47 @@ path where you want to install it, then compile it.
 This program predicts 5s/8s, 16s/18s and 23s/28s ribosomal
 RNA in genomic sequences.
   - Install hmmer
-`wget --directory-prefix=/tmp/  http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz`
-`tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt`
-`cd /opt/hmmer-2.3.2/`
-`./configure --enable-threads`
-`make --directory=/opt/hmmer-2.3.2/`
-`ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23`
+> wget --directory-prefix=/tmp/  http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
+> tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
+> cd /opt/hmmer-2.3.2/
+> ./configure --enable-threads
+> make --directory=/opt/hmmer-2.3.2/
+> ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23
 
   - Install Perl dependency
-`sudo apt-get install libxml-simple-perl`
+> sudo apt-get install libxml-simple-perl
 
   - Copy RNAmmer archive in /opt
-`cp $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnammer-1.2.src.tar.Z /tmp/rnammer-1.2.src.tar.Z`
+> cp $ROOT_PATH/provisioning/roles/mirkwood-software/files/rnammer-1.2.src.tar.Z /tmp/rnammer-1.2.src.tar.Z
 
   - Create RNAmmer directory
-`mkdir /opt/RNAmmer`
+> mkdir /opt/RNAmmer
 
   - Extract RNAmmer
-`tar xf /tmp/rnammer-1.2.src.tar.Z --directory /opt/RNAmmer`
+> tar xf /tmp/rnammer-1.2.src.tar.Z --directory /opt/RNAmmer
 
   - Add necessary module import to RNAmmer perl executable
-`sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rnammer`
+> sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rnammer
 
   - Update self-path in RNAmmer perl executable
-`sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer`
+> sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer
 
   - Update paths to HMMER in RNAmmer perl executable
-`sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/' -i /opt/RNAmmer/rnammer`
+> sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23"/' -i /opt/RNAmmer/rnammer
 
   - Make relevant user/group
-`chown -R www-data:www-data "/opt/RNAmmer"`
+> chown -R www-data:www-data "/opt/RNAmmer"
 
 - **blastX** 
 BLAST finds regions of local similarity between sequences.
 We use it to mask CDS regions in the sequences given by the user.
 Install package 'ncbi-blast+' with your usual package manager,
 for instance with
-`sudo apt-get install ncbi-blast+`
+> sudo apt-get install ncbi-blast+
+
 or
-`sudo yum install ncbi-blast+`
+
+> sudo yum install ncbi-blast+
 
 
 #### In-house programs:
@@ -221,7 +227,7 @@ Ensuire Python pip is installed.
 Copy the sources where you want it to be (the sources are given in
 /{miRkwood_path}/provisioning/roles/mirkwood-software/files/) and
 then build it with pip.
-`pip install /path/rnashuffles`
+> pip install /path/rnashuffles
 
 
 ## Update miRBase DB
@@ -232,10 +238,10 @@ with the database of mature miRNAs of plant (Viridiplantae) deposited in miRBase
 To update the miRBase database file, you can use the script construct_mirbase_fasta_file.pl
 (in /{miRkwood_path}/cgi-bin/bin/).
 
-`./construct_mirbase_fasta_file.pl \`
-`-species list_Viridiplantae.txt \`
-`-fasta mature.fa \`
-`-output MirbaseFile.txt`
+> ./construct_mirbase_fasta_file.pl \
+> -species list_Viridiplantae.txt \
+> -fasta mature.fa \
+> -output MirbaseFile.txt
 
 The file mature.fa can be downloaded on miRBase website: <http://www.mirbase.org/ftp.shtml>.
 
