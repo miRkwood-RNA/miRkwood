@@ -1,0 +1,90 @@
+FROM iguigon/mirkwood_base:latest
+MAINTAINER miRkwood team (mirkwood@univ-lille.fr)
+
+RUN apt-get -y update
+
+##### Get miRkwood code
+RUN rm -Rf /home/mirkwood/
+
+RUN wget --directory-prefix=/home/ https://github.com/miRkwood-RNA/miRkwood/archive/master.zip
+
+RUN unzip -qq /home/master.zip -d /home/
+
+RUN mv /home/miRkwood-master/ /home/mirkwood/
+
+
+##### Install dependencies provided with miRkwood ####################
+
+### Install Vienna package
+RUN cp /home/mirkwood/provisioning/roles/mirkwood-software/files/vienna-rna_2.1.6-1_amd64.deb /tmp/vienna-rna_2.1.6-1_amd64.deb
+RUN dpkg -i /tmp/vienna-rna_2.1.6-1_amd64.deb
+RUN ln -s /usr/share/ViennaRNA/bin/b2ct /usr/bin/b2ct
+
+### Install RNAstemloop
+RUN rm -f /home/mirkwood/cgi-bin/programs/RNAstemloop
+RUN ln -s /home/mirkwood/cgi-bin/programs/RNAstemloop-x86_64 /home/mirkwood/cgi-bin/programs/RNAstemloop
+
+### Install miRdup
+RUN cp /home/mirkwood/provisioning/roles/mirkwood-software/files/miRdup_1.4.zip /tmp/miRdup_1.4.zip
+RUN unzip -qq /tmp/miRdup_1.4.zip -d /opt/miRdup
+
+### Install rnammer
+# Install hmmer
+RUN wget --directory-prefix=/tmp/  http://eddylab.org/software/hmmer/2.3.2/hmmer-2.3.2.tar.gz
+RUN mkdir /opt/hmmer-2.3.2/
+RUN tar xf /tmp/hmmer-2.3.2.tar.gz --directory /opt
+RUN cd /opt/hmmer-2.3.2/ && ./configure && make && make install
+RUN ln -s /opt/hmmer-2.3.2/src/hmmsearch /usr/bin/hmmsearch23
+
+# Install Perl dependency
+RUN apt-get -y install libxml-simple-perl
+
+# Copy RNAmmer archive in /opt
+RUN cp /home/mirkwood/provisioning/roles/mirkwood-software/files/rnammer-1.2.src.tar.Z /tmp/rnammer-1.2.src.tar.Z
+
+# Create RNAmmer directory
+RUN mkdir /opt/RNAmmer
+
+# Extract RNAmmer
+RUN tar xf /tmp/rnammer-1.2.src.tar.Z --directory /opt/RNAmmer
+
+# Add necessary module import to RNAmmer perl executable
+RUN sed -re 's/(use Getopt::Long;)/use File::Basename;\n\1/' -i /opt/RNAmmer/rnammer
+
+# Update self-path in RNAmmer perl executable
+RUN sed -re 's/"\/usr\/cbs\/bio\/src\/rnammer-1.2"/dirname(__FILE__)/' -i /opt/RNAmmer/rnammer
+
+# Update paths to HMMER in RNAmmer perl executable
+RUN sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch23";/' -i /opt/RNAmmer/rnammer
+
+# Make relevant user/group
+RUN chown -R www-data:www-data "/opt/RNAmmer"
+
+### Install RNAshuffles
+# Ensure Python pip is installed
+RUN sudo apt-get -y install python-pip
+
+# Copy RNAshuffles files
+RUN cp -r /home/mirkwood/provisioning/roles/mirkwood-software/files/rnashuffles /opt/
+
+# Build RNAshuffles
+RUN pip install /opt/rnashuffles
+
+
+##### Create symbolic links for programs #############################
+RUN ln -s /opt/VARNAv3-91.jar /home/mirkwood/cgi-bin/programs/VARNA.jar
+RUN ln -s /opt/miRdup /home/mirkwood/cgi-bin/programs/miRdup-1.4
+RUN ln -s /opt/tRNAscan-SE /home/mirkwood/cgi-bin/programs/tRNAscan-SE
+RUN ln -s /opt/RNAmmer /home/mirkwood/cgi-bin/programs/rnammer
+
+
+##### Deploy miRkwood data ###########################################
+RUN sh /home/mirkwood/cgi-bin/install-data.sh /home/mirkwood/cgi-bin/data
+
+
+##### cd to the bin directory
+WORKDIR /home/mirkwood/cgi-bin/bin
+
+
+##### Add bin dir to the PATH
+ENV PATH="${PATH}:/home/mirkwood/cgi-bin/bin/"

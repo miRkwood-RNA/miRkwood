@@ -1,0 +1,59 @@
+FROM ubuntu:14.04
+MAINTAINER miRkwood team (mirkwood@univ-lille1.fr)
+
+
+##### Check prerequisites ############################################
+RUN apt-get -y update
+RUN apt-get -y install make
+RUN apt-get -y install gcc
+RUN apt-get -y install g++
+RUN apt-get -y install unzip
+RUN apt-get -y install cpanminus
+RUN apt-get -y install wget
+RUN apt-get -y install default-jre --fix-missing
+RUN apt-get -y install samtools
+
+
+##### Install Perl modules ###########################################
+RUN apt-get -y install libconfig-simple-perl
+RUN apt-get -y install libyaml-libyaml-perl
+RUN apt-get -y install libfile-which-perl
+RUN apt-get -y install libmime-lite-perl
+RUN apt-get -y install libimage-size-perl
+RUN apt-get -y install libfile-type-perl
+RUN apt-get -y install libfile-slurp-perl
+RUN apt-get -y install libarchive-zip-perl
+
+RUN cpanm LWP::UserAgent
+RUN cpanm Bio::DB::Fasta
+RUN cpanm Inline::CPP
+RUN cpanm Log::Message::Simple
+RUN cpanm Archive::Zip
+
+
+##### Install dependencies not provided with miRkwood ################
+
+### Install bedtools
+RUN apt-get -y install bedtools
+
+### Install NCBI Blast+
+RUN apt-get -y install ncbi-blast+
+
+### Download VARNA jar
+RUN wget --directory-prefix=/opt/ http://varna.lri.fr/bin/VARNAv3-91.jar
+
+### Install tRNAscan-SE
+# Download and extract tRNAscan-SE archive
+RUN wget --directory-prefix=/tmp/ http://lowelab.ucsc.edu/software/tRNAscan-SE.tar.gz
+RUN tar xf /tmp/tRNAscan-SE.tar.gz --directory /tmp
+
+# Update tRNAscan-SE paths
+RUN sed -re 's/\$\(HOME\)\//\/opt\/tRNAscan-SE\//g' -i /tmp/tRNAscan-SE-1.3.1/Makefile
+
+# Build and install tRNAscan-SE
+RUN make --directory=/tmp/tRNAscan-SE-1.3.1/
+RUN make install --directory=/tmp/tRNAscan-SE-1.3.1/
+
+# Make relevant user/group and file mode
+RUN chown -R www-data:www-data "/opt/tRNAscan-SE"
+RUN chmod -R +x /opt/tRNAscan-SE/bin/tRNAscanSE/
