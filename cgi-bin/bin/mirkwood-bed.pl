@@ -63,8 +63,8 @@ GetOptions(
     'mirbase=s'               => \$mirbase_file,
     'gff=s'                   => \@annotation_gff,
     'no-filter-bad-hairpins'  => \$no_filter_bad_hairpins,
-    'min-read-positions-nb=s' => \$min_read_positions_nb,
-    'max-read-positions-nb=s' => \$max_read_positions_nb,
+    'min-repeats=s'           => \$min_read_positions_nb,
+    'max-repeats=s'           => \$max_read_positions_nb,
     'varna'                   => \$varna,
     'help|?'                  => \$help,
     'force'                   => \$force,
@@ -86,17 +86,17 @@ if ( $no_filter_bad_hairpins ){
 }
 
 if ( $min_read_positions_nb !~ /^-?(\d+)$/ ){
-    my $msg = "ERROR: --min-read-positions-nb must be digit.\n";
+    my $msg = "ERROR: --min-repeats must be digit.\n";
     $msg .= "Enter 0 if you don't want to specify a minimum number of positions for each read.";
     die $msg;
 }
 if ( $max_read_positions_nb !~ /^-?(\d+)$/ ){
-    my $msg = "ERROR: --max-read-positions-nb must be digit.\n";
+    my $msg = "ERROR: --max-repeats must be digit.\n";
     $msg .= "Enter 0 if you don't want to specify a maximum number of positions for each read.";
     die $msg;
 }
 if ( $min_read_positions_nb > $max_read_positions_nb ){
-    die "ERROR: --min-read-positions-nb must be lower than --max-read-positions-nb.\n";
+    die "ERROR: --min-repeats must be lower than --max-repeats.\n";
 }
 if ( $min_read_positions_nb < 0 || $max_read_positions_nb < 0 ){
     $min_read_positions_nb = 0;
@@ -258,12 +258,12 @@ By default the candidates with a quality score of 0 and no
 conservation are discarded from results and are stored in a BED file.
 Use this option to keep all results.
 
-=item B<--min-read-positions-nb>
+=item B<--min-repeats>
 
 Minimum number of positions for each read to be kept.
 Default : 0.
 
-=item B<--max-read-positions-nb>
+=item B<--max-repeats>
 
 Maximum number of positions for each read to be kept.
 Default : 5 (reads that map at more than 5 positions are filtered out).
