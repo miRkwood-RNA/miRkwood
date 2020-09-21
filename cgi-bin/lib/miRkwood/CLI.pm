@@ -442,6 +442,14 @@ END_TXT
         $mirbase_name = "<li><b>miRbase name:</b> <a href='$mirbase_link'>$candidate->{'precursor_name'}</a></li>";
     }
 
+    # VARNA image
+    my $varna_html = '';
+    if ( defined( $candidate->{'image'} ) ){
+        my $varna_path = File::Spec->catfile( File::Spec->updir(),  File::Spec->updir(), miRkwood::Paths::get_images_dir_name() );
+        my $linkVarna = File::Spec->catfile( $varna_path, $candidate->{'identifier'} . '.png' );
+        $varna_html = "[<a href='$linkVarna'>image</a>]";
+    }
+
     ### make page
     my ($start, $end) = split( /-/, $candidate->{'position'});
     $start = miRkwood::Utils::make_numbers_more_readable( $start );
@@ -467,6 +475,7 @@ END_TXT
         <li>
             <b>miRNA precursor:</b> [<a href='$linkFasta'>FASTA sequence</a>] 
                                     [<a href='$linkVienna'>stem-loop structure</a>] 
+                                    $varna_html 
                                     $optimal_HTML 
                                     $alternatives_HTML
         </li>
