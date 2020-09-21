@@ -422,10 +422,10 @@ sub create_summary_page {
         }
     }
     if ( $min_nb_positions == 0 && $max_nb_positions == 0){
-        $output_txt .= "Filter multiply mapped reads: No\n";
+        $output_txt .= "Filter multiple mapped reads: No\n";
     }
     else{
-        $output_txt .= "Filter multiply mapped reads: keep reads mapping at $min_nb_positions to $max_nb_positions positions\n";
+        $output_txt .= "Filter multiple mapped reads: keep reads mapping at $min_nb_positions to $max_nb_positions positions\n";
     }
     $output_txt .= 'Filter low quality hairpins: ' . $boolean_mapping{ $cfg->param('options.filter_bad_hairpins') } . "\n";
 
