@@ -421,6 +421,9 @@ sub create_summary_page {
             $output_txt .= "Filter out features given in $1\n";
         }
     }
+    if ( $cfg->param('options.mirbase_gff') =~ /[\/\\]([^\/\\]+[.](dat|gtf|gff3?))/ ){
+        $output_txt .= "Filter out known miRNAs present in $1\n";
+    }
     if ( $min_nb_positions == 0 && $max_nb_positions == 0){
         $output_txt .= "Filter multiple mapped reads: No\n";
     }
