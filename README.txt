@@ -99,10 +99,10 @@ OPTIONS
                 conservation are discarded from results and are stored in a BED
                 file. Use this option to keep all results.
 
-            --min-read-positions-nb
+            --min-repeats
                 Minimum number of positions for each read to be kept. Default : 0.
 
-            --max-read-positions-nb
+            --max-repeats
                 Maximum number of positions for each read to be kept. Default : 5
                 (reads that map at more than 5 positions are filtered out).
 
@@ -168,8 +168,8 @@ OUTPUT
                 provided.
 
             your_bed_multimapped.tar.gz: a compressed BED containing all reads from your 
-                input BED file mapping at less than --min-read-positions-nb positions
-                or more than --max-read-positions-nb positions.
+                input BED file mapping at less than --min-repeats positions
+                or more than --max-repeats positions.
 
             your_bed_miRNAs.tar.gz: a compressed BED containing all reads from your 
                 input BED file corresponding to miRNAs present in miRBase.

@@ -51,8 +51,8 @@ Here is an example of command line for smallRNAseq pipeline:
 > --mirbase my_mirbase_file.gff3 \
 > --gff my_annotations_file1.gff \
 > --gff my_annotations_file2.gff \
-> --min-read-positions-nb 0 \
-> --max-read-positions-nb 5 \
+> --min-repeats 0 \
+> --max-repeats 5 \
 > --align
 
 Type the following command for detailed help on the command options:
@@ -92,8 +92,8 @@ Example with SmallRNAseq pipeline:
 > --mirbase /MAPPING/my_mirbase_file.gff3 \
 > --gff /MAPPING/my_annotations_file1.gff \
 > --gff /MAPPING/my_annotations_file2.gff \
-> --min-read-positions-nb 0 \
-> --max-read-positions-nb 5 \
+> --min-repeats 0 \
+> --max-repeats 5 \
 > --align
 
 
@@ -108,6 +108,6 @@ Example with SmallRNAseq pipeline:
 > --mirbase /MAPPING/my_mirbase_file.gff3 \
 > --gff /MAPPING/my_annotations_file1.gff \
 > --gff /MAPPING/my_annotations_file2.gff \
-> --min-read-positions-nb 0 \
-> --max-read-positions-nb 5 \
+> --min-repeats 0 \
+> --max-repeats 5 \
 > --align
