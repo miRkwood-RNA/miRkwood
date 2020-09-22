@@ -21,6 +21,7 @@ my $input_file = '';
 my $bed_file   = '';
 my $min_length = 18;
 my $max_length = 25;
+my $depth = 1;
 my $time = time();
 my $sorted_bam_file = "/tmp/mirkwood_bam2bed_${time}_sorted";
 my $sorted_sam_file = "/tmp/mirkwood_bam2bed_${time}_sorted.sam";
@@ -35,11 +36,12 @@ Script to convert a BAM/SAM file into a BED file for use by miRkwood.
 Usage : ./mirkwood-bam2bed.pl -in <input BAM/SAM file> -bed <output BED file>
 
 Options :
-    -in   : input BAM or SAM
-    -bed  : output BED
-    -min  : keep only reads with length >= min (default 18)
-    -max  : keep only reads with length <= max (default 25)
-    -help : display this message and quit
+    -in <file>     : input BAM or SAM
+    -bed <file>    : output BED
+    -min <int X>   : keep only reads with length >= X (default 18)
+    -max <int Y>   : keep only reads with length <= Y (default 25)
+    -depth <int N> : keep only reads with depth > N (default 1)
+    -help          : display this message and quit
 
 Dependencies : samtools
 Make sure to have it installed in your PATH. For Ubuntu/Debian distributions `sudo apt-get install samtools` is enough.
@@ -136,13 +138,15 @@ foreach my $chromosome ( sort ( keys%{$counts} ) ){
     foreach my $start ( sort {$a <=> $b} keys%{ $counts->{$chromosome} } ){
         foreach my $sequence ( sort (keys%{ $counts->{$chromosome}{$start} } ) ){
             foreach my $strand ( sort (keys%{ $counts->{$chromosome}{$start}{$sequence} } ) ){
-                my $end = $start + length($sequence);
-                print $BED "$chromosome\t";
-                print $BED "$start\t";
-                print $BED "$end\t";
-                print $BED "$sequence\t";
-                print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}\t";
-                print $BED "$strand\n";
+                if ( $counts->{$chromosome}{$start}{$sequence}{$strand} > $depth) {
+                    my $end = $start + length($sequence);
+                    print $BED "$chromosome\t";
+                    print $BED "$start\t";
+                    print $BED "$end\t";
+                    print $BED "$sequence\t";
+                    print $BED "$counts->{$chromosome}{$start}{$sequence}{$strand}\t";
+                    print $BED "$strand\n";
+                }
             }
         }
     }
