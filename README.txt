@@ -5,7 +5,7 @@ SYNOPSIS
 
 INSTALL
 
-    See file miRkwood_installation.md.
+    See file INSTALL.md.
 
 
 USAGE
