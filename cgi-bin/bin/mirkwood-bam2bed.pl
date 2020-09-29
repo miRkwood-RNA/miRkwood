@@ -56,11 +56,12 @@ if ( ! which( 'samtools' ) ){
 
 
 ########## Get options
-GetOptions ('in=s'  => \$input_file,
-            'bed=s' => \$bed_file,
-            'min=s' => \$min_length,
-            'max=s' => \$max_length,
-            'help'  => \$help);
+GetOptions ('in=s'    => \$input_file,
+            'bed=s'   => \$bed_file,
+            'depth=s' => \$depth,
+            'min=s'   => \$min_length,
+            'max=s'   => \$max_length,
+            'help'    => \$help);
 
 
 ########## Validate options
