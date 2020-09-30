@@ -282,6 +282,54 @@ sub count_reads_in_basic_yaml_file {
     return $nb_reads;
 }
 
+=method count_candidates_per_quality
+
+Method to count the number of novel candidates with quality 0, 1, ...
+Input : the basic_candidates.yml file
+Output: a hash with key=quality and value=nb of novel candidates
+
+=cut
+sub count_candidates_per_quality {
+    my ( @args ) = @_;
+    my $yaml = shift @args;
+    my $quality_count = {};
+
+    my @attributes = YAML::XS::LoadFile($yaml);
+
+    foreach my $data ( @{$attributes[0]} ){
+        if ( ! defined( $quality_count->{ $data->{'quality'} } ) ){
+            $quality_count->{ $data->{'quality'} } = 0;
+        }
+        $quality_count->{ $data->{'quality'} } += 1;
+    }
+
+    return $quality_count;
+}
+
+=method count_candidates_per_reads_distribution
+
+Method to count the number of novel candidates with reads_distribution 0, 1, ...
+Input : the basic_candidates.yml file
+Output: a hash with key=reads_distribution and value=nb of novel candidates
+
+=cut
+sub count_candidates_per_reads_distribution {
+    my ( @args ) = @_;
+    my $yaml = shift @args;
+    my $reads_distrib_count = {};
+
+    my @attributes = YAML::XS::LoadFile($yaml);
+
+    foreach my $data ( @{$attributes[0]} ){
+        if ( ! defined( $reads_distrib_count->{ $data->{'reads_distribution'} } ) ){
+            $reads_distrib_count->{ $data->{'reads_distribution'} } = 0;
+        }
+        $reads_distrib_count->{ $data->{'reads_distribution'} } += 1;
+    }
+
+    return $reads_distrib_count;
+}
+
 sub make_reads_barchart {
     my ( $self,
          $total_witdh,
@@ -367,6 +415,8 @@ sub create_summary_page {
     my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
     my $nb_reads_known_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_known_yaml );
     my $nb_reads_new_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_yaml );
+    #~ my $nb_candidates_per_quality = miRkwood::Results::count_candidates_per_quality( $basic_yaml );
+    #~ my $nb_candidates_per_reads_distrib = miRkwood::Results::count_candidates_per_reads_distribution( $basic_yaml );
 
     my %known_results = miRkwood::Results->deserialize_results($basic_known_yaml);
     my %novel_results = miRkwood::Results->deserialize_results($basic_yaml);
@@ -448,6 +498,14 @@ sub create_summary_page {
     $output_txt .= "Unclassified reads: $nb_orphan_reads reads\n";
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
+    #~ $output_txt .= "\nDistribution of novel miRNAs according to quality:\n";
+    #~ foreach my $qual (sort(keys%{$nb_candidates_per_quality})){
+        #~ $output_txt .= "    quality $qual: $nb_candidates_per_quality->{$qual} miRNAs\n";
+    #~ }
+    #~ $output_txt .= "\nDistribution of novel miRNAs according to reads distribution:\n";
+    #~ foreach my $qual (sort(keys%{$nb_candidates_per_reads_distrib})){
+        #~ $output_txt .= "    reads distribution quality $qual: $nb_candidates_per_reads_distrib->{$qual} miRNAs\n";
+    #~ }
 
     open (my $OUT, '>', $output_file) or die "ERROR while creating $output_file : $!";
     print $OUT $output_txt;
