@@ -155,9 +155,6 @@ sub count_alignments_per_miRNA {
         chomp;
         my @fields = split( /\t/ );
         $fields[3] =~ s/T/U/g;
-        if ( $fields[5] eq '-' ){
-            $fields[3] = miRkwood::Utils::reverse_complement( $fields[3] );
-        }
         if ( ! defined( $nb_alignments_per_read->{ $fields[3] } ) ){
             $nb_alignments_per_read->{ $fields[3] } = 0;
         }
