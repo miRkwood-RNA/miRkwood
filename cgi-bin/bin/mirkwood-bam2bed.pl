@@ -120,6 +120,8 @@ while ( <$SAM> ){
     my $strand = '+';
     if ( $line[1] eq '16' or $line[1] eq '0x10' ){
         $strand = '-';
+        $sequence = reverse( $sequence );
+        $sequence = complement_sequence( $sequence );
     }
 
     if ( ! exists( $counts->{$chromosome}{$start}{$sequence}{$strand} ) ){
@@ -163,3 +165,10 @@ my $sec  = int( ( ($total_time % 86_400 ) % 3_600 ) % 60 );
 print "Done in $day day $hour h $min min $sec sec.\n";
 
 
+##########  Functions
+sub complement_sequence {
+    my (@args) = @_;
+    my $sequence = shift @args;
+    $sequence =~ tr/ACGUTacgut/TGCAAtgcaa/;
+    return $sequence;
+}
