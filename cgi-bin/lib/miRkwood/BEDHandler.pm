@@ -269,31 +269,34 @@ sub count_reads_in_bed_file {
     my $bed_file = shift @args;
     my $start = shift @args;
     my $end = shift @args;
-
     my @tab;
+    my %reads;
     my $nb_total_reads = 0;
     my $nb_read_unq = 0;
-
     if ( -e $bed_file ){
         open(my $BED, '<', $bed_file) or die "ERROR while opening $bed_file : $!";
         while ( <$BED> ){
+            chomp;
             @tab = split ( /\t/ );
+            my $seq = $tab[3];
+            my $depth = $tab[4];
             if ( ( $start == -1 && $end == -1 ) || ( $tab[1] >= $start  && $tab[2] <= $end ) ) {
-                $nb_total_reads += $tab[4];
+                if ( defined( $reads{ $seq } ) && $reads{ $seq } != $depth){
+                    debug( "Depth inconsistency with read $seq ($tab[0]:$tab[1]-$tab[2] [$tab[5]]!", 1 );
+                }
+                $reads{ $seq } = $depth;
             }
         }
         close $BED;
-        $nb_read_unq = `wc -l $bed_file`;
-        if ( $nb_read_unq =~ /(\d+) .*/ ){
-            $nb_read_unq = $1;
+        $nb_read_unq = scalar( keys%reads );
+        foreach my $key ( keys%reads ){
+            $nb_total_reads += $reads{$key};
         }
-
         return ($nb_total_reads, $nb_read_unq);
     }
     else {
         return (0, 0);
     }
-
 }
 
 =method store_reads_nb_in_BED_file
