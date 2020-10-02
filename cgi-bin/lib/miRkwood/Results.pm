@@ -499,11 +499,11 @@ sub create_summary_page {
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
     #~ $output_txt .= "\nDistribution of novel miRNAs according to quality:\n";
-    #~ foreach my $qual (sort(keys%{$nb_candidates_per_quality})){
+    #~ foreach my $qual (reverse(sort(keys%{$nb_candidates_per_quality}))){
         #~ $output_txt .= "    quality $qual: $nb_candidates_per_quality->{$qual} miRNAs\n";
     #~ }
     #~ $output_txt .= "\nDistribution of novel miRNAs according to reads distribution:\n";
-    #~ foreach my $qual (sort(keys%{$nb_candidates_per_reads_distrib})){
+    #~ foreach my $qual (reverse(sort(keys%{$nb_candidates_per_reads_distrib}))){
         #~ $output_txt .= "    reads distribution quality $qual: $nb_candidates_per_reads_distrib->{$qual} miRNAs\n";
     #~ }
 
