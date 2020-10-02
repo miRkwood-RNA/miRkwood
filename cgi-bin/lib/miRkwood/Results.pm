@@ -490,7 +490,7 @@ sub create_summary_page {
             $output_txt .= "${1}_$2: $bed_sizes->{ $2 }{'reads'} reads\n";
         }
     }
-    $output_txt .= "Multiply mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
+    $output_txt .= "Multiple mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
     $output_txt .= "Orphan clusters of reads: $bed_sizes->{'orphan_clusters'}{'reads'} reads\n";
     if ( $cfg->param('options.filter_bad_hairpins') ){
         $output_txt .= "Orphan hairpins: $bed_sizes->{'orphan_hairpins'}{'reads'} reads\n";
