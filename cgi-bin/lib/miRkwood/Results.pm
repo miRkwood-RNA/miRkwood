@@ -415,7 +415,7 @@ sub create_summary_page {
     my $basic_yaml = File::Spec->catfile( $absolute_job_dir, 'basic_candidates.yml');
     my $nb_reads_known_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_known_yaml );
     my $nb_reads_new_miRNAs = miRkwood::Results::count_reads_in_basic_yaml_file( $basic_yaml );
-    #~ my $nb_candidates_per_quality = miRkwood::Results::count_candidates_per_quality( $basic_yaml );
+    my $nb_candidates_per_quality = miRkwood::Results::count_candidates_per_quality( $basic_yaml );
     #~ my $nb_candidates_per_reads_distrib = miRkwood::Results::count_candidates_per_reads_distribution( $basic_yaml );
 
     my %known_results = miRkwood::Results->deserialize_results($basic_known_yaml);
@@ -498,10 +498,10 @@ sub create_summary_page {
     $output_txt .= "Unclassified reads: $nb_orphan_reads reads\n";
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
-    #~ $output_txt .= "\nDistribution of novel miRNAs according to quality:\n";
-    #~ foreach my $qual (reverse(sort(keys%{$nb_candidates_per_quality}))){
-        #~ $output_txt .= "    quality $qual: $nb_candidates_per_quality->{$qual} miRNAs\n";
-    #~ }
+    $output_txt .= "\nDistribution of novel miRNAs according to quality:\n";
+    foreach my $qual (reverse(sort(keys%{$nb_candidates_per_quality}))){
+        $output_txt .= "    quality $qual: $nb_candidates_per_quality->{$qual} miRNAs\n";
+    }
     #~ $output_txt .= "\nDistribution of novel miRNAs according to reads distribution:\n";
     #~ foreach my $qual (reverse(sort(keys%{$nb_candidates_per_reads_distrib}))){
         #~ $output_txt .= "    reads distribution quality $qual: $nb_candidates_per_reads_distrib->{$qual} miRNAs\n";
