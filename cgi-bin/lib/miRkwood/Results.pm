@@ -443,10 +443,10 @@ sub create_summary_page {
     }
     close $FH;
 
-    my $nb_orphan_reads = $bed_sizes->{$basename_bed}{'reads'} - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
+    my $nb_unclassified_reads = $bed_sizes->{$basename_bed}{'reads'} - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
     foreach my $category ( keys%{$bed_sizes} ){
         if ( $category ne $basename_bed && $category ne 'miRNAs' ){
-            $nb_orphan_reads -= $bed_sizes->{ $category }{'reads'};
+            $nb_unclassified_reads -= $bed_sizes->{ $category }{'reads'};
         }
     }
 
@@ -495,7 +495,7 @@ sub create_summary_page {
     if ( $cfg->param('options.filter_bad_hairpins') ){
         $output_txt .= "Orphan hairpins: $bed_sizes->{'orphan_hairpins'}{'reads'} reads\n";
     }
-    $output_txt .= "Unclassified reads: $nb_orphan_reads reads\n";
+    $output_txt .= "Unclassified reads: $nb_unclassified_reads reads\n";
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
     $output_txt .= "\nDistribution of novel miRNAs according to quality:\n";
