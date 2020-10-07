@@ -60,7 +60,7 @@ sub filterBEDfile {
         store_overlapping_reads( $bed_file, $mirbase_file, $mirna_reads, '-f 1');
 
         # Delete reads corresponding to known miRNAs from the BED
-        $result_non_overlapping_reads = store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed);  # un-comment when tests are done
+        $result_non_overlapping_reads = store_non_overlapping_reads( $bed_file, $mirbase_file, $output_bed, '-f 1');  # un-comment when tests are done
 
         if ($result_non_overlapping_reads){
             debug( 'WARNING : there was a problem with miRbase file. Couldn\'t filter out known miRNAs', 1 );
@@ -142,7 +142,7 @@ sub filter_according_given_gff {
 
     # Delete reads corresponding to the features in the gff file
     my $result = 0;
-    $result = store_non_overlapping_reads( $input_bed, $annotation_gff, $output_bed);
+    $result = store_non_overlapping_reads( $input_bed, $annotation_gff, $output_bed, '');
 
     if ($result){
         debug( "WARNING : there was a problem with annotation file $annotation_gff. Couldn't filter out", 1 );
@@ -191,8 +191,9 @@ sub store_non_overlapping_reads {
     my $bed_file = shift @args;
     my $referenceFile = shift @args;
     my $outputFile = shift @args;
+    my $additionalArgs = shift @args;
 
-    my $job = "intersectBed -a $bed_file -b $referenceFile -s -v > $outputFile";
+    my $job = "intersectBed -a $bed_file -b $referenceFile -s -v $additionalArgs > $outputFile";
     #~ debug( "   $job", 1);
     my $result = system($job);
 
