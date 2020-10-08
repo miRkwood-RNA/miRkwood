@@ -517,19 +517,21 @@ sub clean_job_dir_for_cli_pipeline {
     my (@args) = @_;
     my $absolute_job_dir = shift @args;
 
-    opendir (my $DIR, $absolute_job_dir) or die "ERROR : cannot open directory $absolute_job_dir : $!";
-    while ( readdir $DIR ){
-        if ( $_ eq 'basic_candidates.yml'
-          || $_ eq 'basic_known_candidates.yml'
-          || $_ eq 'finished' ){
-            unlink "$absolute_job_dir/$_";
-        }
-        elsif ( $_ =~ /.*_filtered.bed/ ){
-            miRkwood::BEDHandler::zipBEDfile( "$absolute_job_dir/$_" );
-        }
+    unlink File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_orphan_regions_file_name() );
 
-    }
-    closedir $DIR;
+    #~ opendir (my $DIR, $absolute_job_dir) or die "ERROR : cannot open directory $absolute_job_dir : $!";
+    #~ while ( readdir $DIR ){
+        #~ if ( $_ eq 'basic_candidates.yml'
+          #~ || $_ eq 'basic_known_candidates.yml'
+          #~ || $_ eq 'finished' ){
+            #~ unlink "$absolute_job_dir/$_";
+        #~ }
+        #~ elsif ( $_ =~ /.*_filtered.bed/ ){
+            #~ miRkwood::BEDHandler::zipBEDfile( "$absolute_job_dir/$_" );
+        #~ }
+
+    #~ }
+    #~ closedir $DIR;
 
 }
 
