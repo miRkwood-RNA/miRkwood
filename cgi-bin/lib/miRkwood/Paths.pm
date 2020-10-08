@@ -515,6 +515,18 @@ sub get_bed_size_file_name {
     return 'bed_sizes.txt';
 }
 
+=method get_orphan_regions_file_name
+
+  Return the name of the text file
+  which contains the number of orphan regions
+  (clusters, hairpins).
+
+=cut
+sub get_orphan_regions_file_name {
+    my (@args) = @_;
+    return 'orphan_regions.txt';
+}
+
 =method get_orphan_clusters_file_name
 
   Return the name of the bed file which
