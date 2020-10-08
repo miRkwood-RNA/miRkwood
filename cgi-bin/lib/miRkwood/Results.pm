@@ -450,6 +450,23 @@ sub create_summary_page {
         }
     }
 
+    my $orphan_regions_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_orphan_regions_file_name() );
+    my $nb_orphan_clusters = 0;
+    my $nb_orphan_hairpins = 0;
+    open (my $OR, '<', $orphan_regions_file) or die "ERROR while opening $orphan_regions_file : $!";
+    while ( <$OR> ){
+        if ( $_ !~ /^#/ ){
+            chomp;
+            if ( /Orphan clusters:(\d+)/ ){
+                $nb_orphan_clusters = $1;
+            }
+            if ( /Orphan hairpins:(\d+)/ ){
+                $nb_orphan_hairpins = $1;
+            }
+        }
+    }
+    close $OR;
+
     my $multimapped_interval = $cfg->param('options.multimapped_interval');
     my $min_nb_positions = 0;
     my $max_nb_positions = 5;
@@ -491,9 +508,9 @@ sub create_summary_page {
         }
     }
     $output_txt .= "Multiple mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
-    $output_txt .= "Orphan clusters of reads: $bed_sizes->{'orphan_clusters'}{'reads'} reads\n";
+    $output_txt .= "Orphan clusters of reads: $nb_orphan_clusters orphan clusters\n";
     if ( $cfg->param('options.filter_bad_hairpins') ){
-        $output_txt .= "Orphan hairpins: $bed_sizes->{'orphan_hairpins'}{'reads'} reads\n";
+        $output_txt .= "Orphan hairpins: $nb_orphan_hairpins orphan hairpins\n";
     }
     $output_txt .= "Unclassified reads: $nb_unclassified_reads reads\n";
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
