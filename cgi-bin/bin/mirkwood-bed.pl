@@ -196,7 +196,7 @@ miRkwood::CLI::process_results_dir_for_offline($abs_output_folder, 'smallRNAseq'
 
 my $summary_page = File::Spec->catfile( $abs_output_folder, 'summary.txt' );
 miRkwood::Results::create_summary_page( $abs_output_folder, $summary_page );
-#~ miRkwood::Results::clean_job_dir_for_cli_pipeline( $abs_output_folder );
+miRkwood::Results::clean_job_dir_for_cli_pipeline( $abs_output_folder );
 
 __END__
 
