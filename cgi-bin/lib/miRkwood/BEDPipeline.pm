@@ -76,6 +76,7 @@ sub run_pipeline {
     close $FH;
 
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'initial_bed'}, $bed_sizes_file );
+    miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'bed_file'}, $bed_sizes_file );
 
     foreach my $BED_type ( @list_of_BED_files ){
         my $BED_file = miRkwood::Paths::get_bed_file ( $self->get_job_dir(), $BED_type, 'bed' );
