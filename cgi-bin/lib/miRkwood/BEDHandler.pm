@@ -325,6 +325,22 @@ sub store_reads_nb_in_BED_file {
     return;
 }
 
+=method count_regions_nb_in_BED_file
+
+  Count the number of regions (clusters, hairpins)
+  in a BED file and return it.
+
+=cut
+sub count_regions_nb_in_BED_file {
+    my @args = @_;
+    my $BED_file = shift @args;
+
+    my $regions_nb = `wc -l $BED_file | awk '{print \$1}'`;
+    chomp $regions_nb;
+
+    return $regions_nb;
+}
+
 =method zipBEDfile
 
 =cut
