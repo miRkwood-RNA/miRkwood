@@ -443,12 +443,7 @@ sub create_summary_page {
     }
     close $FH;
 
-    my $nb_unclassified_reads = $bed_sizes->{$basename_bed}{'reads'} - $nb_reads_known_miRNAs - $nb_reads_new_miRNAs;
-    foreach my $category ( keys%{$bed_sizes} ){
-        if ( $category ne $basename_bed && $category ne 'miRNAs' ){
-            $nb_unclassified_reads -= $bed_sizes->{ $category }{'reads'};
-        }
-    }
+    my $nb_unclassified_reads = $bed_sizes->{'filtered'}{'reads'} - $nb_reads_new_miRNAs;
 
     my $orphan_regions_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_orphan_regions_file_name() );
     my $nb_orphan_clusters = 0;
