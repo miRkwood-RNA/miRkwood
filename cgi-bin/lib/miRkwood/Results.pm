@@ -510,7 +510,7 @@ sub create_summary_page {
     $output_txt .= "Unclassified reads: $nb_unclassified_reads reads\n";
     $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
-    $output_txt .= "\nDistribution of novel miRNAs according to quality:\n";
+    $output_txt .= "\nDistribution of novel miRNAs according to their quality:\n";
     foreach my $qual (reverse(sort(keys%{$nb_candidates_per_quality}))){
         $output_txt .= "    quality $qual: $nb_candidates_per_quality->{$qual} miRNAs\n";
     }
