@@ -325,13 +325,13 @@ sub store_reads_nb_in_BED_file {
     return;
 }
 
-=method count_regions_nb_in_BED_file
+=method count_alignments_nb_in_BED_file
 
   Count the number of regions (clusters, hairpins)
   in a BED file and return it.
 
 =cut
-sub count_regions_nb_in_BED_file {
+sub count_alignments_nb_in_BED_file {
     my @args = @_;
     my $BED_file = shift @args;
 

@@ -112,11 +112,11 @@ sub run_pipeline {
     $self->count_alignments_per_miRNA();
     $self->count_precursors_per_miRNA();
 
+	# Count the number of orphan clusters and orphan hairpins and write it in a file
     my $orphan_regions_file = File::Spec->catfile( $self->get_job_dir(), miRkwood::Paths::get_orphan_regions_file_name() );
     open(my $OR, '>', $orphan_regions_file) or die "ERROR while opening $orphan_regions_file: $!";
-
-    my $nb_orphan_clusters = miRkwood::BEDHandler::count_regions_nb_in_BED_file( $self->{'orphan_clusters'} );
-    my $nb_orphan_hairpins = miRkwood::BEDHandler::count_regions_nb_in_BED_file( $self->{'orphan_hairpins'} );
+    my $nb_orphan_clusters = miRkwood::BEDHandler::count_alignments_nb_in_BED_file( $self->{'orphan_clusters'} );
+    my $nb_orphan_hairpins = miRkwood::BEDHandler::count_alignments_nb_in_BED_file( $self->{'orphan_hairpins'} );
     print $OR "Orphan clusters:$nb_orphan_clusters\n";
     print $OR "Orphan hairpins:$nb_orphan_hairpins\n";
     close $OR;
