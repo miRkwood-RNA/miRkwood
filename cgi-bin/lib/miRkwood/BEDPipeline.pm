@@ -72,7 +72,7 @@ sub run_pipeline {
 
     my $bed_sizes_file = File::Spec->catfile( $self->get_job_dir(), miRkwood::Paths::get_bed_size_file_name() );
     open (my $FH, '>', $bed_sizes_file) or die "ERROR while creating $bed_sizes_file : $!";
-    print $FH "#file\treads\tunique reads\n";
+    print $FH '#file' . "\t" . 'alignments' . "\t" . 'total reads' . "\t" . 'unique reads' . "\n";
     close $FH;
 
     miRkwood::BEDHandler::store_reads_nb_in_BED_file( $self->{'initial_bed'}, $bed_sizes_file );

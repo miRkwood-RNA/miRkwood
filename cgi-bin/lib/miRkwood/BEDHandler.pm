@@ -317,10 +317,11 @@ sub store_reads_nb_in_BED_file {
         $basename_bed = $1;
     }
     my ($nb_reads, $nb_unique_reads) = count_reads_in_bed_file( $BED_file, -1, -1 );
+    my $nb_alignments = count_alignments_nb_in_BED_file($BED_file);
     #~ $nb_reads = miRkwood::Utils::make_numbers_more_readable( $nb_reads );
     #~ $nb_unique_reads = miRkwood::Utils::make_numbers_more_readable( $nb_unique_reads );
     open (my $FH, '>>', $log_file) or die "ERROR while opening $log_file : $!";
-    print $FH "$basename_bed\t$nb_reads\t$nb_unique_reads\n";
+    print $FH "$basename_bed\t$nb_alignments \t$nb_reads\t$nb_unique_reads\n";
     close $FH;
     return;
 }
