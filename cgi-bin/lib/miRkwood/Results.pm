@@ -437,13 +437,14 @@ sub create_summary_page {
             elsif ( $line[0] =~ /${basename_bed}_(.*)[.]bed/ ){
                 $name = $1;
             }
-            $bed_sizes->{$name}{'reads'} = $line[1];
-            $bed_sizes->{$name}{'unique_reads'} = $line[2];
+            $bed_sizes->{$name}{'alignments'} = $line[1];
+            $bed_sizes->{$name}{'reads'} = $line[2];
+            $bed_sizes->{$name}{'unique_reads'} = $line[3];
         }
     }
     close $FH;
 
-    my $nb_unclassified_reads = $bed_sizes->{'filtered'}{'reads'} - $nb_reads_new_miRNAs;
+    #~ my $nb_unclassified_reads = $bed_sizes->{'filtered'}{'reads'} - $nb_reads_new_miRNAs;
 
     my $orphan_regions_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_orphan_regions_file_name() );
     my $nb_orphan_clusters = 0;
@@ -471,6 +472,8 @@ sub create_summary_page {
     }
 
     my $output_txt = '';
+
+	## Options summary
     $output_txt .= "OPTIONS SUMMARY\n";
     $output_txt .= "===============\n\n";
     $output_txt .= 'BED file: ' . $basename_bed . ".bed\n";
@@ -494,21 +497,38 @@ sub create_summary_page {
     }
     $output_txt .= 'Filter low quality hairpins: ' . $boolean_mapping{ $cfg->param('options.filter_bad_hairpins') } . "\n";
 
+	## Results summary
     $output_txt .= "\nRESULTS SUMMARY\n";
     $output_txt .= "===============\n\n";
-    $output_txt .= "Total number of reads: $bed_sizes->{$basename_bed}{'reads'} ($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
+    $output_txt .= 'Total number of reads and alignments: ' .
+			"$bed_sizes->{$basename_bed}{'alignments'} alignments " .
+			"involving $bed_sizes->{$basename_bed}{'reads'} reads " .
+			"($bed_sizes->{$basename_bed}{'unique_reads'} unique reads)\n";
     foreach my $gff ( @annotation_gff ){
         if ( $gff =~ /[\/\\]([^\/\\]+)_(.*)[.](dat|gtf|gff3?)/ ){
-            $output_txt .= "${1}_$2: $bed_sizes->{ $2 }{'reads'} reads\n";
+            $output_txt .= "${1}_$2: " .
+					"removing $bed_sizes->{ $2 }{'alignments'} alignments " .
+					"involving $bed_sizes->{ $2 }{'reads'} reads ".
+					"($bed_sizes->{ $2 }{'unique_reads'} unique reads)\n";
         }
     }
-    $output_txt .= "Multiple mapped reads: $bed_sizes->{'multimapped'}{'reads'} reads\n";
-    $output_txt .= "Orphan clusters of reads: $nb_orphan_clusters orphan clusters\n";
-    if ( $cfg->param('options.filter_bad_hairpins') ){
-        $output_txt .= "Orphan hairpins: $nb_orphan_hairpins orphan hairpins\n";
-    }
-    $output_txt .= "Unclassified reads: $nb_unclassified_reads reads\n";
-    $output_txt .= "Known miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
+    $output_txt .= "Multiple mapped reads: " .
+			"removing $bed_sizes->{'multimapped'}{'alignments'} alignments " .
+			"involving $bed_sizes->{'multimapped'}{'reads'} reads " .
+			"($bed_sizes->{'multimapped'}{'unique_reads'} unique reads)\n";
+    #~ $output_txt .= "Orphan clusters of reads: $nb_orphan_clusters orphan clusters\n";
+    #~ if ( $cfg->param('options.filter_bad_hairpins') ){
+        #~ $output_txt .= "Orphan hairpins: $nb_orphan_hairpins orphan hairpins\n";
+    #~ }
+    #~ $output_txt .= "Unclassified reads: $nb_unclassified_reads reads\n";
+    $output_txt .= "Unclassified elements: " .
+			"XX orphan clusters " .
+			"(involving XX reads)";
+	if ( $cfg->param('options.filter_bad_hairpins') ){
+		$output_txt .= " + XX orphan hairpins " .
+			"(involving XX reads)";
+	}
+    $output_txt .= "\nKnown miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
     $output_txt .= "\nDistribution of novel miRNAs according to their quality:\n";
     foreach my $qual (reverse(sort(keys%{$nb_candidates_per_quality}))){
