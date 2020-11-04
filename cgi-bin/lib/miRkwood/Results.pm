@@ -444,21 +444,15 @@ sub create_summary_page {
     }
     close $FH;
 
-    #~ my $nb_unclassified_reads = $bed_sizes->{'filtered'}{'reads'} - $nb_reads_new_miRNAs;
-
     my $orphan_regions_file = File::Spec->catfile( $absolute_job_dir, miRkwood::Paths::get_orphan_regions_file_name() );
-    my $nb_orphan_clusters = 0;
-    my $nb_orphan_hairpins = 0;
+    my $orphan_regions = {};
     open (my $OR, '<', $orphan_regions_file) or die "ERROR while opening $orphan_regions_file : $!";
     while ( <$OR> ){
         if ( $_ !~ /^#/ ){
             chomp;
-            if ( /Orphan clusters:(\d+)/ ){
-                $nb_orphan_clusters = $1;
-            }
-            if ( /Orphan hairpins:(\d+)/ ){
-                $nb_orphan_hairpins = $1;
-            }
+            my @line = split(/\t/);
+            $orphan_regions->{$line[0]}{'regions'} = $line[1];
+            $orphan_regions->{$line[0]}{'reads'} = $line[2];
         }
     }
     close $OR;
@@ -516,17 +510,12 @@ sub create_summary_page {
 			"removing $bed_sizes->{'multimapped'}{'alignments'} alignments " .
 			"involving $bed_sizes->{'multimapped'}{'reads'} reads " .
 			"($bed_sizes->{'multimapped'}{'unique_reads'} unique reads)\n";
-    #~ $output_txt .= "Orphan clusters of reads: $nb_orphan_clusters orphan clusters\n";
-    #~ if ( $cfg->param('options.filter_bad_hairpins') ){
-        #~ $output_txt .= "Orphan hairpins: $nb_orphan_hairpins orphan hairpins\n";
-    #~ }
-    #~ $output_txt .= "Unclassified reads: $nb_unclassified_reads reads\n";
     $output_txt .= "Unclassified elements: " .
-			"XX orphan clusters " .
-			"(involving XX reads)";
+			"$orphan_regions->{'Orphan clusters'}{'regions'} orphan clusters " .
+			"(involving $orphan_regions->{'Orphan clusters'}{'reads'} reads)";
 	if ( $cfg->param('options.filter_bad_hairpins') ){
-		$output_txt .= " + XX orphan hairpins " .
-			"(involving XX reads)";
+		$output_txt .= " + $orphan_regions->{'Orphan hairpins'}{'regions'} orphan hairpins " .
+			"(involving $orphan_regions->{'Orphan hairpins'}{'reads'} reads)";
 	}
     $output_txt .= "\nKnown miRNAs: $nb_results_known_miRNAs sequence(s) - $nb_reads_known_miRNAs reads\n";
     $output_txt .= "Novel miRNAs: $nb_results_new_miRNAs sequence(s) - $nb_reads_new_miRNAs reads\n";
