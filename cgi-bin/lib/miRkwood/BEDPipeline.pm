@@ -117,8 +117,12 @@ sub run_pipeline {
     open(my $OR, '>', $orphan_regions_file) or die "ERROR while opening $orphan_regions_file: $!";
     my $nb_orphan_clusters = miRkwood::BEDHandler::count_alignments_nb_in_BED_file( $self->{'orphan_clusters'} );
     my $nb_orphan_hairpins = miRkwood::BEDHandler::count_alignments_nb_in_BED_file( $self->{'orphan_hairpins'} );
-    print $OR "Orphan clusters:$nb_orphan_clusters\n";
-    print $OR "Orphan hairpins:$nb_orphan_hairpins\n";
+    my $nb_orphan_clusters_reads = miRkwood::BEDHandler::count_reads_for_orphan_regions( $self->{'orphan_clusters'});
+    my $nb_orphan_hairpins_reads = miRkwood::BEDHandler::count_reads_for_orphan_regions( $self->{'orphan_hairpins'});
+
+    print $OR '#file' . "\t" . 'regions' . "\t" . 'reads' . "\n";
+    print $OR 'Orphan clusters' . "\t" . $nb_orphan_clusters . "\t" . $nb_orphan_clusters_reads . "\n";
+    print $OR 'Orphan hairpins' . "\t" . $nb_orphan_hairpins . "\t" . $nb_orphan_hairpins_reads . "\n";
     close $OR;
 
     miRkwood::BEDHandler::zipBEDfile( $self->{'orphan_clusters'} );
