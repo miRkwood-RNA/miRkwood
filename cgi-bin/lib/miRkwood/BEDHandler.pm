@@ -300,6 +300,22 @@ sub count_reads_in_bed_file {
     }
 }
 
+=method count_reads_for_orphan_regions
+
+  Count the total number of reads
+  in orphan_clusters and orphan_hairpins files
+  (basically this is the sum of numbers in 5th column)
+
+=cut
+sub count_reads_for_orphan_regions{
+	my @args = @_;
+    my $bed_file = shift @args;
+    my $nb_reads = 0;
+    $nb_reads  = `awk '{sum+=\$5} END {print sum}' $bed_file`;
+    chomp $nb_reads;
+    return $nb_reads;
+}
+
 =method store_reads_nb_in_BED_file
 
   Count the number of reads and unique
