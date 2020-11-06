@@ -66,7 +66,7 @@
    - post_deploy
 
 - name: Deploy miRkwood data
-  command: "{{ mirkwood_path }}/install-data.sh {{ mirkwood_path }}/data"
+  command: "{{ mirkwood_path }}/install-data.sh {{ mirkwood_path }}/../provisioning/roles/mirkwood-software/files {{ mirkwood_path }}/data"
   when: mirkwood_deployed is defined and mirkwood_deployed.stat.exists == true
   tags:
    - post_deploy
