@@ -60,6 +60,9 @@ RUN sed -re 's/\$HMMSEARCH_BINARY\s?=.*/$HMMSEARCH_BINARY="\/usr\/bin\/hmmsearch
 # Make relevant user/group
 RUN chown -R www-data:www-data "/opt/RNAmmer"
 
+# Delete param "--cpu 1" in core-rnammer file to avoid POSIX errors
+RUN sed -i "s/--cpu 1 //" /opt/RNAmmer/core-rnammer
+
 ### Install RNAshuffles
 # Ensure Python pip is installed
 RUN sudo apt-get -y install python-pip
